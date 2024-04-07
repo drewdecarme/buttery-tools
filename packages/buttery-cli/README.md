@@ -1,0 +1,2 @@
+- cosmic config
+- dynamic location and folder name for the commands

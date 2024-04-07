@@ -1,0 +1,23 @@
+{
+  "name": "example-cli",
+  "version": "1.0.0",
+  "description": "A dogfooding example on how to use the buttery-cli",
+  "main": "index.js",
+  "scripts": {
+    "build": "butter cli build",
+    "dev": "butter cli build --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/starter-ts-cli.git"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/starter-ts-cli/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
+  "dependencies": {
+    "@buttery/cli": "workspace:^"
+  }
+}

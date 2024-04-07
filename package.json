@@ -1,0 +1,23 @@
+{
+  "name": "buttery",
+  "version": "0.0.0",
+  "description": "A much needed CLI that helps manage setup boilerplate for common projects and utility sets for TS development projects",
+  "main": "index.js",
+  "workspaces": {
+    "packages": [
+      "./packages/**",
+      "./examples/**"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/starter-ts-cli.git"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/starter-ts-cli/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
+  "packageManager": "yarn@4.1.1"
+}
