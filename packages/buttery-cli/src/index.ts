@@ -12,7 +12,7 @@ import {
 } from "../lib/types";
 import {
   constructCommandFiles,
-  constructCommandObj,
+  // constructCommandObj,
   processCommands,
 } from "./process-command-dir.js";
 
@@ -32,8 +32,8 @@ explorer
     const commandFilePaths = glob.sync(`${config.root}/bin/commands/*.js`, {
       follow: false,
     });
-    console.log(commandFilePaths);
-    constructCommandObj(commandFilePaths);
+    // console.log(commandFilePaths);
+    // constructCommandObj(commandFilePaths);
     const commandFiles = constructCommandFiles(commandFilePaths);
     processCommands(program, commandFiles);
 
@@ -114,6 +114,12 @@ explorer
     // }
 
     // console.log(commands);
+
+    console.log(`end processing.
+    
+
+
+    `);
 
     program.parseAsync(process.argv);
   })

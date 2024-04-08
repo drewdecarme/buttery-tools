@@ -1,20 +1,20 @@
 import { CommandAction, CommandMeta, CommandOptions } from "../lib/types";
 
 export const meta: CommandMeta = {
-  name: "test",
+  name: "data",
   description: "Cras mattis consectetur purus sit amet fermentum.",
 };
 
 export const options: CommandOptions = [
   {
-    flag: "option-1",
-    alias: "opt1",
-    description: "option 1 description",
+    flag: "first",
+    alias: "f",
+    description: "display just the first substring",
   },
 ];
 
 export const action: CommandAction<undefined, typeof options> = async (
   params
 ) => {
-  console.log("Hello from the `test` command.", params);
+  console.log("Hello from the `test.data` command.", params);
 };
