@@ -2,8 +2,9 @@
 import { program } from "commander";
 import { cosmiconfig } from "cosmiconfig";
 import { glob } from "glob";
-import { CLIConfig } from "../lib/types.js";
+import { CLIConfig } from "./types.js";
 import { registerCommandsFromFiles } from "./process-command-dir.js";
+export * from "./types.js";
 
 const explorer = cosmiconfig("butter");
 

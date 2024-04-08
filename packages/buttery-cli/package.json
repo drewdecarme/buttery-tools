@@ -5,11 +5,11 @@
   "sideEffects": false,
   "type": "module",
   "bin": {
-    "butter": "./bin/src/index.js"
+    "butter": "./bin/index.js"
   },
   "scripts": {
-    "build": "yarn tsc --project tsconfig.bin.json",
-    "dev": "yarn build --watch",
+    "build": "yarn tsc --project tsconfig.build.json & tsx ./scripts/build.ts",
+    "dev": "yarn tsc --project tsconfig.build.json --watch",
     "commands:build": "yarn butter cli build",
     "commands:dev": "yarn build --watch"
   },
@@ -25,11 +25,14 @@
   "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
   "devDependencies": {
     "@types/lodash.get": "^4.4.9",
+    "esbuild": "^0.20.2",
     "lodash.get": "^4.4.2",
+    "tsx": "^4.7.2",
     "typescript": "^5.4.4"
   },
   "dependencies": {
     "cosmiconfig": "^9.0.0",
-    "glob": "^10.3.12"
+    "glob": "^10.3.12",
+    "vite": "^5.2.8"
   }
 }

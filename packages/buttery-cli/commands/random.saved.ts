@@ -1,4 +1,4 @@
-import { CommandAction, CommandMeta, CommandOptions } from "../lib/types";
+import { CommandAction, CommandMeta, CommandOptions } from "../src/types";
 
 export const meta: CommandMeta = {
   name: "saved",

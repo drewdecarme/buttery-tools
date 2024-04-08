@@ -5,7 +5,7 @@ import {
   CommandArgs,
   CommandMeta,
   CommandOptions,
-} from "../lib/types";
+} from "./types";
 
 type CommandFile = {
   name: string;
