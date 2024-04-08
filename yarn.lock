@@ -58,6 +58,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/cli@workspace:packages/buttery-cli"
   dependencies:
+    "@types/lodash.get": "npm:^4.4.9"
     cosmiconfig: "npm:^9.0.0"
     glob: "npm:^10.3.12"
     lodash.get: "npm:^4.4.2"
@@ -220,6 +221,22 @@ __metadata:
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
   checksum: 10c0/5bd7576bb1b38a47a7fc7b51ac9f38748e772beebc56200450c4a817d712232b8f1d3ef70532c80840243c657d491cf6a6be1e3a214cff907645819fdc34aadd
+  languageName: node
+  linkType: hard
+
+"@types/lodash.get@npm:^4.4.9":
+  version: 4.4.9
+  resolution: "@types/lodash.get@npm:4.4.9"
+  dependencies:
+    "@types/lodash": "npm:*"
+  checksum: 10c0/934ae4f02831afdb9216cb5fcb702f8f4e0b45e13f2d10ed9c7ce7e891800e5dea726b513c98b8370d6292d42ad7745c622ae75733676746b711bea95b6259d5
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.17.0
+  resolution: "@types/lodash@npm:4.17.0"
+  checksum: 10c0/4c5b41c9a6c41e2c05d08499e96f7940bcf194dcfa84356235b630da920c2a5e05f193618cea76006719bec61c76617dff02defa9d29934f9f6a76a49291bd8f
   languageName: node
   linkType: hard
 

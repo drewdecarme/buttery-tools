@@ -10,7 +10,11 @@ import {
   // CommandMeta,
   // CommandOptions,
 } from "../lib/types";
-import { processCommands } from "./process-command-dir.js";
+import {
+  constructCommandFiles,
+  constructCommandObj,
+  processCommands,
+} from "./process-command-dir.js";
 
 const explorer = cosmiconfig("butter");
 
@@ -25,9 +29,13 @@ explorer
     // Add the name and the description of the CLI
     program.name(config.name).description(config.description);
 
-    const commandFiles = glob.sync(`${config.root}/bin/commands/*.js`);
-
-    processCommands(commandFiles, program);
+    const commandFilePaths = glob.sync(`${config.root}/bin/commands/*.js`, {
+      follow: false,
+    });
+    console.log(commandFilePaths);
+    constructCommandObj(commandFilePaths);
+    const commandFiles = constructCommandFiles(commandFilePaths);
+    processCommands(program, commandFiles);
 
     // Loop through all of the files
     // for (const commandFilePath of commandFiles) {
