@@ -12,11 +12,11 @@ export type CommandMeta = {
 export type CommandArg = {
   name: string;
   description: string;
-  required?: boolean;
+  required: boolean;
   defaultValue?: string;
 };
 export type CommandArgs = CommandArg[];
-export type CommandOption = {
+type CommandOptionShared = {
   /**
    * The flag that will enable this option. This flag
    * should be a kebab-cased option and not contain any other
@@ -24,14 +24,21 @@ export type CommandOption = {
    * @example test-option
    * @return --test-option
    */
-  flag: string;
   alias: string;
   description: string;
-  defaultValue?: string;
+  required?: boolean;
 };
-export type CommandOptions = CommandOption[];
+type CommandOptionTypeValue = CommandOptionShared & {
+  type: "value";
+};
+type CommandOptionTypeBoolean = CommandOptionShared & {
+  type: "boolean";
+};
 
-export type CommandAction<
-  A extends CommandArgs | undefined = undefined,
-  O extends CommandOptions | undefined = undefined
-> = (params: { args: A; options: O }) => Promise<void>;
+export type CommandOption = {
+  [key: string]: CommandOptionTypeValue | CommandOptionTypeBoolean;
+};
+export type CommandOptions = CommandOption;
+
+export type CommandAction<O extends CommandOptions | undefined = undefined> =
+  (params: { args: string[]; options: O }) => Promise<void>;

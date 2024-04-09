@@ -24,7 +24,8 @@ explorer
     });
 
     await registerCommandsFromFiles(program, commandFilePaths);
-    await program.parseAsync(process.argv);
+    console.log(program.opts());
+    await program.parseAsync();
   })
   .catch((error) => {
     console.error(error);

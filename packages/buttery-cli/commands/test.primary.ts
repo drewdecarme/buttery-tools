@@ -5,16 +5,34 @@ export const meta: CommandMeta = {
   description: "Cras mattis consectetur purus sit amet fermentum.",
 };
 
-export const options: CommandOptions = [
-  {
-    flag: "first",
-    alias: "f",
+export const options: CommandOptions = {
+  bg: {
+    type: "value",
+    alias: "bg",
     description: "display just the first substring",
+    required: false,
   },
-];
+  "should-load": {
+    type: "boolean",
+    alias: "sl",
+    description: "If something should load",
+    required: false,
+  },
+};
 
-export const action: CommandAction<undefined, typeof options> = async (
-  params
-) => {
-  console.log("Hello from the `test.data` command.", params);
+// export const args: CommandArgs = [
+//   {
+//     name: "username",
+//     description: "user to login",
+//     required: false,
+//   },
+//   {
+//     name: "password",
+//     description: "password for user, if required",
+//     required: false,
+//   },
+// ];
+
+export const action: CommandAction<typeof options> = async (params) => {
+  console.log(`Hello from the "test.primary" command.`, params);
 };

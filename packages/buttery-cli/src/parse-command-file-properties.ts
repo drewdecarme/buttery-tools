@@ -39,7 +39,11 @@ export const parseCommandFileProperties = ({
   return {
     action: props.action,
     args: props.args ?? [],
-    options: props.options ?? [],
+    options: props.options ?? {},
     meta: props.meta,
   };
+};
+
+export const exhaustiveMatchGuard = (_: never): never => {
+  throw new Error("Forgot to include an option in the switch statement");
 };

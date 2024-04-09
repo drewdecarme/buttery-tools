@@ -5,16 +5,15 @@ export const meta: CommandMeta = {
   description: "Cras mattis consectetur purus sit amet fermentum.",
 };
 
-export const options: CommandOptions = [
-  {
-    flag: "first",
+export const options: CommandOptions = {
+  first: {
+    type: "value",
     alias: "f",
     description: "display just the first substring",
+    required: false,
   },
-];
+};
 
-export const action: CommandAction<undefined, typeof options> = async (
-  params
-) => {
+export const action: CommandAction<typeof options> = async (params) => {
   console.log("Hello from the `random.saved.brutal` command.", params);
 };

@@ -4,6 +4,7 @@ import path from "node:path";
 import { CLIConfig } from "./types";
 import { glob } from "glob";
 import * as esbuild from "esbuild";
+import { rimraf } from "rimraf";
 
 // const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
@@ -19,6 +20,8 @@ export async function buildCli() {
     const commandFiles = glob.sync(path.resolve(commandFilesDir, "./*.ts"), {
       follow: false,
     });
+
+    await rimraf(commandFilesDir.concat("/*.js"), { glob: true });
 
     await esbuild.build({
       entryPoints: commandFiles,
