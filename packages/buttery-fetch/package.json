@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A TS fetch client with 0 dependencies",
   "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "yarn tsc",
     "dev": "yarn build --watch"

@@ -12,5 +12,8 @@
   "bugs": {
     "url": "https://github.com/drewdecarme/buttery-tokens/issues"
   },
-  "homepage": "https://github.com/drewdecarme/buttery-tokens#readme"
+  "homepage": "https://github.com/drewdecarme/buttery-tokens#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
