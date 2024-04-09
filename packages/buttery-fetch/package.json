@@ -1,5 +1,5 @@
 {
-  "name": "@buttery-templates/fetch-client",
+  "name": "@buttery/fetch",
   "version": "1.0.0",
   "description": "A TS fetch client with 0 dependencies",
   "main": "dist/index.js",

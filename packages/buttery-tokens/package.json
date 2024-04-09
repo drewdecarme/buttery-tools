@@ -1,0 +1,16 @@
+{
+  "name": "@buttery/tokens",
+  "version": "1.0.0",
+  "description": "The oh so buttery container for the oh so buttery tokens",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tokens.git"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tokens/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tokens#readme"
+}

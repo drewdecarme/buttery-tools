@@ -1,0 +1,8 @@
+{
+  "name": "@buttery/logger",
+  "version": "0.0.0",
+  "description": "An isomorphic logging utility used to make logging browser & node applications buttery smooth.",
+  "main": "index.js",
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT"
+}
