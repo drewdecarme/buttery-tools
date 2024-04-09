@@ -82,15 +82,12 @@ export async function registerCommandsFromFiles(
             .command(segment)
             .description(props.meta.description);
 
-          // TODO:
           // Add arguments (if they're defined in the file) to the parent command.
-          // props.args.forEach((arg) => {
-          //   if (!segmentCommand) return;
-          //   const argName = arg.required ? `<${arg.name}>` : `[${arg.name}]`;
-          //   segmentCommand
-          //     .argument(argName, arg.description, arg.defaultValue)
-          //     .passThroughOptions();
-          // });
+          props.args.forEach((arg) => {
+            if (!segmentCommand) return;
+            const argName = arg.required ? `<${arg.name}>` : `[${arg.name}]`;
+            segmentCommand.argument(argName, arg.description, arg.defaultValue);
+          });
 
           // Add options (if they're defined in the file) to the parent command.
           Object.entries(props.options).forEach(([flag, option]) => {
@@ -122,8 +119,13 @@ export async function registerCommandsFromFiles(
             restArgs.pop();
             const options = restArgs[restArgs.length - 1];
             restArgs.pop();
+            const args = Object.fromEntries(
+              props.args.map((arg, i) => {
+                return [arg.name, restArgs[i] as string];
+              })
+            );
             props.action({
-              args: restArgs,
+              args,
               options,
             });
           });

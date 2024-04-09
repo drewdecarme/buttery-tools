@@ -1,4 +1,9 @@
-import { CommandAction, CommandMeta, CommandOptions } from "../src/types";
+import {
+  CommandAction,
+  CommandArgs,
+  CommandMeta,
+  CommandOptions,
+} from "../src/types";
 
 export const meta: CommandMeta = {
   name: "data",
@@ -20,19 +25,22 @@ export const options: CommandOptions = {
   },
 };
 
-// export const args: CommandArgs = [
-//   {
-//     name: "username",
-//     description: "user to login",
-//     required: false,
-//   },
-//   {
-//     name: "password",
-//     description: "password for user, if required",
-//     required: false,
-//   },
-// ];
+export const args: CommandArgs = [
+  {
+    name: "username",
+    description: "user to login",
+    required: true,
+  },
+  {
+    name: "password",
+    description: "password for user, if required",
+    required: false,
+  },
+];
 
-export const action: CommandAction<typeof options> = async (params) => {
+export const action: CommandAction<typeof args, typeof options> = async (
+  params
+) => {
+  params.args;
   console.log(`Hello from the "test.primary" command.`, params);
 };

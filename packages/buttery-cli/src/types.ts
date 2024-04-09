@@ -40,5 +40,10 @@ export type CommandOption = {
 };
 export type CommandOptions = CommandOption;
 
-export type CommandAction<O extends CommandOptions | undefined = undefined> =
-  (params: { args: string[]; options: O }) => Promise<void>;
+export type CommandAction<
+  A extends CommandArgs = [],
+  O extends CommandOptions | undefined = undefined
+> = (params: {
+  args: { [key in A[0]["name"]]: string };
+  options: O;
+}) => Promise<void>;
