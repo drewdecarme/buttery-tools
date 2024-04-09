@@ -1,11 +1,6 @@
-import { type Command } from "commander";
+import { Command } from "commander";
 import path from "path";
-import {
-  CommandAction,
-  CommandArgs,
-  CommandMeta,
-  CommandOptions,
-} from "./types";
+import { parseCommandFileProperties } from "./parse-command-file-properties.js";
 
 type CommandFile = {
   name: string;
@@ -28,7 +23,7 @@ export const constructCommandFiles = (
 export async function registerCommandsFromFiles(
   command: Command,
   commandFilePaths: string[]
-): Promise<void> {
+): Promise<Command> {
   if (commandFilePaths.length === 0) {
     throw new Error(
       "You don't have any files in your 'commands' folder. Please add some command files."
@@ -61,67 +56,39 @@ export async function registerCommandsFromFiles(
         (cmd) => cmd.name() === segment
       );
 
+      // the segment command doesn't exist for this segment
+      // so we need to create it by importing the properties
+      // from the segment path and then adding them to the command.
       if (!segmentCommand) {
-        segmentCommand = fileCommand.command(segment);
+        segmentCommand = fileCommand.command(segment).action((args) => {
+          console.log("Launching segment action", segment, args);
+        });
         const segmentFileName = origArr
           .slice(0, iSegment + 2)
           .join(".")
           .concat(".js");
         const segmentFilePath = file.basePath.concat(segmentFileName);
-        const cmd = segmentCommand; // alias here for typechecking
 
-        import(segmentFilePath)
-          .then((segmentProperties) => {
-            console.log("adding properties");
-            const importedCommand = segmentProperties as Partial<{
-              meta: CommandMeta;
-              args: CommandArgs;
-              options: CommandOptions;
-              action: CommandAction;
-            }>;
-            console.log(importedCommand.action);
-            // Validate command.meta and set the description
-            if (!importedCommand.meta) {
-              throw `Error in '${segmentFileName}'. 'meta' export not detected. Please ensure that you have exported a 'meta' configuration object from the '${segmentFileName}'.`;
-            }
-            cmd.description(importedCommand.meta.description);
+        // import(segmentFilePath)
+        //   .then((content) => {
+        //     const props = parseCommandFileProperties({
+        //       content,
+        //       fileName: segmentFileName,
+        //     });
 
-            // Validate the action and set the action
-            if (!importedCommand.action) {
-              throw new Error(
-                `Error in '${segmentFileName}'. 'action' export not detected. Please ensure that you have exported a 'action' configuration object from the '${segmentFileName}'.`
-              );
-            }
-            const action = importedCommand.action;
-            cmd.action(action);
-
-            // Process the arguments
-            if (importedCommand.args && importedCommand.args.length > 0) {
-              importedCommand.args.forEach((arg) => {
-                const name = arg.required ? `[${arg}]` : `<${arg}>`;
-                cmd.argument(name, arg.description, arg.defaultValue);
-              });
-            }
-
-            // Process options
-            if (importedCommand.options && importedCommand.options.length > 0) {
-              importedCommand.options.forEach((option) => {
-                cmd.option(
-                  `-${option.alias} --${option.flag}`,
-                  option.description,
-                  option.defaultValue
-                );
-              });
-            }
-          })
-          .catch(() => {
-            console.log(segmentFilePath, segmentFileName);
-            console.warn(
-              `Command file doesn't exist. Using '${segmentFilePath}' as parent command.`
-            );
-          });
+        //     // add the items to the newCommand and chain them correctly
+        //     segmentCommand = fileCommand
+        //       .command(segment)
+        //       .description(props.meta.description)
+        //       // @ts-ignore
+        //       .action((...args) => props.action(args));
+        //   })
+        //   .catch(() => {
+        //     // console.error(error);
+        //     console.log("ERROR", segmentFilePath, segmentFileName);
+        //   });
       }
-
+      // @ts-ignore
       fileCommand = segmentCommand;
     });
 
@@ -131,6 +98,5 @@ export async function registerCommandsFromFiles(
     // program
     fileCommand = command;
   });
-
-  command.parse(process.argv);
+  return command;
 }

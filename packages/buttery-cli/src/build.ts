@@ -25,6 +25,7 @@ export async function buildCli() {
       bundle: true,
       minify: true,
       sourcemap: true,
+      format: "esm",
       platform: "node",
       target: ["node20.11.1"],
       packages: "external",

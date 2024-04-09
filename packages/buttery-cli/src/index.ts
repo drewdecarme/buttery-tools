@@ -22,8 +22,9 @@ explorer
     const commandFilePaths = glob.sync(`${config.root}/bin/commands/*.js`, {
       follow: false,
     });
-    registerCommandsFromFiles(program, commandFilePaths);
-    program.parse(process.argv);
+
+    await registerCommandsFromFiles(program, commandFilePaths);
+    await program.parseAsync(process.argv);
   })
   .catch((error) => {
     console.error(error);
