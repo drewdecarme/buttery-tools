@@ -3,7 +3,7 @@ import {
   CommandArgs,
   CommandMeta,
   CommandOptions,
-} from "../src/types";
+} from "@buttery/cli";
 
 export const meta: CommandMeta = {
   name: "data",
@@ -14,7 +14,7 @@ export const options: CommandOptions = {
   background: {
     type: "value",
     alias: "b",
-    description: "display just the first substring",
+    description: "The color of a nebulous thing",
     required: false,
   },
   "should-load": {
