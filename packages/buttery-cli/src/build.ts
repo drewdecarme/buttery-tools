@@ -20,19 +20,22 @@ export async function buildCli() {
     const commandFiles = glob.sync(path.resolve(commandFilesDir, "./*.ts"), {
       follow: false,
     });
+    const outDir = path.join(config.root, "./bin/commands");
+    const commandOutputFiles = glob.sync(path.resolve(outDir, "./*.js"), {
+      follow: false,
+    });
 
-    await rimraf(commandFilesDir.concat("/*.js"), { glob: true });
+    await rimraf(commandOutputFiles);
 
     await esbuild.build({
       entryPoints: commandFiles,
       bundle: true,
       minify: true,
-      sourcemap: true,
       format: "esm",
       platform: "node",
       target: ["node20.11.1"],
       packages: "external",
-      outdir: path.join(config.root, "./bin/commands"),
+      outdir: outDir,
     });
   } catch (error) {
     throw new Error(error as string);

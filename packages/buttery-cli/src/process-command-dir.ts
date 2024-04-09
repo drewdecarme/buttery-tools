@@ -81,8 +81,8 @@ export async function registerCommandsFromFiles(
           segmentCommand = fileCommand
             .command(segment)
             .description(props.meta.description);
-          // .option("-t, --test", "test option", "blue");
 
+          // TODO:
           // Add arguments (if they're defined in the file) to the parent command.
           // props.args.forEach((arg) => {
           //   if (!segmentCommand) return;

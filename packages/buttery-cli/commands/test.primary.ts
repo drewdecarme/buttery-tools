@@ -6,9 +6,9 @@ export const meta: CommandMeta = {
 };
 
 export const options: CommandOptions = {
-  bg: {
+  background: {
     type: "value",
-    alias: "bg",
+    alias: "b",
     description: "display just the first substring",
     required: false,
   },
