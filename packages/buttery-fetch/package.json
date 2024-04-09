@@ -12,5 +12,8 @@
     "url": "git@github.com"
   },
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.4.4"
+  }
 }
