@@ -1,6 +1,6 @@
 {
   "name": "buttery",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "description": "A much needed CLI that helps manage setup boilerplate for common projects and utility sets for TS development projects",
   "main": "index.js",
   "private": true,
