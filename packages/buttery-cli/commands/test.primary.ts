@@ -41,6 +41,5 @@ export const args: CommandArgs = [
 export const action: CommandAction<typeof args, typeof options> = async (
   params
 ) => {
-  params.args;
   console.log(`Hello from the "test.primary" command.`, params);
 };

@@ -34,16 +34,17 @@ type CommandOptionTypeValue = CommandOptionShared & {
 type CommandOptionTypeBoolean = CommandOptionShared & {
   type: "boolean";
 };
+type CommandOptionType = CommandOptionTypeValue | CommandOptionTypeBoolean;
 
 export type CommandOption = {
-  [key: string]: CommandOptionTypeValue | CommandOptionTypeBoolean;
+  [key: string]: CommandOptionType;
 };
 export type CommandOptions = CommandOption;
 
 export type CommandAction<
   A extends CommandArgs = [],
-  O extends CommandOptions | undefined = undefined
+  O extends CommandOptions = CommandOptions
 > = (params: {
   args: { [key in A[0]["name"]]: string };
-  options: O;
+  options: { [key in keyof O]: string };
 }) => Promise<void>;

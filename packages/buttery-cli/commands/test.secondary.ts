@@ -14,6 +14,6 @@ export const options: CommandOptions = {
   },
 };
 
-export const action: CommandAction<typeof options> = async (params) => {
+export const action: CommandAction<[], typeof options> = async (params) => {
   console.log("Hello from the `test.data` command.", params);
 };
