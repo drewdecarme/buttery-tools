@@ -4,6 +4,7 @@
   "description": "A file based CLI designed to making writing a CLI as easy as exporting a few funcitons in a file",
   "sideEffects": false,
   "type": "module",
+  "types": "./bin/index.d.ts",
   "bin": {
     "butter": "./bin/index.js"
   },
