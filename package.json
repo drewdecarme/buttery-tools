@@ -24,6 +24,7 @@
     "build": "turbo build"
   },
   "dependencies": {
+    "@changesets/cli": "^2.27.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
