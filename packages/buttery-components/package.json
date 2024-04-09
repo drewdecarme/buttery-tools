@@ -4,5 +4,8 @@
   "description": "A collection of components designed to make creating interfaces buttery smooth",
   "main": "index.js",
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
