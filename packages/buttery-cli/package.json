@@ -1,0 +1,41 @@
+{
+  "name": "@buttery/cli",
+  "version": "0.0.1",
+  "description": "A file based CLI designed to making writing a CLI as easy as exporting a few funcitons in a file",
+  "sideEffects": false,
+  "type": "module",
+  "bin": {
+    "butter": "./bin/index.js"
+  },
+  "scripts": {
+    "build": "yarn tsc --project tsconfig.build.json & tsx ./scripts/build.ts",
+    "dev": "yarn tsc --project tsconfig.build.json --watch",
+    "commands:build": "yarn butter cli build",
+    "commands:dev": "yarn build --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/starter-ts-cli.git"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/starter-ts-cli/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
+  "devDependencies": {
+    "@types/lodash.get": "^4.4.9",
+    "@types/node": "^20.12.6",
+    "esbuild": "^0.20.2",
+    "lodash.get": "^4.4.2",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.4"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "cosmiconfig": "^9.0.0",
+    "glob": "^10.3.12",
+    "rimraf": "^5.0.5",
+    "vite": "^5.2.8"
+  }
+}
