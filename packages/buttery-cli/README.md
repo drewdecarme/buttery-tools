@@ -124,3 +124,5 @@ WIP
 - Finish hard typing the `options` and `args` based upon the command file
 - Semantic release
 - Add `init` command to ensure a commands directory is there and some other things
+- Add an SEO command for creating a PWA manifest file
+- Add an SEO command for creating favicon files
