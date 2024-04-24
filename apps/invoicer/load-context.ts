@@ -12,6 +12,7 @@ interface Env {
   CLERK_SIGN_UP_URL: string;
   CLERK_AFTER_SIGN_IN_URL: string;
   CLERK_AFTER_SIGN_UP_URL: string;
+  DB: D1Database;
 }
 
 type Cloudflare = Omit<PlatformProxy<Env>, "dispose">;
