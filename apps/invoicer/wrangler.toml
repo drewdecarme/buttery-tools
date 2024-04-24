@@ -9,6 +9,11 @@ CLERK_SIGN_UP_URL = "/auth/sign-up"
 CLERK_AFTER_SIGN_IN_URL = "/dashboard"
 CLERK_AFTER_SIGN_UP_URL = "/dashboard"
 
+[[d1_databases]]
+binding = "DB"                                       # i.e. available in your Worker on env.DB
+database_name = "buttery-invoicer"
+database_id = "f8ca72fc-c0f1-43ff-80c4-4c5ff6b53e3f"
+
 # Bind a KV Namespace. Use KV as persistent storage for small key-value pairs.
 # Docs: https://developers.cloudflare.com/workers/runtime-apis/kv
 # [[kv_namespaces]]

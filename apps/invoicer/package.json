@@ -10,10 +10,16 @@
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "wrangler pages dev ./build/client",
     "typecheck": "tsc",
-    "typegen": "wrangler types"
+    "typegen": "wrangler types",
+    "migrations:create": "npx wrangler d1 migrations create buttery-invoicer",
+    "migrations:generate-sql": "tsx ./scripts/generate-sql.ts",
+    "migrations:apply-local": "npx wrangler d1 migrations apply buttery-invoicer --local",
+    "migrations:apply-remote": "npx wrangler d1 migrations apply buttery-invoicer --remote"
   },
   "dependencies": {
     "@clerk/remix": "^4.0.0",
+    "@prisma/adapter-d1": "^5.13.0",
+    "@prisma/client": "^5.13.0",
     "@remix-run/cloudflare": "^2.8.1",
     "@remix-run/cloudflare-pages": "^2.8.1",
     "@remix-run/react": "^2.8.1",
@@ -26,7 +32,9 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230518.0",
+    "@inquirer/prompts": "^5.0.1",
     "@remix-run/dev": "^2.8.1",
+    "@types/fs-extra": "^11.0.4",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
@@ -37,7 +45,10 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "fs-extra": "^11.2.0",
     "node-fetch": "^3.3.2",
+    "prisma": "^5.13.0",
+    "tsx": "^4.7.2",
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
     "vite-tsconfig-paths": "^4.2.1",

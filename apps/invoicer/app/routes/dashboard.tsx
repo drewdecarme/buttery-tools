@@ -1,7 +1,7 @@
 import { UserButton } from "@clerk/remix";
 import { withAuthentication } from "../utils/clerk";
 
-export const loader = withAuthentication(async (args) => {
+export const loader = withAuthentication(async () => {
   return {};
 });
 
