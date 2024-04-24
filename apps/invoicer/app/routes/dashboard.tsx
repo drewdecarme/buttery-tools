@@ -1,15 +1,9 @@
 import { UserButton } from "@clerk/remix";
-import { getAuth } from "@clerk/remix/ssr.server";
-import { LoaderFunction, redirect } from "@remix-run/node";
+import { withAuthentication } from "../utils/clerk";
 
-export const loader: LoaderFunction = async (args) => {
-  const { userId } = await getAuth(args);
-  console.log(args.context);
-  if (!userId) {
-    return redirect(args.context.cloudflare.env.CLERK_SIGN_IN_URL);
-  }
+export const loader = withAuthentication(async (args) => {
   return {};
-};
+});
 
 export default function DashboardPage() {
   return (
