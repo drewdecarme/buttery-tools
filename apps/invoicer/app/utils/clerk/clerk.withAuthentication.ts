@@ -15,8 +15,7 @@ export const withAuthentication =
       }
       const prisma = await getPrismaClient(args);
 
-      console.log("Saving user", userId);
-
+      console.log("Updating user", userId);
       await prisma.user.upsert({
         create: {
           id: userId,

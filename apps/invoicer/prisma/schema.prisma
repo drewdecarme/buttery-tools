@@ -12,7 +12,58 @@ datasource db {
 }
 
 model User {
-  id         String  @id
+  id         String   @id
   first_name String?
   last_name  String?
+  clients    Client[]
+}
+
+model Client {
+  id             Int       @id @default(autoincrement())
+  name           String
+  address_line_1 String
+  address_line_2 String?
+  address_line_3 String?
+  city           String
+  state          String
+  zip            Int
+  User           User?     @relation(fields: [user_id], references: [id])
+  user_id        String?
+  invoices       Invoice[]
+  expenses       Expense[]
+}
+
+model Invoice {
+  id                 Int       @id @default(autoincrement())
+  invoice_identifier String    @unique
+  subject            String
+  due_date           DateTime
+  Client             Client?   @relation(fields: [client_id], references: [id])
+  client_id          Int?
+  expenses           Expense[]
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @default(now())
+}
+
+model Expense {
+  id                   Int          @id @default(autoincrement())
+  Client               Client?      @relation(fields: [client_id], references: [id])
+  client_id            Int?
+  Invoice              Invoice?     @relation(fields: [invoice_id], references: [id])
+  invoice_id           Int?
+  price                Int
+  description          String
+  is_invoiced          Boolean      @default(false)
+  terms_and_conditions String
+  attachments          Attachment[]
+}
+
+model Attachment {
+  id          Int      @id @default(autoincrement())
+  filename    String // stores the name of the attached file.
+  cotent_type String // stores the MIME type of the attached file.
+  size        Int // stores the size of the attached file.
+  storage_key String // Unique identifier for the attachment in Cloudflare R2 storage
+  Expense     Expense? @relation(fields: [expense_id], references: [id])
+  expense_id  Int?
 }
