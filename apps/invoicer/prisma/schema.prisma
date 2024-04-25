@@ -47,15 +47,15 @@ model Invoice {
 
 model Expense {
   id                   Int          @id @default(autoincrement())
-  Client               Client?      @relation(fields: [client_id], references: [id])
-  client_id            Int?
-  Invoice              Invoice?     @relation(fields: [invoice_id], references: [id])
-  invoice_id           Int?
   price                Int
   description          String
   is_invoiced          Boolean      @default(false)
   terms_and_conditions String
   attachments          Attachment[]
+  Client               Client?      @relation(fields: [client_id], references: [id])
+  client_id            Int?
+  Invoice              Invoice?     @relation(fields: [invoice_id], references: [id])
+  invoice_id           Int?
 }
 
 model Attachment {
