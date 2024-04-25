@@ -21,6 +21,7 @@ model User {
 model Client {
   id             Int       @id @default(autoincrement())
   name           String
+  slug           String    @unique @default("")
   address_line_1 String
   address_line_2 String?
   address_line_3 String?

@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@clerk/remix": "^4.0.1",
+    "@icon-park/react": "^1.4.2",
     "@linaria/core": "^6.1.0",
     "@linaria/react": "^6.1.0",
     "@prisma/adapter-d1": "^5.13.0",

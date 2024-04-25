@@ -1665,6 +1665,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@icon-park/react@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "@icon-park/react@npm:1.4.2"
+  peerDependencies:
+    react: ">=16.9"
+    react-dom: ">=16.9"
+  checksum: 10c0/58d4afa11cbc50d15c365c63f92866e6f59032eb2a23928926f85fe0184c07e967c1185e689b67707c6fa682939de82bf9f96f4fd47f119eaf4b13861c1222ef
+  languageName: node
+  linkType: hard
+
 "@inquirer/checkbox@npm:^2.3.1":
   version: 2.3.1
   resolution: "@inquirer/checkbox@npm:2.3.1"
@@ -6860,6 +6870,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.24.1"
     "@clerk/remix": "npm:^4.0.1"
     "@cloudflare/workers-types": "npm:^4.20240423.0"
+    "@icon-park/react": "npm:^1.4.2"
     "@inquirer/prompts": "npm:^5.0.1"
     "@linaria/core": "npm:^6.1.0"
     "@linaria/react": "npm:^6.1.0"

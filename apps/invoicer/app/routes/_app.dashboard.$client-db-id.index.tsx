@@ -1,6 +1,12 @@
 import { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { withAuthentication } from "../utils/clerk";
-import { useLoaderData, json, Form, useNavigation } from "@remix-run/react";
+import {
+  useLoaderData,
+  json,
+  Form,
+  useNavigation,
+  Link,
+} from "@remix-run/react";
 import { getAuth } from "@clerk/remix/ssr.server";
 import { getPrismaClient } from "../utils/prisma";
 import { z } from "zod";
@@ -32,6 +38,7 @@ const ExpenseSchema = z.object({
 });
 
 export const action = async (args: ActionFunctionArgs) => {
+  // put this into another curreid function
   const { userId: user_id } = await getAuth(args);
   if (!user_id) throw new Error("Cannot locate user");
   const prisma = await getPrismaClient(args);
@@ -80,6 +87,9 @@ export default function DashboardClientOverview() {
           {state === "submitting" ? "Loading..." : "Add expense"}
         </button>
       </Form>
+      <Link to={`/dashboard/${client.id}/invoice/create`}>
+        Create an invoice
+      </Link>
       <table>
         <tr>
           <th>Description</th>
