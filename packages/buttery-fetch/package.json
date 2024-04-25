@@ -17,6 +17,6 @@
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   }
 }

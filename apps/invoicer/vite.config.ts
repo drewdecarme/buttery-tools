@@ -4,7 +4,18 @@ import {
 } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+import wyw from "@wyw-in-js/vite";
 
 export default defineConfig({
-  plugins: [remixCloudflareDevProxy(), remix(), tsconfigPaths()],
+  plugins: [
+    remixCloudflareDevProxy(),
+    remix(),
+    tsconfigPaths(),
+    wyw({
+      include: ["**/*.{ts,tsx}"],
+      babelOptions: {
+        presets: ["@babel/preset-typescript", "@babel/preset-react"],
+      },
+    }),
+  ],
 });

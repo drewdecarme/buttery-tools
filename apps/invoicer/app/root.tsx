@@ -8,6 +8,7 @@ import {
 
 import { rootAuthLoader } from "@clerk/remix/ssr.server";
 import { LoaderFunction, MetaFunction } from "@remix-run/cloudflare";
+import "./root.css";
 
 export const meta: MetaFunction = () => [
   {

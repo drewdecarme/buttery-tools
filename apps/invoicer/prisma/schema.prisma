@@ -26,7 +26,7 @@ model Client {
   address_line_3 String?
   city           String
   state          String
-  zip            Int
+  zip            String
   User           User?     @relation(fields: [user_id], references: [id])
   user_id        String?
   invoices       Invoice[]
