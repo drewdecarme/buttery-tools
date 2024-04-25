@@ -1,7 +1,13 @@
 import { UserButton } from "@clerk/remix";
 import { withAuthentication } from "../utils/clerk";
 import { styled } from "@linaria/react";
-import { Link, Outlet, useLoaderData, json } from "@remix-run/react";
+import {
+  Link,
+  Outlet,
+  useLoaderData,
+  json,
+  useNavigate,
+} from "@remix-run/react";
 import { LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { getPrismaClient } from "../utils/prisma";
 
@@ -46,6 +52,8 @@ export const loader = withAuthentication(async ({ prisma, user_id }) => {
 export default function DashboardPage() {
   const clients = useLoaderData<typeof loader>();
 
+  const navigate = useNavigate();
+
   return (
     <SDashboard>
       <SDashboardSideNav>
@@ -58,12 +66,18 @@ export default function DashboardPage() {
       <SDashboardMain>
         <SDashboardMainHeader>
           <div>
-            <select defaultValue="">
+            <select
+              defaultValue=""
+              onChange={(e) => {
+                debugger;
+                return navigate(`/dashboard/${e.currentTarget.value}`);
+              }}
+            >
               <option value="" disabled>
                 Select a client
               </option>
               {clients.map((client) => (
-                <option key={client.id} value={client.name}>
+                <option key={client.id} value={client.id}>
                   {client.name}
                 </option>
               ))}
