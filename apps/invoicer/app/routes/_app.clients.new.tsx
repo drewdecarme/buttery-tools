@@ -20,6 +20,12 @@ const ClientSchema = z.object({
   zip: z.string(),
 });
 
+export const handle = {
+  breadcrumb: () => {
+    return <span>New Client</span>;
+  },
+};
+
 export const action = async (args: ActionFunctionArgs) => {
   const { userId: user_id } = await getAuth(args);
   if (!user_id) throw new Error("Cannot locate user");

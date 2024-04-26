@@ -1,4 +1,4 @@
-import { json } from "@remix-run/cloudflare";
+import { SerializeFrom, json } from "@remix-run/cloudflare";
 import { withAuthentication } from "../utils/clerk";
 import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { styled } from "@linaria/react";
@@ -13,9 +13,36 @@ const SDiv = styled("div")`
 const SHeader = styled("div")`
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr auto;
   gap: 1rem;
   align-items: center;
+  margin-bottom: 1rem;
+
+  h1 {
+    margin: 0;
+  }
+`;
+
+const SLogo = styled("div")`
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgb(var(--color-primary));
+
+  &::before {
+    content: attr(data-abbrev);
+    font-size: 24px;
+    font-family: var(--font-family);
+    width: 100%;
+    display: block;
+    line-height: 48px;
+    text-align: center;
+    color: #fff;
+  }
+
+  img {
+  }
 `;
 
 export const loader = withAuthentication(async ({ args, prisma, user_id }) => {
@@ -30,8 +57,7 @@ export const loader = withAuthentication(async ({ args, prisma, user_id }) => {
 });
 
 export const handle = {
-  breadcrumb: (match) => {
-    const data = match.data;
+  breadcrumb: ({ data }: { data: SerializeFrom<typeof loader> }) => {
     return <Link to={`/clients/${data.slug}`}>{data.name}</Link>;
   },
 };
@@ -42,13 +68,16 @@ export default function ClientPage() {
   return (
     <SDiv>
       <SHeader>
+        <SLogo data-abbrev={client.name.split("")[0]}></SLogo>
         <h1>{client?.name}</h1>
-        <Link
-          to={`/invoice/create?client_slug=${client.slug}`}
-          title="Create a new invoice"
-        >
-          <Agreement size={24} />
-        </Link>
+        <div>
+          <Link
+            to={`/invoice/create?client_slug=${client.slug}`}
+            title="Create a new invoice"
+          >
+            <Agreement size={24} />
+          </Link>
+        </div>
       </SHeader>
       <NavTabs>
         <ul>

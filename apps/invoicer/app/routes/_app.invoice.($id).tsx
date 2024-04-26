@@ -4,13 +4,13 @@ import {
   redirect,
   useActionData,
   useLoaderData,
-  useParams,
+  useNavigation,
+  useTransition,
 } from "@remix-run/react";
 import { withAuthentication } from "../utils/clerk";
 import { styled } from "@linaria/react";
 import { z } from "zod";
-import { getDB, withFormData } from "../utils/forms";
-import { getAuth } from "@clerk/remix/ssr.server";
+import { withFormData } from "../utils/forms";
 import { getPrismaClient } from "../utils/prisma";
 import { Invoice } from "@prisma/client";
 import { SerializeFrom } from "@remix-run/cloudflare";
@@ -111,16 +111,24 @@ export const action = withFormData({
     const invoice_id = Number(args.params.id);
     let invoice: Invoice;
 
+    const updatedDate = new Date();
+
     if (!invoice_id) {
       invoice = await prisma.invoice.create({
-        data: formData,
+        data: {
+          ...formData,
+          updated_at: updatedDate,
+        },
       });
     } else {
       invoice = await prisma.invoice.update({
         where: {
           id: invoice_id,
         },
-        data: formData,
+        data: {
+          ...formData,
+          updated_at: updatedDate,
+        },
       });
     }
 
@@ -131,7 +139,7 @@ export const action = withFormData({
 export default function CreateClientInvoicePage() {
   const { clients, invoice } = useLoaderData<typeof loader>();
   const actionData = useActionData<typeof action>();
-
+  const { state } = useNavigation();
   return (
     <SLayout>
       <SLayoutDetails>
@@ -161,8 +169,12 @@ export default function CreateClientInvoicePage() {
       <SLayoutFooter>
         <div>Last Saved: {invoice?.updated_at ?? "Not saved"}</div>
         <div>
-          <button type="submit" form="invoice-editor">
-            Save
+          <button
+            type="submit"
+            form="invoice-editor"
+            disabled={state === "submitting"}
+          >
+            {state === "submitting" ? "Saving..." : "Save"}
           </button>
         </div>
       </SLayoutFooter>

@@ -27,6 +27,7 @@ model Client {
   city           String
   state          String
   zip            String
+  logo_url       String?
   User           User?     @relation(fields: [user_id], references: [id])
   user_id        String?
   invoices       Invoice[]
