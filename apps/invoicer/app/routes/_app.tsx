@@ -1,16 +1,6 @@
 import { UserButton } from "@clerk/remix";
-import { withAuthentication } from "../utils/clerk";
 import { styled } from "@linaria/react";
-import {
-  Link,
-  Outlet,
-  useLoaderData,
-  json,
-  useNavigate,
-  NavLink,
-  useMatches,
-} from "@remix-run/react";
-import { ChangeEventHandler, useCallback } from "react";
+import { Outlet, NavLink, useMatches } from "@remix-run/react";
 import { DocDetail, Home, UserBusiness } from "@icon-park/react";
 
 const SDashboard = styled("main")`
@@ -60,6 +50,7 @@ const SDashboardSideNav = styled("nav")`
 `;
 
 const SDashboardMain = styled("section")`
+  padding: 0.25rem 0;
   display: grid;
   grid-template-rows: 64px 1fr;
 `;
@@ -77,17 +68,31 @@ const SDashboardMainHeader = styled("header")`
 `;
 
 const SDashboardMainBody = styled("div")`
-  padding: 2rem;
+  padding: 0 2rem;
+  max-width: 1200px;
+
+  h1 {
+    margin-top: 0;
+  }
 `;
 
-const Breadcrumbs = styled("ol")`
+const SBreadcrumbs = styled("ol")`
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  a,
+  span {
+    font-size: 12px;
+    &:not(.active) {
+      color: #898989;
+    }
+  }
 `;
 
 export default function DashboardPage() {
   const matches = useMatches();
+
   return (
     <SDashboard>
       <SDashboardSideNav>
@@ -111,13 +116,15 @@ export default function DashboardPage() {
       </SDashboardSideNav>
       <SDashboardMain>
         <SDashboardMainHeader>
-          <Breadcrumbs>
+          <SBreadcrumbs>
             {matches
+              // @ts-ignore
               .filter((match) => match.handle && match.handle.breadcrumb)
               .map((match, index) => (
+                // @ts-ignore
                 <li key={index}>{match.handle.breadcrumb(match)}</li>
               ))}
-          </Breadcrumbs>
+          </SBreadcrumbs>
           <UserButton />
         </SDashboardMainHeader>
         <SDashboardMainBody>

@@ -28,7 +28,6 @@ export const action = async (args: ActionFunctionArgs) => {
   try {
     const formData = await args.request.formData();
     const formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj);
     const data = ClientSchema.parse(formDataObj);
     const client = await prisma.client.create({
       data: {

@@ -1,11 +1,21 @@
 import { json } from "@remix-run/cloudflare";
 import { withAuthentication } from "../utils/clerk";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { styled } from "@linaria/react";
+import { NavTabs } from "../components";
+import { Agreement } from "@icon-park/react";
 
 const SDiv = styled("div")`
   display: grid;
   grid-template-rows: auto 1fr;
+`;
+
+const SHeader = styled("div")`
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: center;
 `;
 
 export const loader = withAuthentication(async ({ args, prisma, user_id }) => {
@@ -14,9 +24,8 @@ export const loader = withAuthentication(async ({ args, prisma, user_id }) => {
       slug: args.params.slug,
     },
   });
-  if (typeof client === null) {
-    throw new Response("Not Found", { status: 404 });
-  }
+  if (!client) throw new Response("Not Found", { status: 404 });
+
   return json(client);
 });
 
@@ -32,11 +41,29 @@ export default function ClientPage() {
 
   return (
     <SDiv>
-      <div>
+      <SHeader>
         <h1>{client?.name}</h1>
-      </div>
+        <Link
+          to={`/invoice/create?client_slug=${client.slug}`}
+          title="Create a new invoice"
+        >
+          <Agreement size={24} />
+        </Link>
+      </SHeader>
+      <NavTabs>
+        <ul>
+          <li>
+            <NavLink to={`/clients/${client.slug}`} end>
+              Expenses
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/clients/${client.slug}/invoice`}>Invoices</NavLink>
+          </li>
+        </ul>
+      </NavTabs>
       <div>
-        <pre>{JSON.stringify(client, null, 2)}</pre>
+        <Outlet />
       </div>
     </SDiv>
   );
