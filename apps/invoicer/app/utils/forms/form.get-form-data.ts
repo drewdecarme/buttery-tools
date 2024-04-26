@@ -1,12 +1,5 @@
-import { getAuth } from "@clerk/remix/ssr.server";
 import { ActionFunctionArgs, json } from "@remix-run/cloudflare";
 import { ZodIssue, ZodSchema, z } from "zod";
-import { getPrismaClient } from "../prisma";
-import { PrismaD1 } from "@prisma/adapter-d1";
-import { PrismaClient } from "@prisma/client";
-import { DefaultArgs } from "@prisma/client/runtime/library";
-
-export const getFormData = (args: ActionFunctionArgs, schema: ZodSchema) => {};
 
 // Define the ActionFunction return type
 type ActionFunctionReturnType<T> = ReturnType<typeof json<T>>;
@@ -23,8 +16,8 @@ type ActionFunction<S extends ZodSchema, T> = (params: {
  * schema, this HOF will grab the formData off of the request,
  * parse and validate it. If the validation fails, a well formed
  * error object will be returned to the component which can
- * be accessed using useActionData. If it is successful, the
- * execution will continue and the parsed and coerced formData
+ * be accessed using `useActionData`. If the parsing is successful, the
+ * execution will continue and the parsed and coerced `formData`
  * will be available on the parameters of the action that was passed
  * into this HOF.
  *
@@ -83,15 +76,3 @@ export const withFormData =
       return json({ errors });
     }
   };
-
-export const getDB = async (args: ActionFunctionArgs) => {
-  try {
-    const { userId: user_id } = await getAuth(args);
-    if (!user_id) throw new Error();
-    const prisma = await getPrismaClient(args);
-    return { prisma, user_id };
-  } catch (error) {
-    console.log(error);
-    // throw new Response(error as string, { status: 500 });
-  }
-};
