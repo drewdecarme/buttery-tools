@@ -4,6 +4,8 @@ import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { styled } from "@linaria/react";
 import { NavTabs } from "../components";
 import { Agreement } from "@icon-park/react";
+import { Drawer, useDrawer } from "../components/dialog";
+import { ClientAdd } from "../features";
 
 const SDiv = styled("div")`
   display: grid;
@@ -65,12 +67,16 @@ export const handle = {
 export default function ClientPage() {
   const client = useLoaderData<typeof loader>();
 
+  const { drawerRef, openDrawer } = useDrawer();
+
   return (
     <SDiv>
       <SHeader>
         <SLogo data-abbrev={client.name.split("")[0]}></SLogo>
         <h1>{client?.name}</h1>
         <div>
+          <button onClick={openDrawer}>edit client</button>
+          <ClientAdd ref={drawerRef} />
           <Link
             to={`/invoice/create?client_slug=${client.slug}`}
             title="Create a new invoice"
