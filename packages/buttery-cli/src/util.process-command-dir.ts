@@ -3,7 +3,7 @@ import path from "path";
 import {
   exhaustiveMatchGuard,
   parseCommandFileProperties,
-} from "./parse-command-file-properties.js";
+} from "./util.parse-command-file-properties.js";
 
 type CommandFile = {
   name: string;

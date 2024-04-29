@@ -118,6 +118,15 @@ WIP
 
 ## Todos
 
+### 1st Priority
+
+- Combine all build scripts into esbuild script. Remove need for `tsc`
+- All scripts must build the commands, entry file and `package.json`
+- Create a `buttery.config.json[cli]` namespace to allow for configuration options for configuring the CLI builder.
+- Create a `createConfig` function like `vite`
+
+### 2nd Priority
+
 - Create `dev` scripts for writing the CLI
 - Create `dev` CLI command for developing
 - Create `build` CLI Command building

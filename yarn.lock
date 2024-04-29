@@ -1542,7 +1542,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@buttery/cli@workspace:packages/buttery-cli":
+"@buttery/cli@workspace:^, @buttery/cli@workspace:packages/buttery-cli":
   version: 0.0.0-use.local
   resolution: "@buttery/cli@workspace:packages/buttery-cli"
   dependencies:
@@ -1558,7 +1558,7 @@ __metadata:
     typescript: "npm:^5.4.5"
     vite: "npm:^5.2.10"
   bin:
-    butter: ./bin/index.js
+    buttery: ./bin/index.js
   languageName: unknown
   linkType: soft
 
@@ -1610,6 +1610,8 @@ __metadata:
 "@buttery/tokens@workspace:packages/buttery-tokens":
   version: 0.0.0-use.local
   resolution: "@buttery/tokens@workspace:packages/buttery-tokens"
+  dependencies:
+    "@buttery/cli": "workspace:^"
   languageName: unknown
   linkType: soft
 

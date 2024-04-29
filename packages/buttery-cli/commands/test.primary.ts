@@ -3,7 +3,7 @@ import {
   CommandArgs,
   CommandMeta,
   CommandOptions,
-} from "@buttery/cli";
+} from "../src/types";
 
 export const meta: CommandMeta = {
   name: "data",

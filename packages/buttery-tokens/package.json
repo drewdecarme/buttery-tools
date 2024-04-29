@@ -1,12 +1,12 @@
 {
   "name": "@buttery/tokens",
   "version": "1.0.0",
-  "description": "The oh so buttery container for the oh so buttery tokens",
-  "main": "index.js",
+  "description": "A CLI to create a buttery collection of utilities for various CSS strategies to easily and safely work with your tokens",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tokens.git"
   },
+  "type": "module",
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
   "license": "Apache-2.0",
   "bugs": {
@@ -15,5 +15,11 @@
   "homepage": "https://github.com/drewdecarme/buttery-tokens#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "build": "butter build"
+  },
+  "dependencies": {
+    "@buttery/cli": "workspace:^"
   }
 }

@@ -1,7 +1,7 @@
 import { CommandAction, CommandMeta, CommandOptions } from "../src/types";
 
 export const meta: CommandMeta = {
-  name: "brutal",
+  name: "nested-1",
   description: "Cras mattis consectetur purus sit amet fermentum.",
 };
 
@@ -14,6 +14,6 @@ export const options: CommandOptions = {
   },
 };
 
-export const action: CommandAction<typeof options> = async (params) => {
-  console.log("Hello from the `random.saved.brutal` command.", params);
+export const action: CommandAction = async (params) => {
+  console.log("Hello from the `random.saved.nested-1` command.", params);
 };

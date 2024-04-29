@@ -9,11 +9,11 @@
   "type": "module",
   "types": "./bin/index.d.ts",
   "bin": {
-    "butter": "./bin/index.js"
+    "buttery": "./bin/index.js"
   },
   "scripts": {
-    "build": "yarn tsc --project tsconfig.build.json & tsx ./scripts/build.ts",
-    "dev": "yarn tsc --project tsconfig.build.json --watch",
+    "build": "tsx ./src/build.ts",
+    "dev": "yarn build --watch",
     "commands:build": "yarn butter cli build",
     "commands:dev": "yarn build --watch"
   },
