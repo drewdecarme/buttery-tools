@@ -13,7 +13,7 @@ const defaultBuildArgs: BuildArgs = {
  * complex here... all we're looking to do is allow some args
  * to be supplied to the build script internally to this package.
  */
-export const processBuildArgs = (args: typeof process.argv): BuildArgs => {
+export const parseBuildArgs = (args: typeof process.argv): BuildArgs => {
   return args.reduce<BuildArgs>((accum, arg) => {
     if (arg === "--watch" || arg === "-w") {
       return { ...accum, watch: true };

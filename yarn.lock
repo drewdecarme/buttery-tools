@@ -1552,6 +1552,7 @@ __metadata:
     cosmiconfig: "npm:^9.0.0"
     esbuild: "npm:^0.20.2"
     glob: "npm:^10.3.12"
+    handlebars: "npm:^4.7.8"
     lodash.get: "npm:^4.4.2"
     rimraf: "npm:^5.0.5"
     tsx: "npm:^4.7.2"
@@ -9937,7 +9938,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"handlebars@npm:^4.7.7":
+"handlebars@npm:^4.7.7, handlebars@npm:^4.7.8":
   version: 4.7.8
   resolution: "handlebars@npm:4.7.8"
   dependencies:
