@@ -1,18 +1,23 @@
-export type DevelopmentArgs = {
+export type BuildArgs = {
   watch: boolean;
 };
 
-const defaultDevelopmentArgs: DevelopmentArgs = {
+const defaultBuildArgs: BuildArgs = {
   watch: false,
 };
 
-export const processBuildArgs = (
-  args: typeof process.argv
-): DevelopmentArgs => {
-  return args.reduce<DevelopmentArgs>((accum, arg) => {
+/**
+ * A simple function that parses the `process.argv` to find
+ * some default values that were expecting in order to develop
+ * the cli builder properly. We don't really need anything too
+ * complex here... all we're looking to do is allow some args
+ * to be supplied to the build script internally to this package.
+ */
+export const processBuildArgs = (args: typeof process.argv): BuildArgs => {
+  return args.reduce<BuildArgs>((accum, arg) => {
     if (arg === "--watch" || arg === "-w") {
       return { ...accum, watch: true };
     }
     return accum;
-  }, defaultDevelopmentArgs);
+  }, defaultBuildArgs);
 };
