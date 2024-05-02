@@ -114,7 +114,27 @@ Hello from the "test.primary" command. {
 
 ## Conventions
 
-WIP
+### Directories
+
+#### `/src`
+
+Contains all of the files that are needed for the CLI builder to work. This would include utilities for parsing commands and any handlebars templates for dynamic config variable insertion and creation.
+
+The functions and other things in this directory should only be accessible via the CLI and they should not be able to be imported when the cli builder is installed.
+
+#### `/lib`
+
+Contains all of the files that can be publicly imported when this package is installed using any package manager. This would include things like the `createConfig` function which will properly type and add intellisense to creating a `buttery.config.ts` file.
+
+This directory is built using the TS compiler even though some files inside of this directory are used for the CLI commands like `build` and `dev`
+
+#### `/types`
+
+Contains all of the types that are used for both the `src` and `lib` files and will be added and exposed following the conventions set fourth in each directory.
+
+#### `/scripts`
+
+These are internal scripts that are invoked using this packages `package.json`. This allows for this package to share the `script.build.ts` file that is used both internally to this packages `commands` directory as well as for development of the build command. Essentially, having this script directory allows this package dog-food the `buttery cli build` command buy actually using it.
 
 ## Todos
 

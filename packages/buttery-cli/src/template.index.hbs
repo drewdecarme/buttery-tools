@@ -2,10 +2,10 @@
 import { program } from "commander";
 import { cosmiconfig } from "cosmiconfig";
 import { glob } from "glob";
-import { CLIConfig } from "./types.js";
+import type { CLIConfig } from "../types/index.js";
 import { registerCommandsFromFiles } from "./util.process-command-dir.js";
 import { fileURLToPath, resolve } from "node:url";
-export * from "./types.js";
+export * from "../types/index.js";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 

@@ -20,5 +20,16 @@
     "declarationMap": true,
     "allowImportingTsExtensions": false
   },
-  "include": ["buttery.config.ts", "src", "commands", "lib", "scripts"]
+  "include": [
+    "buttery.config.ts",
+    "scripts",
+    "commands",
+    "src",
+    "src",
+    "scripts/util.parse-build-args.ts",
+    "src/util.parse-command-file-properties.ts",
+    "src/util.process-command-dir.ts",
+    "types/index.ts",
+    "lib/createConfig.ts"
+  ]
 }

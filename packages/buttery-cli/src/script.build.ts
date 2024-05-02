@@ -1,13 +1,15 @@
+// TODO: Work on removing some easily replicated packages
+// to reduce dependency size
 import { cosmiconfig } from "cosmiconfig";
 import path from "node:path";
-import { CLIConfig } from "./types";
+import { CLIConfig } from "../types";
 import { glob } from "glob";
 import * as esbuild from "esbuild";
 import { rimraf } from "rimraf";
-import { BuildArgs } from "./util.parse-build-args";
-import { readFile } from "fs-extra";
-import { compile } from "handlebars";
-import { writeFile } from "node:fs/promises";
+import type { BuildArgs } from "../scripts/util.parse-build-args";
+import handlebars from "handlebars";
+import { writeFile, readFile, mkdir, rm } from "node:fs/promises";
+import { existsSync } from "node:fs";
 
 const __dirname = import.meta.dirname;
 
@@ -30,6 +32,50 @@ export async function build(parsedArgs: BuildArgs) {
     if (!configResult) throw new Error("Cannot parse configuration result.");
     const config = configResult.config as CLIConfig;
 
+    /**
+     * Process
+     * 1 - Build the /src
+     * 1.0 - Delete the src/index.ts file
+     * 1.1 - Process the template with the config
+     * 1.2 - Build the src into the bin folder
+     * 2 - Build the /commands
+     */
+    // TODO: FUTURE --- run an init command to prompt the user for these values rather than
+    // setting this up manually.
+
+    // force remove the index.ts file
+
+    // delete the existing index.ts file, compile the index template and write it
+    // to the src directory so it can be built again.
+    await rm(path.resolve(__dirname, "./index.ts"), {
+      force: true,
+    });
+    const entryTemplateFile = await readFile(
+      path.resolve(__dirname, "./template.index.hbs")
+    );
+    const template = handlebars.compile<{ cli_name: string }>(
+      entryTemplateFile.toString()
+    )({
+      cli_name: config.name,
+    });
+    await writeFile(path.resolve(__dirname, "./index.ts"), template, "utf-8");
+
+    // Glob the selected files from src and build
+    // this is done first so this CLI can be instantiated from here and when installed elsewhere
+    const srcFiles = [path.resolve(__dirname, "./index.ts")];
+    const srcFilesGlob = glob.sync(srcFiles, { follow: false });
+    const srcFilesOutDir = path.resolve(__dirname, "../bin");
+    await esbuild.build({
+      entryPoints: srcFilesGlob,
+      bundle: true,
+      minify: true,
+      format: "esm",
+      platform: "node",
+      target: ["node20.11.1"],
+      packages: "external",
+      outdir: srcFilesOutDir,
+    });
+
     // Gather the commands via glob, delete the old ones and build
     // the new ones to the bin. This makes sure that any commands from
     // a previous development instance are completely wiped out and
@@ -49,25 +95,17 @@ export async function build(parsedArgs: BuildArgs) {
     // from the buttery config. Namely the CLI name so someone
     // can configure & instantiate the CLI that their building with the name
     // that they want.
-    // TODO: FUTURE --- run an init command to prompt the user for these values rather than
-    // setting this up manually.
-    const entryTemplateFile = await readFile(
-      path.resolve(__dirname, "./entry.template.hbs")
-    );
-    const template = compile<{ cli_name: string }>(entryTemplateFile)({
-      cli_name: config.name,
-    });
 
     // TODO: Write all of the files to a temporary directory or something like that
     // so ESBuild can transpile everything after the template has been created.
-    await writeFile(
-      path.resolve(__dirname, "../.buttery/index.ts"),
-      template,
-      ut
-    );
+    // First, ensure the temp directory exists, create it and then fully replace
+    // the file contents with the stringified buffer
+    // Supply those temp files to the build command so they can be transpiled
+    // and built into the bin directory
 
+    // Create the build options
     const esbuildArgs: esbuild.BuildOptions = {
-      entryPoints: commandFiles,
+      entryPoints: [...commandFiles],
       bundle: true,
       minify: true,
       format: "esm",

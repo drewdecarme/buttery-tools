@@ -1,4 +1,4 @@
-import { CommandMeta } from "../src";
+import { CommandMeta } from "../types";
 
 export const meta: CommandMeta = {
   name: "cli",

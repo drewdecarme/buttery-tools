@@ -1,4 +1,4 @@
-import { CommandAction, CommandMeta } from "../src/types";
+import { CommandAction, CommandMeta } from "../types";
 
 export const meta: CommandMeta = {
   name: "build",

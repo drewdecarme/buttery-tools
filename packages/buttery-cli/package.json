@@ -12,7 +12,7 @@
     "buttery": "./bin/index.js"
   },
   "scripts": {
-    "build": "tsx ./src/build.ts",
+    "build": "tsx ./scripts/build.ts",
     "dev": "yarn build --watch",
     "commands:build": "yarn butter cli build",
     "commands:dev": "yarn build --watch"

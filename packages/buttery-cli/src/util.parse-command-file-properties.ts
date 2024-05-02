@@ -3,7 +3,7 @@ import {
   CommandArgs,
   CommandMeta,
   CommandOptions,
-} from "./types";
+} from "../types";
 
 type CommandProperties = {
   meta: CommandMeta;

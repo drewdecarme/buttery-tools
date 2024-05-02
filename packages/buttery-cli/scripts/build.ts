@@ -1,5 +1,5 @@
-import { build } from "../src/build.js";
-import { parseBuildArgs } from "../src/util.parse-build-args.js";
+import { build } from "../src/script.build.js";
+import { parseBuildArgs } from "./util.parse-build-args.js";
 
 try {
   const args = process.argv.slice(2);

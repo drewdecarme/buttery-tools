@@ -3,7 +3,7 @@ import {
   CommandArgs,
   CommandMeta,
   CommandOptions,
-} from "../src/types";
+} from "../types";
 
 export const meta: CommandMeta = {
   name: "data",

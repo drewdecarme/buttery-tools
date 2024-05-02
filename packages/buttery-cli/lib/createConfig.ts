@@ -1,3 +1,3 @@
-import { CLIConfig } from "../src/types";
+import { CLIConfig } from "../types";
 
 export const createConfig = (config: CLIConfig) => config;
