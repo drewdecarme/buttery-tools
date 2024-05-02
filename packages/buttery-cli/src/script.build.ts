@@ -8,8 +8,7 @@ import * as esbuild from "esbuild";
 import { rimraf } from "rimraf";
 import type { BuildArgs } from "../scripts/util.parse-build-args";
 import handlebars from "handlebars";
-import { writeFile, readFile, mkdir, rm } from "node:fs/promises";
-import { existsSync } from "node:fs";
+import { writeFile, readFile, rm } from "node:fs/promises";
 
 const __dirname = import.meta.dirname;
 
@@ -40,8 +39,6 @@ export async function build(parsedArgs: BuildArgs) {
      * 1.2 - Build the src into the bin folder
      * 2 - Build the /commands
      */
-    // TODO: FUTURE --- run an init command to prompt the user for these values rather than
-    // setting this up manually.
 
     // force remove the index.ts file
 
