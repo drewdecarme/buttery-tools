@@ -93,12 +93,27 @@ export async function build(parsedArgs: BuildArgs) {
     // can configure & instantiate the CLI that their building with the name
     // that they want.
 
-    // TODO: Write all of the files to a temporary directory or something like that
-    // so ESBuild can transpile everything after the template has been created.
-    // First, ensure the temp directory exists, create it and then fully replace
-    // the file contents with the stringified buffer
-    // Supply those temp files to the build command so they can be transpiled
-    // and built into the bin directory
+    let rebuildNumber = 0;
+
+    // A simple plugin that logs the output of the watch commands
+    const watchPlugin: esbuild.Plugin = {
+      name: "example",
+      setup(build) {
+        build.onEnd(() => {
+          rebuildNumber++;
+          if (rebuildNumber <= 2) return;
+          const dateFormatter = new Intl.DateTimeFormat("en", {
+            dateStyle: "short",
+          });
+          const now = dateFormatter.format(new Date());
+          console.log(
+            `${now} [${config.name}] commands changed. Rebuilding x${
+              rebuildNumber - 2
+            }`
+          );
+        });
+      },
+    };
 
     // Create the build options
     const esbuildArgs: esbuild.BuildOptions = {
@@ -114,7 +129,10 @@ export async function build(parsedArgs: BuildArgs) {
 
     if (parsedArgs.watch) {
       console.log("Running Buttery CLI Builder in DEV mode...");
-      const context = await esbuild.context(esbuildArgs);
+      const context = await esbuild.context({
+        ...esbuildArgs,
+        plugins: [watchPlugin],
+      });
       await context.watch();
     }
     await esbuild.build(esbuildArgs);
