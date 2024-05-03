@@ -127,6 +127,7 @@ export async function build(parsedArgs: BuildArgs) {
       outdir: outDir,
     };
 
+    // Run in development mode if our watch command exists.
     if (parsedArgs.watch) {
       console.log("Running Buttery CLI Builder in DEV mode...");
       const context = await esbuild.context({
