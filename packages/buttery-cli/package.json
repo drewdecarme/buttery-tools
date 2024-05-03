@@ -7,10 +7,6 @@
     "access": "public"
   },
   "type": "module",
-  "types": "./bin/index.d.ts",
-  "bin": {
-    "buttery": "./bin/index.js"
-  },
   "scripts": {
     "build": "tsx ./scripts/build.ts",
     "dev": "yarn build --watch",
@@ -31,7 +27,6 @@
     "@types/lodash.get": "^4.4.9",
     "@types/node": "^20.12.7",
     "esbuild": "^0.20.2",
-    "lodash.get": "^4.4.2",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5"
   },
@@ -40,7 +35,12 @@
     "cosmiconfig": "^9.0.0",
     "glob": "^10.3.12",
     "handlebars": "^4.7.8",
+    "lodash.get": "^4.4.2",
     "rimraf": "^5.0.5",
     "vite": "^5.2.10"
+  },
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "buttery": "./bin/index.js"
   }
 }

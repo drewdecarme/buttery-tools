@@ -42,6 +42,7 @@ export async function build(parsedArgs: BuildArgs) {
 
     // force remove the index.ts file
 
+    // -- SRC --
     // delete the existing index.ts file, compile the index template and write it
     // to the src directory so it can be built again.
     await rm(path.resolve(__dirname, "./index.ts"), {
@@ -73,6 +74,36 @@ export async function build(parsedArgs: BuildArgs) {
       outdir: srcFilesOutDir,
     });
 
+    // -- PACKAGE.JSON --
+    // In order to invoke the CLI we need to add a few properties
+    // from the `buttery.config.(mjs|cjs|js)` file into the `package.json`
+    // file. This will allow whoever consumes the CLI to instantiate it
+    // from the command line without having to worry about manually adding
+    // those properties to their `package.json`
+    const packageJsonPath = path.resolve(config.root, "./package.json");
+    const packageJsonBuffer = await readFile(packageJsonPath);
+    const packageJsonString = packageJsonBuffer.toString();
+    const packageJson = JSON.parse(packageJsonString);
+    const packageJsonCLIProperties = {
+      type: "module",
+      types: "./dist/index.d.ts",
+      bin: {
+        [config.name]: "./bin/index.js",
+      },
+    };
+    Object.entries(packageJsonCLIProperties).forEach(([key, value]) => {
+      if (!(key in packageJson)) {
+        console.log(`Adding '${key}' to package.json file.`);
+        packageJson[key] = value;
+      }
+    });
+    await writeFile(
+      packageJsonPath,
+      JSON.stringify(packageJson, null, 2),
+      "utf-8"
+    );
+
+    // -- COMMANDS --
     // Gather the commands via glob, delete the old ones and build
     // the new ones to the bin. This makes sure that any commands from
     // a previous development instance are completely wiped out and
