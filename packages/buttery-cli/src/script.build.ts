@@ -28,7 +28,12 @@ export async function build(parsedArgs: BuildArgs) {
     // get the buttery configuration file
     const explorer = cosmiconfig("buttery");
     const configResult = await explorer.search();
-    if (!configResult) throw new Error("Cannot parse configuration result.");
+    if (!configResult) {
+      throw new Error("Cannot parse configuration result.");
+    }
+    if (configResult.isEmpty) {
+      throw new Error("The buttery configuration file is empty.");
+    }
     const config = configResult.config as CLIConfig;
 
     /**
@@ -44,7 +49,7 @@ export async function build(parsedArgs: BuildArgs) {
 
     // -- SRC --
     // delete the existing index.ts file, compile the index template and write it
-    // to the src directory so it can be built again.
+    // to the src directory so it can be transpiled and built again.
     await rm(path.resolve(__dirname, "./index.ts"), {
       force: true,
     });
@@ -60,9 +65,10 @@ export async function build(parsedArgs: BuildArgs) {
 
     // Glob the selected files from src and build
     // this is done first so this CLI can be instantiated from here and when installed elsewhere
-    const srcFiles = [path.resolve(__dirname, "./index.ts")];
+    const srcFilesDir = __dirname;
+    const srcFiles = [path.resolve(srcFilesDir, "./index.ts")];
     const srcFilesGlob = glob.sync(srcFiles, { follow: false });
-    const srcFilesOutDir = path.resolve(__dirname, "../bin");
+    const srcFilesOutDir = path.resolve(srcFilesDir, "../bin");
     await esbuild.build({
       entryPoints: srcFilesGlob,
       bundle: true,
@@ -118,34 +124,6 @@ export async function build(parsedArgs: BuildArgs) {
     });
     await rimraf(commandOutputFiles);
 
-    // Copy the files in the entry template
-    // and replace some of the strings with the values
-    // from the buttery config. Namely the CLI name so someone
-    // can configure & instantiate the CLI that their building with the name
-    // that they want.
-
-    let rebuildNumber = 0;
-
-    // A simple plugin that logs the output of the watch commands
-    const watchPlugin: esbuild.Plugin = {
-      name: "example",
-      setup(build) {
-        build.onEnd(() => {
-          rebuildNumber++;
-          if (rebuildNumber <= 2) return;
-          const dateFormatter = new Intl.DateTimeFormat("en", {
-            dateStyle: "short",
-          });
-          const now = dateFormatter.format(new Date());
-          console.log(
-            `${now} [${config.name}] commands changed. Rebuilding x${
-              rebuildNumber - 2
-            }`
-          );
-        });
-      },
-    };
-
     // Create the build options
     const esbuildArgs: esbuild.BuildOptions = {
       entryPoints: [...commandFiles],
@@ -161,9 +139,49 @@ export async function build(parsedArgs: BuildArgs) {
     // Run in development mode if our watch command exists.
     if (parsedArgs.watch) {
       console.log("Running Buttery CLI Builder in DEV mode...");
+      // A simple plugin that logs the output of the watch commands
+      // TODO: Move this into another file
+      let rebuildNumber = 0;
+      const watchPlugin: esbuild.Plugin = {
+        name: "watch-logger",
+        setup(build) {
+          build.onEnd(() => {
+            rebuildNumber++;
+            if (rebuildNumber <= 2) return;
+            const dateFormatter = new Intl.DateTimeFormat("en", {
+              dateStyle: "short",
+            });
+            const now = dateFormatter.format(new Date());
+            console.log(
+              `${now} [${
+                config.name
+              }] Rebuild triggered. Transpiling and re-building... x${
+                rebuildNumber - 2
+              }`
+            );
+          });
+        },
+      };
+      const srcPlugin: esbuild.Plugin = {
+        name: "src-watcher",
+        setup(build) {
+          build.onLoad({ filter: /.*/ }, async () => {
+            if (!parsedArgs.local) return undefined;
+            const templateGlob = path.resolve(srcFilesDir, "./template.*.ts");
+            const utilsGlob = path.resolve(srcFilesDir, "./util.*.ts");
+            const srcFilesToWatch = await glob([templateGlob, utilsGlob], {
+              follow: false,
+            });
+            return {
+              watchFiles: srcFilesToWatch,
+            };
+          });
+        },
+      };
+
       const context = await esbuild.context({
         ...esbuildArgs,
-        plugins: [watchPlugin],
+        plugins: [watchPlugin, srcPlugin],
       });
       await context.watch();
     }

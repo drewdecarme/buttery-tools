@@ -1,9 +1,11 @@
 export type BuildArgs = {
   watch: boolean;
+  local: boolean;
 };
 
 const defaultBuildArgs: BuildArgs = {
   watch: false,
+  local: false,
 };
 
 /**
@@ -17,6 +19,9 @@ export const parseBuildArgs = (args: typeof process.argv): BuildArgs => {
   return args.reduce<BuildArgs>((accum, arg) => {
     if (arg === "--watch" || arg === "-w") {
       return { ...accum, watch: true };
+    }
+    if (arg === "--local" || arg === "-l") {
+      return { ...accum, local: true };
     }
     return accum;
   }, defaultBuildArgs);
