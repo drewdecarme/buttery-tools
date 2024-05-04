@@ -1,7 +1,12 @@
 import type { Plugin } from "esbuild";
 
-// TODO: Fix this doc
-// A simple plugin that logs the output of the watch commands
+/**
+ * This class helps create a plugin for esbuild that logs
+ * the date, a generic name and then the number of times
+ * that the build has re-built. It ignores a few repetitive
+ * times that esbuild runs and then logs those details in a
+ * string every time the files change in the build configurations.
+ */
 export class EsbuildPluginWatchLogger {
   private cliName: string;
   private dirname: string;
