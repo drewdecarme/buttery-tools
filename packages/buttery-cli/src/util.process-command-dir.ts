@@ -32,7 +32,6 @@ export async function registerCommandsFromFiles(
       "You don't have any files in your 'commands' folder. Please add some command files."
     );
   }
-  console.log("HELLO!!!");
 
   const files = constructCommandFiles(commandFilePaths);
 
