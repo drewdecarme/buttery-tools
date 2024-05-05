@@ -48,7 +48,7 @@ export async function buildCommands({ config, argv }: BuildScriptArgs) {
 
     // Run in development mode if our watch command exists.
     if (argv.watch) {
-      console.log("Running Buttery CLI Builder in DEV mode...");
+      console.log(`Watching '${commandFilesDir}' for changes...`);
       // A simple plugin that logs the output of the watch commands
       // TODO: Move this into another file
       let rebuildNumber = 0;

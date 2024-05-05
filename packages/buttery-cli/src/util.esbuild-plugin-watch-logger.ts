@@ -32,9 +32,9 @@ export class EsbuildPluginWatchLogger {
 
           const now = this.date.format(new Date());
           console.log(
-            `${now} [${this.cliName}] '${
+            `${now} [${this.cliName}] Files in '${
               this.dirname
-            }' changed Transpiling and re-building... x${
+            }/' changed. Transpiling and re-building... x${
               this.rebuildNumber - 2
             }`
           );

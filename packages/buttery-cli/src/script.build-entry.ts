@@ -3,10 +3,11 @@
 import path from "node:path";
 import { glob } from "glob";
 import * as esbuild from "esbuild";
-import handlebars from "handlebars";
-import { writeFile, readFile, rm } from "node:fs/promises";
+import { rm } from "node:fs/promises";
 import { BuildScriptArgs } from "./script.build";
 import { EsbuildPluginWatchLogger } from "./util.esbuild-plugin-watch-logger";
+import { compileEntryTemplate } from "./util.compile-entry-template";
+import { ESBuildPluginEntryTemplateTransformer } from "./util.esbuild-plugin-entry-template-transformer";
 
 const __dirname = import.meta.dirname;
 
@@ -29,21 +30,12 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
     await rm(path.resolve(__dirname, "./index.ts"), {
       force: true,
     });
-    const entryTemplateFile = await readFile(
-      path.resolve(__dirname, "./template.index.hbs")
-    );
-    const template = handlebars.compile<{ cli_name: string }>(
-      entryTemplateFile.toString()
-    )({
-      cli_name: config.name,
-    });
-    await writeFile(path.resolve(__dirname, "./index.ts"), template, "utf-8");
 
     // Glob the selected files from src and build
     // this is done first so this CLI can be instantiated from here and when installed elsewhere
     const srcFilesDir = __dirname;
-    const srcFilesGlob = path.resolve(srcFilesDir, "./index.ts");
-    const srcFiles = glob.sync(srcFilesGlob, { follow: false });
+    let srcFilesGlob = path.resolve(srcFilesDir, "./index.ts");
+    let srcFiles = glob.sync(srcFilesGlob, { follow: false });
     const srcFilesOutDir = path.join(config.root, "./bin");
 
     // Create the build options
@@ -58,19 +50,35 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
       outdir: srcFilesOutDir,
     };
 
-    // Just build
-    if (!argv.watch) {
+    // Just build when dev or local aren't present
+    if (!argv.watch || !argv.local) {
       return await esbuild.build(esbuildArgs);
     }
 
     // Run in development mode if our watch command exists.
-    const watchLogger = new EsbuildPluginWatchLogger({
+    console.log("Running build in `watch` && `local` mode...");
+    console.log(`Watching '${srcFilesDir}' for changes...`);
+
+    // change some values for development
+    srcFilesGlob = path.resolve(srcFilesDir, "*");
+    srcFiles = glob.sync(srcFilesGlob, { follow: false });
+
+    const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
       cliName: config.name,
       dirname: "src",
     });
+    const ESBuildEntryTemplateTransformer =
+      new ESBuildPluginEntryTemplateTransformer({ cli_name: config.name });
+
     const context = await esbuild.context({
       ...esbuildArgs,
-      plugins: [watchLogger.getPlugin()],
+      entryPoints: srcFiles,
+      bundle: false,
+      minify: false,
+      plugins: [
+        ESBuildWatchLogger.getPlugin(),
+        ESBuildEntryTemplateTransformer.getPlugin(),
+      ],
     });
     return await context.watch();
   } catch (error) {

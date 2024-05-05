@@ -5,7 +5,6 @@ import { glob } from "glob";
 import type { CLIConfig } from "../types/index.js";
 import { registerCommandsFromFiles } from "./util.process-command-dir.js";
 import { fileURLToPath, resolve } from "node:url";
-export * from "../types/index.js";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 

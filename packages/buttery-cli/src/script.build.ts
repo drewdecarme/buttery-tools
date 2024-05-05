@@ -5,8 +5,8 @@ import type { BuildArgs } from "../scripts/util.parse-build-args";
 import { buildCommands } from "./script.build-commands";
 import { buildEntry } from "./script.build-entry";
 import { buildPackageJson } from "./script.build-package-json";
-
-const __dirname = import.meta.dirname;
+import { rm } from "fs/promises";
+import path from "path";
 
 export type BuildScriptArgs = {
   config: CLIConfig;
@@ -47,6 +47,12 @@ export async function build(parsedArgs: BuildArgs) {
 
   try {
     const params = { config, argv: parsedArgs };
+
+    // delete the entire bin folder to make it fresh
+    await rm(path.resolve(config.root, "./bin"), {
+      recursive: true,
+      force: true,
+    });
 
     await Promise.all([
       buildEntry(params),
