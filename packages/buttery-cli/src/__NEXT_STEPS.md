@@ -1,0 +1,1 @@
+- Cosmic config when consumed from other packages is wrong. Either need to import it directly into the build directory or need to copy the config into the bin directory.

@@ -16,9 +16,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {
-    "build": "butter build"
-  },
   "dependencies": {
     "@buttery/cli": "workspace:^"
   }

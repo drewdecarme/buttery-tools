@@ -44,12 +44,14 @@ export async function registerCommandsFromFiles(
     // the deeply nested relationships when going through the
     // segments
     let fileCommand = command;
+    console.log({ fileCommandName: fileCommand.name() });
 
     // go through all of the segments of the file and
     // create nested command relationships if they don't already
     // exist.
     for (const segmentIndex in segments) {
       const segment = segments[segmentIndex];
+      console.log(segment);
       // In order to create the deeply nested command relationships.. we need
       // to either see if the file has a command on it that matches this segment
       // or we need to create a new command for the file segment.
