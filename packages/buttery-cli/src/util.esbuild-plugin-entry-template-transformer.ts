@@ -16,6 +16,12 @@ export type EntryTemplateData = {
  * watch mode, we listen to the handlebars template changes
  * to then recompile them and print them to their destination
  * (all defined in the esbuild itself and not the plugin)
+ *
+ * This plugin also looks for any files that are also in the src
+ * directory without explicitly providing them in the entryPoints
+ * key in the esbuild configurations. This is to ensure that only
+ * one file is bundled on output but the files that support the
+ * index file are also watched.
  */
 export class ESBuildPluginEntryTemplateTransformer {
   data: EntryTemplateData;

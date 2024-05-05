@@ -5,9 +5,11 @@ import { rm } from "node:fs/promises";
 import { BuildScriptArgs } from "./script.build";
 import { EsbuildPluginWatchLogger } from "./util.esbuild-plugin-watch-logger";
 import { ESBuildPluginEntryTemplateTransformer } from "./util.esbuild-plugin-entry-template-transformer";
+import { createEsbuildOptions } from "./config.esbuild";
 
 const __dirname = import.meta.dirname;
 
+// TODO: Fix description
 /**
  * Process
  * 1 - Build the /src
@@ -31,8 +33,8 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
     // Glob the selected files from src and build
     // this is done first so this CLI can be instantiated from here and when installed elsewhere
     const srcFilesDir = __dirname;
-    let srcFilesGlob = path.resolve(srcFilesDir, "./index.hbs");
-    let srcFiles = glob.sync(srcFilesGlob, { follow: false });
+    const srcFilesGlob = path.resolve(srcFilesDir, "./index.hbs");
+    const srcFiles = glob.sync(srcFilesGlob, { follow: false });
     const srcFilesOutDir = path.join(config.root, "./bin");
 
     // Create a .hbs plugin transformer
@@ -42,30 +44,20 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
     const plugins = [ESBuildEntryTemplateTransformer.getPlugin()];
 
     // Create the build options
-    const esbuildArgs: esbuild.BuildOptions = {
+    const esbuildOptions = createEsbuildOptions({
       entryPoints: srcFiles,
-      bundle: true,
-      minify: true,
-      format: "esm",
-      platform: "node",
-      target: ["node20.11.1"],
-      packages: "external",
       plugins,
       outdir: srcFilesOutDir,
-    };
+    });
 
     // Just build when dev or local aren't present
     if (!argv.watch || !argv.local) {
-      return await esbuild.build(esbuildArgs);
+      return await esbuild.build(esbuildOptions);
     }
 
     // Run in development mode if our watch command exists.
     console.log("Running build in `watch` && `local` mode...");
     console.log(`Watching '${srcFilesDir}' for changes...`);
-
-    // change some values for development
-    // srcFilesGlob = path.resolve(srcFilesDir, "*");
-    // srcFiles = glob.sync(srcFilesGlob, { follow: false });
 
     // Create a watcher plugin
     const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
@@ -73,14 +65,15 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
       dirname: "src",
     });
 
+    // Build the esbuild context and watch it to re-build
+    // files on change
     const context = await esbuild.context({
-      ...esbuildArgs,
-      entryPoints: srcFiles,
+      ...esbuildOptions,
       minify: false,
       plugins: [...plugins, ESBuildWatchLogger.getPlugin()],
     });
     return await context.watch();
   } catch (error) {
-    throw new Error(error as string);
+    throw new Error("Error when building 'entry': ".concat(error as string));
   }
 }

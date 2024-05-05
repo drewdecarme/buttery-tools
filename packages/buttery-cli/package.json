@@ -36,7 +36,6 @@
     "glob": "^10.3.12",
     "handlebars": "^4.7.8",
     "lodash.get": "^4.4.2",
-    "rimraf": "^5.0.5",
     "vite": "^5.2.10"
   },
   "types": "./dist/index.d.ts",

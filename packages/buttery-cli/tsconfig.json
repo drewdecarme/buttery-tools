@@ -12,12 +12,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "outDir": "./bin",
+    "outDir": "./dist",
     "skipLibCheck": true,
-    "jsx": "react-jsx",
-    "noEmit": false,
-    "declaration": true,
-    "declarationMap": true,
+    "noEmit": true,
     "allowImportingTsExtensions": false
   },
   "include": [
@@ -25,11 +22,8 @@
     "scripts",
     "commands",
     "src",
-    "src",
-    "scripts/util.parse-build-args.ts",
-    "src/util.parse-command-file-properties.ts",
-    "src/util.process-command-dir.ts",
-    "types/index.ts",
-    "lib/createConfig.ts"
+    "scripts",
+    "types",
+    "lib"
   ]
 }

@@ -6,6 +6,7 @@ import type { BuildScriptArgs } from "./script.build";
 import { EsbuildPluginWatchLogger } from "./util.esbuild-plugin-watch-logger";
 import { createEsbuildOptions } from "./config.esbuild";
 
+// TODO: Fix jsdoc description
 /**
  * Builds the commands in the commands directory defined in
  * the buttery.config cosmic config file.
@@ -19,19 +20,19 @@ import { createEsbuildOptions } from "./config.esbuild";
  * are cleared out so the new ones can be replaced and updated dynamically
  * via the esbuild watch context (if necessary).
  */
-export async function buildCommands({ config, argv }: BuildScriptArgs) {
+export async function buildLib({ config, argv }: BuildScriptArgs) {
   try {
-    const commandFilesDir = path.resolve(config.root, "./commands");
-    const commandFilesGlob = path.resolve(commandFilesDir, "./*.ts");
-    const commandFiles = glob.sync(commandFilesGlob, {
+    const libFilesDir = path.resolve(import.meta.dirname, "../lib");
+    const libFilesGlob = path.resolve(libFilesDir, "./*.ts");
+    const libFiles = glob.sync(libFilesGlob, {
       follow: false,
     });
-    const commandFilesOutDir = path.join(config.root, "./bin/commands");
+    const libFilesOutDir = path.join(config.root, "./dist");
 
-    // Create the esbuild options
+    // Create the build options
     const esbuildOptions = createEsbuildOptions({
-      entryPoints: commandFiles,
-      outdir: commandFilesOutDir,
+      entryPoints: libFiles,
+      outdir: libFilesOutDir,
     });
 
     // Just build when dev isn't present
@@ -39,25 +40,25 @@ export async function buildCommands({ config, argv }: BuildScriptArgs) {
       return await esbuild.build(esbuildOptions);
     }
 
-    console.log(`Watching '${commandFilesDir}' for changes...`);
+    console.log(`Watching '${libFilesDir}' for changes...`);
 
     // Create a watcher plugin
     const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
       cliName: config.name,
-      dirname: "commands",
+      dirname: "lib",
     });
 
     // Build the esbuild context and watch it to re-build
     // files on change
     const context = await esbuild.context({
       ...esbuildOptions,
-      entryPoints: commandFiles,
+      entryPoints: libFiles,
       minify: false,
       plugins: [ESBuildWatchLogger.getPlugin()],
     });
 
     return await context.watch();
   } catch (error) {
-    throw new Error("Error when building 'commands': ".concat(error as string));
+    throw new Error("Error when building 'lib': ".concat(error as string));
   }
 }
