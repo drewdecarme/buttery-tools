@@ -1,12 +1,12 @@
 import { cosmiconfig } from "cosmiconfig";
-import { CLIConfig } from "../types";
+import type { CLIConfig } from "../lib/types";
 
-import type { BuildArgs } from "../scripts/util.parse-build-args";
 import { buildCommands } from "./script.build-commands";
 import { buildEntry } from "./script.build-entry";
 import { buildPackageJson } from "./script.build-package-json";
 import { rm } from "fs/promises";
 import path from "path";
+import type { BuildArgs } from "../scripts/build";
 
 export type BuildScriptArgs = {
   config: CLIConfig;
