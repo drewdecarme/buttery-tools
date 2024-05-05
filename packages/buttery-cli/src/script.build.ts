@@ -7,6 +7,7 @@ import { buildPackageJson } from "./script.build-package-json";
 import { rm } from "fs/promises";
 import path from "path";
 import type { BuildArgs } from "../scripts/build";
+import { buildLib } from "./script.build-lib";
 
 export type BuildScriptArgs = {
   config: CLIConfig;
@@ -58,6 +59,7 @@ export async function build(parsedArgs: BuildArgs) {
       buildEntry(params),
       buildCommands(params),
       buildPackageJson(params),
+      buildLib(params),
     ]);
   } catch (error) {
     throw new Error(error as string);
