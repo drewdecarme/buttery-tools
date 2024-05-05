@@ -4,7 +4,7 @@ import { execSync } from "node:child_process";
 /**
  * TODO: Fix path
  */
-export class EsbuildPluginWatchLogger {
+export class EsbuildPluginTypescriptCompiler {
   private tsConfigPath: string;
 
   constructor({ tsConfigPath }: { tsConfigPath: string }) {

@@ -8,6 +8,7 @@ import { rm } from "fs/promises";
 import path from "path";
 import type { BuildArgs } from "../scripts/build";
 import { buildLib } from "./script.build-lib";
+import { RmOptions } from "fs";
 
 export type BuildScriptArgs = {
   config: CLIConfig;
@@ -49,11 +50,16 @@ export async function build(parsedArgs: BuildArgs) {
   try {
     const params = { config, argv: parsedArgs };
 
-    // delete the entire bin folder to make it fresh
-    await rm(path.resolve(config.root, "./bin"), {
-      recursive: true,
-      force: true,
-    });
+    // delete the entire bin & dist folder to make it fresh
+    console.log("Cleaning distribution directories...");
+    const foldersToDelete = ["./bin", "./dist"].map((folder) =>
+      rm(path.resolve(config.root, folder), {
+        recursive: true,
+        force: true,
+      })
+    );
+    await Promise.all(foldersToDelete);
+    console.log("Cleaning distribution directories... done.");
 
     await Promise.all([
       buildEntry(params),

@@ -5,6 +5,7 @@ import * as esbuild from "esbuild";
 import type { BuildScriptArgs } from "./script.build";
 import { EsbuildPluginWatchLogger } from "./util.esbuild-plugin-watch-logger";
 import { createEsbuildOptions } from "./config.esbuild";
+import { EsbuildPluginTypescriptCompiler } from "./util.esbuild-plugin-typescript-compiler";
 
 // TODO: Fix jsdoc description
 /**
@@ -29,10 +30,17 @@ export async function buildLib({ config, argv }: BuildScriptArgs) {
     });
     const libFilesOutDir = path.join(config.root, "./dist");
 
+    // Create the TS compiler plugin
+    const ESBuildTypescriptCompiler = new EsbuildPluginTypescriptCompiler({
+      tsConfigPath: path.resolve(import.meta.dirname, "../tsconfig.lib.json"),
+    });
+    const plugins = [ESBuildTypescriptCompiler.getPlugin()];
+
     // Create the build options
     const esbuildOptions = createEsbuildOptions({
       entryPoints: libFiles,
       outdir: libFilesOutDir,
+      plugins,
     });
 
     // Just build when dev isn't present
@@ -52,9 +60,8 @@ export async function buildLib({ config, argv }: BuildScriptArgs) {
     // files on change
     const context = await esbuild.context({
       ...esbuildOptions,
-      entryPoints: libFiles,
       minify: false,
-      plugins: [ESBuildWatchLogger.getPlugin()],
+      plugins: [...plugins, ESBuildWatchLogger.getPlugin()],
     });
 
     return await context.watch();
