@@ -25,6 +25,7 @@ export const parseCommandFileProperties = ({
     options: CommandOptions;
     action: CommandAction;
   }>;
+
   // Validate command.meta and set the description
   if (!props.meta) {
     throw `Error in '${fileName}'. 'meta' export not detected. Please ensure that you have exported a 'meta' configuration object from the '${fileName}'.`;

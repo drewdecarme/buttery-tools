@@ -1,7 +1,8 @@
 import type { Plugin } from "esbuild";
-import { compileEntryTemplate } from "./util.compile-entry-template";
 import { readFile } from "fs/promises";
+import { glob } from "glob";
 import handlebars from "handlebars";
+import path from "path";
 
 export type EntryTemplateData = {
   cli_name: string;
@@ -35,10 +36,14 @@ export class ESBuildPluginEntryTemplateTransformer {
           const template = handlebars.compile<EntryTemplateData>(
             entryTemplateFile.toString()
           )(data);
+
+          const srcFilesGlob = path.resolve(import.meta.dirname, "/**.ts");
+          const srcFiles = glob.sync(srcFilesGlob, { follow: false });
+
           return {
             contents: template,
             loader: "ts",
-            watchFiles: [args.path],
+            watchFiles: [args.path, ...srcFiles],
           };
         });
       },

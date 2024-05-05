@@ -1,12 +1,9 @@
-// TODO: Work on removing some easily replicated packages
-// to reduce dependency size
 import path from "node:path";
 import { glob } from "glob";
 import * as esbuild from "esbuild";
 import { rm } from "node:fs/promises";
 import { BuildScriptArgs } from "./script.build";
 import { EsbuildPluginWatchLogger } from "./util.esbuild-plugin-watch-logger";
-import { compileEntryTemplate } from "./util.compile-entry-template";
 import { ESBuildPluginEntryTemplateTransformer } from "./util.esbuild-plugin-entry-template-transformer";
 
 const __dirname = import.meta.dirname;
@@ -34,9 +31,15 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
     // Glob the selected files from src and build
     // this is done first so this CLI can be instantiated from here and when installed elsewhere
     const srcFilesDir = __dirname;
-    let srcFilesGlob = path.resolve(srcFilesDir, "./index.ts");
+    let srcFilesGlob = path.resolve(srcFilesDir, "./index.hbs");
     let srcFiles = glob.sync(srcFilesGlob, { follow: false });
     const srcFilesOutDir = path.join(config.root, "./bin");
+
+    // Create a .hbs plugin transformer
+    const ESBuildEntryTemplateTransformer =
+      new ESBuildPluginEntryTemplateTransformer({ cli_name: config.name });
+
+    const plugins = [ESBuildEntryTemplateTransformer.getPlugin()];
 
     // Create the build options
     const esbuildArgs: esbuild.BuildOptions = {
@@ -47,6 +50,7 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
       platform: "node",
       target: ["node20.11.1"],
       packages: "external",
+      plugins,
       outdir: srcFilesOutDir,
     };
 
@@ -60,25 +64,20 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
     console.log(`Watching '${srcFilesDir}' for changes...`);
 
     // change some values for development
-    srcFilesGlob = path.resolve(srcFilesDir, "*");
-    srcFiles = glob.sync(srcFilesGlob, { follow: false });
+    // srcFilesGlob = path.resolve(srcFilesDir, "*");
+    // srcFiles = glob.sync(srcFilesGlob, { follow: false });
 
+    // Create a watcher plugin
     const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
       cliName: config.name,
       dirname: "src",
     });
-    const ESBuildEntryTemplateTransformer =
-      new ESBuildPluginEntryTemplateTransformer({ cli_name: config.name });
 
     const context = await esbuild.context({
       ...esbuildArgs,
       entryPoints: srcFiles,
-      bundle: false,
       minify: false,
-      plugins: [
-        ESBuildWatchLogger.getPlugin(),
-        ESBuildEntryTemplateTransformer.getPlugin(),
-      ],
+      plugins: [...plugins, ESBuildWatchLogger.getPlugin()],
     });
     return await context.watch();
   } catch (error) {
