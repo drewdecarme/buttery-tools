@@ -44,14 +44,12 @@ export async function registerCommandsFromFiles(
     // the deeply nested relationships when going through the
     // segments
     let fileCommand = command;
-    console.log({ fileCommandName: fileCommand.name() });
 
     // go through all of the segments of the file and
     // create nested command relationships if they don't already
     // exist.
     for (const segmentIndex in segments) {
       const segment = segments[segmentIndex];
-      console.log(segment);
       // In order to create the deeply nested command relationships.. we need
       // to either see if the file has a command on it that matches this segment
       // or we need to create a new command for the file segment.
@@ -72,7 +70,16 @@ export async function registerCommandsFromFiles(
           .join(".")
           .concat(".js");
         const segmentFilePath = file.basePath.concat(segmentFileName);
+        console.log({ segment, segmentFilePath });
+
         try {
+          // import the content from the segment
+          //TODO: The command is trying to be imported but if it's
+          // parent file command doesn't exist, then it bombs out.
+          // We need to create the parent command if it can't import
+          // the file command
+          // Also need to come up with more intuitive variable names
+          // START HERE NEXT
           const commandFileContent = await import(segmentFilePath);
           const props = parseCommandFileProperties({
             content: commandFileContent,
@@ -131,7 +138,9 @@ export async function registerCommandsFromFiles(
               options,
             });
           });
-        } catch (error) {}
+        } catch (error) {
+          console.error(error);
+        }
       }
       if (!segmentCommand) return;
       fileCommand = segmentCommand;
