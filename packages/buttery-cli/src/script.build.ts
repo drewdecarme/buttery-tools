@@ -8,7 +8,7 @@ import { rm } from "fs/promises";
 import path from "path";
 import type { BuildArgs } from "../scripts/build";
 import { buildLib } from "./script.build-lib";
-import { RmOptions } from "fs";
+import { buildConfig } from "./script.build-config";
 
 export type BuildScriptArgs = {
   config: CLIConfig;
@@ -26,7 +26,8 @@ async function getAndParseButteryConfig() {
     if (configResult.isEmpty) {
       throw "The buttery configuration file is empty.";
     }
-    const config = configResult.config as CLIConfig;
+    console.log(configResult);
+    const config = configResult;
     return config;
   } catch (error) {
     throw new Error(`Error parsing buttery.config file: ${error as string}`);
@@ -45,9 +46,10 @@ async function getAndParseButteryConfig() {
  * is creating. A little CLI inception... if you will ;)
  */
 export async function build(parsedArgs: BuildArgs) {
-  const config = await getAndParseButteryConfig();
+  const configResult = await getAndParseButteryConfig();
 
   try {
+    const { config, filepath: configFilePath } = configResult;
     const params = { config, argv: parsedArgs };
 
     // delete the entire bin & dist folder to make it fresh
@@ -62,6 +64,7 @@ export async function build(parsedArgs: BuildArgs) {
     console.log("Cleaning distribution directories... done.");
 
     await Promise.all([
+      buildConfig({ ...params, configFilePath }),
       buildEntry(params),
       buildCommands(params),
       buildPackageJson(params),

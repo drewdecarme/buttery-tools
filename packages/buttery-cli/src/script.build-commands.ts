@@ -51,7 +51,6 @@ export async function buildCommands({ config, argv }: BuildScriptArgs) {
     // files on change
     const context = await esbuild.context({
       ...esbuildOptions,
-      entryPoints: commandFiles,
       minify: false,
       plugins: [ESBuildWatchLogger.getPlugin()],
     });

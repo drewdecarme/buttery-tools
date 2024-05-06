@@ -1,38 +1,24 @@
 #! /usr/bin/env node
 import { program } from "commander";
-import { cosmiconfig } from "cosmiconfig";
 import { glob } from "glob";
 import type { CLIConfig } from "../types/index.js";
 import { registerCommandsFromFiles } from "./util.process-command-dir.js";
 import { fileURLToPath, resolve } from "node:url";
+import path from "path";
 
-const __dirname = fileURLToPath(new URL(".", import.meta.url));
+import("./{{cli_name}}.config.js").then(async ({ default: config }) => {
+  // Add the name and the description of the CLI
+  program.name(config.name).description(config.description);
 
-const explorer = cosmiconfig("{{cli_name}}");
-
-explorer
-  .search()
-  .then(async (result) => {
-    // protect against a bad parse
-    if (!result)
-      throw new Error(
-        "Cannot locate your {{cli_name}} config. Please ensure you have a `{{cli_name}}.config.ts` file."
-      );
-
-    const config = result.config as CLIConfig;
-
-    // Add the name and the description of the CLI
-    program.name(config.name).description(config.description);
-    const commandsDir = resolve(__dirname, "./commands");
-
-    const commandFilePaths = glob.sync(commandsDir.concat("/*.js"), {
-      follow: false,
-    });
-
-    await registerCommandsFromFiles(program, commandFilePaths);
-    await program.parseAsync();
-  })
-  .catch((error) => {
-    console.error(error);
-    throw new Error(error);
+  const commandFilePaths = glob.sync(path.resolve(config.root, "./commands/**.js"), {
+    follow: false,
   });
+  
+  await registerCommandsFromFiles(program, commandFilePaths);
+  await program.parseAsync();
+}).catch(error => {
+  console.error(error);
+  throw new Error(error);
+})
+
+
