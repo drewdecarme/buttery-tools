@@ -50,13 +50,18 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
       outdir: srcFilesOutDir,
     });
 
-    // Just build when dev or local aren't present
-    if (!argv.watch || !argv.local) {
+    // Build when not in watch
+    if (!argv.watch) {
       return await esbuild.build(esbuildOptions);
     }
 
+    // Don't run any development commands unless we're developing
+    // locally to the CLI builder. This ensures that if the builder
+    // is being run in watch mode that it's also not building
+    // any src directory files from another package.
+    if (!argv.local) return;
+
     // Run in development mode if our watch command exists.
-    console.log("Running build in `watch` && `local` mode...");
     console.log(`Watching '${srcFilesDir}' for changes...`);
 
     // Create a watcher plugin

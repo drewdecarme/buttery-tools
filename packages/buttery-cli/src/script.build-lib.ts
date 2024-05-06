@@ -22,6 +22,11 @@ import { EsbuildPluginTypescriptCompiler } from "./util.esbuild-plugin-typescrip
  * via the esbuild watch context (if necessary).
  */
 export async function buildLib({ config, argv }: BuildScriptArgs) {
+  // We don't want to do anything when building or developing
+  // from another package. This build is only for developing
+  // the CLI builder.
+  if (!argv.local) return;
+
   try {
     const libFilesDir = path.resolve(import.meta.dirname, "../lib");
     const libFilesGlob = path.resolve(libFilesDir, "./*.ts");
@@ -43,7 +48,7 @@ export async function buildLib({ config, argv }: BuildScriptArgs) {
       plugins,
     });
 
-    // Just build when dev isn't present
+    // Build when not in watch mode
     if (!argv.watch) {
       return await esbuild.build(esbuildOptions);
     }

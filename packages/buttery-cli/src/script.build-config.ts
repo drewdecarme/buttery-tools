@@ -17,6 +17,7 @@ export const buildConfig = async ({
       entryPoints: [configFilePath],
       outdir: configFileOutDir,
     });
+
     // Just build when dev isn't present
     if (!argv.watch) {
       return await esbuild.build(esbuildOptions);
