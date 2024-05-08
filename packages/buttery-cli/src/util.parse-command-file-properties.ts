@@ -1,3 +1,4 @@
+import path from "path";
 import type {
   CommandAction,
   CommandArgs,
@@ -33,12 +34,15 @@ export const parseCommandFileProperties = ({
 
   // Validate the action and set the action
   if (!props.action) {
-    throw new Error(
-      `Error in '${fileName}'. 'action' export not detected. Please ensure that you have exported a 'action' configuration object from the '${fileName}'.`
+    const commandPath = fileName.split(".js")[0];
+    console.warn(
+      `"${commandPath}" does not have an "action" export. This command will appear in the help menus but will do nothing when invoked. It is recommended to add an "action" export.`
     );
   }
+  const action = props?.action ?? (async () => void 0);
+
   return {
-    action: props.action,
+    action,
     args: props.args ?? [],
     options: props.options ?? {},
     meta: props.meta,

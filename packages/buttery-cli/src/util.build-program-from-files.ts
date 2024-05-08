@@ -7,33 +7,38 @@ import {
 
 type CommandFile = {
   name: string;
-  basePath: string;
   path: string;
 };
 
-export const constructCommandFiles = (
-  commandFilePaths: string[]
-): CommandFile[] =>
+export const constructCommandFiles = ({
+  commandFilePaths,
+}: {
+  commandFilePaths: string[];
+}): CommandFile[] =>
   commandFilePaths.map((commandFilePath) => {
     const name = path.basename(commandFilePath, ".js");
     return {
       name,
-      basePath: commandFilePath.split(name)[0],
       path: commandFilePath,
     };
   });
 
-export async function registerCommandsFromFiles(
-  command: Command,
-  commandFilePaths: string[]
-): Promise<void> {
+export async function buildProgramFromFiles({
+  command,
+  commandsDir,
+  commandFilePaths,
+}: {
+  command: Command;
+  commandsDir: string;
+  commandFilePaths: string[];
+}): Promise<void> {
   if (commandFilePaths.length === 0) {
     throw new Error(
       "You don't have any files in your 'commands' folder. Please add some command files."
     );
   }
 
-  const files = constructCommandFiles(commandFilePaths);
+  const files = constructCommandFiles({ commandFilePaths });
 
   // Go through every file
   for (const fileIndex in files) {
@@ -69,12 +74,12 @@ export async function registerCommandsFromFiles(
           .slice(0, Number(segmentIndex) + 2)
           .join(".")
           .concat(".js");
-        const segmentFilePath = file.basePath.concat(segmentFileName);
+        const segmentFilePath = `${commandsDir}/${segmentFileName}`;
         console.log({ segment, segmentFilePath });
 
         try {
           // import the content from the segment
-          //TODO: The command is trying to be imported but if it's
+          // TODO: The command is trying to be imported but if it's
           // parent file command doesn't exist, then it bombs out.
           // We need to create the parent command if it can't import
           // the file command
@@ -103,19 +108,17 @@ export async function registerCommandsFromFiles(
             if (!segmentCommand) return;
             switch (option.type) {
               case "value": {
-                segmentCommand.option(
+                return segmentCommand.option(
                   `-${option.alias}, --${flag} <value>`,
                   option.description
                 );
-                return;
               }
 
               case "boolean": {
-                segmentCommand.option(
+                return segmentCommand.option(
                   `-${option.alias}, --${flag}`,
                   option.description
                 );
-                return;
               }
 
               default:
@@ -139,7 +142,16 @@ export async function registerCommandsFromFiles(
             });
           });
         } catch (error) {
-          console.error(error);
+          console.log(error);
+          // TODO: This still needs some work mostly around
+          // what we do when we can't find a file. Do we create a base command
+          // Most likely will need a logical check here to ensure
+          // the base command is created.
+
+          // console.warn(
+          //   `Cannot find the a command "${segment}". Creating a command with an empty description.`
+          // );
+          segmentCommand = fileCommand.command(segment).description("");
         }
       }
       if (!segmentCommand) return;

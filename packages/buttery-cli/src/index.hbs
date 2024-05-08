@@ -2,7 +2,7 @@
 import { program } from "commander";
 import { glob } from "glob";
 import type { CLIConfig } from "../types/index.js";
-import { registerCommandsFromFiles } from "./util.process-command-dir.js";
+import { buildProgramFromFiles } from "./util.build-program-from-files.js";
 import { fileURLToPath, resolve } from "node:url";
 import path from "path";
 
@@ -10,11 +10,16 @@ import("./{{cli_name}}.config.js").then(async ({ default: config }) => {
   // Add the name and the description of the CLI
   program.name(config.name).description(config.description);
 
-  const commandFilePaths = glob.sync(path.resolve(config.root, "./commands/**.js"), {
+  const commandsDir = path.resolve(config.root, "./commands");
+  const commandFilePaths = glob.sync(path.resolve(commandsDir, "./**.js"), {
     follow: false,
   });
   
-  await registerCommandsFromFiles(program, commandFilePaths);
+  await buildProgramFromFiles({
+    command: program,
+    commandsDir,
+    commandFilePaths
+  });
   await program.parseAsync();
 }).catch(error => {
   console.error(error);
