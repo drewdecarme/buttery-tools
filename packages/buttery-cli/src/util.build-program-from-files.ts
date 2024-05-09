@@ -4,24 +4,109 @@ import {
   exhaustiveMatchGuard,
   parseCommandFileProperties,
 } from "./util.parse-command-file-properties.js";
+import { readFile, writeFile } from "fs/promises";
+import handlebars from "handlebars";
 
 type CommandFile = {
   name: string;
+  hasSubCommands: boolean;
   path: string;
+  properties: Record<string, unknown>;
 };
 
-export const constructCommandFiles = ({
+export const parseAndValidateCommandFiles = async ({
+  commandsDir,
   commandFilePaths,
 }: {
+  commandsDir: string;
   commandFilePaths: string[];
-}): CommandFile[] =>
-  commandFilePaths.map((commandFilePath) => {
-    const name = path.basename(commandFilePath, ".js");
-    return {
-      name,
-      path: commandFilePath,
-    };
-  });
+}): Promise<CommandFile[]> => {
+  // Check to make sure there are files in the commands directory
+  try {
+    if (commandFilePaths.length === 0) {
+      throw "You don't have any files in your 'commands' directory. Please add some command files.";
+    }
+  } catch (error) {
+    throw new Error(`Error parsing command files: ${error}`);
+  }
+
+  // construct some data about each file
+  const files = commandFilePaths.reduce<CommandFile[]>(
+    (accum, commandFilePath) => {
+      const name = path.basename(commandFilePath, ".js");
+      const hasSubCommands = !!commandFilePaths.find(
+        (cFilePath) => cFilePath !== commandFilePath && cFilePath.includes(name)
+      );
+      return [
+        ...accum,
+        {
+          name,
+          hasSubCommands,
+          path: commandFilePath,
+          properties: {},
+        },
+      ];
+    },
+    []
+  );
+
+  // Import the necessary data from each file and their segments
+  // TODO: Add --debug to build to log output
+  // TODO: Add --log-level to build to log output
+  // If the files don't exist create them, TODO: then prompt using --auto-generate
+  for (const fileIndex in files) {
+    const file = files[fileIndex];
+    const segments = file.name.split(".");
+
+    for (const segmentIndex in segments) {
+      const segment = segments[segmentIndex];
+      const segmentFileName = segments
+        .slice(0, Number(segmentIndex) + 1)
+        .join(".");
+      const segmentFilePath = `${commandsDir}/${segmentFileName}.js`;
+      try {
+        console.log(`Importing data from: ${segmentFilePath}...`);
+        // find the segment command file
+        const segmentCommandProperties = await import(segmentFilePath);
+        // add the properties to the file
+        console.log(`Importing data from: ${segmentFilePath}... done.`);
+        file.properties = {
+          meta: segmentCommandProperties?.meta,
+          options: segmentCommandProperties?.options,
+          args: segmentCommandProperties?.args,
+          action: segmentCommandProperties?.action,
+        };
+      } catch (error) {
+        // @ts-expect-error code doesn't normally exist
+        // but we're ignoring it here
+        if (error.code === "ERR_MODULE_NOT_FOUND") {
+          console.info(`Cannot locate command file for '${segmentFileName}'`);
+          console.log("Auto creating command file with default values...");
+          // TODO: Put any prompting behind --autofix
+          // TODO: NEXT STEPS!!! Move build to create commands
+          const commandParentTemplate = await readFile(
+            path.resolve(import.meta.dirname, "./template.command-parent.hbs"),
+            { encoding: "utf-8" }
+          );
+          const template = handlebars.compile<{ command_name: string }>(
+            commandParentTemplate.toString()
+          )({ command_name: segment });
+          await writeFile(
+            path.resolve(commandsDir, `./${segmentFileName}.ts`),
+            template,
+            { encoding: "utf-8" }
+          );
+          console.log(
+            "Auto creating command file with default values... done."
+          );
+        }
+        throw new Error(error as string);
+      }
+    }
+  }
+  console.log(files);
+  return files;
+};
 
 export async function buildProgramFromFiles({
   command,
@@ -32,13 +117,10 @@ export async function buildProgramFromFiles({
   commandsDir: string;
   commandFilePaths: string[];
 }): Promise<void> {
-  if (commandFilePaths.length === 0) {
-    throw new Error(
-      "You don't have any files in your 'commands' folder. Please add some command files."
-    );
-  }
-
-  const files = constructCommandFiles({ commandFilePaths });
+  const files = await parseAndValidateCommandFiles({
+    commandsDir,
+    commandFilePaths,
+  });
 
   // Go through every file
   for (const fileIndex in files) {
@@ -53,8 +135,10 @@ export async function buildProgramFromFiles({
     // go through all of the segments of the file and
     // create nested command relationships if they don't already
     // exist.
+    const rootCommandName = segments[0];
     for (const segmentIndex in segments) {
       const segment = segments[segmentIndex];
+
       // In order to create the deeply nested command relationships.. we need
       // to either see if the file has a command on it that matches this segment
       // or we need to create a new command for the file segment.
@@ -71,20 +155,13 @@ export async function buildProgramFromFiles({
       // from the segment path and then adding them to the command.
       if (!segmentCommand) {
         const segmentFileName = segments
-          .slice(0, Number(segmentIndex) + 2)
+          .slice(0, Number(segmentIndex) + 1)
           .join(".")
           .concat(".js");
         const segmentFilePath = `${commandsDir}/${segmentFileName}`;
-        console.log({ segment, segmentFilePath });
 
         try {
           // import the content from the segment
-          // TODO: The command is trying to be imported but if it's
-          // parent file command doesn't exist, then it bombs out.
-          // We need to create the parent command if it can't import
-          // the file command
-          // Also need to come up with more intuitive variable names
-          // START HERE NEXT
           const commandFileContent = await import(segmentFilePath);
           const props = parseCommandFileProperties({
             content: commandFileContent,
@@ -142,16 +219,14 @@ export async function buildProgramFromFiles({
             });
           });
         } catch (error) {
-          console.log(error);
-          // TODO: This still needs some work mostly around
-          // what we do when we can't find a file. Do we create a base command
-          // Most likely will need a logical check here to ensure
-          // the base command is created.
-
-          // console.warn(
-          //   `Cannot find the a command "${segment}". Creating a command with an empty description.`
-          // );
-          segmentCommand = fileCommand.command(segment).description("");
+          // @ts-expect-error code doesn't normally exist
+          // but we're ignoring it here
+          if (error.code === "ERR_MODULE_NOT_FOUND") {
+            console.log(segmentFilePath);
+            console.info(
+              `Cannot locate file for the parent command '${rootCommandName}'. Auto creating command file with default values.`
+            );
+          }
         }
       }
       if (!segmentCommand) return;

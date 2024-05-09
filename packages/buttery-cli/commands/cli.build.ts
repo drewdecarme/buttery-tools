@@ -6,8 +6,5 @@ export const meta: CommandMeta = {
 };
 
 export const action: CommandAction = async (args) => {
-  // This is where you make the index.js file where the commands
-  // will have an entry point...
-
-  console.log("Hello from the 'cli.build' command.", args);
+  console.log(args);
 };

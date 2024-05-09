@@ -29,14 +29,14 @@ export const parseCommandFileProperties = ({
 
   // Validate command.meta and set the description
   if (!props.meta) {
-    throw `Error in '${fileName}'. 'meta' export not detected. Please ensure that you have exported a 'meta' configuration object from the '${fileName}'.`;
+    throw `Missing 'meta' export in '${fileName}'. Please ensure that you have exported a 'meta' configuration object from the '${fileName}'.`;
   }
 
   // Validate the action and set the action
   if (!props.action) {
     const commandPath = fileName.split(".js")[0];
     console.warn(
-      `"${commandPath}" does not have an "action" export. This command will appear in the help menus but will do nothing when invoked. It is recommended to add an "action" export.`
+      `Missing 'action' export from "${commandPath}". This command will appear in the help menus but will do nothing when invoked`
     );
   }
   const action = props?.action ?? (async () => void 0);
