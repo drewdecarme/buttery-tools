@@ -25,6 +25,7 @@
   "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
   "devDependencies": {
     "@types/lodash.get": "^4.4.9",
+    "@types/lodash.set": "^4.3.9",
     "@types/node": "^20.12.7",
     "esbuild": "^0.20.2",
     "tsx": "^4.7.2",
@@ -36,6 +37,7 @@
     "glob": "^10.3.12",
     "handlebars": "^4.7.8",
     "lodash.get": "^4.4.2",
+    "lodash.set": "^4.3.2",
     "vite": "^5.2.10"
   },
   "types": "./dist/index.d.ts",

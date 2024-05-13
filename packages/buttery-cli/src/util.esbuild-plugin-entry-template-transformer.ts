@@ -3,7 +3,9 @@ import { readFile, writeFile } from "fs/promises";
 import { glob } from "glob";
 import handlebars from "handlebars";
 import path from "path";
-import { CLIConfig, CommandMeta, CommandOptions } from "../lib";
+import { CLIConfig } from "../lib";
+import get from "lodash.get";
+import set from "lodash.set";
 
 type CommandFile = {
   path: string;
@@ -18,6 +20,13 @@ export type EntryTemplateData = {
   cli_commands: string;
 };
 
+type CommandObject = {
+  [key: string]: {
+    properties: {};
+    commands: CommandObject;
+  };
+};
+
 /**
  * TODO: Update this description
  */
@@ -25,11 +34,19 @@ export class ESBuildPluginEntryTemplateTransformer {
   config: CLIConfig;
   private runNumber: number;
   private commandFileProperties: Record<string, Record<string, unknown>>;
+  private commandObj: CommandObject;
+  private commandStr: string;
 
   constructor(config: CLIConfig) {
     this.config = config;
     this.runNumber = 0;
     this.commandFileProperties = {};
+    this.commandObj = {};
+    this.commandStr = "";
+  }
+
+  private kebabToCamel(kebab: string): string {
+    return kebab.replace(/-([a-z0-9])/g, (_, match) => match.toUpperCase());
   }
 
   /**
@@ -120,32 +137,46 @@ export class ESBuildPluginEntryTemplateTransformer {
   /**
    * Parses all of the commandFiles and then returns the result
    */
-  private parseAndValidateCommands(): CommandFile[] {
-    const commandFiles = this.commandFilePaths;
-    const files = commandFiles.reduce<CommandFile[]>(
-      (accum, commandFilePath) => {
-        const name = path.basename(commandFilePath, ".ts");
-        const hasSubCommands = !!commandFiles.find(
-          (cFilePath) =>
-            cFilePath !== commandFilePath && cFilePath.includes(name)
-        );
-        return [
-          ...accum,
-          {
-            name,
-            hasSubCommands,
-            path: commandFilePath,
-            properties: {},
-          },
-        ];
-      },
-      []
-    );
-    return files;
+  private parseCommands() {
+    const commandFilePaths = this.commandFilePaths;
+    console.log(commandFilePaths);
+
+    commandFilePaths.forEach((commandFilePath) => {
+      const commandFileName = this.getCommandFileName(commandFilePath);
+      const commandSegments = commandFileName.split(".");
+      let currentObj = this.commandObj;
+
+      commandSegments.forEach((segment, segmentIndex, origArr) => {
+        const segmentName = origArr
+          .slice(0, Number(segmentIndex) + 1)
+          .join(".");
+        if (!currentObj[segment]) {
+          currentObj[segment] = {
+            properties: this.commandFileProperties[segmentName],
+            commands: {},
+          };
+        }
+        currentObj = currentObj[segment].commands;
+      });
+    }, {});
   }
 
-  private buildProgramFromCommandFiles(): string {
-    return "";
+  private buildProgram() {
+    const parseCommand = (cmdObj: CommandObject, parentCommandName: string) => {
+      Object.entries(cmdObj).forEach(([cmdName, { commands, properties }]) => {
+        const wellFormedCmdName = this.kebabToCamel(cmdName);
+        console.log("Parsing", wellFormedCmdName);
+        const subCommands = Object.values(commands).length > 0;
+        this.commandStr = this.commandStr.concat(`
+const ${wellFormedCmdName} = ${parentCommandName}.command("${cmdName}");`);
+        if (subCommands) {
+          return parseCommand(commands, wellFormedCmdName);
+        }
+      });
+    };
+
+    parseCommand(this.commandObj, "program");
+    console.log(this.commandStr);
   }
 
   private logBuildIteration() {
@@ -165,9 +196,9 @@ export class ESBuildPluginEntryTemplateTransformer {
           // 1. ensure all of the command files exist
           await this.ensureCommands();
           // 2. get all of the command files and then parse them
-          // const commandFiles = this.parseAndValidateCommands();
+          this.parseCommands();
           // 3. build a program by iterating over each file using reduce (since all of the data will have been created at this point and all we're trying to do is create a string)
-          const commandString = this.buildProgramFromCommandFiles();
+          this.buildProgram();
           // 4. Read the entry template and compile it with the data
           const entryTemplateFile = await readFile(args.path);
           const template = handlebars.compile<EntryTemplateData>(
@@ -176,7 +207,7 @@ export class ESBuildPluginEntryTemplateTransformer {
             cli_name: config.name,
             cli_description: config.description,
             cli_version: config.version,
-            cli_commands: commandString,
+            cli_commands: this.commandStr,
           });
 
           // TODO: Only do this on --local
