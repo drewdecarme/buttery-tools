@@ -14,16 +14,22 @@ type CommandFile = {
   properties: Record<string, unknown>;
 };
 
+const ensureCommandFile = async ({
+  commandFilePath,
+}: {
+  commandFilePath: string;
+}) => {};
+
 export const parseAndValidateCommandFiles = async ({
   commandsDir,
-  commandFilePaths,
+  commandFiles,
 }: {
   commandsDir: string;
-  commandFilePaths: string[];
+  commandFiles: string[];
 }): Promise<CommandFile[]> => {
   // Check to make sure there are files in the commands directory
   try {
-    if (commandFilePaths.length === 0) {
+    if (commandFiles.length === 0) {
       throw "You don't have any files in your 'commands' directory. Please add some command files.";
     }
   } catch (error) {
@@ -31,24 +37,21 @@ export const parseAndValidateCommandFiles = async ({
   }
 
   // construct some data about each file
-  const files = commandFilePaths.reduce<CommandFile[]>(
-    (accum, commandFilePath) => {
-      const name = path.basename(commandFilePath, ".js");
-      const hasSubCommands = !!commandFilePaths.find(
-        (cFilePath) => cFilePath !== commandFilePath && cFilePath.includes(name)
-      );
-      return [
-        ...accum,
-        {
-          name,
-          hasSubCommands,
-          path: commandFilePath,
-          properties: {},
-        },
-      ];
-    },
-    []
-  );
+  const files = commandFiles.reduce<CommandFile[]>((accum, commandFilePath) => {
+    const name = path.basename(commandFilePath, ".ts");
+    const hasSubCommands = !!commandFiles.find(
+      (cFilePath) => cFilePath !== commandFilePath && cFilePath.includes(name)
+    );
+    return [
+      ...accum,
+      {
+        name,
+        hasSubCommands,
+        path: commandFilePath,
+        properties: {},
+      },
+    ];
+  }, []);
 
   // Import the necessary data from each file and their segments
   // TODO: Add --debug to build to log output
@@ -62,9 +65,12 @@ export const parseAndValidateCommandFiles = async ({
       const segment = segments[segmentIndex];
       const segmentFileName = segments
         .slice(0, Number(segmentIndex) + 1)
-        .join(".");
-      const segmentFilePath = `${commandsDir}/${segmentFileName}.js`;
+        .join(".")
+        .split(".ts")[0];
+      const segmentFilePath = `${commandsDir}/${segmentFileName}`;
+
       try {
+        console.log({ file, segmentFileName });
         console.log(`Importing data from: ${segmentFilePath}...`);
         // find the segment command file
         const segmentCommandProperties = await import(segmentFilePath);
@@ -92,35 +98,41 @@ export const parseAndValidateCommandFiles = async ({
             commandParentTemplate.toString()
           )({ command_name: segment });
           await writeFile(
-            path.resolve(commandsDir, `./${segmentFileName}.ts`),
+            path.resolve(commandsDir, `./${segmentFileName}`),
             template,
             { encoding: "utf-8" }
           );
           console.log(
             "Auto creating command file with default values... done."
           );
+          const segmentCommandProperties = await import(segmentFilePath);
+          file.properties = {
+            meta: segmentCommandProperties?.meta,
+          };
+        } else {
+          throw new Error(error as string);
         }
-        throw new Error(error as string);
       }
     }
   }
-  console.log(files);
   return files;
 };
 
 export async function buildProgramFromFiles({
-  command,
   commandsDir,
-  commandFilePaths,
+  commandFiles,
 }: {
-  command: Command;
   commandsDir: string;
-  commandFilePaths: string[];
-}): Promise<void> {
+  commandFiles: string[];
+}): Promise<string> {
   const files = await parseAndValidateCommandFiles({
     commandsDir,
-    commandFilePaths,
+    commandFiles,
   });
+
+  console.log({ files });
+
+  return "";
 
   // Go through every file
   for (const fileIndex in files) {

@@ -1,7 +1,6 @@
 import { cosmiconfig } from "cosmiconfig";
 import type { CLIConfig } from "../lib/types";
 
-import { buildCommands } from "./script.build-commands";
 import { buildEntry } from "./script.build-entry";
 import { buildPackageJson } from "./script.build-package-json";
 import { rm } from "fs/promises";
@@ -66,7 +65,7 @@ export async function build(parsedArgs: BuildArgs) {
     await Promise.all([
       buildConfig({ ...params, configFilePath }),
       buildEntry(params),
-      buildCommands(params),
+      // buildCommands(params),
       buildPackageJson(params),
       buildLib(params),
     ]);

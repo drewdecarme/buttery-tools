@@ -6,7 +6,7 @@ import type { BuildOptions } from "esbuild";
  * consistency on our builds across our build scripts.
  */
 export const createEsbuildOptions = (
-  options: Pick<BuildOptions, "entryPoints" | "outdir" | "plugins">
+  options: Pick<BuildOptions, "entryPoints" | "outdir" | "plugins" | "outfile">
 ): BuildOptions => ({
   bundle: true,
   minify: true,

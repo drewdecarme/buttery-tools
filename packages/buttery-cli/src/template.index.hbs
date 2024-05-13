@@ -1,0 +1,16 @@
+#! /usr/bin/env node
+import { program } from "commander";
+
+(async () => {
+  try {
+    program.name("{{ cli_name }}").description("{{ cli_description }}");
+    {{ cli_commands }}
+    await program.parseAsync();
+  } catch {
+    console.error(error);
+    throw new Error(error);
+  }
+})()
+
+
+
