@@ -22,7 +22,7 @@ function withParsedAction(segmentCommand) {
 }
 
 try {
-  program.name("{{ cli_name }}").description("{{ cli_description }}");
+  program.name("{{{ cli_name }}}").description("{{{ cli_description }}}");
   {{{ cli_commands }}}
   await program.parseAsync();
 } catch(error) {

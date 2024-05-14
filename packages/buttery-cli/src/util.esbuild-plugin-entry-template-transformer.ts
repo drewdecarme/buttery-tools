@@ -1,5 +1,5 @@
 import type { Plugin } from "esbuild";
-import { readFile, rm, writeFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import { glob } from "glob";
 import handlebars from "handlebars";
 import path from "path";
@@ -11,6 +11,8 @@ import {
   CommandOptions,
 } from "../lib";
 import { exhaustiveMatchGuard } from "./util.parse-command-file-properties";
+import { createEsbuildOptions } from "./config.esbuild";
+import * as esbuild from "esbuild";
 
 export type EntryTemplateData = {
   cli_name: string;
@@ -64,10 +66,6 @@ export class ESBuildPluginEntryTemplateTransformer {
    * Returns the commands directory path that was configured
    * by the `buttery.config`
    */
-  private get commandFilesOutDir() {
-    return path.resolve(this.config.root, "./bin/commands");
-  }
-
   private get commandFilesDir() {
     return path.resolve(this.config.root, "./commands");
   }
@@ -77,13 +75,13 @@ export class ESBuildPluginEntryTemplateTransformer {
    * set from the `buttery.config`
    */
   private get commandFilePaths() {
-    const commandFilesGlob = path.resolve(this.commandFilesOutDir, "./**.js");
+    const commandFilesGlob = path.resolve(this.commandFilesDir, "./**.ts");
     const commandFiles = glob.sync(commandFilesGlob, { follow: false });
     return commandFiles;
   }
 
   private getCommandFileName(commandFilePath: string) {
-    return path.basename(commandFilePath, ".js");
+    return path.basename(commandFilePath, ".ts");
   }
 
   private async ensureCommandFile(
@@ -93,6 +91,13 @@ export class ESBuildPluginEntryTemplateTransformer {
     const segmentCommandName = this.getCommandFileName(commandSegmentPath);
     try {
       const segmentCommandProperties = await import(commandSegmentPath);
+      // if (segmentCommandName === "cli.build") {
+      //   console.log({
+      //     segmentCommandName,
+      //     commandSegmentPath,
+      //     properties: segmentCommandProperties,
+      //   });
+      // }
       this.commandFileProperties[segmentCommandName] = {
         segment_name: segmentCommandName,
         meta: segmentCommandProperties?.meta,
@@ -104,16 +109,18 @@ export class ESBuildPluginEntryTemplateTransformer {
       console.info(`Cannot locate command file for '${segmentCommandName}'`);
       console.log("Auto creating command file with default values...");
       // TODO: Put any prompting behind --autofix
-      // TODO: NEXT STEPS!!! Move build to create commands
       const commandParentTemplate = await readFile(
-        path.resolve(import.meta.dirname, "./template.command-parent.hbs"),
+        path.resolve(
+          import.meta.dirname,
+          "../templates/template.command-parent.hbs"
+        ),
         { encoding: "utf-8" }
       );
       const template = handlebars.compile<{ command_name: string }>(
         commandParentTemplate.toString()
       )({ command_name: commandSegment });
       await writeFile(
-        path.resolve(this.commandFilesOutDir, `./${segmentCommandName}.js`),
+        path.resolve(this.commandFilesDir, `./${segmentCommandName}.js`),
         template,
         { encoding: "utf-8" }
       );
@@ -145,7 +152,7 @@ export class ESBuildPluginEntryTemplateTransformer {
         const commandSegmentName = commandSegments
           .slice(0, Number(commandSegmentIndex) + 1)
           .join(".");
-        const commandSegmentPath = `${this.commandFilesOutDir}/${commandSegmentName}`;
+        const commandSegmentPath = `${this.commandFilesDir}/${commandSegmentName}`;
         await this.ensureCommandFile(commandSegment, commandSegmentPath);
       }
     }
@@ -166,6 +173,7 @@ export class ESBuildPluginEntryTemplateTransformer {
         const segmentName = origArr
           .slice(0, Number(segmentIndex) + 1)
           .join(".");
+
         if (!currentCommandGraph[segment]) {
           currentCommandGraph[segment] = {
             properties: this.commandFileProperties[segmentName],
@@ -174,73 +182,73 @@ export class ESBuildPluginEntryTemplateTransformer {
         }
         currentCommandGraph = currentCommandGraph[segment].commands;
       });
-    }, {});
+    });
   }
 
-  private buildProgram() {
-    const buildCommand = (cmdObj: CommandObject, parentCmd: string) => {
-      Object.entries(cmdObj).forEach(([cmdName, { commands, properties }]) => {
-        const cmdVariableName = this.kebabToCamel(cmdName);
-        const hasSubCommands = Object.values(commands).length > 0;
+  private buildProgram(cmdObj: CommandObject, parentCmd: string) {
+    Object.entries(cmdObj).forEach(([cmdName, { commands, properties }]) => {
+      const cmdVariableName = this.kebabToCamel(cmdName);
+      const hasSubCommands = Object.values(commands).length > 0;
+      this.appendCommandStr(
+        `const ${cmdVariableName} = ${parentCmd}.command("${cmdName}")`
+      );
+
+      const props = properties as CommandProperties;
+
+      // meta
+      this.appendCommandStr(`.description("${props.meta.description}")`);
+
+      // args
+      const commandArgs = props.args ?? [];
+      commandArgs.forEach((arg) => {
+        const argName = arg.required ? `<${arg.name}>` : `[${arg.name}]`;
         this.appendCommandStr(
-          `const ${cmdVariableName} = ${parentCmd}.command("${cmdName}")`
+          `.argument(${argName}, ${arg.description}, ${arg.defaultValue})`
         );
+      });
 
-        const props = properties as CommandProperties;
-
-        // meta
-        this.appendCommandStr(`.description("${props.meta.description}")`);
-
-        // args
-        const commandArgs = props.args ?? [];
-        commandArgs.forEach((arg) => {
-          const argName = arg.required ? `<${arg.name}>` : `[${arg.name}]`;
-          this.appendCommandStr(
-            `.argument(${argName}, ${arg.description}, ${arg.defaultValue})`
-          );
-        });
-
-        // options
-        const commandOptions = props.options ?? {};
-        Object.entries(commandOptions).forEach(([flag, option]) => {
-          switch (option.type) {
-            case "value": {
-              return this.appendCommandStr(`.option(
+      // options
+      const commandOptions = props.options ?? {};
+      Object.entries(commandOptions).forEach(([flag, option]) => {
+        switch (option.type) {
+          case "value": {
+            return this.appendCommandStr(`.option(
                   "-${option.alias}, --${flag} <value>",
                   "${option.description}"
                 )`);
-            }
+          }
 
-            case "boolean": {
-              return this.appendCommandStr(`.option(
+          case "boolean": {
+            return this.appendCommandStr(`.option(
                   "-${option.alias}, --${flag}",
                  "${option.description}"
                 )`);
-            }
-
-            default:
-              exhaustiveMatchGuard(option);
-              return;
           }
-        });
 
-        // no sub commands on this command... an action should exist.
-        if (!hasSubCommands) {
-          const commandAction = props.action ?? undefined;
-          if (commandAction) {
-            this.appendCommandStr(
-              `.action(withParsedAction("${props.segment_name}"))`
-            );
-          }
+          default:
+            exhaustiveMatchGuard(option);
+            return;
         }
-
-        this.appendCommandStr(";");
-
-        return buildCommand(commands, cmdVariableName);
       });
-    };
 
-    buildCommand(this.commandGraph, "program");
+      // no sub commands on this command... an action should exist.
+      if (!hasSubCommands) {
+        const commandAction = props.action ?? undefined;
+        if (commandAction) {
+          this.appendCommandStr(
+            `.action(withParsedAction("${props.segment_name}"))`
+          );
+        } else {
+          console.warn(
+            `"${props.segment_name}" missing an action export. Please export an action.`
+          );
+        }
+      }
+
+      this.appendCommandStr(";");
+
+      return this.buildProgram(commands, cmdVariableName);
+    });
   }
 
   private logBuildIteration() {
@@ -254,21 +262,57 @@ export class ESBuildPluginEntryTemplateTransformer {
     return {
       name: "entry-template-transformer",
       setup: (build) => {
-        build.onLoad({ filter: /\.hbs$/ }, async (args) => {
-          this.logBuildIteration();
+        build.onResolve({ filter: /\.(ts)$/ }, async (args) => {
+          console.log("resolving commands", args);
+          return {
+            pluginData: { test: "" },
+          };
+        });
 
-          await rm(path.resolve(this.config.root, "./bin/index.js"), {
-            force: true,
-          });
+        build.onLoad({ filter: /\.(hbs|ts)$/ }, async (args) => {
+          console.log({ onLoad: "hbs|ts", args });
 
           // 1. ensure all of the command files exist
           await this.ensureCommands();
           // 2. get all of the command files and then parse them
           this.parseCommands();
-          // 3. build a program by iterating over each file using reduce (since all of the data will have been created at this point and all we're trying to do is create a string)
-          this.buildProgram();
+          // // 3. build a program by iterating over each file using reduce (since all of the data will have been created at this point and all we're trying to do is create a string)
+          // this.buildProgram();
+          // // 4. Read the entry template and compile it with the data
+          // const entryTemplateFile = await readFile(
+          //   path.resolve(import.meta.dirname, "../templates/template.index.hbs")
+          // );
+          // const entryTemplate = entryTemplateFile.toString();
+          // const entryTemplateData: EntryTemplateData = {
+          //   cli_name: config.name,
+          //   cli_description: config.description,
+          //   cli_version: config.version,
+          //   cli_commands: this.commandStr,
+          // };
+          // const template = handlebars.compile<EntryTemplateData>(entryTemplate);
+          // const templateResult = template(entryTemplateData);
+
+          // TODO: Only do this on --local
+          const srcDir = import.meta.dirname;
+          const srcFilesGlob = path.resolve(srcDir, "./**.ts");
+          const srcFiles = glob.sync(srcFilesGlob, { follow: false });
+
+          return {
+            contents: "",
+            loader: "ts",
+            watchFiles: [args.path, ...srcFiles, ...this.commandFilePaths],
+            watchDirs: [this.commandFilesDir],
+          };
+        });
+        build.onEnd(async () => {
+          this.logBuildIteration();
+
+          this.buildProgram(this.commandGraph, "program");
+
           // 4. Read the entry template and compile it with the data
-          const entryTemplateFile = await readFile(args.path);
+          const entryTemplateFile = await readFile(
+            path.resolve(import.meta.dirname, "../templates/template.index.hbs")
+          );
           const entryTemplate = entryTemplateFile.toString();
           const entryTemplateData: EntryTemplateData = {
             cli_name: config.name,
@@ -276,22 +320,28 @@ export class ESBuildPluginEntryTemplateTransformer {
             cli_version: config.version,
             cli_commands: this.commandStr,
           };
+
+          // Reset some internally tracked values
+          this.commandStr = "";
+          this.commandGraph = {};
+
           const template = handlebars.compile<EntryTemplateData>(entryTemplate);
           const templateResult = template(entryTemplateData);
+          console.log(templateResult);
 
-          // TODO: Only do this on --local
-          const srcDir = import.meta.dirname;
-          const srcFilesGlob = path.resolve(srcDir, "./**.ts");
-          const srcFiles = glob.sync(srcFilesGlob, { follow: false });
-
-          this.commandStr = "";
-
-          return {
-            contents: templateResult,
-            loader: "ts",
-            watchFiles: [args.path, ...srcFiles, ...this.commandFilePaths],
-            watchDirs: [this.commandFilesOutDir],
-          };
+          await esbuild.build({
+            ...createEsbuildOptions({
+              stdin: {
+                contents: templateResult,
+                sourcefile: "index.js",
+                loader: "ts",
+              },
+              outfile: path.resolve(import.meta.dirname, "../bin/index.js"),
+            }),
+            bundle: true,
+            minify: true,
+            external: ["commander"],
+          });
         });
       },
     };

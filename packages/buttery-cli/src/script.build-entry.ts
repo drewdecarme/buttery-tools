@@ -1,9 +1,9 @@
 import path from "node:path";
 import * as esbuild from "esbuild";
 import { BuildScriptArgs } from "./script.build";
-import { EsbuildPluginWatchLogger } from "./util.esbuild-plugin-watch-logger";
 import { ESBuildPluginEntryTemplateTransformer } from "./util.esbuild-plugin-entry-template-transformer";
 import { createEsbuildOptions } from "./config.esbuild";
+import { glob } from "glob";
 
 // TODO: Fix description
 /**
@@ -24,9 +24,14 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
   try {
     const entryFileTemplate = path.resolve(
       import.meta.dirname,
-      "./template.index.hbs"
+      "../templates/template.index.hbs"
     );
-    const entryFileOutFile = path.join(config.root, "./bin/index.js");
+    const commandFilesDir = path.resolve(config.root, "./commands");
+    const commandFilesGlob = path.resolve(commandFilesDir, "./*.ts");
+    const commandFiles = glob.sync(commandFilesGlob, {
+      follow: false,
+    });
+    const outFile = path.join(config.root, "./bin/index.js");
 
     // Create a .hbs plugin transformer
     const ESBuildEntryTemplateTransformer =
@@ -36,9 +41,9 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
 
     // Create the build options
     const esbuildOptions = createEsbuildOptions({
-      entryPoints: [entryFileTemplate],
+      entryPoints: [entryFileTemplate, ...commandFiles],
       plugins,
-      outfile: entryFileOutFile,
+      outdir: outFile,
     });
 
     // Build when not in watch
@@ -46,27 +51,18 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
       return await esbuild.build(esbuildOptions);
     }
 
-    // Don't run any development commands unless we're developing
-    // locally to the CLI builder. This ensures that if the builder
-    // is being run in watch mode that it's also not building
-    // any src directory files from another package.
-    if (!argv.local) return;
-
-    // Run in development mode if our watch command exists.
-    // console.log(`Watching '${entryFileDir}' for changes...`);
-
     // Create a watcher plugin
-    const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
-      cliName: config.name,
-      dirname: "entry",
-    });
+    // const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
+    //   cliName: config.name,
+    //   dirname: "entry",
+    // });
 
     // Build the esbuild context and watch it to re-build
     // files on change
     const context = await esbuild.context({
       ...esbuildOptions,
       minify: false,
-      plugins: [...plugins, ESBuildWatchLogger.getPlugin()],
+      plugins,
     });
     return await context.watch();
   } catch (error) {

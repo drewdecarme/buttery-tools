@@ -64,7 +64,7 @@ export async function build(parsedArgs: BuildArgs) {
     console.log("Cleaning distribution directories... done.");
 
     // build the commands directory
-    await buildCommands(params);
+    // await buildCommands(params);
 
     await Promise.all([
       buildConfig({ ...params, configFilePath }),
