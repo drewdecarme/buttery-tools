@@ -36,15 +36,13 @@ type CommandOptionTypeBoolean = CommandOptionShared & {
 };
 type CommandOptionType = CommandOptionTypeValue | CommandOptionTypeBoolean;
 
-export type CommandOption = {
-  [key: string]: CommandOptionType;
+export type CommandOptions<T extends string> = {
+  [key in T]: CommandOptionType;
 };
-export type CommandOptions = CommandOption;
 
-export type CommandAction<
-  A extends CommandArgs = [],
-  O extends CommandOptions = CommandOptions
-> = (params: {
-  args: { [key in A[0]["name"]]: string };
-  options: { [key in keyof O]: string };
-}) => Promise<void>;
+// @ts-ignore
+export type CommandAction<O extends CommandOptions = CommandOptions> =
+  (params: {
+    args: {};
+    options: { [key in keyof O]: string };
+  }) => Promise<void>;

@@ -5,7 +5,8 @@ import path from "path";
 function withParsedAction(segmentCommand) {
   return async function(...restArgs) {
     try {
-      const commandPath = path.resolve(import.meta.dirname, `./commands/${segmentCommand}.js`);
+      const timestamp = new Date().getTime();
+      const commandPath = path.resolve(import.meta.dirname, `./commands/${segmentCommand}.js?t=${timestamp}`);
       const command = await import(commandPath);
       restArgs.pop();
       const options = restArgs[restArgs.length - 1];

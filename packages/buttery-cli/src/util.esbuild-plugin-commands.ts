@@ -24,7 +24,7 @@ type CommandProperties = {
   segment_name: string;
   path: string;
   meta: CommandMeta;
-  options?: CommandOptions;
+  options?: CommandOptions<"">;
   args?: CommandArgs;
   action?: CommandAction;
 };
@@ -212,7 +212,7 @@ export class ESBuildPluginCommands {
       });
 
       // options
-      const commandOptions = props.options ?? {};
+      const commandOptions = props.options ?? ({} as CommandOptions<"">);
       Object.entries(commandOptions).forEach(([flag, option]) => {
         switch (option.type) {
           case "value": {
@@ -273,7 +273,7 @@ export class ESBuildPluginCommands {
         build.onStart(() => {
           this.logRebuild();
         });
-        build.onLoad({ filter: /\.(ts)$/ }, async (args) => {
+        build.onLoad({ filter: /\/commands\/.*\.ts$/ }, async (args) => {
           // 1. ensure all of the command files exist
           await this.ensureCommandHierarchy(args.path);
 

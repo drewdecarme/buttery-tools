@@ -6,8 +6,8 @@ export const meta: CommandMeta = {
   description: "Build your file-based CLI",
 };
 
-export const options: CommandOptions = {
-  ["autofix"]: {
+export const options: CommandOptions<"autofix"> = {
+  autofix: {
     alias: "af",
     description:
       "Prompts the user to add a description to any missing command files during the build process",
@@ -16,7 +16,8 @@ export const options: CommandOptions = {
   },
 };
 
-export const action: CommandAction<typeof options> = async (args) => {
+export const action: CommandAction<typeof options> = async ({ options }) => {
   try {
+    await build({ watch: false, local: false, autofix: options.autofix });
   } catch (error) {}
 };

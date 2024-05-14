@@ -8,7 +8,6 @@ import path from "path";
 import type { BuildArgs } from "../scripts/build";
 import { buildLib } from "./script.build-lib";
 import { buildConfig } from "./script.build-config";
-import { buildCommands } from "./script.build-commands";
 
 export type BuildScriptArgs = {
   config: CLIConfig;
