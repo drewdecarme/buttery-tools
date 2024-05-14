@@ -2,7 +2,7 @@ import type { Plugin } from "esbuild";
 import { readFile, writeFile } from "fs/promises";
 import { glob } from "glob";
 import handlebars from "handlebars";
-import path from "path";
+import path, { dirname } from "path";
 import {
   CLIConfig,
   CommandAction,
@@ -13,6 +13,7 @@ import {
 import { exhaustiveMatchGuard } from "./util.parse-command-file-properties";
 import { createEsbuildOptions } from "./config.esbuild";
 import * as esbuild from "esbuild";
+import { fileURLToPath } from "node:url";
 
 export type EntryTemplateData = {
   cli_name: string;
@@ -71,18 +72,22 @@ export class ESBuildPluginEntryTemplateTransformer {
     return path.resolve(this.config.root, "./commands");
   }
 
-  /**
-   * Returns all of the command file paths in the commands directory
-   * set from the `buttery.config`
-   */
-  private get commandFilePaths() {
-    const commandFilesGlob = path.resolve(this.commandFilesDir, "./**.ts");
-    const commandFiles = glob.sync(commandFilesGlob, { follow: false });
-    return commandFiles;
-  }
-
   private getCommandFileName(commandFilePath: string) {
     return path.basename(commandFilePath, ".ts");
+  }
+
+  /**
+   * Dynamically import a command by cache busting the import
+   * cache by adding a number representation of now. This forces
+   * import to go out and fetch a new instance.
+   */
+  private async importCommand(modulePath: string) {
+    // Construct a new import specifier with a unique URL timestamp query parameter
+    const timestamp = new Date().getTime();
+    const importSpecifier = `${modulePath}?t=${timestamp}`;
+
+    // Import the module fresh
+    return await import(importSpecifier);
   }
 
   private async ensureCommandFile(
@@ -91,14 +96,10 @@ export class ESBuildPluginEntryTemplateTransformer {
   ) {
     const segmentCommandName = this.getCommandFileName(commandSegmentPath);
     try {
-      const segmentCommandProperties = await import(commandSegmentPath);
-      if (segmentCommandName === "cli.build") {
-        console.log({
-          segmentCommandName,
-          commandSegmentPath,
-          properties: segmentCommandProperties,
-        });
-      }
+      const segmentCommandProperties = await this.importCommand(
+        commandSegmentPath
+      );
+
       this.commandFileProperties[segmentCommandName] = {
         segment_name: segmentCommandName,
         path: commandSegmentPath,
@@ -122,7 +123,7 @@ export class ESBuildPluginEntryTemplateTransformer {
         commandParentTemplate.toString()
       )({ command_name: commandSegment });
       await writeFile(
-        path.resolve(this.commandFilesDir, `./${segmentCommandName}.js`),
+        path.resolve(this.commandFilesDir, `./${segmentCommandName}.ts`),
         template,
         { encoding: "utf-8" }
       );
@@ -152,19 +153,19 @@ export class ESBuildPluginEntryTemplateTransformer {
       const commandSegmentName = commandSegments
         .slice(0, Number(commandSegmentIndex) + 1)
         .join(".");
-      const commandSegmentPath = `${this.commandFilesDir}/${commandSegmentName}`;
+      const commandSegmentPath = `${this.commandFilesDir}/${commandSegmentName}.ts`;
       await this.ensureCommandFile(commandSegment, commandSegmentPath);
     }
   }
 
   /**
-   * Parses all of the commandFiles and then returns the result
+   * Creates a deeply nested graph of all of the commands
+   * and their associated child commands. This is done
+   * so that we can recursively build the commander program
+   * by processing the commands key.
    */
   private createCommandGraph() {
-    const commandFilePaths = this.commandFilePaths;
-
-    commandFilePaths.forEach((commandFilePath) => {
-      const commandFileName = this.getCommandFileName(commandFilePath);
+    Object.keys(this.commandFileProperties).forEach((commandFileName) => {
       const commandSegments = commandFileName.split(".");
       let currentCommandGraph = this.commandGraph;
 
@@ -173,15 +174,23 @@ export class ESBuildPluginEntryTemplateTransformer {
           .slice(0, Number(segmentIndex) + 1)
           .join(".");
 
-        currentCommandGraph[segment] = {
-          properties: this.commandFileProperties[segmentName],
-          commands: {},
-        };
+        if (!currentCommandGraph[segment]) {
+          currentCommandGraph[segment] = {
+            properties: this.commandFileProperties[segmentName],
+            commands: {},
+          };
+        }
         currentCommandGraph = currentCommandGraph[segment].commands;
       });
     });
   }
 
+  /**
+   * Recursively builds a commander string in order to be
+   * interpolated onto the index template. This string
+   * recursively loops through all of the command relationships
+   * in order to build the program string.
+   */
   private buildProgram(cmdObj: CommandObject, parentCmd: string) {
     Object.entries(cmdObj).forEach(([cmdName, { commands, properties }]) => {
       const cmdVariableName = this.kebabToCamel(cmdName);
@@ -248,9 +257,13 @@ export class ESBuildPluginEntryTemplateTransformer {
     });
   }
 
-  private logBuildIteration() {
-    console.log(`Compiling template x${this.runNumber}`);
+  private logRebuild() {
     this.runNumber++;
+    console.log(`Building program x${this.runNumber}...`);
+  }
+
+  private logBuildComplete() {
+    console.log(`Building program x${this.runNumber}... complete.`);
   }
 
   getPlugin(): Plugin {
@@ -259,23 +272,12 @@ export class ESBuildPluginEntryTemplateTransformer {
     return {
       name: "entry-template-transformer",
       setup: (build) => {
+        build.onStart(() => {
+          this.logRebuild();
+        });
         build.onLoad({ filter: /\.(ts)$/ }, async (args) => {
           // 1. ensure all of the command files exist
           await this.ensureCommandHierarchy(args.path);
-          // this.buildProgram();
-          // // 4. Read the entry template and compile it with the data
-          // const entryTemplateFile = await readFile(
-          //   path.resolve(import.meta.dirname, "../templates/template.index.hbs")
-          // );
-          // const entryTemplate = entryTemplateFile.toString();
-          // const entryTemplateData: EntryTemplateData = {
-          //   cli_name: config.name,
-          //   cli_description: config.description,
-          //   cli_version: config.version,
-          //   cli_commands: this.commandStr,
-          // };
-          // const template = handlebars.compile<EntryTemplateData>(entryTemplate);
-          // const templateResult = template(entryTemplateData);
 
           // TODO: Only do this on --local
           // const srcDir = import.meta.dirname;
@@ -285,11 +287,10 @@ export class ESBuildPluginEntryTemplateTransformer {
           return undefined;
         });
         build.onEnd(async () => {
-          this.logBuildIteration();
+          this.logBuildComplete();
 
           // 2. get all of the command files and then parse them
           this.createCommandGraph();
-          console.log(this.commandFileProperties["cli.build"]);
 
           // // 3. build a program by iterating over each file using reduce (since all of the data will have been created at this point and all we're trying to do is create a string)
           this.buildProgram(this.commandGraph, "program");
@@ -310,6 +311,8 @@ export class ESBuildPluginEntryTemplateTransformer {
           this.commandStr = "";
           this.commandGraph = {};
 
+          // Compile the template and then build the template to the
+          // correct directory
           const template = handlebars.compile<EntryTemplateData>(entryTemplate);
           const templateResult = template(entryTemplateData);
 
@@ -323,7 +326,7 @@ export class ESBuildPluginEntryTemplateTransformer {
             }),
             bundle: true,
             minify: true,
-            external: ["commander"],
+            external: ["commander"], // externalize commander
           });
         });
       },

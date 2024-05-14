@@ -6,7 +6,7 @@ export const meta: CommandMeta = {
 };
 
 export const options: CommandOptions = {
-  ["autofix"]: {
+  ["auto-fix"]: {
     alias: "af",
     description:
       "Prompts the user to add a description to any missing command files during the build process",

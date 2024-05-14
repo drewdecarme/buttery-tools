@@ -23,6 +23,7 @@
     "commands",
     "src",
     "scripts",
+    "templates",
     "types",
     "lib"
   ]
