@@ -311,8 +311,8 @@ export class ESBuildPluginCommands {
           };
 
           // Reset some internally tracked values
-          this.commandStr = "";
           this.commandGraph = {};
+          this.commandStr = "";
 
           // Compile the template and then build the template to the
           // correct directory
