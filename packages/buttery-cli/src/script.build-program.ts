@@ -20,18 +20,14 @@ import { glob } from "glob";
 // -- SRC --
 // delete the existing index.ts file, compile the index template and write it
 // to the src directory so it can be transpiled and built again.
-export async function buildEntry({ config, argv }: BuildScriptArgs) {
+export async function buildProgram({ config, argv }: BuildScriptArgs) {
   try {
-    const entryFileTemplate = path.resolve(
-      import.meta.dirname,
-      "../templates/template.index.hbs"
-    );
     const commandFilesDir = path.resolve(config.root, "./commands");
     const commandFilesGlob = path.resolve(commandFilesDir, "./*.ts");
     const commandFiles = glob.sync(commandFilesGlob, {
       follow: false,
     });
-    const outFile = path.join(config.root, "./bin/index.js");
+    const outDir = path.join(config.root, "./bin/commands");
 
     // Create a .hbs plugin transformer
     const ESBuildEntryTemplateTransformer =
@@ -41,9 +37,9 @@ export async function buildEntry({ config, argv }: BuildScriptArgs) {
 
     // Create the build options
     const esbuildOptions = createEsbuildOptions({
-      entryPoints: [entryFileTemplate, ...commandFiles],
+      entryPoints: commandFiles,
       plugins,
-      outdir: outFile,
+      outdir: outDir,
     });
 
     // Build when not in watch

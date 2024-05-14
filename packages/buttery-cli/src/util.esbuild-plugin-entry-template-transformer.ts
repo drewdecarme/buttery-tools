@@ -23,6 +23,7 @@ export type EntryTemplateData = {
 
 type CommandProperties = {
   segment_name: string;
+  path: string;
   meta: CommandMeta;
   options?: CommandOptions;
   args?: CommandArgs;
@@ -91,15 +92,16 @@ export class ESBuildPluginEntryTemplateTransformer {
     const segmentCommandName = this.getCommandFileName(commandSegmentPath);
     try {
       const segmentCommandProperties = await import(commandSegmentPath);
-      // if (segmentCommandName === "cli.build") {
-      //   console.log({
-      //     segmentCommandName,
-      //     commandSegmentPath,
-      //     properties: segmentCommandProperties,
-      //   });
-      // }
+      if (segmentCommandName === "cli.build") {
+        console.log({
+          segmentCommandName,
+          commandSegmentPath,
+          properties: segmentCommandProperties,
+        });
+      }
       this.commandFileProperties[segmentCommandName] = {
         segment_name: segmentCommandName,
+        path: commandSegmentPath,
         meta: segmentCommandProperties?.meta,
         options: segmentCommandProperties?.options,
         args: segmentCommandProperties?.args,
@@ -130,6 +132,8 @@ export class ESBuildPluginEntryTemplateTransformer {
       );
       const segmentCommandProperties = await import(commandSegmentPath);
       this.commandFileProperties[segmentCommandName] = {
+        segment_name: segmentCommandName,
+        path: commandSegmentPath,
         meta: segmentCommandProperties?.meta,
       };
     }
@@ -139,29 +143,24 @@ export class ESBuildPluginEntryTemplateTransformer {
    * Get's all of the existing command files, loops through
    * them and ensures that all of the proper files have been created
    */
-  private async ensureCommands() {
-    const commandFilePaths = this.commandFilePaths;
+  private async ensureCommandHierarchy(commandFilePath: string) {
+    const commandFileName = this.getCommandFileName(commandFilePath);
+    const commandSegments = commandFileName.split(".");
 
-    for (const commandFilePathIndex in commandFilePaths) {
-      const commandFilePath = commandFilePaths[commandFilePathIndex];
-      const commandFileName = this.getCommandFileName(commandFilePath);
-      const commandSegments = commandFileName.split(".");
-
-      for (const commandSegmentIndex in commandSegments) {
-        const commandSegment = commandSegments[commandSegmentIndex];
-        const commandSegmentName = commandSegments
-          .slice(0, Number(commandSegmentIndex) + 1)
-          .join(".");
-        const commandSegmentPath = `${this.commandFilesDir}/${commandSegmentName}`;
-        await this.ensureCommandFile(commandSegment, commandSegmentPath);
-      }
+    for (const commandSegmentIndex in commandSegments) {
+      const commandSegment = commandSegments[commandSegmentIndex];
+      const commandSegmentName = commandSegments
+        .slice(0, Number(commandSegmentIndex) + 1)
+        .join(".");
+      const commandSegmentPath = `${this.commandFilesDir}/${commandSegmentName}`;
+      await this.ensureCommandFile(commandSegment, commandSegmentPath);
     }
   }
 
   /**
    * Parses all of the commandFiles and then returns the result
    */
-  private parseCommands() {
+  private createCommandGraph() {
     const commandFilePaths = this.commandFilePaths;
 
     commandFilePaths.forEach((commandFilePath) => {
@@ -174,12 +173,10 @@ export class ESBuildPluginEntryTemplateTransformer {
           .slice(0, Number(segmentIndex) + 1)
           .join(".");
 
-        if (!currentCommandGraph[segment]) {
-          currentCommandGraph[segment] = {
-            properties: this.commandFileProperties[segmentName],
-            commands: {},
-          };
-        }
+        currentCommandGraph[segment] = {
+          properties: this.commandFileProperties[segmentName],
+          commands: {},
+        };
         currentCommandGraph = currentCommandGraph[segment].commands;
       });
     });
@@ -262,21 +259,9 @@ export class ESBuildPluginEntryTemplateTransformer {
     return {
       name: "entry-template-transformer",
       setup: (build) => {
-        build.onResolve({ filter: /\.(ts)$/ }, async (args) => {
-          console.log("resolving commands", args);
-          return {
-            pluginData: { test: "" },
-          };
-        });
-
-        build.onLoad({ filter: /\.(hbs|ts)$/ }, async (args) => {
-          console.log({ onLoad: "hbs|ts", args });
-
+        build.onLoad({ filter: /\.(ts)$/ }, async (args) => {
           // 1. ensure all of the command files exist
-          await this.ensureCommands();
-          // 2. get all of the command files and then parse them
-          this.parseCommands();
-          // // 3. build a program by iterating over each file using reduce (since all of the data will have been created at this point and all we're trying to do is create a string)
+          await this.ensureCommandHierarchy(args.path);
           // this.buildProgram();
           // // 4. Read the entry template and compile it with the data
           // const entryTemplateFile = await readFile(
@@ -293,20 +278,20 @@ export class ESBuildPluginEntryTemplateTransformer {
           // const templateResult = template(entryTemplateData);
 
           // TODO: Only do this on --local
-          const srcDir = import.meta.dirname;
-          const srcFilesGlob = path.resolve(srcDir, "./**.ts");
-          const srcFiles = glob.sync(srcFilesGlob, { follow: false });
+          // const srcDir = import.meta.dirname;
+          // const srcFilesGlob = path.resolve(srcDir, "./**.ts");
+          // const srcFiles = glob.sync(srcFilesGlob, { follow: false });
 
-          return {
-            contents: "",
-            loader: "ts",
-            watchFiles: [args.path, ...srcFiles, ...this.commandFilePaths],
-            watchDirs: [this.commandFilesDir],
-          };
+          return undefined;
         });
         build.onEnd(async () => {
           this.logBuildIteration();
 
+          // 2. get all of the command files and then parse them
+          this.createCommandGraph();
+          console.log(this.commandFileProperties["cli.build"]);
+
+          // // 3. build a program by iterating over each file using reduce (since all of the data will have been created at this point and all we're trying to do is create a string)
           this.buildProgram(this.commandGraph, "program");
 
           // 4. Read the entry template and compile it with the data
@@ -327,13 +312,11 @@ export class ESBuildPluginEntryTemplateTransformer {
 
           const template = handlebars.compile<EntryTemplateData>(entryTemplate);
           const templateResult = template(entryTemplateData);
-          console.log(templateResult);
 
           await esbuild.build({
             ...createEsbuildOptions({
               stdin: {
                 contents: templateResult,
-                sourcefile: "index.js",
                 loader: "ts",
               },
               outfile: path.resolve(import.meta.dirname, "../bin/index.js"),

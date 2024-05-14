@@ -1,7 +1,7 @@
 import { cosmiconfig } from "cosmiconfig";
 import type { CLIConfig } from "../lib/types";
 
-import { buildEntry } from "./script.build-entry";
+import { buildProgram } from "./script.build-program";
 import { buildPackageJson } from "./script.build-package-json";
 import { rm } from "fs/promises";
 import path from "path";
@@ -63,13 +63,9 @@ export async function build(parsedArgs: BuildArgs) {
     await Promise.all(foldersToDelete);
     console.log("Cleaning distribution directories... done.");
 
-    // build the commands directory
-    // await buildCommands(params);
-
     await Promise.all([
       buildConfig({ ...params, configFilePath }),
-      buildEntry(params),
-      // buildCommands(params),
+      buildProgram(params),
       buildPackageJson(params),
       buildLib(params),
     ]);
