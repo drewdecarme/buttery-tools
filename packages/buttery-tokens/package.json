@@ -18,5 +18,9 @@
   },
   "dependencies": {
     "@buttery/cli": "workspace:^"
+  },
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "buttery-tokens": "./bin/index.js"
   }
 }

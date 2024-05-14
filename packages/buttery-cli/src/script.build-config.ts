@@ -10,7 +10,7 @@ export const buildConfig = async ({
   configFilePath,
 }: BuildScriptArgs & { configFilePath: string }) => {
   try {
-    const configFileOutDir = path.resolve(import.meta.dirname, "../bin");
+    const configFileOutDir = path.resolve(config.root, "./bin");
 
     // Create the esbuild options
     const esbuildOptions = createEsbuildOptions({

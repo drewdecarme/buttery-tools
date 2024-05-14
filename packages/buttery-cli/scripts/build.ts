@@ -1,13 +1,17 @@
+import { cp } from "node:fs/promises";
 import { build } from "../src/script.build.js";
+import path from "node:path";
 
 export type BuildArgs = {
   watch: boolean;
   local: boolean;
+  autofix?: boolean;
 };
 
 const defaultBuildArgs: BuildArgs = {
   watch: false,
   local: false,
+  autofix: false,
 };
 
 /**
@@ -32,6 +36,13 @@ export const parseBuildArgs = (args: typeof process.argv): BuildArgs => {
 try {
   const args = process.argv.slice(2);
   const parsedArgs = parseBuildArgs(args);
+
+  await cp(
+    path.resolve(import.meta.dirname, "../templates/"),
+    path.resolve(import.meta.dirname, "../bin/templates/"),
+    { recursive: true }
+  );
+
   await build(parsedArgs);
 } catch (error) {
   console.error(error);

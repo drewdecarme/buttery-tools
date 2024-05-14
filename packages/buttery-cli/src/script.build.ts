@@ -53,7 +53,12 @@ export async function build(parsedArgs: BuildArgs) {
 
     // delete the entire bin & dist folder to make it fresh
     console.log("Cleaning distribution directories...");
-    const foldersToDelete = ["./bin", "./dist"].map((folder) =>
+    const foldersToDelete = [
+      "./bin/index.js",
+      "./bin/buttery-config.js",
+      "./bin/commands",
+      "./dist",
+    ].map((folder) =>
       rm(path.resolve(config.root, folder), {
         recursive: true,
         force: true,

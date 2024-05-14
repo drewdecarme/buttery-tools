@@ -1,5 +1,5 @@
 import type { Plugin } from "esbuild";
-import { readFile, writeFile } from "fs/promises";
+import { access, constants, readFile, writeFile } from "fs/promises";
 import handlebars from "handlebars";
 import path from "path";
 import {
@@ -9,9 +9,9 @@ import {
   CommandMeta,
   CommandOptions,
 } from "../lib";
-import { exhaustiveMatchGuard } from "./util.parse-command-file-properties";
 import { createEsbuildOptions } from "./config.esbuild";
 import * as esbuild from "esbuild";
+import { exhaustiveMatchGuard } from "./util.exhaustive-match-guard";
 
 export type EntryTemplateData = {
   cli_name: string;
@@ -22,7 +22,6 @@ export type EntryTemplateData = {
 
 type CommandProperties = {
   segment_name: string;
-  path: string;
   meta: CommandMeta;
   options?: CommandOptions<"">;
   args?: CommandArgs;
@@ -42,16 +41,21 @@ type CommandObject = {
 export class ESBuildPluginCommands {
   config: CLIConfig;
   private runNumber: number;
-  private commandFileProperties: Record<string, Record<string, unknown>>;
+  private commandFilesSrcDir: string;
+  private commandFilesOutDir: string;
+  private commandFiles: Set<string>;
   private commandGraph: CommandObject;
   private commandStr: string;
 
   constructor(config: CLIConfig) {
     this.config = config;
     this.runNumber = 0;
-    this.commandFileProperties = {};
+    this.commandFiles = new Set();
     this.commandGraph = {};
     this.commandStr = "";
+
+    this.commandFilesSrcDir = path.resolve(this.config.root, "./commands");
+    this.commandFilesOutDir = path.resolve(this.config.root, "./bin/commands");
   }
 
   private kebabToCamel(kebab: string): string {
@@ -66,9 +70,6 @@ export class ESBuildPluginCommands {
    * Returns the commands directory path that was configured
    * by the `buttery.config`
    */
-  private get commandFilesDir() {
-    return path.resolve(this.config.root, "./commands");
-  }
 
   private getCommandFileName(commandFilePath: string) {
     return path.basename(commandFilePath, ".ts");
@@ -88,25 +89,20 @@ export class ESBuildPluginCommands {
     return await import(importSpecifier);
   }
 
+  /**
+   * Creates files that might be missing from the command hierarchy
+   */
   private async ensureCommandFile(
     commandSegment: string,
-    commandSegmentPath: string
+    commandSegmentPathSrc: string
   ) {
-    const segmentCommandName = this.getCommandFileName(commandSegmentPath);
-    try {
-      const segmentCommandProperties = await this.importCommand(
-        commandSegmentPath
-      );
+    const segmentCommandName = this.getCommandFileName(commandSegmentPathSrc);
+    this.commandFiles.add(segmentCommandName);
 
-      this.commandFileProperties[segmentCommandName] = {
-        segment_name: segmentCommandName,
-        path: commandSegmentPath,
-        meta: segmentCommandProperties?.meta,
-        options: segmentCommandProperties?.options,
-        args: segmentCommandProperties?.args,
-        action: segmentCommandProperties?.action,
-      };
+    try {
+      await access(commandSegmentPathSrc, constants.F_OK);
     } catch (error) {
+      console.log(error);
       console.info(`Cannot locate command file for '${segmentCommandName}'`);
       console.log("Auto creating command file with default values...");
       // TODO: Put any prompting behind --autofix
@@ -121,7 +117,7 @@ export class ESBuildPluginCommands {
         commandParentTemplate.toString()
       )({ command_name: commandSegment });
       await writeFile(
-        path.resolve(this.commandFilesDir, `./${segmentCommandName}.ts`),
+        path.resolve(this.commandFilesSrcDir, `./${segmentCommandName}.ts`),
         template,
         { encoding: "utf-8" }
       );
@@ -129,12 +125,6 @@ export class ESBuildPluginCommands {
       console.warn(
         "A stub file has been created for you. You should ensure that you create the command in the commands dir. If you want to do this automatically then use --autofix"
       );
-      const segmentCommandProperties = await import(commandSegmentPath);
-      this.commandFileProperties[segmentCommandName] = {
-        segment_name: segmentCommandName,
-        path: commandSegmentPath,
-        meta: segmentCommandProperties?.meta,
-      };
     }
   }
 
@@ -151,7 +141,7 @@ export class ESBuildPluginCommands {
       const commandSegmentName = commandSegments
         .slice(0, Number(commandSegmentIndex) + 1)
         .join(".");
-      const commandSegmentPath = `${this.commandFilesDir}/${commandSegmentName}.ts`;
+      const commandSegmentPath = `${this.commandFilesSrcDir}/${commandSegmentName}.ts`;
       await this.ensureCommandFile(commandSegment, commandSegmentPath);
     }
   }
@@ -162,25 +152,40 @@ export class ESBuildPluginCommands {
    * so that we can recursively build the commander program
    * by processing the commands key.
    */
-  private createCommandGraph() {
-    Object.keys(this.commandFileProperties).forEach((commandFileName) => {
+  private async createCommandGraph() {
+    const commandFiles = [...this.commandFiles.values()];
+
+    for (const commandFileName of commandFiles) {
       const commandSegments = commandFileName.split(".");
       let currentCommandGraph = this.commandGraph;
 
-      commandSegments.forEach((segment, segmentIndex, origArr) => {
-        const segmentName = origArr
-          .slice(0, Number(segmentIndex) + 1)
-          .join(".");
-
-        if (!currentCommandGraph[segment]) {
-          currentCommandGraph[segment] = {
-            properties: this.commandFileProperties[segmentName],
-            commands: {},
+      for (const commandSegment of commandSegments) {
+        try {
+          const commandFilePath = path.resolve(
+            this.commandFilesOutDir,
+            `./${commandFileName}.js`
+          );
+          const commandFileContent = await this.importCommand(commandFilePath);
+          const properties: CommandProperties = {
+            meta: commandFileContent?.meta,
+            segment_name: commandFileName,
+            action: commandFileContent?.action,
+            args: commandFileContent?.args,
+            options: commandFileContent?.options,
           };
+          if (!currentCommandGraph[commandSegment]) {
+            currentCommandGraph[commandSegment] = {
+              properties,
+              commands: {},
+            };
+          }
+        } catch (error) {
+          throw error;
         }
-        currentCommandGraph = currentCommandGraph[segment].commands;
-      });
-    });
+
+        currentCommandGraph = currentCommandGraph[commandSegment].commands;
+      }
+    }
   }
 
   /**
@@ -189,7 +194,7 @@ export class ESBuildPluginCommands {
    * recursively loops through all of the command relationships
    * in order to build the program string.
    */
-  private buildProgram(cmdObj: CommandObject, parentCmd: string) {
+  private buildCommands(cmdObj: CommandObject, parentCmd: string) {
     Object.entries(cmdObj).forEach(([cmdName, { commands, properties }]) => {
       const cmdVariableName = this.kebabToCamel(cmdName);
       const hasSubCommands = Object.values(commands).length > 0;
@@ -251,7 +256,7 @@ export class ESBuildPluginCommands {
 
       this.appendCommandStr(";");
 
-      return this.buildProgram(commands, cmdVariableName);
+      return this.buildCommands(commands, cmdVariableName);
     });
   }
 
@@ -268,7 +273,7 @@ export class ESBuildPluginCommands {
     const config = this.config;
 
     return {
-      name: "entry-template-transformer",
+      name: "commands",
       setup: (build) => {
         build.onStart(() => {
           this.logRebuild();
@@ -288,10 +293,10 @@ export class ESBuildPluginCommands {
           this.logBuildComplete();
 
           // 2. get all of the command files and then parse them
-          this.createCommandGraph();
+          await this.createCommandGraph();
 
           // // 3. build a program by iterating over each file using reduce (since all of the data will have been created at this point and all we're trying to do is create a string)
-          this.buildProgram(this.commandGraph, "program");
+          this.buildCommands(this.commandGraph, "program");
 
           // 4. Read the entry template and compile it with the data
           const entryTemplateFile = await readFile(
@@ -320,7 +325,7 @@ export class ESBuildPluginCommands {
                 contents: templateResult,
                 loader: "ts",
               },
-              outfile: path.resolve(import.meta.dirname, "../bin/index.js"),
+              outfile: path.resolve(this.config.root, "./bin/index.js"),
             }),
             bundle: true,
             minify: true,
