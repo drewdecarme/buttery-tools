@@ -18,6 +18,8 @@ export const options: CommandOptions<"autofix"> = {
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
   try {
-    await build({ watch: false, local: false, autofix: options.autofix });
-  } catch (error) {}
+    await build({ watch: false, local: false });
+  } catch (error) {
+    throw error;
+  }
 };

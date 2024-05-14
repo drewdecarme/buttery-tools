@@ -12,8 +12,9 @@ import { BuildScriptArgs } from "./script.build";
 export async function buildPackageJson({ config }: BuildScriptArgs) {
   try {
     const packageJsonPath = path.resolve(config.root, "./package.json");
-    const packageJsonBuffer = await readFile(packageJsonPath);
-    const packageJsonString = packageJsonBuffer.toString();
+    const packageJsonString = await readFile(packageJsonPath, {
+      encoding: "utf8",
+    });
     const packageJson = JSON.parse(packageJsonString);
     const packageJsonCLIProperties = {
       type: "module",

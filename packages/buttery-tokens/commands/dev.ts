@@ -6,5 +6,5 @@ export const meta: CommandMeta = {
 };
 
 export const action: CommandAction = async () => {
-  console.log("running buttery tokens in dev mode.");
+  console.log("running buttery tokens in DEV mode.");
 };

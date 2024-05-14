@@ -6,7 +6,7 @@ import { buildPackageJson } from "./script.build-package-json";
 import { rm } from "fs/promises";
 import path from "path";
 import type { BuildArgs } from "../scripts/build";
-import { buildLib } from "./script.build-lib";
+import { buildLib } from "../scripts/build-lib";
 import { buildConfig } from "./script.build-config";
 
 export type BuildScriptArgs = {
@@ -25,7 +25,6 @@ async function getAndParseButteryConfig() {
     if (configResult.isEmpty) {
       throw "The buttery configuration file is empty.";
     }
-    console.log(configResult);
     const config = configResult;
     return config;
   } catch (error) {
@@ -57,7 +56,6 @@ export async function build(parsedArgs: BuildArgs) {
       "./bin/index.js",
       "./bin/buttery-config.js",
       "./bin/commands",
-      "./dist",
     ].map((folder) =>
       rm(path.resolve(config.root, folder), {
         recursive: true,
@@ -71,7 +69,6 @@ export async function build(parsedArgs: BuildArgs) {
       buildConfig({ ...params, configFilePath }),
       buildProgram(params),
       buildPackageJson(params),
-      buildLib(params),
     ]);
   } catch (error) {
     throw new Error(error as string);

@@ -1,6 +1,7 @@
 import { cp } from "node:fs/promises";
 import { build } from "../src/script.build.js";
 import path from "node:path";
+import { buildLib } from "./build-lib.js";
 
 export type BuildArgs = {
   watch: boolean;
@@ -42,6 +43,7 @@ try {
     path.resolve(import.meta.dirname, "../bin/templates/"),
     { recursive: true }
   );
+  await Promise.all([build(parsedArgs), buildLib(parsedArgs)]);
 
   await build(parsedArgs);
 } catch (error) {

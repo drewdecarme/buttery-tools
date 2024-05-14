@@ -2,10 +2,10 @@ import path from "node:path";
 import { glob } from "glob";
 import * as esbuild from "esbuild";
 
-import type { BuildScriptArgs } from "./script.build";
-import { EsbuildPluginWatchLogger } from "./util.esbuild-plugin-watch-logger";
-import { createEsbuildOptions } from "./config.esbuild";
-import { EsbuildPluginTypescriptCompiler } from "./util.esbuild-plugin-typescript-compiler";
+import type { BuildScriptArgs } from "../src/script.build";
+import { EsbuildPluginWatchLogger } from "../src/util.esbuild-plugin-watch-logger";
+import { createEsbuildOptions } from "../src/config.esbuild";
+import { EsbuildPluginTypescriptCompiler } from "../src/util.esbuild-plugin-typescript-compiler";
 
 // TODO: Fix jsdoc description
 /**
@@ -21,11 +21,10 @@ import { EsbuildPluginTypescriptCompiler } from "./util.esbuild-plugin-typescrip
  * are cleared out so the new ones can be replaced and updated dynamically
  * via the esbuild watch context (if necessary).
  */
-export async function buildLib({ config, argv }: BuildScriptArgs) {
+export async function buildLib(argv: BuildScriptArgs["argv"]) {
   // We don't want to do anything when building or developing
   // from another package. This build is only for developing
   // the CLI builder.
-  if (!argv.local) return;
 
   try {
     const libFilesDir = path.resolve(import.meta.dirname, "../lib");
@@ -33,7 +32,7 @@ export async function buildLib({ config, argv }: BuildScriptArgs) {
     const libFiles = glob.sync(libFilesGlob, {
       follow: false,
     });
-    const libFilesOutDir = path.join(config.root, "./dist");
+    const libFilesOutDir = path.join(import.meta.dirname, "../dist");
 
     // Create the TS compiler plugin
     const ESBuildTypescriptCompiler = new EsbuildPluginTypescriptCompiler({
@@ -57,7 +56,7 @@ export async function buildLib({ config, argv }: BuildScriptArgs) {
 
     // Create a watcher plugin
     const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
-      cliName: config.name,
+      cliName: "buttery",
       dirname: "lib",
     });
 
