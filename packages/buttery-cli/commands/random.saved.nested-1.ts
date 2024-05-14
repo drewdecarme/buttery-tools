@@ -1,3 +1,4 @@
+import path from "path";
 import { CommandAction, CommandMeta, CommandOptions } from "../lib/types";
 
 export const meta: CommandMeta = {
@@ -15,5 +16,9 @@ export const options: CommandOptions = {
 };
 
 export const action: CommandAction = async (params) => {
-  console.log("Hello from the `random.saved.nested-1` command.", params);
+  console.log(
+    "Hello from the `random.saved.nested-1` command.",
+    params,
+    path.resolve(import.meta.dirname, "../images")
+  );
 };

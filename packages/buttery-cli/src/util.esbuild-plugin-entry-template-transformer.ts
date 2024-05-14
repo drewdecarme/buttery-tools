@@ -1,23 +1,30 @@
 import type { Plugin } from "esbuild";
-import { readFile, writeFile } from "fs/promises";
+import { readFile, rm, writeFile } from "fs/promises";
 import { glob } from "glob";
 import handlebars from "handlebars";
 import path from "path";
-import { CLIConfig } from "../lib";
-import get from "lodash.get";
-import set from "lodash.set";
-
-type CommandFile = {
-  path: string;
-  hasSubCommands: boolean;
-  properties: Record<string, unknown>;
-};
+import {
+  CLIConfig,
+  CommandAction,
+  CommandArgs,
+  CommandMeta,
+  CommandOptions,
+} from "../lib";
+import { exhaustiveMatchGuard } from "./util.parse-command-file-properties";
 
 export type EntryTemplateData = {
   cli_name: string;
   cli_description: string;
   cli_version?: string;
   cli_commands: string;
+};
+
+type CommandProperties = {
+  segment_name: string;
+  meta: CommandMeta;
+  options?: CommandOptions;
+  args?: CommandArgs;
+  action?: CommandAction;
 };
 
 type CommandObject = {
@@ -34,14 +41,14 @@ export class ESBuildPluginEntryTemplateTransformer {
   config: CLIConfig;
   private runNumber: number;
   private commandFileProperties: Record<string, Record<string, unknown>>;
-  private commandObj: CommandObject;
+  private commandGraph: CommandObject;
   private commandStr: string;
 
   constructor(config: CLIConfig) {
     this.config = config;
     this.runNumber = 0;
     this.commandFileProperties = {};
-    this.commandObj = {};
+    this.commandGraph = {};
     this.commandStr = "";
   }
 
@@ -49,10 +56,18 @@ export class ESBuildPluginEntryTemplateTransformer {
     return kebab.replace(/-([a-z0-9])/g, (_, match) => match.toUpperCase());
   }
 
+  private appendCommandStr(str: string) {
+    this.commandStr += str;
+  }
+
   /**
    * Returns the commands directory path that was configured
    * by the `buttery.config`
    */
+  private get commandFilesOutDir() {
+    return path.resolve(this.config.root, "./bin/commands");
+  }
+
   private get commandFilesDir() {
     return path.resolve(this.config.root, "./commands");
   }
@@ -62,13 +77,13 @@ export class ESBuildPluginEntryTemplateTransformer {
    * set from the `buttery.config`
    */
   private get commandFilePaths() {
-    const commandFilesGlob = path.resolve(this.commandFilesDir, "./**.ts");
+    const commandFilesGlob = path.resolve(this.commandFilesOutDir, "./**.js");
     const commandFiles = glob.sync(commandFilesGlob, { follow: false });
     return commandFiles;
   }
 
   private getCommandFileName(commandFilePath: string) {
-    return path.basename(commandFilePath, ".ts");
+    return path.basename(commandFilePath, ".js");
   }
 
   private async ensureCommandFile(
@@ -77,10 +92,9 @@ export class ESBuildPluginEntryTemplateTransformer {
   ) {
     const segmentCommandName = this.getCommandFileName(commandSegmentPath);
     try {
-      console.log(`Importing data from "${segmentCommandName}"...`);
       const segmentCommandProperties = await import(commandSegmentPath);
-      console.log(`Importing data from "${segmentCommandName}"... done.`);
       this.commandFileProperties[segmentCommandName] = {
+        segment_name: segmentCommandName,
         meta: segmentCommandProperties?.meta,
         options: segmentCommandProperties?.options,
         args: segmentCommandProperties?.args,
@@ -99,11 +113,14 @@ export class ESBuildPluginEntryTemplateTransformer {
         commandParentTemplate.toString()
       )({ command_name: commandSegment });
       await writeFile(
-        path.resolve(this.commandFilesDir, `./${segmentCommandName}.ts`),
+        path.resolve(this.commandFilesOutDir, `./${segmentCommandName}.js`),
         template,
         { encoding: "utf-8" }
       );
       console.log("Auto creating command file with default values... done.");
+      console.warn(
+        "A stub file has been created for you. You should ensure that you create the command in the commands dir. If you want to do this automatically then use --autofix"
+      );
       const segmentCommandProperties = await import(commandSegmentPath);
       this.commandFileProperties[segmentCommandName] = {
         meta: segmentCommandProperties?.meta,
@@ -128,7 +145,7 @@ export class ESBuildPluginEntryTemplateTransformer {
         const commandSegmentName = commandSegments
           .slice(0, Number(commandSegmentIndex) + 1)
           .join(".");
-        const commandSegmentPath = `${this.commandFilesDir}/${commandSegmentName}`;
+        const commandSegmentPath = `${this.commandFilesOutDir}/${commandSegmentName}`;
         await this.ensureCommandFile(commandSegment, commandSegmentPath);
       }
     }
@@ -139,44 +156,91 @@ export class ESBuildPluginEntryTemplateTransformer {
    */
   private parseCommands() {
     const commandFilePaths = this.commandFilePaths;
-    console.log(commandFilePaths);
 
     commandFilePaths.forEach((commandFilePath) => {
       const commandFileName = this.getCommandFileName(commandFilePath);
       const commandSegments = commandFileName.split(".");
-      let currentObj = this.commandObj;
+      let currentCommandGraph = this.commandGraph;
 
       commandSegments.forEach((segment, segmentIndex, origArr) => {
         const segmentName = origArr
           .slice(0, Number(segmentIndex) + 1)
           .join(".");
-        if (!currentObj[segment]) {
-          currentObj[segment] = {
+        if (!currentCommandGraph[segment]) {
+          currentCommandGraph[segment] = {
             properties: this.commandFileProperties[segmentName],
             commands: {},
           };
         }
-        currentObj = currentObj[segment].commands;
+        currentCommandGraph = currentCommandGraph[segment].commands;
       });
     }, {});
   }
 
   private buildProgram() {
-    const parseCommand = (cmdObj: CommandObject, parentCommandName: string) => {
+    const buildCommand = (cmdObj: CommandObject, parentCmd: string) => {
       Object.entries(cmdObj).forEach(([cmdName, { commands, properties }]) => {
-        const wellFormedCmdName = this.kebabToCamel(cmdName);
-        console.log("Parsing", wellFormedCmdName);
-        const subCommands = Object.values(commands).length > 0;
-        this.commandStr = this.commandStr.concat(`
-const ${wellFormedCmdName} = ${parentCommandName}.command("${cmdName}");`);
-        if (subCommands) {
-          return parseCommand(commands, wellFormedCmdName);
+        const cmdVariableName = this.kebabToCamel(cmdName);
+        const hasSubCommands = Object.values(commands).length > 0;
+        this.appendCommandStr(
+          `const ${cmdVariableName} = ${parentCmd}.command("${cmdName}")`
+        );
+
+        const props = properties as CommandProperties;
+
+        // meta
+        this.appendCommandStr(`.description("${props.meta.description}")`);
+
+        // args
+        const commandArgs = props.args ?? [];
+        commandArgs.forEach((arg) => {
+          const argName = arg.required ? `<${arg.name}>` : `[${arg.name}]`;
+          this.appendCommandStr(
+            `.argument(${argName}, ${arg.description}, ${arg.defaultValue})`
+          );
+        });
+
+        // options
+        const commandOptions = props.options ?? {};
+        Object.entries(commandOptions).forEach(([flag, option]) => {
+          switch (option.type) {
+            case "value": {
+              return this.appendCommandStr(`.option(
+                  "-${option.alias}, --${flag} <value>",
+                  "${option.description}"
+                )`);
+            }
+
+            case "boolean": {
+              return this.appendCommandStr(`.option(
+                  "-${option.alias}, --${flag}",
+                 "${option.description}"
+                )`);
+            }
+
+            default:
+              exhaustiveMatchGuard(option);
+              return;
+          }
+        });
+
+        // no sub commands on this command... an action should exist.
+        if (!hasSubCommands) {
+          const commandAction = props.action ?? undefined;
+          if (commandAction) {
+            this.appendCommandStr(
+              `.action(withParsedAction("${props.segment_name}"))`
+            );
+          }
         }
+
+        this.appendCommandStr(";");
+
+        return buildCommand(commands, cmdVariableName);
       });
     };
 
-    parseCommand(this.commandObj, "program");
-    console.log(this.commandStr);
+    buildCommand(this.commandGraph, "program");
   }
 
   private logBuildIteration() {
@@ -193,6 +257,10 @@ const ${wellFormedCmdName} = ${parentCommandName}.command("${cmdName}");`);
         build.onLoad({ filter: /\.hbs$/ }, async (args) => {
           this.logBuildIteration();
 
+          await rm(path.resolve(this.config.root, "./bin/index.js"), {
+            force: true,
+          });
+
           // 1. ensure all of the command files exist
           await this.ensureCommands();
           // 2. get all of the command files and then parse them
@@ -201,25 +269,28 @@ const ${wellFormedCmdName} = ${parentCommandName}.command("${cmdName}");`);
           this.buildProgram();
           // 4. Read the entry template and compile it with the data
           const entryTemplateFile = await readFile(args.path);
-          const template = handlebars.compile<EntryTemplateData>(
-            entryTemplateFile.toString()
-          )({
+          const entryTemplate = entryTemplateFile.toString();
+          const entryTemplateData: EntryTemplateData = {
             cli_name: config.name,
             cli_description: config.description,
             cli_version: config.version,
             cli_commands: this.commandStr,
-          });
+          };
+          const template = handlebars.compile<EntryTemplateData>(entryTemplate);
+          const templateResult = template(entryTemplateData);
 
           // TODO: Only do this on --local
           const srcDir = import.meta.dirname;
-          const srcFilesGlob = path.resolve(srcDir, "/**.ts");
+          const srcFilesGlob = path.resolve(srcDir, "./**.ts");
           const srcFiles = glob.sync(srcFilesGlob, { follow: false });
 
+          this.commandStr = "";
+
           return {
-            contents: template,
+            contents: templateResult,
             loader: "ts",
             watchFiles: [args.path, ...srcFiles, ...this.commandFilePaths],
-            watchDirs: [this.commandFilesDir],
+            watchDirs: [this.commandFilesOutDir],
           };
         });
       },
