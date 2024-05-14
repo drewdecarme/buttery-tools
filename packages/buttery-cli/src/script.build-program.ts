@@ -1,9 +1,10 @@
 import path from "node:path";
 import * as esbuild from "esbuild";
 import { BuildScriptArgs } from "./script.build";
-import { ESBuildPluginEntryTemplateTransformer } from "./util.esbuild-plugin-entry-template-transformer";
+import { ESBuildPluginCommands } from "./util.esbuild-plugin-commands";
 import { createEsbuildOptions } from "./config.esbuild";
 import { glob } from "glob";
+import { EsbuildPluginWatchLogger } from "./util.esbuild-plugin-watch-logger";
 
 // TODO: Fix description
 /**
@@ -29,11 +30,9 @@ export async function buildProgram({ config, argv }: BuildScriptArgs) {
     });
     const outDir = path.join(config.root, "./bin/commands");
 
-    // Create a .hbs plugin transformer
-    const ESBuildEntryTemplateTransformer =
-      new ESBuildPluginEntryTemplateTransformer(config);
-
-    const plugins = [ESBuildEntryTemplateTransformer.getPlugin()];
+    // Create a commands plugin
+    const ESBuildCommandsPlugin = new ESBuildPluginCommands(config);
+    const plugins = [ESBuildCommandsPlugin.getPlugin()];
 
     // Create the build options
     const esbuildOptions = createEsbuildOptions({
@@ -48,17 +47,17 @@ export async function buildProgram({ config, argv }: BuildScriptArgs) {
     }
 
     // Create a watcher plugin
-    // const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
-    //   cliName: config.name,
-    //   dirname: "entry",
-    // });
+    const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
+      cliName: config.name,
+      dirname: "commands",
+    });
 
     // Build the esbuild context and watch it to re-build
     // files on change
     const context = await esbuild.context({
       ...esbuildOptions,
       minify: false,
-      plugins,
+      plugins: [...plugins, ESBuildWatchLogger.getPlugin()],
     });
     return await context.watch();
   } catch (error) {

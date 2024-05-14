@@ -1,4 +1,5 @@
 import { CommandAction, CommandMeta, CommandOptions } from "../lib/types";
+import { build } from "../src/script.build.js";
 
 export const meta: CommandMeta = {
   name: "build",
@@ -6,7 +7,7 @@ export const meta: CommandMeta = {
 };
 
 export const options: CommandOptions = {
-  ["auto-fix"]: {
+  ["autofix"]: {
     alias: "af",
     description:
       "Prompts the user to add a description to any missing command files during the build process",
@@ -15,6 +16,7 @@ export const options: CommandOptions = {
   },
 };
 
-export const action: CommandAction = async (args) => {
-  console.log(args);
+export const action: CommandAction<typeof options> = async (args) => {
+  try {
+  } catch (error) {}
 };

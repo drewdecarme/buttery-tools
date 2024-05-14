@@ -1,8 +1,7 @@
 import type { Plugin } from "esbuild";
 import { readFile, writeFile } from "fs/promises";
-import { glob } from "glob";
 import handlebars from "handlebars";
-import path, { dirname } from "path";
+import path from "path";
 import {
   CLIConfig,
   CommandAction,
@@ -13,7 +12,6 @@ import {
 import { exhaustiveMatchGuard } from "./util.parse-command-file-properties";
 import { createEsbuildOptions } from "./config.esbuild";
 import * as esbuild from "esbuild";
-import { fileURLToPath } from "node:url";
 
 export type EntryTemplateData = {
   cli_name: string;
@@ -41,7 +39,7 @@ type CommandObject = {
 /**
  * TODO: Update this description
  */
-export class ESBuildPluginEntryTemplateTransformer {
+export class ESBuildPluginCommands {
   config: CLIConfig;
   private runNumber: number;
   private commandFileProperties: Record<string, Record<string, unknown>>;
