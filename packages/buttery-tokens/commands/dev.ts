@@ -2,7 +2,7 @@ import { CommandAction, CommandMeta } from "@buttery/cli";
 
 export const meta: CommandMeta = {
   name: "dev",
-  description: "dev description... Please update me",
+  description: "Run the buttery-tokens CLI in watch mode.",
 };
 
 export const action: CommandAction = async () => {
