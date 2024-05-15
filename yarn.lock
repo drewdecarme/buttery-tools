@@ -1706,6 +1706,7 @@ __metadata:
   resolution: "@buttery/tokens@workspace:packages/buttery-tokens"
   dependencies:
     "@buttery/cli": "workspace:^"
+    "@buttery/logger": "workspace:^"
   bin:
     buttery-tokens: ./bin/index.js
   languageName: unknown

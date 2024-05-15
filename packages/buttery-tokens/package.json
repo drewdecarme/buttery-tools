@@ -17,7 +17,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@buttery/cli": "workspace:^"
+    "@buttery/cli": "workspace:^",
+    "@buttery/logger": "workspace:^"
   },
   "types": "./dist/index.d.ts",
   "bin": {

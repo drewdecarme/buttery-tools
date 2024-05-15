@@ -4,15 +4,15 @@ import { build } from "../src/script.build.js";
 import { buildLib } from "./build-lib.js";
 
 export type BuildArgs = {
-	watch: boolean;
-	local: boolean;
-	autofix?: boolean;
+  watch: boolean;
+  local: boolean;
+  autofix?: boolean;
 };
 
 const defaultBuildArgs: BuildArgs = {
-	watch: false,
-	local: false,
-	autofix: false,
+  watch: false,
+  local: false,
+  autofix: false
 };
 
 /**
@@ -23,29 +23,27 @@ const defaultBuildArgs: BuildArgs = {
  * to be supplied to the build script internally to this package.
  */
 export const parseBuildArgs = (args: typeof process.argv): BuildArgs => {
-	return args.reduce<BuildArgs>((accum, arg) => {
-		if (arg === "--watch" || arg === "-w") {
-			return Object.assign({}, accum, { watch: true });
-		}
-		if (arg === "--local" || arg === "-l") {
-			return Object.assign({}, accum, { local: true });
-		}
-		return accum;
-	}, defaultBuildArgs);
+  return args.reduce<BuildArgs>((accum, arg) => {
+    if (arg === "--watch" || arg === "-w") {
+      return Object.assign({}, accum, { watch: true });
+    }
+    if (arg === "--local" || arg === "-l") {
+      return Object.assign({}, accum, { local: true });
+    }
+    return accum;
+  }, defaultBuildArgs);
 };
 
 try {
-	const args = process.argv.slice(2);
-	const parsedArgs = parseBuildArgs(args);
+  const args = process.argv.slice(2);
+  const parsedArgs = parseBuildArgs(args);
 
-	await cp(
-		path.resolve(import.meta.dirname, "../templates/"),
-		path.resolve(import.meta.dirname, "../bin/templates/"),
-		{ recursive: true },
-	);
-	await Promise.all([build(parsedArgs), buildLib(parsedArgs)]);
-
-	await build(parsedArgs);
+  await cp(
+    path.resolve(import.meta.dirname, "../templates/"),
+    path.resolve(import.meta.dirname, "../bin/templates/"),
+    { recursive: true }
+  );
+  await Promise.all([build(parsedArgs), buildLib(parsedArgs)]);
 } catch (error) {
-	console.error(error);
+  console.error(error);
 }

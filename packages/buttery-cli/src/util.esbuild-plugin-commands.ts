@@ -12,6 +12,7 @@ import type {
 } from "../lib";
 import { createEsbuildOptions } from "./config.esbuild";
 import { exhaustiveMatchGuard } from "./util.exhaustive-match-guard";
+import { LOG } from "./util.logger";
 
 export type EntryTemplateData = {
   cli_name: string;
@@ -103,9 +104,8 @@ export class ESBuildPluginCommands {
     try {
       await access(commandSegmentPathSrc, constants.F_OK);
     } catch (error) {
-      console.log(error);
-      console.info(`Cannot locate command file for '${segmentCommandName}'`);
-      console.log("Auto creating command file with default values...");
+      LOG.error(`Cannot locate command file for '${segmentCommandName}'`);
+      LOG.debug("Auto creating command file with default values...");
       // TODO: Put any prompting behind --autofix
       const commandParentTemplate = await readFile(
         path.resolve(
@@ -122,8 +122,8 @@ export class ESBuildPluginCommands {
         template,
         { encoding: "utf-8" }
       );
-      console.log("Auto creating command file with default values... done.");
-      console.warn(
+      LOG.debug("Auto creating command file with default values... done.");
+      LOG.warning(
         "A stub file has been created for you. You should ensure that you create the command in the commands dir. If you want to do this automatically then use --autofix"
       );
     }
@@ -181,7 +181,7 @@ export class ESBuildPluginCommands {
             };
           }
         } catch (error) {
-          throw new Error(error as string);
+          LOG.fatal(new Error(error as string));
         }
 
         currentCommandGraph = currentCommandGraph[commandSegment].commands;
@@ -258,7 +258,7 @@ export class ESBuildPluginCommands {
 
       // no sub commands on this command... an action should exist.
       if (!commandAction && !hasSubCommands) {
-        console.warn(
+        LOG.warning(
           `"${props.segment_name}" missing an action export. Please export an action.`
         );
       }
@@ -269,11 +269,11 @@ export class ESBuildPluginCommands {
 
   private logRebuild() {
     this.runNumber++;
-    console.log(`Building program x${this.runNumber}...`);
+    LOG.debug(`Building program x${this.runNumber}...`);
   }
 
   private logBuildComplete() {
-    console.log(`Building program x${this.runNumber}... complete.`);
+    LOG.success(`Building program x${this.runNumber}... complete.`);
   }
 
   getPlugin(): Plugin {

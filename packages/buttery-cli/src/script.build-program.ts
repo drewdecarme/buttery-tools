@@ -4,7 +4,7 @@ import { glob } from "glob";
 import { createEsbuildOptions } from "./config.esbuild";
 import type { BuildScriptArgs } from "./script.build";
 import { ESBuildPluginCommands } from "./util.esbuild-plugin-commands";
-import { EsbuildPluginWatchLogger } from "./util.esbuild-plugin-watch-logger";
+import { LOG } from "./util.logger";
 
 // TODO: Fix description
 /**
@@ -38,8 +38,8 @@ export async function buildProgram({ config, argv }: BuildScriptArgs) {
     // Create the build options
     const esbuildOptions = createEsbuildOptions({
       entryPoints: commandFiles,
-      plugins,
-      outdir: outDir
+      outdir: outDir,
+      plugins
     });
 
     // Build when not in watch
@@ -47,18 +47,13 @@ export async function buildProgram({ config, argv }: BuildScriptArgs) {
       return await esbuild.build(esbuildOptions);
     }
 
-    // Create a watcher plugin
-    const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
-      cliName: config.name,
-      dirname: "commands"
-    });
+    LOG.watch(`Listening for changes in "${commandFilesDir}"...`);
 
     // Build the esbuild context and watch it to re-build
     // files on change
     const context = await esbuild.context({
       ...esbuildOptions,
-      minify: false,
-      plugins: [...plugins, ESBuildWatchLogger.getPlugin()]
+      minify: false
     });
     return await context.watch();
   } catch (error) {

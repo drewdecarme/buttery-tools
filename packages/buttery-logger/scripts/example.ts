@@ -13,4 +13,5 @@ basicLogger.debug(
 );
 basicLogger.success("Successful!");
 basicLogger.warning("this is a warning");
+basicLogger.error("this is an error");
 basicLogger.fatal(new Error("Something went horribly wrong."));
