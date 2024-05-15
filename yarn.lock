@@ -1637,7 +1637,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/cli@workspace:packages/buttery-cli"
   dependencies:
-    "@biomejs/biome": "npm:1.7.3"
+    "@buttery/logger": "workspace:^"
     "@types/lodash.get": "npm:^4.4.9"
     "@types/lodash.set": "npm:^4.3.9"
     "@types/node": "npm:^20.12.7"
@@ -1646,11 +1646,8 @@ __metadata:
     esbuild: "npm:^0.20.2"
     glob: "npm:^10.3.12"
     handlebars: "npm:^4.7.8"
-    lodash.get: "npm:^4.4.2"
-    lodash.set: "npm:^4.3.2"
     tsx: "npm:^4.7.2"
     typescript: "npm:^5.4.5"
-    vite: "npm:^5.2.10"
   bin:
     buttery: ./bin/index.js
   languageName: unknown
@@ -1695,9 +1692,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/logger@workspace:packages/buttery-logger":
+"@buttery/logger@workspace:^, @buttery/logger@workspace:packages/buttery-logger":
   version: 0.0.0-use.local
   resolution: "@buttery/logger@workspace:packages/buttery-logger"
+  dependencies:
+    chalk: "npm:^5.3.0"
+    typescript: "npm:^5.4.5"
   languageName: unknown
   linkType: soft
 
@@ -11632,24 +11632,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.get@npm:^4.4.2":
-  version: 4.4.2
-  resolution: "lodash.get@npm:4.4.2"
-  checksum: 10c0/48f40d471a1654397ed41685495acb31498d5ed696185ac8973daef424a749ca0c7871bf7b665d5c14f5cc479394479e0307e781f61d5573831769593411be6e
-  languageName: node
-  linkType: hard
-
 "lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: 10c0/402fa16a1edd7538de5b5903a90228aa48eb5533986ba7fa26606a49db2572bf414ff73a2c9f5d5fd36b31c46a5d5c7e1527749c07cbcf965ccff5fbdf32c506
-  languageName: node
-  linkType: hard
-
-"lodash.set@npm:^4.3.2":
-  version: 4.3.2
-  resolution: "lodash.set@npm:4.3.2"
-  checksum: 10c0/c641d31905e51df43170dce8a1d11a1cff11356e2e2e75fe2615995408e9687d58c3e1d64c3c284c2df2bc519f79a98af737d2944d382ff82ffd244ff6075c29
   languageName: node
   linkType: hard
 
