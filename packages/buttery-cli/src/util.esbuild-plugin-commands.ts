@@ -154,6 +154,7 @@ export class ESBuildPluginCommands {
    * by processing the commands key.
    */
   private async createCommandGraph() {
+    LOG.debug("Creating the command graph...");
     const commandFiles = [...this.commandFiles.values()];
 
     for (const commandFileName of commandFiles) {
@@ -180,13 +181,15 @@ export class ESBuildPluginCommands {
               commands: {}
             };
           }
+          currentCommandGraph = currentCommandGraph[commandSegment].commands;
         } catch (error) {
-          LOG.fatal(new Error(error as string));
+          const err = new Error(error as string);
+          LOG.fatal(err);
+          throw err;
         }
-
-        currentCommandGraph = currentCommandGraph[commandSegment].commands;
       }
     }
+    LOG.debug("Creating the command graph... done.");
   }
 
   /**
@@ -224,43 +227,44 @@ export class ESBuildPluginCommands {
       for (const [flag, option] of commandOptionEntires) {
         switch (option.type) {
           case "value": {
-            return this.appendCommandStr(`.option(
+            this.appendCommandStr(`.option(
                   "-${option.alias}, --${flag} <value>",
                   "${option.description}"
                 )`);
+            break;
           }
 
           case "boolean": {
-            return this.appendCommandStr(`.option(
+            this.appendCommandStr(`.option(
                   "-${option.alias}, --${flag}",
                  "${option.description}"
                 )`);
+            break;
           }
 
           default:
             exhaustiveMatchGuard(option);
-            return;
+            break;
         }
+      }
+
+      if (!hasSubCommands) {
+        this.appendCommandStr(
+          `.action(withParsedAction("${props.segment_name}"))`
+        );
+      }
+
+      if (!hasSubCommands && !props.action) {
+        // no sub commands on this command... an action should exist.
+        LOG.warning(
+          `"${props.segment_name}" missing an action export. Please export an action.`
+        );
       }
 
       // recurse with the sub commands
       if (hasSubCommands) {
         this.appendCommandStr(";");
         this.buildCommands(commands, cmdVariableName);
-      }
-
-      const commandAction = props.action ?? undefined;
-      if (commandAction) {
-        this.appendCommandStr(
-          `.action(withParsedAction("${props.segment_name}"))`
-        );
-      }
-
-      // no sub commands on this command... an action should exist.
-      if (!commandAction && !hasSubCommands) {
-        LOG.warning(
-          `"${props.segment_name}" missing an action export. Please export an action.`
-        );
       }
 
       this.appendCommandStr(";");
@@ -297,8 +301,6 @@ export class ESBuildPluginCommands {
           return undefined;
         });
         build.onEnd(async () => {
-          this.logBuildComplete();
-
           // 2. get all of the command files and then parse them
           await this.createCommandGraph();
 
@@ -338,6 +340,8 @@ export class ESBuildPluginCommands {
             minify: true,
             external: ["commander"] // externalize commander
           });
+
+          this.logBuildComplete();
         });
       }
     };

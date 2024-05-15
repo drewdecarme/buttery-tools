@@ -6,6 +6,10 @@
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tokens.git"
   },
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "buttery-tokens": "./bin/index.js"
+  },
   "type": "module",
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
   "license": "Apache-2.0",
@@ -16,12 +20,12 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "build": "yarn buttery cli build",
+    "dev": "yarn buttery cli --help"
+  },
   "dependencies": {
     "@buttery/cli": "workspace:^",
     "@buttery/logger": "workspace:^"
-  },
-  "types": "./dist/index.d.ts",
-  "bin": {
-    "buttery-tokens": "./bin/index.js"
   }
 }

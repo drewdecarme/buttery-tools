@@ -4,6 +4,7 @@ import path from "path";
 
 function withParsedAction(segmentCommand) {
   return async function(...restArgs) {
+
     try {
       const timestamp = new Date().getTime();
       const commandPath = path.resolve(import.meta.dirname, `./commands/${segmentCommand}.js?t=${timestamp}`);
