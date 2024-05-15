@@ -20,7 +20,7 @@
     "url": "https://github.com/drewdecarme/starter-ts-cli/issues"
   },
   "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.2.2",
   "scripts": {
     "build": "turbo build",
     "release": "yarn build && changeset publish"
