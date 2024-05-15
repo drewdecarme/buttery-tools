@@ -1,16 +1,16 @@
+import { constants, access, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
 import type { Plugin } from "esbuild";
-import { access, constants, readFile, writeFile } from "fs/promises";
+import * as esbuild from "esbuild";
 import handlebars from "handlebars";
-import path from "path";
-import {
+import type {
   CLIConfig,
   CommandAction,
   CommandArgs,
   CommandMeta,
-  CommandOptions,
+  CommandOptions
 } from "../lib";
 import { createEsbuildOptions } from "./config.esbuild";
-import * as esbuild from "esbuild";
 import { exhaustiveMatchGuard } from "./util.exhaustive-match-guard";
 
 export type EntryTemplateData = {
@@ -30,6 +30,7 @@ type CommandProperties = {
 
 type CommandObject = {
   [key: string]: {
+    // biome-ignore lint/complexity/noBannedTypes: Don't really care too much about this
     properties: {};
     commands: CommandObject;
   };
@@ -171,16 +172,16 @@ export class ESBuildPluginCommands {
             segment_name: commandFileName,
             action: commandFileContent?.action,
             args: commandFileContent?.args,
-            options: commandFileContent?.options,
+            options: commandFileContent?.options
           };
           if (!currentCommandGraph[commandSegment]) {
             currentCommandGraph[commandSegment] = {
               properties,
-              commands: {},
+              commands: {}
             };
           }
         } catch (error) {
-          throw error;
+          throw new Error(error as string);
         }
 
         currentCommandGraph = currentCommandGraph[commandSegment].commands;
@@ -195,7 +196,8 @@ export class ESBuildPluginCommands {
    * in order to build the program string.
    */
   private buildCommands(cmdObj: CommandObject, parentCmd: string) {
-    Object.entries(cmdObj).forEach(([cmdName, { commands, properties }]) => {
+    const commandEntries = Object.entries(cmdObj);
+    for (const [cmdName, { commands, properties }] of commandEntries) {
       const cmdVariableName = this.kebabToCamel(cmdName);
       const hasSubCommands = Object.values(commands).length > 0;
       this.appendCommandStr(
@@ -209,16 +211,17 @@ export class ESBuildPluginCommands {
 
       // args
       const commandArgs = props.args ?? [];
-      commandArgs.forEach((arg) => {
+      for (const arg of commandArgs) {
         const argName = arg.required ? `<${arg.name}>` : `[${arg.name}]`;
         this.appendCommandStr(
           `.argument(${argName}, ${arg.description}, ${arg.defaultValue})`
         );
-      });
+      }
 
       // options
       const commandOptions = props.options ?? ({} as CommandOptions<"">);
-      Object.entries(commandOptions).forEach(([flag, option]) => {
+      const commandOptionEntires = Object.entries(commandOptions);
+      for (const [flag, option] of commandOptionEntires) {
         switch (option.type) {
           case "value": {
             return this.appendCommandStr(`.option(
@@ -238,26 +241,30 @@ export class ESBuildPluginCommands {
             exhaustiveMatchGuard(option);
             return;
         }
-      });
+      }
+
+      // recurse with the sub commands
+      if (hasSubCommands) {
+        this.appendCommandStr(";");
+        this.buildCommands(commands, cmdVariableName);
+      }
+
+      const commandAction = props.action ?? undefined;
+      if (commandAction) {
+        this.appendCommandStr(
+          `.action(withParsedAction("${props.segment_name}"))`
+        );
+      }
 
       // no sub commands on this command... an action should exist.
-      if (!hasSubCommands) {
-        const commandAction = props.action ?? undefined;
-        if (commandAction) {
-          this.appendCommandStr(
-            `.action(withParsedAction("${props.segment_name}"))`
-          );
-        } else {
-          console.warn(
-            `"${props.segment_name}" missing an action export. Please export an action.`
-          );
-        }
+      if (!commandAction && !hasSubCommands) {
+        console.warn(
+          `"${props.segment_name}" missing an action export. Please export an action.`
+        );
       }
 
       this.appendCommandStr(";");
-
-      return this.buildCommands(commands, cmdVariableName);
-    });
+    }
   }
 
   private logRebuild() {
@@ -307,7 +314,7 @@ export class ESBuildPluginCommands {
             cli_name: config.name,
             cli_description: config.description,
             cli_version: config.version,
-            cli_commands: this.commandStr,
+            cli_commands: this.commandStr
           };
 
           // Reset some internally tracked values
@@ -323,16 +330,16 @@ export class ESBuildPluginCommands {
             ...createEsbuildOptions({
               stdin: {
                 contents: templateResult,
-                loader: "ts",
+                loader: "ts"
               },
-              outfile: path.resolve(this.config.root, "./bin/index.js"),
+              outfile: path.resolve(this.config.root, "./bin/index.js")
             }),
             bundle: true,
             minify: true,
-            external: ["commander"], // externalize commander
+            external: ["commander"] // externalize commander
           });
         });
-      },
+      }
     };
   }
 }

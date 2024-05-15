@@ -17,5 +17,5 @@ export const createEsbuildOptions = (
   platform: "node",
   target: ["node20.11.1"],
   packages: "external",
-  ...options,
+  ...options
 });

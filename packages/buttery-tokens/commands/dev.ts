@@ -1,8 +1,8 @@
-import { CommandAction, CommandMeta } from "@buttery/cli";
+import type { CommandAction, CommandMeta } from "@buttery/cli";
 
 export const meta: CommandMeta = {
   name: "dev",
-  description: "Run the buttery-tokens CLI in watch mode.",
+  description: "Run the buttery-tokens CLI in watch mode."
 };
 
 export const action: CommandAction = async () => {

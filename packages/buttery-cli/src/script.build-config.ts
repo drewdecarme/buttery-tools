@@ -1,47 +1,45 @@
-import path from "path";
-import { createEsbuildOptions } from "./config.esbuild";
-import { BuildScriptArgs } from "./script.build";
+import path from "node:path";
 import * as esbuild from "esbuild";
+import { createEsbuildOptions } from "./config.esbuild";
+import type { BuildScriptArgs } from "./script.build";
 import { EsbuildPluginWatchLogger } from "./util.esbuild-plugin-watch-logger";
 
 export const buildConfig = async ({
-  argv,
-  config,
-  configFilePath,
+	argv,
+	config,
+	configFilePath,
 }: BuildScriptArgs & { configFilePath: string }) => {
-  try {
-    const configFileOutDir = path.resolve(config.root, "./bin");
+	try {
+		const configFileOutDir = path.resolve(config.root, "./bin");
 
-    // Create the esbuild options
-    const esbuildOptions = createEsbuildOptions({
-      entryPoints: [configFilePath],
-      outdir: configFileOutDir,
-    });
+		// Create the esbuild options
+		const esbuildOptions = createEsbuildOptions({
+			entryPoints: [configFilePath],
+			outdir: configFileOutDir,
+		});
 
-    // Just build when dev isn't present
-    if (!argv.watch) {
-      return await esbuild.build(esbuildOptions);
-    }
+		// Just build when dev isn't present
+		if (!argv.watch) {
+			return await esbuild.build(esbuildOptions);
+		}
 
-    // Create a watcher plugin
-    const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
-      cliName: config.name,
-      dirname: config.name.concat(".config"),
-    });
+		// Create a watcher plugin
+		const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
+			cliName: config.name,
+			dirname: config.name.concat(".config"),
+		});
 
-    // Build the esbuild context and watch it to re-build
-    // files on change
-    const context = await esbuild.context({
-      ...esbuildOptions,
-      minify: false,
-      plugins: [ESBuildWatchLogger.getPlugin()],
-    });
-    return await context.watch();
-  } catch (error) {
-    throw new Error(
-      `Error when building '${config.name}.config': `.concat(error as string)
-    );
-  }
-
-  return;
+		// Build the esbuild context and watch it to re-build
+		// files on change
+		const context = await esbuild.context({
+			...esbuildOptions,
+			minify: false,
+			plugins: [ESBuildWatchLogger.getPlugin()],
+		});
+		return await context.watch();
+	} catch (error) {
+		throw new Error(
+			`Error when building '${config.name}.config': `.concat(error as string),
+		);
+	}
 };

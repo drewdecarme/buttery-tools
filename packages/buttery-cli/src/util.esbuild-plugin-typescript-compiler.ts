@@ -1,5 +1,5 @@
-import type { Plugin } from "esbuild";
 import { execSync } from "node:child_process";
+import type { Plugin } from "esbuild";
 
 /**
  * TODO: Fix comment
@@ -20,7 +20,7 @@ export class EsbuildPluginTypescriptCompiler {
           if (result.errors.length > 0) return;
           execSync(`tsc --project ${tsconfigPath}`);
         });
-      },
+      }
     };
   }
 }

@@ -1,9 +1,9 @@
 import path from "node:path";
 import * as esbuild from "esbuild";
-import { BuildScriptArgs } from "./script.build";
-import { ESBuildPluginCommands } from "./util.esbuild-plugin-commands";
-import { createEsbuildOptions } from "./config.esbuild";
 import { glob } from "glob";
+import { createEsbuildOptions } from "./config.esbuild";
+import type { BuildScriptArgs } from "./script.build";
+import { ESBuildPluginCommands } from "./util.esbuild-plugin-commands";
 import { EsbuildPluginWatchLogger } from "./util.esbuild-plugin-watch-logger";
 
 // TODO: Fix description
@@ -26,8 +26,9 @@ export async function buildProgram({ config, argv }: BuildScriptArgs) {
     const commandFilesDir = path.resolve(config.root, "./commands");
     const commandFilesGlob = path.resolve(commandFilesDir, "./*.ts");
     const commandFiles = glob.sync(commandFilesGlob, {
-      follow: false,
+      follow: false
     });
+
     const outDir = path.join(config.root, "./bin/commands");
 
     // Create a commands plugin
@@ -38,7 +39,7 @@ export async function buildProgram({ config, argv }: BuildScriptArgs) {
     const esbuildOptions = createEsbuildOptions({
       entryPoints: commandFiles,
       plugins,
-      outdir: outDir,
+      outdir: outDir
     });
 
     // Build when not in watch
@@ -49,7 +50,7 @@ export async function buildProgram({ config, argv }: BuildScriptArgs) {
     // Create a watcher plugin
     const ESBuildWatchLogger = new EsbuildPluginWatchLogger({
       cliName: config.name,
-      dirname: "commands",
+      dirname: "commands"
     });
 
     // Build the esbuild context and watch it to re-build
@@ -57,7 +58,7 @@ export async function buildProgram({ config, argv }: BuildScriptArgs) {
     const context = await esbuild.context({
       ...esbuildOptions,
       minify: false,
-      plugins: [...plugins, ESBuildWatchLogger.getPlugin()],
+      plugins: [...plugins, ESBuildWatchLogger.getPlugin()]
     });
     return await context.watch();
   } catch (error) {

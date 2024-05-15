@@ -1,6 +1,6 @@
-import { CommandMeta } from "../lib/types";
+import type { CommandMeta } from "../lib/types";
 
 export const meta: CommandMeta = {
-    name: "random",
-    description: "random description... Please update me",
+  name: "random",
+  description: "random description... Please update me"
 };

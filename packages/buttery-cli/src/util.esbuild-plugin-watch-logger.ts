@@ -18,7 +18,7 @@ export class EsbuildPluginWatchLogger {
     this.dirname = dirname;
     this.rebuildNumber = 0;
     this.date = new Intl.DateTimeFormat("en", {
-      dateStyle: "short",
+      dateStyle: "short"
     });
   }
 
@@ -39,7 +39,7 @@ export class EsbuildPluginWatchLogger {
             }`
           );
         });
-      },
+      }
     };
   }
 }

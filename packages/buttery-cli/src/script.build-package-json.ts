@@ -1,6 +1,6 @@
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { writeFile, readFile } from "node:fs/promises";
-import { BuildScriptArgs } from "./script.build";
+import type { BuildScriptArgs } from "./script.build";
 
 // TODO: Update this description
 // -- PACKAGE.JSON --
@@ -10,31 +10,34 @@ import { BuildScriptArgs } from "./script.build";
 // from the command line without having to worry about manually adding
 // those properties to their `package.json`
 export async function buildPackageJson({ config }: BuildScriptArgs) {
-  try {
-    const packageJsonPath = path.resolve(config.root, "./package.json");
-    const packageJsonString = await readFile(packageJsonPath, {
-      encoding: "utf8",
-    });
-    const packageJson = JSON.parse(packageJsonString);
-    const packageJsonCLIProperties = {
-      type: "module",
-      types: "./dist/index.d.ts",
-      bin: {
-        [config.name]: "./bin/index.js",
-      },
-    };
-    Object.entries(packageJsonCLIProperties).forEach(([key, value]) => {
-      if (!(key in packageJson)) {
-        console.log(`Adding '${key}' to package.json file.`);
-        packageJson[key] = value;
-      }
-    });
-    await writeFile(
-      packageJsonPath,
-      JSON.stringify(packageJson, null, 2),
-      "utf-8"
-    );
-  } catch (error) {
-    throw new Error(error as string);
-  }
+	try {
+		const packageJsonPath = path.resolve(config.root, "./package.json");
+		const packageJsonString = await readFile(packageJsonPath, {
+			encoding: "utf8",
+		});
+		const packageJson = JSON.parse(packageJsonString);
+		const packageJsonCLIProperties = {
+			type: "module",
+			types: "./dist/index.d.ts",
+			bin: {
+				[config.name]: "./bin/index.js",
+			},
+		};
+		const packageJsonPropertiesEntries = Object.entries(
+			packageJsonCLIProperties,
+		);
+		for (const [key, value] of packageJsonPropertiesEntries) {
+			if (!(key in packageJson)) {
+				console.log(`Adding '${key}' to package.json file.`);
+				packageJson[key] = value;
+			}
+		}
+		await writeFile(
+			packageJsonPath,
+			JSON.stringify(packageJson, null, 2),
+			"utf-8",
+		);
+	} catch (error) {
+		throw new Error(error as string);
+	}
 }

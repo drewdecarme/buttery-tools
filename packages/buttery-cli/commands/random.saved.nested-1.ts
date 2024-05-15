@@ -1,18 +1,18 @@
-import path from "path";
-import { CommandAction, CommandMeta, CommandOptions } from "../lib/types";
+import path from "node:path";
+import type { CommandAction, CommandMeta, CommandOptions } from "../lib/types";
 
 export const meta: CommandMeta = {
   name: "nested-1",
-  description: "Cras mattis consectetur purus sit amet fermentum.",
+  description: "Cras mattis consectetur purus sit amet fermentum."
 };
 
-export const options: CommandOptions = {
+export const options: CommandOptions<"first"> = {
   first: {
     type: "value",
     alias: "f",
     description: "display just the first substring",
-    required: false,
-  },
+    required: false
+  }
 };
 
 export const action: CommandAction = async (params) => {
