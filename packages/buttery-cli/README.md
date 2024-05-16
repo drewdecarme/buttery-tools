@@ -150,10 +150,13 @@ These are internal scripts that are invoked using this packages `package.json`. 
 - Create `dev` scripts for writing the CLI
 - Create `dev` CLI command for developing
 - Create `build` CLI Command building
-- Finish hard typing the `options` and `args` based upon the command file
+- Finish hard typing the `options` and `args` based upon the command file (options & values)
+- should add a option type for pre-defined values
+- properly parse ts option boolean values.
 - Semantic release
 - Add `init` command to ensure a commands directory is there and some other things
 - Add an SEO command for creating a PWA manifest file
 - Add an SEO command for creating favicon files
 - Watch and entire directory instead of just some files so when a new command is added it's added to the build files
 - Make a static build instead of runtime evaluation. The development errors surface when instantiating the CLI rather than when developing it.
+- fix the `createBuild` script

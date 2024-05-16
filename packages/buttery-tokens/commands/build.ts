@@ -2,7 +2,7 @@ import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
 import { build } from "../scripts/script.build";
 
 export const meta: CommandMeta = {
-  name: "dev",
+  name: "build",
   description: "Run the buttery-tokens CLI in watch mode."
 };
 
@@ -17,5 +17,5 @@ export const options: CommandOptions<"debug"> = {
 };
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
-  await build({ watch: true, debug: !!options.debug });
+  await build({ watch: false, debug: !!options.debug });
 };

@@ -22,10 +22,11 @@
   },
   "scripts": {
     "build": "yarn buttery cli build",
-    "dev": "yarn buttery cli --help"
+    "dev": "yarn buttery cli dev"
   },
   "dependencies": {
     "@buttery/cli": "workspace:^",
-    "@buttery/logger": "workspace:^"
+    "@buttery/logger": "workspace:^",
+    "@inquirer/prompts": "^5.0.3"
   }
 }
