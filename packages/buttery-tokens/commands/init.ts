@@ -28,19 +28,17 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
 
   try {
     // create the buttery.tokens.ts
-    const outFile = path.resolve(workingDir, "/buttery-tokens.config.ts");
-    const outContent = `
-  export default {
-    factor: 4
-  };  
+    const outFile = path.resolve(workingDir, "./buttery-tokens.config.ts");
+    const outContent = `export default {
+  factor: 4
+};  
 `;
     tokenLogger.debug("Creating `buttery-tokens.config.ts`...");
-    await writeFile(outFile, outContent, { encoding: "utf-8", mode:  });
+    await writeFile(outFile, outContent, { encoding: "utf-8" });
     tokenLogger.debug("Creating `buttery-tokens.config.ts`... complete.");
-    tokenLogger.debug("Buttery tokens successfully initialized!");
+    tokenLogger.success("Buttery tokens successfully initialized!");
   } catch (error) {
     const err = new Error(error);
-    tokenLogger.fatal(err);
-    throw err;
+    throw tokenLogger.fatal(err);
   }
 };
