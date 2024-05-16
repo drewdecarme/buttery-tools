@@ -3,7 +3,6 @@ import path from "node:path";
 import { cosmiconfig } from "cosmiconfig";
 import type { CLIConfig } from "../lib/types";
 import type { BuildArgs } from "../scripts/build";
-import { buildConfig } from "./script.build-config";
 import { buildPackageJson } from "./script.build-package-json";
 import { buildProgram } from "./script.build-program";
 import { LOG } from "./util.logger";
@@ -49,6 +48,8 @@ export async function build(parsedArgs: BuildArgs) {
     const { config, filepath: configFilePath } = configResult;
     const params = { config, argv: parsedArgs };
 
+    LOG.debug(`Using config: ${configFilePath}`);
+
     // delete the entire bin & dist folder to make it fresh
     LOG.debug("Cleaning distribution directories...");
     const foldersToDelete = [
@@ -65,7 +66,7 @@ export async function build(parsedArgs: BuildArgs) {
     LOG.debug("Cleaning distribution directories... done.");
 
     await Promise.all([
-      buildConfig({ ...params, configFilePath }),
+      // buildConfig({ ...params, configFilePath }),
       buildProgram(params),
       buildPackageJson(params)
     ]);
