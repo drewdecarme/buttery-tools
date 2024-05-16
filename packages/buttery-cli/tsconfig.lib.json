@@ -1,10 +1,8 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "@buttery/tsconfig/library",
   "compilerOptions": {
-    "noEmit": false,
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "dist"
+    "declarationDir": "./dist",
+    "outDir": "./dist"
   },
   "include": ["./lib/index.ts"]
 }

@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
   "devDependencies": {
+    "@buttery/tsconfig": "workspace:^",
     "@types/node": "^20.12.7",
     "esbuild": "^0.20.2",
     "tsx": "^4.7.2",

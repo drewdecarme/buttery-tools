@@ -3,7 +3,7 @@ import type { ButteryLogger } from "@buttery/logger";
 import { build, context } from "esbuild";
 import { glob } from "glob";
 import { EsbuildPluginTypescriptCompiler } from "./EsbuildPluginTypescriptCompiler.js";
-import { createEsbuildOptions } from "./createEsbuildOptions";
+import { createEsbuildOptions } from "./createEsbuildOptions.js";
 
 /**
  * ## Description `buildTSLibrary`

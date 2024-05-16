@@ -5,24 +5,24 @@
     "module": "ESNext",
     "lib": ["ESNext"],
     "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowImportingTsExtensions": false,
 
     /* Bundler mode */
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
 
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
 
     // Build
-    "noEmit": true
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": true
   },
-  "include": ["buttery.config.ts", "scripts", "commands", "src", "types", "lib"]
+  "exclude": ["node_modules"]
 }

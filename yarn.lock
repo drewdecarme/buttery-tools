@@ -1638,6 +1638,7 @@ __metadata:
   resolution: "@buttery/cli@workspace:packages/buttery-cli"
   dependencies:
     "@buttery/logger": "workspace:^"
+    "@buttery/tsconfig": "workspace:^"
     "@buttery/utils": "workspace:^"
     "@types/node": "npm:^20.12.7"
     commander: "npm:^12.0.0"
@@ -1706,6 +1707,7 @@ __metadata:
   dependencies:
     "@buttery/cli": "workspace:^"
     "@buttery/logger": "workspace:^"
+    "@buttery/tsconfig": "workspace:^"
     "@buttery/utils": "workspace:^"
     "@inquirer/prompts": "npm:^5.0.3"
     esbuild: "npm:^0.21.3"
@@ -1715,11 +1717,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@buttery/tsconfig@workspace:^, @buttery/tsconfig@workspace:packages/buttery-tsconfig":
+  version: 0.0.0-use.local
+  resolution: "@buttery/tsconfig@workspace:packages/buttery-tsconfig"
+  dependencies:
+    typescript: "npm:^5.4.5"
+  languageName: unknown
+  linkType: soft
+
 "@buttery/utils@workspace:^, @buttery/utils@workspace:packages/buttery-utils":
   version: 0.0.0-use.local
   resolution: "@buttery/utils@workspace:packages/buttery-utils"
   dependencies:
     "@buttery/logger": "workspace:^"
+    "@buttery/tsconfig": "workspace:^"
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
     esbuild: "npm:^0.21.3"
     fs-extra: "npm:^11.2.0"
