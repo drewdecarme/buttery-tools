@@ -1,7 +1,7 @@
 import path from "node:path";
+import { createEsbuildOptions } from "@buttery/utils/esbuild";
 import * as esbuild from "esbuild";
 import { glob } from "glob";
-import { createEsbuildOptions } from "./config.esbuild";
 import type { BuildScriptArgs } from "./script.build";
 import { ESBuildPluginCommands } from "./util.esbuild-plugin-commands";
 import { LOG } from "./util.logger";

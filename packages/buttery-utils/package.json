@@ -15,6 +15,20 @@
       "node": "./dist/vite/index.js",
       "types": "./dist/vite/index.d.ts"
     },
+    "./esbuild": {
+      "default": "./dist/esbuild/index.js",
+      "import": "./dist/esbuild/index.js",
+      "require": "./dist/esbuild/index.js",
+      "node": "./dist/esbuild/index.js",
+      "types": "./dist/esbuild/index.d.ts"
+    },
+    "./ts": {
+      "default": "./dist/ts/index.js",
+      "import": "./dist/ts/index.js",
+      "require": "./dist/ts/index.js",
+      "node": "./dist/ts/index.js",
+      "types": "./dist/ts/index.d.ts"
+    },
     "./remix/cloudflare": {
       "default": "./dist/remix/cloudflare/index.js",
       "import": "./dist/remix/cloudflare/index.js",
@@ -34,11 +48,14 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
+    "@buttery/logger": "workspace:^",
     "typescript": "^5.4.5",
     "vite": "^5.2.10"
   },
   "dependencies": {
     "@vitejs/plugin-react-swc": "^3.6.0",
-    "fs-extra": "^11.2.0"
+    "esbuild": "^0.21.3",
+    "fs-extra": "^11.2.0",
+    "glob": "^10.3.15"
   }
 }

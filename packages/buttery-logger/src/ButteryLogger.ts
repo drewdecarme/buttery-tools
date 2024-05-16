@@ -158,12 +158,23 @@ export class ButteryLogger {
     this.log({ level: "error", method, message }, ...data);
   }
 
+  public info(message: string, ...data: Record<string, unknown>[]) {
+    const method = chalk.blueBright(`ℹ︎ ${chalk.underline("info")}`);
+    this.log({ level: "info", method, message }, ...data);
+  }
+
   public fatal(error: Error) {
     const method = chalk.redBright.bold(`✕ ${chalk.underline("fatal")}`);
     this.log({ level: "error", method, message: error.message });
     if (!this.shouldLog("error")) return;
     console.log(`
-      ${chalk.grey(error.stack)}    
+${chalk.grey(
+  error.stack?.replace(
+    `Error: ${error.message}
+`,
+    ""
+  )
+)}    
     `);
   }
 }

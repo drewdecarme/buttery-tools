@@ -1,5 +1,5 @@
+import path from "node:path";
 import fs from "fs-extra";
-import path from "path";
 
 /**
  * Collects the dependencies inside of the package.json
@@ -27,7 +27,7 @@ export const externalizeDependencies = (
       string[]
     >((accum, [packageName]) => {
       if (!exclude.includes(packageName)) {
-        return [...accum, packageName];
+        return accum.concat(packageName);
       }
       return accum;
     }, []);

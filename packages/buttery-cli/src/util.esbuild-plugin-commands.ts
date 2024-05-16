@@ -1,5 +1,7 @@
 import { constants, access, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { createEsbuildOptions } from "@buttery/utils/esbuild";
+import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import type { Plugin } from "esbuild";
 import * as esbuild from "esbuild";
 import handlebars from "handlebars";
@@ -10,8 +12,6 @@ import type {
   CommandMeta,
   CommandOptions
 } from "../lib";
-import { createEsbuildOptions } from "./config.esbuild";
-import { exhaustiveMatchGuard } from "./util.exhaustive-match-guard";
 import { LOG } from "./util.logger";
 
 export type EntryTemplateData = {

@@ -1,6 +1,6 @@
 import path from "node:path";
+import { createEsbuildOptions } from "@buttery/utils/esbuild";
 import * as esbuild from "esbuild";
-import { createEsbuildOptions } from "./config.esbuild";
 import type { BuildScriptArgs } from "./script.build";
 import { LOG } from "./util.logger";
 

@@ -1,6 +1,6 @@
-import { defineConfig } from "vite";
+import { resolve } from "node:path";
 import react from "@vitejs/plugin-react-swc";
-import { resolve } from "path";
+import { defineConfig } from "vite";
 import { externalizeDependencies } from "./externalize-dependencies.js";
 
 type BaseLibraryOptions = {
@@ -33,21 +33,21 @@ export const createLibraryConfig = (params: LibraryConfigParams) => {
   return defineConfig({
     plugins: params.type === "react" ? [react()] : undefined,
     esbuild: {
-      target: params.type === "node" ? ["esnext", "node18.14.0"] : "esnext",
+      target: params.type === "node" ? ["esnext", "node18.14.0"] : "esnext"
     },
     build: {
       lib: {
         entry: resolve(params.rootDir, params.entryFile ?? "./src/index.ts"),
         formats: ["es", "cjs"],
-        fileName: (format) => `index.${format}.js`,
+        fileName: (format) => `index.${format}.js`
       },
       outDir: resolve(params.rootDir, params.outDir ?? "./dist"),
       rollupOptions: {
         output: {
-          preserveModules: true,
+          preserveModules: true
         },
-        external: externalizeDependencies(params.rootDir),
-      },
-    },
+        external: externalizeDependencies(params.rootDir)
+      }
+    }
   });
 };
