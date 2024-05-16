@@ -19,8 +19,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "yarn lib:build && yarn buttery cli build",
-    "dev": "yarn lib:dev && yarn buttery cli dev",
+    "build": "yarn lib:build & yarn buttery cli build",
+    "dev": "yarn lib:dev & yarn buttery cli dev",
     "lib:build": "yarn tsx ./scripts/build-dist.ts",
     "lib:dev": "yarn lib:build --watch"
   },

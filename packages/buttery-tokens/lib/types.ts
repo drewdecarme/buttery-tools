@@ -68,4 +68,15 @@ export type TokenConfig = {
    * Stops the warnings from being printed to the console when `strict: false`. This should be used SPARINGLY
    */
   suppressStrictWarnings: boolean;
+  font: {
+    family: { [key in string]: string };
+    weight: { [key in string]: number };
+    typography: {
+      [key in string]: {
+        fontFamily: string;
+        fontSize: number;
+        lineHeight: number;
+      };
+    };
+  };
 };
