@@ -1,3 +1,4 @@
+import { cp } from "node:fs/promises";
 import path from "node:path";
 import type { ButteryConfig } from "@buttery/cli";
 import {
@@ -48,7 +49,17 @@ export const buildTokensJavascript = async ({
 
   try {
     tokenLogger.debug("Transpiling & bundling...");
+    // build the ts files
     await build(buildOptions);
+    // move the index files
+    await cp(
+      Templates.tokensCSSFile,
+      path.resolve(butteryConfig.root, "./dist/index.css"),
+      {
+        recursive: true,
+        force: true
+      }
+    );
     tokenLogger.debug("Transpiling & bundling... done.");
   } catch (error) {
     const err = new Error(error);
