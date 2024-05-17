@@ -1,6 +1,12 @@
-import { MakeTemplate, type TemplateFunction } from "./MakeTemplate";
+import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 
-const template: TemplateFunction = (config, methods, functionName) => {
+const template: CompileFunction = ({
+  config,
+  methods,
+  functionName,
+  variableBody,
+  cssVarPrefix
+}) => {
   const fontFamilyNames = Object.keys(config.font.family);
   const fontFamilyUnion = methods.createTypeUnion(fontFamilyNames);
 
@@ -24,12 +30,24 @@ export type MakeFontFamily = (fontFamilyName: FontFamily) => string;
  * \`\`\`
  */
 export const ${functionName}: MakeFontFamily = (value) => {
-    return \`var(--${config.prefix}-font-family-\${value})\`
+    return \`var(${cssVarPrefix}-\${value})\`
 };
 `;
 };
 
+const css: CompileFunction = ({ config, cssVarPrefix }) => {
+  return Object.entries(config.font.family).reduce(
+    (accum, [fontFamilyName, fontFamilyValue]) =>
+      accum.concat(
+        `  ${cssVarPrefix}-${fontFamilyName}: ${fontFamilyValue};\n`
+      ),
+    ""
+  );
+};
+
 export const MakeTemplateFontFamily = new MakeTemplate({
   functionName: "makeFontFamily",
-  template
+  variableBody: "font-family",
+  template,
+  css
 });
