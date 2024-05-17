@@ -4,7 +4,6 @@ const template: CompileFunction = ({
   config,
   methods,
   functionName,
-  variableBody,
   cssVarPrefix
 }) => {
   const fontFamilyNames = Object.keys(config.font.family);
@@ -23,10 +22,31 @@ export type MakeFontFamily = (fontFamilyName: FontFamily) => string;
  * ### css-in-ts
  * \`\`\`ts
  * import { css } from "@linaria/core";
+ * import { makeFontFamily } from "@buttery/tokens/js"
  *
  * const aClassName = css\`
  *   font-family: \${makeFontFamily("${fontFamilyNames[0]}")};
  * \`
+ * \`\`\`
+ * 
+ * ### style-object
+ * \`\`\`ts
+ * import { forwardRef } from "react"
+ * import { makeFontFamily } from "@buttery/tokens/js"
+ * 
+ * const Button = forwardRef<HTMLButtonElement, JSX.IntrinsicElements["button"]>(
+ *  ({ children, style, ...restProps }, ref) => {
+ *    return (
+ *      <button
+ *        {...restProps}
+ *        style={{ fontFamily: makeFontFamily("${fontFamilyNames[1]}") }}
+ *        ref={ref}
+ *      >
+ *        {children}
+ *      </button>
+ *    );
+ *  }
+ * );
  * \`\`\`
  */
 export const ${functionName}: MakeFontFamily = (value) => {

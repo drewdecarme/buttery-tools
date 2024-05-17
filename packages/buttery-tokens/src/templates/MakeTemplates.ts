@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+
 import type { TokensConfig } from "../lib/types";
 import { tokenLogger } from "../utils";
 import type { MakeTemplate } from "./MakeTemplate";

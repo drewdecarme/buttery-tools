@@ -16,6 +16,10 @@ export type MakeTemplateOptions = {
   css: CompileFunction;
 };
 
+/**
+ * A class used to define and construct a `make` function and it's corresponding
+ * CSS tokens.
+ */
 export class MakeTemplate {
   functionName: string;
   variableBody: string;
@@ -26,7 +30,6 @@ export class MakeTemplate {
   constructor(options: MakeTemplateOptions) {
     this.functionName = options.functionName;
     this.variableBody = options.variableBody;
-
     this.template = options.template;
     this.css = options.css;
     this.methods = {

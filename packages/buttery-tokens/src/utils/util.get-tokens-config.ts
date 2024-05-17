@@ -8,7 +8,7 @@ import { tokenLogger } from "./util.logger";
  * is consuming the package.
  */
 export const getTokensConfig = async () => {
-  const explorer = cosmiconfig("tokens");
+  const explorer = cosmiconfig("tokens", { searchStrategy: "global" });
   tokenLogger.debug("Searching for `tokens` config...");
   try {
     const config = await explorer.search(path.resolve(process.cwd()));
@@ -19,7 +19,7 @@ export const getTokensConfig = async () => {
       throw "`tokens.config` is empty. This should not have happened. Please raise a support ticket.";
     }
     tokenLogger.debug("Searching for `tokens` config... done.");
-    return config.config;
+    return config;
   } catch (error) {
     throw tokenLogger.fatal(new Error(error));
   }

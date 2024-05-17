@@ -2,8 +2,8 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
 import { confirm, input, select } from "@inquirer/prompts";
-import type { TokensConfig } from "../lib/types";
-import { tokenLogger } from "../utils";
+import type { TokensConfig } from "../src/lib/types";
+import { tokenLogger } from "../src/utils";
 
 export const meta: CommandMeta = {
   name: "init",

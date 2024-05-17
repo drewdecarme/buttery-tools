@@ -1,5 +1,6 @@
 import { makeFontFamily } from "@buttery/tokens/js";
 import type { MetaFunction } from "@remix-run/cloudflare";
+import { forwardRef } from "react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,6 +11,20 @@ export const meta: MetaFunction = () => {
     }
   ];
 };
+
+const Button = forwardRef<HTMLButtonElement, JSX.IntrinsicElements["button"]>(
+  ({ children, style, ...restProps }, ref) => {
+    return (
+      <button
+        {...restProps}
+        style={{ fontFamily: makeFontFamily("heading") }}
+        ref={ref}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
 export default function Index() {
   return (

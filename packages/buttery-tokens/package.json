@@ -11,6 +11,10 @@
   "type": "module",
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
   "license": "Apache-2.0",
+  "homepage": "https://github.com/drewdecarme/buttery-tokens#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "bugs": {
     "url": "https://github.com/drewdecarme/buttery-tokens/issues"
   },
@@ -21,17 +25,19 @@
       "require": "./dist/javascript/index.js",
       "node": "./dist/javascript/index.js",
       "types": "./dist/javascript/index.d.ts"
+    },
+    "./css": {
+      "default": "./dist/index.css",
+      "import": "./dist/index.css",
+      "require": "./dist/index.css",
+      "node": "./dist/index.css"
     }
   },
-  "homepage": "https://github.com/drewdecarme/buttery-tokens#readme",
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
-    "build": "yarn lib:build & yarn buttery cli build",
-    "dev": "yarn lib:dev & yarn buttery cli dev",
-    "lib:build": "yarn tsx ./scripts/build-dist.ts",
-    "lib:dev": "yarn lib:build --watch"
+    "build": "yarn local:build & yarn buttery cli build",
+    "dev": "yarn local:dev & yarn buttery cli dev",
+    "local:build": "yarn tsx ./scripts/build.ts",
+    "local:dev": "yarn local:build --watch"
   },
   "dependencies": {
     "@buttery/cli": "workspace:^",

@@ -1,7 +1,5 @@
-import { cp } from "node:fs/promises";
-import path from "node:path";
-import { buildTSLibrary } from "@buttery/utils/esbuild";
-import { tokenLogger } from "../utils";
+import { buildLibrary } from "../src/scripts/script.build-lib";
+import { tokenLogger } from "../src/utils";
 
 type BuildArgs = {
   watch: boolean;
@@ -30,18 +28,9 @@ export const getArgs = (): BuildArgs => {
 
 try {
   const { watch } = getArgs();
-  // create the library build definition
-  tokenLogger.debug("Building buttery tokens distribution directory...");
-  await buildTSLibrary({
-    srcDir: path.resolve(import.meta.dirname, "../lib"),
-    outDir: path.resolve(import.meta.dirname, "../dist"),
-    tsconfigPath: path.resolve(import.meta.dirname, "../tsconfig.lib.json"),
-    logger: tokenLogger,
-    watch
-  });
-  tokenLogger.success(
-    "Building buttery tokens distribution directory... success"
-  );
+  // run both in parallel
+  await Promise.all([buildLibrary({ watch })]);
 } catch (error) {
+  console.log(error);
   throw tokenLogger.fatal(new Error(error));
 }
