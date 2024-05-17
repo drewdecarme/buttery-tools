@@ -1,4 +1,4 @@
-import { MakeTemplate, type TemplateFunction } from "./Template";
+import { MakeTemplate, type TemplateFunction } from "./MakeTemplate";
 
 const template: TemplateFunction = (config, methods, functionName) => {
   const fontFamilyNames = Object.keys(config.font.family);
@@ -19,7 +19,7 @@ export type MakeFontFamily = (fontFamilyName: FontFamily) => string;
  * import { css } from "@linaria/core";
  *
  * const aClassName = css\`
- *   font-family: \${makeFontFamily("${fontFamilyNames[0]}")}
+ *   font-family: \${makeFontFamily("${fontFamilyNames[0]}")};
  * \`
  * \`\`\`
  */

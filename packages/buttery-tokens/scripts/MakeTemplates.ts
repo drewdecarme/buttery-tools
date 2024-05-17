@@ -2,60 +2,22 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { TokensConfig } from "../lib/types";
 import { tokenLogger } from "../utils";
-
-// export type MakeTemplateLiteralFunction = (
-//   strings: TemplateStringsArray,
-//   config: TokensConfig,
-//   methods: MakeTemplate["methods"]
-// ) => string;
-
-export type TemplateFunction = (
-  config: TokensConfig,
-  methods: MakeTemplate["methods"],
-  functionName: string
-) => string;
-
-export type MakeTemplateOptions = {
-  functionName: string;
-  template: TemplateFunction;
-};
-
-export class MakeTemplate {
-  functionName: string;
-  template: TemplateFunction;
-  private methods: { createTypeUnion: (arr: string[]) => string };
-
-  constructor(options: MakeTemplateOptions) {
-    this.functionName = options.functionName;
-    this.template = options.template;
-    this.methods = {
-      createTypeUnion: this.createUnionType
-    };
-  }
-
-  private createUnionType(arr: string[]): string {
-    return arr.reduce<string>((accum, val, i, origArr) => {
-      accum.concat(`"${val}"`);
-      if (i < origArr.length - 1) {
-        return accum.concat(`"${val}" | `);
-      }
-      return accum.concat(`"${val}"`);
-    }, "");
-  }
-
-  compile(config: TokensConfig) {
-    return this.template(config, this.methods, this.functionName);
-  }
-}
+import type { MakeTemplate } from "./MakeTemplate";
 
 export class MakeTemplates {
   private templates: MakeTemplate[];
   private config: TokensConfig;
   outDir: string;
+  /**
+   * The path of the barrel file that will include
+   * all of the functional exports
+   */
+  entryFile: string;
 
   constructor(options: { config: TokensConfig; outDir: string }) {
     this.config = options.config;
     this.outDir = options.outDir;
+    this.entryFile = path.resolve(this.outDir, "./index.ts");
     this.templates = [];
   }
 
@@ -77,12 +39,11 @@ export class MakeTemplates {
       const filePath = path.resolve(this.outDir, `./${fileName}.ts`);
 
       try {
-        tokenLogger.debug("Generating function from template...", {
-          fileName,
-          filePath
-        });
+        tokenLogger.debug(`Generating function "${fileName}" from template...`);
         await writeFile(filePath, fileContent, { encoding: "utf8" });
-        tokenLogger.debug("Generating function from template... done.");
+        tokenLogger.debug(
+          `Generating function "${fileName}" from template... done.`
+        );
         indexFileContent = indexFileContent.concat(
           `export * from "./${fileName}";\n`
         );
@@ -96,9 +57,8 @@ export class MakeTemplates {
 
       try {
         tokenLogger.debug("Creating entry point...");
-        const indexFilePath = path.resolve(this.outDir, "./index.ts");
-        await writeFile(indexFilePath, indexFileContent, { encoding: "utf8" });
-        tokenLogger.success("Creating entry point... done.");
+        await writeFile(this.entryFile, indexFileContent, { encoding: "utf8" });
+        tokenLogger.debug("Creating entry point... done.");
       } catch (error) {
         const err = new Error(
           `Error when generating the barrel file for consumption: ${error}`

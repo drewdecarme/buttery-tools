@@ -4,5 +4,5 @@
     "declarationDir": "./dist/javascript",
     "outDir": "./dist/javascript"
   },
-  "include": ["./.temp/javascript/index.ts"]
+  "include": ["./.tokens/javascript/index.ts"]
 }
