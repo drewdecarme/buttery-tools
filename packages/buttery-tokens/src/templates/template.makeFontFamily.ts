@@ -9,7 +9,7 @@ const template: CompileFunction = ({
   const fontFamilyNames = Object.keys(config.font.family);
   const fontFamilyUnion = methods.createTypeUnion(fontFamilyNames);
 
-  return `type FontFamily = ${fontFamilyUnion};
+  return `export type FontFamily = ${fontFamilyUnion};
 export type MakeFontFamily = (fontFamilyName: FontFamily) => string;
 
 /**

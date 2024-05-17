@@ -9,7 +9,7 @@ const template: CompileFunction = ({
   const fontWeightNames = Object.keys(config.font.weight);
   const fontWeightUnion = methods.createTypeUnion(fontWeightNames);
 
-  return `type FontWeight = ${fontWeightUnion};
+  return `export type FontWeight = ${fontWeightUnion};
 export type MakeFontWeight = (fontWeightName: FontWeight) => string;
 
 /**

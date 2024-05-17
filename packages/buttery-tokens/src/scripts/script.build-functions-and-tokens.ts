@@ -101,8 +101,7 @@ export const buildFunctionsAndTokens = async ({
   const watcher = watchDir(tokensConfigPath);
 
   for await (const event of watcher) {
-    // KNOWN ISSUE - watchDir files twice. this prevents it.
-
+    // KNOWN ISSUE - watchDir files twice
     tokenLogger.watch("Changes detected. Rebuilding functions and tokens...");
     const updatedTokensConfig = await getTokensConfig();
     await generateAndTranspile({
