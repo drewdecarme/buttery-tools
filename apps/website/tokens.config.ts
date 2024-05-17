@@ -1,6 +1,4 @@
-import { createTokenConfig } from "@buttery/tokens";
-
-export default createTokenConfig({
+const tokensConfig = {
   gridSystem: 4,
   prefix: "buttery",
   strict: true,
@@ -31,4 +29,5 @@ export default createTokenConfig({
       }
     }
   }
-});
+};
+export default tokensConfig;

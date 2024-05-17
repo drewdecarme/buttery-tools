@@ -1710,6 +1710,7 @@ __metadata:
     "@buttery/tsconfig": "workspace:^"
     "@buttery/utils": "workspace:^"
     "@inquirer/prompts": "npm:^5.0.3"
+    cosmiconfig: "npm:^9.0.0"
     esbuild: "npm:^0.21.3"
     glob: "npm:^10.3.15"
     tsx: "npm:^4.10.3"

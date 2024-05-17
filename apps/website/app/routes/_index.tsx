@@ -1,3 +1,4 @@
+import { makeFontFamily } from "@buttery/tokens/js";
 import type { MetaFunction } from "@remix-run/cloudflare";
 
 export const meta: MetaFunction = () => {
@@ -5,8 +6,8 @@ export const meta: MetaFunction = () => {
     { title: "New Remix App" },
     {
       name: "description",
-      content: "Welcome to Remix! Using Vite and Cloudflare!",
-    },
+      content: "Welcome to Remix! Using Vite and Cloudflare!"
+    }
   ];
 };
 
@@ -25,7 +26,12 @@ export default function Index() {
           </a>
         </li>
         <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
+          <a
+            target="_blank"
+            href="https://remix.run/docs"
+            rel="noreferrer"
+            style={{ fontFamily: makeFontFamily("") }}
+          >
             Remix Docs
           </a>
         </li>

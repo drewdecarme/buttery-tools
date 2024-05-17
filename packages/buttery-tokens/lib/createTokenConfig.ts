@@ -1,6 +1,6 @@
-import type { TokenConfig } from "./types";
+import type { TokensConfig } from "./types";
 
 /**
  * A function to create a well formed buttery token config
  */
-export const createTokenConfig = (config: TokenConfig) => config;
+export const createTokensConfig = (config: TokensConfig) => config;

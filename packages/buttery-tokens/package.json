@@ -14,6 +14,15 @@
   "bugs": {
     "url": "https://github.com/drewdecarme/buttery-tokens/issues"
   },
+  "exports": {
+    "./js": {
+      "default": "./dist/javascript/index.js",
+      "import": "./dist/javascript/index.js",
+      "require": "./dist/javascript/index.js",
+      "node": "./dist/javascript/index.js",
+      "types": "./dist/javascript/index.d.ts"
+    }
+  },
   "homepage": "https://github.com/drewdecarme/buttery-tokens#readme",
   "publishConfig": {
     "access": "public"
@@ -29,6 +38,7 @@
     "@buttery/logger": "workspace:^",
     "@buttery/utils": "workspace:^",
     "@inquirer/prompts": "^5.0.3",
+    "cosmiconfig": "^9.0.0",
     "esbuild": "^0.21.3",
     "glob": "^10.3.15"
   },

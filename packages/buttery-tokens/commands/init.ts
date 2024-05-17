@@ -2,7 +2,7 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
 import { confirm, input, select } from "@inquirer/prompts";
-import type { TokenConfig } from "../lib/types";
+import type { TokensConfig } from "../lib/types";
 import { tokenLogger } from "../utils";
 
 export const meta: CommandMeta = {
@@ -27,7 +27,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
 
   const defaultWorkingDir = path.resolve(process.cwd());
 
-  const tokenDefaults: TokenConfig = {
+  const tokenDefaults: TokensConfig = {
     gridSystem: 4,
     prefix: "buttery",
     strict: true,
@@ -83,9 +83,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
   try {
     // create the buttery.tokens.ts
     const outFile = path.resolve(workingDir, "./tokens.config.ts");
-    const outContent = `import { createTokenConfig } from "@buttery/tokens";
-
-export default createTokenConfig({
+    const outContent = `const tokensConfig = {
   gridSystem: ${gridSystem},
   prefix: "${prefix}",
   strict: ${strictMode},
@@ -115,7 +113,8 @@ export default createTokenConfig({
       }
     }
   }
-});  
+};
+export default tokensConfig;  
 `;
     tokenLogger.debug("Creating `tokens.config.ts`...");
     await writeFile(outFile, outContent, { encoding: "utf-8" });
@@ -123,6 +122,8 @@ export default createTokenConfig({
 
     tokenLogger.success("Buttery tokens successfully initialized!");
   } catch (error) {
-    throw tokenLogger.fatal(new Error(error));
+    const err = new Error(error);
+    tokenLogger.fatal(err);
+    throw err;
   }
 };

@@ -1,6 +1,6 @@
+import { cp } from "node:fs/promises";
 import path from "node:path";
 import { buildTSLibrary } from "@buttery/utils/esbuild";
-
 import { tokenLogger } from "../utils";
 
 type BuildArgs = {

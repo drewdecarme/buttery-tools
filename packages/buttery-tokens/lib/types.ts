@@ -1,4 +1,4 @@
-export type TokenConfig = {
+export type TokensConfig = {
   /**
    * ## Description
    * The integer that will regulate the visual harmony of the application by enforcing strict spacing requirements
