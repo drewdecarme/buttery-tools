@@ -30,7 +30,7 @@ export default function Index() {
             target="_blank"
             href="https://remix.run/docs"
             rel="noreferrer"
-            style={{ fontFamily: makeFontFamily("") }}
+            style={{ fontFamily: makeFontFamily("body") }}
           >
             Remix Docs
           </a>

@@ -18,14 +18,14 @@ export class EsbuildPluginTypescriptCompiler {
     this.tsConfigPath = tsConfigPath;
   }
 
-  getPlugin(): Plugin {
+  getPlugin(extraArgs: string[] = []): Plugin {
     const tsconfigPath = this.tsConfigPath;
     return {
       name: "typescript",
       setup(build) {
         build.onEnd((result) => {
           if (result.errors.length > 0) return;
-          execSync(`tsc --project ${tsconfigPath}`);
+          execSync(`tsc --project ${tsconfigPath} ${extraArgs.join(" ")}`);
         });
       }
     };
