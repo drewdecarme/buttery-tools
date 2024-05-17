@@ -6,14 +6,15 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "bin",
+    "dist",
+    "templates"
+  ],
   "type": "module",
-  "types": "./bin/index.d.ts",
-  "bin": {
-    "butter": "./bin/index.js"
-  },
   "scripts": {
-    "build": "yarn tsc --project tsconfig.build.json & tsx ./scripts/build.ts",
-    "dev": "yarn tsc --project tsconfig.build.json --watch",
+    "build": "tsx ./scripts/build.ts",
+    "dev": "yarn build --watch --local",
     "commands:build": "yarn butter cli build",
     "commands:dev": "yarn build --watch"
   },
@@ -28,18 +29,22 @@
   },
   "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
   "devDependencies": {
-    "@types/lodash.get": "^4.4.9",
-    "@types/node": "^20.12.6",
+    "@buttery/tsconfig": "workspace:^",
+    "@types/node": "^20.12.7",
     "esbuild": "^0.20.2",
-    "lodash.get": "^4.4.2",
     "tsx": "^4.7.2",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@buttery/logger": "workspace:^",
+    "@buttery/utils": "workspace:^",
     "commander": "^12.0.0",
     "cosmiconfig": "^9.0.0",
     "glob": "^10.3.12",
-    "rimraf": "^5.0.5",
-    "vite": "^5.2.8"
+    "handlebars": "^4.7.8"
+  },
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "buttery": "./bin/index.js"
   }
 }

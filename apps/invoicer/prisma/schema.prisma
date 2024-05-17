@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id
+  first_name String?
+  last_name  String?
+  clients    Client[]
+}
+
+model Client {
+  id             Int       @id @default(autoincrement())
+  name           String
+  slug           String    @unique @default("")
+  address_line_1 String
+  address_line_2 String?
+  city           String
+  state          String
+  zip            String
+  logo_url       String?
+  User           User?     @relation(fields: [user_id], references: [id])
+  user_id        String?
+  invoices       Invoice[]
+  expenses       Expense[]
+}
+
+model Invoice {
+  id                Int            @id @default(autoincrement()) //12,783
+  Client            Client         @relation(fields: [client_id], references: [id])
+  client_id         Int
+  subject           String?
+  issue_date        DateTime?
+  due_date          DateTime?
+  created_at        DateTime       @default(now())
+  updated_at        DateTime       @default(now())
+  expenses          Expense[]
+  invoice_status    InvoiceStatus? @relation(fields: [invoice_status_id], references: [id])
+  invoice_status_id String?        @default("DRAFT")
+}
+
+// enum table for invoice
+// DRAFT
+// ISSUED
+// PAIED
+model InvoiceStatus {
+  id       String    @id
+  invoices Invoice[]
+}
+
+model Expense {
+  id                   Int          @id @default(autoincrement())
+  price                Int
+  description          String
+  is_draft             Boolean      @default(true)
+  is_invoiced          Boolean      @default(false)
+  terms_and_conditions String
+  attachments          Attachment[]
+  Client               Client?      @relation(fields: [client_id], references: [id])
+  client_id            Int?
+  Invoice              Invoice?     @relation(fields: [invoice_id], references: [id])
+  invoice_id           Int?
+}
+
+model Attachment {
+  id          Int      @id @default(autoincrement())
+  filename    String // stores the name of the attached file.
+  cotent_type String // stores the MIME type of the attached file.
+  size        Int // stores the size of the attached file.
+  storage_key String // Unique identifier for the attachment in Cloudflare R2 storage
+  Expense     Expense? @relation(fields: [expense_id], references: [id])
+  expense_id  Int?
+}

@@ -1,24 +1,28 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ESNext"],
-    "moduleResolution": "Node",
-    "strict": true,
-    "useDefineForClassFields": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": false,
+
+    /* Bundler mode */
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    /* Linting */
+    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "outDir": "./bin",
-    "skipLibCheck": true,
-    "jsx": "react-jsx",
-    "noEmit": false,
-    "declaration": true,
-    "declarationMap": true,
-    "allowImportingTsExtensions": false
+
+    // Build
+    "noEmit": true
   },
-  "include": ["butter.config.ts", "src", "commands", "lib", "scripts"]
+  "include": ["buttery.config.ts", "scripts", "commands", "src", "types", "lib"]
 }

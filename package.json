@@ -6,7 +6,8 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "./packages/**"
+      "./packages/**",
+      "./apps/**"
     ]
   },
   "repository": {
@@ -19,7 +20,7 @@
     "url": "https://github.com/drewdecarme/starter-ts-cli/issues"
   },
   "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.2.2",
   "scripts": {
     "build": "turbo build",
     "release": "yarn build && changeset publish"
@@ -28,6 +29,7 @@
     "@changesets/cli": "^2.27.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.7.3",
     "turbo": "^1.13.2"
   }
 }

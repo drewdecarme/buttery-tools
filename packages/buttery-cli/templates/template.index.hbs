@@ -1,0 +1,36 @@
+#! /usr/bin/env node
+import { program } from "commander";
+import path from "path";
+
+function withParsedAction(segmentCommand) {
+  return async function(...restArgs) {
+
+    try {
+      const timestamp = new Date().getTime();
+      const commandPath = path.resolve(import.meta.dirname, `./commands/${segmentCommand}.js?t=${timestamp}`);
+      const command = await import(commandPath);
+      restArgs.pop();
+      const options = restArgs[restArgs.length - 1];
+      restArgs.pop();
+      const args = (command.args ?? []).map((arg, i) => {
+        return [arg.name, restArgs[i] as string];
+      });
+      const action = command.action ?? ((params) => console.log("No action defined", params));
+      return action({ args, options });
+    } catch (error) {
+      throw error;
+    }
+  }
+}
+
+try {
+  program.name("{{{ cli_name }}}").description("{{{ cli_description }}}");
+  {{{ cli_commands }}}
+  await program.parseAsync();
+} catch(error) {
+  console.error(error);
+  throw new Error(error);
+}
+
+
+
