@@ -1,5 +1,9 @@
 export type ButteryConfigTokens = {
   /**
+   * TODO: Work on conventions
+   */
+  importName?: string;
+  /**
    * ## Description
    * The integer that will regulate the visual harmony of the application by enforcing strict spacing requirements
    *

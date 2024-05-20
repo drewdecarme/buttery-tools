@@ -29,6 +29,13 @@
       "node": "./dist/ts/index.js",
       "types": "./dist/ts/index.d.ts"
     },
+    "./node": {
+      "default": "./dist/node/index.js",
+      "import": "./dist/node/index.js",
+      "require": "./dist/node/index.js",
+      "node": "./dist/node/index.js",
+      "types": "./dist/node/index.d.ts"
+    },
     "./remix/cloudflare": {
       "default": "./dist/remix/cloudflare/index.js",
       "import": "./dist/remix/cloudflare/index.js",

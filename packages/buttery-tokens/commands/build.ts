@@ -1,5 +1,4 @@
 import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
-import { getButteryConfig } from "@buttery/core";
 import { buildFunctionsAndTokens } from "../src/scripts/script.build-functions-and-tokens";
 import { tokenLogger } from "../src/utils";
 

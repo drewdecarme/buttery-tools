@@ -51,5 +51,6 @@
     "@buttery/tsconfig": "workspace:^",
     "tsx": "^4.10.3",
     "typescript": "^5.4.5"
-  }
+  },
+  "buttery-tokens": {}
 }

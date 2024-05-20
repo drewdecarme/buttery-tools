@@ -15,7 +15,7 @@ import {
 import { MakeTemplates } from "../templates/MakeTemplates";
 import { MakeTemplateFontFamily } from "../templates/template.makeFontFamily";
 import { MakeTemplateFontWeight } from "../templates/template.makeFontWeight";
-import { tokenLogger } from "../utils";
+import { getLocalRootPath, tokenLogger } from "../utils";
 
 // The function that does stuff. It's in here so it can either be used
 // when a specific file changes or just straight up.
@@ -26,9 +26,27 @@ async function generateAndTranspile({
   configBase: ButteryConfigBase;
   configTokens: ButteryConfigTokens;
 }) {
+  const tokensRootPath = await getLocalRootPath();
+
+  console.log({ tokensRootPath });
+
+  const outDirForGeneratedTSFiles = path.resolve(
+    tokensRootPath,
+    configTokens?.importName
+      ? `./.tokens/${configTokens.importName}/`
+      : "./.tokens/"
+  );
+
+  const outFileForTranspiledFiles = path.resolve(
+    tokensRootPath,
+    configTokens?.importName
+      ? `./dist/${configTokens.importName}/index.js`
+      : "./dist/index.js"
+  );
+
   const Templates = new MakeTemplates({
     config: configTokens,
-    outDir: path.resolve(configBase.root, "./.tokens/javascript/")
+    outDir: outDirForGeneratedTSFiles
   });
 
   // Register the templates that should be generated
@@ -38,12 +56,14 @@ async function generateAndTranspile({
   // Create a plugin to eventually transpile the .tokens directory
   // and assemble the ESBuild options for that entry / barrel file.
   const tsPlugin = new EsbuildPluginTypescriptCompiler({
-    tsConfigPath: path.resolve(configBase.root, "./tsconfig.lib-js.json")
+    tsConfigPath: path.resolve(tokensRootPath, "./tsconfig.lib-js.json")
   });
-  const plugins = [tsPlugin.getPlugin()];
+  const plugins = [
+    tsPlugin.getPlugin({ filePathToTranspile: outFileForTranspiledFiles })
+  ];
   const buildOptions = createEsbuildOptions({
     entryPoints: [Templates.entryFile],
-    outfile: path.resolve(configBase.root, "./dist/javascript/index.js"),
+    outfile: outFileForTranspiledFiles,
     plugins
   });
 

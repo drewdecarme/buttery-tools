@@ -19599,6 +19599,7 @@ __metadata:
   resolution: "website@workspace:apps/website"
   dependencies:
     "@buttery/components": "workspace:^"
+    "@buttery/core": "workspace:^"
     "@buttery/tokens": "workspace:^"
     "@cloudflare/workers-types": "npm:^4.20240405.0"
     "@remix-run/cloudflare": "npm:^2.9.2"
