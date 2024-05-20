@@ -1,4 +1,4 @@
-export type TokensConfig = {
+export type ButteryConfigTokens = {
   /**
    * ## Description
    * The integer that will regulate the visual harmony of the application by enforcing strict spacing requirements

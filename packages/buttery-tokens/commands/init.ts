@@ -1,8 +1,8 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
+import type { ButteryConfigTokens } from "@buttery/core";
 import { confirm, input, select } from "@inquirer/prompts";
-import type { TokensConfig } from "../src/lib/types";
 import { tokenLogger } from "../src/utils";
 
 export const meta: CommandMeta = {
@@ -27,7 +27,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
 
   const defaultWorkingDir = path.resolve(process.cwd());
 
-  const tokenDefaults: TokensConfig = {
+  const tokenDefaults: ButteryConfigTokens = {
     gridSystem: 4,
     prefix: "buttery",
     strict: true,
@@ -122,7 +122,7 @@ export default tokensConfig;
 
     tokenLogger.success("Buttery tokens successfully initialized!");
   } catch (error) {
-    const err = new Error(error);
+    const err = new Error(error as string);
     tokenLogger.fatal(err);
     throw err;
   }

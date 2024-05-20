@@ -1,12 +1,12 @@
 import { constants, access, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import type { ButteryConfigBase, ButteryConfigCli } from "@buttery/core";
 import { createEsbuildOptions } from "@buttery/utils/esbuild";
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import type { Plugin } from "esbuild";
 import * as esbuild from "esbuild";
 import handlebars from "handlebars";
 import type {
-  CLIConfig,
   CommandAction,
   CommandArgs,
   CommandMeta,
@@ -41,7 +41,7 @@ type CommandObject = {
  * TODO: Update this description
  */
 export class ESBuildPluginCommands {
-  config: CLIConfig;
+  private config: ButteryConfigBase & ButteryConfigCli;
   private runNumber: number;
   private commandFilesSrcDir: string;
   private commandFilesOutDir: string;
@@ -49,7 +49,7 @@ export class ESBuildPluginCommands {
   private commandGraph: CommandObject;
   private commandStr: string;
 
-  constructor(config: CLIConfig) {
+  constructor(config: ButteryConfigBase & ButteryConfigCli) {
     this.config = config;
     this.runNumber = 0;
     this.commandFiles = new Set();

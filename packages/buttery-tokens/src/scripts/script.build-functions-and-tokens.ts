@@ -7,28 +7,28 @@ import {
 } from "@buttery/utils/esbuild";
 import { build } from "esbuild";
 
-import type { ButteryConfig } from "@buttery/cli";
-import type { TokensConfig } from "../lib/types";
+import {
+  type ButteryConfigBase,
+  type ButteryConfigTokens,
+  getButteryConfig
+} from "@buttery/core";
 import { MakeTemplates } from "../templates/MakeTemplates";
 import { MakeTemplateFontFamily } from "../templates/template.makeFontFamily";
 import { MakeTemplateFontWeight } from "../templates/template.makeFontWeight";
-import { getButteryConfig, tokenLogger } from "../utils";
-import { getTokensConfig } from "../utils/util.get-tokens-config";
+import { tokenLogger } from "../utils";
 
 // The function that does stuff. It's in here so it can either be used
 // when a specific file changes or just straight up.
 async function generateAndTranspile({
-  tokensConfig,
-  butteryConfig
+  configBase,
+  configTokens
 }: {
-  tokensConfig: TokensConfig;
-  butteryConfig: ButteryConfig;
+  configBase: ButteryConfigBase;
+  configTokens: ButteryConfigTokens;
 }) {
-  // Register a new MakeTemplates instance
-  // to register the pre-defined Template classes
   const Templates = new MakeTemplates({
-    config: tokensConfig,
-    outDir: path.resolve(butteryConfig.root, "./.tokens/javascript/")
+    config: configTokens,
+    outDir: path.resolve(configBase.root, "./.tokens/javascript/")
   });
 
   // Register the templates that should be generated
@@ -38,12 +38,12 @@ async function generateAndTranspile({
   // Create a plugin to eventually transpile the .tokens directory
   // and assemble the ESBuild options for that entry / barrel file.
   const tsPlugin = new EsbuildPluginTypescriptCompiler({
-    tsConfigPath: path.resolve(butteryConfig.root, "./tsconfig.lib-js.json")
+    tsConfigPath: path.resolve(configBase.root, "./tsconfig.lib-js.json")
   });
   const plugins = [tsPlugin.getPlugin()];
   const buildOptions = createEsbuildOptions({
     entryPoints: [Templates.entryFile],
-    outfile: path.resolve(butteryConfig.root, "./dist/javascript/index.js"),
+    outfile: path.resolve(configBase.root, "./dist/javascript/index.js"),
     plugins
   });
 
@@ -62,7 +62,7 @@ async function generateAndTranspile({
     tokenLogger.debug("Distributing CSS files...");
     await cp(
       Templates.tokensCSSFile,
-      path.resolve(butteryConfig.root, "./dist/index.css"),
+      path.resolve(configBase.root, "./dist/index.css"),
       {
         recursive: true,
         force: true
@@ -70,7 +70,7 @@ async function generateAndTranspile({
     );
     tokenLogger.debug("Distributing CSS files... done");
   } catch (error) {
-    const err = new Error(error);
+    const err = new Error(error as string);
     tokenLogger.fatal(err);
     throw err;
   }
@@ -80,33 +80,37 @@ async function generateAndTranspile({
  * TODO: Fix this description
  */
 export const buildFunctionsAndTokens = async ({
-  watch,
-  butteryConfig,
-  tokensConfig,
-  tokensConfigPath
+  watch
 }: {
-  butteryConfig: ButteryConfig;
-  tokensConfig: TokensConfig;
   watch: boolean;
-  tokensConfigPath: string;
 }) => {
+  // Get the `buttery.config` to baseline some variables
+  // The `buttery.config` is included in the distribution via package.json files
+  // and it's set as a JS file so it can be consumed without a lot of configuration
+  tokenLogger.debug("Fetching necessary configuration files...");
+  const configs = await getButteryConfig("tokens");
+  tokenLogger.debug("Fetching necessary configuration files... done.");
+
   // build it once
-  await generateAndTranspile({ tokensConfig, butteryConfig });
+  await generateAndTranspile({
+    configBase: configs.configBase,
+    configTokens: configs.tokens
+  });
 
   if (!watch) return;
 
   // Watch the tokens.config for any changes
-  tokenLogger.watch(tokensConfigPath.concat(" for changes..."));
+  tokenLogger.watch(configs.configBase.root.concat(" for changes..."));
 
-  const watcher = watchDir(tokensConfigPath);
+  const watcher = watchDir(configs.configBase.root);
 
   for await (const event of watcher) {
     // KNOWN ISSUE - watchDir files twice
     tokenLogger.watch("Changes detected. Rebuilding functions and tokens...");
-    const updatedTokensConfig = await getTokensConfig();
+    const updatedConfig = await getButteryConfig("tokens");
     await generateAndTranspile({
-      tokensConfig: updatedTokensConfig.config,
-      butteryConfig
+      configBase: updatedConfig.configBase,
+      configTokens: updatedConfig.tokens
     });
     tokenLogger.watch(
       "Changes detected. Rebuilding functions and tokens... done."

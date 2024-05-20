@@ -21,18 +21,26 @@ import { LOG } from "./util.logger";
 // -- SRC --
 // delete the existing index.ts file, compile the index template and write it
 // to the src directory so it can be transpiled and built again.
-export async function buildProgram({ config, argv }: BuildScriptArgs) {
+export async function buildProgram({
+  configBase,
+  configCli,
+  configPath,
+  programArgs
+}: BuildScriptArgs) {
   try {
-    const commandFilesDir = path.resolve(config.root, "./commands");
+    const commandFilesDir = path.resolve(configBase.root, "./commands");
     const commandFilesGlob = path.resolve(commandFilesDir, "./*.ts");
     const commandFiles = glob.sync(commandFilesGlob, {
       follow: false
     });
 
-    const outDir = path.join(config.root, "./bin/commands");
+    const outDir = path.join(configBase.root, "./bin/commands");
 
     // Create a commands plugin
-    const ESBuildCommandsPlugin = new ESBuildPluginCommands(config);
+    const ESBuildCommandsPlugin = new ESBuildPluginCommands({
+      ...configBase,
+      ...configCli
+    });
     const plugins = [ESBuildCommandsPlugin.getPlugin()];
 
     // Create the build options
@@ -43,7 +51,7 @@ export async function buildProgram({ config, argv }: BuildScriptArgs) {
     });
 
     // Build when not in watch
-    if (!argv.watch) {
+    if (!programArgs.watch) {
       return await esbuild.build(esbuildOptions);
     }
 

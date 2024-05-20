@@ -1,34 +1,21 @@
 import { rm } from "node:fs/promises";
 import path from "node:path";
-import { cosmiconfig } from "cosmiconfig";
-import type { CLIConfig } from "../lib/types";
+import {
+  type ButteryConfigBase,
+  type ButteryConfigCli,
+  getButteryConfig
+} from "@buttery/core";
 import type { BuildArgs } from "../scripts/build";
 import { buildPackageJson } from "./script.build-package-json";
 import { buildProgram } from "./script.build-program";
 import { LOG } from "./util.logger";
 
 export type BuildScriptArgs = {
-  config: CLIConfig;
-  argv: BuildArgs;
+  configBase: ButteryConfigBase;
+  configPath: string;
+  configCli: ButteryConfigCli;
+  programArgs: BuildArgs;
 };
-
-async function getAndParseButteryConfig() {
-  try {
-    // get the buttery configuration file
-    const explorer = cosmiconfig("buttery");
-    const configResult = await explorer.search();
-    if (!configResult) {
-      throw "Cannot parse configuration result.";
-    }
-    if (configResult.isEmpty) {
-      throw "The buttery configuration file is empty.";
-    }
-    const config = configResult;
-    return config;
-  } catch (error) {
-    throw new Error(`Error parsing buttery.config file: ${error as string}`);
-  }
-}
 
 /**
  * This is the main build command that is used to build the
@@ -41,14 +28,14 @@ async function getAndParseButteryConfig() {
  * builds this CLI that creates the CLI that the consumer
  * is creating. A little CLI inception... if you will ;)
  */
-export async function build(parsedArgs: BuildArgs) {
-  const configResult = await getAndParseButteryConfig();
+export async function build(programArgs: BuildArgs) {
+  const butteryConfig = await getButteryConfig("cli");
 
   try {
-    const { config, filepath: configFilePath } = configResult;
-    const params = { config, argv: parsedArgs };
+    const { configBase, configPath, cli: configCli } = butteryConfig;
+    const params = { configBase, configPath, configCli, programArgs };
 
-    LOG.debug(`Using config: ${configFilePath}`);
+    LOG.debug(`Using config: ${configPath}`);
 
     // delete the entire bin & dist folder to make it fresh
     LOG.debug("Cleaning distribution directories...");
@@ -57,7 +44,7 @@ export async function build(parsedArgs: BuildArgs) {
       "./bin/buttery-config.js",
       "./bin/commands"
     ].map((folder) =>
-      rm(path.resolve(config.root, folder), {
+      rm(path.resolve(configBase.root, folder), {
         recursive: true,
         force: true
       })
@@ -65,11 +52,7 @@ export async function build(parsedArgs: BuildArgs) {
     await Promise.all(foldersToDelete);
     LOG.debug("Cleaning distribution directories... done.");
 
-    await Promise.all([
-      // buildConfig({ ...params, configFilePath }),
-      buildProgram(params),
-      buildPackageJson(params)
-    ]);
+    await Promise.all([buildProgram(params), buildPackageJson(params)]);
   } catch (error) {
     const err = new Error(error as string);
     LOG.fatal(err);

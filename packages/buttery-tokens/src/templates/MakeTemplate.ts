@@ -1,7 +1,7 @@
-import type { TokensConfig } from "../lib/types";
+import type { ButteryConfigTokens } from "@buttery/core";
 
 export type CompileFunctionParams = {
-  config: TokensConfig;
+  config: ButteryConfigTokens;
   methods: MakeTemplate["methods"];
   variableBody: string;
   cssVarPrefix: string;
@@ -47,7 +47,7 @@ export class MakeTemplate {
     }, "");
   }
 
-  compile(config: TokensConfig) {
+  compile(config: ButteryConfigTokens) {
     const compileArgs: CompileFunctionParams = {
       config,
       functionName: this.functionName,

@@ -34,13 +34,12 @@
     }
   },
   "scripts": {
-    "build": "yarn local:build & yarn buttery cli build",
-    "dev": "yarn local:dev & yarn buttery cli dev",
-    "local:build": "yarn tsx ./scripts/build.ts",
-    "local:dev": "yarn local:build --watch"
+    "build": "yarn buttery cli build",
+    "dev": "yarn buttery cli dev"
   },
   "dependencies": {
     "@buttery/cli": "workspace:^",
+    "@buttery/core": "workspace:^",
     "@buttery/logger": "workspace:^",
     "@buttery/utils": "workspace:^",
     "@inquirer/prompts": "^5.0.3",

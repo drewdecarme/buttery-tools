@@ -1,13 +1,13 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import type { TokensConfig } from "../lib/types";
+import type { ButteryConfigTokens } from "@buttery/core";
 import { tokenLogger } from "../utils";
 import type { MakeTemplate } from "./MakeTemplate";
 
 export class MakeTemplates {
   private templates: MakeTemplate[];
-  private config: TokensConfig;
+  private config: ButteryConfigTokens;
   outDir: string;
   /**
    * The path of the barrel file that will include
@@ -16,7 +16,7 @@ export class MakeTemplates {
   entryFile: string;
   tokensCSSFile: string;
 
-  constructor(options: { config: TokensConfig; outDir: string }) {
+  constructor(options: { config: ButteryConfigTokens; outDir: string }) {
     this.config = options.config;
     this.outDir = options.outDir;
     this.entryFile = path.resolve(this.outDir, "./index.ts");

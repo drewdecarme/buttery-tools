@@ -1,0 +1,31 @@
+{
+  "name": "@buttery/core",
+  "version": "0.0.1",
+  "description": "A core module that provides some core functionality for all buttery tools",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "yarn tsc",
+    "dev": "yarn build --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@buttery/logger": "workspace:^",
+    "@buttery/tsconfig": "workspace:^",
+    "cosmiconfig": "^9.0.0"
+  }
+}

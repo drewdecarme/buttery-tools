@@ -10,9 +10,12 @@ import { LOG } from "./util.logger";
 // file. This will allow whoever consumes the CLI to instantiate it
 // from the command line without having to worry about manually adding
 // those properties to their `package.json`
-export async function buildPackageJson({ config }: BuildScriptArgs) {
+export async function buildPackageJson({
+  configBase,
+  configCli
+}: BuildScriptArgs) {
   try {
-    const packageJsonPath = path.resolve(config.root, "./package.json");
+    const packageJsonPath = path.resolve(configBase.root, "./package.json");
     const packageJsonString = await readFile(packageJsonPath, {
       encoding: "utf8"
     });
@@ -21,7 +24,7 @@ export async function buildPackageJson({ config }: BuildScriptArgs) {
       type: "module",
       types: "./dist/index.d.ts",
       bin: {
-        [config.name]: "./bin/index.js"
+        [configCli.name]: "./bin/index.js"
       }
     };
     const packageJsonPropertiesEntries = Object.entries(
@@ -35,7 +38,7 @@ export async function buildPackageJson({ config }: BuildScriptArgs) {
     }
     await writeFile(
       packageJsonPath,
-      JSON.stringify(packageJson, null, 2),
+      `${JSON.stringify(packageJson, null, 2)}\n`,
       "utf-8"
     );
   } catch (error) {

@@ -36,6 +36,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@buttery/core": "workspace:^",
     "@buttery/logger": "workspace:^",
     "@buttery/utils": "workspace:^",
     "commander": "^12.0.0",

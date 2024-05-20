@@ -1,20 +1,3 @@
-/**
- * @deprecated Please use the ButteryConfig type
- */
-export type CLIConfig = {
-  name: string;
-  description: string;
-  version?: string;
-  root: string;
-};
-export type ButteryConfig = {
-  name: string;
-  description: string;
-  version?: string;
-  root: string;
-  tokens: Record<string, unknown>;
-};
-
 export type CommandMeta = {
   name: string;
   description: string;
