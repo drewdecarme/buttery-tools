@@ -1,5 +1,5 @@
 import { cosmiconfig } from "cosmiconfig";
-import { LOG } from "./logger";
+import { LOG } from "./logger.js";
 import type { ButteryConfig } from "./types.buttery-config";
 
 type FoundButteryConfig = {

@@ -55,12 +55,12 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
-    "@buttery/logger": "workspace:^",
-    "@buttery/tsconfig": "workspace:^",
     "typescript": "^5.4.5",
     "vite": "^5.2.10"
   },
   "dependencies": {
+    "@buttery/logger": "workspace:^",
+    "@buttery/tsconfig": "workspace:^",
     "@vitejs/plugin-react-swc": "^3.6.0",
     "esbuild": "^0.21.3",
     "fs-extra": "^11.2.0",

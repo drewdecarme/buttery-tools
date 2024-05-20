@@ -5,24 +5,17 @@
     "module": "ESNext",
     "lib": ["ESNext"],
     "skipLibCheck": true,
-
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
-    // Build
     "noEmit": false,
     "declaration": true,
     "declarationMap": true
-  },
-  "exclude": ["node_modules"]
+  }
 }

@@ -1,4 +1,7 @@
 import { execSync } from "node:child_process";
+import butteryLibraryConfig from "@buttery/tsconfig/library" with {
+  type: "json"
+};
 import type { Plugin } from "esbuild";
 
 /**
@@ -28,10 +31,26 @@ export class EsbuildPluginTypescriptCompiler {
       setup(build) {
         build.onEnd((result) => {
           if (result.errors.length > 0) return;
+
+          const extraArgs = (options?.extraArgs ?? []).join(" ");
+
+          if (options?.filePathToTranspile) {
+            const compilerOptions = Object.entries(
+              butteryLibraryConfig.compilerOptions
+            ).reduce(
+              (accum, [key, value]) => accum.concat(`--${key} ${value} `),
+              ""
+            );
+            execSync(
+              `tsc ${options.filePathToTranspile} ${compilerOptions} ${extraArgs}`
+            );
+            return;
+          }
+
           execSync(
             `tsc ${
               options?.filePathToTranspile ?? ""
-            } --project ${tsconfigPath} ${(options?.extraArgs ?? []).join(" ")}`
+            } --project ${tsconfigPath} `
           );
         });
       }

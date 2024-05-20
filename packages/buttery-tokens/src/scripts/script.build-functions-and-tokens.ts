@@ -37,11 +37,14 @@ async function generateAndTranspile({
       : "./.tokens/"
   );
 
-  const outFileForTranspiledFiles = path.resolve(
+  const outDirForTranspiledFiles = path.resolve(
     tokensRootPath,
-    configTokens?.importName
-      ? `./dist/${configTokens.importName}/index.js`
-      : "./dist/index.js"
+    configTokens?.importName ? `./${configTokens.importName}/` : "./dist/"
+  );
+
+  const outFileForTranspiledFiles = path.resolve(
+    outDirForTranspiledFiles,
+    "./index.js"
   );
 
   const Templates = new MakeTemplates({
@@ -56,15 +59,18 @@ async function generateAndTranspile({
   // Create a plugin to eventually transpile the .tokens directory
   // and assemble the ESBuild options for that entry / barrel file.
   const tsPlugin = new EsbuildPluginTypescriptCompiler({
-    tsConfigPath: path.resolve(tokensRootPath, "./tsconfig.lib-js.json")
+    tsConfigPath: path.resolve(tokensRootPath, "./tsconfig.build.json")
   });
-  const plugins = [
-    tsPlugin.getPlugin({ filePathToTranspile: outFileForTranspiledFiles })
-  ];
   const buildOptions = createEsbuildOptions({
     entryPoints: [Templates.entryFile],
     outfile: outFileForTranspiledFiles,
-    plugins
+    plugins: [
+      // transpile and create files
+      tsPlugin.getPlugin({
+        filePathToTranspile: Templates.entryFile,
+        extraArgs: [`--outDir ${outDirForTranspiledFiles}`]
+      })
+    ]
   });
 
   try {

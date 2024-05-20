@@ -3,7 +3,7 @@ import type { ButteryConfig } from "@buttery/core";
 const config: ButteryConfig = {
   root: import.meta.dirname,
   tokens: {
-    importName: "website",
+    importName: "internal-website",
     gridSystem: 4,
     prefix: "buttery",
     strict: true,
