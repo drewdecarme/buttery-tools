@@ -1969,6 +1969,8 @@ __metadata:
   resolution: "@buttery/docs@workspace:packages/buttery-docs"
   dependencies:
     "@buttery/cli": "workspace:^"
+    "@buttery/core": "workspace:^"
+    "@buttery/tokens": "workspace:^"
     "@chromatic-com/storybook": "npm:^1.4.0"
     "@storybook/addon-essentials": "npm:^8.1.1"
     "@storybook/addon-interactions": "npm:^8.1.1"
@@ -1983,7 +1985,7 @@ __metadata:
     storybook: "npm:^8.1.1"
     typescript: "npm:^5.4.5"
   bin:
-    buttery-docs: ./bin/index.js
+    buttery-docs: bin/index.js
   languageName: unknown
   linkType: soft
 
@@ -2020,7 +2022,7 @@ __metadata:
     tsx: "npm:^4.10.3"
     typescript: "npm:^5.4.5"
   bin:
-    tokens: ./bin/index.js
+    buttery-tokens: ./bin/index.js
   languageName: unknown
   linkType: soft
 

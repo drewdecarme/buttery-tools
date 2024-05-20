@@ -1,4 +1,4 @@
-import { makeFontFamily } from "@buttery/tokens/website";
+import { makeFontFamily } from "@buttery/tokens/_website";
 import type { MetaFunction } from "@remix-run/cloudflare";
 import { forwardRef } from "react";
 

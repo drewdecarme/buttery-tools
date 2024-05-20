@@ -13,8 +13,8 @@
     "start": "wrangler pages dev ./build/client",
     "typecheck": "tsc",
     "typegen": "wrangler types",
-    "tokens:build": "yarn tokens build",
-    "tokens:dev": "yarn tokens:build --watch"
+    "tokens:build": "yarn buttery-tokens build",
+    "tokens:dev": "yarn buttery-tokens:build --watch"
   },
   "dependencies": {
     "@buttery/components": "workspace:^",

@@ -9,7 +9,9 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "./dist/index.d.ts",
-  "bin": "./bin/index.js",
+  "bin": {
+    "buttery-tokens": "./bin/index.js"
+  },
   "type": "module",
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
   "license": "Apache-2.0",

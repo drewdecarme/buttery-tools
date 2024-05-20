@@ -7,11 +7,7 @@ import {
 } from "@buttery/utils/esbuild";
 import { build } from "esbuild";
 
-import {
-  type ButteryConfigBase,
-  type ButteryConfigTokens,
-  getButteryConfig
-} from "@buttery/core";
+import { type ButteryConfigTokens, getButteryConfig } from "@buttery/core";
 import { MakeTemplates } from "../templates/MakeTemplates";
 import { MakeTemplateFontFamily } from "../templates/template.makeFontFamily";
 import { MakeTemplateFontWeight } from "../templates/template.makeFontWeight";
@@ -19,13 +15,7 @@ import { getLocalRootPath, tokenLogger } from "../utils";
 
 // The function that does stuff. It's in here so it can either be used
 // when a specific file changes or just straight up.
-async function generateAndTranspile({
-  configBase,
-  configTokens
-}: {
-  configBase: ButteryConfigBase;
-  configTokens: ButteryConfigTokens;
-}) {
+async function generateAndTranspile(configTokens: ButteryConfigTokens) {
   const tokensRootPath = await getLocalRootPath();
 
   console.log({ tokensRootPath });
@@ -118,10 +108,7 @@ export const buildFunctionsAndTokens = async ({
   tokenLogger.debug("Fetching necessary configuration files... done.");
 
   // build it once
-  await generateAndTranspile({
-    configBase: configs.configBase,
-    configTokens: configs.tokens
-  });
+  await generateAndTranspile(configs.tokens);
 
   if (!watch) return;
 
@@ -134,10 +121,7 @@ export const buildFunctionsAndTokens = async ({
     // KNOWN ISSUE - watchDir files twice
     tokenLogger.watch("Changes detected. Rebuilding functions and tokens...");
     const updatedConfig = await getButteryConfig("tokens");
-    await generateAndTranspile({
-      configBase: updatedConfig.configBase,
-      configTokens: updatedConfig.tokens
-    });
+    await generateAndTranspile(updatedConfig.tokens);
     tokenLogger.watch(
       "Changes detected. Rebuilding functions and tokens... done."
     );
