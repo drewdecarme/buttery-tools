@@ -1,4 +1,4 @@
-import "@buttery/tokens/css";
+import "@buttery/tokens/website/index.css";
 import {
   Links,
   Meta,

@@ -6,6 +6,8 @@
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tokens.git"
   },
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": "./bin/index.js",
   "type": "module",
@@ -17,21 +19,6 @@
   },
   "bugs": {
     "url": "https://github.com/drewdecarme/buttery-tokens/issues"
-  },
-  "exports": {
-    "./js": {
-      "default": "./dist/javascript/index.js",
-      "import": "./dist/javascript/index.js",
-      "require": "./dist/javascript/index.js",
-      "node": "./dist/javascript/index.js",
-      "types": "./dist/javascript/index.d.ts"
-    },
-    "./css": {
-      "default": "./dist/index.css",
-      "import": "./dist/index.css",
-      "require": "./dist/index.css",
-      "node": "./dist/index.css"
-    }
   },
   "scripts": {
     "build": "yarn buttery cli build",

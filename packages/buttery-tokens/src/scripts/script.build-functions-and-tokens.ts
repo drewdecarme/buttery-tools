@@ -88,7 +88,7 @@ async function generateAndTranspile({
     tokenLogger.debug("Distributing CSS files...");
     await cp(
       Templates.tokensCSSFile,
-      path.resolve(configBase.root, "./dist/index.css"),
+      path.resolve(outDirForTranspiledFiles, "./index.css"),
       {
         recursive: true,
         force: true
