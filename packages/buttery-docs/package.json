@@ -4,16 +4,29 @@
   "description": "A CLI to generate the assets needed to render the Buttery Docs template in any Remix application",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "yarn buttery cli dev",
-    "build": "yarn buttery cli build",
+    "dev": "yarn tokens:dev & yarn lib:dev & yarn cli:dev",
+    "build": "yarn tokens:build & yarn lib:build & yarn cli:build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "tokens:build": "yarn buttery-tokens build",
-    "tokens:dev": "yarn tokens:build --watch"
+    "tokens:dev": "yarn tokens:build --watch",
+    "lib:build": "yarn tsc --project ./tsconfig.lib.json",
+    "lib:dev": "yarn lib:build --watch --preserveWatchOutput",
+    "cli:build": "yarn buttery cli build",
+    "cli:dev": "yarn buttery cli dev"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
+  },
+  "exports": {
+    "./remix/cloudflare": {
+      "default": "./dist/remix/cloudflare.js",
+      "import": "./dist/remix/cloudflare.js",
+      "node": "./dist/remix/cloudflare.js",
+      "require": "./dist/remix/cloudflare.js",
+      "types": "./dist/remix/cloudflare.d.ts"
+    }
   },
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
   "license": "Apache-2.0",
@@ -25,6 +38,7 @@
     "@buttery/tokens": "workspace:^",
     "@buttery/tsconfig": "workspace:^",
     "@chromatic-com/storybook": "^1.4.0",
+    "@remix-run/cloudflare": "^2.9.2",
     "@storybook/addon-essentials": "^8.1.1",
     "@storybook/addon-interactions": "^8.1.1",
     "@storybook/addon-links": "^8.1.1",
@@ -33,6 +47,7 @@
     "@storybook/react": "^8.1.1",
     "@storybook/react-vite": "^8.1.1",
     "@storybook/test": "^8.1.1",
+    "remix": "^2.9.2",
     "storybook": "^8.1.1",
     "typescript": "^5.4.5"
   },
@@ -46,6 +61,7 @@
     "@buttery/core": "workspace:^",
     "@buttery/logger": "workspace:^",
     "@inquirer/prompts": "^5.0.4",
+    "@remix-run/react": "^2.9.2",
     "gray-matter": "^4.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

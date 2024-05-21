@@ -1,24 +1,18 @@
 {
-  "getting-started": {
-    "title": null,
-    "content": null,
-    "pages": {
-      "introduction": {
-        "title": "Getting Started",
-        "content": "",
-        "pages": {
-          "basic-components": {
-            "title": "Basic Components",
-            "content": "",
-            "pages": null
-          },
-          "advanced-components": {
-            "title": "Advanced Components",
-            "content": "",
-            "pages": null
-          }
-        }
-      }
+  "getting-started": [
+    "quick-start-guide",
+    {
+      "introduction": [
+        "basic-components",
+        "advanced-components",
+        "other-components"
+      ]
     }
-  }
+  ],
+  "security": [
+    "overview-of-security",
+    "prevention-of-attacks",
+    "other-stuff",
+    "more-other-stuff"
+  ]
 }

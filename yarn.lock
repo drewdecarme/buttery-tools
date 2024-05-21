@@ -1975,6 +1975,8 @@ __metadata:
     "@buttery/tsconfig": "workspace:^"
     "@chromatic-com/storybook": "npm:^1.4.0"
     "@inquirer/prompts": "npm:^5.0.4"
+    "@remix-run/cloudflare": "npm:^2.9.2"
+    "@remix-run/react": "npm:^2.9.2"
     "@storybook/addon-essentials": "npm:^8.1.1"
     "@storybook/addon-interactions": "npm:^8.1.1"
     "@storybook/addon-links": "npm:^8.1.1"
@@ -1986,6 +1988,7 @@ __metadata:
     gray-matter: "npm:^4.0.3"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
+    remix: "npm:^2.9.2"
     storybook: "npm:^8.1.1"
     typescript: "npm:^5.4.5"
   bin:
@@ -17428,6 +17431,13 @@ __metadata:
     mdast-util-to-hast: "npm:^12.1.0"
     unified: "npm:^10.0.0"
   checksum: 10c0/803e658c9b51a9b53ee2ada42ff82e8e570444bb97c873e0d602c2d8dcb69a774fd22bd6f26643dfd5ab4c181059ea6c9fb9a99a2d7f9665f3f11bef1a1489bd
+  languageName: node
+  linkType: hard
+
+"remix@npm:^2.9.2":
+  version: 2.9.2
+  resolution: "remix@npm:2.9.2"
+  checksum: 10c0/3cb62bff653724b9783e6b235caf258934e3cebfc2ac6f3a5051eb5d45d1f292b2b1403ba96f9c238321d6c171374e0ccf5972dcd2085465d824de42588e5e43
   languageName: node
   linkType: hard
 
