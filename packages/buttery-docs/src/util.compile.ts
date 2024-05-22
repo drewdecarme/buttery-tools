@@ -14,7 +14,15 @@ export const compile = async (args: CompileArgs) => {
     if (!parsedFile) return;
     const { meta, segments, content, section } = parsedFile;
 
-    let currentGraph = graph;
+    if (section && !graph[section]) {
+      graph[section] = {
+        title: section,
+        content: "",
+        pages: {}
+      };
+    }
+
+    let currentGraph = section ? graph[section].pages : graph;
     console.log({ currentGraph });
 
     for (const segmentIndex in segments) {
