@@ -20,7 +20,7 @@ export function createRoute(graph: ButteryDocsGraph) {
 
   const page = () => {
     const loaderData = useLoaderData<typeof loader>();
-    return <div>{loaderData.content}</div>;
+    return <pre>{loaderData.content}</pre>;
   };
 
   return {

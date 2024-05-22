@@ -7,3 +7,5 @@ node_modules
 .wrangler
 
 docs/remix
+
+.buttery-docs

@@ -20,6 +20,13 @@
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
   },
   "exports": {
+    "./types": {
+      "default": "./dist/types/index.js",
+      "import": "./dist/types/index.js",
+      "node": "./dist/types/index.js",
+      "require": "./dist/types/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
     "./remix/cloudflare": {
       "default": "./dist/remix/cloudflare.js",
       "import": "./dist/remix/cloudflare.js",
