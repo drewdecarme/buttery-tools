@@ -38,17 +38,22 @@ const getFilename = (filename: string) => {
  * and content depending upon what type of file it is.
  */
 const parseFileContent = async (
-  filePath: string
+  filePath: string,
+  file: string
 ): Promise<{ meta: { title: string }; content: string }> => {
   try {
     const fileContent = await readFile(filePath, { encoding: "utf8" });
     const { data, content } = matter(fileContent);
     if (!data.title) {
-      // TODO: Add a warning here
+      LOG_DOCS.warning(
+        `"${file}" is missing a frontmatter title. "${getFilename(
+          file
+        )}" will be used temporarily. Please ensure you add the title property in the document's frontmatter.`
+      );
     }
     return {
       meta: {
-        title: data.title
+        title: data.title ?? getFilename(file)
       },
       content
     };
@@ -68,7 +73,7 @@ export const parseFile = async ({
     const filePath = path.resolve(docsDir, "./".concat(file));
 
     const { section, segments } = parseFileName(fileName);
-    const { meta, content } = await parseFileContent(filePath);
+    const { meta, content } = await parseFileContent(filePath, file);
 
     return {
       path: filePath,

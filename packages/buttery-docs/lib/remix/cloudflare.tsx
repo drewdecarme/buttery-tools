@@ -7,7 +7,7 @@ export function createRoute(graph: ButteryDocsGraph) {
   async function loader(args: LoaderFunctionArgs) {
     console.log(args.params["*"]);
 
-    return json({ content: JSON.stringify(graph, null, 2) });
+    return json({ content: graph });
   }
 
   const meta: MetaFunction = () => {
@@ -20,7 +20,7 @@ export function createRoute(graph: ButteryDocsGraph) {
 
   const page = () => {
     const loaderData = useLoaderData<typeof loader>();
-    return <pre>{loaderData.content}</pre>;
+    return <pre>{JSON.stringify(loaderData.content, null, 2)}</pre>;
   };
 
   return {
