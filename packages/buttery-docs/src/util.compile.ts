@@ -1,32 +1,55 @@
-import { readFile, readdir } from "node:fs/promises";
-import path from "node:path";
-import { LOG } from "./util.logger";
-import { parsePageSectionAndOrderFromFilename } from "./util.parsePageSectionAndOrderFromFilename";
+import { readdir } from "node:fs/promises";
+import type { ButteryDocsGraph } from "../lib/types";
+import { parseFile } from "./util.parseFile";
 
 export type CompileArgs = {
   docsDir: string;
 };
 
 export const compile = async (args: CompileArgs) => {
-  try {
-    const files = await readdir(args.docsDir);
+  const graph: ButteryDocsGraph = {};
 
-    console.log(files);
+  async function insertNode(file: string) {
+    const parsedFile = await parseFile({ file, docsDir: args.docsDir });
+    if (!parsedFile) return;
+    const { meta, segments, content, section } = parsedFile;
 
-    for (const fileIndex in files) {
-      const fileName = files[fileIndex];
-      const filePath = path.resolve(args.docsDir, "./".concat(fileName));
-      const fileContent = await readFile(filePath, { encoding: "utf8" });
+    let currentGraph = graph;
+    console.log({ currentGraph });
 
-      try {
-        const [section, order] = parsePageSectionAndOrderFromFilename(fileName);
+    for (const segmentIndex in segments) {
+      const i = Number(segmentIndex);
+      const segment = segments[i];
+      console.log({ segmentIndex, segment });
+      if (!currentGraph[segment]) {
+        currentGraph[segment] = {
+          title: "",
+          content: "",
+          pages: {}
+        };
+      }
 
-        console.log({ fileName, section, order });
-      } catch (error) {
-        LOG.warning(error as string);
+      console.log({ currentGraph });
+      if (i === segments.length - 1) {
+        currentGraph[segment].title = meta.title;
+        currentGraph[segment].content = content;
+      } else {
+        currentGraph = currentGraph[segment].pages;
       }
     }
-  } catch (error) {
-    console.log(error);
   }
+
+  // get the files in the docs directorry
+  const files = await readdir(args.docsDir);
+
+  // for each file find a place for it in the graph
+  for (const fileIndex in files) {
+    const file = files[fileIndex];
+
+    console.group(file);
+    await insertNode(file);
+    console.groupEnd();
+  }
+
+  console.log(JSON.stringify(graph, null, 2));
 };

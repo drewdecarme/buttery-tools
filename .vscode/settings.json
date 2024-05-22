@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["autofix", "fooded", "invoicer"]
+  "cSpell.words": ["autofix", "fooded", "invoicer"],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

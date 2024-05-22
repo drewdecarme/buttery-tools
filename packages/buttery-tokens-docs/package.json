@@ -10,7 +10,9 @@
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "wrangler pages dev ./build/client",
     "typecheck": "tsc",
-    "typegen": "wrangler types"
+    "typegen": "wrangler types",
+    "docs:build": "yarn buttery-docs build",
+    "docs:dev": "yarn docs:build --watch"
   },
   "dependencies": {
     "@buttery/core": "workspace:^",

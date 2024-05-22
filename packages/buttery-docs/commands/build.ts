@@ -2,10 +2,10 @@ import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
 import { getButteryConfig } from "@buttery/core";
 import { compile } from "../src/util.compile";
 import { getDocsDir } from "../src/util.getDocsDir";
-import { LOG } from "../src/util.logger";
+import { LOG_DOCS } from "../src/util.logger";
 
 export const meta: CommandMeta = {
-  name: "compile",
+  name: "build",
   description:
     "Build the necessary assets required to create actions, fetchers, and components to render the Buttery Docs template."
 };
@@ -28,6 +28,6 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     // COMPILE
     await compile({ docsDir });
   } catch (error) {
-    throw LOG.fatal(new Error(error as string));
+    throw LOG_DOCS.fatal(new Error(error as string));
   }
 };

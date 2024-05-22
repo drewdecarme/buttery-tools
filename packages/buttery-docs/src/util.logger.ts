@@ -1,6 +1,6 @@
 import { ButteryLogger } from "@buttery/logger";
 
-export const LOG = new ButteryLogger({
+export const LOG_DOCS = new ButteryLogger({
   prefix: "@buttery/docs",
   logLevel: "debug",
   shouldPrintLevel: false,

@@ -1,1 +1,1 @@
-export * from "@buttery/docs/remix/cloudflare";
+export * from "../../.buttery-docs";
