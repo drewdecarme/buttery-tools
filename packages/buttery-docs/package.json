@@ -5,12 +5,12 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "yarn tokens:dev & yarn lib:dev & yarn cli:dev",
-    "build": "yarn tokens:build & yarn lib:build & yarn cli:build",
+    "build": "yarn tokens:build & yarn cli:build && yarn lib:build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "tokens:build": "yarn buttery-tokens build",
     "tokens:dev": "yarn tokens:build --watch",
-    "lib:build": "yarn vite build & yarn tsc --project ./tsconfig.lib.json",
+    "lib:build": "yarn vite build && yarn tsc --project ./tsconfig.build.json",
     "lib:dev": "yarn storybook:dev",
     "cli:build": "yarn buttery cli build",
     "cli:dev": "yarn buttery cli dev"
