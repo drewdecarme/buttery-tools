@@ -2,9 +2,9 @@ import path from "node:path";
 import { createEsbuildOptions } from "@buttery/utils/esbuild";
 import * as esbuild from "esbuild";
 import { glob } from "glob";
+import { LOG } from "../_utils/util.logger";
 import type { BuildScriptArgs } from "./script.build";
 import { ESBuildPluginCommands } from "./util.esbuild-plugin-commands";
-import { LOG } from "./util.logger";
 
 // TODO: Fix description
 /**
@@ -29,7 +29,11 @@ export async function buildProgram({
 }: BuildScriptArgs) {
   try {
     const commandFilesDir = path.resolve(configBase.root, "./commands");
-    const commandFilesGlob = path.resolve(commandFilesDir, "./*.ts");
+    const commandFilesGlob = [
+      `!${path.resolve(commandFilesDir, "./_*")}`, // Ignore all underscore-prefixed files and directories
+      path.resolve(commandFilesDir, "./[!_]*.ts") // Include all TypeScript files, excluding those with underscore prefix
+    ];
+    // TODO: <TEST> - Test to ensure that these patterns are ignored
     const commandFiles = glob.sync(commandFilesGlob, {
       follow: false
     });

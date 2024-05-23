@@ -11,8 +11,9 @@ import type {
   CommandArgs,
   CommandMeta,
   CommandOptions
-} from "../lib";
-import { LOG } from "./util.logger";
+} from "../../lib";
+import { LOG } from "../_utils/util.logger";
+import { templateCommandParent, templateIndex } from "./template";
 
 export type EntryTemplateData = {
   cli_name: string;
@@ -107,15 +108,8 @@ export class ESBuildPluginCommands {
       LOG.error(`Cannot locate command file for '${segmentCommandName}'`);
       LOG.debug("Auto creating command file with default values...");
       // TODO: Put any prompting behind --autofix
-      const commandParentTemplate = await readFile(
-        path.resolve(
-          import.meta.dirname,
-          "../templates/template.command-parent.hbs"
-        ),
-        { encoding: "utf-8" }
-      );
       const template = handlebars.compile<{ command_name: string }>(
-        commandParentTemplate.toString()
+        templateCommandParent
       )({ command_name: commandSegment });
       await writeFile(
         path.resolve(this.commandFilesSrcDir, `./${segmentCommandName}.ts`),
@@ -308,10 +302,7 @@ export class ESBuildPluginCommands {
           this.buildCommands(this.commandGraph, "program");
 
           // 4. Read the entry template and compile it with the data
-          const entryTemplateFile = await readFile(
-            path.resolve(import.meta.dirname, "../templates/template.index.hbs")
-          );
-          const entryTemplate = entryTemplateFile.toString();
+          const entryTemplate = templateIndex;
           const entryTemplateData: EntryTemplateData = {
             cli_name: config.name,
             cli_description: config.description,

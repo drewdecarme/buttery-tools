@@ -1,5 +1,5 @@
 import type { CommandAction, CommandMeta } from "../lib/types";
-import { build } from "../src/script.build";
+import { build } from "./_cli.build/script.build";
 
 export const meta: CommandMeta = {
   name: "dev",

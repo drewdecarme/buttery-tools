@@ -1,6 +1,6 @@
 import type { CommandAction, CommandMeta, CommandOptions } from "../lib/types";
-import { build } from "../src/script.build.js";
-import { LOG } from "../src/util.logger";
+import { build } from "./_cli.build/script.build.js";
+import { LOG } from "./_utils";
 
 export const meta: CommandMeta = {
   name: "build",

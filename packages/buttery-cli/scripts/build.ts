@@ -1,8 +1,8 @@
 import { cp } from "node:fs/promises";
 import path from "node:path";
 import { buildTSLibrary } from "@buttery/utils/esbuild";
-import { build } from "../src/script.build.js";
-import { LOG } from "../src/util.logger.js";
+import { build } from "../commands/_cli.build/script.build.js";
+import { LOG } from "../commands/_utils/util.logger.js";
 
 export type BuildArgs = {
   watch: boolean;

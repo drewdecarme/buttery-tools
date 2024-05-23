@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { LOG } from "../_utils/util.logger";
 import type { BuildScriptArgs } from "./script.build";
-import { LOG } from "./util.logger";
 
 // TODO: Update this description
 // -- PACKAGE.JSON --

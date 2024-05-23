@@ -5,10 +5,10 @@ import {
   type ButteryConfigCli,
   getButteryConfig
 } from "@buttery/core";
-import type { BuildArgs } from "../scripts/build";
+import type { BuildArgs } from "../../scripts/build";
+import { LOG } from "../_utils/util.logger";
 import { buildPackageJson } from "./script.build-package-json";
 import { buildProgram } from "./script.build-program";
-import { LOG } from "./util.logger";
 
 export type BuildScriptArgs = {
   configBase: ButteryConfigBase;
