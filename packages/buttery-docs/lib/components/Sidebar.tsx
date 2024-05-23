@@ -1,12 +1,17 @@
+import { styled } from "@linaria/react";
 import type { FC } from "react";
-import { Fragment } from "react/jsx-runtime";
-import type { ButteryDocsGraph } from "../../lib/types";
+import type { ButteryDocsGraph } from "../types";
+
+const SNav = styled("nav")`
+  background: red;
+`;
 
 /**
  * Recursive component designed to create a sidebar tree form
  * nested pages.
  */
-const SectionGroup: FC<{ graph: ButteryDocsGraph }> = ({ graph }) => {
+export type SidebarGroupProps = { graph: ButteryDocsGraph };
+const SidebarGroup: FC<SidebarGroupProps> = ({ graph }) => {
   return (
     <ul>
       {Object.entries(graph).map(([graphKey, graphValue]) => {
@@ -14,7 +19,7 @@ const SectionGroup: FC<{ graph: ButteryDocsGraph }> = ({ graph }) => {
           <li key={graphKey}>
             {graphValue.title}
             {Object.entries(graphValue.pages).length > 0
-              ? SectionGroup({ graph: graphValue.pages })
+              ? SidebarGroup({ graph: graphValue.pages })
               : null}
           </li>
         );
@@ -26,16 +31,16 @@ const SectionGroup: FC<{ graph: ButteryDocsGraph }> = ({ graph }) => {
 export type SidebarProps = { graph: ButteryDocsGraph };
 export function Sidebar({ graph }: SidebarProps) {
   return (
-    <nav>
+    <SNav>
       {Object.entries(graph).map(([sectionKey, sectionValues]) => {
         if (sectionKey === "index") return null;
         return (
           <section key={sectionKey}>
             <h1>{sectionValues.title}</h1>
-            <SectionGroup graph={sectionValues.pages} />
+            <SidebarGroup graph={sectionValues.pages} />
           </section>
         );
       })}
-    </nav>
+    </SNav>
   );
 }

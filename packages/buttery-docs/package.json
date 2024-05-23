@@ -10,8 +10,8 @@
     "build-storybook": "storybook build",
     "tokens:build": "yarn buttery-tokens build",
     "tokens:dev": "yarn tokens:build --watch",
-    "lib:build": "yarn tsc --project ./tsconfig.lib.json",
-    "lib:dev": "yarn lib:build --watch --preserveWatchOutput",
+    "lib:build": "yarn vite build & yarn tsc --project ./tsconfig.lib.json",
+    "lib:dev": "yarn storybook:dev",
     "cli:build": "yarn buttery cli build",
     "cli:dev": "yarn buttery cli dev"
   },
@@ -28,11 +28,18 @@
       "types": "./dist/types/index.d.ts"
     },
     "./remix/cloudflare": {
-      "default": "./dist/remix/cloudflare.js",
-      "import": "./dist/remix/cloudflare.js",
-      "node": "./dist/remix/cloudflare.js",
-      "require": "./dist/remix/cloudflare.js",
-      "types": "./dist/remix/cloudflare.d.ts"
+      "default": "./dist/remix/cloudflare/index.js",
+      "import": "./dist/remix/cloudflare/index.js",
+      "node": "./dist/remix/cloudflare/index.js",
+      "require": "./dist/remix/cloudflare/index.js",
+      "types": "./dist/remix/cloudflare/index.d.ts"
+    },
+    "./css": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/style.css",
+      "import": "./dist/style.css",
+      "node": "./dist/style.css",
+      "require": "./dist/style.css"
     }
   },
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
@@ -42,10 +49,8 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
-    "@buttery/tokens": "workspace:^",
     "@buttery/tsconfig": "workspace:^",
     "@chromatic-com/storybook": "^1.4.0",
-    "@remix-run/cloudflare": "^2.9.2",
     "@storybook/addon-essentials": "^8.1.1",
     "@storybook/addon-interactions": "^8.1.1",
     "@storybook/addon-links": "^8.1.1",
@@ -54,9 +59,14 @@
     "@storybook/react": "^8.1.1",
     "@storybook/react-vite": "^8.1.1",
     "@storybook/test": "^8.1.1",
+    "@types/fs-extra": "^11.0.4",
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "@wyw-in-js/vite": "^0.5.3",
+    "fs-extra": "^11.2.0",
     "remix": "^2.9.2",
     "storybook": "^8.1.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
   },
   "type": "module",
   "types": "./dist/index.d.ts",
@@ -67,8 +77,13 @@
     "@buttery/cli": "workspace:^",
     "@buttery/core": "workspace:^",
     "@buttery/logger": "workspace:^",
+    "@buttery/tokens": "workspace:^",
     "@inquirer/prompts": "^5.0.4",
+    "@linaria/core": "^6.2.0",
+    "@linaria/react": "^6.2.1",
+    "@remix-run/cloudflare": "^2.9.2",
     "@remix-run/react": "^2.9.2",
+    "@wyw-in-js/babel-preset": "^0.5.3",
     "gray-matter": "^4.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
