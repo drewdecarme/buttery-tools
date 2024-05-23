@@ -14,7 +14,7 @@ import type {
   CommandOptions
 } from "../../lib";
 import { LOG } from "../_utils/util.logger";
-import { templateCommandParent, templateIndex } from "./template";
+import { templateCommandParent, templateIndex } from "./templates";
 
 export type EntryTemplateData = {
   cli_name: string;

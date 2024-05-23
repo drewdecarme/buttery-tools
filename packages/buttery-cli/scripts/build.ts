@@ -1,4 +1,3 @@
-import { cp } from "node:fs/promises";
 import path from "node:path";
 import { buildTSLibrary } from "@buttery/utils/esbuild";
 import { build } from "../commands/_cli.build/script.build.js";
@@ -48,13 +47,6 @@ try {
   });
   LOG.debug("Building library for distribution... complete.");
 
-  LOG.debug("Copying templates to bin directory...");
-  await cp(
-    path.resolve(import.meta.dirname, "../templates/"),
-    path.resolve(import.meta.dirname, "../bin/templates/"),
-    { recursive: true }
-  );
-  LOG.debug("Copying templates to bin directory... complete.");
   await Promise.all([build(parsedArgs), buildLibrary]);
 } catch (error) {
   console.error(error);
