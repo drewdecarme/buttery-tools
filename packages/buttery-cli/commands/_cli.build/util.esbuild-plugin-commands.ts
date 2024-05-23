@@ -1,10 +1,11 @@
-import { constants, access, readFile, writeFile } from "node:fs/promises";
+import { constants, access, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { ButteryConfigBase, ButteryConfigCli } from "@buttery/core";
 import { createEsbuildOptions } from "@buttery/utils/esbuild";
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import type { Plugin } from "esbuild";
 import * as esbuild from "esbuild";
+// TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
 import type {
   CommandAction,

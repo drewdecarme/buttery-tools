@@ -31,6 +31,7 @@ export async function buildProgram({
     const commandFilesDir = path.resolve(configBase.root, "./commands");
     const commandFilesGlob = [
       `!${path.resolve(commandFilesDir, "./_*")}`, // Ignore all underscore-prefixed files and directories
+      `!${path.resolve(commandFilesDir, "./_*/**")}`, // Ignore all files inside underscore prefixed directories
       path.resolve(commandFilesDir, "./[!_]*.ts") // Include all TypeScript files, excluding those with underscore prefix
     ];
     // TODO: <TEST> - Test to ensure that these patterns are ignored
