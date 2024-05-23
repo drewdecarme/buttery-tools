@@ -12,6 +12,7 @@ type ButteryLoggerOptions = {
   /**
    * - `info` - Displays messages from all loggers
    * - `timer` - Displays messages from `error`, `warn`, `debug`, `timer`
+   * TODO: Finish the description here
    */
   logLevel?: ButteryLoggerOptionLevel;
   format?: ButteryLoggerOptionFormat;
@@ -54,6 +55,16 @@ export class ButteryLogger {
       (accum, logLevel) => (logLevel.length > accum ? logLevel.length : accum),
       0
     );
+  }
+
+  /**
+   * Allows to publicly set the logLevel
+   * to display the appropriate logs at
+   * the appropriate times
+   * TODO: This still isn't working
+   */
+  set level(level: ButteryLoggerOptionLevel) {
+    this.logLevel = level;
   }
 
   private printLevel(level: ButteryLoggerOptionLevel) {

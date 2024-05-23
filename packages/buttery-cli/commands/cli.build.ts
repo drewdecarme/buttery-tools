@@ -7,7 +7,13 @@ export const meta: CommandMeta = {
   description: "Build your file-based CLI"
 };
 
-export const options: CommandOptions<"autofix"> = {
+export const options: CommandOptions<"autofix" | "debug"> = {
+  debug: {
+    alias: "d",
+    description: "Run the build command with more verbose logging",
+    type: "boolean",
+    required: false
+  },
   autofix: {
     alias: "af",
     description:
@@ -18,6 +24,12 @@ export const options: CommandOptions<"autofix"> = {
 };
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
+  if (options.debug) {
+    LOG.level = "info";
+  } else {
+    LOG.level = "error";
+  }
+
   try {
     LOG.debug("Building for production...");
     await build({ watch: false, local: false });

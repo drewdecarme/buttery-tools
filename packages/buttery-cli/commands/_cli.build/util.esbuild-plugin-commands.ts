@@ -278,13 +278,31 @@ export class ESBuildPluginCommands {
   getPlugin(): Plugin {
     const config = this.config;
 
+    /**
+     * 1. \/commands\/: Matches the literal string /commands/.
+     * 2. (?:(?!\/_)[^\/])*\/: Ensures that no directory in the path starts with an underscore. The (?:(?!\/_)[^\/])* part means "any sequence of characters that does not contain '/_'".
+     * 3. (?:(?!_)[^\/])*: Ensures that the filename itself does not start with an underscore.
+     * 4. \.ts$: Matches the .ts file extension at the end of the string.
+     */
+    const regex = new RegExp(
+      /\/commands\/(?:(?!\/_)[^\/])*\/(?:(?!_)[^\/])*\.ts$/
+    );
+
     return {
       name: "commands",
       setup: (build) => {
         build.onStart(() => {
           this.logRebuild();
         });
+        // the below regex is a JS regex that matches the go syntax
+        // since the regex that is defined in this method above doesn't
+        // syntactically follow the go regex, we just take in every file
+        // in the commands directory and then test it against the more detailed
+        // JS regex that we have above.
         build.onLoad({ filter: /\/commands\/.*\.ts$/ }, async (args) => {
+          const shouldIgnoreFile = !regex.test(args.path);
+          if (!shouldIgnoreFile) return;
+
           // 1. ensure all of the command files exist
           await this.ensureCommandHierarchy(args.path);
 

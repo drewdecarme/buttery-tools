@@ -29,6 +29,7 @@ export type BuildScriptArgs = {
  * is creating. A little CLI inception... if you will ;)
  */
 export async function build(programArgs: BuildArgs) {
+  LOG.level = "info";
   const butteryConfig = await getButteryConfig("cli");
 
   try {
