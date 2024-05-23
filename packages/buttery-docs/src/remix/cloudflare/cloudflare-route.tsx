@@ -8,8 +8,11 @@ import {
   ScrollRestoration,
   useLoaderData
 } from "@remix-run/react";
+import type { FC } from "react";
 import { Sidebar } from "../../components";
 import type { ButteryDocsGraph } from "../../types/index";
+import { compileMDXStringToReact } from "../../utils/util.compileMDXStringToReact2";
+import { getPageContentFromRouteParams } from "../../utils/util.getPageContentFromRouteParams";
 
 export function createRootRoute(graph: ButteryDocsGraph) {
   async function loader(_args: LoaderFunctionArgs) {
@@ -54,9 +57,15 @@ export function createRootRoute(graph: ButteryDocsGraph) {
 
 export function createRoute(graph: ButteryDocsGraph) {
   async function loader(args: LoaderFunctionArgs) {
-    console.log({ segments: args.params["*"] });
+    const currentGraph = getPageContentFromRouteParams(graph, args.params["*"]);
+    if (!currentGraph.content) {
+      throw new Response("This page does not exist.", {
+        status: 404
+      });
+    }
+    const PageContent = compileMDXStringToReact(currentGraph.content);
 
-    return json({ graph, segments: args.params["*"] });
+    return json({ PageContent });
   }
 
   const meta: MetaFunction = () => {
@@ -69,15 +78,9 @@ export function createRoute(graph: ButteryDocsGraph) {
 
   const page = () => {
     const loaderData = useLoaderData<typeof loader>();
-    return (
-      <pre
-        style={{
-          background: "#ccc"
-        }}
-      >
-        {JSON.stringify(loaderData, null, 2)}
-      </pre>
-    );
+    const PageContent = loaderData.PageContent as FC;
+
+    return <PageContent />;
   };
 
   return {
