@@ -2002,6 +2002,7 @@ __metadata:
     remix: "npm:^2.9.2"
     storybook: "npm:^8.1.1"
     typescript: "npm:^5.4.5"
+    vfile: "npm:^6.0.1"
     vite: "npm:^5.2.11"
   bin:
     buttery-docs: bin/index.js
@@ -4157,7 +4158,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mdx-js/mdx@npm:^3.0.1":
+"@mdx-js/mdx@npm:^3.0.0, @mdx-js/mdx@npm:^3.0.1":
   version: 3.0.1
   resolution: "@mdx-js/mdx@npm:3.0.1"
   dependencies:
@@ -4197,6 +4198,20 @@ __metadata:
     "@types/react": ">=16"
     react: ">=16"
   checksum: 10c0/d210d926ef488d39ad65f04d821936b668eadcdde3b6421e94ec4200ca7ad17f17d24c5cbc543882586af9f08b10e2eea715c728ce6277487945e05c5199f532
+  languageName: node
+  linkType: hard
+
+"@mdx-js/rollup@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@mdx-js/rollup@npm:3.0.1"
+  dependencies:
+    "@mdx-js/mdx": "npm:^3.0.0"
+    "@rollup/pluginutils": "npm:^5.0.0"
+    source-map: "npm:^0.7.0"
+    vfile: "npm:^6.0.0"
+  peerDependencies:
+    rollup: ">=2"
+  checksum: 10c0/8f801812d854d2f6f2338b1507b26f146167b4062517fa67e8c058278731ebc3ea1e07e2c61b1e63b4dbb04d3ec54f664b5226655f7153ed014e8d8188fd84e4
   languageName: node
   linkType: hard
 
@@ -5299,7 +5314,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^5.0.2":
+"@rollup/pluginutils@npm:^5.0.0, @rollup/pluginutils@npm:^5.0.2":
   version: 5.1.0
   resolution: "@rollup/pluginutils@npm:5.1.0"
   dependencies:
@@ -9351,6 +9366,7 @@ __metadata:
     "@buttery/core": "workspace:^"
     "@buttery/docs": "workspace:^"
     "@cloudflare/workers-types": "npm:^4.20240405.0"
+    "@mdx-js/rollup": "npm:^3.0.1"
     "@remix-run/cloudflare": "npm:^2.9.2"
     "@remix-run/cloudflare-pages": "npm:^2.9.2"
     "@remix-run/dev": "npm:^2.9.2"
@@ -20584,7 +20600,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vfile@npm:^6.0.0":
+"vfile@npm:^6.0.0, vfile@npm:^6.0.1":
   version: 6.0.1
   resolution: "vfile@npm:6.0.1"
   dependencies:

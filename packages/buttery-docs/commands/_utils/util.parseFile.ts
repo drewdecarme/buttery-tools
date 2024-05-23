@@ -43,7 +43,7 @@ const parseFileContent = async (
 ): Promise<{ meta: { title: string }; content: string }> => {
   try {
     const fileContent = await readFile(filePath, { encoding: "utf8" });
-    const { data, content } = matter(fileContent);
+    const { data } = matter(fileContent);
     if (!data.title) {
       LOG_DOCS.warning(
         `"${file}" is missing a frontmatter title. "${getFilename(

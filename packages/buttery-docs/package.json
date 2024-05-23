@@ -27,6 +27,13 @@
       "require": "./dist/types/index.js",
       "types": "./dist/types/index.d.ts"
     },
+    "./components": {
+      "default": "./dist/components/index.js",
+      "import": "./dist/components/index.js",
+      "node": "./dist/components/index.js",
+      "require": "./dist/components/index.js",
+      "types": "./dist/components/index.d.ts"
+    },
     "./remix/cloudflare": {
       "default": "./dist/remix/cloudflare/index.js",
       "import": "./dist/remix/cloudflare/index.js",
@@ -90,6 +97,7 @@
     "gray-matter": "^4.0.3",
     "lodash.get": "^4.4.2",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "vfile": "^6.0.1"
   }
 }

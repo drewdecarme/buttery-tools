@@ -19,6 +19,8 @@ export const createGraph = async (
   LOG_DOCS.debug("Generating graph representation of docs...");
   const graph: ButteryDocsGraph = {};
 
+  console.log({ cwd: process.cwd() });
+
   async function insertNode(file: string) {
     const parsedFile = await parseFile({ file, docsDir: args.docsDir });
     if (!parsedFile) return;

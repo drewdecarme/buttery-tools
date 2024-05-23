@@ -17,6 +17,15 @@ export function getPageContentFromRouteParams(
 
   return get(graph, graphPath);
 
+  /**
+   * START HERE
+   * - move the docs to the routes folder
+   * - create a graph of the routes folder using `npx remix routes --json`|| useMatches
+   * - parse through it to get the graph
+   * - create a resource route based upon the files
+   * - use that graph to build the sidebar
+   */
+
   //   let currentGraph: ButteryDocsGraphValue | undefined = undefined;
 
   //   function findContent(segment: string) {
