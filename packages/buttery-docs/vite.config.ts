@@ -10,7 +10,7 @@ const createEntries = (paths: string[]) =>
       Object.assign({}, accum, {
         [p.concat("/index")]: path.join(
           import.meta.dirname,
-          "./lib",
+          "./src",
           p,
           "index.ts"
         )

@@ -3,7 +3,7 @@ import type { CommandAction, CommandMeta } from "@buttery/cli";
 import { getButteryConfig } from "@buttery/core";
 import { input } from "@inquirer/prompts";
 
-import { LOG_DOCS } from "../src/util.logger";
+import { LOG_DOCS } from "./_utils/util.logger";
 
 export const meta: CommandMeta = {
   name: "init",

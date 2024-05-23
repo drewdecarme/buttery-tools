@@ -1,5 +1,5 @@
 import { readdir } from "node:fs/promises";
-import type { ButteryDocsGraph } from "../lib/types";
+import type { ButteryDocsGraph } from "../../lib/types";
 import { LOG_DOCS } from "./util.logger";
 import { parseFile } from "./util.parseFile";
 import type { CompileArgs } from "./util.types.ts";

@@ -2,9 +2,9 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
 import { getButteryConfig } from "@buttery/core";
-import { createGraph } from "../src/util.createGraph";
-import { getDocsDir } from "../src/util.getDocsDir";
-import { LOG_DOCS } from "../src/util.logger";
+import { createGraph } from "./_utils/util.createGraph";
+import { getDocsDir } from "./_utils/util.getDocsDir";
+import { LOG_DOCS } from "./_utils/util.logger";
 
 export const meta: CommandMeta = {
   name: "build",
