@@ -1,5 +1,4 @@
 ---
-section: getting-started
 title: Advanced Components
 ---
 

@@ -5,12 +5,14 @@ import remarkTOC from "remark-toc";
 import { LOG_DOCS } from "./util.logger";
 import type { FileObj } from "./util.types";
 
-export const parseRouteSegments = (
+export const parseFileSegmentsAndSection = (
   fileName: string
-): { segments: string[] } => {
-  const segments = fileName.split(".");
+): { section: string; segments: string[] } => {
+  const allSegments = fileName.split(".");
+  const [section, ...segments] = allSegments;
 
   return {
+    section,
     segments
   };
 };
@@ -53,7 +55,7 @@ const parseFileContent = async (
 
 export const parseFile = async ({ filename, fsPath, routePath }: FileObj) => {
   try {
-    const { segments } = parseRouteSegments(filename);
+    const { segments, section } = parseFileSegmentsAndSection(filename);
     const { meta, content } = await parseFileContent(fsPath, filename);
 
     return {
@@ -61,6 +63,7 @@ export const parseFile = async ({ filename, fsPath, routePath }: FileObj) => {
       filename,
       content,
       meta,
+      section,
       routePath,
       segments
     };

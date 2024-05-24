@@ -33,10 +33,10 @@ export function Sidebar({ graph }: SidebarProps) {
   return (
     <SNav>
       {Object.entries(graph).map(([sectionKey, sectionValues]) => {
-        if (sectionKey === "index") return null;
+        if (sectionValues.routePath === "/") return null;
         return (
           <section key={sectionKey}>
-            <h1>{sectionValues.title}</h1>
+            <h1>{sectionKey}</h1>
             <SidebarGroup graph={sectionValues.pages} />
           </section>
         );

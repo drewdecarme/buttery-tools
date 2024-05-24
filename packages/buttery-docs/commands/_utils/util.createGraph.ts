@@ -30,23 +30,27 @@ export const createGraph = async ({
       routePath
     } = parsedFile;
 
+    if (section && !graph[section]) {
+      graph[section] = {
+        title: section.replace(/-/g, " "),
+        content: "",
+        routePath: "",
+        pages: {}
+      };
+    }
+
     // set the graph to the current graph.
     // js works with references to the graph is just
     // now a reference to current graph which we recursively
     // update if need it
-
-    // let currentGraph = section ? graph[section].pages : graph;
-    let currentGraph = graph;
+    let currentGraph = section ? graph[section].pages : graph;
 
     for (const segmentIndex in segments) {
       const i = Number(segmentIndex);
       const segment = segments[i];
       if (!currentGraph[segment]) {
-        const isSection = section === segment;
         currentGraph[segment] = {
           title: "",
-          isSection,
-          sectionTitle: isSection ? section.replace(/-/g, " ") : undefined,
           content: "",
           routePath: "",
           pages: {}
