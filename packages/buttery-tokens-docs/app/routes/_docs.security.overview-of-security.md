@@ -1,4 +1,4 @@
 ---
-section: Security
+section: security
 title: Overview of Security
 ---

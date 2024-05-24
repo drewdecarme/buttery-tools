@@ -1,5 +1,5 @@
 ---
-section: Getting Started
+section: getting-started
 title: Introduction
 ---
 

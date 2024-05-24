@@ -1,5 +1,5 @@
 ---
-section: Background
+section: background
 title: Why This
 ---
 

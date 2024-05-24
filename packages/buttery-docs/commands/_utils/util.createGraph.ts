@@ -1,6 +1,7 @@
 import type { ButteryDocsGraph } from "../../src/types";
 import { LOG_DOCS } from "./util.logger";
-import { type ParseFileType, parseFile } from "./util.parseFile";
+import { parseFile } from "./util.parseFile";
+import type { FileObj } from "./util.types";
 
 /**
  * This function fetches all of the files in the user
@@ -14,41 +15,40 @@ import { type ParseFileType, parseFile } from "./util.parseFile";
 export const createGraph = async ({
   files
 }: {
-  files: ParseFileType[];
+  files: FileObj[];
 }): Promise<ButteryDocsGraph> => {
   LOG_DOCS.debug("Generating graph representation of docs...");
   const graph: ButteryDocsGraph = {};
 
-  async function insertNode(file: ParseFileType) {
+  async function insertNode(file: FileObj) {
     const parsedFile = await parseFile(file);
     if (!parsedFile) return;
     const {
       meta: { title, section },
       segments,
-      content
+      content,
+      routePath
     } = parsedFile;
-
-    if (section && !graph[section]) {
-      graph[section] = {
-        title: section.replace(/-/g, " "),
-        content: "",
-        pages: {}
-      };
-    }
 
     // set the graph to the current graph.
     // js works with references to the graph is just
     // now a reference to current graph which we recursively
     // update if need it
-    let currentGraph = section ? graph[section].pages : graph;
+
+    // let currentGraph = section ? graph[section].pages : graph;
+    let currentGraph = graph;
 
     for (const segmentIndex in segments) {
       const i = Number(segmentIndex);
       const segment = segments[i];
       if (!currentGraph[segment]) {
+        const isSection = section === segment;
         currentGraph[segment] = {
           title: "",
+          isSection,
+          sectionTitle: isSection ? section.replace(/-/g, " ") : undefined,
           content: "",
+          routePath: "",
           pages: {}
         };
       }
@@ -56,6 +56,7 @@ export const createGraph = async ({
       if (i === segments.length - 1) {
         currentGraph[segment].title = title;
         currentGraph[segment].content = content;
+        currentGraph[segment].routePath = routePath;
       } else {
         currentGraph = currentGraph[segment].pages;
       }

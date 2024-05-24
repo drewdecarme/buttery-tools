@@ -3,9 +3,14 @@ import type { ButteryConfig } from "@buttery/core";
 const config: ButteryConfig = {
   root: import.meta.dirname,
   docs: {
-    docsDirectory: "./app/routes/_docs",
     framework: "remix",
-    docsPrefix: "_docs"
+    docsPrefix: "_docs",
+    ordering: [
+      "/getting-started/introduction",
+      "/getting-started/introduction/basic-components",
+      "/getting-started/introduction/advanced-components",
+      "/security/overview-of-security"
+    ]
   }
 };
 export default config;

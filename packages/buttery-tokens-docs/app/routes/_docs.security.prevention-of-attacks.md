@@ -1,4 +1,4 @@
 ---
-section: Security
+section: security
 title: Prevention of Attacks
 ---

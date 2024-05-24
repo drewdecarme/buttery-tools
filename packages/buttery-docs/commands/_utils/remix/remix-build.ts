@@ -2,24 +2,76 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { ButteryConfigBase, ButteryConfigDocsRemix } from "@buttery/core";
 import { glob } from "glob";
+
+import { readConfig } from "@remix-run/dev/dist/config.js";
 import { createGraph } from "../util.createGraph";
 import { LOG_DOCS } from "../util.logger";
+import type { FileObj } from "../util.types";
+import { getRemixFilename } from "./getRemixFileName";
+import { getRemixRoutePath } from "./getRemixRoutePath";
+
+function orderFiles({
+  docsConfig: { ordering },
+  files
+}: { docsConfig: ButteryConfigDocsRemix; files: FileObj[] }): FileObj[] {
+  if (!ordering) {
+    LOG_DOCS.warning(
+      "No ordering defined... will be outputting graph in order the files are processed."
+    );
+    return files;
+  }
+
+  const orderedFiles = ordering.reduce<FileObj[]>((accum, routePath) => {
+    const fileObj = files.find((file) => file.routePath === routePath);
+    if (!fileObj) {
+      LOG_DOCS.warning(
+        `"${routePath}" does not match any of your routes. Perhaps you have a typo?`
+      );
+      return accum;
+    }
+    return accum.concat(fileObj);
+  }, []);
+
+  console.log({ orderedFiles });
+
+  for (const fileObj of files) {
+    const alreadyOrdered = orderedFiles.find(
+      (fj) => fj.filename === fileObj.filename
+    );
+    if (!alreadyOrdered) orderedFiles.push(fileObj);
+  }
+
+  // replace the ordered files with the other
+  return orderedFiles;
+}
 
 export async function buildRemix(
   baseConfig: ButteryConfigBase,
   docsConfig: ButteryConfigDocsRemix
 ): Promise<void> {
-  const remixRoutesDir = path.resolve(baseConfig.root, "./app/routes/");
+  const docsPrefix = docsConfig.docsPrefix ?? "_docs.";
+  const remixConfig = await readConfig(baseConfig.root);
+  const remixAppDir = remixConfig.appDirectory;
+  const remixRoutesDir = path.join(remixAppDir, "/routes");
+
   const patterns = [
     `**/${docsConfig.docsPrefix}/**/*`,
     `**/${docsConfig.docsPrefix}.*`
   ].map((pattern) => path.resolve(remixRoutesDir, pattern));
 
   const rawFiles = await glob(patterns);
-  const files = rawFiles.map((file) => ({
-    absPath: file,
-    relPath: file.replace(/_docs\./g, "").split(remixRoutesDir)[1]
-  }));
+  const enrichedFiles = rawFiles.map((file) => {
+    const fsPath = file;
+    const filename = getRemixFilename(fsPath, docsPrefix);
+    const routePath = getRemixRoutePath(filename);
+
+    return {
+      fsPath,
+      filename,
+      routePath
+    };
+  });
+  const files = orderFiles({ docsConfig, files: enrichedFiles });
 
   console.log(files);
 

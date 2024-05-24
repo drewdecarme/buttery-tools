@@ -1,11 +1,13 @@
 import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { compile } from "@mdx-js/mdx";
 import matter from "gray-matter";
 import remarkTOC from "remark-toc";
 import { LOG_DOCS } from "./util.logger";
+import type { FileObj } from "./util.types";
 
-export const parseFileName = (fileName: string): { segments: string[] } => {
+export const parseRouteSegments = (
+  fileName: string
+): { segments: string[] } => {
   const segments = fileName.split(".");
 
   return {
@@ -13,19 +15,13 @@ export const parseFileName = (fileName: string): { segments: string[] } => {
   };
 };
 
-const getFilename = (filename: string) => {
-  if (filename.endsWith(".md")) return path.basename(filename, ".md");
-  if (filename.endsWith("mdx")) return path.basename(filename, ".mdx");
-  LOG_DOCS.warning(`"${filename}" is not a markdown or mdx file. Skipping.`);
-  return undefined;
-};
-
 /**
  * Fetches the content inside of the file and parses the frontmatter
  * and content depending upon what type of file it is.
  */
 const parseFileContent = async (
-  filepath: string
+  filepath: string,
+  filename: string
 ): Promise<{
   meta: { title: string; section: string | undefined };
   content: string;
@@ -35,9 +31,7 @@ const parseFileContent = async (
     const { data, content } = matter(fileContent);
     if (!data.title) {
       LOG_DOCS.warning(
-        `"${filepath}" is missing a frontmatter title. "${getFilename(
-          filepath
-        )}" will be used temporarily. Please ensure you add the title property in the document's frontmatter.`
+        `"${filename}" is missing a frontmatter title. "${filename}" will be used temporarily. Please ensure you add the title property in the document's frontmatter.`
       );
     }
     // const vFile = new VFile({ value: content } );
@@ -47,7 +41,7 @@ const parseFileContent = async (
     });
     return {
       meta: {
-        title: data.title ?? getFilename(filepath),
+        title: data.title ?? "",
         section: data.section
       },
       content: compiledContent.toString()
@@ -57,23 +51,17 @@ const parseFileContent = async (
   }
 };
 
-export type ParseFileType = {
-  absPath: string;
-  relPath: string;
-};
-export const parseFile = async ({ absPath, relPath }: ParseFileType) => {
+export const parseFile = async ({ filename, fsPath, routePath }: FileObj) => {
   try {
-    const fileName = getFilename(relPath);
-    if (!fileName) return undefined;
-
-    const { segments } = parseFileName(fileName);
-    const { meta, content } = await parseFileContent(absPath);
+    const { segments } = parseRouteSegments(filename);
+    const { meta, content } = await parseFileContent(fsPath, filename);
 
     return {
-      absPath,
-      relPath,
+      fsPath,
+      filename,
       content,
       meta,
+      routePath,
       segments
     };
   } catch (error) {
