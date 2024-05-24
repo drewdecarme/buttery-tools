@@ -1,6 +1,6 @@
 import type { ButteryDocsGraph } from "../../src/types";
 import { LOG_DOCS } from "./util.logger";
-import { parseFile } from "./util.parseFile";
+import { type ParseFileType, parseFile } from "./util.parseFile";
 
 /**
  * This function fetches all of the files in the user
@@ -14,15 +14,19 @@ import { parseFile } from "./util.parseFile";
 export const createGraph = async ({
   files
 }: {
-  files: string[];
+  files: ParseFileType[];
 }): Promise<ButteryDocsGraph> => {
   LOG_DOCS.debug("Generating graph representation of docs...");
   const graph: ButteryDocsGraph = {};
 
-  async function insertNode(filepath: string) {
-    const parsedFile = await parseFile(filepath);
+  async function insertNode(file: ParseFileType) {
+    const parsedFile = await parseFile(file);
     if (!parsedFile) return;
-    const { meta, segments, content, section } = parsedFile;
+    const {
+      meta: { title, section },
+      segments,
+      content
+    } = parsedFile;
 
     if (section && !graph[section]) {
       graph[section] = {
@@ -50,15 +54,13 @@ export const createGraph = async ({
       }
 
       if (i === segments.length - 1) {
-        currentGraph[segment].title = meta.title;
+        currentGraph[segment].title = title;
         currentGraph[segment].content = content;
       } else {
         currentGraph = currentGraph[segment].pages;
       }
     }
   }
-
-  console.log(files);
 
   // for each file find a place for it in the graph
   for (const fileIndex in files) {

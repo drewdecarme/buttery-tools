@@ -3,74 +3,83 @@ import type { ButteryDocsGraph } from "@buttery/docs/types";
 import { json } from "@remix-run/cloudflare";
 
 const graph: ButteryDocsGraph = {
-  "why-this": {
-    title: "Introduction",
-    content:
-      'import {jsx as _jsx} from "react/jsx-runtime";\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: "h1",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: "Welcome!"\n  });\n}\nexport default function MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\n',
-    pages: {}
-  },
-  welcome: {
-    title: "Introduction",
-    content:
-      'import {jsx as _jsx} from "react/jsx-runtime";\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: "h1",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: "Welcome!"\n  });\n}\nexport default function MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\n',
-    pages: {}
-  },
-  security: {
-    title: "",
-    content: "",
-    pages: {
-      "prevention-of-attacks": {
-        title: "Prevention of Attacks",
-        content:
-          'import {Fragment as _Fragment, jsx as _jsx} from "react/jsx-runtime";\nfunction _createMdxContent(props) {\n  return _jsx(_Fragment, {});\n}\nexport default function MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\n',
-        pages: {}
-      },
-      "overview-of-security": {
-        title: "Overview of Security",
-        content:
-          'import {Fragment as _Fragment, jsx as _jsx} from "react/jsx-runtime";\nfunction _createMdxContent(props) {\n  return _jsx(_Fragment, {});\n}\nexport default function MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\n',
-        pages: {}
+  "Background": {
+    "title": "Background",
+    "content": "",
+    "pages": {
+      "why-this": {
+        "title": "Why This",
+        "content": "\"use strict\";\nconst {jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: \"h1\",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: \"Why This?\"\n  });\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n",
+        "pages": {}
       }
     }
   },
-  index: {
-    title: "Welcome",
-    content:
-      'import {jsx as _jsx} from "react/jsx-runtime";\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: "h1",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: "Welcome"\n  });\n}\nexport default function MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\n',
-    pages: {}
+  "welcome": {
+    "title": "Welcome",
+    "content": "\"use strict\";\nconst {jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: \"h1\",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: \"Welcome!\"\n  });\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n",
+    "pages": {}
   },
-  "getting-started": {
-    title: "",
-    content: "",
-    pages: {
-      "quick-start-guide": {
-        title: "Quick Start Guide",
-        content:
-          'import {jsx as _jsx} from "react/jsx-runtime";\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: "h1",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: "Quick Start Guide"\n  });\n}\nexport default function MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\n',
-        pages: {}
-      },
-      introduction: {
-        title: "Introduction",
-        content:
-          'import {jsx as _jsx} from "react/jsx-runtime";\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: "h1",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: "Introduction"\n  });\n}\nexport default function MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\n',
-        pages: {
-          "basic-components": {
-            title: "Basic Components",
-            content:
-              'import {jsx as _jsx} from "react/jsx-runtime";\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: "h1",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: "Basic Components"\n  });\n}\nexport default function MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\n',
-            pages: {}
+  "Security": {
+    "title": "Security",
+    "content": "",
+    "pages": {
+      "security": {
+        "title": "",
+        "content": "",
+        "pages": {
+          "prevention-of-attacks": {
+            "title": "Prevention of Attacks",
+            "content": "\"use strict\";\nconst {Fragment: _Fragment, jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  return _jsx(_Fragment, {});\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n",
+            "pages": {}
           },
-          "advanced-components": {
-            title: "Advanced Components",
-            content:
-              'import {jsx as _jsx} from "react/jsx-runtime";\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: "h1",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: "Advanced Components"\n  });\n}\nexport default function MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\n',
-            pages: {}
+          "overview-of-security": {
+            "title": "Overview of Security",
+            "content": "\"use strict\";\nconst {Fragment: _Fragment, jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  return _jsx(_Fragment, {});\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n",
+            "pages": {}
           }
         }
       }
     }
+  },
+  "Getting Started": {
+    "title": "Getting Started",
+    "content": "",
+    "pages": {
+      "getting-started": {
+        "title": "",
+        "content": "",
+        "pages": {
+          "quick-start-guide": {
+            "title": "Quick Start Guide",
+            "content": "\"use strict\";\nconst {jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: \"h1\",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: \"Quick Start Guide\"\n  });\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n",
+            "pages": {}
+          },
+          "introduction": {
+            "title": "Introduction",
+            "content": "\"use strict\";\nconst {jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: \"h1\",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: \"Introduction\"\n  });\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n",
+            "pages": {
+              "basic-components": {
+                "title": "Basic Components",
+                "content": "\"use strict\";\nconst {jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: \"h1\",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: \"Basic Components\"\n  });\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n",
+                "pages": {}
+              },
+              "advanced-components": {
+                "title": "Advanced Components",
+                "content": "\"use strict\";\nconst {jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: \"h1\",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: \"Advanced Components\"\n  });\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n",
+                "pages": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "_index": {
+    "title": "Home Page",
+    "content": "\"use strict\";\nconst {jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: \"h1\",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: \"Welcome\"\n  });\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n",
+    "pages": {}
   }
-};
+}
 
 /**
  * A loader that can either be imported as an alias and then re-exported

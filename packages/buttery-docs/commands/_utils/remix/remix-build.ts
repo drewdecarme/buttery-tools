@@ -15,7 +15,13 @@ export async function buildRemix(
     `**/${docsConfig.docsPrefix}.*`
   ].map((pattern) => path.resolve(remixRoutesDir, pattern));
 
-  const files = await glob(patterns);
+  const rawFiles = await glob(patterns);
+  const files = rawFiles.map((file) => ({
+    absPath: file,
+    relPath: file.replace(/_docs\./g, "").split(remixRoutesDir)[1]
+  }));
+
+  console.log(files);
 
   const docsGraph = await createGraph({
     files

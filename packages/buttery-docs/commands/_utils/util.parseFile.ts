@@ -2,28 +2,13 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { compile } from "@mdx-js/mdx";
 import matter from "gray-matter";
-import { VFile } from "vfile";
+import remarkTOC from "remark-toc";
 import { LOG_DOCS } from "./util.logger";
 
-const fileSectionStartDelimiter = "[";
-const fileSectionEndDelimiter = "]";
+export const parseFileName = (fileName: string): { segments: string[] } => {
+  const segments = fileName.split(".");
 
-export const parseFileName = (
-  fileName: string
-): { section: string | undefined; segments: string[] } => {
-  const startIndex =
-    fileName.indexOf(fileSectionStartDelimiter) +
-    fileSectionStartDelimiter.length;
-  const endIndex = fileName.indexOf(fileSectionEndDelimiter);
-  let section = undefined;
-  if (startIndex !== -1 && endIndex !== -1 && endIndex > startIndex) {
-    section = fileName.substring(startIndex, endIndex);
-  }
-  const segments = fileName
-    .split(".")
-    .filter((file) => !file.includes(fileSectionEndDelimiter));
   return {
-    section,
     segments
   };
 };
@@ -41,7 +26,10 @@ const getFilename = (filename: string) => {
  */
 const parseFileContent = async (
   filepath: string
-): Promise<{ meta: { title: string }; content: string }> => {
+): Promise<{
+  meta: { title: string; section: string | undefined };
+  content: string;
+}> => {
   try {
     const fileContent = await readFile(filepath, { encoding: "utf8" });
     const { data, content } = matter(fileContent);
@@ -53,10 +41,14 @@ const parseFileContent = async (
       );
     }
     // const vFile = new VFile({ value: content } );
-    const compiledContent = await compile(content);
+    const compiledContent = await compile(content, {
+      outputFormat: "function-body",
+      remarkPlugins: [remarkTOC]
+    });
     return {
       meta: {
-        title: data.title ?? getFilename(filepath)
+        title: data.title ?? getFilename(filepath),
+        section: data.section
       },
       content: compiledContent.toString()
     };
@@ -65,20 +57,24 @@ const parseFileContent = async (
   }
 };
 
-export const parseFile = async (filepath: string) => {
+export type ParseFileType = {
+  absPath: string;
+  relPath: string;
+};
+export const parseFile = async ({ absPath, relPath }: ParseFileType) => {
   try {
-    const fileName = getFilename(filepath);
+    const fileName = getFilename(relPath);
     if (!fileName) return undefined;
 
-    const { section, segments } = parseFileName(fileName);
-    const { meta, content } = await parseFileContent(filepath);
+    const { segments } = parseFileName(fileName);
+    const { meta, content } = await parseFileContent(absPath);
 
     return {
-      path: filepath,
+      absPath,
+      relPath,
       content,
       meta,
-      segments,
-      section
+      segments
     };
   } catch (error) {
     throw error as Error;
