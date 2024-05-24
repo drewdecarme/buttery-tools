@@ -2,10 +2,10 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { ButteryConfigBase, ButteryConfigDocsRemix } from "@buttery/core";
 import { glob } from "glob";
-import { createGraph } from "./util.createGraph";
-import { LOG_DOCS } from "./util.logger";
+import { createGraph } from "../util.createGraph";
+import { LOG_DOCS } from "../util.logger";
 
-export async function buildFrameworkRemix(
+export async function buildRemix(
   baseConfig: ButteryConfigBase,
   docsConfig: ButteryConfigDocsRemix
 ): Promise<void> {

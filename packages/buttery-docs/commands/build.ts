@@ -1,10 +1,6 @@
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
 import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
 import { getButteryConfig } from "@buttery/core";
-import { buildFrameworkRemix } from "./_utils/util.build-framework-remix";
-import { createGraph } from "./_utils/util.createGraph";
-import { getDocsDir } from "./_utils/util.getDocsDir";
+import { buildRemix } from "./_utils/remix";
 import { LOG_DOCS } from "./_utils/util.logger";
 
 export const meta: CommandMeta = {
@@ -28,7 +24,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
 
     switch (configs.docs.framework) {
       case "remix":
-        await buildFrameworkRemix(configs.configBase, configs.docs);
+        await buildRemix(configs.configBase, configs.docs);
         break;
 
       default:
