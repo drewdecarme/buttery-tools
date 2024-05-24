@@ -24,7 +24,8 @@
     "isbot": "^4.1.0",
     "miniflare": "^3.20240404.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "remix": "^2.9.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240405.0",

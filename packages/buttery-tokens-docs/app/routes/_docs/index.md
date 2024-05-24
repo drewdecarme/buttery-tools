@@ -1,7 +1,5 @@
-// import { route } from "../../.buttery-docs";
-// export const { meta, loader, ErrorBoundary } = route;
-// export default route.page;
+---
+title: Welcome
+---
 
-export default function () {
-  return <div>index page</div>;
-}
+# Welcome

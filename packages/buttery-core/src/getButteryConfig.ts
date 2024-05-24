@@ -30,7 +30,7 @@ const getFullConfig = async (): Promise<FoundButteryConfig> => {
 
 export type ButteryConfigBase = Omit<ButteryConfig, "tokens" | "docs" | "cli">;
 
-type GetButteryConfigResult<N extends keyof ButteryConfig | undefined> =
+export type GetButteryConfig<N extends keyof ButteryConfig | undefined> =
   N extends keyof ButteryConfig
     ? FoundButteryConfig & {
         [K in N]: Required<ButteryConfig>[K];
@@ -46,11 +46,11 @@ export const getButteryConfig = async <
   T extends keyof ButteryConfig | undefined
 >(
   nestedConfigKey?: T
-): Promise<GetButteryConfigResult<T>> => {
+): Promise<GetButteryConfig<T>> => {
   try {
     const butteryConfig = await getFullConfig();
 
-    if (!nestedConfigKey) return butteryConfig as GetButteryConfigResult<T>;
+    if (!nestedConfigKey) return butteryConfig as GetButteryConfig<T>;
 
     const nestedConfig = butteryConfig.configBase[nestedConfigKey];
 
@@ -71,7 +71,7 @@ export const getButteryConfig = async <
       configPath,
       configBase: baseConfig,
       [nestedConfigKey]: nestedConfig
-    } as GetButteryConfigResult<T>;
+    } as GetButteryConfig<T>;
   } catch (error) {
     const err = new Error(error as string);
     LOG.fatal(err);

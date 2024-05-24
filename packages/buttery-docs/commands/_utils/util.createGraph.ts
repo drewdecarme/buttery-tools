@@ -1,8 +1,6 @@
-import { readdir } from "node:fs/promises";
-import type { ButteryDocsGraph } from "../../lib/types";
+import type { ButteryDocsGraph } from "../../src/types";
 import { LOG_DOCS } from "./util.logger";
 import { parseFile } from "./util.parseFile";
-import type { CompileArgs } from "./util.types.ts";
 
 /**
  * This function fetches all of the files in the user
@@ -13,16 +11,16 @@ import type { CompileArgs } from "./util.types.ts";
  *
  * TODO: need to write a test for this
  */
-export const createGraph = async (
-  args: CompileArgs
-): Promise<ButteryDocsGraph> => {
+export const createGraph = async ({
+  files
+}: {
+  files: string[];
+}): Promise<ButteryDocsGraph> => {
   LOG_DOCS.debug("Generating graph representation of docs...");
   const graph: ButteryDocsGraph = {};
 
-  console.log({ cwd: process.cwd() });
-
-  async function insertNode(file: string) {
-    const parsedFile = await parseFile({ file, docsDir: args.docsDir });
+  async function insertNode(filepath: string) {
+    const parsedFile = await parseFile(filepath);
     if (!parsedFile) return;
     const { meta, segments, content, section } = parsedFile;
 
@@ -60,8 +58,7 @@ export const createGraph = async (
     }
   }
 
-  // get the files in the docs directory
-  const files = await readdir(args.docsDir);
+  console.log(files);
 
   // for each file find a place for it in the graph
   for (const fileIndex in files) {

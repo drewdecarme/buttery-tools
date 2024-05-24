@@ -1,6 +1,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { compile } from "@mdx-js/mdx";
 import matter from "gray-matter";
+import { VFile } from "vfile";
 import { LOG_DOCS } from "./util.logger";
 
 const fileSectionStartDelimiter = "[";
@@ -38,45 +40,41 @@ const getFilename = (filename: string) => {
  * and content depending upon what type of file it is.
  */
 const parseFileContent = async (
-  filePath: string,
-  file: string
+  filepath: string
 ): Promise<{ meta: { title: string }; content: string }> => {
   try {
-    const fileContent = await readFile(filePath, { encoding: "utf8" });
-    const { data } = matter(fileContent);
+    const fileContent = await readFile(filepath, { encoding: "utf8" });
+    const { data, content } = matter(fileContent);
     if (!data.title) {
       LOG_DOCS.warning(
-        `"${file}" is missing a frontmatter title. "${getFilename(
-          file
+        `"${filepath}" is missing a frontmatter title. "${getFilename(
+          filepath
         )}" will be used temporarily. Please ensure you add the title property in the document's frontmatter.`
       );
     }
+    // const vFile = new VFile({ value: content } );
+    const compiledContent = await compile(content);
     return {
       meta: {
-        title: data.title ?? getFilename(file)
+        title: data.title ?? getFilename(filepath)
       },
-      content
+      content: compiledContent.toString()
     };
   } catch (error) {
     throw LOG_DOCS.fatal(new Error(error as string));
   }
 };
 
-export const parseFile = async ({
-  file,
-  docsDir
-}: { file: string; docsDir: string }) => {
+export const parseFile = async (filepath: string) => {
   try {
-    const fileName = getFilename(file);
+    const fileName = getFilename(filepath);
     if (!fileName) return undefined;
 
-    const filePath = path.resolve(docsDir, "./".concat(file));
-
     const { section, segments } = parseFileName(fileName);
-    const { meta, content } = await parseFileContent(filePath, file);
+    const { meta, content } = await parseFileContent(filepath);
 
     return {
-      path: filePath,
+      path: filepath,
       content,
       meta,
       segments,
