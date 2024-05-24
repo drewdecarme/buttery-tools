@@ -284,9 +284,6 @@ export class ESBuildPluginCommands {
      * 3. (?:(?!_)[^\/])*: Ensures that the filename itself does not start with an underscore.
      * 4. \.ts$: Matches the .ts file extension at the end of the string.
      */
-    const regex = new RegExp(
-      /\/commands\/(?:(?!\/_)[^\/])*\/(?:(?!_)[^\/])*\.ts$/
-    );
 
     return {
       name: "commands",
@@ -300,8 +297,8 @@ export class ESBuildPluginCommands {
         // in the commands directory and then test it against the more detailed
         // JS regex that we have above.
         build.onLoad({ filter: /\/commands\/.*\.ts$/ }, async (args) => {
-          const shouldIgnoreFile = !regex.test(args.path);
-          if (!shouldIgnoreFile) return;
+          const shouldIgnoreFile = args.path.includes("_");
+          if (shouldIgnoreFile) return;
 
           // 1. ensure all of the command files exist
           await this.ensureCommandHierarchy(args.path);
