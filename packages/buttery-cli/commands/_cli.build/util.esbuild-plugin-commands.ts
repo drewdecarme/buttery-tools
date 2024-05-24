@@ -278,13 +278,6 @@ export class ESBuildPluginCommands {
   getPlugin(): Plugin {
     const config = this.config;
 
-    /**
-     * 1. \/commands\/: Matches the literal string /commands/.
-     * 2. (?:(?!\/_)[^\/])*\/: Ensures that no directory in the path starts with an underscore. The (?:(?!\/_)[^\/])* part means "any sequence of characters that does not contain '/_'".
-     * 3. (?:(?!_)[^\/])*: Ensures that the filename itself does not start with an underscore.
-     * 4. \.ts$: Matches the .ts file extension at the end of the string.
-     */
-
     return {
       name: "commands",
       setup: (build) => {

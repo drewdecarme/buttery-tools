@@ -1,6 +1,6 @@
 import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
 import { getButteryConfig } from "@buttery/core";
-import { buildRemix } from "./_utils/_remix";
+import { buildRemix } from "./_utils/remix";
 import { LOG_DOCS } from "./_utils/util.logger";
 
 export const meta: CommandMeta = {
