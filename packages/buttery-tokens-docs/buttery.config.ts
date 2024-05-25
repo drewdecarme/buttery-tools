@@ -5,12 +5,25 @@ const config: ButteryConfig = {
   docs: {
     framework: "remix",
     docsPrefix: "_docs",
-    ordering: [
-      "/getting-started/introduction",
-      "/getting-started/introduction/basic-components",
-      "/getting-started/introduction/advanced-components",
-      "/security/overview-of-security"
-    ]
+    navOrganization: {
+      introduction: {
+        display: "Intro",
+        routeOrder: ["_index", "why-this"]
+      },
+      "getting-started": {
+        display: "Getting Started",
+        routeOrder: [
+          "introduction",
+          "introduction.basic-components",
+          "introduction.advanced-components",
+          "quick-start-guide"
+        ]
+      },
+      security: {
+        display: "Securing your app",
+        routeOrder: ["overview-of-security", "prevention-of-attacks"]
+      }
+    }
   }
 };
 export default config;

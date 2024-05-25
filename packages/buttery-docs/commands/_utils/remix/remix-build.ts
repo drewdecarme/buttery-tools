@@ -11,38 +11,43 @@ import { getRemixFilename } from "./getRemixFileName";
 import { getRemixRoutePath } from "./getRemixRoutePath";
 
 function orderFiles({
-  docsConfig: { ordering },
+  docsConfig: { navOrganization },
   files
 }: { docsConfig: ButteryConfigDocsRemix; files: FileObj[] }): FileObj[] {
-  if (!ordering) {
+  if (!navOrganization) {
     LOG_DOCS.warning(
-      "No ordering defined... will be outputting graph in order the files are processed."
+      "No navOrganization defined... will be outputting graph in order the files are processed."
     );
     return files;
   }
 
-  const orderedFiles = ordering.reduce<FileObj[]>((accum, routePath) => {
-    const fileObj = files.find((file) => file.routePath === routePath);
-    if (!fileObj) {
-      LOG_DOCS.warning(
-        `"${routePath}" does not match any of your routes. Perhaps you have a typo?`
-      );
-      return accum;
+  const oFiles: FileObj[] = [];
+
+  for (const section in navOrganization) {
+    const sectionOrder = navOrganization[section].routeOrder;
+    for (const sectionRoute of sectionOrder) {
+      const orderedFilename = `${section}.${sectionRoute}`;
+      console.log({ orderedFilename });
+      const foundFile = files.find((file) => file.filename === orderedFilename);
+      if (foundFile) oFiles.push(foundFile);
     }
-    return accum.concat(fileObj);
-  }, []);
-
-  console.log({ orderedFiles });
-
-  for (const fileObj of files) {
-    const alreadyOrdered = orderedFiles.find(
-      (fj) => fj.filename === fileObj.filename
-    );
-    if (!alreadyOrdered) orderedFiles.push(fileObj);
   }
-
-  // replace the ordered files with the other
-  return orderedFiles;
+  for (const file of files) {
+    const fileAlreadyOrdered = oFiles.find(
+      (oFile) => oFile.filename === file.filename
+    );
+    if (!fileAlreadyOrdered && file.filename === "_index") {
+      // add the _index file to the beginning of the order
+      oFiles.unshift(file);
+    } else if (!fileAlreadyOrdered) {
+      // add the un ordered files to the end of the order
+      LOG_DOCS.debug(
+        `No order defined for "${file.filename}". Ordering arbitrarily.`
+      );
+      oFiles.push(file);
+    }
+  }
+  return oFiles;
 }
 
 export async function buildRemix(
@@ -76,7 +81,8 @@ export async function buildRemix(
   console.log(files);
 
   const docsGraph = await createGraph({
-    files
+    files,
+    docsConfig
   });
 
   LOG_DOCS.debug("Creating resource route...");

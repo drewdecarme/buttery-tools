@@ -1,3 +1,4 @@
+import type { ButteryConfigDocsRemix } from "@buttery/core";
 import type { ButteryDocsGraph } from "../../src/types";
 import { LOG_DOCS } from "./util.logger";
 import { parseFile } from "./util.parseFile";
@@ -13,9 +14,11 @@ import type { FileObj } from "./util.types";
  * TODO: need to write a test for this
  */
 export const createGraph = async ({
-  files
+  files,
+  docsConfig
 }: {
   files: FileObj[];
+  docsConfig: ButteryConfigDocsRemix;
 }): Promise<ButteryDocsGraph> => {
   LOG_DOCS.debug("Generating graph representation of docs...");
   const graph: ButteryDocsGraph = {};
@@ -24,15 +27,20 @@ export const createGraph = async ({
     const parsedFile = await parseFile(file);
     if (!parsedFile) return;
     const {
-      meta: { title, section },
+      meta: { title },
+      section,
       segments,
       content,
       routePath
     } = parsedFile;
 
+    const sectionTitle =
+      docsConfig?.navOrganization?.[section]?.display ??
+      section.replace(/-/g, " ");
+
     if (section && !graph[section]) {
       graph[section] = {
-        title: section.replace(/-/g, " "),
+        title: sectionTitle,
         content: "",
         routePath: "",
         pages: {}

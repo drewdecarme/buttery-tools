@@ -1,8 +1,35 @@
 import type { ButteryDocsGraph } from "../types";
 
 export const graph: ButteryDocsGraph = {
+  _index: {
+    title: "_index",
+    content: "",
+    routePath: "",
+    pages: {}
+  },
+  introduction: {
+    title: "Intro",
+    content: "",
+    routePath: "",
+    pages: {
+      _index: {
+        title: "Welcome",
+        content:
+          '"use strict";\nconst {jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: "h1",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: "Welcome!"\n  });\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n',
+        routePath: "/introduction/_index",
+        pages: {}
+      },
+      "why-this": {
+        title: "Why This",
+        content:
+          '"use strict";\nconst {jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: "h1",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: "Why This?"\n  });\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n',
+        routePath: "/introduction/why-this",
+        pages: {}
+      }
+    }
+  },
   "getting-started": {
-    title: "",
+    title: "Getting Started",
     content: "",
     routePath: "",
     pages: {
@@ -38,7 +65,7 @@ export const graph: ButteryDocsGraph = {
     }
   },
   security: {
-    title: "",
+    title: "Securing your app",
     content: "",
     routePath: "",
     pages: {
@@ -57,33 +84,5 @@ export const graph: ButteryDocsGraph = {
         pages: {}
       }
     }
-  },
-  introduction: {
-    title: "",
-    content: "",
-    routePath: "",
-    pages: {
-      "why-this": {
-        title: "Why This",
-        content:
-          '"use strict";\nconst {jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: "h1",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: "Why This?"\n  });\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n',
-        routePath: "/introduction/why-this",
-        pages: {}
-      },
-      _index: {
-        title: "Welcome",
-        content:
-          '"use strict";\nconst {jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: "h1",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: "Welcome!"\n  });\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n',
-        routePath: "/introduction/_index",
-        pages: {}
-      }
-    }
-  },
-  _index: {
-    title: "Home Page",
-    content:
-      '"use strict";\nconst {jsx: _jsx} = arguments[0];\nfunction _createMdxContent(props) {\n  const _components = {\n    h1: "h1",\n    ...props.components\n  };\n  return _jsx(_components.h1, {\n    children: "Welcome"\n  });\n}\nfunction MDXContent(props = {}) {\n  const {wrapper: MDXLayout} = props.components || ({});\n  return MDXLayout ? _jsx(MDXLayout, {\n    ...props,\n    children: _jsx(_createMdxContent, {\n      ...props\n    })\n  }) : _createMdxContent(props);\n}\nreturn {\n  default: MDXContent\n};\n',
-    routePath: "/",
-    pages: {}
   }
 };

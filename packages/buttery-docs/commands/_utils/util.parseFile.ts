@@ -25,7 +25,7 @@ const parseFileContent = async (
   filepath: string,
   filename: string
 ): Promise<{
-  meta: { title: string; section: string | undefined };
+  meta: { title: string };
   content: string;
 }> => {
   try {
@@ -43,8 +43,7 @@ const parseFileContent = async (
     });
     return {
       meta: {
-        title: data.title ?? "",
-        section: data.section
+        title: data.title ?? ""
       },
       content: compiledContent.toString()
     };
