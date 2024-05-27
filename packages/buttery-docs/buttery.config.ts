@@ -15,6 +15,7 @@ const config: ButteryConfig = {
     strict: true,
     suppressStrictWarnings: false,
     font: {
+      size: 16,
       family: {
         heading:
           'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',

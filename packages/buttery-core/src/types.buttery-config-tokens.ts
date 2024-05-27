@@ -73,6 +73,7 @@ export type ButteryConfigTokens = {
    */
   suppressStrictWarnings: boolean;
   font: {
+    size: number;
     family: { [key in string]: string };
     weight: { [key in string]: number };
     typography: {

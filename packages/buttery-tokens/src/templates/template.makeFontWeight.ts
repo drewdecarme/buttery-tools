@@ -3,6 +3,7 @@ import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 const template: CompileFunction = ({
   config,
   methods,
+  docs,
   functionName,
   cssVarPrefix
 }) => {
@@ -14,32 +15,30 @@ export type MakeFontWeight = (fontWeightName: FontWeight) => string;
 
 /**
  * ## Description
- * A utility that returns the CSS variable assigned
- * to keys of the \`font.family\` that are defined
- * in the \`buttery.config.ts\`
+ * ${docs.description}
  *
  * ## Usage
  * ### css-in-ts
  * \`\`\`ts
  * import { css } from "@linaria/core";
- * import { makeFontWeight } from "@buttery/tokens/js"
+ * ${docs.importClause}
  *
  * const aClassName = css\`
- *   font-family: \${makeFontWeight("${fontWeightNames[0]}")};
+ *   font-weight: \${${functionName}("${fontWeightNames[0]}")};
  * \`
  * \`\`\`
  * 
  * ### style-object
  * \`\`\`ts
  * import { forwardRef } from "react"
- * import { makeFontWeight } from "@buttery/tokens/js"
+ * ${docs.importClause}
  * 
  * const Button = forwardRef<HTMLButtonElement, JSX.IntrinsicElements["button"]>(
  *  ({ children, style, ...restProps }, ref) => {
  *    return (
  *      <button
  *        {...restProps}
- *        style={{ fontWeight: makeFontWeight("${fontWeightNames[1]}") }}
+ *        style={{ fontWeight: ${functionName}("${fontWeightNames[0]}") }}
  *        ref={ref}
  *      >
  *        {children}
@@ -67,6 +66,8 @@ const css: CompileFunction = ({ config, cssVarPrefix }) => {
 
 export const MakeTemplateFontWeight = new MakeTemplate({
   functionName: "makeFontWeight",
+  functionDescription:
+    "A utility that returns the CSS variable assigned to keys of the `font.family` that are defined in the `buttery.config.ts`",
   variableBody: "font-weight",
   template,
   css

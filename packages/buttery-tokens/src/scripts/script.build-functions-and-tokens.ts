@@ -11,6 +11,7 @@ import { type ButteryConfigTokens, getButteryConfig } from "@buttery/core";
 import { MakeTemplates } from "../templates/MakeTemplates";
 import { MakeTemplateFontFamily } from "../templates/template.makeFontFamily";
 import { MakeTemplateFontWeight } from "../templates/template.makeFontWeight";
+import { MakeTemplateRem } from "../templates/template.makeRem";
 import { getLocalRootPath, tokenLogger } from "../utils";
 
 // The function that does stuff. It's in here so it can either be used
@@ -45,6 +46,7 @@ async function generateAndTranspile(configTokens: ButteryConfigTokens) {
   // Register the templates that should be generated
   Templates.register(MakeTemplateFontFamily);
   Templates.register(MakeTemplateFontWeight);
+  Templates.register(MakeTemplateRem);
 
   // Create a plugin to eventually transpile the .tokens directory
   // and assemble the ESBuild options for that entry / barrel file.

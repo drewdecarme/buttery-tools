@@ -5,12 +5,30 @@ export type CompileFunctionParams = {
   methods: MakeTemplate["methods"];
   variableBody: string;
   cssVarPrefix: string;
+  docs: {
+    /**
+     * The string that will display in the JSDocs as the import.
+     * This is provided so when the library is built, the import
+     * string will display in the JSDocs that is specific to the
+     * package that is consuming the library
+     */
+    importClause: string;
+    /**
+     * The description of the make function
+     */
+    description: string;
+  };
   functionName: string;
 };
 export type CompileFunction = (params: CompileFunctionParams) => string;
 
 export type MakeTemplateOptions = {
   functionName: string;
+  /**
+   * The description of the make function. This will be added to the
+   * JSDoc of the make function
+   */
+  functionDescription: string;
   variableBody: string;
   template: CompileFunction;
   css: CompileFunction;
@@ -22,6 +40,7 @@ export type MakeTemplateOptions = {
  */
 export class MakeTemplate {
   functionName: string;
+  private functionDescription: string;
   variableBody: string;
   template: CompileFunction;
   css: CompileFunction;
@@ -29,6 +48,7 @@ export class MakeTemplate {
 
   constructor(options: MakeTemplateOptions) {
     this.functionName = options.functionName;
+    this.functionDescription = options.functionDescription;
     this.variableBody = options.variableBody;
     this.template = options.template;
     this.css = options.css;
@@ -50,6 +70,12 @@ export class MakeTemplate {
   compile(config: ButteryConfigTokens) {
     const compileArgs: CompileFunctionParams = {
       config,
+      docs: {
+        description: this.functionDescription,
+        importClause: `import { ${this.functionName} } from "@buttery/tokens${
+          config.importName ? `/${config.importName}` : ""
+        }";`
+      },
       functionName: this.functionName,
       variableBody: this.variableBody,
       cssVarPrefix: `--${config.prefix}-${this.variableBody}`,

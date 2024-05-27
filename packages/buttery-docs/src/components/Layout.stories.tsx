@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Sidebar, type SidebarProps } from "./Sidebar";
-import { graph } from "./Sidebar.stories.data";
+import { Layout, type LayoutProps } from "./Layout";
+import { graph } from "./Layout.stories.data";
 
 const meta: Meta = {
-  title: "Sidebar",
+  title: "Layout",
   // @ts-expect-error Props mismatch
-  component: Sidebar
+  component: Layout
 } satisfies Meta<typeof meta>;
 
 export default meta;
@@ -15,5 +15,5 @@ type Story = StoryObj<typeof meta>;
 export const Basic: Story = {
   args: {
     graph: graph
-  } as SidebarProps
+  } as LayoutProps
 };
