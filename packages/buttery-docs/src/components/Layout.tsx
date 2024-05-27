@@ -7,7 +7,8 @@ const SContainer = styled("div")`
   display: grid;
   min-height: 100vh;
   // desktop
-  grid-template-rows: ${makeRem(40)};
+  grid-template-rows: ${makeRem(40)} auto auto;
+  grid-template-columns: ${makeRem(300)} 1fr;
   grid-template-areas:
     "header header"
     "sidebar main"
@@ -15,12 +16,21 @@ const SContainer = styled("div")`
 `;
 
 const SSidebar = styled("nav")`
-  background: red;
   grid-area: sidebar;
+`;
+
+const SSidebarContent = styled("div")`
+position: sticky;
+  top: ${makeRem(40)};
+  h1 {
+    margin: 0;
+  }
 `;
 
 const SHeader = styled("header")`
   grid-area: header;
+  position: sticky;
+  top: 0;
 `;
 const SMain = styled("main")`
   grid-area: main;
@@ -57,15 +67,17 @@ export function Layout({ graph, children }: LayoutProps) {
     <SContainer>
       <SHeader>header</SHeader>
       <SSidebar>
-        {Object.entries(graph).map(([sectionKey, sectionValues]) => {
-          if (sectionKey === "_index") return null;
-          return (
-            <section key={sectionKey}>
-              <h1>{sectionKey}</h1>
-              <SidebarItem graph={sectionValues.pages} />
-            </section>
-          );
-        })}
+        <SSidebarContent>
+          {Object.entries(graph).map(([sectionKey, sectionValues]) => {
+            if (sectionKey === "_index") return null;
+            return (
+              <section key={sectionKey}>
+                <h1>{sectionKey}</h1>
+                <SidebarItem graph={sectionValues.pages} />
+              </section>
+            );
+          })}
+        </SSidebarContent>
       </SSidebar>
       <SMain>{children}</SMain>
       <SFooter>footer</SFooter>

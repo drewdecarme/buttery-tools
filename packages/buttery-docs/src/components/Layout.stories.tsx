@@ -14,6 +14,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
   args: {
-    graph: graph
+    graph: graph,
+    children: <div style={{ height: 10_000 }}>body</div>
   } as LayoutProps
 };
