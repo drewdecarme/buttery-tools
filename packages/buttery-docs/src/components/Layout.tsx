@@ -72,7 +72,7 @@ export function Layout({ graph, children }: LayoutProps) {
             if (sectionKey === "_index") return null;
             return (
               <section key={sectionKey}>
-                <h1>{sectionKey}</h1>
+                <h1>{sectionValues.title}</h1>
                 <SidebarItem graph={sectionValues.pages} />
               </section>
             );

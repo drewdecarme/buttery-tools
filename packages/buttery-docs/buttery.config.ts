@@ -29,6 +29,17 @@ const config: ButteryConfig = {
         light: 300
       },
       typography: {}
+    },
+    breakpoints: {
+      "phone-small": 320,
+      phone: 375,
+      "phone-large": 414,
+      "tablet-small": 480,
+      tablet: 768,
+      "tablet-large": 1024,
+      "desktop-small": 1200,
+      desktop: 1280,
+      "desktop-large": 1400
     }
   }
 };

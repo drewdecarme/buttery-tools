@@ -84,4 +84,36 @@ export type ButteryConfigTokens = {
       };
     };
   };
+  /**
+   * @default {
+      "phone-small": 320,
+      phone: 375,
+      "phone-large": 414,
+      "tablet-small": 480,
+      tablet: 768,
+      "tablet-large": 1024,
+      "desktop-small": 1200,
+      desktop: 1280,
+      "desktop-large": 1400
+    }
+    320px: This breakpoint targets small mobile devices, including older smartphones like the iPhone 5 and SE. It's crucial to ensure basic functionality and readability on these smaller screens.
+
+375px: Common for newer smartphones, including devices like the iPhone 6, 7, 8, and X series. Many Android phones also fall into this range.
+
+414px: This size includes larger smartphones like the iPhone Plus series (6, 7, 8 Plus) and many of the larger Android phones.
+
+480px: Often used for small tablets and large smartphones in landscape mode.
+
+768px: Targets smaller tablets, such as the iPad Mini, and larger smartphones in landscape mode. This is a key breakpoint for transitioning from a mobile-friendly layout to a more tablet-optimized design.
+
+1024px: This size is common for standard tablets like the iPad. It’s a significant breakpoint where layouts often shift to accommodate a more desktop-like experience.
+
+1200px: A common breakpoint for smaller desktop monitors and larger tablets in landscape mode. It marks the transition to more complex and spacious layouts.
+
+1440px: Often used for larger desktop and laptop screens. This breakpoint helps in enhancing the layout for high-resolution monitors, providing more space for content and navigation elements.
+
+1920px: Targets full HD monitors, commonly used in desktop displays. Ensures that content utilizes the available screen real estate efficiently.
+   */
+  // TODO: This is something to include int he init script and something to also include int he docs
+  breakpoints: { [key in string]: number };
 };
