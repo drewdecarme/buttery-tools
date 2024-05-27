@@ -2,6 +2,8 @@ import { readFile } from "node:fs/promises";
 import { compile } from "@mdx-js/mdx";
 import matter from "gray-matter";
 import remarkTOC from "remark-toc";
+import type { ButteryDocsGraphTOC } from "../../src/types";
+import { createTOCsFromContent } from "./remix/util.createTocFromContent";
 import { LOG_DOCS } from "./util.logger";
 import type { FileObj } from "./util.types";
 
@@ -27,6 +29,7 @@ const parseFileContent = async (
 ): Promise<{
   meta: { title: string };
   content: string;
+  toc: ButteryDocsGraphTOC[];
 }> => {
   try {
     const fileContent = await readFile(filepath, { encoding: "utf8" });
@@ -41,11 +44,13 @@ const parseFileContent = async (
       outputFormat: "function-body",
       remarkPlugins: [remarkTOC]
     });
+    const contentString = compiledContent.toString();
     return {
       meta: {
         title: data.title ?? ""
       },
-      content: compiledContent.toString()
+      content: contentString,
+      toc: createTOCsFromContent(content)
     };
   } catch (error) {
     throw LOG_DOCS.fatal(new Error(error as string));
@@ -55,12 +60,13 @@ const parseFileContent = async (
 export const parseFile = async ({ filename, fsPath, routePath }: FileObj) => {
   try {
     const { segments, section } = parseFileSegmentsAndSection(filename);
-    const { meta, content } = await parseFileContent(fsPath, filename);
+    const { meta, content, toc } = await parseFileContent(fsPath, filename);
 
     return {
       fsPath,
       filename,
       content,
+      toc,
       meta,
       section,
       routePath,

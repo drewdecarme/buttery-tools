@@ -31,7 +31,8 @@ export const createGraph = async ({
       section,
       segments,
       content,
-      routePath
+      routePath,
+      toc
     } = parsedFile;
 
     const sectionTitle =
@@ -43,6 +44,7 @@ export const createGraph = async ({
         title: sectionTitle,
         content: "",
         routePath: "",
+        toc: [],
         pages: {}
       };
     }
@@ -61,6 +63,7 @@ export const createGraph = async ({
           title: "",
           content: "",
           routePath: "",
+          toc: [],
           pages: {}
         };
       }
@@ -69,6 +72,7 @@ export const createGraph = async ({
         currentGraph[segment].title = title;
         currentGraph[segment].content = content;
         currentGraph[segment].routePath = routePath;
+        currentGraph[segment].toc = toc;
       } else {
         currentGraph = currentGraph[segment].pages;
       }

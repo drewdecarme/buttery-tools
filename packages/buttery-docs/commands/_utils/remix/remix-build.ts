@@ -27,7 +27,6 @@ function orderFiles({
     const sectionOrder = navOrganization[section].routeOrder;
     for (const sectionRoute of sectionOrder) {
       const orderedFilename = `${section}.${sectionRoute}`;
-      console.log({ orderedFilename });
       const foundFile = files.find((file) => file.filename === orderedFilename);
       if (foundFile) oFiles.push(foundFile);
     }
@@ -78,7 +77,8 @@ export async function buildRemix(
   });
   const files = orderFiles({ docsConfig, files: enrichedFiles });
 
-  console.log(files);
+  // TODO: Put behind logging tag
+  // console.log(files);
 
   const docsGraph = await createGraph({
     files,
