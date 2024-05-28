@@ -13,33 +13,23 @@ import { MakeTemplateFontFamily } from "../templates/template.makeFontFamily";
 import { MakeTemplateFontWeight } from "../templates/template.makeFontWeight";
 import { MakeTemplateRem } from "../templates/template.makeRem";
 import { MakeTemplateResponsive } from "../templates/template.makeResponsive";
-import { getLocalRootPath, tokenLogger } from "../utils";
+import { tokenLogger } from "../utils";
+import { getResolvedVariables } from "../utils/util.get-resolved-config-constants";
+import { launchPlayground } from "./script.launch-playground";
 
 // The function that does stuff. It's in here so it can either be used
 // when a specific file changes or just straight up.
 async function generateAndTranspile(configTokens: ButteryConfigTokens) {
-  const tokensRootPath = await getLocalRootPath();
-
-  const outDirForGeneratedTSFiles = path.resolve(
-    tokensRootPath,
-    configTokens?.importName
-      ? `./.tokens/${configTokens.importName}/`
-      : "./.tokens/"
-  );
-
-  const outDirForTranspiledFiles = path.resolve(
-    tokensRootPath,
-    configTokens?.importName ? `./${configTokens.importName}/` : "./dist/"
-  );
-
-  const outFileForTranspiledFiles = path.resolve(
-    outDirForTranspiledFiles,
-    "./index.js"
-  );
+  const {
+    transpiledFilesOutDir,
+    transpiledFilesOutFile,
+    generatedTSFilesOutDir,
+    generatedTSFilesTSConfig
+  } = await getResolvedVariables(configTokens);
 
   const Templates = new MakeTemplates({
     config: configTokens,
-    outDir: outDirForGeneratedTSFiles
+    outDir: generatedTSFilesOutDir
   });
 
   // Register the templates that should be generated
@@ -51,16 +41,16 @@ async function generateAndTranspile(configTokens: ButteryConfigTokens) {
   // Create a plugin to eventually transpile the .tokens directory
   // and assemble the ESBuild options for that entry / barrel file.
   const tsPlugin = new EsbuildPluginTypescriptCompiler({
-    tsConfigPath: path.resolve(tokensRootPath, "./tsconfig.build.json")
+    tsConfigPath: generatedTSFilesTSConfig
   });
   const buildOptions = createEsbuildOptions({
     entryPoints: [Templates.entryFile],
-    outfile: outFileForTranspiledFiles,
+    outfile: transpiledFilesOutFile,
     plugins: [
       // transpile and create files
       tsPlugin.getPlugin({
         filePathToTranspile: Templates.entryFile,
-        extraArgs: [`--outDir ${outDirForTranspiledFiles}`]
+        extraArgs: [`--outDir ${transpiledFilesOutDir}`]
       })
     ]
   });
@@ -80,7 +70,7 @@ async function generateAndTranspile(configTokens: ButteryConfigTokens) {
     tokenLogger.debug("Distributing CSS files...");
     await cp(
       Templates.tokensCSSFile,
-      path.resolve(outDirForTranspiledFiles, "./index.css"),
+      path.resolve(transpiledFilesOutDir, "./index.css"),
       {
         recursive: true,
         force: true
@@ -98,9 +88,11 @@ async function generateAndTranspile(configTokens: ButteryConfigTokens) {
  * TODO: Fix this description
  */
 export const buildFunctionsAndTokens = async ({
-  watch
+  watch,
+  interactive
 }: {
   watch: boolean;
+  interactive: boolean;
 }) => {
   // Get the `buttery.config` to baseline some variables
   // The `buttery.config` is included in the distribution via package.json files
@@ -114,12 +106,16 @@ export const buildFunctionsAndTokens = async ({
 
   if (!watch) return;
 
+  if (interactive) {
+    launchPlayground(configs.tokens);
+  }
+
   // Watch the tokens.config for any changes
   tokenLogger.watch(configs.configBase.root.concat(" for changes..."));
 
   const watcher = watchDir(configs.configBase.root);
 
-  for await (const event of watcher) {
+  for await (const _event of watcher) {
     // KNOWN ISSUE - watchDir files twice
     tokenLogger.watch("Changes detected. Rebuilding functions and tokens...");
     const updatedConfig = await getButteryConfig("tokens");

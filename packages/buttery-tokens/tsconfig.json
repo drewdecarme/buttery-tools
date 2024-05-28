@@ -1,4 +1,13 @@
 {
   "extends": "@buttery/tsconfig/vite/react",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@buttery/tokens/generated": ["./.tokens/_tokens/index.ts"],
+      "@buttery/tokens/generated/css": ["./.tokens/_tokens/index.d.ts"],
+      "@buttery/tokens": ["./.tokens/_tokens/index.ts"],
+      "@buttery/tokens/css": ["./.tokens/_tokens/index.ts"]
+    }
+  },
   "include": ["vite.config.ts", "./src", "./playground/src", "./commands"]
 }

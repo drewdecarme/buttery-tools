@@ -36,12 +36,9 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
   tokenLogger.debug("Building buttery tokens...", options);
 
   await buildFunctionsAndTokens({
-    watch: Boolean(options.watch)
+    watch: Boolean(options.watch),
+    interactive: Boolean(options.interactive)
   });
-
-  if (options.interactive) {
-    launchPlayground();
-  }
 
   tokenLogger.success("Build complete!");
 };

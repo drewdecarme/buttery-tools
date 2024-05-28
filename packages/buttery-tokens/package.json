@@ -23,7 +23,8 @@
     "url": "https://github.com/drewdecarme/buttery-tokens/issues"
   },
   "scripts": {
-    "build": "yarn buttery cli build",
+    "build:tokens": "yarn buttery-tokens build",
+    "build": "yarn buttery cli build && yarn build:tokens",
     "dev": "yarn buttery cli dev"
   },
   "dependencies": {
