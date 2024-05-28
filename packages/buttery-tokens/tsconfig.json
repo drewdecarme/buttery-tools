@@ -1,3 +1,4 @@
 {
-  "extends": "@buttery/tsconfig/library"
+  "extends": "@buttery/tsconfig/vite/react",
+  "include": ["vite.config.ts", "./src", "./playground/src", "./commands"]
 }

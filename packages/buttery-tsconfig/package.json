@@ -16,6 +16,12 @@
       "import": "./tsconfig.library.json",
       "require": "./tsconfig.library.json",
       "node": "./tsconfig.library.json"
+    },
+    "./vite/react": {
+      "default": "./tsconfig.vite-react.json",
+      "import": "./tsconfig.vite-react.json",
+      "require": "./tsconfig.vite-react.json",
+      "node": "./tsconfig.vite-react.json"
     }
   },
   "author": "Drew DeCarme (drewdecarme@gmail.com)",

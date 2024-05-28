@@ -40,6 +40,18 @@ const config: ButteryConfig = {
       "desktop-small": 1200,
       desktop: 1280,
       "desktop-large": 1400
+    },
+    color: {
+      mode: "presets",
+      tone: "earth",
+      saturation: 39,
+      brightness: 42,
+      hues: {
+        primary: 286,
+        secondary: 192,
+        warning: 60,
+        danger: 359
+      }
     }
   }
 };

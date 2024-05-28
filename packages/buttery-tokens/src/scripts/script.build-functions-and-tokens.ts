@@ -20,8 +20,6 @@ import { getLocalRootPath, tokenLogger } from "../utils";
 async function generateAndTranspile(configTokens: ButteryConfigTokens) {
   const tokensRootPath = await getLocalRootPath();
 
-  console.log({ tokensRootPath });
-
   const outDirForGeneratedTSFiles = path.resolve(
     tokensRootPath,
     configTokens?.importName
