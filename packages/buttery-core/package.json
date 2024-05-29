@@ -2,13 +2,26 @@
   "name": "@buttery/core",
   "version": "0.0.1",
   "description": "A core module that provides some core functionality for all buttery tools",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
     "build": "yarn tsc",
     "dev": "yarn build --watch"
+  },
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "import": "./dist/index.js",
+      "node": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./defaults": {
+      "default": "./dist/index.defaults.js",
+      "import": "./dist/index.defaults.js",
+      "node": "./dist/index.defaults.js",
+      "require": "./dist/index.defaults.js",
+      "types": "./dist/index.defaults.d.ts"
+    }
   },
   "repository": {
     "type": "git",

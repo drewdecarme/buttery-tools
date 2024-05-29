@@ -1,20 +1,4 @@
-// Helper type to create an array of numbers from 0 to N-1
-type BuildArray<
-  N extends number,
-  R extends unknown[] = []
-> = R["length"] extends N ? R : BuildArray<N, [...R, unknown]>;
-
-// Helper type to get the length of an array as a number
-type Length<T extends unknown[]> = T["length"];
-
-// Main type to build the union of numbers between Start and End (inclusive)
-type Range<
-  Start extends number,
-  End extends number,
-  R extends unknown[] = BuildArray<Start>
-> = Length<R> extends End
-  ? End | Start
-  : Length<R> | Range<Start, End, [...R, unknown]>;
+import type { ButteryTokensColor } from "./types.buttery-config-tokens-color";
 
 export type ButteryConfigTokens = {
   /**
@@ -134,33 +118,5 @@ export type ButteryConfigTokens = {
    */
   // TODO: This is something to include int he init script and something to also include int he docs
   breakpoints: { [key in string]: number };
-  color:
-    | { mode: "manual" } // TODO: Break this out in hsl
-    | ({ mode: "presets"; hues: { [key: string]: number } } & (
-        | {
-            tone: "jewel";
-            saturation: Range<73, 83>;
-            brightness: Range<56, 76>;
-          }
-        | {
-            tone: "pastel";
-            saturation: Range<14, 21>;
-            brightness: Range<89, 96>;
-          }
-        | {
-            tone: "earth";
-            saturation: Range<36, 41>;
-            brightness: Range<36, 77>;
-          }
-        | {
-            tone: "neutral";
-            saturation: Range<1, 4>;
-            brightness: Range<58, 99>;
-          }
-        | {
-            tone: "fluorescent";
-            saturation: Range<63, 100>;
-            brightness: Range<82, 100>;
-          }
-      ));
+  color: ButteryTokensColor;
 };
