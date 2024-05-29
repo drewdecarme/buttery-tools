@@ -14,12 +14,19 @@ export class MakeTemplates {
    * all of the functional exports
    */
   entryFile: string;
+  /**
+   * the path of the config json file that
+   * contains a json representation of the
+   * config.
+   */
+  private configOutFilePath: string;
   tokensCSSFile: string;
 
   constructor(options: { config: ButteryConfigTokens; outDir: string }) {
     this.config = options.config;
     this.outDir = options.outDir;
     this.entryFile = path.resolve(this.outDir, "./index.ts");
+    this.configOutFilePath = path.resolve(this.outDir, "./config.ts");
     this.tokensCSSFile = path.resolve(this.outDir, "./index.css");
     this.templates = [];
   }
@@ -71,6 +78,14 @@ export class MakeTemplates {
 
     // create the entry point barrel file
     try {
+      tokenLogger.debug("Creating config file...");
+      await writeFile(
+        this.configOutFilePath,
+        `export const config = ${JSON.stringify(this.config)}`,
+        { encoding: "utf8" }
+      );
+      indexFileContent = indexFileContent.concat(`export * from "./config";\n`);
+      tokenLogger.debug("Creating config file... done");
       tokenLogger.debug("Creating entry point...");
       await writeFile(this.entryFile, indexFileContent, { encoding: "utf8" });
       tokenLogger.debug("Creating entry point... done.");

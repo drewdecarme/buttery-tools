@@ -1,6 +1,9 @@
 import path from "node:path";
 import type { ButteryConfigTokens } from "@buttery/core";
+import react from "@vitejs/plugin-react";
+import wyw from "@wyw-in-js/vite";
 import { createServer } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 import { getResolvedVariables } from "../utils/util.get-resolved-config-constants";
 
 export async function launchPlayground(configTokens: ButteryConfigTokens) {
@@ -40,7 +43,18 @@ export async function launchPlayground(configTokens: ButteryConfigTokens) {
     root: path.resolve(import.meta.dirname, "../../playground"),
     server: {
       port: 1337
-    }
+    },
+    plugins: [
+      react(),
+      tsconfigPaths(),
+      wyw({
+        include: ["**/*.{ts,tsx}"],
+        babelOptions: {
+          plugins: ["@babel/plugin-transform-export-namespace-from"],
+          presets: ["@babel/preset-typescript", "@babel/preset-react"]
+        }
+      })
+    ]
   });
   await server.listen();
 
