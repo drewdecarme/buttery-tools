@@ -44,7 +44,10 @@ export class MakeTemplate {
   variableBody: string;
   template: CompileFunction;
   css: CompileFunction;
-  private methods: { createTypeUnion: (arr: string[]) => string };
+  private methods: {
+    createTypeUnion: (arr: string[]) => string;
+    cssVar: (...args: string[]) => string;
+  };
 
   constructor(options: MakeTemplateOptions) {
     this.functionName = options.functionName;
@@ -53,7 +56,8 @@ export class MakeTemplate {
     this.template = options.template;
     this.css = options.css;
     this.methods = {
-      createTypeUnion: this.createUnionType
+      createTypeUnion: this.createUnionType,
+      cssVar: this.cssVar
     };
   }
 
@@ -65,6 +69,10 @@ export class MakeTemplate {
       }
       return accum.concat(`"${val}"`);
     }, "");
+  }
+
+  private cssVar(...args: string[]): string {
+    return `var(${args.join("-")})`;
   }
 
   compile(config: ButteryConfigTokens) {

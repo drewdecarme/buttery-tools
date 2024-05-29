@@ -59,9 +59,20 @@ export type ButteryTokensColorPresets = {
   hues: { [key: string]: number };
 } & ButteryTokensColorPreset;
 
-export type ButteryTokensColor =
-  | ButteryTokensColorHarmonious
-  | ButteryTokensColorPresets;
+export type ButteryTokensColor = {
+  /**
+   * If defined, this key determines how variants
+   * will automatically be created
+   */
+  variants?: {
+    /**
+     * The number of variants that will be automatically
+     * created based upon the selected colors
+     * @default 8
+     */
+    total: number;
+  };
+} & (ButteryTokensColorHarmonious | ButteryTokensColorPresets);
 
 // Defaults
 type ColorPresetToneDefault<T extends ButteryTokensColorPreset> = Omit<

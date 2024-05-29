@@ -1,7 +1,7 @@
 import { styled } from "@linaria/react";
 import { type FC, useMemo } from "react";
-import { hsbToHex } from "src/utils/util.color-conversions";
 import { useConfigColorContext } from "./ConfigColor.context";
+import { generatedTokens } from "./tokens-generated";
 import { localTokens } from "./tokens-local";
 
 const ColorContainer = styled("div")`
@@ -18,7 +18,7 @@ const SColor = styled("div")`
 
 export const ConfigColorPalette: FC = () => {
   const {
-    state: { hues, saturation, brightness }
+    state: { hues }
   } = useConfigColorContext();
 
   return useMemo(
@@ -29,12 +29,14 @@ export const ConfigColorPalette: FC = () => {
             key={`color-${hue}`}
             style={{
               // TODO: Change to the generateTokens.makeColor make color
-              backgroundColor: hsbToHex(hueValue, saturation, brightness)
+              // @ts-expect-error no worries since these will conflict since we're conflating 2
+              // different design systems
+              backgroundColor: generatedTokens.makeColor(hue)
             }}
           />
         ))}
       </ColorContainer>
     ),
-    [hues, saturation, brightness]
+    [hues]
   );
 };

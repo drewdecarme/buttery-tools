@@ -42,11 +42,11 @@ const config: ButteryConfig = {
     },
     color: {
       mode: "presets",
-      tone: "earth",
-      saturation: 39,
-      brightness: 42,
+      tone: "pastel",
+      saturation: 14,
+      brightness: 89,
       hues: {
-        primary: 286,
+        primary: 114,
         secondary: 192,
         warning: 60,
         danger: 359
@@ -54,5 +54,7 @@ const config: ButteryConfig = {
     }
   }
 };
+
+// TODO: when this changes, the tokens distro needs to be rebuilt
 
 export default config;
