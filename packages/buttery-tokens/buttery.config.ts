@@ -17,8 +17,8 @@ const config: ButteryConfig = {
       size: 16,
       family: {
         heading:
-          'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-        body: 'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+          'Poppins, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+        body: 'Poppins, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
       },
       weight: {
         bold: 700,
@@ -42,15 +42,16 @@ const config: ButteryConfig = {
     },
     color: {
       mode: "presets",
-      tone: "pastel",
-      saturation: 14,
-      brightness: 89,
+      tone: "jewel",
+      saturation: 83,
+      brightness: 76,
       hues: {
-        primary: 114,
-        secondary: 192,
+        primary: 244,
+        secondary: 170,
         warning: 60,
         danger: 359
-      }
+      },
+      neutral: "#030305"
     }
   }
 };

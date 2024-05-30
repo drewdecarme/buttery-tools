@@ -40,6 +40,7 @@ export async function launchPlayground(configTokens: ButteryConfigTokens) {
     },
     // any valid user config options, plus `mode` and `configFile`
     configFile: false,
+    publicDir: path.resolve(import.meta.dirname, "../../playground/public"),
     root: path.resolve(import.meta.dirname, "../../playground"),
     server: {
       port: 1337

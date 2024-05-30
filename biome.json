@@ -4,7 +4,7 @@
     "enabled": true
   },
   "files": {
-    "ignore": ["dist/**", "bin/**"]
+    "ignore": ["dist/**", "bin/**", "assets/**/*.tsx"]
   },
   "formatter": {
     "indentStyle": "space",

@@ -14,19 +14,46 @@ const SDiv = styled("div")`
   width: 100%;
 `;
 
+const SPane = styled("article")`
+  padding: 0 ${localTokens.makeRem(32)};
+`;
+
+const SH3 = styled("h2")`
+  font-family: ${localTokens.makeFontFamily("body")};
+  font-size: ${localTokens.makeRem(16)};
+  text-transform: uppercase;
+  & + p {
+    font-size: ${localTokens.makeRem(12)};
+  }
+`;
+
+const SPreview = styled("div")`
+  background: #f6f6f6;
+  padding: ${localTokens.makeRem(16)};
+`;
+
 export const ConfigColor: FC = () => {
   return (
     <ConfigColorProvider>
-      <ConfigColorSelectMode />
       <SDiv>
-        <div>
+        <SPane>
+          <SH3>Color</SH3>
+          <p>
+            Donec ullamcorper nulla non metus auctor fringilla. Lorem ipsum
+            dolor sit amet, consectetur adipiscing elit. Duis mollis, est non
+            commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem
+            nec elit. Donec id elit non mi porta gravida at eget metus. Donec
+            sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl
+            consectetur et. Fusce dapibus, tellus ac cursus commodo, tortor
+            mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+          </p>
+          <ConfigColorSelectMode />
           <ConfigColorMode />
           <ConfigColorJSON />
-        </div>
-        <div>
-          <h3>colors</h3>
+        </SPane>
+        <SPreview>
           <ConfigColorPalette />
-        </div>
+        </SPreview>
       </SDiv>
     </ConfigColorProvider>
   );

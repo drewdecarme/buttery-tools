@@ -72,6 +72,7 @@ export type ButteryTokensColor = {
      */
     total: number;
   };
+  neutral: string;
 } & (ButteryTokensColorHarmonious | ButteryTokensColorPresets);
 
 // Defaults
