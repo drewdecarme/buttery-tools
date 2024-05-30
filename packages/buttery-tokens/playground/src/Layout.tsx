@@ -38,17 +38,11 @@ const SLayoutSideNav = styled("nav")`
   grid-area: layout-side-nav;
 
   ul {
+    ${localTokens.makeReset("ul")};
     display: flex;
     flex-direction: column;
-    // TODO: create a makeReset
-    padding: 0;
-    margin: 0;
 
     li {
-      padding: 0;
-      margin: 0;
-      list-style-type: none;
-      
       height: ${localTokens.makeRem(48)};
       width: ${localTokens.makeRem(48)};
       display: grid;
