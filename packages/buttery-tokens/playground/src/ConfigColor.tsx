@@ -28,7 +28,6 @@ const SH3 = styled("h2")`
 `;
 
 const SPreview = styled("div")`
-  background: #f6f6f6;
   padding: ${localTokens.makeRem(16)};
 `;
 

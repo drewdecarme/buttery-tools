@@ -1,4 +1,5 @@
-import { hsbToHsl } from "../utils/util.color-conversions";
+import chroma from "chroma-js";
+import { hexToHsb, hsbToHex, hsbToHsl } from "../utils/util.color-conversions";
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 
 const template: CompileFunction = ({
@@ -55,23 +56,98 @@ export const ${functionName}: MakeColor = (hue, options) => {
 `;
 };
 
+const createColorTokensBase = (
+  hsl: ReturnType<typeof hsbToHsl>,
+  options: { cssPrefix: string; name: string }
+) =>
+  Object.entries(hsl).reduce((iAccum, [key, value]) => {
+    const unit = key !== "h" ? "%" : "";
+    return iAccum.concat(
+      `  ${options.cssPrefix}-${options.name}-${key}: ${value}${unit};\n`
+    );
+  }, "");
+
+const createColorTokensVariants = ({
+  hex,
+  name,
+  prefix,
+  numOfVariants
+}: { hex: string; name: string; prefix: string; numOfVariants: number }) => {
+  const variants = chroma
+    .scale([chroma(hex).brighten(2), hex, chroma(hex).darken(2)])
+    .mode("lab")
+    .colors(numOfVariants);
+
+  const variantTokens = variants.reduce((iAccum, hueVariant, i) => {
+    let hueVariantName: number;
+    if (i === 0) {
+      hueVariantName = 50;
+    } else {
+      hueVariantName = i * 100;
+    }
+    const { h, s, b } = hexToHsb(hueVariant);
+    const variantHsl = hsbToHsl(h, s, b);
+    const vh = `  ${prefix}-${name}-${hueVariantName}-h: ${variantHsl.h};\n`;
+    const vS = `  ${prefix}-${name}-${hueVariantName}-s: ${variantHsl.s}%;\n`;
+    const vL = `  ${prefix}-${name}-${hueVariantName}-l: ${variantHsl.l}%;\n`;
+    return iAccum.concat(vh).concat(vS).concat(vL);
+  }, "");
+  return variantTokens;
+};
+
 const css: CompileFunction = ({ config, cssVarPrefix }) => {
-  return Object.entries(config.color.hues).reduce(
+  const numOfVariants = config.color.variants?.total ?? 10;
+
+  const colorAndVariantTokens = Object.entries(config.color.hues).reduce(
     (accum, [hueName, hueValue]) => {
-      const hsl = hsbToHsl(
+      const hueHex = hsbToHex(
         hueValue,
         config.color.saturation,
         config.color.brightness
       );
-      const h = accum.concat(`  ${cssVarPrefix}-${hueName}-h: ${hsl.h};\n`);
-      const s = accum.concat(`  ${cssVarPrefix}-${hueName}-s: ${hsl.s}%;\n`);
-      const l = accum.concat(`  ${cssVarPrefix}-${hueName}-l: ${hsl.l}%;\n`);
-      const base = accum.concat(h).concat(s).concat(l);
+      const colorBaseHsl = hsbToHsl(
+        hueValue,
+        config.color.saturation,
+        config.color.brightness
+      );
 
-      return base;
+      // create the color tokens - base
+      const colorTokensBase = createColorTokensBase(colorBaseHsl, {
+        cssPrefix: cssVarPrefix,
+        name: hueName
+      });
+
+      // create the color tokens - variants
+      const colorTokensVariant = createColorTokensVariants({
+        hex: hueHex,
+        name: hueName,
+        prefix: cssVarPrefix,
+        numOfVariants
+      });
+      return accum.concat(colorTokensBase).concat(colorTokensVariant);
     },
     ""
   );
+
+  // neutrals
+  const neutralHsb = hexToHsb(config.color.neutral);
+  const neutralHsl = hsbToHsl(neutralHsb.h, neutralHsb.s, neutralHsb.b);
+  // create the neutral tokens - base
+  const neutralTokensBase = createColorTokensBase(neutralHsl, {
+    cssPrefix: cssVarPrefix,
+    name: "neutral"
+  });
+  // create the neutral tokens - variants
+  const neutralTokensVariant = createColorTokensVariants({
+    hex: config.color.neutral,
+    name: "neutral",
+    prefix: cssVarPrefix,
+    numOfVariants
+  });
+
+  return colorAndVariantTokens
+    .concat(neutralTokensBase)
+    .concat(neutralTokensVariant);
 };
 
 export const MakeTemplateColor = new MakeTemplate({

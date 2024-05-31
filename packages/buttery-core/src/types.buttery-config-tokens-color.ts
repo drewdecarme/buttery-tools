@@ -68,7 +68,7 @@ export type ButteryTokensColor = {
     /**
      * The number of variants that will be automatically
      * created based upon the selected colors
-     * @default 8
+     * @default 10
      */
     total: number;
   };

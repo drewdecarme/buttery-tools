@@ -41,7 +41,6 @@ async function generateAndTranspile(configTokens: ButteryConfigTokens) {
   Templates.register(MakeTemplateRem);
   Templates.register(MakeTemplateResponsive);
   Templates.register(MakeTemplateColor);
-  Templates.register(MakeTemplateColor);
   Templates.register(MakeTemplateReset);
 
   // Create a plugin to eventually transpile the .tokens directory
