@@ -4,7 +4,7 @@ import { useConfigColorContext } from "./ConfigColor.context";
 
 export function ConfigColorSelectHues() {
   const { setState, state } = useConfigColorContext();
-  return Object.entries(state.hues).map(([hue, hueValue]) => {
+  return Object.entries(state.application.hues).map(([hue, hueValue]) => {
     const hex = hsbToHex(hueValue, state.saturation, state.brightness);
     return (
       <label key={hue}>
@@ -17,7 +17,7 @@ export function ConfigColorSelectHues() {
           onChange={({ currentTarget: { value } }) => {
             setState(
               produce((draft) => {
-                draft.hues[hue] = getHueFromHex(value);
+                draft.application.hues[hue] = getHueFromHex(value);
               })
             );
           }}

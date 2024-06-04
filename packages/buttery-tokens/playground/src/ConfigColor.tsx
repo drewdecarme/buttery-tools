@@ -10,12 +10,18 @@ import { localTokens } from "./tokens-local";
 const SDiv = styled("div")`
   display: grid;
   gap: ${localTokens.makeRem(16)};
-  grid-template-columns: ${localTokens.makeRem(300)} 1fr;
+  grid-template-columns: ${localTokens.makeRem(300)} 1fr ${localTokens.makeRem(
+    300
+  )};
   width: 100%;
 `;
 
 const SPane = styled("article")`
   padding: 0 ${localTokens.makeRem(32)};
+  border-right: ${localTokens.makeRem(1)} solid ${localTokens.makeColor(
+    "neutral",
+    { variant: "50" }
+  )};
 `;
 
 const SH3 = styled("h2")`
@@ -31,28 +37,29 @@ const SPreview = styled("div")`
   padding: ${localTokens.makeRem(16)};
 `;
 
+const SDetail = styled("div")`
+  padding: ${localTokens.makeRem(16)};
+  border-left: ${localTokens.makeRem(1)} solid ${localTokens.makeColor(
+    "neutral",
+    { variant: "50" }
+  )};
+`;
 export const ConfigColor: FC = () => {
   return (
     <ConfigColorProvider>
       <SDiv>
         <SPane>
           <SH3>Color</SH3>
-          <p>
-            Donec ullamcorper nulla non metus auctor fringilla. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Duis mollis, est non
-            commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem
-            nec elit. Donec id elit non mi porta gravida at eget metus. Donec
-            sed odio dui. Praesent commodo cursus magna, vel scelerisque nisl
-            consectetur et. Fusce dapibus, tellus ac cursus commodo, tortor
-            mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-          </p>
+
           <ConfigColorSelectMode />
           <ConfigColorMode />
-          <ConfigColorJSON />
         </SPane>
         <SPreview>
           <ConfigColorPalette />
         </SPreview>
+        <SDetail>
+          <ConfigColorJSON />
+        </SDetail>
       </SDiv>
     </ConfigColorProvider>
   );

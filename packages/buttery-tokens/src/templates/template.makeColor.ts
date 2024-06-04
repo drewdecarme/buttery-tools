@@ -1,5 +1,6 @@
-import chroma from "chroma-js";
+import { match } from "ts-pattern";
 import { hexToHsb, hsbToHex, hsbToHsl } from "../utils/util.color-conversions";
+import { createColorVariants } from "../utils/util.create-color-variants";
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 
 const template: CompileFunction = ({
@@ -9,7 +10,7 @@ const template: CompileFunction = ({
   functionName,
   cssVarPrefix
 }) => {
-  const hueNames = Object.keys(config.color.hues);
+  const hueNames = Object.keys(config.color.application.hues).concat("neutral");
   const hueUnion = methods.createTypeUnion(hueNames);
 
   const hueVariants = [...new Array(8)].map((_v, i) => {
@@ -37,7 +38,7 @@ export type MakeColor = (color: Color, options?: { variant?: ColorVariant; opaci
  *    return (
  *      <button
  *        {...restProps}
- *        style={{ fontWeight: ${functionName}("${hueNames[0]}") }}
+ *        style={{ color: ${functionName}("${hueNames[0]}") }}
  *        ref={ref}
  *      >
  *        {children}
@@ -51,7 +52,9 @@ export type MakeColor = (color: Color, options?: { variant?: ColorVariant; opaci
  */
 export const ${functionName}: MakeColor = (hue, options) => {
   console.log(hue, options);
-  return \`hsl(var(${cssVarPrefix}-\${hue}-h), var(${cssVarPrefix}-\${hue}-s), var(${cssVarPrefix}-\${hue}-l))\`;
+  const opacity = options?.opacity ?? 1;
+  const variant = options?.variant ? \`-\${options.variant}\` : "";
+  return \`hsla(var(${cssVarPrefix}-\${hue}\${variant}-h), var(${cssVarPrefix}-\${hue}\${variant}-s), var(${cssVarPrefix}-\${hue}\${variant}-l), \${opacity})\`;
 };
 `;
 };
@@ -71,12 +74,16 @@ const createColorTokensVariants = ({
   hex,
   name,
   prefix,
-  numOfVariants
-}: { hex: string; name: string; prefix: string; numOfVariants: number }) => {
-  const variants = chroma
-    .scale([chroma(hex).brighten(2), hex, chroma(hex).darken(2)])
-    .mode("lab")
-    .colors(numOfVariants);
+  numOfVariants,
+  options
+}: {
+  hex: string;
+  name: string;
+  prefix: string;
+  numOfVariants: number;
+  options?: { min?: number; max?: number };
+}) => {
+  const variants = createColorVariants(hex, numOfVariants, options);
 
   const variantTokens = variants.reduce((iAccum, hueVariant, i) => {
     let hueVariantName: number;
@@ -96,41 +103,55 @@ const createColorTokensVariants = ({
 };
 
 const css: CompileFunction = ({ config, cssVarPrefix }) => {
-  const numOfVariants = config.color.variants?.total ?? 10;
+  const numOfVariants = match(config.color)
+    .with(
+      { mode: "presets", application: { variants: { mode: "auto" } } },
+      (colorConfig) => colorConfig.application.variants.total ?? 10
+    )
+    .with(
+      { mode: "presets", application: { variants: { mode: "manual" } } },
+      (colorConfig) => {
+        return Object.keys(colorConfig.application.variants).length;
+      }
+    )
+    .with({ mode: "harmonious" }, () => {
+      // TODO: build out harmonious variants
+      return 0;
+    })
+    .exhaustive();
 
-  const colorAndVariantTokens = Object.entries(config.color.hues).reduce(
-    (accum, [hueName, hueValue]) => {
-      const hueHex = hsbToHex(
-        hueValue,
-        config.color.saturation,
-        config.color.brightness
-      );
-      const colorBaseHsl = hsbToHsl(
-        hueValue,
-        config.color.saturation,
-        config.color.brightness
-      );
+  const colorAndVariantTokens = Object.entries(
+    config.color.application.hues
+  ).reduce((accum, [hueName, hueValue]) => {
+    const hueHex = hsbToHex(
+      hueValue,
+      config.color.saturation,
+      config.color.brightness
+    );
+    const colorBaseHsl = hsbToHsl(
+      hueValue,
+      config.color.saturation,
+      config.color.brightness
+    );
 
-      // create the color tokens - base
-      const colorTokensBase = createColorTokensBase(colorBaseHsl, {
-        cssPrefix: cssVarPrefix,
-        name: hueName
-      });
+    // create the color tokens - base
+    const colorTokensBase = createColorTokensBase(colorBaseHsl, {
+      cssPrefix: cssVarPrefix,
+      name: hueName
+    });
 
-      // create the color tokens - variants
-      const colorTokensVariant = createColorTokensVariants({
-        hex: hueHex,
-        name: hueName,
-        prefix: cssVarPrefix,
-        numOfVariants
-      });
-      return accum.concat(colorTokensBase).concat(colorTokensVariant);
-    },
-    ""
-  );
+    // create the color tokens - variants
+    const colorTokensVariant = createColorTokensVariants({
+      hex: hueHex,
+      name: hueName,
+      prefix: cssVarPrefix,
+      numOfVariants
+    });
+    return accum.concat(colorTokensBase).concat(colorTokensVariant);
+  }, "");
 
   // neutrals
-  const neutralHsb = hexToHsb(config.color.neutral);
+  const neutralHsb = hexToHsb(config.color.neutral.base);
   const neutralHsl = hsbToHsl(neutralHsb.h, neutralHsb.s, neutralHsb.b);
   // create the neutral tokens - base
   const neutralTokensBase = createColorTokensBase(neutralHsl, {
@@ -139,10 +160,14 @@ const css: CompileFunction = ({ config, cssVarPrefix }) => {
   });
   // create the neutral tokens - variants
   const neutralTokensVariant = createColorTokensVariants({
-    hex: config.color.neutral,
+    hex: config.color.neutral.base,
     name: "neutral",
     prefix: cssVarPrefix,
-    numOfVariants
+    numOfVariants,
+    options: {
+      min: Number(config.color.neutral.variants.scaleMin) ?? 10,
+      max: Number(config.color.neutral.variants.scaleMax)
+    }
   });
 
   return colorAndVariantTokens

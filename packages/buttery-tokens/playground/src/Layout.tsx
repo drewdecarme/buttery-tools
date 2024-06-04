@@ -1,6 +1,7 @@
 import { styled } from "@linaria/react";
 import type { ReactNode } from "react";
 
+import { makeRem } from "src/templates/template.makeRem";
 import { Icon } from "./components/Icon";
 import { generatedTokens } from "./tokens-generated";
 import { localTokens } from "./tokens-local";
@@ -20,6 +21,10 @@ const SLayoutHeader = styled("header")`
   padding: 0 ${localTokens.makeRem(32)};
   display: flex;
   align-items: center;
+  border-bottom: ${localTokens.makeRem(1)} solid ${localTokens.makeColor(
+    "neutral",
+    { variant: "50" }
+  )}; 
 
   .title {
     font-family: ${localTokens.makeFontFamily("body")};
@@ -36,6 +41,10 @@ const SLayoutBar = styled("div")`
 
 const SLayoutSideNav = styled("nav")`
   grid-area: layout-side-nav;
+  border-right: ${localTokens.makeRem(1)} solid ${localTokens.makeColor(
+    "neutral",
+    { variant: "50" }
+  )}; 
 
   ul {
     ${localTokens.makeReset("ul")};

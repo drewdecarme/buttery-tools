@@ -20,7 +20,10 @@ export type ButteryTokensColorHarmonious = {
   mode: "harmonious";
   saturation: number;
   brightness: number;
-  hues: { [key: string]: number };
+  application: {
+    hues: { [key: string]: number };
+  };
+  neutral: ButteryTokensColorNeutral;
 }; // TODO: Break this out in hsl
 export type ButteryTokensColorPresetJewel = {
   tone: "jewel";
@@ -54,26 +57,67 @@ export type ButteryTokensColorPreset =
   | ButteryTokensColorPresetNeutral
   | ButteryTokensColorPresetFluorescent;
 
+export type ButteryTokensColorVariantsAuto = {
+  /**
+   * The variant mode. "auto" will ask for presets to automatically
+   * derive and create the application color scales for you.
+   */
+  mode: "auto";
+  /**
+   * The number of application variants that should be created
+   * @default 10
+   */
+  total?: number;
+  /**
+   * The lightness factor of the derived scale. A higher value
+   * creates a lighter variant floor
+   * @default 2
+   */
+  scaleMin?: number;
+  /**
+   * The darkness factor of the derived scale. A higher number
+   * creates a darker variant ceiling
+   * @default 2
+   */
+  scaleMax?: number;
+};
+export type ButteryTokensColorVariantsManual = {
+  mode: "manual";
+  [variantName: string]: string;
+};
+
+export type ButteryTokensColorNeutral = {
+  /**
+   * The base or darkest color for your neutral color. Best practice
+   * dictates that this should be an off black that should match the
+   * relative tone of your primary color. This will be used with it's
+   * variants as the "darkest" color and a variant config of auto mode
+   * will create a scale that adds more lightness to it
+   */
+  base: string;
+  /**
+   * Information about how the variants
+   * will be created
+   */
+  variants: ButteryTokensColorVariantsAuto | ButteryTokensColorVariantsManual;
+};
+
 export type ButteryTokensColorPresets = {
   mode: "presets";
-  hues: { [key: string]: number };
+  application: {
+    hues: { [key: string]: number };
+    /**
+     * Information about how the variants
+     * will be created
+     */
+    variants: ButteryTokensColorVariantsAuto | ButteryTokensColorVariantsManual;
+  };
+  neutral: ButteryTokensColorNeutral;
 } & ButteryTokensColorPreset;
 
-export type ButteryTokensColor = {
-  /**
-   * If defined, this key determines how variants
-   * will automatically be created
-   */
-  variants?: {
-    /**
-     * The number of variants that will be automatically
-     * created based upon the selected colors
-     * @default 10
-     */
-    total: number;
-  };
-  neutral: string;
-} & (ButteryTokensColorHarmonious | ButteryTokensColorPresets);
+export type ButteryTokensColor =
+  | ButteryTokensColorHarmonious
+  | ButteryTokensColorPresets;
 
 // Defaults
 type ColorPresetToneDefault<T extends ButteryTokensColorPreset> = Omit<
@@ -160,8 +204,19 @@ export const butteryConfigColorDefaultsPresets: ButteryTokensColorPresets = {
   mode: "presets",
   tone: "jewel",
   ...butteryConfigColorDefaultsPreset.jewel,
-  hues: {
-    primary: 203
+  application: {
+    hues: {
+      primary: 203
+    },
+    variants: {
+      mode: "auto"
+    }
+  },
+  neutral: {
+    base: "#000000",
+    variants: {
+      mode: "auto"
+    }
   }
 };
 export const butteryConfigColorDefaultsHarmonious: ButteryTokensColorHarmonious =
@@ -169,7 +224,15 @@ export const butteryConfigColorDefaultsHarmonious: ButteryTokensColorHarmonious 
     mode: "harmonious",
     saturation: 83,
     brightness: 76,
-    hues: {
-      primary: 203
+    application: {
+      hues: {
+        primary: 203
+      }
+    },
+    neutral: {
+      base: "#000000",
+      variants: {
+        mode: "auto"
+      }
     }
   };

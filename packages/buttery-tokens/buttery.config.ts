@@ -45,13 +45,28 @@ const config: ButteryConfig = {
       tone: "jewel",
       saturation: 83,
       brightness: 76,
-      hues: {
-        primary: 244,
-        secondary: 170,
-        warning: 60,
-        danger: 359
+      application: {
+        hues: {
+          primary: 244,
+          secondary: 170,
+          warning: 60,
+          danger: 359
+        },
+        variants: {
+          mode: "auto",
+          total: 10,
+          scaleMin: 2,
+          scaleMax: 2
+        }
       },
-      neutral: "#030305"
+      neutral: {
+        base: "#030305",
+        variants: {
+          mode: "auto",
+          total: 10,
+          scaleMin: 5
+        }
+      }
     }
   }
 };
