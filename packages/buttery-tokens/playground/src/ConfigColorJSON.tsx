@@ -3,17 +3,13 @@ import { useConfigColorContext } from "./ConfigColor.context";
 import { localTokens } from "./tokens-local";
 
 const SPre = styled("pre")`
-    background: #ccc;
-    padding: ${localTokens.makeRem(32)};
+  background: ${localTokens.makeColor("neutral", { variant: "50" })};
+  font-size: ${localTokens.makeRem(12)};
+  padding: ${localTokens.makeRem(4)};
 `;
 
 export function ConfigColorJSON() {
   const { state } = useConfigColorContext();
 
-  return (
-    <>
-      <div>Color config</div>
-      <SPre>{JSON.stringify(state, null, 2)}</SPre>
-    </>
-  );
+  return <SPre>{JSON.stringify(state, null, 2)}</SPre>;
 }

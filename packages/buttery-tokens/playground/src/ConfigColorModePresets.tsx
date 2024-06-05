@@ -1,12 +1,13 @@
 import type {
   ButteryTokensColor,
-  ButteryTokensColorPresets
+  ButteryTokensColorPresets,
 } from "@buttery/core";
 import { butteryConfigColorDefaultsPreset } from "@buttery/core/defaults";
 import { produce } from "immer";
 import { type ChangeEventHandler, type FC, useCallback } from "react";
 import { ConfigColorSelectHues } from "./ConfigColorSelectHues";
 import { ConfigColorSelectSaturationBrightness } from "./ConfigColorSelectSaturationBrightness";
+import { LayoutMainPaneSection } from "./components/layout/LayoutMainPaneSection";
 
 export const ConfigColorModePresets: FC<{
   state: ButteryTokensColorPresets;
@@ -30,7 +31,10 @@ export const ConfigColorModePresets: FC<{
   );
 
   return (
-    <div>
+    <LayoutMainPaneSection
+      btTitle="presets"
+      btSubtitle="Each preset below represents a harmonious color scale that allows you to configure a pre-defined range of saturation and brightness for each selected hue."
+    >
       <label>
         <div>select a preset</div>
         <select defaultValue={state.tone} onChange={handleChangePreset}>
@@ -45,6 +49,6 @@ export const ConfigColorModePresets: FC<{
       <div>
         <ConfigColorSelectHues />
       </div>
-    </div>
+    </LayoutMainPaneSection>
   );
 };

@@ -12,21 +12,22 @@ const ColorContainer = styled("div")`
   width: 100%;
   margin-bottom: ${localTokens.makeRem(32)};
   display: grid;
-  grid-template-columns: ${makeRem(200)} 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: ${makeRem(48)} ${makeRem(48)};
-  grid-template-areas: 
-  "description main"
-  "description variants";
+  grid-template-areas:
+    "description"
+    "main"
+    "variants";
 `;
 
 const ColorMain = styled("div")`
-grid-area: main;
+  grid-area: main;
 `;
 
 const ColorVariants = styled("div")`
   grid-area: variants;
   display: flex;
-  
+
   & > * {
     height: ${makeRem(48)};
     flex: 1;
@@ -35,14 +36,13 @@ const ColorVariants = styled("div")`
 
 const ColorDescription = styled("div")`
   grid-area: description;
-
 `;
 
 export const ConfigColorPalettePresets: FC<ButteryTokensColorPresets> = ({
   saturation,
   brightness,
   application,
-  neutral
+  neutral,
 }) => {
   return (
     <>
@@ -54,7 +54,7 @@ export const ConfigColorPalettePresets: FC<ButteryTokensColorPresets> = ({
             <ColorDescription>{hue}</ColorDescription>
             <ColorMain
               style={{
-                backgroundColor: colorHex
+                backgroundColor: colorHex,
               }}
             />
             <ColorVariants>
@@ -65,7 +65,7 @@ export const ConfigColorPalettePresets: FC<ButteryTokensColorPresets> = ({
                     variantConfig.total,
                     {
                       min: Number(application.variants.scaleMin),
-                      max: Number(application.variants.scaleMax)
+                      max: Number(application.variants.scaleMax),
                     }
                   );
                   return variants.map((variant, i) => (
@@ -73,7 +73,7 @@ export const ConfigColorPalettePresets: FC<ButteryTokensColorPresets> = ({
                       key={`color-${hue}-variant-${i.toString()}`}
                       style={{
                         gridArea: `v${i}`,
-                        backgroundColor: variant
+                        backgroundColor: variant,
                       }}
                     />
                   ));
@@ -91,7 +91,7 @@ export const ConfigColorPalettePresets: FC<ButteryTokensColorPresets> = ({
         <ColorDescription>neutral</ColorDescription>
         <ColorMain
           style={{
-            backgroundColor: neutral.base
+            backgroundColor: neutral.base,
           }}
         />
         <ColorVariants>
@@ -104,7 +104,7 @@ export const ConfigColorPalettePresets: FC<ButteryTokensColorPresets> = ({
                   // TODO: Add defaults config for min and max neutral scales
                   // so they can be referenced in multiple areas
                   min: Number(neutral.variants.scaleMin) || 10,
-                  max: Number(neutral.variants.scaleMax)
+                  max: Number(neutral.variants.scaleMax),
                 }
               );
               return variants.map((variant, i) => (
@@ -112,7 +112,7 @@ export const ConfigColorPalettePresets: FC<ButteryTokensColorPresets> = ({
                   key={`color-neutral-variant-${i.toString()}`}
                   style={{
                     gridArea: `v${i}`,
-                    backgroundColor: variant
+                    backgroundColor: variant,
                   }}
                 />
               ));

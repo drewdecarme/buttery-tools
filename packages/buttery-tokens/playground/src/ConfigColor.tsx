@@ -1,66 +1,38 @@
-import { styled } from "@linaria/react";
 import type { FC } from "react";
 import { ConfigColorProvider } from "./ConfigColor.context";
 import { ConfigColorJSON } from "./ConfigColorJSON";
 import { ConfigColorMode } from "./ConfigColorMode";
 import { ConfigColorPalette } from "./ConfigColorPalette";
 import { ConfigColorSelectMode } from "./ConfigColorSelectMode";
-import { localTokens } from "./tokens-local";
+import { LayoutMainContent } from "./components/layout/LayoutMainContent";
+import { LayoutMainPaneLeft } from "./components/layout/LayoutMainPaneLeft";
+import { LayoutMainPaneRight } from "./components/layout/LayoutMainPaneRight";
+import { LayoutMainPaneSection } from "./components/layout/LayoutMainPaneSection";
 
-const SDiv = styled("div")`
-  display: grid;
-  gap: ${localTokens.makeRem(16)};
-  grid-template-columns: ${localTokens.makeRem(300)} 1fr ${localTokens.makeRem(
-    300
-  )};
-  width: 100%;
-`;
-
-const SPane = styled("article")`
-  padding: 0 ${localTokens.makeRem(32)};
-  border-right: ${localTokens.makeRem(1)} solid ${localTokens.makeColor(
-    "neutral",
-    { variant: "50" }
-  )};
-`;
-
-const SH3 = styled("h2")`
-  font-family: ${localTokens.makeFontFamily("body")};
-  font-size: ${localTokens.makeRem(16)};
-  text-transform: uppercase;
-  & + p {
-    font-size: ${localTokens.makeRem(12)};
-  }
-`;
-
-const SPreview = styled("div")`
-  padding: ${localTokens.makeRem(16)};
-`;
-
-const SDetail = styled("div")`
-  padding: ${localTokens.makeRem(16)};
-  border-left: ${localTokens.makeRem(1)} solid ${localTokens.makeColor(
-    "neutral",
-    { variant: "50" }
-  )};
-`;
 export const ConfigColor: FC = () => {
   return (
     <ConfigColorProvider>
-      <SDiv>
-        <SPane>
-          <SH3>Color</SH3>
-
+      <LayoutMainPaneLeft>
+        <LayoutMainPaneSection
+          btTitle="mode"
+          btSubtitle="The mode determines the types of options that can be used to create a color palette. Each mode is designed to ensure complete color harmony regardless of settings."
+        >
           <ConfigColorSelectMode />
-          <ConfigColorMode />
-        </SPane>
-        <SPreview>
-          <ConfigColorPalette />
-        </SPreview>
-        <SDetail>
+        </LayoutMainPaneSection>
+        <ConfigColorMode />
+      </LayoutMainPaneLeft>
+      <LayoutMainContent>
+        <ConfigColorPalette />
+      </LayoutMainContent>
+      <LayoutMainPaneRight>
+        <LayoutMainPaneSection>tabs</LayoutMainPaneSection>
+        <LayoutMainPaneSection
+          btTitle="graph"
+          btSubtitle="The graphical representation of the configuration that has been configured in the left pane."
+        >
           <ConfigColorJSON />
-        </SDetail>
-      </SDiv>
+        </LayoutMainPaneSection>
+      </LayoutMainPaneRight>
     </ConfigColorProvider>
   );
 };
