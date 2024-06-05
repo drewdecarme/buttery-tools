@@ -47,7 +47,7 @@ const config: ButteryConfig = {
       brightness: 76,
       application: {
         hues: {
-          primary: 244,
+          primary: 42,
           secondary: 170,
           warning: 60,
           danger: 359

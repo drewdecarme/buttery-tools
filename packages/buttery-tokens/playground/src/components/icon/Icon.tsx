@@ -2,12 +2,13 @@ import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { Suspense, forwardRef, lazy } from "react";
-import { localTokens } from "../tokens-local";
+import { localTokens } from "../../tokens-local";
+import type { IconNames } from "./icon.types";
 import { type Color, makeColor } from ".tokens/_tokens/makeColor";
 
 export type IconPropsNative = JSX.IntrinsicElements["div"];
 export type IconPropsCustom = {
-  icon: "palette";
+  icon: IconNames;
   /**
    * The height and width of the icon
    * @default 24
@@ -34,21 +35,12 @@ const SIconContainer = styled("div")`
 `;
 
 export const Icon = forwardRef<HTMLDivElement, IconProps>(function Icon(
-  { children, className, icon, ddSize = 24, ddColor = "primary", ...restProps },
+  { children, className, icon, ddSize = 24, ddColor, ...restProps },
   ref
 ) {
-  // biome-ignore lint/suspicious/noExplicitAny: We're not really interested in this type internally we just care that it's a component
-  let IconComponent: React.LazyExoticComponent<React.ComponentType<any>>;
-
-  switch (icon) {
-    case "palette":
-      IconComponent = lazy(
-        () => import(`../../assets/icons/react/${icon}.tsx`)
-      );
-      break;
-    default:
-      exhaustiveMatchGuard(icon);
-  }
+  const IconComponent = lazy(
+    () => import(`../../../assets/icons/react/${icon}.tsx`)
+  );
 
   return (
     <SIconContainer

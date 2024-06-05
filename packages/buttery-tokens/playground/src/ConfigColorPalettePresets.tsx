@@ -62,7 +62,11 @@ export const ConfigColorPalettePresets: FC<ButteryTokensColorPresets> = ({
                 .with({ mode: "auto" }, (variantConfig) => {
                   const variants = createColorVariants(
                     colorHex,
-                    variantConfig.total
+                    variantConfig.total,
+                    {
+                      min: Number(application.variants.scaleMin),
+                      max: Number(application.variants.scaleMax)
+                    }
                   );
                   return variants.map((variant, i) => (
                     <div

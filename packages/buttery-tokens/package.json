@@ -26,7 +26,9 @@
     "build:tokens": "yarn buttery-tokens build",
     "build": "yarn buttery cli build && yarn build:tokens",
     "dev": "yarn buttery cli dev",
-    "build:icons": "svgr --out-dir ./playground/assets/icons/react --filename-case kebab --typescript --jsx-runtime automatic --no-index --title-prop -- ./playground/assets/icons/svg"
+    "icons:build": "yarn icons:generate && yarn icons:types",
+    "icons:generate": "svgr --out-dir ./playground/assets/icons/react --filename-case kebab --typescript --jsx-runtime automatic --no-index --title-prop -- ./playground/assets/icons/svg",
+    "icons:types": "npx tsx ./playground/scripts/script.icon-types.ts"
   },
   "dependencies": {
     "@babel/core": "^7.24.6",
