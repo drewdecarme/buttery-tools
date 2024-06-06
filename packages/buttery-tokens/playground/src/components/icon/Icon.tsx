@@ -1,4 +1,3 @@
-import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { Suspense, forwardRef, lazy } from "react";

@@ -10,9 +10,8 @@ const SDiv = styled("div")`
   display: grid;
   grid-template-areas:
     "layout-side-nav  layout-header"
-    "layout-side-nav   layout-main"
-    "layout-side-nav  layout-footer";
-  grid-template-rows: ${localTokens.makeRem(64)} 100vh auto;
+    "layout-side-nav   layout-main";
+  grid-template-rows: ${localTokens.makeRem(64)} 100vh;
   grid-template-columns: ${localTokens.makeRem(80)} 1fr;
 `;
 

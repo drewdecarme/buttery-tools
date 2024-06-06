@@ -5,7 +5,7 @@ const config: ButteryConfig = {
   cli: {
     name: "buttery-tokens",
     description: "A CLI to develop and build buttery tokens",
-    version: "0.0.1"
+    version: "0.0.1",
   },
   tokens: {
     importName: "_tokens",
@@ -18,16 +18,16 @@ const config: ButteryConfig = {
       family: {
         heading:
           'Poppins, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-        body: 'Poppins, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+        body: 'Poppins, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
       },
       weight: {
         bold: 700,
         "semi-bold": 600,
         medium: 500,
         regular: 400,
-        light: 300
+        light: 300,
       },
-      typography: {}
+      typography: {},
     },
     breakpoints: {
       "phone-small": 320,
@@ -38,7 +38,7 @@ const config: ButteryConfig = {
       "tablet-large": 1024,
       "desktop-small": 1200,
       desktop: 1280,
-      "desktop-large": 1400
+      "desktop-large": 1400,
     },
     color: {
       mode: "presets",
@@ -50,25 +50,25 @@ const config: ButteryConfig = {
           primary: 42,
           secondary: 170,
           warning: 60,
-          danger: 359
+          danger: 359,
         },
         variants: {
           mode: "auto",
           total: 10,
           scaleMin: 2,
-          scaleMax: 2
-        }
+          scaleMax: 2,
+        },
       },
       neutral: {
         base: "#030305",
         variants: {
           mode: "auto",
           total: 10,
-          scaleMin: 5
-        }
-      }
-    }
-  }
+          scaleMin: 5,
+        },
+      },
+    },
+  },
 };
 
 // TODO: when this changes, the tokens distro needs to be rebuilt

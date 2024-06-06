@@ -1,19 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { type FC, type ReactNode, useContext, useMemo } from "react";
 
 type TabsContextType = {
-  active: string;
+  activeTab: string;
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
 };
 const TabsContext = React.createContext<TabsContextType | null>(null);
 export type TabsProviderProps = {
   children: ReactNode;
+  btInitActiveTab: string;
 };
-export const TabsProvider: FC<TabsProviderProps> = ({ children }) => {
+export const TabsProvider: FC<TabsProviderProps> = ({
+  children,
+  btInitActiveTab,
+}) => {
+  const [activeTab, setActiveTab] = useState<string>(btInitActiveTab);
+
   const value = useMemo(
     () => ({
-      active: "sample",
+      activeTab,
+      setActiveTab,
     }),
-    []
+    [activeTab]
   );
 
   return <TabsContext.Provider value={value}>{children}</TabsContext.Provider>;

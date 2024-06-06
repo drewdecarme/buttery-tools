@@ -1,14 +1,13 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, ScrollRestoration } from "react-router-dom";
 import { Icon } from "../components/icon/Icon";
-import { Layout as LayoutComponent } from "../components/layout/Layout";
-import { LayoutFooter } from "../components/layout/LayoutFooter";
+import { Layout } from "../components/layout/Layout";
 import { LayoutHeader } from "../components/layout/LayoutHeader";
 import { LayoutMain } from "../components/layout/LayoutMain";
 import { LayoutNav } from "../components/layout/LayoutNav";
 
 export default function Root() {
   return (
-    <LayoutComponent>
+    <Layout>
       <LayoutNav
         btLogoSrc="/images/buttery-tokens-logo.png"
         btLogoAlt="buttery-tokens-logo"
@@ -32,7 +31,7 @@ export default function Root() {
       <LayoutMain>
         <Outlet />
       </LayoutMain>
-      <LayoutFooter>footer</LayoutFooter>
-    </LayoutComponent>
+      <ScrollRestoration />
+    </Layout>
   );
 }

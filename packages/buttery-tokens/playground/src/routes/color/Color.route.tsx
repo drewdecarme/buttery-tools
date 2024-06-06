@@ -2,6 +2,8 @@ import { LayoutMainContent } from "playground/src/components/layout/LayoutMainCo
 import { LayoutMainPaneLeft } from "playground/src/components/layout/LayoutMainPaneLeft";
 import { LayoutMainPaneRight } from "playground/src/components/layout/LayoutMainPaneRight";
 import { LayoutMainPaneSection } from "playground/src/components/layout/LayoutMainPaneSection";
+import { Tab } from "playground/src/components/tabs/Tab";
+import { Tabs } from "playground/src/components/tabs/Tabs";
 import { ColorProvider } from "./Color.context";
 import { ColorJSON } from "./ColorJSON";
 import { ColorMode } from "./ColorMode";
@@ -24,12 +26,20 @@ export const ColorRoute = () => {
         <ColorPalette />
       </LayoutMainContent>
       <LayoutMainPaneRight>
-        <LayoutMainPaneSection>tabs</LayoutMainPaneSection>
-        <LayoutMainPaneSection
-          btTitle="graph"
-          btSubtitle="The graphical representation of the configuration that has been configured in the left pane."
-        >
-          <ColorJSON />
+        <LayoutMainPaneSection>
+          <Tabs btInitActiveTab="graph">
+            <Tab btId="graph" btLabel="Graph">
+              <LayoutMainPaneSection
+                btTitle="graph"
+                btSubtitle="The graphical representation of the configuration that has been configured in the left pane."
+              >
+                <ColorJSON />
+              </LayoutMainPaneSection>
+            </Tab>
+            <Tab btId="other" btLabel="Other">
+              Other tab - WIP
+            </Tab>
+          </Tabs>
         </LayoutMainPaneSection>
       </LayoutMainPaneRight>
     </ColorProvider>
