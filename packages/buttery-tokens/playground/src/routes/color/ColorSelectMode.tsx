@@ -1,16 +1,16 @@
 import type { ButteryTokensColor } from "@buttery/core";
 import {
   butteryConfigColorDefaultsHarmonious,
-  butteryConfigColorDefaultsPresets
+  butteryConfigColorDefaultsPresets,
 } from "@buttery/core/defaults";
+import { generatedTokens } from "playground/src/tokens/tokens-generated";
 import { type ChangeEventHandler, type FC, useCallback } from "react";
-import { useConfigColorContext } from "./ConfigColor.context";
-import { generatedTokens } from "./tokens-generated";
+import { useColorContext } from "./Color.context";
 
 const modeOptions: ButteryTokensColor["mode"][] = ["harmonious", "presets"];
 
-export const ConfigColorSelectMode: FC = () => {
-  const { state, setState } = useConfigColorContext();
+export const ColorSelectMode: FC = () => {
+  const { state, setState } = useColorContext();
 
   const handleChangeMode = useCallback<ChangeEventHandler<HTMLSelectElement>>(
     ({ currentTarget: { value } }) => {

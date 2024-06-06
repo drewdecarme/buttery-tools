@@ -1,9 +1,9 @@
 import { produce } from "immer";
 import { getHueFromHex, hsbToHex } from "src/utils/util.color-conversions";
-import { useConfigColorContext } from "./ConfigColor.context";
+import { useColorContext } from "./Color.context";
 
-export function ConfigColorSelectHues() {
-  const { setState, state } = useConfigColorContext();
+export function ColorSelectHues() {
+  const { setState, state } = useColorContext();
   return Object.entries(state.application.hues).map(([hue, hueValue]) => {
     const hex = hsbToHex(hueValue, state.saturation, state.brightness);
     return (

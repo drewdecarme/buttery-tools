@@ -1,11 +1,11 @@
 import type { ButteryTokensColorPresets } from "@buttery/core";
 import { styled } from "@linaria/react";
+import { localTokens } from "playground/src/tokens/tokens-local";
 import type { FC } from "react";
+import { makeRem } from "src/templates/template.makeRem";
+import { hsbToHex } from "src/utils/util.color-conversions";
+import { createColorVariants } from "src/utils/util.create-color-variants";
 import { match } from "ts-pattern";
-import { makeRem } from "../../src/templates/template.makeRem";
-import { hsbToHex } from "../../src/utils/util.color-conversions";
-import { createColorVariants } from "../../src/utils/util.create-color-variants";
-import { localTokens } from "./tokens-local";
 
 const ColorContainer = styled("div")`
   display: flex;
@@ -13,7 +13,7 @@ const ColorContainer = styled("div")`
   margin-bottom: ${localTokens.makeRem(32)};
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: ${makeRem(48)} ${makeRem(48)};
+  grid-template-rows: ${localTokens.makeRem(48)} ${localTokens.makeRem(48)};
   grid-template-areas:
     "description"
     "main"
@@ -38,7 +38,7 @@ const ColorDescription = styled("div")`
   grid-area: description;
 `;
 
-export const ConfigColorPalettePresets: FC<ButteryTokensColorPresets> = ({
+export const ColorPalettePresets: FC<ButteryTokensColorPresets> = ({
   saturation,
   brightness,
   application,

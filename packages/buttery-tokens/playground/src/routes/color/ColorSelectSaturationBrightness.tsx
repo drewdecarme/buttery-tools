@@ -1,10 +1,10 @@
 import { butteryConfigColorDefaultsPreset } from "@buttery/core/defaults";
 import { produce } from "immer";
 import { type FC, useMemo } from "react";
-import { useConfigColorContext } from "./ConfigColor.context";
+import { useColorContext } from "./Color.context";
 
-export const ConfigColorSelectSaturationBrightness: FC = () => {
-  const { state, setState } = useConfigColorContext();
+export const ColorSelectSaturationBrightness: FC = () => {
+  const { state, setState } = useColorContext();
 
   const minMax = useMemo<{
     saturation: { min: number; max: number };
@@ -15,18 +15,18 @@ export const ConfigColorSelectSaturationBrightness: FC = () => {
         return {
           saturation: {
             min: butteryConfigColorDefaultsPreset[state.tone].min.saturation,
-            max: butteryConfigColorDefaultsPreset[state.tone].max.saturation
+            max: butteryConfigColorDefaultsPreset[state.tone].max.saturation,
           },
           brightness: {
             min: butteryConfigColorDefaultsPreset[state.tone].min.brightness,
-            max: butteryConfigColorDefaultsPreset[state.tone].max.brightness
-          }
+            max: butteryConfigColorDefaultsPreset[state.tone].max.brightness,
+          },
         };
 
       default:
         return {
           saturation: { min: 0, max: 100 },
-          brightness: { min: 0, max: 0 }
+          brightness: { min: 0, max: 0 },
         };
     }
   }, [state]);

@@ -15,11 +15,11 @@ export async function launchPlayground(configTokens: ButteryConfigTokens) {
       alias: [
         {
           find: "@buttery/tokens/generated/css",
-          replacement: path.resolve(transpiledFilesOutDir, "./index.css")
+          replacement: path.resolve(transpiledFilesOutDir, "./index.css"),
         },
         {
           find: "@buttery/tokens/generated",
-          replacement: transpiledFilesOutFile
+          replacement: transpiledFilesOutFile,
         },
 
         {
@@ -27,23 +27,23 @@ export async function launchPlayground(configTokens: ButteryConfigTokens) {
           replacement: path.resolve(
             tokensRootPath,
             "./.tokens/_tokens/index.css"
-          )
+          ),
         },
         {
           find: "@buttery/tokens",
           replacement: path.resolve(
             tokensRootPath,
             "./.tokens/_tokens/index.ts"
-          )
-        }
-      ]
+          ),
+        },
+      ],
     },
     // any valid user config options, plus `mode` and `configFile`
     configFile: false,
     publicDir: path.resolve(import.meta.dirname, "../../playground/public"),
     root: path.resolve(import.meta.dirname, "../../playground"),
     server: {
-      port: 1337
+      port: 1337,
     },
     plugins: [
       react(),
@@ -52,10 +52,10 @@ export async function launchPlayground(configTokens: ButteryConfigTokens) {
         include: ["**/*.{ts,tsx}"],
         babelOptions: {
           plugins: ["@babel/plugin-transform-export-namespace-from"],
-          presets: ["@babel/preset-typescript", "@babel/preset-react"]
-        }
-      })
-    ]
+          presets: ["@babel/preset-typescript", "@babel/preset-react"],
+        },
+      }),
+    ],
   });
   await server.listen();
 

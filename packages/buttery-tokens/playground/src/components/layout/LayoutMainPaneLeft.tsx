@@ -1,5 +1,5 @@
 import { styled } from "@linaria/react";
-import { localTokens } from "playground/src/tokens-local";
+import { localTokens } from "playground/src/tokens/tokens-local";
 import { LayoutMainPane } from "./LayoutMainPane";
 
 export const LayoutMainPaneLeft = styled(LayoutMainPane)`

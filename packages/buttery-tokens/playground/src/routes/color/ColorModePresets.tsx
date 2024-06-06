@@ -4,12 +4,12 @@ import type {
 } from "@buttery/core";
 import { butteryConfigColorDefaultsPreset } from "@buttery/core/defaults";
 import { produce } from "immer";
+import { LayoutMainPaneSection } from "playground/src/components/layout/LayoutMainPaneSection";
 import { type ChangeEventHandler, type FC, useCallback } from "react";
-import { ConfigColorSelectHues } from "./ConfigColorSelectHues";
-import { ConfigColorSelectSaturationBrightness } from "./ConfigColorSelectSaturationBrightness";
-import { LayoutMainPaneSection } from "./components/layout/LayoutMainPaneSection";
+import { ColorSelectHues } from "./ColorSelectHues";
+import { ColorSelectSaturationBrightness } from "./ColorSelectSaturationBrightness";
 
-export const ConfigColorModePresets: FC<{
+export const ColorModePresets: FC<{
   state: ButteryTokensColorPresets;
   setState: React.Dispatch<React.SetStateAction<ButteryTokensColor>>;
 }> = ({ state, setState }) => {
@@ -45,9 +45,9 @@ export const ConfigColorModePresets: FC<{
           ))}
         </select>
       </label>
-      <ConfigColorSelectSaturationBrightness />
+      <ColorSelectSaturationBrightness />
       <div>
-        <ConfigColorSelectHues />
+        <ColorSelectHues />
       </div>
     </LayoutMainPaneSection>
   );

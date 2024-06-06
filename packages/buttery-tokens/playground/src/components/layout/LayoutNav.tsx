@@ -1,6 +1,6 @@
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
-import { localTokens } from "playground/src/tokens-local";
+import { localTokens } from "playground/src/tokens/tokens-local";
 import { forwardRef } from "react";
 
 export type LayoutNavPropsNative = JSX.IntrinsicElements["nav"];
@@ -59,6 +59,7 @@ const SNav = styled("nav")`
         text-transform: uppercase;
         border-radius: ${localTokens.makeRem(8)};
         position: relative;
+        text-decoration: none;
 
         &.active {
           color: ${localTokens.makeColor("primary", { variant: "300" })};

@@ -2,7 +2,7 @@ import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { Suspense, forwardRef, lazy } from "react";
-import { localTokens } from "../../tokens-local";
+import { localTokens } from "../../tokens/tokens-local";
 import type { IconNames } from "./icon.types";
 import { type Color, makeColor } from ".tokens/_tokens/makeColor";
 
@@ -27,7 +27,7 @@ const SIconContainer = styled("div")`
   place-content: center;
   width: var(--icon-size);
   height: var(--icon-size);
-  
+
   svg {
     width: inherit;
     height: inherit;
@@ -49,7 +49,7 @@ export const Icon = forwardRef<HTMLDivElement, IconProps>(function Icon(
       style={{
         // @ts-ignore
         "--icon-size": localTokens.makeRem(ddSize),
-        color: ddColor ? makeColor(ddColor) : "inherit"
+        color: ddColor ? makeColor(ddColor) : "inherit",
       }}
       ref={ref}
     >

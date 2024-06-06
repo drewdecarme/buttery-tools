@@ -1,6 +1,6 @@
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
-import { localTokens } from "playground/src/tokens-local";
+import { localTokens } from "playground/src/tokens/tokens-local";
 import { forwardRef } from "react";
 
 export type LayoutMainPropsNative = JSX.IntrinsicElements["main"];
