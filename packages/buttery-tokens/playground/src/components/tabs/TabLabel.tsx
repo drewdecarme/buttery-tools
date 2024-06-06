@@ -1,4 +1,6 @@
+import { styled } from "@linaria/react";
 import { clsx } from "clsx";
+import { localTokens } from "playground/src/tokens/tokens-local";
 import { type ReactNode, forwardRef } from "react";
 import { useTabsContext } from "./Tab.context";
 
@@ -9,14 +11,37 @@ export type TabLabelPropsCustom = {
 };
 export type TabLabelProps = TabLabelPropsNative & TabLabelPropsCustom;
 
+const SButton = styled("button")`
+  ${localTokens.makeReset("button")};
+  flex: 1;
+  display: grid;
+  place-content: center;
+  height: ${localTokens.makeRem(32)};
+  font-family: ${localTokens.makeFontFamily("body")};
+  font-size: ${localTokens.makeRem(12)};
+  color: ${localTokens.makeColor("neutral", { variant: "200" })};
+  z-index: 10;
+  transition: color 0.25s;
+  font-weight: ${localTokens.makeFontWeight("medium")};
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.active,
+  &:hover {
+    color: ${localTokens.makeColor("neutral")};
+  }
+`;
+
 export const TabLabel = forwardRef<HTMLButtonElement, TabLabelProps>(
   function TabLabel({ children, className, btId, ...restProps }, ref) {
     const { activeTab, setActiveTab } = useTabsContext();
     return (
-      <button
+      <SButton
         type="button"
         {...restProps}
-        className={clsx(className, {
+        className={clsx(className, "tab-panel", {
           active: activeTab === btId,
         })}
         role="tab"
@@ -27,7 +52,7 @@ export const TabLabel = forwardRef<HTMLButtonElement, TabLabelProps>(
         onClick={() => setActiveTab(btId)}
       >
         {children}
-      </button>
+      </SButton>
     );
   }
 );

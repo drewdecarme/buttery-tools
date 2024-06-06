@@ -1,7 +1,7 @@
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 
 const template: CompileFunction = ({ methods, docs, functionName }) => {
-  const resetUnion = methods.createTypeUnion(["ul"]);
+  const resetUnion = methods.createTypeUnion(["ul", "button"]);
 
   return `export type MakeReset = (element: ${resetUnion}) => string;
 
@@ -44,6 +44,14 @@ export const ${functionName}: MakeReset = (element) => {
             list-style-type: none;
           }
         \`
+
+      case "button":
+          return \`
+            margin: 0;
+            padding: 0;
+            border: none;
+            background: none;
+          \`
       default:
         return matchGuard(element);
     }
@@ -58,5 +66,5 @@ export const MakeTemplateReset = new MakeTemplate({
   functionDescription: "Returns some CSS resets for any given elements",
   variableBody: "",
   template,
-  css
+  css,
 });
