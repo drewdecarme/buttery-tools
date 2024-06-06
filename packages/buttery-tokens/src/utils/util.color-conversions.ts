@@ -22,7 +22,7 @@ export function hsbToHsl(h: number, s: number, b: number) {
   return {
     h: hue,
     s: sl,
-    l: lightness
+    l: lightness,
   };
 }
 

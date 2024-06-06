@@ -67,6 +67,10 @@ const config: ButteryConfig = {
           scaleMin: 5,
         },
       },
+      static: {
+        background: "#fff",
+        surface: "#fff",
+      },
     },
   },
 };

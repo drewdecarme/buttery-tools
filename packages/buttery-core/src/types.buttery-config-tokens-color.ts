@@ -1,7 +1,7 @@
 // Helper type to create an array of numbers from 0 to N-1
 type BuildArray<
   N extends number,
-  R extends unknown[] = []
+  R extends unknown[] = [],
 > = R["length"] extends N ? R : BuildArray<N, [...R, unknown]>;
 
 // Helper type to get the length of an array as a number
@@ -11,11 +11,13 @@ type Length<T extends unknown[]> = T["length"];
 type Range<
   Start extends number,
   End extends number,
-  R extends unknown[] = BuildArray<Start>
-> = Length<R> extends End
-  ? End | Start
-  : Length<R> | Range<Start, End, [...R, unknown]>;
+  R extends unknown[] = BuildArray<Start>,
+> =
+  Length<R> extends End
+    ? End | Start
+    : Length<R> | Range<Start, End, [...R, unknown]>;
 
+// TODO: Clean up these types
 export type ButteryTokensColorHarmonious = {
   mode: "harmonious";
   saturation: number;
@@ -24,6 +26,11 @@ export type ButteryTokensColorHarmonious = {
     hues: { [key: string]: number };
   };
   neutral: ButteryTokensColorNeutral;
+  /**
+   * Extra colors that don't require variants. These are static
+   * since they stay the same and cannot be varied
+   */
+  static?: ButteryTokensColorStatic;
 }; // TODO: Break this out in hsl
 export type ButteryTokensColorPresetJewel = {
   tone: "jewel";
@@ -86,6 +93,7 @@ export type ButteryTokensColorVariantsManual = {
   [variantName: string]: string;
 };
 
+export type ButteryTokensColorStatic = { [colorName: string]: string };
 export type ButteryTokensColorNeutral = {
   /**
    * The base or darkest color for your neutral color. Best practice
@@ -113,6 +121,11 @@ export type ButteryTokensColorPresets = {
     variants: ButteryTokensColorVariantsAuto | ButteryTokensColorVariantsManual;
   };
   neutral: ButteryTokensColorNeutral;
+  /**
+   * Extra colors that don't require variants. These are static
+   * since they stay the same and cannot be varied
+   */
+  static?: ButteryTokensColorStatic;
 } & ButteryTokensColorPreset;
 
 export type ButteryTokensColor =
@@ -133,12 +146,12 @@ const butteryConfigColorPresetDefaultJewel: ColorPresetToneDefault<ButteryTokens
     brightness: 56,
     min: {
       saturation: 73,
-      brightness: 56
+      brightness: 56,
     },
     max: {
       saturation: 83,
-      brightness: 76
-    }
+      brightness: 76,
+    },
   };
 const butteryConfigColorPresetDefaultPastel: ColorPresetToneDefault<ButteryTokensColorPresetPastel> =
   {
@@ -146,12 +159,12 @@ const butteryConfigColorPresetDefaultPastel: ColorPresetToneDefault<ButteryToken
     brightness: 89,
     min: {
       saturation: 14,
-      brightness: 89
+      brightness: 89,
     },
     max: {
       saturation: 21,
-      brightness: 96
-    }
+      brightness: 96,
+    },
   };
 const butteryConfigColorPresetDefaultEarth: ColorPresetToneDefault<ButteryTokensColorPresetEarth> =
   {
@@ -159,12 +172,12 @@ const butteryConfigColorPresetDefaultEarth: ColorPresetToneDefault<ButteryTokens
     brightness: 36,
     min: {
       saturation: 36,
-      brightness: 36
+      brightness: 36,
     },
     max: {
       saturation: 41,
-      brightness: 77
-    }
+      brightness: 77,
+    },
   };
 const butteryConfigColorPresetDefaultNeutral: ColorPresetToneDefault<ButteryTokensColorPresetNeutral> =
   {
@@ -172,12 +185,12 @@ const butteryConfigColorPresetDefaultNeutral: ColorPresetToneDefault<ButteryToke
     brightness: 58,
     min: {
       saturation: 1,
-      brightness: 58
+      brightness: 58,
     },
     max: {
       saturation: 4,
-      brightness: 99
-    }
+      brightness: 99,
+    },
   };
 const butteryConfigColorPresetDefaultFluorescent: ColorPresetToneDefault<ButteryTokensColorPresetFluorescent> =
   {
@@ -185,12 +198,12 @@ const butteryConfigColorPresetDefaultFluorescent: ColorPresetToneDefault<Buttery
     brightness: 82,
     min: {
       saturation: 63,
-      brightness: 82
+      brightness: 82,
     },
     max: {
       saturation: 100,
-      brightness: 100
-    }
+      brightness: 100,
+    },
   };
 
 export const butteryConfigColorDefaultsPreset = {
@@ -198,7 +211,7 @@ export const butteryConfigColorDefaultsPreset = {
   jewel: butteryConfigColorPresetDefaultJewel,
   pastel: butteryConfigColorPresetDefaultPastel,
   neutral: butteryConfigColorPresetDefaultNeutral,
-  fluorescent: butteryConfigColorPresetDefaultFluorescent
+  fluorescent: butteryConfigColorPresetDefaultFluorescent,
 };
 export const butteryConfigColorDefaultsPresets: ButteryTokensColorPresets = {
   mode: "presets",
@@ -206,18 +219,18 @@ export const butteryConfigColorDefaultsPresets: ButteryTokensColorPresets = {
   ...butteryConfigColorDefaultsPreset.jewel,
   application: {
     hues: {
-      primary: 203
+      primary: 203,
     },
     variants: {
-      mode: "auto"
-    }
+      mode: "auto",
+    },
   },
   neutral: {
     base: "#000000",
     variants: {
-      mode: "auto"
-    }
-  }
+      mode: "auto",
+    },
+  },
 };
 export const butteryConfigColorDefaultsHarmonious: ButteryTokensColorHarmonious =
   {
@@ -226,13 +239,13 @@ export const butteryConfigColorDefaultsHarmonious: ButteryTokensColorHarmonious 
     brightness: 76,
     application: {
       hues: {
-        primary: 203
-      }
+        primary: 203,
+      },
     },
     neutral: {
       base: "#000000",
       variants: {
-        mode: "auto"
-      }
-    }
+        mode: "auto",
+      },
+    },
   };

@@ -1,6 +1,9 @@
 import { match } from "ts-pattern";
 import { hexToHsb, hsbToHex, hsbToHsl } from "../utils/util.color-conversions";
-import { createColorVariants } from "../utils/util.create-color-variants";
+import {
+  createColorTokens,
+  createColorTokensVariants,
+} from "../utils/util.create-color-variants";
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 
 const template: CompileFunction = ({
@@ -8,7 +11,7 @@ const template: CompileFunction = ({
   methods,
   docs,
   functionName,
-  cssVarPrefix
+  cssVarPrefix,
 }) => {
   const hueNames = Object.keys(config.color.application.hues).concat("neutral");
   const hueUnion = methods.createTypeUnion(hueNames);
@@ -59,49 +62,6 @@ export const ${functionName}: MakeColor = (hue, options) => {
 `;
 };
 
-const createColorTokensBase = (
-  hsl: ReturnType<typeof hsbToHsl>,
-  options: { cssPrefix: string; name: string }
-) =>
-  Object.entries(hsl).reduce((iAccum, [key, value]) => {
-    const unit = key !== "h" ? "%" : "";
-    return iAccum.concat(
-      `  ${options.cssPrefix}-${options.name}-${key}: ${value}${unit};\n`
-    );
-  }, "");
-
-const createColorTokensVariants = ({
-  hex,
-  name,
-  prefix,
-  numOfVariants,
-  options
-}: {
-  hex: string;
-  name: string;
-  prefix: string;
-  numOfVariants: number;
-  options?: { min?: number; max?: number };
-}) => {
-  const variants = createColorVariants(hex, numOfVariants, options);
-
-  const variantTokens = variants.reduce((iAccum, hueVariant, i) => {
-    let hueVariantName: number;
-    if (i === 0) {
-      hueVariantName = 50;
-    } else {
-      hueVariantName = i * 100;
-    }
-    const { h, s, b } = hexToHsb(hueVariant);
-    const variantHsl = hsbToHsl(h, s, b);
-    const vh = `  ${prefix}-${name}-${hueVariantName}-h: ${variantHsl.h};\n`;
-    const vS = `  ${prefix}-${name}-${hueVariantName}-s: ${variantHsl.s}%;\n`;
-    const vL = `  ${prefix}-${name}-${hueVariantName}-l: ${variantHsl.l}%;\n`;
-    return iAccum.concat(vh).concat(vS).concat(vL);
-  }, "");
-  return variantTokens;
-};
-
 const css: CompileFunction = ({ config, cssVarPrefix }) => {
   const numOfVariants = match(config.color)
     .with(
@@ -135,9 +95,9 @@ const css: CompileFunction = ({ config, cssVarPrefix }) => {
     );
 
     // create the color tokens - base
-    const colorTokensBase = createColorTokensBase(colorBaseHsl, {
+    const colorTokensBase = createColorTokens(colorBaseHsl, {
       cssPrefix: cssVarPrefix,
-      name: hueName
+      name: hueName,
     });
 
     // create the color tokens - variants
@@ -145,7 +105,7 @@ const css: CompileFunction = ({ config, cssVarPrefix }) => {
       hex: hueHex,
       name: hueName,
       prefix: cssVarPrefix,
-      numOfVariants
+      numOfVariants,
     });
     return accum.concat(colorTokensBase).concat(colorTokensVariant);
   }, "");
@@ -154,9 +114,9 @@ const css: CompileFunction = ({ config, cssVarPrefix }) => {
   const neutralHsb = hexToHsb(config.color.neutral.base);
   const neutralHsl = hsbToHsl(neutralHsb.h, neutralHsb.s, neutralHsb.b);
   // create the neutral tokens - base
-  const neutralTokensBase = createColorTokensBase(neutralHsl, {
+  const neutralTokensBase = createColorTokens(neutralHsl, {
     cssPrefix: cssVarPrefix,
-    name: "neutral"
+    name: "neutral",
   });
   // create the neutral tokens - variants
   const neutralTokensVariant = createColorTokensVariants({
@@ -166,9 +126,11 @@ const css: CompileFunction = ({ config, cssVarPrefix }) => {
     numOfVariants,
     options: {
       min: Number(config.color.neutral.variants.scaleMin) ?? 10,
-      max: Number(config.color.neutral.variants.scaleMax)
-    }
+      max: Number(config.color.neutral.variants.scaleMax),
+    },
   });
+
+  // static colors
 
   return colorAndVariantTokens
     .concat(neutralTokensBase)
@@ -180,5 +142,5 @@ export const MakeTemplateColor = new MakeTemplate({
   functionDescription: "A utility that allows you to incorporate color",
   variableBody: "color",
   template,
-  css
+  css,
 });
