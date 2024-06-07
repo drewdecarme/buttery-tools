@@ -6,7 +6,7 @@ import { LOG_DOCS } from "./_utils/util.logger";
 export const meta: CommandMeta = {
   name: "build",
   description:
-    "Build the necessary assets required to create actions, fetchers, and components to render the Buttery Docs template."
+    "Build the necessary assets required to create actions, fetchers, and components to render the Buttery Docs template.",
 };
 
 export const options: CommandOptions<"watch"> = {
@@ -14,8 +14,8 @@ export const options: CommandOptions<"watch"> = {
     alias: "w",
     description: "Run the build in watch mode",
     type: "boolean",
-    required: false
-  }
+    required: false,
+  },
 };
 
 export const action: CommandAction<typeof options> = async ({ options }) => {

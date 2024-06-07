@@ -5,12 +5,14 @@ export type ButteryDocsGraphTOC = {
   children: ButteryDocsGraphTOC[];
 };
 
+export type ButteryDocsGraphValue = {
+  title: string;
+  // content: string;
+  routePath: string;
+  filepath: string;
+  // toc: ButteryDocsGraphTOC[];
+  pages: ButteryDocsGraph;
+};
 export type ButteryDocsGraph = {
-  [key: string]: {
-    title: string;
-    content: string;
-    routePath: string;
-    toc: ButteryDocsGraphTOC[];
-    pages: ButteryDocsGraph;
-  };
+  [key: string]: ButteryDocsGraphValue;
 };

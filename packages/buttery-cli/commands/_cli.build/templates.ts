@@ -11,7 +11,7 @@ function withParsedAction(segmentCommand) {
 
     try {
       const timestamp = new Date().getTime();
-      const commandPath = path.resolve(import.meta.dirname, \`./commands/\${segmentCommand}.js?t=\${timestamp}\`);
+      const commandPath = path.resolve(import.meta.dirname, \`./\${segmentCommand}.js?t=\${timestamp}\`);
       const command = await import(commandPath);
       restArgs.pop();
       const options = restArgs[restArgs.length - 1];

@@ -1,4 +1,4 @@
-import type { ButteryConfigDocsRemix } from "@buttery/core";
+import type { ButteryConfigDocs } from "@buttery/core";
 import type { ButteryDocsGraph } from "../../src/types";
 import { LOG_DOCS } from "./util.logger";
 import { parseFile } from "./util.parseFile";
@@ -15,10 +15,10 @@ import type { FileObj } from "./util.types";
  */
 export const createGraph = async ({
   files,
-  docsConfig
+  docsConfig,
 }: {
   files: FileObj[];
-  docsConfig: ButteryConfigDocsRemix;
+  docsConfig: ButteryConfigDocs;
 }): Promise<ButteryDocsGraph> => {
   LOG_DOCS.debug("Generating graph representation of docs...");
   const graph: ButteryDocsGraph = {};
@@ -32,20 +32,20 @@ export const createGraph = async ({
       segments,
       content,
       routePath,
-      toc
+      toc,
     } = parsedFile;
 
     const sectionTitle =
-      docsConfig?.navOrganization?.[section]?.display ??
-      section.replace(/-/g, " ");
+      docsConfig?.order?.[section]?.display ?? section.replace(/-/g, " ");
 
     if (section && !graph[section]) {
       graph[section] = {
         title: sectionTitle,
-        content: "",
+        filepath: file.fsPath,
+        // content: "",
         routePath: "",
-        toc: [],
-        pages: {}
+        // toc: [],
+        pages: {},
       };
     }
 
@@ -61,18 +61,20 @@ export const createGraph = async ({
       if (!currentGraph[segment]) {
         currentGraph[segment] = {
           title: "",
-          content: "",
+          filepath: "",
+          // content: "",
           routePath: "",
-          toc: [],
-          pages: {}
+          // toc: [],
+          pages: {},
         };
       }
 
       if (i === segments.length - 1) {
         currentGraph[segment].title = title;
-        currentGraph[segment].content = content;
+        currentGraph[segment].filepath = file.fsPath;
+        // currentGraph[segment].content = content;
         currentGraph[segment].routePath = routePath;
-        currentGraph[segment].toc = toc;
+        // currentGraph[segment].toc = toc;
       } else {
         currentGraph = currentGraph[segment].pages;
       }

@@ -3,7 +3,7 @@ import path from "node:path";
 import {
   type ButteryConfigBase,
   type ButteryConfigCli,
-  getButteryConfig
+  getButteryConfig,
 } from "@buttery/core";
 import type { BuildArgs } from "../../scripts/build";
 import { LOG } from "../_utils/util.logger";
@@ -40,14 +40,10 @@ export async function build(programArgs: BuildArgs) {
 
     // delete the entire bin & dist folder to make it fresh
     LOG.debug("Cleaning distribution directories...");
-    const foldersToDelete = [
-      "./bin/index.js",
-      "./bin/buttery-config.js",
-      "./bin/commands"
-    ].map((folder) =>
+    const foldersToDelete = ["./bin"].map((folder) =>
       rm(path.resolve(configBase.root, folder), {
         recursive: true,
-        force: true
+        force: true,
       })
     );
     await Promise.all(foldersToDelete);

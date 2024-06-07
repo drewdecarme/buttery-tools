@@ -1,12 +1,4 @@
-export type ButteryConfigDocsRemix = {
-  framework: "remix";
-  /**
-   * A prefix for which to look for in the `app/routes` directory.
-   * This prefix will look for any files that begin with it or any
-   * files that reside in a directory
-   * @default "_docs"
-   */
-  docsPrefix?: string;
+export type ButteryConfigDocs = {
   /**
    * A key that allows you to configure how the navigation
    * will display as well as how it should be organized. Order is a
@@ -40,7 +32,7 @@ export type ButteryConfigDocsRemix = {
     }
    * ```
    */
-  navOrganization?: {
+  order?: {
     [section: string]: {
       /**
        * The string that will be displayed as the header
@@ -58,7 +50,3 @@ export type ButteryConfigDocsRemix = {
     };
   };
 };
-export type ButteryConfigDocsNextJs = { framework: "nextjs" };
-export type ButteryConfigDocs =
-  | ButteryConfigDocsRemix
-  | ButteryConfigDocsNextJs;

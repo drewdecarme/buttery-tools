@@ -3,5 +3,5 @@
   "compilerOptions": {
     "jsx": "react-jsx"
   },
-  "include": ["src", "commands"]
+  "include": ["src", "commands", "templates", "targets"]
 }

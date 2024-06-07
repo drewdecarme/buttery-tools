@@ -7,6 +7,27 @@ const config: ButteryConfig = {
     description: "A CLI to develop and build buttery tokens",
     version: "0.0.1",
   },
+  docs: {
+    order: {
+      introduction: {
+        display: "Intro",
+        routeOrder: ["_index", "why-this"],
+      },
+      "getting-started": {
+        display: "Getting Started",
+        routeOrder: [
+          "introduction",
+          "introduction.basic-components",
+          "introduction.advanced-components",
+          "quick-start-guide",
+        ],
+      },
+      security: {
+        display: "Securing your app",
+        routeOrder: ["overview-of-security", "prevention-of-attacks"],
+      },
+    },
+  },
   tokens: {
     importName: "_tokens",
     gridSystem: 4,

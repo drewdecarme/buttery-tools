@@ -1,6 +1,6 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { ButteryConfigBase, ButteryConfigDocsRemix } from "@buttery/core";
+import type { ButteryConfigBase, ButteryConfigDocs } from "@buttery/core";
 import { glob } from "glob";
 
 import { readConfig } from "@remix-run/dev/dist/config.js";
@@ -10,48 +10,9 @@ import type { FileObj } from "../util.types";
 import { getRemixFilename } from "./getRemixFileName";
 import { getRemixRoutePath } from "./getRemixRoutePath";
 
-function orderFiles({
-  docsConfig: { navOrganization },
-  files
-}: { docsConfig: ButteryConfigDocsRemix; files: FileObj[] }): FileObj[] {
-  if (!navOrganization) {
-    LOG_DOCS.warning(
-      "No navOrganization defined... will be outputting graph in order the files are processed."
-    );
-    return files;
-  }
-
-  const oFiles: FileObj[] = [];
-
-  for (const section in navOrganization) {
-    const sectionOrder = navOrganization[section].routeOrder;
-    for (const sectionRoute of sectionOrder) {
-      const orderedFilename = `${section}.${sectionRoute}`;
-      const foundFile = files.find((file) => file.filename === orderedFilename);
-      if (foundFile) oFiles.push(foundFile);
-    }
-  }
-  for (const file of files) {
-    const fileAlreadyOrdered = oFiles.find(
-      (oFile) => oFile.filename === file.filename
-    );
-    if (!fileAlreadyOrdered && file.filename === "_index") {
-      // add the _index file to the beginning of the order
-      oFiles.unshift(file);
-    } else if (!fileAlreadyOrdered) {
-      // add the un ordered files to the end of the order
-      LOG_DOCS.debug(
-        `No order defined for "${file.filename}". Ordering arbitrarily.`
-      );
-      oFiles.push(file);
-    }
-  }
-  return oFiles;
-}
-
 export async function buildRemix(
   baseConfig: ButteryConfigBase,
-  docsConfig: ButteryConfigDocsRemix
+  docsConfig: ButteryConfigDocs
 ): Promise<void> {
   const docsPrefix = docsConfig.docsPrefix ?? "_docs.";
   const remixConfig = await readConfig(baseConfig.root);
@@ -60,7 +21,7 @@ export async function buildRemix(
 
   const patterns = [
     `**/${docsConfig.docsPrefix}/**/*`,
-    `**/${docsConfig.docsPrefix}.*`
+    `**/${docsConfig.docsPrefix}.*`,
   ].map((pattern) => path.resolve(remixRoutesDir, pattern));
 
   const rawFiles = await glob(patterns);
@@ -72,7 +33,7 @@ export async function buildRemix(
     return {
       fsPath,
       filename,
-      routePath
+      routePath,
     };
   });
   const files = orderFiles({ docsConfig, files: enrichedFiles });
@@ -82,7 +43,7 @@ export async function buildRemix(
 
   const docsGraph = await createGraph({
     files,
-    docsConfig
+    docsConfig,
   });
 
   LOG_DOCS.debug("Creating resource route...");

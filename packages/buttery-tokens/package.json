@@ -28,7 +28,9 @@
     "dev": "yarn buttery cli dev",
     "icons:build": "yarn icons:generate && yarn icons:types",
     "icons:generate": "svgr --out-dir ./playground/assets/icons/react --filename-case kebab --typescript --jsx-runtime automatic --no-index --title-prop -- ./playground/assets/icons/svg",
-    "icons:types": "npx tsx ./playground/scripts/script.icon-types.ts"
+    "icons:types": "npx tsx ./playground/scripts/script.icon-types.ts",
+    "docs:dev": "yarn buttery-docs dev",
+    "docs:build": "yarn buttery-docs build"
   },
   "dependencies": {
     "@babel/core": "^7.24.6",
@@ -38,6 +40,7 @@
     "@babel/preset-typescript": "^7.24.6",
     "@buttery/cli": "workspace:^",
     "@buttery/core": "workspace:^",
+    "@buttery/docs": "workspace:^",
     "@buttery/logger": "workspace:^",
     "@buttery/utils": "workspace:^",
     "@inquirer/prompts": "^5.0.3",

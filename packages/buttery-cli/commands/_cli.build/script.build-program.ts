@@ -25,26 +25,26 @@ export async function buildProgram({
   configBase,
   configCli,
   configPath,
-  programArgs
+  programArgs,
 }: BuildScriptArgs) {
   try {
     const commandFilesDir = path.resolve(configBase.root, "./commands");
     const commandFilesGlob = [
       `!${path.resolve(commandFilesDir, "./_*")}`, // Ignore all underscore-prefixed files and directories
       `!${path.resolve(commandFilesDir, "./_*/**")}`, // Ignore all files inside underscore prefixed directories
-      path.resolve(commandFilesDir, "./[!_]*.ts") // Include all TypeScript files, excluding those with underscore prefix
+      path.resolve(commandFilesDir, "./[!_]*.ts"), // Include all TypeScript files, excluding those with underscore prefix
     ];
     // TODO: <TEST> - Test to ensure that these patterns are ignored
     const commandFiles = glob.sync(commandFilesGlob, {
-      follow: false
+      follow: false,
     });
 
-    const outDir = path.join(configBase.root, "./bin/commands");
+    const outDir = path.join(configBase.root, "./bin");
 
     // Create a commands plugin
     const ESBuildCommandsPlugin = new ESBuildPluginCommands({
       ...configBase,
-      ...configCli
+      ...configCli,
     });
     const plugins = [ESBuildCommandsPlugin.getPlugin()];
 
@@ -52,7 +52,7 @@ export async function buildProgram({
     const esbuildOptions = createEsbuildOptions({
       entryPoints: commandFiles,
       outdir: outDir,
-      plugins
+      plugins,
     });
 
     // Build when not in watch
@@ -66,7 +66,7 @@ export async function buildProgram({
     // files on change
     const context = await esbuild.context({
       ...esbuildOptions,
-      minify: false
+      minify: false,
     });
     return await context.watch();
   } catch (error) {

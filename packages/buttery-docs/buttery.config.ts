@@ -6,7 +6,7 @@ const config: ButteryConfig = {
     name: "buttery-docs",
     description:
       "A CLI to build the necessary assets required to render the Buttery Docs template in any remix site.",
-    version: "0.0.1"
+    version: "0.0.1",
   },
   tokens: {
     importName: "_docs",
@@ -19,16 +19,16 @@ const config: ButteryConfig = {
       family: {
         heading:
           'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-        body: 'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+        body: 'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
       },
       weight: {
         bold: 700,
         "semi-bold": 600,
         medium: 500,
         regular: 400,
-        light: 300
+        light: 300,
       },
-      typography: {}
+      typography: {},
     },
     breakpoints: {
       "phone-small": 320,
@@ -39,20 +39,40 @@ const config: ButteryConfig = {
       "tablet-large": 1024,
       "desktop-small": 1200,
       desktop: 1280,
-      "desktop-large": 1400
+      "desktop-large": 1400,
     },
     color: {
       mode: "presets",
-      tone: "earth",
-      saturation: 39,
-      brightness: 42,
-      hues: {
-        primary: 286,
-        secondary: 192,
-        warning: 60,
-        danger: 359
-      }
-    }
-  }
+      tone: "jewel",
+      saturation: 83,
+      brightness: 76,
+      application: {
+        hues: {
+          primary: 42,
+          secondary: 170,
+          warning: 60,
+          danger: 359,
+        },
+        variants: {
+          mode: "auto",
+          total: 10,
+          scaleMin: 2,
+          scaleMax: 2,
+        },
+      },
+      neutral: {
+        base: "#030305",
+        variants: {
+          mode: "auto",
+          total: 10,
+          scaleMin: 5,
+        },
+      },
+      static: {
+        background: "#fff",
+        surface: "#fff",
+      },
+    },
+  },
 };
 export default config;

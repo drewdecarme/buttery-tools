@@ -11,7 +11,7 @@ import type {
   CommandAction,
   CommandArgs,
   CommandMeta,
-  CommandOptions
+  CommandOptions,
 } from "../../lib";
 import { LOG } from "../_utils/util.logger";
 import { templateCommandParent, templateIndex } from "./templates";
@@ -59,7 +59,7 @@ export class ESBuildPluginCommands {
     this.commandStr = "";
 
     this.commandFilesSrcDir = path.resolve(this.config.root, "./commands");
-    this.commandFilesOutDir = path.resolve(this.config.root, "./bin/commands");
+    this.commandFilesOutDir = path.resolve(this.config.root, "./bin");
   }
 
   private kebabToCamel(kebab: string): string {
@@ -168,12 +168,12 @@ export class ESBuildPluginCommands {
             segment_name: commandFileName,
             action: commandFileContent?.action,
             args: commandFileContent?.args,
-            options: commandFileContent?.options
+            options: commandFileContent?.options,
           };
           if (!currentCommandGraph[commandSegment]) {
             currentCommandGraph[commandSegment] = {
               properties,
-              commands: {}
+              commands: {},
             };
           }
           currentCommandGraph = currentCommandGraph[commandSegment].commands;
@@ -316,7 +316,7 @@ export class ESBuildPluginCommands {
             cli_name: config.name,
             cli_description: config.description,
             cli_version: config.version,
-            cli_commands: this.commandStr
+            cli_commands: this.commandStr,
           };
 
           // Reset some internally tracked values
@@ -332,18 +332,18 @@ export class ESBuildPluginCommands {
             ...createEsbuildOptions({
               stdin: {
                 contents: templateResult,
-                loader: "ts"
+                loader: "ts",
               },
-              outfile: path.resolve(this.config.root, "./bin/index.js")
+              outfile: path.resolve(this.config.root, "./bin/index.js"),
             }),
             bundle: true,
             minify: true,
-            external: ["commander"] // externalize commander
+            external: ["commander"], // externalize commander
           });
 
           this.logBuildComplete();
         });
-      }
+      },
     };
   }
 }
