@@ -11,7 +11,7 @@ const config: ButteryConfig = {
     order: {
       introduction: {
         display: "Intro",
-        routeOrder: ["_index", "why-this"],
+        routeOrder: ["why-this"],
       },
       "getting-started": {
         display: "Getting Started",

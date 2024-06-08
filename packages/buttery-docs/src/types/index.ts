@@ -8,7 +8,8 @@ export type ButteryDocsGraphTOC = {
 export type ButteryDocsGraphValue = {
   title: string;
   // content: string;
-  routePath: string;
+  routeAbs: string;
+  routeRel: string;
   filepath: string;
   // toc: ButteryDocsGraphTOC[];
   pages: ButteryDocsGraph;

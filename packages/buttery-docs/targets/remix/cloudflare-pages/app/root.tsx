@@ -16,7 +16,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <h1>Layout</h1>
+        <div style={{ border: "1px solid red" }}>
+          <h2>Content</h2>
+          {children}
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>

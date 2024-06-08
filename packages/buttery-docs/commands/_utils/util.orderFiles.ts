@@ -21,9 +21,22 @@ export function orderFiles({
   for (const section in order) {
     const sectionOrder = order[section].routeOrder;
     for (const sectionRoute of sectionOrder) {
-      const orderedFilename = `${section}.${sectionRoute}`;
-      const foundFile = files.find((file) => file.filename === orderedFilename);
-      if (foundFile) oFiles.push(foundFile);
+      console.log(section);
+      // add the section index file first
+      const sectionIndexFile = files.find((file) => file.filename === section);
+      const oFilesHasSectionIndexFile = oFiles.find(
+        (f) => f.filename === sectionIndexFile?.filename
+      );
+      if (!oFilesHasSectionIndexFile && sectionIndexFile) {
+        console.log({ sectionIndexFile });
+        oFiles.push(sectionIndexFile);
+      }
+
+      // add the ordered file name second
+      const orderedFile = files.find(
+        (file) => file.filename === `${section}.${sectionRoute}`
+      );
+      if (orderedFile) oFiles.push(orderedFile);
     }
   }
   for (const file of files) {

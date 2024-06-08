@@ -74,7 +74,10 @@ export const action: CommandAction = async () => {
     console.log(JSON.stringify(docsGraph, null, 2));
 
     const server = await createServer({
-      root: path.resolve(import.meta.dirname, "../targets/remix/cloudflare"),
+      root: path.resolve(
+        import.meta.dirname,
+        "../targets/remix/cloudflare-pages"
+      ),
       publicDir: docsPublicDir,
       server: {
         port: 1347,
@@ -88,7 +91,27 @@ export const action: CommandAction = async () => {
         remix({
           routes(defineRoutes) {
             return defineRoutes((route) => {
-              route("/", path.resolve(docsDir, "./_index.md"));
+              // let popRoute = "";
+              function createRouteFromGraph(graph: ButteryDocsGraph) {
+                for (const g of Object.entries(graph)) {
+                  const [key, { routeAbs, routeRel, filepath, pages }] = g;
+                  const hasNestedPages = Object.keys(pages);
+
+                  // const relativeRoute = routeAbs.split(popRoute)[1] ?? "/";
+                  console.log({ routeAbs, routeRel, filepath });
+                  route(
+                    routeRel,
+                    filepath,
+                    hasNestedPages
+                      ? () => {
+                          // popRoute = routeAbs.concat("/");
+                          createRouteFromGraph(pages);
+                        }
+                      : undefined
+                  );
+                }
+              }
+              createRouteFromGraph(docsGraph);
             });
           },
         }),

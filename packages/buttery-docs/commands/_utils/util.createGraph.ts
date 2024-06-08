@@ -31,19 +31,22 @@ export const createGraph = async ({
       section,
       segments,
       content,
-      routePath,
+      routeAbs,
       toc,
     } = parsedFile;
 
     const sectionTitle =
       docsConfig?.order?.[section]?.display ?? section.replace(/-/g, " ");
 
+    console.log(file.fsPath);
+
     if (section && !graph[section]) {
       graph[section] = {
         title: sectionTitle,
         filepath: file.fsPath,
         // content: "",
-        routePath: "",
+        routeAbs: `/${section === "_index" ? "" : section}`,
+        routeRel: section === "_index" ? "/" : section,
         // toc: [],
         pages: {},
       };
@@ -63,7 +66,8 @@ export const createGraph = async ({
           title: "",
           filepath: "",
           // content: "",
-          routePath: "",
+          routeAbs: "",
+          routeRel: "",
           // toc: [],
           pages: {},
         };
@@ -73,7 +77,8 @@ export const createGraph = async ({
         currentGraph[segment].title = title;
         currentGraph[segment].filepath = file.fsPath;
         // currentGraph[segment].content = content;
-        currentGraph[segment].routePath = routePath;
+        currentGraph[segment].routeAbs = routeAbs;
+        currentGraph[segment].routeRel = segment;
         // currentGraph[segment].toc = toc;
       } else {
         currentGraph = currentGraph[segment].pages;

@@ -15,7 +15,7 @@ export const parseFileSegmentsAndSection = (
 
   return {
     section,
-    segments
+    segments,
   };
 };
 
@@ -42,15 +42,15 @@ const parseFileContent = async (
     // const vFile = new VFile({ value: content } );
     const compiledContent = await compile(content, {
       outputFormat: "function-body",
-      remarkPlugins: [remarkTOC]
+      remarkPlugins: [remarkTOC],
     });
     const contentString = compiledContent.toString();
     return {
       meta: {
-        title: data.title ?? ""
+        title: data.title ?? "",
       },
       content: contentString,
-      toc: createTOCsFromContent(content)
+      toc: createTOCsFromContent(content),
     };
   } catch (error) {
     throw LOG_DOCS.fatal(new Error(error as string));
@@ -69,8 +69,8 @@ export const parseFile = async ({ filename, fsPath, routePath }: FileObj) => {
       toc,
       meta,
       section,
-      routePath,
-      segments
+      routeAbs: routePath,
+      segments,
     };
   } catch (error) {
     throw error as Error;
