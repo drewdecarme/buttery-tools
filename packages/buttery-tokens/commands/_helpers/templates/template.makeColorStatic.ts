@@ -1,5 +1,5 @@
-import { createColorTokens } from "src/utils/util.create-color-variants";
 import { hexToHsb, hsbToHsl } from "../utils/util.color-conversions";
+import { createColorTokens } from "../utils/util.create-color-variants";
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 
 const template: CompileFunction = ({

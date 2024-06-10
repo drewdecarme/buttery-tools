@@ -1,10 +1,10 @@
 import type { ButteryTokensColorPresets } from "@buttery/core";
 import { styled } from "@linaria/react";
+import { hsbToHex } from "commands/_helpers/utils/util.color-conversions";
+import { createColorVariants } from "commands/_helpers/utils/util.create-color-variants";
 import { localTokens } from "playground/src/tokens/tokens-local";
 import type { FC } from "react";
-import { makeRem } from "src/templates/template.makeRem";
-import { hsbToHex } from "src/utils/util.color-conversions";
-import { createColorVariants } from "src/utils/util.create-color-variants";
+
 import { match } from "ts-pattern";
 
 const ColorContainer = styled("div")`
@@ -29,7 +29,7 @@ const ColorVariants = styled("div")`
   display: flex;
 
   & > * {
-    height: ${makeRem(48)};
+    height: ${localTokens.makeRem(48)};
     flex: 1;
   }
 `;

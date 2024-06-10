@@ -30,7 +30,7 @@ export const createGraph = async ({
       meta: { title },
       section,
       segments,
-      content,
+      // content,
       routeAbs,
       toc,
     } = parsedFile;
@@ -45,7 +45,7 @@ export const createGraph = async ({
         // content: "",
         routeAbs: `/${section === "_index" ? "" : section}`,
         routeRel: section === "_index" ? "/" : section,
-        // toc: [],
+        toc: [],
         pages: {},
       };
     }
@@ -66,7 +66,7 @@ export const createGraph = async ({
           // content: "",
           routeAbs: "",
           routeRel: "",
-          // toc: [],
+          toc: [],
           pages: {},
         };
       }
@@ -77,7 +77,7 @@ export const createGraph = async ({
         // currentGraph[segment].content = content;
         currentGraph[segment].routeAbs = routeAbs;
         currentGraph[segment].routeRel = segment;
-        // currentGraph[segment].toc = toc;
+        currentGraph[segment].toc = toc;
       } else {
         currentGraph = currentGraph[segment].pages;
       }

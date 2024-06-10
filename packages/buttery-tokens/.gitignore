@@ -1,4 +1,8 @@
 .temp
 .tokens
+# Ignore all directories prefixed with _
 _*/
+
+# Do not ignore directories prefixed with _ that are inside the commands directory
+!commands/_*/
 .buttery-docs

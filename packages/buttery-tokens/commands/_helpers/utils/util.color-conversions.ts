@@ -90,7 +90,7 @@ export function hexToRgb(h: string) {
 
 // Convert RGB to HSB
 function rgbToHsb(r: number, g: number, b: number) {
-  r /= 255;
+  const red = (r /= 255);
   g /= 255;
   b /= 255;
 

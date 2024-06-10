@@ -2,7 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import type { ButteryConfigTokens } from "@buttery/core";
-import { tokenLogger } from "../utils";
+import { tokenLogger } from "../utils/util.logger";
 import type { MakeTemplate } from "./MakeTemplate";
 
 export class MakeTemplates {
@@ -55,7 +55,7 @@ export class MakeTemplates {
       try {
         tokenLogger.debug(`Generating function "${fileName}" from template...`);
         await writeFile(filePath, compiledFunctionContent, {
-          encoding: "utf8"
+          encoding: "utf8",
         });
         tokenLogger.debug(
           `Generating function "${fileName}" from template... done.`
@@ -104,7 +104,7 @@ export class MakeTemplates {
       tokensCSSFileContent = `:root {
 ${tokensCSSFileContent}}`;
       await writeFile(this.tokensCSSFile, tokensCSSFileContent, {
-        encoding: "utf8"
+        encoding: "utf8",
       });
     } catch (error) {
       const err = new Error(`Error when generating tokens CSS file: ${error}`);

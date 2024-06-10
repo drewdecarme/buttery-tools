@@ -5,7 +5,7 @@ const template: CompileFunction = ({
   methods,
   docs,
   functionName,
-  cssVarPrefix
+  cssVarPrefix,
 }) => {
   const fontWeightNames = Object.keys(config.font.weight);
   const fontWeightUnion = methods.createTypeUnion(fontWeightNames);
@@ -70,5 +70,5 @@ export const MakeTemplateFontWeight = new MakeTemplate({
     "A utility that returns the CSS variable assigned to keys of the `font.family` that are defined in the `buttery.config.ts`",
   variableBody: "font-weight",
   template,
-  css
+  css,
 });

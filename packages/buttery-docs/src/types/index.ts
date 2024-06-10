@@ -11,7 +11,7 @@ export type ButteryDocsGraphValue = {
   routeAbs: string;
   routeRel: string;
   filepath: string;
-  // toc: ButteryDocsGraphTOC[];
+  toc: ButteryDocsGraphTOC[];
   pages: ButteryDocsGraph;
 };
 export type ButteryDocsGraph = {

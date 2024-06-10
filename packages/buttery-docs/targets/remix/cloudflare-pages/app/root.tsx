@@ -1,3 +1,4 @@
+import type { LoaderFunctionArgs } from "@remix-run/cloudflare";
 import {
   Links,
   Meta,
@@ -10,11 +11,11 @@ import {
 import { getButteryDocsConfig } from "../../../../commands/_utils/util.getButteryDocsConfig";
 import { getButteryDocsGraph } from "../../../../commands/_utils/util.getButteryDocsGraph";
 
-export async function loader() {
-  const config = await getButteryDocsConfig();
-  const graph = await getButteryDocsGraph(config);
-  console.log({ graph });
-  return json({ graph });
+export async function loader(args: LoaderFunctionArgs) {
+  console.log(args);
+  const butteryDocsConfig = await getButteryDocsConfig();
+  const butteryDocsGraph = await getButteryDocsGraph(butteryDocsConfig);
+  return json({ graph: butteryDocsGraph });
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {

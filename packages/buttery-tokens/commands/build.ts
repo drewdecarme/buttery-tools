@@ -1,11 +1,10 @@
 import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
-import { buildFunctionsAndTokens } from "../src/scripts/script.build-functions-and-tokens";
-import { launchPlayground } from "../src/scripts/script.launch-playground";
-import { tokenLogger } from "../src/utils";
+import { buildFunctionsAndTokens } from "./_helpers/utils/util.build-functions-and-tokens";
+import { tokenLogger } from "./_helpers/utils/util.logger";
 
 export const meta: CommandMeta = {
   name: "build",
-  description: "Run the buttery-tokens CLI in watch mode."
+  description: "Run the buttery-tokens CLI in watch mode.",
 };
 
 export const options: CommandOptions<"debug" | "watch" | "interactive"> = {
@@ -14,22 +13,22 @@ export const options: CommandOptions<"debug" | "watch" | "interactive"> = {
     description:
       "Runs the build with a specific logging level set to debug the build process.",
     type: "boolean",
-    required: false
+    required: false,
   },
   watch: {
     alias: "w",
     description:
       "Runs the build in development mode. Any changes to commands will rebuild the CLI",
     type: "boolean",
-    required: false
+    required: false,
   },
   interactive: {
     alias: "i",
     description:
       "Runs the playground to visually view and edit the tokens configuration",
     type: "boolean",
-    required: false
-  }
+    required: false,
+  },
 };
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
@@ -37,7 +36,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
 
   await buildFunctionsAndTokens({
     watch: Boolean(options.watch),
-    interactive: Boolean(options.interactive)
+    interactive: Boolean(options.interactive),
   });
 
   tokenLogger.success("Build complete!");

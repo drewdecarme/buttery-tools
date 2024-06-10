@@ -3,7 +3,7 @@ import path from "node:path";
 
 import {
   EsbuildPluginTypescriptCompiler,
-  createEsbuildOptions
+  createEsbuildOptions,
 } from "@buttery/utils/esbuild";
 import { build } from "esbuild";
 
@@ -16,9 +16,9 @@ import { MakeTemplateFontWeight } from "../templates/template.makeFontWeight";
 import { MakeTemplateRem } from "../templates/template.makeRem";
 import { MakeTemplateReset } from "../templates/template.makeReset";
 import { MakeTemplateResponsive } from "../templates/template.makeResponsive";
-import { tokenLogger } from "../utils";
-import { getResolvedVariables } from "../utils/util.get-resolved-config-constants";
-import { launchPlayground } from "./script.launch-playground";
+import { getResolvedVariables } from "./util.get-resolved-config-constants";
+import { launchPlayground } from "./util.launch-playground";
+import { tokenLogger } from "./util.logger";
 
 // The function that does stuff. It's in here so it can either be used
 // when a specific file changes or just straight up.
@@ -27,12 +27,12 @@ async function generateAndTranspile(configTokens: ButteryConfigTokens) {
     transpiledFilesOutDir,
     transpiledFilesOutFile,
     generatedTSFilesOutDir,
-    generatedTSFilesTSConfig
+    generatedTSFilesTSConfig,
   } = await getResolvedVariables(configTokens);
 
   const Templates = new MakeTemplates({
     config: configTokens,
-    outDir: generatedTSFilesOutDir
+    outDir: generatedTSFilesOutDir,
   });
 
   // Register the templates that should be generated
@@ -46,7 +46,7 @@ async function generateAndTranspile(configTokens: ButteryConfigTokens) {
   // Create a plugin to eventually transpile the .tokens directory
   // and assemble the ESBuild options for that entry / barrel file.
   const tsPlugin = new EsbuildPluginTypescriptCompiler({
-    tsConfigPath: generatedTSFilesTSConfig
+    tsConfigPath: generatedTSFilesTSConfig,
   });
   const buildOptions = createEsbuildOptions({
     entryPoints: [Templates.entryFile],
@@ -55,9 +55,9 @@ async function generateAndTranspile(configTokens: ButteryConfigTokens) {
       // transpile and create files
       tsPlugin.getPlugin({
         filePathToTranspile: Templates.entryFile,
-        extraArgs: [`--outDir ${transpiledFilesOutDir}`]
-      })
-    ]
+        extraArgs: [`--outDir ${transpiledFilesOutDir}`],
+      }),
+    ],
   });
 
   try {
@@ -78,7 +78,7 @@ async function generateAndTranspile(configTokens: ButteryConfigTokens) {
       path.resolve(transpiledFilesOutDir, "./index.css"),
       {
         recursive: true,
-        force: true
+        force: true,
       }
     );
     tokenLogger.debug("Distributing CSS files... done");
@@ -94,7 +94,7 @@ async function generateAndTranspile(configTokens: ButteryConfigTokens) {
  */
 export const buildFunctionsAndTokens = async ({
   watch,
-  interactive
+  interactive,
 }: {
   watch: boolean;
   interactive: boolean;

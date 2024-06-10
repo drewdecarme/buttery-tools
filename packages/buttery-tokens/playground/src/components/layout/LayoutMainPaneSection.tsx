@@ -2,7 +2,6 @@ import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { localTokens } from "playground/src/tokens/tokens-local";
 import { forwardRef } from "react";
-import { makeRem } from "src/templates/template.makeRem";
 
 export type LayoutMainPaneSectionPropsNative = JSX.IntrinsicElements["div"];
 export type LayoutMainPaneSectionPropsCustom = {
@@ -23,7 +22,7 @@ const SDiv = styled("div")`
   }
 
   .title {
-    margin-bottom: ${makeRem(20)};
+    margin-bottom: ${localTokens.makeRem(20)};
 
     h4 {
       font-size: ${localTokens.makeRem(14)};
@@ -32,7 +31,7 @@ const SDiv = styled("div")`
       margin: 0;
     }
     p {
-      font-size: ${makeRem(12)};
+      font-size: ${localTokens.makeRem(12)};
       margin: 0;
     }
   }

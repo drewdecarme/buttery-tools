@@ -5,7 +5,7 @@ const template: CompileFunction = ({
   methods,
   docs,
   functionName,
-  cssVarPrefix
+  cssVarPrefix,
 }) => {
   const breakpointNames = Object.keys(config.breakpoints);
   const breakpointUnion = methods.createTypeUnion(breakpointNames);
@@ -63,5 +63,5 @@ export const MakeTemplateResponsive = new MakeTemplate({
 string that can be interpolated in CSS-in-JS syntax.`,
   variableBody: "breakpoint",
   template,
-  css
+  css,
 });

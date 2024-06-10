@@ -4,11 +4,14 @@ import react from "@vitejs/plugin-react";
 import wyw from "@wyw-in-js/vite";
 import { createServer } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-import { getResolvedVariables } from "../utils/util.get-resolved-config-constants";
+import { getResolvedVariables } from "./util.get-resolved-config-constants";
 
 export async function launchPlayground(configTokens: ButteryConfigTokens) {
   const { transpiledFilesOutFile, tokensRootPath, transpiledFilesOutDir } =
     await getResolvedVariables(configTokens);
+
+  const playgroundDir = path.resolve(tokensRootPath, "./playground");
+  const playgroundPublicDir = path.resolve(playgroundDir, "./public");
 
   const server = await createServer({
     resolve: {
@@ -40,8 +43,8 @@ export async function launchPlayground(configTokens: ButteryConfigTokens) {
     },
     // any valid user config options, plus `mode` and `configFile`
     configFile: false,
-    publicDir: path.resolve(import.meta.dirname, "../../playground/public"),
-    root: path.resolve(import.meta.dirname, "../../playground"),
+    root: playgroundDir,
+    publicDir: playgroundPublicDir,
     server: {
       port: 1337,
     },

@@ -5,7 +5,7 @@ const template: CompileFunction = ({
   docs,
   methods,
   functionName,
-  cssVarPrefix
+  cssVarPrefix,
 }) => {
   const fontFamilyNames = Object.keys(config.font.family);
   const fontFamilyUnion = methods.createTypeUnion(fontFamilyNames);
@@ -70,5 +70,5 @@ export const MakeTemplateFontFamily = new MakeTemplate({
     "A utility that returns the CSS variable assigned to keys of the `font.family` that are defined in the `buttery.config.ts`",
   variableBody: "font-family",
   template,
-  css
+  css,
 });
