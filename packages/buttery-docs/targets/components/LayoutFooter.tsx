@@ -1,7 +1,7 @@
 import { styled } from "@linaria/react";
 import type { FC } from "react";
 
-const SLayoutFooter = styled("main")`
+const SLayoutFooter = styled("footer")`
   grid-area: layout-footer;
 `;
 

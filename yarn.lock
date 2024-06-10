@@ -11437,9 +11437,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cloudflare-02f31b@workspace:packages/buttery-docs/targets/remix/cloudflare":
+"cloudflare-pages-42c21a@workspace:packages/buttery-docs/targets/remix/cloudflare-pages":
   version: 0.0.0-use.local
-  resolution: "cloudflare-02f31b@workspace:packages/buttery-docs/targets/remix/cloudflare"
+  resolution: "cloudflare-pages-42c21a@workspace:packages/buttery-docs/targets/remix/cloudflare-pages"
   dependencies:
     "@remix-run/cloudflare": "npm:latest"
     isbot: "npm:^4"

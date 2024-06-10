@@ -1,6 +1,6 @@
 import React from "react";
 import { type FC, type ReactNode, useContext, useMemo } from "react";
-import type { ButteryDocsGraph } from "../types";
+import type { ButteryDocsGraph } from "../../commands/_utils/types";
 
 type LayoutContextType = {
   graph: ButteryDocsGraph;

@@ -1,7 +1,7 @@
 import { makeColor, makeFontWeight, makeRem } from "@buttery/tokens/_docs";
 import { styled } from "@linaria/react";
 import type { FC } from "react";
-import type { ButteryDocsGraph } from "../types";
+import type { ButteryDocsGraph } from "../../commands/_utils/types";
 import { useLayoutContext } from "./Layout.context";
 
 const SSidebar = styled("nav")`

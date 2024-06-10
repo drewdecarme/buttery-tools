@@ -13,6 +13,8 @@ import {
 import { getButteryDocsConfig } from "../../../../commands/_utils/util.getButteryDocsConfig";
 import { getButteryDocsGraph } from "../../../../commands/_utils/util.getButteryDocsGraph";
 
+import { Layout as RootLayout } from "../../../components/Layout";
+
 export async function loader(args: LoaderFunctionArgs) {
   console.log(args);
   const butteryDocsConfig = await getButteryDocsConfig();
@@ -48,11 +50,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <SBody>
-        <h1>Layout</h1>
-        <div style={{ border: "1px solid red" }}>
-          <h2>Content</h2>
-          {children}
-        </div>
+        <RootLayout graph={data.graph}>{children}</RootLayout>
         <ScrollRestoration />
         <Scripts />
       </SBody>

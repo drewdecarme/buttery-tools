@@ -2,8 +2,8 @@ import { readFile } from "node:fs/promises";
 import { compile } from "@mdx-js/mdx";
 import matter from "gray-matter";
 import remarkTOC from "remark-toc";
-import type { ButteryDocsGraphTOC } from "../../src/types";
 import { createTOCsFromContent } from "./remix/util.createTocFromContent";
+import type { ButteryDocsGraphTOC } from "./types";
 import { LOG_DOCS } from "./util.logger";
 import type { FileObj } from "./util.types";
 

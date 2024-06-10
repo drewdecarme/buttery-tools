@@ -1,4 +1,4 @@
-import type { ButteryDocsGraph } from "../types";
+import type { ButteryDocsGraph } from "../../commands/_utils/types";
 
 export const graph: ButteryDocsGraph = {
   _index: {

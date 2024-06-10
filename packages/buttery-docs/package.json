@@ -10,44 +10,12 @@
     "build-storybook": "storybook build",
     "tokens:build": "yarn buttery-tokens build",
     "tokens:dev": "yarn tokens:build --watch",
-    "lib:build": "yarn vite build && yarn tsc --project ./tsconfig.build.json",
-    "lib:dev": "yarn storybook:dev",
     "cli:build": "yarn buttery cli build",
     "cli:dev": "yarn buttery cli dev"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
-  },
-  "exports": {
-    "./components": {
-      "default": "./dist/components/index.js",
-      "import": "./dist/components/index.js",
-      "node": "./dist/components/index.js",
-      "require": "./dist/components/index.js",
-      "types": "./dist/components/index.d.ts"
-    },
-    "./remix/cloudflare": {
-      "default": "./dist/remix/cloudflare/index.js",
-      "import": "./dist/remix/cloudflare/index.js",
-      "node": "./dist/remix/cloudflare/index.js",
-      "require": "./dist/remix/cloudflare/index.js",
-      "types": "./dist/remix/cloudflare/index.d.ts"
-    },
-    "./css": {
-      "types": "./dist/types/index.d.ts",
-      "default": "./dist/style.css",
-      "import": "./dist/style.css",
-      "node": "./dist/style.css",
-      "require": "./dist/style.css"
-    },
-    "./types": {
-      "default": "./dist/types/index.js",
-      "import": "./dist/types/index.js",
-      "node": "./dist/types/index.js",
-      "require": "./dist/types/index.js",
-      "types": "./dist/types/index.d.ts"
-    }
   },
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
   "license": "Apache-2.0",

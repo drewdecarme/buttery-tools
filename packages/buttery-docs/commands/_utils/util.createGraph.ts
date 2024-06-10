@@ -1,5 +1,5 @@
 import type { ButteryConfigDocs } from "@buttery/core";
-import type { ButteryDocsGraph } from "../../src/types";
+import type { ButteryDocsGraph } from "./types";
 import { LOG_DOCS } from "./util.logger";
 import { parseFile } from "./util.parseFile";
 import type { FileObj } from "./util.types";

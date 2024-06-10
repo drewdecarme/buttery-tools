@@ -6,7 +6,7 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
-import type { ButteryDocsGraphTOC } from "../../../src/types";
+import type { ButteryDocsGraphTOC } from "../types";
 
 export function createTOCsFromContent(content: string) {
   const file = unified()
@@ -50,7 +50,7 @@ export function createTOCsFromContent(content: string) {
         level,
         title,
         link,
-        children: []
+        children: [],
       };
 
       while (stack.length && stack[stack.length - 1].level >= level) {

@@ -5,8 +5,9 @@ import {
   vitePlugin as remix,
   cloudflareDevProxyVitePlugin as remixCloudflareDevProxy,
 } from "@remix-run/dev";
+import wyw from "@wyw-in-js/vite";
 import { createServer } from "vite";
-import type { ButteryDocsGraph } from "../src/types";
+import type { ButteryDocsGraph } from "./_utils/types";
 import { getButteryDocsConfig } from "./_utils/util.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./_utils/util.getButteryDocsDirectories";
 import { getButteryDocsGraph } from "./_utils/util.getButteryDocsGraph";
@@ -41,6 +42,7 @@ export const action: CommandAction = async () => {
         transformMarkdownAssetPath(),
         remixCloudflareDevProxy(),
         mdx(),
+
         remix({
           routes(defineRoutes) {
             const routes = defineRoutes((route) => {
@@ -61,6 +63,12 @@ export const action: CommandAction = async () => {
             });
             // TODO: put behind a verbose log
             return routes;
+          },
+        }),
+        wyw({
+          include: ["../targets/app/**/*.{ts,tsx}"],
+          babelOptions: {
+            presets: ["@babel/preset-typescript", "@babel/preset-react"],
           },
         }),
       ],
