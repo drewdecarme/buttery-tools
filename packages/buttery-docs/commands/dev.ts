@@ -27,9 +27,12 @@ export const action: CommandAction = async () => {
     const butteryDocsDirectories = getButteryDocsDirectories(butteryDocsConfig);
 
     const appTargetsDir = path.resolve(import.meta.dirname, "../targets");
+    const rootDir = path.resolve(appTargetsDir, "./remix/cloudflare-pages");
+
+    console.log(JSON.stringify(butteryDocsGraph, null, 2));
 
     const server = await createServer({
-      root: path.resolve(appTargetsDir, "./remix/cloudflare-pages"),
+      root: rootDir,
       publicDir: butteryDocsDirectories.public,
       server: {
         port: 1347,
@@ -53,19 +56,29 @@ export const action: CommandAction = async () => {
               function createRouteFromGraph(graph: ButteryDocsGraph) {
                 for (const graphValue of Object.values(graph)) {
                   const { routeAbs, filepath, pages } = graphValue;
-
-                  route(routeAbs, filepath);
-
                   const hasNestedPages = Object.keys(pages).length > 0;
+
+                  // escape the index page
+                  if (routeAbs === "/") continue;
+
+                  route(routeAbs, filepath, { index: true });
+
                   if (hasNestedPages) {
                     // recurse
                     createRouteFromGraph(pages);
                   }
                 }
               }
-              createRouteFromGraph(butteryDocsGraph);
+              route(
+                "/",
+                path.resolve(rootDir, "./app/routes/_index.tsx"),
+                () => {
+                  createRouteFromGraph(butteryDocsGraph);
+                }
+              );
             });
             // TODO: put behind a verbose log
+            console.log(routes);
             return routes;
           },
         }),

@@ -9,25 +9,27 @@ type ButteryConfigDocsItems = {
 
 type LayoutContextType = ButteryConfigDocsItems & {
   graph: ButteryDocsGraph;
-  NavLink?: JSX.ElementType;
+  NavLinkComponent?: JSX.ElementType;
 };
 const LayoutContext = React.createContext<LayoutContextType | null>(null);
 export type LayoutProviderProps = ButteryConfigDocsItems & {
   children: ReactNode;
   graph: ButteryDocsGraph;
-  NavLink?: JSX.ElementType;
+  NavLinkComponent?: JSX.ElementType;
 };
 export const LayoutProvider: FC<LayoutProviderProps> = ({
   children,
-  NavLink,
-  ...restProps
+  NavLinkComponent,
+  graph,
+  header,
 }) => {
   const value = useMemo<LayoutContextType>(
     () => ({
-      ...restProps,
-      NavLink,
+      graph,
+      header,
+      NavLinkComponent,
     }),
-    [restProps, NavLink]
+    [graph, header, NavLinkComponent]
   );
 
   return (

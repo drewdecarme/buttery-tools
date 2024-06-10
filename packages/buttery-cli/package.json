@@ -30,18 +30,18 @@
   "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
   "devDependencies": {
     "@buttery/tsconfig": "workspace:^",
-    "@types/node": "^20.12.7",
-    "esbuild": "^0.21.3",
-    "tsx": "^4.7.2",
+    "@types/node": "^20.14.2",
+    "esbuild": "^0.21.5",
+    "tsx": "^4.15.1",
     "typescript": "^5.4.5"
   },
   "dependencies": {
     "@buttery/core": "workspace:^",
     "@buttery/logger": "workspace:^",
     "@buttery/utils": "workspace:^",
-    "commander": "^12.0.0",
+    "commander": "^12.1.0",
     "cosmiconfig": "^9.0.0",
-    "glob": "^10.3.12",
+    "glob": "^10.4.1",
     "handlebars": "^4.7.8"
   },
   "types": "./dist/index.d.ts",

@@ -1,10 +1,11 @@
 import { makeColor, makeFontWeight, makeRem } from "@buttery/tokens/_docs";
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
-import type { FC } from "react";
+// import { NativeAnchor } from "./native";
+import { NavLink } from "@remix-run/react";
+import { type FC, useMemo } from "react";
 import type { ButteryDocsGraph } from "../../commands/_utils/types";
 import { useLayoutContext } from "./Layout.context";
-import { NativeAnchor } from "./native";
 
 const SSidebar = styled("nav")`
   grid-area: layout-sidebar;
@@ -103,13 +104,13 @@ export type SidebarItemProps = {
   NavLinkComponent: JSX.ElementType | undefined;
 };
 const SidebarItem: FC<SidebarItemProps> = ({ graph, NavLinkComponent }) => {
-  const NavLink = NavLinkComponent ?? NativeAnchor;
+  // const NavLink = NavLinkComponent ?? NativeAnchor;
   return (
     <SUl>
       {Object.entries(graph).map(([graphKey, graphValue]) => {
         return (
           <li key={graphKey}>
-            <NavLink href={graphValue.routeAbs} className={anchorCss}>
+            <NavLink to={graphValue.routeAbs} className={anchorCss} end>
               {graphValue.title}
             </NavLink>
             {Object.entries(graphValue.pages).length > 0
@@ -123,23 +124,26 @@ const SidebarItem: FC<SidebarItemProps> = ({ graph, NavLinkComponent }) => {
 };
 
 export const LayoutSidebar: FC = () => {
-  const { graph, NavLink } = useLayoutContext();
-  return (
-    <SSidebar>
-      <SSidebarContent>
-        {Object.entries(graph).map(([sectionKey, sectionValues]) => {
-          if (sectionKey === "_index") return null;
-          return (
-            <SSection key={sectionKey}>
-              <SSectionOverline>{sectionValues.title}</SSectionOverline>
-              <SidebarItem
-                graph={sectionValues.pages}
-                NavLinkComponent={NavLink}
-              />
-            </SSection>
-          );
-        })}
-      </SSidebarContent>
-    </SSidebar>
+  const { graph, NavLinkComponent } = useLayoutContext();
+  return useMemo(
+    () => (
+      <SSidebar>
+        <SSidebarContent>
+          {Object.entries(graph).map(([sectionKey, sectionValues]) => {
+            if (sectionKey === "_index") return null;
+            return (
+              <SSection key={sectionKey}>
+                <SSectionOverline>{sectionValues.title}</SSectionOverline>
+                <SidebarItem
+                  graph={sectionValues.pages}
+                  NavLinkComponent={NavLinkComponent}
+                />
+              </SSection>
+            );
+          })}
+        </SSidebarContent>
+      </SSidebar>
+    ),
+    [graph, NavLinkComponent]
   );
 };
