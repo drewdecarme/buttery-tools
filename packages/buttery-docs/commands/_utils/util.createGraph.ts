@@ -38,8 +38,6 @@ export const createGraph = async ({
     const sectionTitle =
       docsConfig?.order?.[section]?.display ?? section.replace(/-/g, " ");
 
-    console.log(file.fsPath);
-
     if (section && !graph[section]) {
       graph[section] = {
         title: sectionTitle,

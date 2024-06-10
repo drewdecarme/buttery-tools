@@ -4,4 +4,4 @@ title: Home Page
 
 # Welcome
 
-![image info](./assets/images/buttery-tokens-logo.png)
+![image info](./public/images/buttery-tokens-logo.png)

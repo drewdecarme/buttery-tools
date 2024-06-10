@@ -21,14 +21,12 @@ export function orderFiles({
   for (const section in order) {
     const sectionOrder = order[section].routeOrder;
     for (const sectionRoute of sectionOrder) {
-      console.log(section);
       // add the section index file first
       const sectionIndexFile = files.find((file) => file.filename === section);
       const oFilesHasSectionIndexFile = oFiles.find(
         (f) => f.filename === sectionIndexFile?.filename
       );
       if (!oFilesHasSectionIndexFile && sectionIndexFile) {
-        console.log({ sectionIndexFile });
         oFiles.push(sectionIndexFile);
       }
 
@@ -48,7 +46,7 @@ export function orderFiles({
       oFiles.unshift(file);
     } else if (!fileAlreadyOrdered) {
       // add the un ordered files to the end of the order
-      LOG_DOCS.debug(
+      LOG_DOCS.warning(
         `No order defined for "${file.filename}". Ordering arbitrarily.`
       );
       oFiles.push(file);

@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { mkdir, readdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir } from "node:fs/promises";
 import path from "node:path";
 import type { CommandAction, CommandMeta } from "@buttery/cli";
 import { getButteryConfig } from "@buttery/core";
@@ -8,15 +8,13 @@ import {
   vitePlugin as remix,
   cloudflareDevProxyVitePlugin as remixCloudflareDevProxy,
 } from "@remix-run/dev";
-import react from "@vitejs/plugin-react";
-import type { RouteObject } from "react-router-dom";
 import { createServer } from "vite";
-import type { ButteryDocsGraph, ButteryDocsGraphValue } from "../src/types";
+import type { ButteryDocsGraph } from "../src/types";
 import { createGraph } from "./_utils/util.createGraph";
 import { getRoutePath } from "./_utils/util.getRoutePath";
-import { kebabToPascalCase } from "./_utils/util.kebab-to-pascal-case";
 import { LOG_DOCS } from "./_utils/util.logger";
 import { orderFiles } from "./_utils/util.orderFiles";
+import { transformMarkdownAssetPath } from "./_utils/vite-plugin-transform-markdown-asset-path";
 
 export const meta: CommandMeta = {
   name: "dev",
@@ -64,14 +62,12 @@ export const action: CommandAction = async () => {
 
     // order the files
     const files = orderFiles({ docsConfig: configs.docs, files: docsDirFiles });
-    // const routes = files.map((file) => file.routePath);
 
     // create the graph
     const docsGraph = await createGraph({
       docsConfig: configs.docs,
       files,
     });
-    console.log(JSON.stringify(docsGraph, null, 2));
 
     const server = await createServer({
       root: path.resolve(
@@ -79,6 +75,11 @@ export const action: CommandAction = async () => {
         "../targets/remix/cloudflare-pages"
       ),
       publicDir: docsPublicDir,
+      resolve: {
+        alias: {
+          "./public": "/",
+        },
+      },
       server: {
         port: 1347,
         fs: {
@@ -86,33 +87,29 @@ export const action: CommandAction = async () => {
         },
       },
       plugins: [
+        transformMarkdownAssetPath(),
         remixCloudflareDevProxy(),
         mdx(),
         remix({
           routes(defineRoutes) {
-            return defineRoutes((route) => {
-              // let popRoute = "";
+            const routes = defineRoutes((route) => {
               function createRouteFromGraph(graph: ButteryDocsGraph) {
-                for (const g of Object.entries(graph)) {
-                  const [key, { routeAbs, routeRel, filepath, pages }] = g;
-                  const hasNestedPages = Object.keys(pages);
+                for (const graphValue of Object.values(graph)) {
+                  const { routeAbs, filepath, pages } = graphValue;
 
-                  // const relativeRoute = routeAbs.split(popRoute)[1] ?? "/";
-                  console.log({ routeAbs, routeRel, filepath });
-                  route(
-                    routeRel,
-                    filepath,
-                    hasNestedPages
-                      ? () => {
-                          // popRoute = routeAbs.concat("/");
-                          createRouteFromGraph(pages);
-                        }
-                      : undefined
-                  );
+                  route(routeAbs, filepath);
+
+                  const hasNestedPages = Object.keys(pages).length > 0;
+                  if (hasNestedPages) {
+                    // recurse
+                    createRouteFromGraph(pages);
+                  }
                 }
               }
               createRouteFromGraph(docsGraph);
             });
+            // TODO: put behind a verbose log
+            return routes;
           },
         }),
       ],
