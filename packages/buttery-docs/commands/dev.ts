@@ -26,11 +26,10 @@ export const action: CommandAction = async () => {
     const butteryDocsGraph = await getButteryDocsGraph(butteryDocsConfig);
     const butteryDocsDirectories = getButteryDocsDirectories(butteryDocsConfig);
 
+    const appTargetsDir = path.resolve(import.meta.dirname, "../targets");
+
     const server = await createServer({
-      root: path.resolve(
-        import.meta.dirname,
-        "../targets/remix/cloudflare-pages"
-      ),
+      root: path.resolve(appTargetsDir, "./remix/cloudflare-pages"),
       publicDir: butteryDocsDirectories.public,
       server: {
         port: 1347,
@@ -42,7 +41,12 @@ export const action: CommandAction = async () => {
         transformMarkdownAssetPath(),
         remixCloudflareDevProxy(),
         mdx(),
-
+        wyw({
+          include: [path.resolve(appTargetsDir, "./**/*.(ts|tsx)")],
+          babelOptions: {
+            presets: ["@babel/preset-typescript", "@babel/preset-react"],
+          },
+        }),
         remix({
           routes(defineRoutes) {
             const routes = defineRoutes((route) => {
@@ -63,12 +67,6 @@ export const action: CommandAction = async () => {
             });
             // TODO: put behind a verbose log
             return routes;
-          },
-        }),
-        wyw({
-          include: ["../targets/app/**/*.{ts,tsx}"],
-          babelOptions: {
-            presets: ["@babel/preset-typescript", "@babel/preset-react"],
           },
         }),
       ],

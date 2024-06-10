@@ -14,6 +14,7 @@ import { getButteryDocsConfig } from "../../../../commands/_utils/util.getButter
 import { getButteryDocsGraph } from "../../../../commands/_utils/util.getButteryDocsGraph";
 
 import { Layout as RootLayout } from "../../../components/Layout";
+import "@buttery/tokens/_docs/index.css";
 
 export async function loader(args: LoaderFunctionArgs) {
   console.log(args);
