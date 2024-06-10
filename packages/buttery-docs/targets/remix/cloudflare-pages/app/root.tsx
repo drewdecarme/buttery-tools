@@ -4,6 +4,7 @@ import type { LoaderFunctionArgs } from "@remix-run/cloudflare";
 import {
   Links,
   Meta,
+  NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -15,22 +16,33 @@ import { getButteryDocsGraph } from "../../../../commands/_utils/util.getButtery
 
 import { Layout as RootLayout } from "../../../components/Layout";
 import "@buttery/tokens/_docs/index.css";
+import { type FC, useMemo } from "react";
 
 export async function loader(args: LoaderFunctionArgs) {
-  console.log(args);
   const butteryDocsConfig = await getButteryDocsConfig();
   const butteryDocsGraph = await getButteryDocsGraph(butteryDocsConfig);
-  console.log(JSON.stringify(butteryDocsGraph, null, 2));
-  return json({ graph: butteryDocsGraph });
+  return json({
+    graph: butteryDocsGraph,
+    header: butteryDocsConfig.docs.header ?? null,
+  });
 }
 
 const SBody = styled("body")`
   font-family: ${makeFontFamily("body")};
 `;
 
+const RemixNavLink: FC<JSX.IntrinsicElements["a"] & { href: string }> = ({
+  children,
+  href,
+  ...restProps
+}) => (
+  <NavLink to={href} {...restProps} end>
+    {children}
+  </NavLink>
+);
+
 export function Layout({ children }: { children: React.ReactNode }) {
   const data = useLoaderData<typeof loader>();
-  console.log({ data });
 
   return (
     <html lang="en">
@@ -51,7 +63,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <SBody>
-        <RootLayout graph={data.graph}>{children}</RootLayout>
+        <RootLayout {...useMemo(() => data, [data])} NavLink={RemixNavLink}>
+          {children}
+        </RootLayout>
         <ScrollRestoration />
         <Scripts />
       </SBody>

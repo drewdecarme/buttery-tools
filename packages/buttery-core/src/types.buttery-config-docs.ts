@@ -49,4 +49,18 @@ export type ButteryConfigDocs = {
       routeOrder: string[];
     };
   };
+  header?: {
+    /**
+     * Adds a title in the upper left hand of the application
+     */
+    title?: string;
+    /**
+     * Adds a logo that is at a particular URL to be displayed in the top
+     * left hand corner of the docs app
+     */
+    logo?: {
+      src: string;
+      alt: string;
+    };
+  };
 };

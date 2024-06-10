@@ -1,24 +1,33 @@
+import type { ButteryConfigDocs } from "@buttery/core";
 import React from "react";
 import { type FC, type ReactNode, useContext, useMemo } from "react";
 import type { ButteryDocsGraph } from "../../commands/_utils/types";
 
-type LayoutContextType = {
+type ButteryConfigDocsItems = {
+  header: ButteryConfigDocs["header"] | null;
+};
+
+type LayoutContextType = ButteryConfigDocsItems & {
   graph: ButteryDocsGraph;
+  NavLink?: JSX.ElementType;
 };
 const LayoutContext = React.createContext<LayoutContextType | null>(null);
-export type LayoutProviderProps = {
+export type LayoutProviderProps = ButteryConfigDocsItems & {
   children: ReactNode;
   graph: ButteryDocsGraph;
+  NavLink?: JSX.ElementType;
 };
 export const LayoutProvider: FC<LayoutProviderProps> = ({
   children,
+  NavLink,
   ...restProps
 }) => {
-  const value = useMemo(
+  const value = useMemo<LayoutContextType>(
     () => ({
       ...restProps,
+      NavLink,
     }),
-    [restProps]
+    [restProps, NavLink]
   );
 
   return (

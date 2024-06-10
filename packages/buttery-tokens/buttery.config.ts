@@ -8,6 +8,13 @@ const config: ButteryConfig = {
     version: "0.0.1",
   },
   docs: {
+    header: {
+      title: "Buttery Tokens Documentation",
+      logo: {
+        src: "/images/buttery-tokens-logo.png",
+        alt: "buttery-tokens",
+      },
+    },
     order: {
       introduction: {
         display: "Intro",

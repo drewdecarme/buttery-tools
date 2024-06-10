@@ -1,8 +1,10 @@
 import { makeColor, makeFontWeight, makeRem } from "@buttery/tokens/_docs";
+import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 import type { FC } from "react";
 import type { ButteryDocsGraph } from "../../commands/_utils/types";
 import { useLayoutContext } from "./Layout.context";
+import { NativeAnchor } from "./native";
 
 const SSidebar = styled("nav")`
   grid-area: layout-sidebar;
@@ -62,12 +64,12 @@ const SSectionOverline = styled("h1")`
   letter-spacing: ${makeRem(1.4)};
 `;
 
-const SAnchor = styled("a")`
-  height: ${makeRem(28)};
+const anchorCss = css`
+  height: ${makeRem(32)};
   text-decoration: none;
   color: ${makeColor("neutral")};
   padding: 0 ${makeRem(8)};
-  border-radius: ${makeRem(8)};
+  border-radius: ${makeRem(4)};
   font-size: ${makeRem(14)};
   display: flex;
   align-items: center;
@@ -96,16 +98,22 @@ const SAnchor = styled("a")`
  * Recursive component designed to create a sidebar tree form
  * nested pages.
  */
-export type SidebarItemProps = { graph: ButteryDocsGraph };
-const SidebarItem: FC<SidebarItemProps> = ({ graph }) => {
+export type SidebarItemProps = {
+  graph: ButteryDocsGraph;
+  NavLinkComponent: JSX.ElementType | undefined;
+};
+const SidebarItem: FC<SidebarItemProps> = ({ graph, NavLinkComponent }) => {
+  const NavLink = NavLinkComponent ?? NativeAnchor;
   return (
     <SUl>
       {Object.entries(graph).map(([graphKey, graphValue]) => {
         return (
           <li key={graphKey}>
-            <SAnchor href={graphValue.routeAbs}>{graphValue.title}</SAnchor>
+            <NavLink href={graphValue.routeAbs} className={anchorCss}>
+              {graphValue.title}
+            </NavLink>
             {Object.entries(graphValue.pages).length > 0
-              ? SidebarItem({ graph: graphValue.pages })
+              ? SidebarItem({ graph: graphValue.pages, NavLinkComponent })
               : null}
           </li>
         );
@@ -115,7 +123,7 @@ const SidebarItem: FC<SidebarItemProps> = ({ graph }) => {
 };
 
 export const LayoutSidebar: FC = () => {
-  const { graph } = useLayoutContext();
+  const { graph, NavLink } = useLayoutContext();
   return (
     <SSidebar>
       <SSidebarContent>
@@ -124,7 +132,10 @@ export const LayoutSidebar: FC = () => {
           return (
             <SSection key={sectionKey}>
               <SSectionOverline>{sectionValues.title}</SSectionOverline>
-              <SidebarItem graph={sectionValues.pages} />
+              <SidebarItem
+                graph={sectionValues.pages}
+                NavLinkComponent={NavLink}
+              />
             </SSection>
           );
         })}

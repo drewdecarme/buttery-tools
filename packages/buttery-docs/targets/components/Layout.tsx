@@ -19,9 +19,9 @@ const SContainer = styled("div")`
 `;
 
 export type LayoutProps = LayoutProviderProps;
-export function Layout({ graph, children }: LayoutProps) {
+export function Layout({ children, ...restProps }: LayoutProps) {
   return (
-    <LayoutProvider graph={graph}>
+    <LayoutProvider {...restProps}>
       <SContainer>
         <LayoutHeader />
         <LayoutSidebar />
