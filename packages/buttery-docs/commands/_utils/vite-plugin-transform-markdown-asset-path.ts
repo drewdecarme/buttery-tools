@@ -7,7 +7,7 @@ export function transformMarkdownAssetPath() {
     name: "markdown-image-path-transform",
     transform(code: string, id: string) {
       if (id.endsWith(".md")) {
-        // Replace the image URL
+        // Replace the ./public with /public URL
         const transformedCode = code.replace(
           /!\[([^\]]*)\]\(\.\/public\/([^)]*)\)/g,
           "![$1](/$2)"

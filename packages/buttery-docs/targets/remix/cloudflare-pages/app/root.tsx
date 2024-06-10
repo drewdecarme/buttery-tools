@@ -4,9 +4,23 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  json,
+  useLoaderData,
 } from "@remix-run/react";
+import { getButteryDocsConfig } from "../../../../commands/_utils/util.getButteryDocsConfig";
+import { getButteryDocsGraph } from "../../../../commands/_utils/util.getButteryDocsGraph";
+
+export async function loader() {
+  const config = await getButteryDocsConfig();
+  const graph = await getButteryDocsGraph(config);
+  console.log({ graph });
+  return json({ graph });
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useLoaderData<typeof loader>();
+  console.log({ data });
+
   return (
     <html lang="en">
       <head>
