@@ -8,6 +8,10 @@ import {
 // import rehypeHighlight from "rehype-highlight";
 import rehypeShiki from "@shikijs/rehype";
 import wyw from "@wyw-in-js/vite";
+import remarkFrontmatter from "remark-frontmatter";
+
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeSlug from "rehype-slug";
 
 import { createServer } from "vite";
 import type { ButteryDocsGraph } from "./_utils/types";
@@ -45,7 +49,10 @@ export const action: CommandAction = async () => {
         transformMarkdownAssetPath(),
         remixCloudflareDevProxy(),
         mdx({
+          remarkPlugins: [remarkFrontmatter],
           rehypePlugins: [
+            rehypeSlug,
+            rehypeAutolinkHeadings,
             [
               rehypeShiki,
               {

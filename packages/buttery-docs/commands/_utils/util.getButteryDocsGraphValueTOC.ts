@@ -34,7 +34,6 @@ export function getButteryDocsGraphValueTOC(markdownContent: string) {
       const title = node.children
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         .map((child: any) => {
-          console.log(child);
           if (child.type === "text") return child.value;
           if (child.type === "h1") return "";
           if (

@@ -10,6 +10,7 @@ import { styled } from "@linaria/react";
 import { type FC, useMemo } from "react";
 import type { ButteryDocsGraph } from "../../commands/_utils/types";
 import { useLayoutContext } from "./Layout.context";
+import { layoutNavOverlineCSS } from "./layout.utils";
 
 const SNav = styled("nav")`
   grid-area: layout-sidebar;
@@ -61,13 +62,7 @@ const SSection = styled("section")`
   }
 `;
 
-const SSectionOverline = styled("h1")`
-  font-size: ${makeRem(12)};
-  text-transform: uppercase;
-  font-weight: ${makeFontWeight("semi-bold")};
-  color: ${makeColor("neutral", { variant: "300" })};
-  letter-spacing: ${makeRem(1.4)};
-`;
+const SSectionOverline = styled("h1")``;
 
 const anchorCss = css`
   height: ${makeRem(32)};
@@ -140,7 +135,7 @@ export const LayoutBodyNav: FC = () => {
             if (sectionKey === "_index") return null;
             return (
               <SSection key={sectionKey}>
-                <SSectionOverline>{sectionValues.title}</SSectionOverline>
+                <h1 className={layoutNavOverlineCSS}>{sectionValues.title}</h1>
                 <NavItem
                   graph={sectionValues.pages}
                   NavLinkComponent={NavLinkComponent}

@@ -1,10 +1,7 @@
 import type { ButteryConfigDocs } from "@buttery/core";
 import React from "react";
 import { type FC, type ReactNode, useContext, useMemo } from "react";
-import type {
-  ButteryDocsGraph,
-  ButteryDocsGraphTOC,
-} from "../../commands/_utils/types";
+import type { ButteryDocsGraph } from "../../commands/_utils/types";
 import { NativeAnchor } from "./native";
 
 type ButteryConfigDocsItems = {
@@ -14,25 +11,22 @@ type ButteryConfigDocsItems = {
 type LayoutContextType = ButteryConfigDocsItems & {
   graph: ButteryDocsGraph;
   NavLinkComponent: JSX.ElementType;
-  tableOfContents: ButteryDocsGraphTOC[];
 };
 const LayoutContext = React.createContext<LayoutContextType | null>(null);
 export type LayoutProviderProps = ButteryConfigDocsItems & {
   children: ReactNode;
   graph: ButteryDocsGraph;
   NavLinkComponent?: JSX.ElementType;
-  tableOfContents?: ButteryDocsGraphTOC[];
 };
 export const LayoutProvider: FC<LayoutProviderProps> = ({
   children,
   graph,
-  tableOfContents = [],
   NavLinkComponent = NativeAnchor,
   header,
 }) => {
   const value = useMemo<LayoutContextType>(
-    () => ({ graph, tableOfContents, NavLinkComponent, header }),
-    [graph, tableOfContents, NavLinkComponent, header]
+    () => ({ graph, NavLinkComponent, header }),
+    [graph, NavLinkComponent, header]
   );
 
   return (

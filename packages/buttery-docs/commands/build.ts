@@ -1,6 +1,4 @@
 import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
-import { getButteryConfig } from "@buttery/core";
-import { buildRemix } from "./_utils/remix";
 import { LOG_DOCS } from "./_utils/util.logger";
 
 export const meta: CommandMeta = {
@@ -20,16 +18,7 @@ export const options: CommandOptions<"watch"> = {
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
   try {
-    const configs = await getButteryConfig("docs");
-
-    switch (configs.docs.framework) {
-      case "remix":
-        await buildRemix(configs.configBase, configs.docs);
-        break;
-
-      default:
-        break;
-    }
+    // const configs = await getButteryConfig("docs");
 
     LOG_DOCS.success("Build complete.");
   } catch (error) {

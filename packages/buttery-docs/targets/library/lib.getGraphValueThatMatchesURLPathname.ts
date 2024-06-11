@@ -8,13 +8,10 @@ import type {
  * parse the pathname off of the URL and then recursively search
  * the graph tree to find a routeAbs path that matches that pathname
  */
-export function getGraphValueThatMatchesURLPathname(
-  url: string,
+export function getGraphValueThatMatchesPathname(
+  pathname: string,
   graph: ButteryDocsGraph
 ) {
-  const reqUrl = new URL(url);
-  const { pathname } = reqUrl;
-
   let graphValue: ButteryDocsGraphValue | undefined;
 
   function findGraphValue(innerGraph: ButteryDocsGraph) {

@@ -14,7 +14,7 @@ const SLayoutBodyMain = styled("section")`
   top: ${makeCustom("layout-header-height")};
 
   & > div {
-    padding: ${makeRem(32)} ${makeRem(48)};
+    padding: 0 ${makeRem(32)} ${makeRem(48)} ${makeRem(32)};
     max-width: ${makeRem(668)};
 
     h1,
