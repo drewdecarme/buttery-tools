@@ -14,6 +14,7 @@ import "@buttery/tokens/_docs/index.css";
 
 const SBody = styled("body")`
   font-family: ${makeFontFamily("body")};
+  margin: 0;
 
   pre {
     padding: ${makeRem(20)};

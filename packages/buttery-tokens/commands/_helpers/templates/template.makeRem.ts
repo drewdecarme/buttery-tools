@@ -43,7 +43,7 @@ export const ${functionName} = (pixel: number) => \`\${pixel / ${config.font.siz
 };
 
 const css: CompileFunction = ({ config, cssVarPrefix }) => {
-  return `${cssVarPrefix}: ${config.font.size}`;
+  return `${cssVarPrefix}: ${config.font.size};`;
 };
 
 export const MakeTemplateRem = new MakeTemplate({

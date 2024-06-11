@@ -1,7 +1,12 @@
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 
 const template: CompileFunction = ({ methods, docs, functionName }) => {
-  const resetUnion = methods.createTypeUnion(["ul", "button"]);
+  const resetUnion = methods.createTypeUnion([
+    "ul",
+    "button",
+    "body",
+    "anchor",
+  ]);
 
   return `export type MakeReset = (element: ${resetUnion}) => string;
 
@@ -43,15 +48,32 @@ export const ${functionName}: MakeReset = (element) => {
             padding: 0;
             list-style-type: none;
           }
-        \`
+        \`;
 
       case "button":
-          return \`
-            margin: 0;
-            padding: 0;
-            border: none;
-            background: none;
-          \`
+        return \`
+          margin: 0;
+          padding: 0;
+          border: none;
+          background: none;
+        \`;
+
+      case "body":
+        return \`
+          margin: 0;
+          padding: 0;
+        \`;
+
+      case "anchor":
+        return \`
+          text-decoration: none;
+          color: inherit;
+
+          &:visited {
+            color: inherit;
+          }
+        \`;
+
       default:
         return matchGuard(element);
     }

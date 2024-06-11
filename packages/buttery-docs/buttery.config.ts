@@ -73,6 +73,12 @@ const config: ButteryConfig = {
         surface: "#fff",
       },
     },
+    custom: {
+      "layout-header-height": {
+        value: 48,
+        storeAsRem: true,
+      },
+    },
   },
 };
 export default config;

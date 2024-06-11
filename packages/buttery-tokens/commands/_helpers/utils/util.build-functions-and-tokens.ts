@@ -11,6 +11,7 @@ import { type ButteryConfigTokens, getButteryConfig } from "@buttery/core";
 
 import { MakeTemplates } from "../templates/MakeTemplates";
 import { MakeTemplateColor } from "../templates/template.makeColor";
+import { MakeTemplateCustom } from "../templates/template.makeCustom";
 import { MakeTemplateFontFamily } from "../templates/template.makeFontFamily";
 import { MakeTemplateFontWeight } from "../templates/template.makeFontWeight";
 import { MakeTemplateRem } from "../templates/template.makeRem";
@@ -42,6 +43,9 @@ async function generateAndTranspile(configTokens: ButteryConfigTokens) {
   Templates.register(MakeTemplateResponsive);
   Templates.register(MakeTemplateColor);
   Templates.register(MakeTemplateReset);
+  if (configTokens.custom) {
+    Templates.register(MakeTemplateCustom);
+  }
 
   // Create a plugin to eventually transpile the .tokens directory
   // and assemble the ESBuild options for that entry / barrel file.

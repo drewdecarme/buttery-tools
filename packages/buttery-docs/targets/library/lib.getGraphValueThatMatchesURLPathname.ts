@@ -1,4 +1,4 @@
-import {
+import type {
   ButteryDocsGraph,
   ButteryDocsGraphValue,
 } from "../../commands/_utils/types";

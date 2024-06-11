@@ -1,4 +1,9 @@
-import { makeColor, makeFontWeight, makeRem } from "@buttery/tokens/_docs";
+import {
+  makeColor,
+  makeCustom,
+  makeFontWeight,
+  makeRem,
+} from "@buttery/tokens/_docs";
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 // import { NativeAnchor } from "./native";
@@ -16,7 +21,7 @@ const SSidebar = styled("nav")`
 
 const SSidebarContent = styled("div")`
   position: sticky;
-  top: var(--buttery-docs-header);
+  top: ${makeCustom("layout-header-height")};
   h1 {
     margin: 0;
   }

@@ -1,4 +1,4 @@
-import { makeRem } from "@buttery/tokens/_docs";
+import { makeCustom, makeRem } from "@buttery/tokens/_docs";
 import { styled } from "@linaria/react";
 import { LayoutProvider, type LayoutProviderProps } from "./Layout.context";
 import { LayoutFooter } from "./LayoutFooter";
@@ -8,11 +8,11 @@ import { LayoutSidebar } from "./LayoutSidebar";
 import { LayoutTOC } from "./LayoutTOC";
 
 const SContainer = styled("div")`
-  --buttery-docs-header: ${makeRem(64)};
   display: grid;
   min-height: 100vh;
+  margin: 0 auto;
   // desktop
-  grid-template-rows: var(--buttery-docs-header) auto auto;
+  grid-template-rows: ${makeCustom("layout-header-height")} auto auto;
   grid-template-columns: ${makeRem(300)} 1fr ${makeRem(300)};
   grid-template-areas:
     "layout-header layout-header layout-header"

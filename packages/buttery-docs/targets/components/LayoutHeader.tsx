@@ -12,6 +12,15 @@ const SLayoutHeader = styled("header")`
   padding: 0 ${makeRem(32)};
   border-bottom: ${makeRem(1)} solid
     ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
+
+  & > div {
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 100%;
+    gap: ${makeRem(16)};
+    max-width: ${makeRem(1440)};
+  }
 `;
 
 const SAnchor = styled("a")`
@@ -47,12 +56,19 @@ export const LayoutHeader: FC = () => {
 
   return (
     <SLayoutHeader>
-      {header && (
-        <SAnchor href="/">
-          {header?.logo && <SImg src={header.logo.src} alt={header.logo.alt} />}
-          {header?.title && <SDiv>{header.title}</SDiv>}
-        </SAnchor>
-      )}
+      <div>
+        {header && (
+          <SAnchor href="/">
+            {header?.logo && (
+              <SImg src={header.logo.src} alt={header.logo.alt} />
+            )}
+            {header?.title && <SDiv>{header.title}</SDiv>}
+          </SAnchor>
+        )}
+        <div>
+          <button type="button">test 1</button>
+        </div>
+      </div>
     </SLayoutHeader>
   );
 };

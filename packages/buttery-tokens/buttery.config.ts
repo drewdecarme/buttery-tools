@@ -100,6 +100,9 @@ const config: ButteryConfig = {
         surface: "#fff",
       },
     },
+    custom: {
+      "layout-header": 48,
+    },
   },
 };
 
