@@ -7,20 +7,19 @@ import {
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 // import { NativeAnchor } from "./native";
-import { NavLink } from "@remix-run/react";
 import { type FC, useMemo } from "react";
 import type { ButteryDocsGraph } from "../../commands/_utils/types";
 import { useLayoutContext } from "./Layout.context";
 
-const SSidebar = styled("nav")`
+const SNav = styled("nav")`
   grid-area: layout-sidebar;
-  padding: ${makeRem(32)};
   border-right: ${makeRem(1)} solid
     ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
 `;
 
-const SSidebarContent = styled("div")`
+const SNavContent = styled("div")`
   position: sticky;
+  padding: ${makeRem(32)};
   top: ${makeCustom("layout-header-height")};
   h1 {
     margin: 0;
@@ -104,22 +103,25 @@ const anchorCss = css`
  * Recursive component designed to create a sidebar tree form
  * nested pages.
  */
-export type SidebarItemProps = {
+export type NavItemProps = {
   graph: ButteryDocsGraph;
-  NavLinkComponent: JSX.ElementType | undefined;
+  NavLinkComponent: JSX.ElementType;
 };
-const SidebarItem: FC<SidebarItemProps> = ({ graph, NavLinkComponent }) => {
-  // const NavLink = NavLinkComponent ?? NativeAnchor;
+const NavItem: FC<NavItemProps> = ({ graph, NavLinkComponent }) => {
   return (
     <SUl>
       {Object.entries(graph).map(([graphKey, graphValue]) => {
         return (
           <li key={graphKey}>
-            <NavLink to={graphValue.routeAbs} className={anchorCss} end>
+            <NavLinkComponent
+              to={graphValue.routeAbs}
+              className={anchorCss}
+              end
+            >
               {graphValue.title}
-            </NavLink>
+            </NavLinkComponent>
             {Object.entries(graphValue.pages).length > 0
-              ? SidebarItem({ graph: graphValue.pages, NavLinkComponent })
+              ? NavItem({ graph: graphValue.pages, NavLinkComponent })
               : null}
           </li>
         );
@@ -128,26 +130,26 @@ const SidebarItem: FC<SidebarItemProps> = ({ graph, NavLinkComponent }) => {
   );
 };
 
-export const LayoutSidebar: FC = () => {
+export const LayoutBodyNav: FC = () => {
   const { graph, NavLinkComponent } = useLayoutContext();
   return useMemo(
     () => (
-      <SSidebar>
-        <SSidebarContent>
+      <SNav>
+        <SNavContent>
           {Object.entries(graph).map(([sectionKey, sectionValues]) => {
             if (sectionKey === "_index") return null;
             return (
               <SSection key={sectionKey}>
                 <SSectionOverline>{sectionValues.title}</SSectionOverline>
-                <SidebarItem
+                <NavItem
                   graph={sectionValues.pages}
                   NavLinkComponent={NavLinkComponent}
                 />
               </SSection>
             );
           })}
-        </SSidebarContent>
-      </SSidebar>
+        </SNavContent>
+      </SNav>
     ),
     [graph, NavLinkComponent]
   );

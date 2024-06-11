@@ -1,12 +1,7 @@
 import type { Preview } from "@storybook/react";
 import "@buttery/tokens/_docs/index.css";
-import { makeFontFamily } from "@buttery/tokens/_docs";
-import { css } from "@linaria/core";
 import React from "react";
-
-const globalStyles = css`
-  font-family: ${makeFontFamily("body")};
-`;
+import { bodyCSS } from "../targets/components/Layout";
 
 const preview: Preview = {
   parameters: {
@@ -19,7 +14,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <div className={globalStyles}>
+      <div className={bodyCSS}>
         <Story />
       </div>
     ),

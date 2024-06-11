@@ -69,13 +69,17 @@ const config: ButteryConfig = {
         },
       },
       static: {
-        background: "#fff",
-        surface: "#fff",
+        background: "#ffffff",
+        surface: "#ffffff",
       },
     },
     custom: {
       "layout-header-height": {
-        value: 48,
+        value: 64,
+        storeAsRem: true,
+      },
+      "layout-max-width": {
+        value: 1440,
         storeAsRem: true,
       },
     },

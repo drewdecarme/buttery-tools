@@ -11,6 +11,7 @@ import { type ButteryConfigTokens, getButteryConfig } from "@buttery/core";
 
 import { MakeTemplates } from "../templates/MakeTemplates";
 import { MakeTemplateColor } from "../templates/template.makeColor";
+import { MakeTemplateColorStatic } from "../templates/template.makeColorStatic";
 import { MakeTemplateCustom } from "../templates/template.makeCustom";
 import { MakeTemplateFontFamily } from "../templates/template.makeFontFamily";
 import { MakeTemplateFontWeight } from "../templates/template.makeFontWeight";
@@ -42,6 +43,7 @@ async function generateAndTranspile(configTokens: ButteryConfigTokens) {
   Templates.register(MakeTemplateRem);
   Templates.register(MakeTemplateResponsive);
   Templates.register(MakeTemplateColor);
+  Templates.register(MakeTemplateColorStatic);
   Templates.register(MakeTemplateReset);
   if (configTokens.custom) {
     Templates.register(MakeTemplateCustom);

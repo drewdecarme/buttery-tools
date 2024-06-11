@@ -1,4 +1,11 @@
-import { makeColor, makeFontWeight, makeRem } from "@buttery/tokens/_docs";
+import {
+  makeColor,
+  makeColorStatic,
+  makeCustom,
+  makeFontWeight,
+  makeRem,
+} from "@buttery/tokens/_docs";
+import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 import type { FC } from "react";
 import { useLayoutContext } from "./Layout.context";
@@ -12,18 +19,27 @@ const SLayoutHeader = styled("header")`
   padding: 0 ${makeRem(32)};
   border-bottom: ${makeRem(1)} solid
     ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
+  background: ${makeColorStatic("background")};
+  z-index: 10;
 
   & > div {
+    flex: 1;
     height: 100%;
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: 100%;
     gap: ${makeRem(16)};
-    max-width: ${makeRem(1440)};
+    max-width: ${makeCustom("layout-max-width")};
+    margin: 0 auto;
+
+    & > div:last-child {
+      display: flex;
+      justify-content: flex-end;
+    }
   }
 `;
 
-const SAnchor = styled("a")`
+const anchorCSS = css`
   margin: 0;
   padding: 0;
   text-decoration: none;
@@ -52,18 +68,18 @@ const SDiv = styled("div")`
 `;
 
 export const LayoutHeader: FC = () => {
-  const { header } = useLayoutContext();
+  const { header, NavLinkComponent } = useLayoutContext();
 
   return (
     <SLayoutHeader>
       <div>
         {header && (
-          <SAnchor href="/">
+          <NavLinkComponent href="/" className={anchorCSS}>
             {header?.logo && (
               <SImg src={header.logo.src} alt={header.logo.alt} />
             )}
             {header?.title && <SDiv>{header.title}</SDiv>}
-          </SAnchor>
+          </NavLinkComponent>
         )}
         <div>
           <button type="button">test 1</button>

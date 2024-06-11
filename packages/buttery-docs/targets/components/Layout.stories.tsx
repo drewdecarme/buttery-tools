@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Layout, type LayoutProps } from "./Layout";
-import { graph } from "./Layout.stories.data";
+import { graph, toc } from "./Layout.stories.data";
+import { NativeAnchor } from "./native";
 
 const meta: Meta = {
   title: "Layout",
@@ -16,6 +17,7 @@ export const Basic: Story = {
   args: {
     graph: graph,
     children: <div style={{ height: 10_000 }}>body</div>,
+    tableOfContents: toc,
   } as LayoutProps,
 };
 
@@ -53,5 +55,19 @@ export const WithLogoAndTitle: Story = {
       },
     },
     children: <div style={{ height: 10_000 }}>body</div>,
+  } as LayoutProps,
+};
+
+export const WithTableOfContents: Story = {
+  args: {
+    graph: graph,
+    header: {
+      logo: {
+        src: "/images/buttery-tokens-logo.png",
+        alt: "buttery-tokens",
+      },
+    },
+    children: <div style={{ height: 10_000 }}>body</div>,
+    tableOfContents: toc,
   } as LayoutProps,
 };

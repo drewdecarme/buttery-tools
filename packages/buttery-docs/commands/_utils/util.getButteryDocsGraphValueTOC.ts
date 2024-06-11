@@ -6,16 +6,16 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
-import type { ButteryDocsGraphTOC } from "../types";
+import type { ButteryDocsGraphTOC } from "./types";
 
-export function createTOCsFromContent(content: string) {
+export function getButteryDocsGraphValueTOC(markdownContent: string) {
   const file = unified()
     .use(remarkParse)
     .use(remarkMdx)
     .use(remarkRehype)
     .use(rehypeSlug)
     .use(rehypeStringify)
-    .processSync(content);
+    .processSync(markdownContent);
   const tree = unified()
     .use(rehypeParse, { fragment: true })
     .parse(file.toString());
@@ -26,7 +26,7 @@ export function createTOCsFromContent(content: string) {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   visit(tree, "element", (node: any) => {
     if (
-      node.tagName.match(/^h[1-6]$/) &&
+      node.tagName.match(/^h[2-6]$/) &&
       node.properties &&
       node.properties.id
     ) {
@@ -34,7 +34,9 @@ export function createTOCsFromContent(content: string) {
       const title = node.children
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         .map((child: any) => {
+          console.log(child);
           if (child.type === "text") return child.value;
+          if (child.type === "h1") return "";
           if (
             child.type === "element" &&
             (child.tagName === "a" || child.tagName === "code")

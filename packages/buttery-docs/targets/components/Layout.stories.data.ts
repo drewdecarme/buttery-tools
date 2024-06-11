@@ -1,4 +1,7 @@
-import type { ButteryDocsGraph } from "../../commands/_utils/types";
+import type {
+  ButteryDocsGraph,
+  ButteryDocsGraphValue,
+} from "../../commands/_utils/types";
 
 export const graph: ButteryDocsGraph = {
   _index: {
@@ -184,3 +187,51 @@ export const graph: ButteryDocsGraph = {
     },
   },
 };
+
+export const toc: ButteryDocsGraphValue["toc"] = [
+  {
+    level: 1,
+    title: "Advanced Components",
+    link: "#advanced-components",
+    children: [
+      {
+        level: 2,
+        title: "Overview",
+        link: "#overview",
+        children: [],
+      },
+      {
+        level: 2,
+        title: "Explanation",
+        link: "#explanation",
+        children: [
+          {
+            level: 3,
+            title: "Technical Requirements",
+            link: "#technical-requirements",
+            children: [],
+          },
+        ],
+      },
+      {
+        level: 2,
+        title: "Testing",
+        link: "#testing",
+        children: [
+          {
+            level: 3,
+            title: "Testing with vitest",
+            link: "#testing-with-vitest",
+            children: [],
+          },
+          {
+            level: 3,
+            title: "Testing with jest",
+            link: "#testing-with-jest",
+            children: [],
+          },
+        ],
+      },
+    ],
+  },
+];

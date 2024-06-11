@@ -3222,6 +3222,7 @@ __metadata:
     rehype-remark: "npm:^10.0.0"
     rehype-slug: "npm:^6.0.0"
     rehype-stringify: "npm:^10.0.0"
+    remark: "npm:^15.0.1"
     remark-mdx: "npm:^3.0.1"
     remark-parse: "npm:^11.0.0"
     remark-rehype: "npm:^11.1.0"
@@ -19395,6 +19396,18 @@ __metadata:
     "@types/mdast": "npm:^4.0.0"
     mdast-util-toc: "npm:^7.0.0"
   checksum: 10c0/f579645a642a152d4daf4e4b21a516fd15da9d153251faddf65213bcb0bd41a8d98d4cdbd3bbe364660fb646322d1192f1629f167eb5c14f1720734df119c9c7
+  languageName: node
+  linkType: hard
+
+"remark@npm:^15.0.1":
+  version: 15.0.1
+  resolution: "remark@npm:15.0.1"
+  dependencies:
+    "@types/mdast": "npm:^4.0.0"
+    remark-parse: "npm:^11.0.0"
+    remark-stringify: "npm:^11.0.0"
+    unified: "npm:^11.0.0"
+  checksum: 10c0/ba675e4a5b114355991d2c6f5b09a632121fc8825257b0d148b3938420713f9e9b6f012120604435d5c217d42742f60195ac6f898dc1339d313a6608a84dbc49
   languageName: node
   linkType: hard
 
