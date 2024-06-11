@@ -3191,6 +3191,7 @@ __metadata:
     "@remix-run/cloudflare": "npm:^2.9.2"
     "@remix-run/dev": "npm:^2.9.2"
     "@remix-run/react": "npm:^2.9.2"
+    "@shikijs/rehype": "npm:^1.6.3"
     "@storybook/addon-essentials": "npm:^8.1.6"
     "@storybook/addon-interactions": "npm:^8.1.6"
     "@storybook/addon-links": "npm:^8.1.6"
@@ -3209,12 +3210,14 @@ __metadata:
     "@wyw-in-js/vite": "npm:^0.5.3"
     fs-extra: "npm:^11.2.0"
     gray-matter: "npm:^4.0.3"
+    highlight.js: "npm:^11.9.0"
     lodash.get: "npm:^4.4.2"
     mdast: "npm:^3.0.0"
     mdast-util-from-markdown: "npm:^2.0.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     react-snap: "npm:^1.23.0"
+    rehype-highlight: "npm:^7.0.0"
     rehype-parse: "npm:^9.0.0"
     rehype-remark: "npm:^10.0.0"
     rehype-slug: "npm:^6.0.0"
@@ -6209,6 +6212,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@shikijs/core@npm:1.6.3":
+  version: 1.6.3
+  resolution: "@shikijs/core@npm:1.6.3"
+  checksum: 10c0/5c0e989311592c377ca07f300ca820083bab7a835755a2f501375fd0f61d4fd6d6e9eb5450fd2102f1cc2f17835ef636a4dd516526171c949e9d5d95d5e6444e
+  languageName: node
+  linkType: hard
+
+"@shikijs/rehype@npm:^1.6.3":
+  version: 1.6.3
+  resolution: "@shikijs/rehype@npm:1.6.3"
+  dependencies:
+    "@shikijs/transformers": "npm:1.6.3"
+    "@types/hast": "npm:^3.0.4"
+    hast-util-to-string: "npm:^3.0.0"
+    shiki: "npm:1.6.3"
+    unified: "npm:^11.0.4"
+    unist-util-visit: "npm:^5.0.0"
+  checksum: 10c0/ae2062bfb608ecbfb75671e9c63933dd1f87fa10ce4ef70fabbe776e3ad96c7657f187ce2a943a69ad30ee0c44bee18dc5ca446fbe2d80277853d16b5b4d677d
+  languageName: node
+  linkType: hard
+
+"@shikijs/transformers@npm:1.6.3":
+  version: 1.6.3
+  resolution: "@shikijs/transformers@npm:1.6.3"
+  dependencies:
+    shiki: "npm:1.6.3"
+  checksum: 10c0/57bbb030a98d53329f8e025dc248d07a81ecd1f09bae1d21729a8156ff5dfda70c56e0d1ff38c331e993c0bf5cd39a63ff38ee2ab77784c8c1feaf48ab92d21d
+  languageName: node
+  linkType: hard
+
 "@sigstore/bundle@npm:^2.3.0, @sigstore/bundle@npm:^2.3.1":
   version: 2.3.1
   resolution: "@sigstore/bundle@npm:2.3.1"
@@ -7738,7 +7771,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/hast@npm:^3.0.0":
+"@types/hast@npm:^3.0.0, @types/hast@npm:^3.0.4":
   version: 3.0.4
   resolution: "@types/hast@npm:3.0.4"
   dependencies:
@@ -13668,6 +13701,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highlight.js@npm:^11.9.0, highlight.js@npm:~11.9.0":
+  version: 11.9.0
+  resolution: "highlight.js@npm:11.9.0"
+  checksum: 10c0/27cfa8717dc9d200aecbdb383eb122d5f45ce715d2f468583785d36fbfe5076ce033abb02486dc13b407171721cda6f474ed3f3a5a8e8c3d91367fa5f51ee374
+  languageName: node
+  linkType: hard
+
 "hosted-git-info@npm:^2.1.4":
   version: 2.8.9
   resolution: "hosted-git-info@npm:2.8.9"
@@ -15304,6 +15344,17 @@ __metadata:
   dependencies:
     tslib: "npm:^2.0.3"
   checksum: 10c0/3d925e090315cf7dc1caa358e0477e186ffa23947740e4314a7429b6e62d72742e0bbe7536a5ae56d19d7618ce998aba05caca53c2902bd5742fdca5fc57fd7b
+  languageName: node
+  linkType: hard
+
+"lowlight@npm:^3.0.0":
+  version: 3.1.0
+  resolution: "lowlight@npm:3.1.0"
+  dependencies:
+    "@types/hast": "npm:^3.0.0"
+    devlop: "npm:^1.0.0"
+    highlight.js: "npm:~11.9.0"
+  checksum: 10c0/ee230ba1da3b339bae640479a09a4c82e5727bae38345421767c6407db4d514c10387300900ba79aa8c64dd79ae7f8d1acff847c01d5b0a20364a5ce04685f27
   languageName: node
   linkType: hard
 
@@ -19153,6 +19204,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rehype-highlight@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "rehype-highlight@npm:7.0.0"
+  dependencies:
+    "@types/hast": "npm:^3.0.0"
+    hast-util-to-text: "npm:^4.0.0"
+    lowlight: "npm:^3.0.0"
+    unist-util-visit: "npm:^5.0.0"
+    vfile: "npm:^6.0.0"
+  checksum: 10c0/bf9eba61ac2635db6c6635d3485456f2d6bdf43e3acba34deb673ddde82dc8e0a7a4ba81c4f26dda85ecc5e99a9e949c05ed1b4fb25c0414e970d9623894c935
+  languageName: node
+  linkType: hard
+
 "rehype-minify-whitespace@npm:^6.0.0":
   version: 6.0.0
   resolution: "rehype-minify-whitespace@npm:6.0.0"
@@ -19920,6 +19984,15 @@ __metadata:
   version: 3.0.0
   resolution: "shebang-regex@npm:3.0.0"
   checksum: 10c0/1dbed0726dd0e1152a92696c76c7f06084eb32a90f0528d11acd764043aacf76994b2fb30aa1291a21bd019d6699164d048286309a278855ee7bec06cf6fb690
+  languageName: node
+  linkType: hard
+
+"shiki@npm:1.6.3":
+  version: 1.6.3
+  resolution: "shiki@npm:1.6.3"
+  dependencies:
+    "@shikijs/core": "npm:1.6.3"
+  checksum: 10c0/3a5f421536b2d77f2973fa4459dc58ec154f8831acd177ec1b21bf33d876895b501263c7bcf58f6ad65541262ece485acd38e29ad271796dbf7f5743c8615485
   languageName: node
   linkType: hard
 

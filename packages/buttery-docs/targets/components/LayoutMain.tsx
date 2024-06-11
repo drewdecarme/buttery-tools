@@ -5,7 +5,7 @@ import type { FC, ReactNode } from "react";
 const SLayoutMain = styled("main")`
   grid-area: layout-main;
   padding: ${makeRem(32)} ${makeRem(48)};
-  max-width: 60ch;
+  max-width: ${makeRem(668)};
 `;
 
 export const LayoutMain: FC<{ children: ReactNode }> = ({ children }) => {

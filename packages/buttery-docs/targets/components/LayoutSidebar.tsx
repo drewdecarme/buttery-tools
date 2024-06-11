@@ -16,7 +16,7 @@ const SSidebar = styled("nav")`
 
 const SSidebarContent = styled("div")`
   position: sticky;
-  top: ${makeRem(40)};
+  top: var(--buttery-docs-header);
   h1 {
     margin: 0;
   }

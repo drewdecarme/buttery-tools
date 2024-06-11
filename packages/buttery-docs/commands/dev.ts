@@ -5,7 +5,10 @@ import {
   vitePlugin as remix,
   cloudflareDevProxyVitePlugin as remixCloudflareDevProxy,
 } from "@remix-run/dev";
+// import rehypeHighlight from "rehype-highlight";
+import rehypeShiki from "@shikijs/rehype";
 import wyw from "@wyw-in-js/vite";
+
 import { createServer } from "vite";
 import type { ButteryDocsGraph } from "./_utils/types";
 import { getButteryDocsConfig } from "./_utils/util.getButteryDocsConfig";
@@ -29,8 +32,6 @@ export const action: CommandAction = async () => {
     const appTargetsDir = path.resolve(import.meta.dirname, "../targets");
     const rootDir = path.resolve(appTargetsDir, "./remix/cloudflare-pages");
 
-    console.log(JSON.stringify(butteryDocsGraph, null, 2));
-
     const server = await createServer({
       root: rootDir,
       publicDir: butteryDocsDirectories.public,
@@ -43,7 +44,17 @@ export const action: CommandAction = async () => {
       plugins: [
         transformMarkdownAssetPath(),
         remixCloudflareDevProxy(),
-        mdx(),
+        mdx({
+          rehypePlugins: [
+            [
+              rehypeShiki,
+              {
+                theme: "dark-plus",
+                // theme: "material-theme-ocean",
+              },
+            ],
+          ],
+        }),
         wyw({
           include: [path.resolve(appTargetsDir, "./**/*.(ts|tsx)")],
           babelOptions: {
@@ -78,7 +89,7 @@ export const action: CommandAction = async () => {
               );
             });
             // TODO: put behind a verbose log
-            console.log(routes);
+            // console.log(routes);
             return routes;
           },
         }),

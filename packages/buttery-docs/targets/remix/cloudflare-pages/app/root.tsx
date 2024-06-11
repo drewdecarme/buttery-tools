@@ -1,4 +1,4 @@
-import { makeFontFamily } from "@buttery/tokens/_docs";
+import { makeFontFamily, makeRem } from "@buttery/tokens/_docs";
 import { styled } from "@linaria/react";
 import {
   Links,
@@ -9,9 +9,22 @@ import {
 } from "@remix-run/react";
 
 import "@buttery/tokens/_docs/index.css";
+// import "highlight.js/styles/base16/onedark.min.css";
+// import "highlight.js/styles/base16/material.min.css";
 
 const SBody = styled("body")`
   font-family: ${makeFontFamily("body")};
+
+  pre {
+    padding: ${makeRem(20)};
+    overflow-x: auto;
+    border-radius: ${makeRem(8)};
+    font-size: ${makeRem(12)};
+
+    .line {
+      line-height: 1.5;
+    }
+  }
 `;
 
 export function Layout({ children }: { children: React.ReactNode }) {
