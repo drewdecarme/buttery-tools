@@ -2,6 +2,7 @@
   "extends": "@buttery/tsconfig/library",
   "compilerOptions": {
     "jsx": "react-jsx",
+    "lib": ["DOM"],
     "types": ["@remix-run/cloudflare", "vite/client"]
   },
   "include": ["src", "commands", "templates", "targets"]

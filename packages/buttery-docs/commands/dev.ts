@@ -41,9 +41,12 @@ export const action: CommandAction = async () => {
       publicDir: butteryDocsDirectories.public,
       server: {
         port: 1347,
-        fs: {
-          strict: false,
+        hmr: {
+          port: 443,
         },
+        // fs: {
+        //   strict: false,
+        // },
       },
       plugins: [
         transformMarkdownAssetPath(),
@@ -52,7 +55,15 @@ export const action: CommandAction = async () => {
           remarkPlugins: [remarkFrontmatter],
           rehypePlugins: [
             rehypeSlug,
-            rehypeAutolinkHeadings,
+            [
+              rehypeAutolinkHeadings,
+              {
+                behavior: "wrap",
+                headingProperties: {
+                  className: "heading",
+                },
+              },
+            ],
             [
               rehypeShiki,
               {

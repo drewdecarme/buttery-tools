@@ -8,7 +8,7 @@ import {
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 import type { FC } from "react";
-import { useLayoutContext } from "./Layout.context";
+import { useLayoutContext } from "./layout.useLayoutContext";
 
 const SLayoutHeader = styled("header")`
   grid-area: layout-header;

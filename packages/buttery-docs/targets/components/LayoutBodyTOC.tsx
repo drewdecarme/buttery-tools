@@ -8,10 +8,11 @@ import {
 } from "@buttery/tokens/_docs";
 import { styled } from "@linaria/react";
 import { useLocation } from "@remix-run/react";
-import type { FC } from "react";
+import { type FC, type MouseEventHandler, useCallback } from "react";
 import type { ButteryDocsGraphTOC } from "../../commands/_utils/types";
 import { getGraphValueThatMatchesPathname } from "../library";
-import { useLayoutContext } from "./Layout.context";
+import { useDetermineActiveSection } from "./layout.useDetermineActiveSection";
+import { useLayoutContext } from "./layout.useLayoutContext";
 import { layoutNavOverlineCSS } from "./layout.utils";
 
 const SLayoutBodyTOC = styled("article")`
@@ -31,7 +32,7 @@ const SUl = styled("ul")`
   ${makeReset("ul")};
 
   & ul {
-    padding-left: ${makeRem(8)};
+    padding-left: ${makeRem(16)};
   }
 
   li {
@@ -45,13 +46,13 @@ const SUl = styled("ul")`
 
       &:not(.active) {
         &:hover {
-          color: ${makeColor("primary")};
-          font-weight: ${makeFontWeight("semi-bold")};
+          color: ${makeColor("secondary")};
+          text-decoration: underline;
         }
       }
 
       &.active {
-        color: ${makeColor("primary")};
+        color: ${makeColor("secondary")};
         font-weight: ${makeFontWeight("semi-bold")};
       }
     }
@@ -69,27 +70,46 @@ export function ContentsNode({
   tableOfContents: ButteryDocsGraphTOC[];
   NavLinkComponent: JSX.ElementType;
 }) {
-  return tableOfContents.map((toc, i) => {
-    return (
-      <li key={`${toc.level}-${i}`}>
-        <a href={toc.link}>{toc.title}</a>
-        {toc.children.length > 0 && (
-          <ul key={`group-${toc.level}-${i}`}>
-            <ContentsNode
-              tableOfContents={toc.children}
-              NavLinkComponent={NavLinkComponent}
-            />
-          </ul>
-        )}
-      </li>
-    );
-  });
+  const handleClick = useCallback<MouseEventHandler<HTMLAnchorElement>>((e) => {
+    e.preventDefault();
+    const anchorHash = e.currentTarget.hash;
+    window.history.replaceState(null, "", anchorHash);
+    // get the heading with the ID of hash
+    const headingWithIdOfAnchorHash =
+      document.querySelector<HTMLHeadingElement>(anchorHash);
+    const header = document.querySelector<HTMLElement>("header");
+    if (!headingWithIdOfAnchorHash || !header) return;
+    const offset =
+      headingWithIdOfAnchorHash.offsetTop - header.offsetHeight + 64;
+
+    window.scrollTo({
+      top: offset,
+      behavior: "smooth",
+    });
+  }, []);
+
+  return tableOfContents.map((toc, i) => (
+    <li key={toc.link}>
+      <a href={toc.link} onClick={handleClick} className="contents-link">
+        {toc.title}
+      </a>
+      {toc.children.length > 0 && (
+        <ul key={`group-${toc.level}-${i}`}>
+          <ContentsNode
+            tableOfContents={toc.children}
+            NavLinkComponent={NavLinkComponent}
+          />
+        </ul>
+      )}
+    </li>
+  ));
 }
 
 export const LayoutBodyTOC: FC = () => {
   const { NavLinkComponent, graph } = useLayoutContext();
   const { pathname } = useLocation();
   const currentGraph = getGraphValueThatMatchesPathname(pathname, graph);
+  useDetermineActiveSection(pathname);
 
   return (
     <SLayoutBodyTOC>

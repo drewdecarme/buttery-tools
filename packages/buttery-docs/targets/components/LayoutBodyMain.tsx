@@ -21,17 +21,11 @@ const SLayoutBodyMain = styled("section")`
     h2,
     h3 {
       background: ${makeColorStatic("background")};
+      margin: 0;
     }
     h1,
     h2 {
       padding: 0.83em 0;
-      margin: 0;
-    }
-
-    h2,
-    h3 {
-      position: sticky;
-      top: ${makeCustom("layout-header-height")};
     }
 
     h1 {

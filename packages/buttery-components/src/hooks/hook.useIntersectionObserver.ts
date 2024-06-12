@@ -36,12 +36,9 @@ type IntersectionObserverOptions = {
  *
  * export default MyComponent;
  */
-export const useIntersectionObserver = (
+export const useIntersectionObserver = <T extends HTMLElement>(
   options: IntersectionObserverOptions = {}
-): [
-  ref: React.MutableRefObject<HTMLDivElement | null>,
-  isVisibleOnPage: boolean,
-] => {
+): [ref: React.MutableRefObject<T | null>, isVisibleOnPage: boolean] => {
   const once = options?.once ?? false;
   const root = options?.root ?? null;
   const rootMargin = options?.rootMargin ?? "0px";
@@ -49,7 +46,7 @@ export const useIntersectionObserver = (
 
   const [isIntersecting, setIsIntersecting] = useState(false);
   const hasIntersectedRef = useRef(false);
-  const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<T | null>(null);
 
   useEffect(() => {
     const observerRef = ref.current;
