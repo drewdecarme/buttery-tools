@@ -1,3 +1,8 @@
+export type ButteryConfigDocsHeaderLink =
+  | { type: "social"; provider: "github" | "discord"; href: string }
+  | { type: "text"; text: string; href: string }
+  | { type: "internal"; text: string; href: string };
+
 export type ButteryConfigDocs = {
   /**
    * A key that allows you to configure how the navigation
@@ -62,5 +67,11 @@ export type ButteryConfigDocs = {
       src: string;
       alt: string;
     };
+    /**
+     * Links that will appear in order from left to right that link
+     * out to different external pages or to places inside of the
+     * documents app
+     */
+    links?: ButteryConfigDocsHeaderLink[];
   };
 };

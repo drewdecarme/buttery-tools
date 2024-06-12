@@ -9,8 +9,8 @@ import {
 import { styled } from "@linaria/react";
 import { useLocation } from "@remix-run/react";
 import { type FC, type MouseEventHandler, useCallback } from "react";
-import type { ButteryDocsGraphTOC } from "../../commands/_utils/types";
-import { getGraphValueThatMatchesPathname } from "../library";
+import type { ButteryDocsGraphTOC } from "../../../commands/_utils/types";
+import { getGraphValueThatMatchesPathname } from "../../library";
 import { useDetermineActiveSection } from "./layout.useDetermineActiveSection";
 import { useLayoutContext } from "./layout.useLayoutContext";
 import { layoutNavOverlineCSS } from "./layout.utils";

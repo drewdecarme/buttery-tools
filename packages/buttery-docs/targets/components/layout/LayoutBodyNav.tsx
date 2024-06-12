@@ -8,7 +8,7 @@ import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 // import { NativeAnchor } from "./native";
 import { type FC, useMemo } from "react";
-import type { ButteryDocsGraph } from "../../commands/_utils/types";
+import type { ButteryDocsGraph } from "../../../commands/_utils/types";
 import { useLayoutContext } from "./layout.useLayoutContext";
 import { layoutNavOverlineCSS } from "./layout.utils";
 

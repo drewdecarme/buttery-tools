@@ -1,8 +1,8 @@
 import type { ButteryConfigDocs } from "@buttery/core";
 import React from "react";
 import { type FC, type ReactNode, useMemo } from "react";
-import type { ButteryDocsGraph } from "../../commands/_utils/types";
-import { NativeAnchor } from "./native";
+import type { ButteryDocsGraph } from "../../../commands/_utils/types";
+import { NativeAnchor } from "../native";
 
 type ButteryConfigDocsItems = {
   header?: ButteryConfigDocs["header"] | null;

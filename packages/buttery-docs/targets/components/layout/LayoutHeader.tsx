@@ -8,6 +8,7 @@ import {
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 import type { FC } from "react";
+import { LayoutHeaderLinks } from "./LayoutHeaderLinks";
 import { useLayoutContext } from "./layout.useLayoutContext";
 
 const SLayoutHeader = styled("header")`
@@ -82,7 +83,7 @@ export const LayoutHeader: FC = () => {
           </NavLinkComponent>
         )}
         <div>
-          <button type="button">test 1</button>
+          <LayoutHeaderLinks links={header?.links} />
         </div>
       </div>
     </SLayoutHeader>

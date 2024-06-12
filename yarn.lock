@@ -3210,6 +3210,7 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     "@wyw-in-js/babel-preset": "npm:^0.5.3"
     "@wyw-in-js/vite": "npm:^0.5.3"
+    chokidar: "npm:^3.6.0"
     clsx: "npm:^2.1.1"
     fs-extra: "npm:^11.2.0"
     gray-matter: "npm:^4.0.3"
@@ -3235,12 +3236,13 @@ __metadata:
     remark-toc: "npm:^9.0.0"
     remix: "npm:^2.9.2"
     storybook: "npm:^8.1.6"
-    ts-pattern: "npm:^5.1.2"
+    ts-pattern: "npm:^5.2.0"
     typescript: "npm:^5.4.5"
     unified: "npm:^11.0.4"
     unist-util-is: "npm:^6.0.0"
     vfile: "npm:^6.0.1"
     vite: "npm:^5.2.13"
+    wrangler: "npm:^3.60.2"
   bin:
     buttery-docs: bin/index.js
   languageName: unknown
@@ -9426,41 +9428,6 @@ __metadata:
   checksum: 10c0/3c32fe5bd7ed4ff7dbd6fb14bcb9d7eaa7e967327f1899cd336f8625d3f46fceead0a53528f1e332aeaee757034ebb307cb2f1a37af2b86a3c5ad4845d01c0c8
   languageName: node
   linkType: hard
-
-"buttery-tokens-docs@workspace:packages/buttery-tokens-docs":
-  version: 0.0.0-use.local
-  resolution: "buttery-tokens-docs@workspace:packages/buttery-tokens-docs"
-  dependencies:
-    "@buttery/core": "workspace:^"
-    "@buttery/docs": "workspace:^"
-    "@cloudflare/workers-types": "npm:^4.20240605.0"
-    "@mdx-js/rollup": "npm:^3.0.1"
-    "@remix-run/cloudflare": "npm:^2.9.2"
-    "@remix-run/cloudflare-pages": "npm:^2.9.2"
-    "@remix-run/dev": "npm:^2.9.2"
-    "@remix-run/react": "npm:^2.9.2"
-    "@types/react": "npm:^18.3.3"
-    "@types/react-dom": "npm:^18.3.0"
-    "@typescript-eslint/eslint-plugin": "npm:^6.21.0"
-    "@typescript-eslint/parser": "npm:^6.21.0"
-    eslint: "npm:^8.57.0"
-    eslint-import-resolver-typescript: "npm:^3.6.1"
-    eslint-plugin-import: "npm:^2.29.1"
-    eslint-plugin-jsx-a11y: "npm:^6.8.0"
-    eslint-plugin-react: "npm:^7.34.2"
-    eslint-plugin-react-hooks: "npm:^4.6.2"
-    isbot: "npm:^4.4.0"
-    miniflare: "npm:^3.20240605.0"
-    node-fetch: "npm:^3.3.2"
-    react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
-    remix: "npm:^2.9.2"
-    typescript: "npm:^5.4.5"
-    vite: "npm:^5.2.13"
-    vite-tsconfig-paths: "npm:^4.3.2"
-    wrangler: "npm:^3.60.1"
-  languageName: unknown
-  linkType: soft
 
 "buttery@workspace:.":
   version: 0.0.0-use.local
@@ -20985,6 +20952,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-pattern@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "ts-pattern@npm:5.2.0"
+  checksum: 10c0/99d0bc0d2f3aa19d8ff50b028f4e1c3da35b21f4503f329f8818863b614df3850c0b3709c703e18f5902e68b9682d29719c82b709e07907e87e374e5c70a01f5
+  languageName: node
+  linkType: hard
+
 "tsconfck@npm:^3.0.3":
   version: 3.0.3
   resolution: "tsconfck@npm:3.0.3"
@@ -22383,6 +22357,41 @@ __metadata:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
   checksum: 10c0/5b459ec57321cc51ac5f6f699c0cc9b18344f9840329ffd7a4bfe020c8067573a2409d3840f9c473a6fb13495e1cc4f0d02d355a4b463a83cb30e380ed60704a
+  languageName: node
+  linkType: hard
+
+"wrangler@npm:^3.60.2":
+  version: 3.60.2
+  resolution: "wrangler@npm:3.60.2"
+  dependencies:
+    "@cloudflare/kv-asset-handler": "npm:0.3.2"
+    "@esbuild-plugins/node-globals-polyfill": "npm:^0.2.3"
+    "@esbuild-plugins/node-modules-polyfill": "npm:^0.2.2"
+    blake3-wasm: "npm:^2.1.5"
+    chokidar: "npm:^3.5.3"
+    esbuild: "npm:0.17.19"
+    fsevents: "npm:~2.3.2"
+    miniflare: "npm:3.20240605.0"
+    nanoid: "npm:^3.3.3"
+    path-to-regexp: "npm:^6.2.0"
+    resolve: "npm:^1.22.8"
+    resolve.exports: "npm:^2.0.2"
+    selfsigned: "npm:^2.0.1"
+    source-map: "npm:0.6.1"
+    unenv: "npm:unenv-nightly@1.10.0-1717606461.a117952"
+    xxhash-wasm: "npm:^1.0.1"
+  peerDependencies:
+    "@cloudflare/workers-types": ^4.20240605.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  peerDependenciesMeta:
+    "@cloudflare/workers-types":
+      optional: true
+  bin:
+    wrangler: bin/wrangler.js
+    wrangler2: bin/wrangler.js
+  checksum: 10c0/edf25ccb0dafc9caf74af75ca1e4f535e627ca6ed530f292fd4f4927426f04b9d47191409f9457669b3002e3f3e630b3fda115b10a0790ca90cee88c2379fa52
   languageName: node
   linkType: hard
 

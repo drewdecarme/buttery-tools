@@ -14,6 +14,13 @@ const config: ButteryConfig = {
         src: "/images/buttery-tokens-logo.png",
         alt: "buttery-tokens",
       },
+      links: [
+        {
+          type: "social",
+          provider: "github",
+          href: "https://github.com/drewdecarme/buttery-tools/tree/main/packages/buttery-tokens",
+        },
+      ],
     },
     order: {
       introduction: {
