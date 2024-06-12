@@ -11,6 +11,7 @@ import { useCallback, useEffect, useRef } from "react";
 export const useDetermineActiveSection = (pathname: string) => {
   const headingsRef = useRef<NodeListOf<HTMLHeadingElement> | null>(null);
   const anchorsRef = useRef<NodeListOf<HTMLAnchorElement> | null>(null);
+  const activeHashRef = useRef<string | null>(null);
 
   const getHeadings = useCallback(() => {
     if (!headingsRef.current) {
@@ -55,48 +56,22 @@ export const useDetermineActiveSection = (pathname: string) => {
 
     const headings = getHeadings();
 
-    const iObserver = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.target.nodeName === "H1") return;
-          const entryHash = `#${entry.target.id}`;
-
-          // TODO: This logic can be improved
-          console.log(
-            entry.target.id,
-            entry.isIntersecting,
-            entry.boundingClientRect.top > 65
-          );
-          if (
-            entry.isIntersecting &&
-            entry.boundingClientRect.top > 65 &&
-            entry.boundingClientRect.top < 500
-          ) {
-            setActiveAnchor(entryHash);
-          }
-
-          // when we leave the page - 65
-          if (
-            !entry.isIntersecting &&
-            entry.boundingClientRect.top > 0 &&
-            entry.boundingClientRect.top < 65
-          ) {
-            setActiveAnchor(entryHash);
-          }
+    function handleScroll() {
+      // biome-ignore lint/complexity/noForEach: <explanation>
+      headings.forEach((heading) => {
+        const headingHash = `#${heading.id}`;
+        const top = heading.getBoundingClientRect().top;
+        if (top < 65 && top > 0 && activeHashRef.current !== headingHash) {
+          activeHashRef.current = headingHash;
+          setActiveAnchor(headingHash);
         }
-      },
-      {
-        root: null,
-        rootMargin: "-65px",
-        threshold: [0.99],
-      }
-    );
-    // biome-ignore lint/complexity/noForEach: Using a native prototype iterator
-    headings.forEach((heading) => iObserver.observe(heading));
+      });
+    }
+
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      // biome-ignore lint/complexity/noForEach: Using a native forEach
-      headings.forEach((heading) => iObserver.unobserve(heading));
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [pathname]);
 };

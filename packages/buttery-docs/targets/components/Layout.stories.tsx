@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Layout, type LayoutProps } from "./Layout";
 import { graph, toc } from "./Layout.stories.data";
-import { NativeAnchor } from "./native";
 
 const meta: Meta = {
   title: "Layout",

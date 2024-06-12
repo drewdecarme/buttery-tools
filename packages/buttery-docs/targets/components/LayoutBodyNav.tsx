@@ -62,8 +62,6 @@ const SSection = styled("section")`
   }
 `;
 
-const SSectionOverline = styled("h1")``;
-
 const anchorCss = css`
   height: ${makeRem(32)};
   text-decoration: none;

@@ -3,6 +3,7 @@ import {
   makeColorStatic,
   makeCustom,
   makeRem,
+  makeReset,
 } from "@buttery/tokens/_docs";
 import { styled } from "@linaria/react";
 import type { FC, ReactNode } from "react";
@@ -51,6 +52,10 @@ const SLayoutBodyMain = styled("section")`
       line-height: ${makeRem(24)};
       z-index: 9;
       background: ${makeColorStatic("background")};
+    }
+
+    a {
+      ${makeReset("anchor")};
     }
   }
 `;
