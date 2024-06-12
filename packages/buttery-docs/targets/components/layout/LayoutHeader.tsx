@@ -32,11 +32,6 @@ const SLayoutHeader = styled("header")`
     gap: ${makeRem(16)};
     max-width: ${makeCustom("layout-max-width")};
     margin: 0 auto;
-
-    & > div:last-child {
-      display: flex;
-      justify-content: flex-end;
-    }
   }
 `;
 
@@ -82,9 +77,11 @@ export const LayoutHeader: FC = () => {
             {header?.title && <SDiv>{header.title}</SDiv>}
           </NavLinkComponent>
         )}
-        <div>
-          <LayoutHeaderLinks links={header?.links} />
-        </div>
+
+        <LayoutHeaderLinks
+          links={header?.links}
+          NavLinkComponent={NavLinkComponent}
+        />
       </div>
     </SLayoutHeader>
   );

@@ -1,0 +1,50 @@
+{
+  "name": "@buttery/icons",
+  "version": "0.0.1",
+  "description": "SVG, React Icons that can be used in any buttery apps or packages; includes a React Icon component that dynamically loads icon files as they are needed",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "import": "./dist/index.js",
+      "node": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./svg": {
+      "default": "./svg/index.js",
+      "import": "./svg/index.js",
+      "node": "./svg/index.js",
+      "require": "./svg/index.js",
+      "types": "./svg/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "yarn generate && yarn types && yarn tsc",
+    "generate": "svgr --out-dir ./src/generated --filename-case kebab --typescript --jsx-runtime automatic --no-index --title-prop -- ./svg",
+    "types": "npx tsx ./scripts/script.icon-types.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drewdecarme/buttery-tools.git#main"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools/tree/main#readme",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@buttery/logger": "workspace:^",
+    "@buttery/tsconfig": "workspace:^",
+    "@svgr/cli": "^8.1.0",
+    "@svgr/core": "^8.1.0",
+    "tsx": "^4.15.2",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.13"
+  }
+}

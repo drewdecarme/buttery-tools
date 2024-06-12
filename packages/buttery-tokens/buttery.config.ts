@@ -9,12 +9,17 @@ const config: ButteryConfig = {
   },
   docs: {
     header: {
-      title: "Buttery Tokens Documentation",
+      title: "Buttery Tokens",
       logo: {
         src: "/images/buttery-tokens-logo.png",
         alt: "buttery-tokens",
       },
       links: [
+        {
+          type: "internal",
+          href: "/guides",
+          text: "Guides",
+        },
         {
           type: "social",
           provider: "github",
@@ -39,6 +44,10 @@ const config: ButteryConfig = {
       security: {
         display: "Securing your app",
         routeOrder: ["overview-of-security", "prevention-of-attacks"],
+      },
+      guides: {
+        display: "Guides",
+        routeOrder: ["guides"],
       },
     },
   },

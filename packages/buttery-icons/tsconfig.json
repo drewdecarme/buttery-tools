@@ -1,0 +1,10 @@
+{
+  "extends": "@buttery/tsconfig/library",
+  "compilerOptions": {
+    "declarationDir": "./dist",
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["src"]
+}
