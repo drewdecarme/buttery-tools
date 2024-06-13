@@ -1,0 +1,3 @@
+.buttery-docs/*
+!.buttery-docs/_template/
+!.buttery-docs/_template/**

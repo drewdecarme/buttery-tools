@@ -37,6 +37,7 @@ export const createGraph = async ({
       segments,
       // content,
       routeAbs,
+      filename,
       toc,
     } = parsedFile;
 
@@ -47,6 +48,7 @@ export const createGraph = async ({
       graph[section] = {
         title: sectionTitle,
         filepath: file.fsPath,
+        filename,
         routeAbs: `/${section === "_index" ? "" : section}`,
         routeRel: section === "_index" ? "/" : section,
         toc: [],
@@ -67,6 +69,7 @@ export const createGraph = async ({
         currentGraph[segment] = {
           title: "",
           filepath: "",
+          filename: "",
           routeAbs: "",
           routeRel: "",
           toc: [],
@@ -77,6 +80,7 @@ export const createGraph = async ({
       if (i === segments.length - 1) {
         currentGraph[segment].title = title;
         currentGraph[segment].filepath = file.fsPath;
+        currentGraph[segment].filename = file.filename;
         currentGraph[segment].routeAbs = routeAbs;
         currentGraph[segment].routeRel = segment;
         currentGraph[segment].toc = toc;

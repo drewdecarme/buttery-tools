@@ -3202,7 +3202,6 @@ __metadata:
     "@storybook/react": "npm:^8.1.6"
     "@storybook/react-vite": "npm:^8.1.6"
     "@storybook/test": "npm:^8.1.6"
-    "@types/fs-extra": "npm:^11.0.4"
     "@types/lodash.get": "npm:^4.4.9"
     "@types/mdast": "npm:^4.0.4"
     "@types/node": "npm:^20.14.2"
@@ -3213,7 +3212,6 @@ __metadata:
     "@wyw-in-js/vite": "npm:^0.5.3"
     chokidar: "npm:^3.6.0"
     clsx: "npm:^2.1.1"
-    fs-extra: "npm:^11.2.0"
     gray-matter: "npm:^4.0.3"
     highlight.js: "npm:^11.9.0"
     lodash.get: "npm:^4.4.2"
@@ -3221,6 +3219,7 @@ __metadata:
     mdast-util-from-markdown: "npm:^2.0.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
+    react-router-dom: "npm:^6.23.1"
     react-snap: "npm:^1.23.0"
     rehype-autolink-headings: "npm:^7.1.0"
     rehype-highlight: "npm:^7.0.0"
@@ -9945,9 +9944,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cloudflare-pages-42c21a@workspace:packages/buttery-docs/targets/remix/cloudflare-pages":
+"cloudflare-pages-e6a6e1@workspace:packages/buttery-docs/targets/apps/cloudflare-pages":
   version: 0.0.0-use.local
-  resolution: "cloudflare-pages-42c21a@workspace:packages/buttery-docs/targets/remix/cloudflare-pages"
+  resolution: "cloudflare-pages-e6a6e1@workspace:packages/buttery-docs/targets/apps/cloudflare-pages"
   dependencies:
     "@remix-run/cloudflare": "npm:^2.9.2"
     isbot: "npm:^4.4.0"

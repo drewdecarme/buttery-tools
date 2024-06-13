@@ -43,6 +43,7 @@ const SUl = styled("ul")`
       height: ${makeRem(32)};
       color: ${makeColor("neutral")};
       transition: all 0.15s ease-in-out;
+      font-size: ${makeRem(14)};
 
       &:not(.active) {
         &:hover {

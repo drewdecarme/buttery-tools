@@ -1,3 +1,4 @@
+import { parseFilename } from "./util.file.parseFilename";
 import { LOG_DOCS } from "./util.logger";
 
 export async function getButteryDocsGraphValueMeta({
@@ -7,14 +8,15 @@ export async function getButteryDocsGraphValueMeta({
   frontmatter: { [key: string]: string };
   filename: string;
 }) {
+  const { route } = parseFilename(filename);
   // get the file
   if (!frontmatter.title) {
     LOG_DOCS.warning(
-      `"${filename}" is missing a frontmatter title. "${filename}" will be used temporarily. Please ensure you add the title property in the document's frontmatter.`
+      `"${filename}" is missing a frontmatter title. "${route}" will be used temporarily. Please ensure you add the title property in the document's frontmatter.`
     );
   }
 
   return {
-    title: frontmatter?.title ?? "",
+    title: frontmatter?.title ?? route,
   };
 }

@@ -5,5 +5,11 @@
     "lib": ["DOM"],
     "types": ["@remix-run/cloudflare", "vite/client"]
   },
-  "include": ["src", "commands", "templates", "targets"]
+  "include": [
+    "src",
+    "commands",
+    "templates",
+    "targets",
+    ".buttery-docs/_template"
+  ]
 }
