@@ -39,7 +39,6 @@ export default defineConfig({
     hmr: {
       port: 443,
     },
-
     fs: {
       strict: false,
     },
@@ -92,11 +91,11 @@ export default defineConfig({
     }),
     remixCloudflareDevProxy(),
     remix({
-      // serverModuleFormat: "esm",
-      // basename: "/",
       appDirectory: path.resolve(import.meta.dirname, "./app"),
       async routes(defineRoutes) {
         const butteryDocsGraph = await getButteryDocsGraph(butteryDocsConfig);
+
+        console.log(JSON.stringify(butteryDocsGraph, null, 2));
 
         const routes = defineRoutes((route) => {
           function createRouteFromGraph(graph: ButteryDocsGraph) {

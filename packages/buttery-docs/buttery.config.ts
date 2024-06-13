@@ -11,6 +11,13 @@ const config: ButteryConfig = {
   docs: {
     header: {
       title: "Buttery Docs",
+      links: [
+        {
+          type: "internal",
+          text: "Background",
+          href: "/background",
+        },
+      ],
     },
   },
   tokens: {

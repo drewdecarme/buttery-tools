@@ -2,6 +2,23 @@ export type ButteryConfigDocsHeaderLink =
   | { type: "social"; provider: "github" | "discord"; href: string }
   | { type: "text"; text: string; href: string }
   | { type: "internal"; text: string; href: string };
+export type ButteryConfigDocsOrder = {
+  [section: string]: {
+    /**
+     * The string that will be displayed as the header
+     */
+    display: string;
+    /**
+     * The order of the routes. These are the file names
+     * sans the docsPrefix and the section name
+     * @example
+     * if the file name = `_docs.getting-started.introduction.advanced`
+     * the string in the route order will be `introduction.advanced`
+     *
+     */
+    routeOrder: string[];
+  };
+};
 
 export type ButteryConfigDocs = {
   /**
@@ -37,23 +54,7 @@ export type ButteryConfigDocs = {
     }
    * ```
    */
-  order?: {
-    [section: string]: {
-      /**
-       * The string that will be displayed as the header
-       */
-      display: string;
-      /**
-       * The order of the routes. These are the file names
-       * sans the docsPrefix and the section name
-       * @example
-       * if the file name = `_docs.getting-started.introduction.advanced`
-       * the string in the route order will be `introduction.advanced`
-       *
-       */
-      routeOrder: string[];
-    };
-  };
+  order?: ButteryConfigDocsOrder;
   header?: {
     /**
      * Adds a title in the upper left hand of the application
