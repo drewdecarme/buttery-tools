@@ -5,15 +5,15 @@ import { getButteryDocsConfig } from "../../../../../commands/_utils/util.getBut
 import { getButteryDocsGraph } from "../../../../../commands/_utils/util.getButteryDocsGraph";
 import { Layout } from "../../../../components";
 
-const RemixNavLink: FC<JSX.IntrinsicElements["a"] & { href: string }> = memo(
-  function RemixNavLink({ children, href, ...restProps }) {
-    return (
-      <NavLink to={href} {...restProps} end>
-        {children}
-      </NavLink>
-    );
-  }
-);
+const RemixNavLink: FC<
+  JSX.IntrinsicElements["a"] & { href: string; end?: boolean }
+> = memo(function RemixNavLink({ children, href, end = false, ...restProps }) {
+  return (
+    <NavLink to={href} {...restProps} end={end}>
+      {children}
+    </NavLink>
+  );
+});
 
 export async function loader() {
   const butteryDocsConfig = await getButteryDocsConfig();

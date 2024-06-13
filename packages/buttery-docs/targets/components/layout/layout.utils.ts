@@ -1,7 +1,13 @@
-import { makeColor, makeFontWeight, makeRem } from "@buttery/tokens/_docs";
+import {
+  makeColor,
+  makeFontWeight,
+  makeRem,
+  makeReset,
+} from "@buttery/tokens/_docs";
 import { css } from "@linaria/core";
 
 export const layoutNavOverlineCSS = css`
+  ${makeReset("anchor")};
   font-size: ${makeRem(12)};
   text-transform: uppercase;
   font-weight: ${makeFontWeight("semi-bold")};

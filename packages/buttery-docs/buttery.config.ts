@@ -8,6 +8,11 @@ const config: ButteryConfig = {
       "A CLI to build the necessary assets required to render the Buttery Docs template in any remix site.",
     version: "0.0.1",
   },
+  docs: {
+    header: {
+      title: "Buttery Docs",
+    },
+  },
   tokens: {
     importName: "_docs",
     gridSystem: 4,
@@ -30,6 +35,7 @@ const config: ButteryConfig = {
       },
       typography: {},
     },
+
     breakpoints: {
       "phone-small": 320,
       phone: 375,

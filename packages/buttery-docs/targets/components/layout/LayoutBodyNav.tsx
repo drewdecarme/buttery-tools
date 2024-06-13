@@ -3,9 +3,11 @@ import {
   makeCustom,
   makeFontWeight,
   makeRem,
+  makeReset,
 } from "@buttery/tokens/_docs";
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
+import clsx from "clsx";
 // import { NativeAnchor } from "./native";
 import { type FC, useMemo } from "react";
 import type { ButteryDocsGraph } from "../../../commands/_utils/types";
@@ -92,6 +94,19 @@ const anchorCss = css`
   }
 `;
 
+const anchorOverlineCSS = css`
+  ${makeReset("anchor")};
+  transition: all 0.15s ease-in-out;
+
+  &.active,
+  &:hover {
+    & > * {
+      font-weight: ${makeFontWeight("bold")};
+      color: ${makeColor("primary")};
+    }
+  }
+`;
+
 /**
  * Recursive component designed to create a sidebar tree form
  * nested pages.
@@ -133,7 +148,14 @@ export const LayoutBodyNav: FC = () => {
             if (sectionKey === "_index") return null;
             return (
               <SSection key={sectionKey}>
-                <h1 className={layoutNavOverlineCSS}>{sectionValues.title}</h1>
+                <NavLinkComponent
+                  to={sectionValues.routeAbs}
+                  className={clsx(anchorOverlineCSS)}
+                >
+                  <h1 className={layoutNavOverlineCSS}>
+                    {sectionValues.title}
+                  </h1>
+                </NavLinkComponent>
                 <NavItem
                   graph={sectionValues.pages}
                   NavLinkComponent={NavLinkComponent}
