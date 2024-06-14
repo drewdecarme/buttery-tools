@@ -8,7 +8,6 @@ import {
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 import clsx from "clsx";
-// import { NativeAnchor } from "./native";
 import { type FC, useMemo } from "react";
 import type { ButteryDocsGraph } from "../../../commands/_utils/types";
 import { useLayoutContext } from "./layout.useLayoutContext";
@@ -16,8 +15,11 @@ import { layoutNavOverlineCSS } from "./layout.utils";
 
 const SNav = styled("nav")`
   grid-area: layout-sidebar;
+  align-self: start;
   border-right: ${makeRem(1)} solid
     ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
+  max-height: ${`calc(100vh - ${makeCustom("layout-header-height")})`};
+  overflow-y: auto;
 `;
 
 const SNavContent = styled("div")`
@@ -56,24 +58,24 @@ const SUl = styled("ul")`
 `;
 
 const SSection = styled("section")`
-  margin-bottom: ${makeRem(24)};
+  margin-bottom: ${makeRem(16)};
   & + & {
-    padding-top: ${makeRem(24)};
+    padding-top: ${makeRem(16)};
     border-top: ${makeRem(1)} solid
       ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
   }
 `;
 
 const anchorCss = css`
-  height: ${makeRem(32)};
+  height: ${makeRem(24)};
   text-decoration: none;
   color: ${makeColor("neutral")};
-  padding: 0 ${makeRem(8)};
+  padding: ${makeRem(2)} ${makeRem(8)};
   border-radius: ${makeRem(4)};
   font-size: ${makeRem(14)};
   display: flex;
   align-items: center;
-  margin-bottom: ${makeRem(8)};
+  margin-bottom: ${makeRem(4)};
   transition: all 0.15s ease-in-out;
 
   &:visited {
