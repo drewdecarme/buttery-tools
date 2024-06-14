@@ -38,42 +38,44 @@ const internalCss = css`
 `;
 
 export const LayoutHeaderLinks: FC<{
-  links?: ButteryConfigDocsHeaderLink[];
+  links?: ButteryConfigDocsHeaderLink[][];
   NavLinkComponent: JSX.ElementType;
 }> = ({ links = [], NavLinkComponent }) => {
   return (
-    <SUl>
-      {links.map((link) => {
-        return (
-          <li key={link.href}>
-            {match(link)
-              .with({ type: "social" }, (socialLink) => {
-                return (
-                  <SAnchorSocial href={socialLink.href} target="_blank">
-                    <IconComponent
-                      icon="github-circle-solid-rounded"
-                      ddSize={makeRem(28)}
-                    />
-                  </SAnchorSocial>
-                );
-              })
-              .with({ type: "text" }, (socialLink) => {
-                return <a href={socialLink.href}>{socialLink.text}</a>;
-              })
-              .with({ type: "internal" }, (internalLink) => {
-                return (
-                  <NavLinkComponent
-                    to={internalLink.href}
-                    className={internalCss}
-                  >
-                    {internalLink.text}
-                  </NavLinkComponent>
-                );
-              })
-              .exhaustive()}
-          </li>
-        );
+    <>
+      {links.map((linkSection) => {
+        <SUl>
+          {linkSection.map((link) => (
+            <li key={link.href}>
+              {match(link)
+                .with({ type: "social" }, (socialLink) => {
+                  return (
+                    <SAnchorSocial href={socialLink.href} target="_blank">
+                      <IconComponent
+                        icon="github-circle-solid-rounded"
+                        ddSize={makeRem(28)}
+                      />
+                    </SAnchorSocial>
+                  );
+                })
+                .with({ type: "text" }, (socialLink) => {
+                  return <a href={socialLink.href}>{socialLink.text}</a>;
+                })
+                .with({ type: "internal" }, (internalLink) => {
+                  return (
+                    <NavLinkComponent
+                      to={internalLink.href}
+                      className={internalCss}
+                    >
+                      {internalLink.text}
+                    </NavLinkComponent>
+                  );
+                })
+                .exhaustive()}
+            </li>
+          ))}
+        </SUl>;
       })}
-    </SUl>
+    </>
   );
 };

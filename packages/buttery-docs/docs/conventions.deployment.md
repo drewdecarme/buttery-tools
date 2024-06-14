@@ -1,8 +1,10 @@
 ---
-title: Build Targets
+title: Deployment
 ---
 
 # Deployment
+
+## Overview
 
 Buttery Docs aims to ensure that you can deploy your app anywhere using any service, instead of deciding for you what targets you can. If you want to deploy a static site, then you can select a deployment target for that. If you want to deploy a server rendered app on Cloudflare, then you can also choose that as well.
 

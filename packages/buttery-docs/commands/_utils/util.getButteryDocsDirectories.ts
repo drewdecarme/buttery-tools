@@ -11,6 +11,10 @@ export const hashString = (input: string) => {
   return createHash("sha256").update(input).digest("hex");
 };
 
+export type ButteryDocsDirectories = ReturnType<
+  typeof getButteryDocsDirectories
+>;
+
 /**
  * Returns some absolute path directories for easily referencing directories
  * that we should be pulling files from or serving content.

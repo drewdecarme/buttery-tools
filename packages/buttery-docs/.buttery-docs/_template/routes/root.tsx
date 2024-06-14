@@ -1,5 +1,6 @@
 import type { ButteryConfigDocs } from "@buttery/core";
 import { NavLink, Outlet, useLoaderData } from "react-router-dom";
+import { ScrollRestoration } from "react-router-dom";
 import type { ButteryDocsGraph } from "../../../commands/_utils/types";
 import { Layout, bodyCSS } from "../../../targets/components";
 
@@ -18,6 +19,7 @@ export default function RootRoute() {
       >
         <Outlet />
       </Layout>
+      <ScrollRestoration />
     </div>
   );
 }

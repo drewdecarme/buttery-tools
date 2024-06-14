@@ -46,16 +46,27 @@ const SLayoutBodyMain = styled("section")`
       padding: 1em 0;
     }
 
+    a {
+      ${makeReset("anchor")};
+    }
+
     p {
-      margin: 0;
       font-size: ${makeRem(16)};
       line-height: ${makeRem(24)};
       z-index: 9;
       background: ${makeColorStatic("background")};
-    }
 
-    a {
-      ${makeReset("anchor")};
+      a {
+        background-color: ${makeColor("secondary", {
+          variant: "50",
+          opacity: 0.2,
+        })};
+        color: ${makeColor("secondary", { variant: "700" })} !important;
+        padding: 0 ${makeRem(4)};
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 `;

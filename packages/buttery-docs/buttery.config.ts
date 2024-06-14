@@ -12,11 +12,20 @@ const config: ButteryConfig = {
     header: {
       title: "Buttery Docs",
       links: [
-        {
-          type: "internal",
-          text: "Background",
-          href: "/background",
-        },
+        [
+          {
+            type: "internal",
+            text: "Under the hood",
+            href: "/under-the-hood",
+          },
+        ],
+        [
+          {
+            type: "social",
+            provider: "github",
+            href: "https://github.com/drewdecarme/buttery-tools/tree/main/packages/buttery-docs",
+          },
+        ],
       ],
     },
   },

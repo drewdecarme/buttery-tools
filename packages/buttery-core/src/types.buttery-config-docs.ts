@@ -73,6 +73,6 @@ export type ButteryConfigDocs = {
      * out to different external pages or to places inside of the
      * documents app
      */
-    links?: ButteryConfigDocsHeaderLink[];
+    links?: ButteryConfigDocsHeaderLink[][];
   };
 };
