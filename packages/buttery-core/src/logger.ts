@@ -4,5 +4,5 @@ export const LOG = new ButteryLogger({
   prefix: "@buttery/core",
   format: "basic",
   logLevel: "debug",
-  shouldPrintLevel: false
+  shouldPrintLevel: false,
 });

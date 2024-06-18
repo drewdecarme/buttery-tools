@@ -13,6 +13,7 @@ export const meta: CommandMeta = {
 export const action: CommandAction = async () => {
   try {
     const butteryConfigs = await getButteryDocsConfig();
+    console.log({ butteryConfigs });
 
     await prepareDevDirectory(butteryConfigs);
     await writeButteryDocsGraphDevData(butteryConfigs);

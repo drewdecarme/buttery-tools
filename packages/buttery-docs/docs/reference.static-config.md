@@ -91,6 +91,8 @@ There are 3 kinds of links that can be created in n number of sections the heade
 2. **Social**: A pre-defined set of links that has their own icons that can link to various social providers
 3. **External**: Any link that links out to any other. By default it opens in another tab.
 
+All links are a discriminated union so depending upon the `type`, intellisense will know which other properties to surface when declaratively writing links.
+
 ```ts
 const config: ButteryConfig = {
   docs: {
@@ -109,7 +111,7 @@ const config: ButteryConfig = {
           {
             type: "social",
             provider: "github",
-            href: "https://github.com/drewdecarme/buttery-tools/tree/main/packages/buttery-docs",
+            href: "https://github.com/your-repo.git",
           },
         ],
       ],
@@ -117,5 +119,3 @@ const config: ButteryConfig = {
   },
 };
 ```
-
-## Organizing the Navbar

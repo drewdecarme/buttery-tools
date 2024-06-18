@@ -3165,7 +3165,6 @@ __metadata:
   dependencies:
     "@buttery/logger": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
-    cosmiconfig: "npm:^9.0.0"
     typescript: "npm:^5.4.5"
   languageName: unknown
   linkType: soft

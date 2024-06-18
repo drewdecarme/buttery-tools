@@ -17,12 +17,12 @@ export const prepareDevDirectory = async (config: ButteryDocsConfig) => {
       recursive: true,
     });
     // clean the dev/docs dir
-    await rm(butteryDirs.dev.docsDir, { recursive: true });
+    await rm(butteryDirs.dev.docsDir, { recursive: true, force: true });
     // populate the dev/docs dir
     await cp(butteryDirs.docs, butteryDirs.dev.docsDir, {
       recursive: true,
     });
   } catch (error) {
-    throw "Failed to copy necessary files to dev directory for development";
+    throw `Failed to copy necessary files to dev directory for development: ${error}`;
   }
 };

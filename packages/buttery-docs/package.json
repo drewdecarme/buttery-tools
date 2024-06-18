@@ -48,6 +48,7 @@
   "bin": {
     "buttery-docs": "bin/index.js"
   },
+  "buttery-docs": {},
   "dependencies": {
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
