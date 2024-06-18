@@ -1,8 +1,8 @@
 import { NavLink, Outlet, json, useLoaderData } from "@remix-run/react";
 import { type FC, memo } from "react";
 
-import { getButteryDocsConfig } from "../../../../../commands/_utils/util.getButteryDocsConfig";
-import { getButteryDocsGraph } from "../../../../../commands/_utils/util.getButteryDocsGraph";
+import { getButteryDocsConfig } from "../../../../../.buttery/commands/_utils/util.getButteryDocsConfig";
+import { getButteryDocsGraph } from "../../../../../.buttery/commands/_utils/util.getButteryDocsGraph";
 import { Layout } from "../../../../components";
 
 const RemixNavLink: FC<

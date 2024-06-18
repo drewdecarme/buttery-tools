@@ -20,12 +20,12 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import { defineConfig } from "vite";
-import type { ButteryDocsGraph } from "../../../commands/_utils/types";
-import { getButteryDocsConfig } from "../../../commands/_utils/util.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../../../commands/_utils/util.getButteryDocsDirectories";
-import { getButteryDocsGraph } from "../../../commands/_utils/util.getButteryDocsGraph";
-import { LOG_DOCS } from "../../../commands/_utils/util.logger";
-import { transformMarkdownAssetPath } from "../../../commands/_utils/vite-plugin-transform-markdown-asset-path";
+import type { ButteryDocsGraph } from "../../../.buttery/commands/_utils/types";
+import { getButteryDocsConfig } from "../../../.buttery/commands/_utils/util.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../../../.buttery/commands/_utils/util.getButteryDocsDirectories";
+import { getButteryDocsGraph } from "../../../.buttery/commands/_utils/util.getButteryDocsGraph";
+import { LOG_DOCS } from "../../../.buttery/commands/_utils/util.logger";
+import { transformMarkdownAssetPath } from "../../../.buttery/commands/_utils/vite-plugin-transform-markdown-asset-path";
 
 const butteryDocsConfig = await getButteryDocsConfig();
 const butteryDocsDirectories = getButteryDocsDirectories(butteryDocsConfig);

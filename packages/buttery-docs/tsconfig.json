@@ -7,7 +7,7 @@
   },
   "include": [
     "src",
-    "commands",
+    ".buttery/commands",
     "templates",
     "targets",
     ".buttery-docs/_template"

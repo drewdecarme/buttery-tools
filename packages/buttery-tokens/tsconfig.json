@@ -9,5 +9,5 @@
       "@buttery/tokens/css": ["./.tokens/_tokens/index.ts"]
     }
   },
-  "include": ["vite.config.ts", "./src", "./playground", "./commands"]
+  "include": ["vite.config.ts", "./src", "./playground", ".buttery"]
 }

@@ -1,7 +1,6 @@
 import type { ButteryConfig } from "@buttery/core";
 
 const config: ButteryConfig = {
-  root: import.meta.dirname,
   cli: {
     name: "buttery-tokens",
     description: "A CLI to develop and build buttery tokens",
@@ -15,16 +14,20 @@ const config: ButteryConfig = {
         alt: "buttery-tokens",
       },
       links: [
-        {
-          type: "internal",
-          href: "/guides",
-          text: "Guides",
-        },
-        {
-          type: "social",
-          provider: "github",
-          href: "https://github.com/drewdecarme/buttery-tools/tree/main/packages/buttery-tokens",
-        },
+        [
+          {
+            type: "internal",
+            href: "/guides",
+            text: "Guides",
+          },
+        ],
+        [
+          {
+            type: "social",
+            provider: "github",
+            href: "https://github.com/drewdecarme/buttery-tools/tree/main/packages/buttery-tokens",
+          },
+        ],
       ],
     },
     order: {
@@ -121,7 +124,5 @@ const config: ButteryConfig = {
     },
   },
 };
-
-// TODO: when this changes, the tokens distro needs to be rebuilt
 
 export default config;
