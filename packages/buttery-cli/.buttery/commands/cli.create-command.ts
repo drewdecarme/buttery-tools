@@ -1,8 +1,8 @@
-import type { CommandAction, CommandMeta } from "../lib/types";
+import type { CommandAction, CommandMeta } from "../../lib/types";
 
 export const meta: CommandMeta = {
   name: "create-command",
-  description: "Bootstrap a new file based CLI command via a few prompts"
+  description: "Bootstrap a new file based CLI command via a few prompts",
 };
 
 export const action: CommandAction = async (args) => {

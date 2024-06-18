@@ -13,7 +13,7 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "tsx ./scripts/build.ts",
+    "build": "tsx ./scripts/build-local.ts",
     "dev": "yarn build --watch --local",
     "commands:build": "yarn butter cli build",
     "commands:dev": "yarn build --watch"

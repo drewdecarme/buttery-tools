@@ -12,7 +12,7 @@ import type {
   CommandArgs,
   CommandMeta,
   CommandOptions,
-} from "../../lib";
+} from "../../../lib";
 import { LOG } from "../_utils/util.logger";
 import { templateCommandParent, templateIndex } from "./templates";
 
@@ -58,8 +58,8 @@ export class ESBuildPluginCommands {
     this.commandGraph = {};
     this.commandStr = "";
 
-    this.commandFilesSrcDir = path.resolve(this.config.root, "./commands");
-    this.commandFilesOutDir = path.resolve(this.config.root, "./bin");
+    this.commandFilesSrcDir = path.resolve(this.config., "./commands");
+    this.commandFilesOutDir = path.resolve(this.config., "./bin");
   }
 
   private kebabToCamel(kebab: string): string {

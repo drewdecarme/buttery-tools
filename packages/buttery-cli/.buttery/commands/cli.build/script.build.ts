@@ -5,10 +5,15 @@ import {
   type ButteryConfigCli,
   getButteryConfig,
 } from "@buttery/core";
-import type { BuildArgs } from "../../scripts/build";
 import { LOG } from "../_utils/util.logger";
 import { buildPackageJson } from "./script.build-package-json";
 import { buildProgram } from "./script.build-program";
+
+export type BuildArgs = {
+  watch: boolean;
+  local: boolean;
+  autofix?: boolean;
+};
 
 export type BuildScriptArgs = {
   configBase: ButteryConfigBase;
@@ -33,7 +38,10 @@ export async function build(programArgs: BuildArgs) {
   const butteryConfig = await getButteryConfig("cli");
 
   try {
-    const { configBase, configPath, cli: configCli } = butteryConfig;
+    const {
+      paths: { config: configPath },
+      cli: configCli,
+    } = butteryConfig;
     const params = { configBase, configPath, configCli, programArgs };
 
     LOG.debug(`Using config: ${configPath}`);

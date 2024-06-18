@@ -20,13 +20,13 @@ export type ButteryDocsDirectories = ReturnType<
  * that we should be pulling files from or serving content.
  */
 export function getButteryDocsDirectories(config: ButteryDocsConfig) {
-  const targetsDir = path.resolve(import.meta.dirname, "../targets");
-  const devDir = path.resolve(config.configBase.root, "./.buttery-docs");
-  const devRootDir = path.resolve(devDir, hashString(config.configPath));
+  const targetsDir = path.resolve(config.paths.rootDir, "../targets");
+  const devDir = path.resolve(config.paths.rootDir, "./.dev-environments");
+  const devRootDir = path.resolve(devDir, hashString(config.paths.rootDir));
 
   return {
-    docs: path.resolve(config.configBase.root, "./docs"),
-    public: path.resolve(config.configBase.root, "./docs/public"),
+    docs: path.resolve(config.paths.butteryDir, "./docs"),
+    public: path.resolve(config.paths.butteryDir, "./docs/public"),
     dev: {
       templateDir: path.resolve(devDir, "./_template"),
       rootDir: devRootDir,
