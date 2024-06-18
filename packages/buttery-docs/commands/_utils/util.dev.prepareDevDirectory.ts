@@ -1,4 +1,4 @@
-import { cp } from "node:fs/promises";
+import { cp, rm } from "node:fs/promises";
 import type { ButteryDocsConfig } from "./util.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./util.getButteryDocsDirectories";
 
@@ -12,9 +12,13 @@ import { getButteryDocsDirectories } from "./util.getButteryDocsDirectories";
 export const prepareDevDirectory = async (config: ButteryDocsConfig) => {
   try {
     const butteryDirs = getButteryDocsDirectories(config);
+    // copy the template to the dev dir
     await cp(butteryDirs.dev.templateDir, butteryDirs.dev.rootDir, {
       recursive: true,
     });
+    // clean the dev/docs dir
+    await rm(butteryDirs.dev.docsDir, { recursive: true });
+    // populate the dev/docs dir
     await cp(butteryDirs.docs, butteryDirs.dev.docsDir, {
       recursive: true,
     });

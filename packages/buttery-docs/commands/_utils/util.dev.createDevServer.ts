@@ -5,6 +5,7 @@ import wyw from "@wyw-in-js/vite";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
+import remarkGfm from "remark-gfm";
 import { createServer } from "vite";
 import type { ButteryDocsConfig } from "./util.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./util.getButteryDocsDirectories";
@@ -29,7 +30,7 @@ export const createDevServer = async (configs: ButteryDocsConfig) => {
         },
       }),
       mdx({
-        remarkPlugins: [remarkFrontmatter],
+        remarkPlugins: [remarkFrontmatter, remarkGfm],
         rehypePlugins: [
           rehypeSlug,
           [

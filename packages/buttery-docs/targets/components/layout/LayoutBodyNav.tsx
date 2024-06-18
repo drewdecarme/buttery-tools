@@ -20,6 +20,8 @@ const SNav = styled("nav")`
     ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
   max-height: ${`calc(100vh - ${makeCustom("layout-header-height")})`};
   overflow-y: auto;
+  position: sticky;
+  top: ${makeCustom("layout-header-height")};
 `;
 
 const SNavContent = styled("div")`

@@ -14,6 +14,86 @@ const SLayoutBodyMain = styled("section")`
   position: sticky;
   top: ${makeCustom("layout-header-height")};
 
+  &:not(pre) {
+    & > code {
+    }
+  }
+
+  code {
+    background: ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
+    padding: ${makeRem(4)};
+    border-radius: ${makeRem(4)};
+  }
+
+  p,
+  li {
+    code {
+      font-size: ${makeRem(12)};
+    }
+  }
+
+  blockquote {
+    background-color: ${makeColor("secondary", {
+      variant: "500",
+      opacity: 0.1,
+    })} !important;
+    margin: 0;
+    padding: ${makeRem(16)};
+    border-radius: ${makeRem(8)};
+
+    & > p {
+      margin: 0;
+      font-size: ${makeRem(14)} !important;
+    }
+  }
+
+  table {
+    --bd-table-border: ${makeRem(1)} solid
+      ${makeColor("neutral", { variant: "50" })};
+    border-spacing: 0;
+    border: var(--bd-table-border);
+    width: 100%;
+    font-size: ${makeRem(14)};
+
+    code {
+      font-size: ${makeRem(12)};
+      color: ${makeColor("secondary")};
+    }
+
+    thead {
+      background: ${makeColor("secondary", { variant: "50", opacity: 0.3 })};
+    }
+
+    tr {
+      &:not(:last-child) {
+        td {
+          border-bottom: var(--bd-table-border);
+        }
+      }
+    }
+
+    th {
+      border-bottom: var(--bd-table-border);
+    }
+
+    th,
+    td {
+      padding: ${makeRem(8)} ${makeRem(16)};
+      text-align: left;
+      &:not(:last-child) {
+        border-right: var(--bd-table-border);
+      }
+    }
+  }
+
+  pre {
+    & > code {
+      background: initial;
+      padding: initial;
+      border-radius: initial;
+    }
+  }
+
   & > div {
     padding: 0 ${makeRem(32)} ${makeRem(48)} ${makeRem(32)};
     max-width: ${makeRem(668)};
@@ -54,7 +134,6 @@ const SLayoutBodyMain = styled("section")`
       font-size: ${makeRem(16)};
       line-height: ${makeRem(24)};
       z-index: 9;
-      background: ${makeColorStatic("background")};
 
       a {
         background-color: ${makeColor("secondary", {

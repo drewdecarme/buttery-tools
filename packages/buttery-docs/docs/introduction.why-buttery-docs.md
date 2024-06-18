@@ -2,11 +2,6 @@
 title: Why Buttery Docs?
 ---
 
-- Wanted to build a documentation ONLY site out of of one co-located directory
-- Use the Vite ecosystem with flat file routing conventions established by Remix
-- Provide first class support for Remix and Next JS without any configuration
-- Use existing conventions such as Frontmatter for SEO and flat file routing to visually parse the routing structure
-
 # Why Buttery Docs?
 
 ## Background
@@ -16,6 +11,16 @@ The need for Buttery Docs arose while writing the [Buttery Tools](https://butter
 In addition, the mental load of conventional static site generators or SSR meta frameworks is a lot especially when trying to incorporate them into an existing package or repo that already subscribes to various conventions and configurations.
 
 These basic requirements are what prompted the **Buttery Docs** package to be created; each mono-package or (any directory for that matter) should contain a directory with a flat file structure that will be read, parsed and then assembled into a website that can be easily published to any target.
+
+## Requirements
+
+Based upon the need the below requirements we're created:
+
+- Build a complete SSR / SSG documentation website from one directory with only a few conventions
+- Require as little configuration points as possible; grow with the demand
+- Hide implementation details of development server as well as framework.
+- Use the Vite ecosystem with flat file routing conventions established by Remix
+- Use existing conventions such as Frontmatter for SEO and flat file routing to visually parse the routing structure
 
 ## Problems
 

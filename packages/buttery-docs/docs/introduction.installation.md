@@ -1,5 +1,5 @@
 ---
-title: Features
+title: Installation
 ---
 
 # Features
