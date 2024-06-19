@@ -7,36 +7,18 @@ import type { Plugin } from "esbuild";
 import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
-import type {
-  CommandAction,
-  CommandArgs,
-  CommandMeta,
-  CommandOptions,
-} from "../../../lib";
+import type { CommandOptions } from "../../../lib";
 import { LOG } from "../_utils/util.logger";
-import { templateCommandParent, templateIndex } from "./templates";
+import {
+  templateCommandParent,
+  templateIndex,
+} from "./build-commands.templates";
 
 export type EntryTemplateData = {
   cli_name: string;
   cli_description: string;
   cli_version?: string;
   cli_commands: string;
-};
-
-type CommandProperties = {
-  segment_name: string;
-  meta: CommandMeta;
-  options?: CommandOptions<"">;
-  args?: CommandArgs;
-  action?: CommandAction;
-};
-
-type CommandObject = {
-  [key: string]: {
-    // biome-ignore lint/complexity/noBannedTypes: Don't really care too much about this
-    properties: {};
-    commands: CommandObject;
-  };
 };
 
 /**
@@ -48,7 +30,7 @@ export class ESBuildPluginCommands {
   private commandFilesSrcDir: string;
   private commandFilesOutDir: string;
   private commandFiles: Set<string>;
-  private commandGraph: CommandObject;
+  private commandGraph: CommandGraph;
   private commandStr: string;
 
   constructor(config: ButteryConfigBase & ButteryConfigCli) {
@@ -58,8 +40,8 @@ export class ESBuildPluginCommands {
     this.commandGraph = {};
     this.commandStr = "";
 
-    this.commandFilesSrcDir = path.resolve(this.config., "./commands");
-    this.commandFilesOutDir = path.resolve(this.config., "./bin");
+    this.commandFilesSrcDir = path.resolve(this.config.root, "./commands");
+    this.commandFilesOutDir = path.resolve(this.config.root, "./bin");
   }
 
   private kebabToCamel(kebab: string): string {
@@ -148,44 +130,7 @@ export class ESBuildPluginCommands {
    * so that we can recursively build the commander program
    * by processing the commands key.
    */
-  private async createCommandGraph() {
-    LOG.debug("Creating the command graph...");
-    const commandFiles = [...this.commandFiles.values()];
-
-    for (const commandFileName of commandFiles) {
-      const commandSegments = commandFileName.split(".");
-      let currentCommandGraph = this.commandGraph;
-
-      for (const commandSegment of commandSegments) {
-        try {
-          const commandFilePath = path.resolve(
-            this.commandFilesOutDir,
-            `./${commandFileName}.js`
-          );
-          const commandFileContent = await this.importCommand(commandFilePath);
-          const properties: CommandProperties = {
-            meta: commandFileContent?.meta,
-            segment_name: commandFileName,
-            action: commandFileContent?.action,
-            args: commandFileContent?.args,
-            options: commandFileContent?.options,
-          };
-          if (!currentCommandGraph[commandSegment]) {
-            currentCommandGraph[commandSegment] = {
-              properties,
-              commands: {},
-            };
-          }
-          currentCommandGraph = currentCommandGraph[commandSegment].commands;
-        } catch (error) {
-          const err = new Error(error as string);
-          LOG.fatal(err);
-          throw err;
-        }
-      }
-    }
-    LOG.debug("Creating the command graph... done.");
-  }
+  private async buildCommandGraph() {}
 
   /**
    * Recursively builds a commander string in order to be
@@ -193,7 +138,7 @@ export class ESBuildPluginCommands {
    * recursively loops through all of the command relationships
    * in order to build the program string.
    */
-  private buildCommands(cmdObj: CommandObject, parentCmd: string) {
+  private buildCommands(cmdObj: CommandGraph, parentCmd: string) {
     const commandEntries = Object.entries(cmdObj);
     for (const [cmdName, { commands, properties }] of commandEntries) {
       const cmdVariableName = this.kebabToCamel(cmdName);
@@ -202,7 +147,7 @@ export class ESBuildPluginCommands {
         `const ${cmdVariableName} = ${parentCmd}.command("${cmdName}")`
       );
 
-      const props = properties as CommandProperties;
+      const props = properties as CommandGraphProperties;
 
       // meta
       this.appendCommandStr(`.description("${props.meta.description}")`);
@@ -305,7 +250,7 @@ export class ESBuildPluginCommands {
         });
         build.onEnd(async () => {
           // 2. get all of the command files and then parse them
-          await this.createCommandGraph();
+          await this.buildCommandGraph();
 
           // // 3. build a program by iterating over each file using reduce (since all of the data will have been created at this point and all we're trying to do is create a string)
           this.buildCommands(this.commandGraph, "program");

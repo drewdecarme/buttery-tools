@@ -4,7 +4,7 @@ import type {
   CommandOptions,
 } from "../../../lib/types.js";
 import { LOG } from "../_utils/index.js";
-import { build } from "./script.build.js";
+import { buildCommands } from "./build-commands.js";
 
 export const meta: CommandMeta = {
   name: "build",
@@ -35,9 +35,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
   }
 
   try {
-    LOG.debug("Building for production...");
-    await build({ watch: false, local: false });
-    LOG.success("Building for production... complete.");
+    await buildCommands({ watch: false, local: false });
   } catch (error) {
     throw new Error(error as string);
   }

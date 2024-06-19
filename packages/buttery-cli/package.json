@@ -41,7 +41,6 @@
     "@buttery/utils": "workspace:^",
     "commander": "^12.1.0",
     "cosmiconfig": "^9.0.0",
-    "glob": "^10.4.1",
     "handlebars": "^4.7.8"
   },
   "types": "./dist/index.d.ts",

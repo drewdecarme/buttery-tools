@@ -75,8 +75,6 @@ const getFullConfig = async (): Promise<FoundButteryConfig> => {
   };
 };
 
-export type ButteryConfigBase = Omit<ButteryConfig, "tokens" | "docs" | "cli">;
-
 export type GetButteryConfig<N extends keyof ButteryConfig | undefined> =
   N extends keyof ButteryConfig
     ? FoundButteryConfig & {
@@ -84,16 +82,19 @@ export type GetButteryConfig<N extends keyof ButteryConfig | undefined> =
       }
     : FoundButteryConfig;
 
+export type ResolvedButteryConfig<T extends keyof ButteryConfig> = Omit<
+  GetButteryConfig<T>,
+  "config"
+>;
+
 /**
  * Fetches the `buttery.config` from the current working
  * directory. If a key from the buttery config is provided
  * then it attempts to search for the configuration of that specific key.
  */
-export const getButteryConfig = async <
-  T extends keyof ButteryConfig | undefined,
->(
-  nestedConfigKey?: T
-): Promise<Omit<GetButteryConfig<T>, "config">> => {
+export const getButteryConfig = async <T extends keyof ButteryConfig>(
+  nestedConfigKey: T
+): Promise<ResolvedButteryConfig<T>> => {
   try {
     const butteryConfig = await getFullConfig();
 

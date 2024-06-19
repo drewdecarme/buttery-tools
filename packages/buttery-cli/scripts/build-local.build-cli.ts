@@ -1,7 +1,7 @@
-import { build } from "../.buttery/commands/cli.build/script.build";
-import { getLocalBuildArgs } from "./build-local.get-args";
+import { buildCommands } from "../.buttery/commands/cli.build/build-commands";
+import { getLocalBuildOptions } from "./build-local.get-local-build-options";
 
 export const buildLocalCLI = () => {
-  const localBuildArgs = getLocalBuildArgs();
-  return build(localBuildArgs);
+  const localBuildArgs = getLocalBuildOptions();
+  return buildCommands(localBuildArgs);
 };

@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { LOG } from "../_utils/util.logger";
-import type { BuildScriptArgs } from "./script.build";
+import type { BuildCommandsFunctionArgs } from "./build-commands.utils";
 
 // TODO: Update this description
 // -- PACKAGE.JSON --
@@ -10,22 +10,22 @@ import type { BuildScriptArgs } from "./script.build";
 // file. This will allow whoever consumes the CLI to instantiate it
 // from the command line without having to worry about manually adding
 // those properties to their `package.json`
-export async function buildPackageJson({
+export async function buildCommandsEnrichPackageJson({
   configBase,
-  configCli
-}: BuildScriptArgs) {
+  configCli,
+}: BuildCommandsFunctionArgs) {
   try {
     const packageJsonPath = path.resolve(configBase.root, "./package.json");
     const packageJsonString = await readFile(packageJsonPath, {
-      encoding: "utf8"
+      encoding: "utf8",
     });
     const packageJson = JSON.parse(packageJsonString);
     const packageJsonCLIProperties = {
       type: "module",
       types: "./dist/index.d.ts",
       bin: {
-        [configCli.name]: "./bin/index.js"
-      }
+        [configCli.name]: "./bin/index.js",
+      },
     };
     const packageJsonPropertiesEntries = Object.entries(
       packageJsonCLIProperties
