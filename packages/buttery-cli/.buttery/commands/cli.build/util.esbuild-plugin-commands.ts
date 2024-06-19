@@ -138,7 +138,7 @@ export class ESBuildPluginCommands {
    * recursively loops through all of the command relationships
    * in order to build the program string.
    */
-  private buildCommands(cmdObj: CommandGraph, parentCmd: string) {
+  private buildProgram(cmdObj: CommandGraph, parentCmd: string) {
     const commandEntries = Object.entries(cmdObj);
     for (const [cmdName, { commands, properties }] of commandEntries) {
       const cmdVariableName = this.kebabToCamel(cmdName);
@@ -204,7 +204,7 @@ export class ESBuildPluginCommands {
       // recurse with the sub commands
       if (hasSubCommands) {
         this.appendCommandStr(";");
-        this.buildCommands(commands, cmdVariableName);
+        this.buildProgram(commands, cmdVariableName);
       }
 
       this.appendCommandStr(";");
@@ -234,59 +234,53 @@ export class ESBuildPluginCommands {
         // syntactically follow the go regex, we just take in every file
         // in the commands directory and then test it against the more detailed
         // JS regex that we have above.
-        build.onLoad({ filter: /\/commands\/.*\.ts$/ }, async (args) => {
-          const shouldIgnoreFile = args.path.includes("_");
-          if (shouldIgnoreFile) return;
+        // build.onLoad({ filter: /\/commands\/.*\.ts$/ }, async (args) => {
+        //   // const shouldIgnoreFile = args.path.includes("_");
+        //   // if (shouldIgnoreFile) return;
 
-          // 1. ensure all of the command files exist
-          await this.ensureCommandHierarchy(args.path);
+        //   // // 1. ensure all of the command files exist
+        //   // await this.ensureCommandHierarchy(args.path);
 
-          // TODO: Only do this on --local
-          // const srcDir = import.meta.dirname;
-          // const srcFilesGlob = path.resolve(srcDir, "./**.ts");
-          // const srcFiles = glob.sync(srcFilesGlob, { follow: false });
+        //   // TODO: Only do this on --local
+        //   // const srcDir = import.meta.dirname;
+        //   // const srcFilesGlob = path.resolve(srcDir, "./**.ts");
+        //   // const srcFiles = glob.sync(srcFilesGlob, { follow: false });
 
-          return undefined;
-        });
+        //   return undefined;
+        // });
         build.onEnd(async () => {
           // 2. get all of the command files and then parse them
-          await this.buildCommandGraph();
-
-          // // 3. build a program by iterating over each file using reduce (since all of the data will have been created at this point and all we're trying to do is create a string)
-          this.buildCommands(this.commandGraph, "program");
-
-          // 4. Read the entry template and compile it with the data
-          const entryTemplate = templateIndex;
-          const entryTemplateData: EntryTemplateData = {
-            cli_name: config.name,
-            cli_description: config.description,
-            cli_version: config.version,
-            cli_commands: this.commandStr,
-          };
-
-          // Reset some internally tracked values
-          this.commandGraph = {};
-          this.commandStr = "";
-
-          // Compile the template and then build the template to the
-          // correct directory
-          const template = handlebars.compile<EntryTemplateData>(entryTemplate);
-          const templateResult = template(entryTemplateData);
-
-          await esbuild.build({
-            ...createEsbuildOptions({
-              stdin: {
-                contents: templateResult,
-                loader: "ts",
-              },
-              outfile: path.resolve(this.config.root, "./bin/index.js"),
-            }),
-            bundle: true,
-            minify: true,
-            external: ["commander"], // externalize commander
-          });
-
-          this.logBuildComplete();
+          // await this.buildCommandGraph();
+          // // build the command program
+          // this.buildProgram(this.commandGraph, "program");
+          // // 4. Read the entry template and compile it with the data
+          // const entryTemplate = templateIndex;
+          // const entryTemplateData: EntryTemplateData = {
+          //   cli_name: config.name,
+          //   cli_description: config.description,
+          //   cli_version: config.version,
+          //   cli_commands: this.commandStr,
+          // };
+          // // Reset some internally tracked values
+          // this.commandGraph = {};
+          // this.commandStr = "";
+          // // Compile the template and then build the template to the
+          // // correct directory
+          // const template = handlebars.compile<EntryTemplateData>(entryTemplate);
+          // const templateResult = template(entryTemplateData);
+          // await esbuild.build({
+          //   ...createEsbuildOptions({
+          //     stdin: {
+          //       contents: templateResult,
+          //       loader: "ts",
+          //     },
+          //     outfile: path.resolve(this.config.root, "./bin/index.js"),
+          //   }),
+          //   bundle: true,
+          //   minify: true,
+          //   external: ["commander"], // externalize commander
+          // });
+          // this.logBuildComplete();
         });
       },
     };

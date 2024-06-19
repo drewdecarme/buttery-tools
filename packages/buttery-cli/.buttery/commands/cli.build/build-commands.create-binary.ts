@@ -6,51 +6,39 @@ import {
   type BuildCommandFunction,
   getButteryCliDirectories,
 } from "./build-commands.utils";
-import { ESBuildPluginCommands } from "./util.esbuild-plugin-commands";
+// import { ESBuildPluginCommands } from "./util.esbuild-plugin-commands";
 
 // to the src directory so it can be transpiled and built again.
 export const buildCommandsCreateBinary: BuildCommandFunction = async ({
   config,
   options,
 }) => {
-  // const commandGraph = createCommandGraph();
-  // const dirs = getButteryCliDirectories(config);
-  // const commandFiles = getCommandFiles(config);
-
   try {
     const commandFiles = await getCommandFiles(config);
-    console.log({ commandFiles });
+    const cliDirs = getButteryCliDirectories(config);
 
-    // Create a commands plugin
-    // const ESBuildCommandsPlugin = new ESBuildPluginCommands({
-    //   ...configBase,
-    //   ...configCli,
-    // });
-    // const plugins = [ESBuildCommandsPlugin.getPlugin()];
+    // Create the commands plugin
+    // const ESBuildCommandsPlugin = new ESBuildPluginCommands(config);
 
     // // Create the build options
-    // const esbuildOptions = createEsbuildOptions({
-    //   entryPoints: commandFiles,
-    //   outdir: outDir,
-    //   plugins,
-    // });
+    const esbuildOptions = createEsbuildOptions({
+      entryPoints: commandFiles.map((commandFile) => commandFile.inPath),
+      outdir: cliDirs.binDir,
+      // plugins: [ESBuildCommandsPlugin.getPlugin()],
+    });
 
-    // // Build when not in watch
-    // if (!programArgs.watch) {
-    //   await esbuild.build(esbuildOptions);
-    //   return;
-    // }
+    // // Run the build in 'watch' mode
+    if (options.watch) {
+      LOG.watch(`Listening for changes in "${cliDirs.commandsDir}"...`);
+      const context = await esbuild.context({
+        ...esbuildOptions,
+        minify: false,
+      });
+      return await context.watch();
+    }
 
-    // LOG.watch(`Listening for changes in "${commandFilesDir}"...`);
-
-    // // Build the esbuild context and watch it to re-build
-    // // files on change
-    // const context = await esbuild.context({
-    //   ...esbuildOptions,
-    //   minify: false,
-    // });
-    // await context.watch();
-    // return;
+    // Run the build
+    await esbuild.build(esbuildOptions);
   } catch (error) {
     throw new Error("Error when building 'entry': ".concat(error as string));
   }

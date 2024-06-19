@@ -6,6 +6,7 @@ import type {
   CommandOptions,
 } from "../../../lib";
 import { LOG } from "../_utils";
+import type { CommandFile } from "./build-commands.utils";
 
 type CommandGraphProperties = {
   segment_name: string;
@@ -22,13 +23,15 @@ export type CommandGraph = {
   };
 };
 
-export const createCommandGraph = async (): CommandGraph => {
+export const createCommandGraph = async (
+  commandFiles: CommandFile[]
+): CommandGraph => {
   LOG.debug("Creating the command graph...");
-  const commandFiles = [...this.commandFiles.values()];
+  const commandGraph = {};
 
-  for (const commandFileName of commandFiles) {
-    const commandSegments = commandFileName.split(".");
-    let currentCommandGraph = this.commandGraph;
+  for (const { name: commandName, path: commandFilePath } of commandFiles) {
+    const commandSegments = commandName.split(".");
+    let currentCommandGraph = commandGraph;
 
     for (const commandSegment of commandSegments) {
       try {

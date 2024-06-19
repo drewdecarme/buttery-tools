@@ -1,12 +1,10 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core";
-import { getButteryCliDirectories } from "./build-commands.utils";
-
-type CommandFile = {
-  name: string;
-  path: string;
-};
+import {
+  type CommandFile,
+  getButteryCliDirectories,
+} from "./build-commands.utils";
 
 // This is the name of the file that is a command
 // when there is a directory
@@ -35,6 +33,7 @@ export const getCommandFiles = async (
   for (const entry of commandDirEntries) {
     const commandDirEntryName = entry.name.replace(/\.(ts|js|mjs)$/, "");
     let commandDirEntryPath = path.join(entry.parentPath, entry.name);
+    let commandPath = commandDirEntryName;
     const isDirectory = entry.isDirectory();
     const isUnderscore = entry.name.startsWith("_");
 
@@ -64,12 +63,17 @@ export const getCommandFiles = async (
         nestedDirCommandFile.parentPath,
         nestedDirCommandFile.name
       );
+      commandPath = commandPath.concat("/command");
     }
+
+    // console.log({ binDir: dirs.binDir, });
 
     // push the files to the command files
     commandFiles.push({
       name: commandDirEntryName,
-      path: commandDirEntryPath,
+      commandPath,
+      inPath: commandDirEntryPath,
+      outPath: path.resolve(dirs.binDir, commandPath),
     });
   }
 

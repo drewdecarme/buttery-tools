@@ -1,5 +1,5 @@
 import type { CommandAction, CommandMeta } from "../../lib/types";
-import { build } from "./cli.build/script.build";
+import { buildCommands } from "./cli.build/build-commands";
 
 export const meta: CommandMeta = {
   name: "dev",
@@ -8,7 +8,7 @@ export const meta: CommandMeta = {
 
 export const action: CommandAction = async ({ options }) => {
   try {
-    await build({ watch: true, local: false });
+    await buildCommands({ watch: true, local: false });
   } catch (error) {
     throw new Error(error as string);
   }

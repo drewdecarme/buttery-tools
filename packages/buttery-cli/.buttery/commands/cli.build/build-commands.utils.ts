@@ -24,3 +24,23 @@ export const getButteryCliDirectories = (
     binDir: path.resolve(config.paths.rootDir, "./bin"),
   };
 };
+
+export type CommandFile = {
+  /**
+   * the name of the command
+   */
+  name: string;
+  /**
+   * The relative path of the command file to the
+   * commands input and also the commands output dir
+   */
+  commandPath: string;
+  /**
+   * The absolute path to the commands source file
+   */
+  inPath: string;
+  /**
+   * The absolute path of the built command file
+   */
+  outPath: string;
+};
