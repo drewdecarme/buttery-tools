@@ -1,8 +1,7 @@
 import { constants, access, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type {
-  ButteryConfigBase,
-  ButteryConfigCli,
+  ButteryConfigCommands,
   ResolvedButteryConfig,
 } from "@buttery/core";
 import { createEsbuildOptions } from "@buttery/utils/esbuild";
@@ -27,7 +26,7 @@ import {
   type CommandFile,
   type CommandGraph,
   type CommandGraphProperties,
-  getButteryCliDirectories,
+  getButteryCommandsDirectories,
 } from "./build-commands.utils";
 
 export type EntryTemplateData = {
@@ -41,16 +40,16 @@ export type EntryTemplateData = {
  * TODO: Update this description
  */
 export class ESBuildPluginCommands {
-  private config: ResolvedButteryConfig<"cli">;
+  private config: ResolvedButteryConfig<"commands">;
   private dirs: ButteryCLIDirectories;
 
   private runNumber: number;
   private commandGraph: CommandGraph;
   private programString: string;
 
-  constructor(config: ResolvedButteryConfig<"cli">) {
+  constructor(config: ResolvedButteryConfig<"commands">) {
     this.config = config;
-    this.dirs = getButteryCliDirectories(config);
+    this.dirs = getButteryCommandsDirectories(config);
     this.runNumber = 0;
     this.commandGraph = {};
     this.programString = "";
@@ -76,53 +75,53 @@ export class ESBuildPluginCommands {
   /**
    * Creates files that might be missing from the command hierarchy
    */
-  private async ensureCommandFile(
-    commandSegment: string,
-    commandSegmentPathSrc: string
-  ) {
-    const segmentCommandName = this.getCommandFileName(commandSegmentPathSrc);
-    this.commandFiles.add(segmentCommandName);
+  // private async ensureCommandFile(
+  //   commandSegment: string,
+  //   commandSegmentPathSrc: string
+  // ) {
+  //   const segmentCommandName = this.getCommandFileName(commandSegmentPathSrc);
+  //   this.commandFiles.add(segmentCommandName);
 
-    try {
-      await access(commandSegmentPathSrc, constants.F_OK);
-    } catch (error) {
-      LOG.error(`Cannot locate command file for '${segmentCommandName}'`);
-      LOG.debug("Auto creating command file with default values...");
-      // TODO: Put any prompting behind --autofix
-      const template = handlebars.compile<{ command_name: string }>(
-        templateCommandParent
-      )({ command_name: commandSegment });
-      await writeFile(
-        path.resolve(this.commandFilesSrcDir, `./${segmentCommandName}.ts`),
-        template,
-        { encoding: "utf-8" }
-      );
-      LOG.debug("Auto creating command file with default values... done.");
-      LOG.warning(
-        "A stub file has been created for you. You should ensure that you create the command in the commands dir. If you want to do this automatically then use --autofix"
-      );
-    }
-  }
+  //   try {
+  //     await access(commandSegmentPathSrc, constants.F_OK);
+  //   } catch (error) {
+  //     LOG.error(`Cannot locate command file for '${segmentCommandName}'`);
+  //     LOG.debug("Auto creating command file with default values...");
+  //     // TODO: Put any prompting behind --autofix
+  //     const template = handlebars.compile<{ command_name: string }>(
+  //       templateCommandParent
+  //     )({ command_name: commandSegment });
+  //     await writeFile(
+  //       path.resolve(this.commandFilesSrcDir, `./${segmentCommandName}.ts`),
+  //       template,
+  //       { encoding: "utf-8" }
+  //     );
+  //     LOG.debug("Auto creating command file with default values... done.");
+  //     LOG.warning(
+  //       "A stub file has been created for you. You should ensure that you create the command in the commands dir. If you want to do this automatically then use --autofix"
+  //     );
+  //   }
+  // }
 
   /**
    * Get's all of the existing command files, loops through
    * them and ensures that all of the proper files have been created
    */
-  private async validateCommandHierarchy(commandFile: CommandFile) {
-    const { commandSegments } = commandFile;
-    for (const commandSegmentIndex in commandFile.commandSegments) {
-      const commandSegment = commandSegments[commandSegmentIndex];
-      const commandSegmentName = commandSegments
-        .slice(0, Number(commandSegmentIndex) + 1)
-        .join(".");
-      const commandSegmentPath = path.resolve(
-        this.dirs.commandsDir,
-        commandSegmentName.concat(".ts")
-      );
-      console.log({ commandSegmentPath });
-      // await this.ensureCommandFile(commandSegment, commandSegmentPath);
-    }
-  }
+  // private async validateCommandHierarchy(commandFile: CommandFile) {
+  //   const { commandSegments } = commandFile;
+  //   for (const commandSegmentIndex in commandFile.commandSegments) {
+  //     const commandSegment = commandSegments[commandSegmentIndex];
+  //     const commandSegmentName = commandSegments
+  //       .slice(0, Number(commandSegmentIndex) + 1)
+  //       .join(".");
+  //     const commandSegmentPath = path.resolve(
+  //       this.dirs.commandsDir,
+  //       commandSegmentName.concat(".ts")
+  //     );
+  //     console.log({ commandSegmentPath });
+  //     // await this.ensureCommandFile(commandSegment, commandSegmentPath);
+  //   }
+  // }
 
   /**
    * Creates a deeply nested graph of all of the commands
@@ -173,7 +172,7 @@ export class ESBuildPluginCommands {
   private buildProgram(cmdObj: CommandGraph, parentCmd: string) {
     const commandEntries = Object.entries(cmdObj);
     for (const [cmdName, { commands, properties }] of commandEntries) {
-      const cmdVariableName = kebabToCamel(cmdName);
+      const cmdVariableName = kebabToCamel(`${parentCmd}-${cmdName}`);
       const hasSubCommands = Object.values(commands).length > 0;
       this.appendToProgramString(
         `const ${cmdVariableName} = ${parentCmd}.command("${cmdName}")`
@@ -299,9 +298,9 @@ export class ESBuildPluginCommands {
           // // 4. Read the entry template and compile it with the data
           const entryTemplate = templateIndex;
           const entryTemplateData: EntryTemplateData = {
-            cli_name: this.config.cli.name,
-            cli_description: this.config.cli.description,
-            cli_version: this.config.cli.version,
+            cli_name: this.config.commands.name,
+            cli_description: this.config.commands.description,
+            cli_version: this.config.commands.version,
             cli_commands: this.programString,
           };
 

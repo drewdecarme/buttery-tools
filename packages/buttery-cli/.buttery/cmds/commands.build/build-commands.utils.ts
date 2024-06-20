@@ -7,19 +7,19 @@ import type {
   CommandOptions,
 } from "../../../lib";
 
-export type BuildCommandsOptions = {
+export type CommandsBuildOptions = {
   watch: boolean;
   local: boolean;
   autofix?: boolean;
 };
 
-export type BuildCommandsFunctionArgs = {
-  config: ResolvedButteryConfig<"cli">;
-  options: BuildCommandsOptions;
+export type CommandsBuildFunctionArgs = {
+  config: ResolvedButteryConfig<"commands">;
+  options: CommandsBuildOptions;
 };
 
-export type BuildCommandFunction = (
-  args: BuildCommandsFunctionArgs
+export type CommandsBuildFunction = (
+  args: CommandsBuildFunctionArgs
 ) => Promise<void>;
 
 export type ButteryCLIDirectories = {
@@ -27,11 +27,13 @@ export type ButteryCLIDirectories = {
   binDir: string;
 };
 
-export const getButteryCliDirectories = (
-  config: ResolvedButteryConfig<"cli">
+export const getButteryCommandsDirectories = (
+  config: ResolvedButteryConfig<"commands">
 ): ButteryCLIDirectories => {
+  const commandsDirName = config.commands.commandsDir ?? "commands";
+
   return {
-    commandsDir: path.resolve(config.paths.butteryDir, "./commands"),
+    commandsDir: path.resolve(config.paths.butteryDir, `./${commandsDirName}`),
     binDir: path.resolve(config.paths.rootDir, "./bin"),
   };
 };

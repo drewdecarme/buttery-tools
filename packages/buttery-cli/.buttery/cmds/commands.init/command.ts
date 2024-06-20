@@ -1,4 +1,4 @@
-import type { CommandAction, CommandMeta } from "../../lib/types";
+import type { CommandAction, CommandMeta } from "../../../lib/types";
 
 // TODO: FUTURE --- run an init command to prompt the user for these values rather than
 // setting this up manually.

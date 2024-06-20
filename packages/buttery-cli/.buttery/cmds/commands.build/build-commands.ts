@@ -6,20 +6,20 @@ import { buildCommandsCreateBinary } from "./build-commands.create-binary";
 import { buildCommandsEnrichPackageJson } from "./build-commands.enrich-package-json";
 
 import type {
-  BuildCommandsFunctionArgs,
-  BuildCommandsOptions,
+  CommandsBuildFunctionArgs,
+  CommandsBuildOptions,
 } from "./build-commands.utils";
 /**
  * This function is the main build command that reads the .buttery/config
  * parses the commands directory and then builds the binary. This command
  * is also used locally to build the commands that build the commands.
  */
-export async function buildCommands(options: BuildCommandsOptions) {
+export async function buildCommands(options: CommandsBuildOptions) {
   LOG.level = "info";
-  const config = await getButteryConfig("cli");
+  const config = await getButteryConfig("commands");
   LOG.debug(`Using config: ${config.paths.config}`);
 
-  const args: BuildCommandsFunctionArgs = {
+  const args: CommandsBuildFunctionArgs = {
     config,
     options,
   };

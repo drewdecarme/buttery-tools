@@ -1,4 +1,4 @@
 {
   "extends": "@buttery/tsconfig/library",
-  "include": ["buttery.config.ts", "scripts", ".buttery", "src", "types", "lib"]
+  "include": ["scripts", ".buttery", "src", "types", "lib"]
 }

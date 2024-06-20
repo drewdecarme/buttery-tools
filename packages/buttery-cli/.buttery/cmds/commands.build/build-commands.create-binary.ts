@@ -2,20 +2,20 @@ import { createEsbuildOptions } from "@buttery/utils/esbuild";
 import * as esbuild from "esbuild";
 import { LOG } from "../_utils/util.logger";
 import { getCommandFiles } from "./build-commands.get-command-files";
+import { ESBuildPluginCommands } from "./build-commands.util.esbuild-plugin-commands";
 import {
-  type BuildCommandFunction,
-  getButteryCliDirectories,
+  type CommandsBuildFunction,
+  getButteryCommandsDirectories,
 } from "./build-commands.utils";
-import { ESBuildPluginCommands } from "./util.esbuild-plugin-commands";
 
 // to the src directory so it can be transpiled and built again.
-export const buildCommandsCreateBinary: BuildCommandFunction = async ({
+export const buildCommandsCreateBinary: CommandsBuildFunction = async ({
   config,
   options,
 }) => {
   try {
     const commandFiles = await getCommandFiles(config);
-    const cliDirs = getButteryCliDirectories(config);
+    const cliDirs = getButteryCommandsDirectories(config);
 
     // Create the commands plugin
     const ESBuildCommandsPlugin = new ESBuildPluginCommands(config);

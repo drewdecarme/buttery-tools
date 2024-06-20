@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { LOG } from "../_utils/util.logger";
-import type { BuildCommandsFunctionArgs } from "./build-commands.utils";
+import type { CommandsBuildFunctionArgs } from "./build-commands.utils";
 
 // TODO: Update this description
 // -- PACKAGE.JSON --
@@ -12,7 +12,7 @@ import type { BuildCommandsFunctionArgs } from "./build-commands.utils";
 // those properties to their `package.json`
 export async function buildCommandsEnrichPackageJson({
   config,
-}: BuildCommandsFunctionArgs) {
+}: CommandsBuildFunctionArgs) {
   try {
     const packageJsonPath = path.resolve(
       config.paths.rootDir,

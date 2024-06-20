@@ -3,7 +3,7 @@ import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core";
 import {
   type CommandFile,
-  getButteryCliDirectories,
+  getButteryCommandsDirectories,
 } from "./build-commands.utils";
 
 // This is the name of the file that is a command
@@ -23,7 +23,7 @@ const nestedDirCommandFileName = "command";
 export const getCommandFiles = async (
   config: ResolvedButteryConfig<"cli">
 ): Promise<CommandFile[]> => {
-  const dirs = getButteryCliDirectories(config);
+  const dirs = getButteryCommandsDirectories(config);
   const commandFiles: CommandFile[] = [];
 
   const commandDirEntries = await readdir(dirs.commandsDir, {

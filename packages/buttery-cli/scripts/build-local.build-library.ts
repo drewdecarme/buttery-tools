@@ -1,6 +1,6 @@
 import path from "node:path";
 import { buildTSLibrary } from "@buttery/utils/esbuild";
-import { LOG } from "../.buttery/commands/_utils/util.logger";
+import { LOG } from "../.buttery/cmds/_utils/util.logger";
 
 export const buildDistributionLibrary = () => {
   return buildTSLibrary({
