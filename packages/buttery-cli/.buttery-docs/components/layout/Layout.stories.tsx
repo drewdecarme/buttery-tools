@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import React from "react";
 import { Layout, type LayoutProps } from "./Layout";
 import { graph, toc } from "./Layout.stories.data";
 

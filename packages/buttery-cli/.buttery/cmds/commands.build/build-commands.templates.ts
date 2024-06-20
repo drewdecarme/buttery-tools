@@ -5,13 +5,34 @@
 export const templateIndex = `#! /usr/bin/env node
 import { program } from "commander";
 import path from "path";
+import { existsSync } from 'node:fs';
+
+function getCommandPath(segmentCommand) {
+  const possiblePaths = [
+    path.resolve(import.meta.dirname, \`./\${segmentCommand}.js\`),
+    path.resolve(import.meta.dirname, \`./\${segmentCommand}/command.js\`)
+  ]
+
+  const foundPath = possiblePaths.reduce((accum, possiblePath) => {
+    if (existsSync(possiblePath)) {
+      return possiblePath;
+    }
+    return accum;
+  }, undefined);
+
+  if (!foundPath) {
+    throw "Cannot find path of \`\${segmentCommand}\`."
+  }
+
+  const timestamp = new Date().getTime();
+  return foundPath.concat(\`?t=\${timestamp}\`);
+}
 
 function withParsedAction(segmentCommand) {
   return async function(...restArgs) {
 
     try {
-      const timestamp = new Date().getTime();
-      const commandPath = path.resolve(import.meta.dirname, \`./\${segmentCommand}.js?t=\${timestamp}\`);
+      const commandPath = getCommandPath(segmentCommand)
       const command = await import(commandPath);
       restArgs.pop();
       const options = restArgs[restArgs.length - 1];

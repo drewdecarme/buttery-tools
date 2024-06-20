@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react";
 import "@buttery/tokens/_docs/index.css";
 import React from "react";
-import { bodyCSS } from "../targets/components/layout/Layout";
+import { bodyCSS } from "../../../../.buttery-docs/components";
 
 const preview: Preview = {
   parameters: {

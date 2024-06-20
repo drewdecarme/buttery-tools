@@ -2,7 +2,6 @@ import { randomUUID } from "node:crypto";
 import { unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-// import { Script, createContext } from "node:vm";
 
 /**
  * Evaluates the transpiled JavaScript code in a sandboxed environment

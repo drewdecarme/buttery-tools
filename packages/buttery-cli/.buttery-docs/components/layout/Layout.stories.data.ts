@@ -1,7 +1,4 @@
-import type {
-  ButteryDocsGraph,
-  ButteryDocsGraphValue,
-} from "../../../.buttery/commands/_utils/types";
+import type { ButteryDocsGraph } from "../../../.buttery/cmds/docs.dev/_utils/types";
 
 export const graph: ButteryDocsGraph = {
   _index: {

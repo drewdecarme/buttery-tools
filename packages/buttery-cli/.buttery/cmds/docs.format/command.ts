@@ -1,5 +1,5 @@
-import type { CommandAction, CommandMeta } from "@buttery/cli";
-import { LOG_DOCS } from "./_utils/util.logger";
+import type { CommandAction, CommandMeta } from "../../../lib";
+import { LOG_DOCS } from "../docs.dev/_utils/util.logger";
 
 export const meta: CommandMeta = {
   name: "format",

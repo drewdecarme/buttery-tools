@@ -1,9 +1,9 @@
 import path from "node:path";
-import type { CommandAction, CommandMeta } from "@buttery/cli";
 import { getButteryConfig } from "@buttery/core";
 import { input, select } from "@inquirer/prompts";
 
-import { LOG_DOCS } from "./_utils/util.logger";
+import type { CommandAction, CommandMeta } from "../../../lib";
+import { LOG_DOCS } from "../docs.dev/_utils/util.logger";
 
 export const meta: CommandMeta = {
   name: "init",
@@ -13,7 +13,7 @@ export const meta: CommandMeta = {
 
 export const action: CommandAction = async () => {
   try {
-    const { configBase } = await getButteryConfig();
+    const config = await getButteryConfig("docs");
 
     // ask some questions
     const relativeDocsFolder = await input({
@@ -33,7 +33,7 @@ export const action: CommandAction = async () => {
       ],
     });
 
-    const docsFolder = path.resolve(configBase.root, relativeDocsFolder);
+    const docsFolder = path.resolve(config.paths.rootDir, relativeDocsFolder);
 
     console.log({ docsFolder, framework });
   } catch (error) {

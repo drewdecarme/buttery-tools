@@ -8,5 +8,10 @@ const config: ButteryConfig = {
     version: "0.0.1",
     commandsDir: "cmds",
   },
+  docs: {
+    header: {
+      title: "Buttery CLI",
+    },
+  },
 };
 export default config;

@@ -9,7 +9,8 @@ import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 import clsx from "clsx";
 import { type FC, useMemo } from "react";
-import type { ButteryDocsGraph } from "../../../.buttery/commands/_utils/types";
+import React from "react";
+import type { ButteryDocsGraph } from "../../../.buttery/cmds/docs.dev/_utils/types";
 import { useLayoutContext } from "./layout.useLayoutContext";
 import { layoutNavOverlineCSS } from "./layout.utils";
 

@@ -20,23 +20,22 @@ export type ButteryDocsDirectories = ReturnType<
  * that we should be pulling files from or serving content.
  */
 export function getButteryDocsDirectories(config: ButteryDocsConfig) {
-  const targetsDir = path.resolve(config.paths.rootDir, "../targets");
-  const devDir = path.resolve(config.paths.rootDir, "./.dev-environments");
-  const devRootDir = path.resolve(devDir, hashString(config.paths.rootDir));
+  const docsSrcFilesDir = path.resolve(config.paths.rootDir, "./.buttery-docs");
+
+  const devDir = path.resolve(docsSrcFilesDir, "./.dev");
+  const devAppTemplateDir = path.resolve(devDir, "./_template");
+  const divAppServerDir = path.resolve(
+    devDir,
+    hashString(config.paths.rootDir)
+  );
 
   return {
     docs: path.resolve(config.paths.butteryDir, "./docs"),
     public: path.resolve(config.paths.butteryDir, "./docs/public"),
     dev: {
-      templateDir: path.resolve(devDir, "./_template"),
-      rootDir: devRootDir,
-      docsDir: path.resolve(devRootDir, "./docs"),
-    },
-    targets: {
-      components: path.resolve(targetsDir, "./components"),
-      apps: {
-        "cloudflare-pages": path.resolve(targetsDir, "./apps/cloudflare-pages"),
-      },
+      templateDir: devAppTemplateDir,
+      rootDir: divAppServerDir,
+      docsDir: path.resolve(divAppServerDir, "./docs"),
     },
   };
 }

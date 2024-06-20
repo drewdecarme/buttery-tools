@@ -166,7 +166,7 @@ export class ESBuildPluginCommands {
   /**a
    * Recursively builds a commander string in order to be
    * interpolated onto the index template. This string
-   * recursively loops through all of the command reltionships
+   * recursively loops through all of the command relationships
    * in order to build the program string.
    */
   private buildProgram(cmdObj: CommandGraph, parentCmd: string) {

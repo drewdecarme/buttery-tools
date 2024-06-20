@@ -1,6 +1,7 @@
 import { makeCustom, makeFontFamily, makeRem } from "@buttery/tokens/_docs";
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
+import React from "react";
 import { LayoutProvider, type LayoutProviderProps } from "./Layout.context";
 import { LayoutBodyMain } from "./LayoutBodyMain";
 import { LayoutBodyNav } from "./LayoutBodyNav";
