@@ -11,11 +11,13 @@ import type { BuildCommandsFunctionArgs } from "./build-commands.utils";
 // from the command line without having to worry about manually adding
 // those properties to their `package.json`
 export async function buildCommandsEnrichPackageJson({
-  configBase,
-  configCli,
+  config,
 }: BuildCommandsFunctionArgs) {
   try {
-    const packageJsonPath = path.resolve(configBase.root, "./package.json");
+    const packageJsonPath = path.resolve(
+      config.paths.rootDir,
+      "./package.json"
+    );
     const packageJsonString = await readFile(packageJsonPath, {
       encoding: "utf8",
     });
@@ -24,7 +26,7 @@ export async function buildCommandsEnrichPackageJson({
       type: "module",
       types: "./dist/index.d.ts",
       bin: {
-        [configCli.name]: "./bin/index.js",
+        [config.cli.name]: "./bin/index.js",
       },
     };
     const packageJsonPropertiesEntries = Object.entries(

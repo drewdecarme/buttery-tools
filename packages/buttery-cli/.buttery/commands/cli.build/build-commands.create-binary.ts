@@ -6,7 +6,7 @@ import {
   type BuildCommandFunction,
   getButteryCliDirectories,
 } from "./build-commands.utils";
-// import { ESBuildPluginCommands } from "./util.esbuild-plugin-commands";
+import { ESBuildPluginCommands } from "./util.esbuild-plugin-commands";
 
 // to the src directory so it can be transpiled and built again.
 export const buildCommandsCreateBinary: BuildCommandFunction = async ({
@@ -18,13 +18,13 @@ export const buildCommandsCreateBinary: BuildCommandFunction = async ({
     const cliDirs = getButteryCliDirectories(config);
 
     // Create the commands plugin
-    // const ESBuildCommandsPlugin = new ESBuildPluginCommands(config);
+    const ESBuildCommandsPlugin = new ESBuildPluginCommands(config);
 
     // // Create the build options
     const esbuildOptions = createEsbuildOptions({
       entryPoints: commandFiles.map((commandFile) => commandFile.inPath),
       outdir: cliDirs.binDir,
-      // plugins: [ESBuildCommandsPlugin.getPlugin()],
+      plugins: [ESBuildCommandsPlugin.getPlugin()],
     });
 
     // // Run the build in 'watch' mode

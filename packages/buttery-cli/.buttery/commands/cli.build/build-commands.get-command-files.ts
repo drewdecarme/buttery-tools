@@ -72,6 +72,7 @@ export const getCommandFiles = async (
     commandFiles.push({
       name: commandDirEntryName,
       commandPath,
+      commandSegments: commandPath.split("/")[0].split("."),
       inPath: commandDirEntryPath,
       outPath: path.resolve(dirs.binDir, commandPath),
     });

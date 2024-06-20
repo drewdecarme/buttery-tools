@@ -1,18 +1,34 @@
 import { constants, access, writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { ButteryConfigBase, ButteryConfigCli } from "@buttery/core";
+import type {
+  ButteryConfigBase,
+  ButteryConfigCli,
+  ResolvedButteryConfig,
+} from "@buttery/core";
 import { createEsbuildOptions } from "@buttery/utils/esbuild";
-import { exhaustiveMatchGuard } from "@buttery/utils/ts";
+import {
+  exhaustiveMatchGuard,
+  importCommand,
+  kebabToCamel,
+} from "@buttery/utils/ts";
 import type { Plugin } from "esbuild";
 import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
 import type { CommandOptions } from "../../../lib";
 import { LOG } from "../_utils/util.logger";
+import { getCommandFiles } from "./build-commands.get-command-files";
 import {
   templateCommandParent,
   templateIndex,
 } from "./build-commands.templates";
+import {
+  type ButteryCLIDirectories,
+  type CommandFile,
+  type CommandGraph,
+  type CommandGraphProperties,
+  getButteryCliDirectories,
+} from "./build-commands.utils";
 
 export type EntryTemplateData = {
   cli_name: string;
@@ -25,54 +41,36 @@ export type EntryTemplateData = {
  * TODO: Update this description
  */
 export class ESBuildPluginCommands {
-  private config: ButteryConfigBase & ButteryConfigCli;
+  private config: ResolvedButteryConfig<"cli">;
+  private dirs: ButteryCLIDirectories;
+
   private runNumber: number;
-  private commandFilesSrcDir: string;
-  private commandFilesOutDir: string;
-  private commandFiles: Set<string>;
   private commandGraph: CommandGraph;
-  private commandStr: string;
+  private programString: string;
 
-  constructor(config: ButteryConfigBase & ButteryConfigCli) {
+  constructor(config: ResolvedButteryConfig<"cli">) {
     this.config = config;
+    this.dirs = getButteryCliDirectories(config);
     this.runNumber = 0;
-    this.commandFiles = new Set();
     this.commandGraph = {};
-    this.commandStr = "";
-
-    this.commandFilesSrcDir = path.resolve(this.config.root, "./commands");
-    this.commandFilesOutDir = path.resolve(this.config.root, "./bin");
-  }
-
-  private kebabToCamel(kebab: string): string {
-    return kebab.replace(/-([a-z0-9])/g, (_, match) => match.toUpperCase());
-  }
-
-  private appendCommandStr(str: string) {
-    this.commandStr += str;
+    this.programString = "";
   }
 
   /**
-   * Returns the commands directory path that was configured
-   * by the `buttery.config`
+   * Appends a string to the programString. Used for dynamically
+   * building the program string
    */
-
-  private getCommandFileName(commandFilePath: string) {
-    return path.basename(commandFilePath, ".ts");
+  private appendToProgramString(str: string) {
+    this.programString += str;
   }
 
   /**
-   * Dynamically import a command by cache busting the import
-   * cache by adding a number representation of now. This forces
-   * import to go out and fetch a new instance.
+   * Dynamically fetches the command files. Used here to re-create
+   * the command files structure when things change in the command
+   * files directory.
    */
-  private async importCommand(modulePath: string) {
-    // Construct a new import specifier with a unique URL timestamp query parameter
-    const timestamp = new Date().getTime();
-    const importSpecifier = `${modulePath}?t=${timestamp}`;
-
-    // Import the module fresh
-    return await import(importSpecifier);
+  private get commandFiles() {
+    return getCommandFiles(this.config);
   }
 
   /**
@@ -110,17 +108,19 @@ export class ESBuildPluginCommands {
    * Get's all of the existing command files, loops through
    * them and ensures that all of the proper files have been created
    */
-  private async ensureCommandHierarchy(commandFilePath: string) {
-    const commandFileName = this.getCommandFileName(commandFilePath);
-    const commandSegments = commandFileName.split(".");
-
-    for (const commandSegmentIndex in commandSegments) {
+  private async validateCommandHierarchy(commandFile: CommandFile) {
+    const { commandSegments } = commandFile;
+    for (const commandSegmentIndex in commandFile.commandSegments) {
       const commandSegment = commandSegments[commandSegmentIndex];
       const commandSegmentName = commandSegments
         .slice(0, Number(commandSegmentIndex) + 1)
         .join(".");
-      const commandSegmentPath = `${this.commandFilesSrcDir}/${commandSegmentName}.ts`;
-      await this.ensureCommandFile(commandSegment, commandSegmentPath);
+      const commandSegmentPath = path.resolve(
+        this.dirs.commandsDir,
+        commandSegmentName.concat(".ts")
+      );
+      console.log({ commandSegmentPath });
+      // await this.ensureCommandFile(commandSegment, commandSegmentPath);
     }
   }
 
@@ -130,33 +130,65 @@ export class ESBuildPluginCommands {
    * so that we can recursively build the commander program
    * by processing the commands key.
    */
-  private async buildCommandGraph() {}
+  private async buildCommandGraph(commandFiles: CommandFile[]) {
+    LOG.debug("Creating the command graph...");
 
-  /**
+    for (const { commandSegments, name, outPath } of commandFiles) {
+      let currentCommandGraph = this.commandGraph;
+
+      for (const commandSegment of commandSegments) {
+        try {
+          const commandFileContent = await importCommand(outPath);
+
+          const properties: CommandGraphProperties = {
+            meta: commandFileContent?.meta,
+            segment_name: name,
+            action: commandFileContent?.action,
+            args: commandFileContent?.args,
+            options: commandFileContent?.options,
+          };
+          if (!currentCommandGraph[commandSegment]) {
+            currentCommandGraph[commandSegment] = {
+              properties,
+              commands: {},
+            };
+          }
+          currentCommandGraph = currentCommandGraph[commandSegment].commands;
+        } catch (error) {
+          console.log(error);
+
+          throw new Error(error as string);
+        }
+      }
+    }
+    LOG.debug("Creating the command graph... done.");
+  }
+
+  /**a
    * Recursively builds a commander string in order to be
    * interpolated onto the index template. This string
-   * recursively loops through all of the command relationships
+   * recursively loops through all of the command reltionships
    * in order to build the program string.
    */
   private buildProgram(cmdObj: CommandGraph, parentCmd: string) {
     const commandEntries = Object.entries(cmdObj);
     for (const [cmdName, { commands, properties }] of commandEntries) {
-      const cmdVariableName = this.kebabToCamel(cmdName);
+      const cmdVariableName = kebabToCamel(cmdName);
       const hasSubCommands = Object.values(commands).length > 0;
-      this.appendCommandStr(
+      this.appendToProgramString(
         `const ${cmdVariableName} = ${parentCmd}.command("${cmdName}")`
       );
 
       const props = properties as CommandGraphProperties;
 
       // meta
-      this.appendCommandStr(`.description("${props.meta.description}")`);
+      this.appendToProgramString(`.description("${props.meta.description}")`);
 
       // args
       const commandArgs = props.args ?? [];
       for (const arg of commandArgs) {
         const argName = arg.required ? `<${arg.name}>` : `[${arg.name}]`;
-        this.appendCommandStr(
+        this.appendToProgramString(
           `.argument(${argName}, ${arg.description}, ${arg.defaultValue})`
         );
       }
@@ -167,7 +199,7 @@ export class ESBuildPluginCommands {
       for (const [flag, option] of commandOptionEntires) {
         switch (option.type) {
           case "value": {
-            this.appendCommandStr(`.option(
+            this.appendToProgramString(`.option(
                   "-${option.alias}, --${flag} <value>",
                   "${option.description}"
                 )`);
@@ -175,7 +207,7 @@ export class ESBuildPluginCommands {
           }
 
           case "boolean": {
-            this.appendCommandStr(`.option(
+            this.appendToProgramString(`.option(
                   "-${option.alias}, --${flag}",
                  "${option.description}"
                 )`);
@@ -189,7 +221,7 @@ export class ESBuildPluginCommands {
       }
 
       if (!hasSubCommands) {
-        this.appendCommandStr(
+        this.appendToProgramString(
           `.action(withParsedAction("${props.segment_name}"))`
         );
       }
@@ -203,11 +235,11 @@ export class ESBuildPluginCommands {
 
       // recurse with the sub commands
       if (hasSubCommands) {
-        this.appendCommandStr(";");
+        this.appendToProgramString(";");
         this.buildProgram(commands, cmdVariableName);
       }
 
-      this.appendCommandStr(";");
+      this.appendToProgramString(";");
     }
   }
 
@@ -221,66 +253,83 @@ export class ESBuildPluginCommands {
   }
 
   getPlugin(): Plugin {
-    const config = this.config;
+    let commandFiles: CommandFile[] = [];
 
     return {
       name: "commands",
       setup: (build) => {
-        build.onStart(() => {
+        build.onStart(async () => {
           this.logRebuild();
+          commandFiles = await this.commandFiles;
         });
-        // the below regex is a JS regex that matches the go syntax
-        // since the regex that is defined in this method above doesn't
-        // syntactically follow the go regex, we just take in every file
-        // in the commands directory and then test it against the more detailed
-        // JS regex that we have above.
-        // build.onLoad({ filter: /\/commands\/.*\.ts$/ }, async (args) => {
-        //   // const shouldIgnoreFile = args.path.includes("_");
-        //   // if (shouldIgnoreFile) return;
 
-        //   // // 1. ensure all of the command files exist
-        //   // await this.ensureCommandHierarchy(args.path);
-
-        //   // TODO: Only do this on --local
-        //   // const srcDir = import.meta.dirname;
-        //   // const srcFilesGlob = path.resolve(srcDir, "./**.ts");
-        //   // const srcFiles = glob.sync(srcFilesGlob, { follow: false });
-
-        //   return undefined;
-        // });
+        /**
+         * The below regex does filters all of the included build files that adhere to the following:
+         *
+         * 1. Any file that is the immediate descendant of the commands folder and doesn't begin with an underscore.
+         * 2. Any file that ends with command.
+         * 3. Any file that is one level deep within the commands folder and ends with command.ts.
+         *
+         * We're filtering all of the build files that esbuild will use to build so we can ensure that
+         * we have created the correct files for a complete command graph.
+         * @see this.validateCommandHierarchy
+         */
+        // build.onLoad(
+        //   {
+        //     filter:
+        //       /\/(commands\/[^/_][^/]*$|.*command$|commands\/[^/]+\/command\.ts$)/,
+        //   },
+        //   async (args) => {
+        //     const commandFile = commandFiles.find(
+        //       (commandFile) => commandFile.inPath === args.path
+        //     );
+        //     if (!commandFile) {
+        //       throw "Cannot locate command file to process. This most likely happened due to the ESBuild onLoad regex doesn't match the command files that we're originally found.";
+        //     }
+        //     await this.validateCommandHierarchy(commandFile);
+        //     return undefined;
+        //   }
+        // );
         build.onEnd(async () => {
           // 2. get all of the command files and then parse them
-          // await this.buildCommandGraph();
+          await this.buildCommandGraph(commandFiles);
           // // build the command program
-          // this.buildProgram(this.commandGraph, "program");
+          this.buildProgram(this.commandGraph, "program");
+
           // // 4. Read the entry template and compile it with the data
-          // const entryTemplate = templateIndex;
-          // const entryTemplateData: EntryTemplateData = {
-          //   cli_name: config.name,
-          //   cli_description: config.description,
-          //   cli_version: config.version,
-          //   cli_commands: this.commandStr,
-          // };
+          const entryTemplate = templateIndex;
+          const entryTemplateData: EntryTemplateData = {
+            cli_name: this.config.cli.name,
+            cli_description: this.config.cli.description,
+            cli_version: this.config.cli.version,
+            cli_commands: this.programString,
+          };
+
           // // Reset some internally tracked values
-          // this.commandGraph = {};
-          // this.commandStr = "";
-          // // Compile the template and then build the template to the
-          // // correct directory
-          // const template = handlebars.compile<EntryTemplateData>(entryTemplate);
-          // const templateResult = template(entryTemplateData);
-          // await esbuild.build({
-          //   ...createEsbuildOptions({
-          //     stdin: {
-          //       contents: templateResult,
-          //       loader: "ts",
-          //     },
-          //     outfile: path.resolve(this.config.root, "./bin/index.js"),
-          //   }),
-          //   bundle: true,
-          //   minify: true,
-          //   external: ["commander"], // externalize commander
-          // });
-          // this.logBuildComplete();
+          this.commandGraph = {};
+          this.programString = "";
+          // // Compile the template using handlebars
+          const template = handlebars.compile<EntryTemplateData>(entryTemplate);
+          const templateResult = template(entryTemplateData);
+
+          // Build the template using the stdIn VModule for esbuild
+          // https://esbuild.github.io/api/#stdin
+          await esbuild.build({
+            ...createEsbuildOptions({
+              stdin: {
+                contents: templateResult,
+                loader: "ts",
+              },
+              outfile: path.resolve(
+                this.config.paths.rootDir,
+                "./bin/index.js"
+              ),
+            }),
+            bundle: true,
+            minify: true,
+            external: ["commander"], // externalize commander
+          });
+          this.logBuildComplete();
         });
       },
     };
