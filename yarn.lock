@@ -3120,6 +3120,7 @@ __metadata:
     "@linaria/core": "npm:^6.2.0"
     "@linaria/react": "npm:^6.2.1"
     "@mdx-js/rollup": "npm:^3.0.1"
+    "@remix-run/react": "npm:^2.9.2"
     "@shikijs/rehype": "npm:^1.7.0"
     "@storybook/addon-essentials": "npm:8.1.6"
     "@storybook/addon-interactions": "npm:8.1.6"

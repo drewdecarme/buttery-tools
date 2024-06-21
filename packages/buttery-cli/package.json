@@ -15,8 +15,6 @@
   "scripts": {
     "build": "tsx ./scripts/build-local.ts",
     "dev": "yarn build --watch --local",
-    "commands:build": "yarn butter cli build",
-    "commands:dev": "yarn build --watch",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -57,6 +55,7 @@
     "@linaria/core": "^6.2.0",
     "@linaria/react": "^6.2.1",
     "@mdx-js/rollup": "^3.0.1",
+    "@remix-run/react": "^2.9.2",
     "@shikijs/rehype": "^1.7.0",
     "@vitejs/plugin-react": "^4.3.1",
     "@wyw-in-js/babel-preset": "^0.5.3",

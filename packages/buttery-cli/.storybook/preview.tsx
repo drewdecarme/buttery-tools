@@ -1,4 +1,7 @@
 import type { Preview } from "@storybook/react";
+import "@buttery/tokens/_docs/index.css";
+import React from "react";
+import { bodyCSS } from "../.buttery-docs/components";
 
 const preview: Preview = {
   parameters: {
@@ -9,6 +12,13 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <div className={bodyCSS}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default preview;
