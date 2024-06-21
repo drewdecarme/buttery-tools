@@ -17,6 +17,7 @@ export const createDevServer = async (configs: ButteryDocsConfig) => {
   const server = await createServer({
     configFile: false,
     root: butteryDirs.dev.rootDir,
+    publicDir: butteryDirs.public,
     server: {
       port: 1400,
     },

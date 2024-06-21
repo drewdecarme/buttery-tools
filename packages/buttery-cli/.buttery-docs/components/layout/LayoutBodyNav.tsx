@@ -19,10 +19,11 @@ const SNav = styled("nav")`
   align-self: start;
   border-right: ${makeRem(1)} solid
     ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
-  max-height: ${`calc(100vh - ${makeCustom("layout-header-height")})`};
+  max-height: ${`calc(100% - ${makeCustom("layout-header-height")})`};
   overflow-y: auto;
   position: sticky;
   top: ${makeCustom("layout-header-height")};
+  align-self: start;
 `;
 
 const SNavContent = styled("div")`

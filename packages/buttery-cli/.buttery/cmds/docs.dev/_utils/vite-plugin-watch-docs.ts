@@ -27,9 +27,9 @@ export function watchDocsPlugin(
           await cp(file, outFile);
           // re-create the data for the base loader. This will update the nav
           // if a new file is created
-          LOG_DOCS.watch("Re-creating routes...");
+          LOG_DOCS.debug("Re-creating routes...");
           await writeButteryDocsGraphDevData(butteryConfigs);
-          LOG_DOCS.watch("Re-creating routes... done.");
+          LOG_DOCS.debug("Re-creating routes... done.");
         }
       });
 

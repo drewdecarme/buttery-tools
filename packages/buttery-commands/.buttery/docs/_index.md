@@ -2,4 +2,4 @@
 title: Buttery Commands
 ---
 
-# Buttery Commands
+# Welcome to Buttery Commands!

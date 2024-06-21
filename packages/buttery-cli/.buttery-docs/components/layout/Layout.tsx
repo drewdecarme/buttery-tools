@@ -1,4 +1,9 @@
-import { makeCustom, makeFontFamily, makeRem } from "@buttery/tokens/_docs";
+import {
+  makeColor,
+  makeCustom,
+  makeFontFamily,
+  makeRem,
+} from "@buttery/tokens/_docs";
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 import React from "react";
@@ -34,6 +39,7 @@ export const bodyCSS = css`
       line-height: 1.5;
     }
   }
+  background: ${makeColor("neutral", { variant: "50", opacity: 0.12 })};
 `;
 
 const LayoutBody = styled("main")`

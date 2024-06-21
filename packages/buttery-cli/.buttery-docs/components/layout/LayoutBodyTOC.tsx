@@ -18,14 +18,24 @@ import { layoutNavOverlineCSS } from "./layout.utils";
 
 const SLayoutBodyTOC = styled("article")`
   grid-area: layout-toc;
-  border-left: ${makeRem(1)} solid
-    ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
   background: ${makeColorStatic("background")};
 
   & > div {
     padding: ${makeRem(32)};
     position: sticky;
     top: ${makeCustom("layout-header-height")};
+
+    &:before {
+      content: "";
+      display: block;
+      left: 0;
+      position: absolute;
+      top: ${makeRem(32)};
+      bottom: ${makeRem(32)};
+      width: ${makeRem(1)};
+      border-left: ${makeRem(1)} solid
+        ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
+    }
   }
 `;
 

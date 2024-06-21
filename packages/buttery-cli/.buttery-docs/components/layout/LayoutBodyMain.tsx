@@ -41,6 +41,7 @@ const SLayoutBodyMain = styled("section")`
     margin: 0;
     padding: ${makeRem(16)};
     border-radius: ${makeRem(8)};
+    border: ${makeRem(2)} solid ${makeColor("secondary")};
 
     & > p {
       margin: 0;
