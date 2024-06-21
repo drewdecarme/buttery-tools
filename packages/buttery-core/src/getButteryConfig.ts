@@ -55,9 +55,11 @@ function findButteryDir(currentDir: string): string {
  * Finds the buttery config file recursively in the directory
  * structure while traversing up the
  */
-const getFullConfig = async (): Promise<FoundButteryConfig> => {
+const getFullConfig = async (
+  directory?: string
+): Promise<FoundButteryConfig> => {
   LOG.debug("Locating buttery configuration file...");
-  const startingDir = process.cwd();
+  const startingDir = directory ?? process.cwd();
   const butteryDir = findButteryDir(startingDir);
   const butteryConfigPath = butteryConfigCheckFile(butteryDir);
   const butteryConfigModule = await butteryConfigParseFile(butteryConfigPath);
@@ -93,10 +95,17 @@ export type ResolvedButteryConfig<T extends keyof ButteryConfig> = Omit<
  * then it attempts to search for the configuration of that specific key.
  */
 export const getButteryConfig = async <T extends keyof ButteryConfig>(
-  nestedConfigKey: T
+  nestedConfigKey: T,
+  options?: {
+    /**
+     * Optional starting directory to look for the config at
+     * @default process.cwd()
+     */
+    startingDirectory?: string;
+  }
 ): Promise<ResolvedButteryConfig<T>> => {
   try {
-    const butteryConfig = await getFullConfig();
+    const butteryConfig = await getFullConfig(options?.startingDirectory);
 
     if (!nestedConfigKey) return butteryConfig as GetButteryConfig<T>;
 

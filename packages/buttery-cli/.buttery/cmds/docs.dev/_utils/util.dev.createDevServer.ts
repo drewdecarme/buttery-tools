@@ -13,7 +13,7 @@ import { transformMarkdownAssetPath } from "./vite-plugin-transform-markdown-ass
 import { watchDocsPlugin } from "./vite-plugin-watch-docs";
 
 export const createDevServer = async (configs: ButteryDocsConfig) => {
-  const butteryDirs = getButteryDocsDirectories(configs);
+  const butteryDirs = await getButteryDocsDirectories(configs);
   const server = await createServer({
     configFile: false,
     root: butteryDirs.dev.rootDir,
@@ -22,7 +22,7 @@ export const createDevServer = async (configs: ButteryDocsConfig) => {
     },
     plugins: [
       transformMarkdownAssetPath(),
-      watchDocsPlugin(configs),
+      watchDocsPlugin(configs, butteryDirs),
       wyw({
         include: "./**/*.(ts|tsx)",
         babelOptions: {

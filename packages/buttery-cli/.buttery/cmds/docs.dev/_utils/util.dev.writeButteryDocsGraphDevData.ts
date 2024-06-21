@@ -13,7 +13,7 @@ export const writeButteryDocsGraphDevData = async (
   butteryConfigs: ButteryDocsConfig
 ) => {
   const graph = await getButteryDocsGraph(butteryConfigs);
-  const butteryDirs = getButteryDocsDirectories(butteryConfigs);
+  const butteryDirs = await getButteryDocsDirectories(butteryConfigs);
 
   await writeFile(
     path.resolve(butteryDirs.dev.rootDir, "./data.js"),

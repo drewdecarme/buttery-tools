@@ -109,7 +109,7 @@ export const createGraph = async ({
  * in the folder that the user specified in their `buttery.config.ts`.
  */
 export async function getButteryDocsGraph(config: ButteryDocsConfig) {
-  const docsDirectories = getButteryDocsDirectories(config);
+  const docsDirectories = await getButteryDocsDirectories(config);
 
   // get the files inside of the docs directory
   // and enrich them with some of the data

@@ -3,3 +3,4 @@ src/index.ts
 .buttery-docs/.dev/*
 !.buttery-docs/.dev/_template/
 !.buttery-docs/.dev/_template/**
+*storybook.log

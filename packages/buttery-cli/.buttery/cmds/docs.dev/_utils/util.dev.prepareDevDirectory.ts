@@ -11,7 +11,7 @@ import { getButteryDocsDirectories } from "./util.getButteryDocsDirectories";
  */
 export const prepareDevDirectory = async (config: ButteryDocsConfig) => {
   try {
-    const butteryDirs = getButteryDocsDirectories(config);
+    const butteryDirs = await getButteryDocsDirectories(config);
     // copy the template to the dev dir
     await cp(butteryDirs.dev.templateDir, butteryDirs.dev.rootDir, {
       recursive: true,

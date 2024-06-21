@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import path from "node:path";
+import { getButteryConfig } from "@buttery/core";
 import type { ButteryDocsConfig } from "./util.getButteryDocsConfig";
 
 /**
@@ -11,16 +12,22 @@ export const hashString = (input: string) => {
   return createHash("sha256").update(input).digest("hex");
 };
 
-export type ButteryDocsDirectories = ReturnType<
-  typeof getButteryDocsDirectories
+export type ButteryDocsDirectories = Awaited<
+  ReturnType<typeof getButteryDocsDirectories>
 >;
 
 /**
  * Returns some absolute path directories for easily referencing directories
  * that we should be pulling files from or serving content.
  */
-export function getButteryDocsDirectories(config: ButteryDocsConfig) {
-  const docsSrcFilesDir = path.resolve(config.paths.rootDir, "./.buttery-docs");
+export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
+  const localConfig = await getButteryConfig("docs", {
+    startingDirectory: import.meta.dirname,
+  });
+  const docsSrcFilesDir = path.resolve(
+    localConfig.paths.rootDir,
+    "./.buttery-docs"
+  );
 
   const devDir = path.resolve(docsSrcFilesDir, "./.dev");
   const devAppTemplateDir = path.resolve(devDir, "./_template");

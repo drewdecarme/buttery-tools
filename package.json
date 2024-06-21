@@ -23,7 +23,8 @@
   "packageManager": "yarn@4.3.0",
   "scripts": {
     "build": "turbo build",
-    "release": "yarn build && changeset publish"
+    "release": "yarn build && changeset publish",
+    "clean": "npx rimraf ./**/node_modules"
   },
   "dependencies": {
     "@changesets/cli": "^2.27.5"

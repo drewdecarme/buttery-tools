@@ -1,15 +1,18 @@
 import { cp } from "node:fs/promises";
 import path, { basename } from "node:path";
+import type { ResolvedButteryConfig } from "@buttery/core";
 import chokidar from "chokidar";
 import type { Plugin } from "vite";
 import { writeButteryDocsGraphDevData } from "./util.dev.writeButteryDocsGraphDevData";
 import type { ButteryDocsConfig } from "./util.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "./util.getButteryDocsDirectories";
+import type { ButteryDocsDirectories } from "./util.getButteryDocsDirectories";
 import { LOG_DOCS } from "./util.logger";
 
 // vite-plugin-watch-markdown.js
-export function watchDocsPlugin(butteryConfigs: ButteryDocsConfig): Plugin {
-  const butteryDirs = getButteryDocsDirectories(butteryConfigs);
+export function watchDocsPlugin(
+  butteryConfigs: ButteryDocsConfig,
+  butteryDirs: ButteryDocsDirectories
+): Plugin {
   return {
     name: "vite-plugin-watch-docs",
     configureServer(server) {
