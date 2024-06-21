@@ -24,7 +24,7 @@ export const createDevServer = async (configs: ButteryDocsConfig) => {
       transformMarkdownAssetPath(),
       watchDocsPlugin(configs, butteryDirs),
       wyw({
-        include: "./**/*.(ts|tsx)",
+        include: "/**/*.(ts|tsx)",
         babelOptions: {
           presets: ["@babel/preset-typescript", "@babel/preset-react"],
         },
