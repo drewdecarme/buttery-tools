@@ -3,9 +3,9 @@ import path, { basename } from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core";
 import chokidar from "chokidar";
 import type { Plugin } from "vite";
-import { writeButteryDocsGraphDevData } from "./util.dev.writeButteryDocsGraphDevData";
-import type { ButteryDocsConfig } from "./util.getButteryDocsConfig";
-import type { ButteryDocsDirectories } from "./util.getButteryDocsDirectories";
+import type { ButteryDocsConfig } from "../../docs/shared.getButteryDocsConfig";
+import type { ButteryDocsDirectories } from "../../docs/shared.getButteryDocsDirectories";
+import { writeButteryDocsGraphDevData } from "../util.dev.writeButteryDocsGraphDevData";
 import { LOG_DOCS } from "./util.logger";
 
 // vite-plugin-watch-markdown.js

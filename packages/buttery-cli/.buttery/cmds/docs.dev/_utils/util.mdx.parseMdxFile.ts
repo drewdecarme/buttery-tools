@@ -1,8 +1,8 @@
+import type { FileObj } from "../../docs/shared.types";
 import { getButteryDocsGraphValueMeta } from "./util.getButteryDocsGraphValueMeta";
 import { getButteryDocsGraphValueSectionAndSegments } from "./util.getButteryDocsGraphValueSectionAndSegments";
 import { getButteryDocsGraphValueTOC } from "./util.getButteryDocsGraphValueTOC";
 import { getMdxFileContent } from "./util.mdx.getMdxFileContent";
-import type { FileObj } from "./util.types";
 
 export const parseMdxFile = async ({
   filename,

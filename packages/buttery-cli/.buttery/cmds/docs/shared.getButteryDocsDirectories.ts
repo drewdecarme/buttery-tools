@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { getButteryConfig } from "@buttery/core";
-import type { ButteryDocsConfig } from "./util.getButteryDocsConfig";
+import type { ButteryDocsConfig } from "./shared.getButteryDocsConfig";
 
 /**
  * Takes a string and returns a hashed representation

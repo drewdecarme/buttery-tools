@@ -7,10 +7,10 @@ import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import { createServer } from "vite";
-import type { ButteryDocsConfig } from "./util.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "./util.getButteryDocsDirectories";
-import { transformMarkdownAssetPath } from "./vite-plugin-transform-markdown-asset-path";
-import { watchDocsPlugin } from "./vite-plugin-watch-docs";
+import type { ButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../docs/shared.getButteryDocsDirectories";
+import { transformMarkdownAssetPath } from "./_utils/vite-plugin-transform-markdown-asset-path";
+import { watchDocsPlugin } from "./_utils/vite-plugin-watch-docs";
 
 export const createDevServer = async (configs: ButteryDocsConfig) => {
   const butteryDirs = await getButteryDocsDirectories(configs);
