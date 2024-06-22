@@ -26,7 +26,7 @@ export function getButteryDocsGraphValueTOC(markdownContent: string) {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   visit(tree, "element", (node: any) => {
     if (
-      node.tagName.match(/^h[2-6]$/) &&
+      node.tagName.match(/^h[2-3]$/) &&
       node.properties &&
       node.properties.id
     ) {

@@ -3167,13 +3167,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/commands@workspace:packages/buttery-commands":
+"@buttery/commands@workspace:^, @buttery/commands@workspace:packages/buttery-commands":
   version: 0.0.0-use.local
   resolution: "@buttery/commands@workspace:packages/buttery-commands"
   dependencies:
     "@buttery/cli": "workspace:^"
     "@buttery/core": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
+  bin:
+    buttery: ./bin/index.js
   languageName: unknown
   linkType: soft
 
@@ -3225,6 +3227,15 @@ __metadata:
     "@buttery/cli": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
     typescript: "npm:^5.5.2"
+  languageName: unknown
+  linkType: soft
+
+"@buttery/examples@workspace:packages/buttery-examples":
+  version: 0.0.0-use.local
+  resolution: "@buttery/examples@workspace:packages/buttery-examples"
+  dependencies:
+    "@buttery/commands": "workspace:^"
+    "@buttery/utils": "workspace:^"
   languageName: unknown
   linkType: soft
 

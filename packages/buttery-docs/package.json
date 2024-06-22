@@ -2,10 +2,13 @@
   "name": "@buttery/docs",
   "version": "0.0.1",
   "description": "Easily create focused technical documentation from one CLI command",
-  "type": "module",
   "types": "./dist/index.d.ts",
   "module": "./dist/index.js",
   "main": "./dist/index.js",
+  "type": "module",
+  "bin": {
+    "buttery": "./bin/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"

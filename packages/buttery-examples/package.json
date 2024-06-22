@@ -1,12 +1,8 @@
 {
-  "name": "@buttery/commands",
+  "name": "@buttery/examples",
   "version": "0.0.1",
-  "description": "A CLI to develop and build file-based CLIs",
+  "description": "Examples to test the @buttery-tools",
   "main": "index.js",
-  "type": "module",
-  "bin": {
-    "buttery": "./bin/index.js"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,10 +17,7 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "dependencies": {
-    "@buttery/cli": "workspace:^"
-  },
-  "devDependencies": {
-    "@buttery/core": "workspace:^",
-    "@buttery/tsconfig": "workspace:^"
+    "@buttery/commands": "workspace:^",
+    "@buttery/utils": "workspace:^"
   }
 }

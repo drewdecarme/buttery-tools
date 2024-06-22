@@ -29,6 +29,13 @@
       "node": "./dist/ts/index.js",
       "types": "./dist/ts/index.d.ts"
     },
+    "./buttery/run-cli": {
+      "default": "./dist/buttery/run-cli.js",
+      "import": "./dist/buttery/run-cli.js",
+      "require": "./dist/buttery/run-cli.js",
+      "node": "./dist/buttery/run-cli.js",
+      "types": "./dist/buttery/run-cli.d.ts"
+    },
     "./node": {
       "default": "./dist/node/index.js",
       "import": "./dist/node/index.js",
