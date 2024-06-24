@@ -9,16 +9,16 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import { type FC, memo } from "react";
-import { Layout as LayoutComponent } from "../../components";
+import { Layout as LayoutComponent } from "../../../components";
 
 import "@buttery/tokens/_docs/index.css";
 // biome-ignore lint/style/useImportType: <explanation>
 import React from "react";
-import { getButteryDocsFiles } from "../../../.buttery/cmds/docs/shared.getButteryDocFiles";
-import { getButteryDocsConfig } from "../../../.buttery/cmds/docs/shared.getButteryDocsConfig";
-import { getButteryDocsGraph } from "../../../.buttery/cmds/docs/shared.getButteryDocsGraph";
-import { orderButteryDocFiles } from "../../../.buttery/cmds/docs/shared.orderButteryDocFiles";
-import { bodyCSS } from "../../components";
+import { getButteryDocsFiles } from "../../../../.buttery/cmds/docs/shared.getButteryDocFiles";
+import { getButteryDocsConfig } from "../../../../.buttery/cmds/docs/shared.getButteryDocsConfig";
+import { getButteryDocsGraph } from "../../../../.buttery/cmds/docs/shared.getButteryDocsGraph";
+import { orderButteryDocFiles } from "../../../../.buttery/cmds/docs/shared.orderButteryDocFiles";
+import { bodyCSS } from "../../../components";
 
 const RemixNavLink: FC<JSX.IntrinsicElements["a"] & { href: string }> = memo(
   function RemixNavLink({ children, href, ...restProps }) {

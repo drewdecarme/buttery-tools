@@ -28,6 +28,7 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
     localConfig.paths.rootDir,
     "./.buttery-docs"
   );
+  const userDocsDir = path.resolve(config.paths.butteryDir, "./docs");
 
   const devDir = path.resolve(docsSrcFilesDir, "./.dev");
   const devAppTemplateDir = path.resolve(devDir, "./_template");
@@ -36,7 +37,13 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
     hashString(config.paths.rootDir)
   );
 
-  const userDocsDir = path.resolve(config.paths.butteryDir, "./docs");
+  // get some of the build paths
+  const buildDir = path.resolve(docsSrcFilesDir, "./.build");
+  const buildAppTemplateDir = path.resolve(
+    buildDir,
+    `./_template-${config.docs.build.target}`
+  );
+  const buildAppDir = path.resolve(buildDir, hashString(config.paths.rootDir));
 
   return {
     docs: userDocsDir,
@@ -47,12 +54,8 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
       docsDir: path.resolve(divAppServerDir, "./docs"),
     },
     build: {
-      targets: {
-        "cloudflare-pages": path.resolve(
-          docsSrcFilesDir,
-          "./target-cloudflare-pages"
-        ),
-      },
+      templateDir: buildAppTemplateDir,
+      appDir: buildAppDir,
       outDir: path.resolve(userDocsDir, "./dist"),
     },
   };

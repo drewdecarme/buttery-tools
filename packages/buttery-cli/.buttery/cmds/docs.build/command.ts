@@ -5,6 +5,7 @@ import { LOG } from "../_utils/util.logger";
 import { runCommand } from "../_utils/util.run-command";
 import { getButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../docs/shared.getButteryDocsDirectories";
+import { prepareBuildDirectory } from "./_utils/prepareBuildDirectory";
 
 export const meta: CommandMeta = {
   name: "build",
@@ -26,13 +27,15 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     const butteryDocsConfig = await getButteryDocsConfig();
     const butteryDocsDirs = await getButteryDocsDirectories(butteryDocsConfig);
 
+    await prepareBuildDirectory(butteryDocsConfig);
+
+    // TODO: put this behind a switch statement
+
     const configFile = path.resolve(
-      butteryDocsDirs.build.targets["cloudflare-pages"],
+      butteryDocsDirs.build.appDir,
       "./vite.config.ts"
     );
-
-    process.env.REMIX_ROOT = butteryDocsDirs.build.targets["cloudflare-pages"];
-    console.log(process.env);
+    process.env.REMIX_ROOT = butteryDocsDirs.build.appDir;
 
     await runCommand(
       `npx remix vite:build --config ${configFile} --emptyOutDir`

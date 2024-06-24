@@ -9,6 +9,9 @@ const config: ButteryConfig = {
     commandsDir: "cmds",
   },
   docs: {
+    build: {
+      target: "cloudflare-pages",
+    },
     header: {
       title: "Buttery CLI",
     },

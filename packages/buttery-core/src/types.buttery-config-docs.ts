@@ -41,6 +41,9 @@ export type ButteryConfigDocsHeader = {
 };
 
 export type ButteryConfigDocs = {
+  build: {
+    target: "cloudflare-pages";
+  };
   /**
    * A key that allows you to configure how the navigation
    * will display as well as how it should be organized. Order is a
