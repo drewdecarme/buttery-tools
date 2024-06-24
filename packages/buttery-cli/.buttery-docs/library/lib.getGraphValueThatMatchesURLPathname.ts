@@ -1,7 +1,7 @@
 import type {
   ButteryDocsGraph,
   ButteryDocsGraphValue,
-} from "../../.buttery/cmds/docs.dev/_utils/types";
+} from "../../.buttery/cmds/docs/shared.types";
 
 /**
  * Provided a url string and a docs graph, this function will

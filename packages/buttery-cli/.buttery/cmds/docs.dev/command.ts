@@ -17,7 +17,7 @@ export const action: CommandAction = async () => {
 
     await prepareDevDirectory(butteryConfigs);
     await writeButteryDocsGraphDevData(butteryConfigs);
-    const server = await createDevServer(butteryConfigs);
+    const server = await createDevServer();
 
     await server.listen();
 

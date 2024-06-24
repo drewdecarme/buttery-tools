@@ -36,13 +36,18 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
     hashString(config.paths.rootDir)
   );
 
+  const userDocsDir = path.resolve(config.paths.butteryDir, "./docs");
+
   return {
-    docs: path.resolve(config.paths.butteryDir, "./docs"),
+    docs: userDocsDir,
     public: path.resolve(config.paths.butteryDir, "./docs/public"),
     dev: {
       templateDir: devAppTemplateDir,
       rootDir: divAppServerDir,
       docsDir: path.resolve(divAppServerDir, "./docs"),
+    },
+    build: {
+      outDir: path.resolve(userDocsDir, "./dist"),
     },
   };
 }

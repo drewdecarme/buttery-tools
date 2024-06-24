@@ -1,8 +1,15 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import { getRoutePath } from "../docs.dev/_utils/util.getRoutePath";
 import type { ButteryDocsConfig } from "./shared.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./shared.getButteryDocsDirectories";
+
+function getRoutePath(filename: string) {
+  // TODO: Needs more scenarios and testing
+  if (filename === "_index") {
+    return "/";
+  }
+  return "/".concat(filename.split(".").join("/"));
+}
 
 /**
  * Fetches the files inside of the buttery docs directory

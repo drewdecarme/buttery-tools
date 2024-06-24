@@ -3120,6 +3120,7 @@ __metadata:
     "@linaria/core": "npm:^6.2.0"
     "@linaria/react": "npm:^6.2.1"
     "@mdx-js/rollup": "npm:^3.0.1"
+    "@remix-run/cloudflare": "npm:^2.9.2"
     "@remix-run/react": "npm:^2.9.2"
     "@shikijs/rehype": "npm:^1.7.0"
     "@storybook/addon-essentials": "npm:8.1.6"
@@ -3227,6 +3228,8 @@ __metadata:
     "@buttery/cli": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
     typescript: "npm:^5.5.2"
+  bin:
+    buttery: ./bin/index.js
   languageName: unknown
   linkType: soft
 
@@ -3314,7 +3317,7 @@ __metadata:
     vite: "npm:^5.2.13"
     vite-tsconfig-paths: "npm:^4.3.2"
   bin:
-    buttery-tokens: ./bin/index.js
+    buttery: ./bin/index.js
   languageName: unknown
   linkType: soft
 

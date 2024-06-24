@@ -21,7 +21,7 @@ const nestedDirCommandFileName = "command";
  * the specifically named file in that directory.
  */
 export const getCommandFiles = async (
-  config: ResolvedButteryConfig<"cli">
+  config: ResolvedButteryConfig<"commands">
 ): Promise<CommandFile[]> => {
   const dirs = getButteryCommandsDirectories(config);
   const commandFiles: CommandFile[] = [];

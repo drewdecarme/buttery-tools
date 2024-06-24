@@ -26,7 +26,7 @@ export async function buildCommandsEnrichPackageJson({
       type: "module",
       types: "./dist/index.d.ts",
       bin: {
-        [config.cli.name]: "./bin/index.js",
+        [config.commands.name]: "./bin/index.js",
       },
     };
     const packageJsonPropertiesEntries = Object.entries(

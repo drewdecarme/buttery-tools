@@ -6,9 +6,9 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
-import type { ButteryDocsGraphTOC } from "./types";
+import type { ButteryDocsGraphTOC } from "./shared.types";
 
-export function getButteryDocsGraphValueTOC(markdownContent: string) {
+export function parseMDXFileContent(markdownContent: string) {
   const file = unified()
     .use(remarkParse)
     .use(remarkMdx)
@@ -68,5 +68,5 @@ export function getButteryDocsGraphValueTOC(markdownContent: string) {
     }
   });
 
-  return toc;
+  return { toc };
 }
