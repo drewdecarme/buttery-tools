@@ -1,5 +1,6 @@
 import { cp, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import { LOG } from "../../_utils/util.logger";
 import type { ButteryDocsConfig } from "../../docs/shared.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../../docs/shared.getButteryDocsDirectories";
@@ -58,7 +59,7 @@ export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
       }
 
       default:
-        break;
+        exhaustiveMatchGuard(config.docs.build.target);
     }
 
     // // clean the dev/docs dir

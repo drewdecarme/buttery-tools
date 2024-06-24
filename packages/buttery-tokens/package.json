@@ -23,14 +23,12 @@
     "url": "https://github.com/drewdecarme/buttery-tokens/issues"
   },
   "scripts": {
-    "build:tokens": "yarn buttery-tokens build",
-    "build": "yarn buttery cli build && yarn build:tokens",
-    "dev": "yarn buttery cli dev",
+    "build": "yarn docs:build",
     "icons:build": "yarn icons:generate && yarn icons:types",
     "icons:generate": "svgr --out-dir ./playground/assets/icons/react --filename-case kebab --typescript --jsx-runtime automatic --no-index --title-prop -- ./playground/assets/icons/svg",
     "icons:types": "npx tsx ./playground/scripts/script.icon-types.ts",
-    "docs:dev": "yarn buttery-docs dev",
-    "docs:build": "yarn buttery-docs build"
+    "docs:dev": "yarn buttery docs dev",
+    "docs:build": "yarn buttery docs build"
   },
   "dependencies": {
     "@babel/core": "^7.24.7",

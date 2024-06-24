@@ -8,7 +8,7 @@
     "buttery": "./bin/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "yarn buttery docs build"
   },
   "repository": {
     "type": "git",
@@ -21,8 +21,7 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "dependencies": {
-    "@buttery/cli": "workspace:^",
-    "@mdx-js/react": "^3.0.1"
+    "@buttery/cli": "workspace:^"
   },
   "devDependencies": {
     "@buttery/core": "workspace:^",

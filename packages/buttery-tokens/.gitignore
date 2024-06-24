@@ -6,3 +6,5 @@ _*/
 # Do not ignore directories prefixed with _ that are inside the commands directory
 !commands/_*/
 .buttery-docs
+
+!bin

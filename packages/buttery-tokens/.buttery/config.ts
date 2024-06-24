@@ -1,12 +1,10 @@
 import type { ButteryConfig } from "@buttery/core";
 
 const config: ButteryConfig = {
-  cli: {
-    name: "buttery-tokens",
-    description: "A CLI to develop and build buttery tokens",
-    version: "0.0.1",
-  },
   docs: {
+    build: {
+      target: "cloudflare-pages",
+    },
     header: {
       title: "Buttery Tokens",
       logo: {

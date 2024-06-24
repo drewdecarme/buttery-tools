@@ -13,10 +13,28 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "tsx ./scripts/build-local.ts",
-    "dev": "yarn build --watch --local",
+    "build": "yarn cli:build & yarn lib:build",
+    "cli:dev": "yarn build --watch --local",
+    "cli:build": "tsx ./scripts/build-local.ts",
+    "lib:build": "yarn tsc --project tsconfig.lib.json",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
+  },
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "import": "./dist/index.js",
+      "node": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./invoke": {
+      "default": "./dist/invoke.js",
+      "import": "./dist/invoke.js",
+      "node": "./dist/invoke.js",
+      "require": "./dist/invoke.js",
+      "types": "./dist/invoke.d.ts"
+    }
   },
   "repository": {
     "type": "git",

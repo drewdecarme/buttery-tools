@@ -1,10 +1,7 @@
-import path from "node:path";
-import { type InlineConfig, createServer } from "vite";
 import type { CommandAction, CommandMeta, CommandOptions } from "../../../lib";
 import { LOG } from "../_utils/util.logger";
-import { runCommand } from "../_utils/util.run-command";
 import { getButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../docs/shared.getButteryDocsDirectories";
+import { buildForProduction } from "./_utils/buildForProduction";
 import { prepareBuildDirectory } from "./_utils/prepareBuildDirectory";
 
 export const meta: CommandMeta = {
@@ -25,23 +22,10 @@ export const options: CommandOptions<"watch"> = {
 export const action: CommandAction<typeof options> = async ({ options }) => {
   try {
     const butteryDocsConfig = await getButteryDocsConfig();
-    const butteryDocsDirs = await getButteryDocsDirectories(butteryDocsConfig);
 
     await prepareBuildDirectory(butteryDocsConfig);
-
-    // TODO: put this behind a switch statement
-
-    const configFile = path.resolve(
-      butteryDocsDirs.build.appDir,
-      "./vite.config.ts"
-    );
-    process.env.REMIX_ROOT = butteryDocsDirs.build.appDir;
-
-    await runCommand(
-      `npx remix vite:build --config ${configFile} --emptyOutDir`
-    );
+    await buildForProduction(butteryDocsConfig);
   } catch (error) {
-    console.log(error);
     throw LOG.fatal(new Error(error as string));
   }
 };

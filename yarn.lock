@@ -3177,7 +3177,6 @@ __metadata:
     "@buttery/cli": "workspace:^"
     "@buttery/core": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
-    "@mdx-js/react": "npm:^3.0.1"
   bin:
     buttery: ./bin/index.js
   languageName: unknown

@@ -21,8 +21,7 @@
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "scripts": {
     "dev": "yarn buttery docs dev",
-    "build": "yarn buttery docs build --target cloudflare-pages && yarn lib:build",
-    "lib:build": "yarn tsc --project tsconfig.build.json"
+    "build": "yarn buttery docs build"
   },
   "devDependencies": {
     "@buttery/cli": "workspace:^",
