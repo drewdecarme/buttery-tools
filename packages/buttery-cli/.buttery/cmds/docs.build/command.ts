@@ -2,6 +2,9 @@ import path from "node:path";
 import { type InlineConfig, createServer } from "vite";
 import type { CommandAction, CommandMeta, CommandOptions } from "../../../lib";
 import { LOG } from "../_utils/util.logger";
+import { runCommand } from "../_utils/util.run-command";
+import { getButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../docs/shared.getButteryDocsDirectories";
 import { getButteryDocsDefineConfig } from "../docs/util.vite.defineBaseDocsConfig";
 
 export const meta: CommandMeta = {
@@ -21,23 +24,15 @@ export const options: CommandOptions<"watch"> = {
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
   try {
-    const defineDocsConfig = await getButteryDocsDefineConfig();
+    const butteryDocsConfig = await getButteryDocsConfig();
+    const butteryDocsDirs = await getButteryDocsDirectories(butteryDocsConfig);
 
-    const baseConfig = defineDocsConfig<InlineConfig>(
-      ({ butteryDocsDirs }) => ({
-        configFile: path.resolve(
-          butteryDocsDirs.build.targets["cloudflare-pages"],
-          "./vite.config.ts"
-        ),
-      })
+    const configFile = path.resolve(
+      butteryDocsDirs.build.targets["cloudflare-pages"],
+      "./vite.config.ts"
     );
 
-    const server = await createServer(baseConfig);
-
-    await server.listen();
-
-    server.printUrls();
-    server.bindCLIShortcuts({ print: true });
+    await runCommand(`remix vite:build --config ${configFile}`);
   } catch (error) {
     console.log(error);
     throw LOG.fatal(new Error(error as string));

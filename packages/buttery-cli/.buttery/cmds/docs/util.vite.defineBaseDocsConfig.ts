@@ -23,12 +23,6 @@ export async function getButteryDocsDefineConfig() {
     plugins: [
       transformMarkdownAssetPath(),
       watchDocsPlugin(butteryDocsConfig, butteryDocsDirs),
-      wyw({
-        include: "/**/*.(ts|tsx)",
-        babelOptions: {
-          presets: ["@babel/preset-typescript", "@babel/preset-react"],
-        },
-      }),
       mdx({
         remarkPlugins: [remarkFrontmatter],
         rehypePlugins: [
@@ -49,6 +43,12 @@ export async function getButteryDocsDefineConfig() {
             },
           ],
         ],
+      }),
+      wyw({
+        include: "/**/*.(ts|tsx)",
+        babelOptions: {
+          presets: ["@babel/preset-typescript", "@babel/preset-react"],
+        },
       }),
     ],
   };

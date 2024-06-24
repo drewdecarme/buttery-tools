@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   },
   "dependencies": {
     "@buttery/logger": "workspace:^",

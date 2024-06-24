@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "dependencies": {
-    "@buttery/cli": "workspace:^"
+    "@buttery/cli": "workspace:^",
+    "@mdx-js/react": "^3.0.1"
   },
   "devDependencies": {
     "@buttery/core": "workspace:^",

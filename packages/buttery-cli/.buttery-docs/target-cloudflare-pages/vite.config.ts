@@ -19,7 +19,7 @@ export default defineDocsConfig(({ butteryDocsConfig, butteryDocsDirs }) => ({
     // @ts-expect-error
     remix({
       appDirectory: path.resolve(import.meta.dirname, "./app"),
-      // buildDirectory: butteryDocsDirs.build.outDir,
+      buildDirectory: butteryDocsDirs.build.outDir,
       async routes(defineRoutes) {
         const files = await getButteryDocsFiles(butteryDocsConfig);
         const orderedFiles = orderButteryDocFiles(butteryDocsConfig, files);
