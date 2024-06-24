@@ -1,10 +1,8 @@
-import type { ButteryConfigDocs } from "@buttery/core";
-import type { ButteryDocsGraph } from "../docs.dev/_utils/types";
+import { LOG } from "../_utils/util.logger";
 import type { ButteryDocsConfig } from "./shared.getButteryDocsConfig";
 
-import { LOG_DOCS } from "../docs.dev/_utils/util.logger";
-import { parseMdxFile } from "../docs.dev/_utils/util.mdx.parseMdxFile";
-import type { FileObj } from "./shared.types";
+import type { ButteryDocsGraph, FileObj } from "./shared.types";
+import { parseMdxFile } from "./util.mdx.parseMDXFile";
 
 /**
  * Creates a graph/object representation of the the files
@@ -18,7 +16,7 @@ export async function getButteryDocsGraph(
   config: ButteryDocsConfig,
   orderedFiles: FileObj[]
 ): Promise<ButteryDocsGraph> {
-  LOG_DOCS.debug("Generating graph representation of docs...");
+  LOG.debug("Generating graph representation of docs...");
   const graph: ButteryDocsGraph = {};
 
   async function insertNode(file: FileObj) {
@@ -38,6 +36,12 @@ export async function getButteryDocsGraph(
       config.docs?.order?.[section]?.display ?? section.replace(/-/g, " ");
 
     if (section && !graph[section]) {
+      if (file.filename.includes(".")) {
+        const sectionName = file.filename.split(".")[0];
+        throw new Error(
+          `It appears your missing a section file for "${file.filename}". Please create a "${sectionName}.md" file in your ./buttery/docs directory.`
+        );
+      }
       graph[section] = {
         title: sectionTitle,
         filepath: file.fsPath,
@@ -89,6 +93,6 @@ export async function getButteryDocsGraph(
     await insertNode(file);
   }
 
-  LOG_DOCS.debug("Generating graph representation of docs... done.");
+  LOG.debug("Generating graph representation of docs... done.");
   return graph;
 }

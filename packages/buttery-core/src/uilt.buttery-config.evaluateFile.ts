@@ -1,22 +1,31 @@
-import { randomUUID } from "node:crypto";
-import { unlink, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
+
+export const hashString = (input: string) => {
+  return createHash("sha256").update(input).digest("hex");
+};
 
 /**
  * Evaluates the transpiled JavaScript code in a sandboxed environment
  */
 export async function butteryConfigEvaluateFile(code: string) {
   // Write the transpiled JavaScript code to a temporary file
-  const tempFilePath = path.resolve(import.meta.dirname, `${randomUUID()}.js`);
-  await writeFile(tempFilePath, code);
+  const tempFileName = hashString(code);
+  const tempDirPath = path.resolve(import.meta.dirname, "./temp");
+  const tempFilePath = path.resolve(tempDirPath, `./${tempFileName}.js`);
 
-  // Dynamically import the temporary JavaScript file as an ES module
-  const moduleURL = pathToFileURL(tempFilePath).href;
-  const module = await import(moduleURL);
+  // try to get what was already created
+  try {
+    const module = await import(`./temp/${tempFileName}.js`); // done this way for static vite dynamic importing
+    return module.default;
+  } catch (error) {
+    // if it wasn't created, it's creating a new reference
+    await mkdir(tempDirPath, { recursive: true });
+    await writeFile(tempFilePath, code);
 
-  // Clean up the temporary file
-  await unlink(tempFilePath);
-
-  return module.default;
+    // Dynamically import the temporary JavaScript file as an ES module
+    const module = await import(`./temp/${tempFileName}.js`); // done this way for static vite dynamic importing
+    return module.default;
+  }
 }

@@ -1,5 +1,6 @@
 import path from "node:path";
 import { vitePlugin as remix } from "@remix-run/dev";
+import { cloudflareDevProxyVitePlugin as remixCloudflareDevProxy } from "@remix-run/dev";
 import { getButteryDocsFiles } from "../../.buttery/cmds/docs/shared.getButteryDocFiles";
 import { getButteryDocsGraph } from "../../.buttery/cmds/docs/shared.getButteryDocsGraph";
 import { orderButteryDocFiles } from "../../.buttery/cmds/docs/shared.orderButteryDocFiles";
@@ -14,13 +15,15 @@ export default defineDocsConfig(({ butteryDocsConfig, butteryDocsDirs }) => ({
   root: import.meta.dirname,
   plugins: [
     // @ts-expect-error
+    remixCloudflareDevProxy(),
+    // @ts-expect-error
     remix({
       appDirectory: path.resolve(import.meta.dirname, "./app"),
-      buildDirectory: butteryDocsDirs.build.outDir,
+      // buildDirectory: butteryDocsDirs.build.outDir,
       async routes(defineRoutes) {
         const files = await getButteryDocsFiles(butteryDocsConfig);
         const orderedFiles = orderButteryDocFiles(butteryDocsConfig, files);
-        const butteryDocsGraph = await getButteryDocsGraph(
+        const graph = await getButteryDocsGraph(
           butteryDocsConfig,
           orderedFiles
         );
@@ -42,13 +45,14 @@ export default defineDocsConfig(({ butteryDocsConfig, butteryDocsDirs }) => ({
               }
             }
           }
-          route(
-            "/",
-            path.resolve(import.meta.dirname, "./app/routes/_layout.tsx"),
-            () => {
-              createRouteFromGraph(butteryDocsGraph);
-            }
-          );
+          createRouteFromGraph(graph);
+          // route(
+          //   "/",
+          //   path.resolve(import.meta.dirname, "./app/routes/_layout.tsx"),
+          //   () => {
+          //     createRouteFromGraph(graph);
+          //   }
+          // );
         });
         return routes;
       },

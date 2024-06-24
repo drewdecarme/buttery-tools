@@ -1,7 +1,7 @@
 import type { CommandAction, CommandMeta } from "../../../lib/types.js";
+import { LOG } from "../_utils/util.logger.js";
 
 import { getButteryDocsConfig } from "../docs/shared.getButteryDocsConfig.js";
-import { LOG_DOCS } from "./_utils/util.logger.js";
 import { createDevServer } from "./util.dev.createDevServer.js";
 import { prepareDevDirectory } from "./util.dev.prepareDevDirectory.js";
 import { writeButteryDocsGraphDevData } from "./util.dev.writeButteryDocsGraphDevData.js";
@@ -25,6 +25,6 @@ export const action: CommandAction = async () => {
     server.bindCLIShortcuts({ print: true });
   } catch (error) {
     console.log(error);
-    throw LOG_DOCS.fatal(new Error(error as string));
+    throw LOG.fatal(new Error(error as string));
   }
 };

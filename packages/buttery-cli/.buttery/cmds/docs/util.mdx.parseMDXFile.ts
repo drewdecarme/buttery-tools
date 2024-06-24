@@ -2,8 +2,8 @@ import { readFile } from "node:fs/promises";
 import matter from "gray-matter";
 import type { FileObj } from "./shared.types";
 import { parseMDXFileContent } from "./util.mdx.parseMDXFileContent";
+import { parseMDXFileFrontmatter } from "./util.mdx.parseMDXFileFrontmatter";
 import { parseMDXFileName } from "./util.mdx.parseMDXFilename";
-import { parseMDXFileFrontmatter } from "./util.mdx.parseMdxFileFrontmatter";
 
 export const parseMdxFile = async ({
   filename,

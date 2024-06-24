@@ -3,7 +3,7 @@ import { getButteryConfig } from "@buttery/core";
 import { input, select } from "@inquirer/prompts";
 
 import type { CommandAction, CommandMeta } from "../../../lib";
-import { LOG_DOCS } from "../docs.dev/_utils/util.logger";
+import { LOG } from "../_utils/util.logger";
 
 export const meta: CommandMeta = {
   name: "init",
@@ -37,6 +37,6 @@ export const action: CommandAction = async () => {
 
     console.log({ docsFolder, framework });
   } catch (error) {
-    throw LOG_DOCS.fatal(new Error(error as string));
+    throw LOG.fatal(new Error(error as string));
   }
 };

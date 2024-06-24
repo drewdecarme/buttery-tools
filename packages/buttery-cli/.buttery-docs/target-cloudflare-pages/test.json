@@ -1,0 +1,81 @@
+{
+  "_index": {
+    "title": "_index",
+    "filepath": "/Users/drewdecarme/git/personal/buttery-tools/packages/buttery-commands/.buttery/docs/_index.md",
+    "filename": "_index",
+    "routeAbs": "/",
+    "routeRel": "/",
+    "pages": {}
+  },
+  "guide": {
+    "title": "Guide",
+    "filepath": "/Users/drewdecarme/git/personal/buttery-tools/packages/buttery-commands/.buttery/docs/guide.md",
+    "filename": "guide",
+    "routeAbs": "/guide",
+    "routeRel": "guide",
+    "toc": [],
+    "pages": {
+      "why-buttery-commands": {
+        "title": "Why Buttery Commands",
+        "filepath": "/Users/drewdecarme/git/personal/buttery-tools/packages/buttery-commands/.buttery/docs/guide.why-buttery-commands.md",
+        "filename": "guide.why-buttery-commands",
+        "routeAbs": "/guide/why-buttery-commands",
+        "routeRel": "why-buttery-commands",
+
+        "pages": {}
+      },
+      "features": {
+        "title": "Features",
+        "filepath": "/Users/drewdecarme/git/personal/buttery-tools/packages/buttery-commands/.buttery/docs/guide.features.md",
+        "filename": "guide.features",
+        "routeAbs": "/guide/features",
+        "routeRel": "features",
+
+        "pages": {}
+      },
+      "getting-started": {
+        "title": "Getting Started",
+        "filepath": "/Users/drewdecarme/git/personal/buttery-tools/packages/buttery-commands/.buttery/docs/guide.getting-started.md",
+        "filename": "guide.getting-started",
+        "routeAbs": "/guide/getting-started",
+        "routeRel": "getting-started",
+
+        "pages": {}
+      },
+      "routing": {
+        "title": "Routing",
+        "filepath": "/Users/drewdecarme/git/personal/buttery-tools/packages/buttery-commands/.buttery/docs/guide.routing.md",
+        "filename": "guide.routing",
+        "routeAbs": "/guide/routing",
+        "routeRel": "routing",
+        "pages": {}
+      },
+      "writing-a-command": {
+        "title": "Writing a command",
+        "filepath": "/Users/drewdecarme/git/personal/buttery-tools/packages/buttery-commands/.buttery/docs/guide.writing-a-command.md",
+        "filename": "guide.writing-a-command",
+        "routeAbs": "/guide/writing-a-command",
+        "routeRel": "writing-a-command",
+        "pages": {}
+      }
+    }
+  },
+  "reference": {
+    "title": "Reference",
+    "filepath": "/Users/drewdecarme/git/personal/buttery-tools/packages/buttery-commands/.buttery/docs/reference.config.md",
+    "filename": "reference.config",
+    "routeAbs": "/reference",
+    "routeRel": "reference",
+    "pages": {
+      "config": {
+        "title": "Configuration",
+        "filepath": "/Users/drewdecarme/git/personal/buttery-tools/packages/buttery-commands/.buttery/docs/reference.config.md",
+        "filename": "reference.config",
+        "routeAbs": "/reference/config",
+        "routeRel": "config",
+        "toc": [],
+        "pages": {}
+      }
+    }
+  }
+}

@@ -47,6 +47,12 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
       docsDir: path.resolve(divAppServerDir, "./docs"),
     },
     build: {
+      targets: {
+        "cloudflare-pages": path.resolve(
+          docsSrcFilesDir,
+          "./target-cloudflare-pages"
+        ),
+      },
       outDir: path.resolve(userDocsDir, "./dist"),
     },
   };

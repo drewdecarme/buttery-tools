@@ -1,14 +1,5 @@
 import { LOG } from "../_utils/util.logger";
-
-function parseFilename(filename: string) {
-  const filenameArr = filename.split(".");
-  const section = filenameArr[0];
-  const route = filenameArr.splice(1).join(".");
-  return {
-    section,
-    route: route === "" ? section : route,
-  };
-}
+import { parseFilename } from "./shared.util.parseFilename";
 
 export async function parseMDXFileFrontmatter({
   frontmatter,

@@ -1,4 +1,3 @@
-import { ResolvedButteryConfig } from "@buttery/core";
 import mdx from "@mdx-js/rollup";
 import rehypeShiki from "@shikijs/rehype";
 import wyw from "@wyw-in-js/vite";
@@ -54,13 +53,13 @@ export async function getButteryDocsDefineConfig() {
     ],
   };
 
-  return function defineConfig(
+  return function defineConfig<T extends UserConfig = UserConfig>(
     fn: (params: {
       butteryDocsConfig: typeof butteryDocsConfig;
       butteryDocsDirs: typeof butteryDocsDirs;
-    }) => UserConfig
+    }) => T
   ) {
     const userConfig = fn({ butteryDocsConfig, butteryDocsDirs });
-    return mergeConfig(baseConfig, userConfig);
+    return mergeConfig<UserConfig, UserConfig>(baseConfig, userConfig);
   };
 }

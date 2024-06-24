@@ -1,5 +1,8 @@
+import path from "node:path";
+import { type InlineConfig, createServer } from "vite";
 import type { CommandAction, CommandMeta, CommandOptions } from "../../../lib";
-import { LOG_DOCS } from "../docs.dev/_utils/util.logger";
+import { LOG } from "../_utils/util.logger";
+import { getButteryDocsDefineConfig } from "../docs/util.vite.defineBaseDocsConfig";
 
 export const meta: CommandMeta = {
   name: "build",
@@ -18,11 +21,25 @@ export const options: CommandOptions<"watch"> = {
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
   try {
-    // const configs = await getButteryConfig("docs");
+    const defineDocsConfig = await getButteryDocsDefineConfig();
 
-    LOG_DOCS.success("Build complete.");
+    const baseConfig = defineDocsConfig<InlineConfig>(
+      ({ butteryDocsDirs }) => ({
+        configFile: path.resolve(
+          butteryDocsDirs.build.targets["cloudflare-pages"],
+          "./vite.config.ts"
+        ),
+      })
+    );
+
+    const server = await createServer(baseConfig);
+
+    await server.listen();
+
+    server.printUrls();
+    server.bindCLIShortcuts({ print: true });
   } catch (error) {
     console.log(error);
-    throw LOG_DOCS.fatal(new Error(error as string));
+    throw LOG.fatal(new Error(error as string));
   }
 };

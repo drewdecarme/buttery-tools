@@ -1,7 +1,7 @@
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
-import { input, select } from "@inquirer/prompts";
+import { select } from "@inquirer/prompts";
 import type { CommandAction, CommandMeta } from "../../../lib";
-import { LOG_DOCS } from "../docs.dev/_utils/util.logger";
+import { LOG } from "../_utils/util.logger";
 import { formatRouteOrder } from "./util.formatRouteOrder";
 
 export const meta: CommandMeta = {
@@ -11,7 +11,7 @@ export const meta: CommandMeta = {
 };
 
 export const action: CommandAction = async () => {
-  LOG_DOCS.watch("Formatting...");
+  LOG.watch("Formatting...");
 
   const decision = await select<"navigation">({
     message: "What would you like to format?",
