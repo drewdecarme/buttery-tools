@@ -22,7 +22,6 @@ export async function getButteryDocsDefineConfig() {
     },
     plugins: [
       transformMarkdownAssetPath(),
-      watchDocsPlugin(butteryDocsConfig, butteryDocsDirs),
       mdx({
         remarkPlugins: [remarkFrontmatter],
         rehypePlugins: [
@@ -44,6 +43,7 @@ export async function getButteryDocsDefineConfig() {
           ],
         ],
       }),
+      watchDocsPlugin(butteryDocsConfig, butteryDocsDirs),
       wyw({
         include: "/**/*.(ts|tsx)",
         babelOptions: {

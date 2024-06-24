@@ -5,7 +5,6 @@ import { LOG } from "../_utils/util.logger";
 import { runCommand } from "../_utils/util.run-command";
 import { getButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../docs/shared.getButteryDocsDirectories";
-import { getButteryDocsDefineConfig } from "../docs/util.vite.defineBaseDocsConfig";
 
 export const meta: CommandMeta = {
   name: "build",
@@ -32,7 +31,12 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
       "./vite.config.ts"
     );
 
-    await runCommand(`remix vite:build --config ${configFile}`);
+    process.env.REMIX_ROOT = butteryDocsDirs.build.targets["cloudflare-pages"];
+    console.log(process.env);
+
+    await runCommand(
+      `npx remix vite:build --config ${configFile} --emptyOutDir`
+    );
   } catch (error) {
     console.log(error);
     throw LOG.fatal(new Error(error as string));

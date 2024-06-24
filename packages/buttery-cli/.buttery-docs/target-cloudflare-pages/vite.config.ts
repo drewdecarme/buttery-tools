@@ -14,9 +14,7 @@ export default defineDocsConfig(({ butteryDocsConfig, butteryDocsDirs }) => ({
   // change the root here since we're looking at this directory
   root: import.meta.dirname,
   plugins: [
-    // @ts-expect-error
     remixCloudflareDevProxy(),
-    // @ts-expect-error
     remix({
       appDirectory: path.resolve(import.meta.dirname, "./app"),
       buildDirectory: butteryDocsDirs.build.outDir,
