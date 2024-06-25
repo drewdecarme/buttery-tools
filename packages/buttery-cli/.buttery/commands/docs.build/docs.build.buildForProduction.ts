@@ -1,10 +1,11 @@
 import path from "node:path";
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 
-import { runCommand } from "../../_utils/util.run-command";
-import { LOG_DOCS } from "../../docs/docs.logger";
-import type { ButteryDocsConfig } from "../../docs/shared.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../../docs/shared.getButteryDocsDirectories";
+import { cp, rename } from "node:fs/promises";
+import { runCommand } from "../_utils/util.run-command";
+import { LOG_DOCS } from "../docs/docs.logger";
+import type { ButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../docs/shared.getButteryDocsDirectories";
 
 export const buildForProduction = async (config: ButteryDocsConfig) => {
   const butteryDirs = await getButteryDocsDirectories(config);
@@ -21,6 +22,11 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
       await runCommand(
         `npx remix vite:build --config ${configFile} --emptyOutDir --logLevel=error`
       );
+
+      // Move the build to the local dist
+      await cp(butteryDirs.build.appDir, butteryDirs.build.outDir, {
+        recursive: true,
+      });
       break;
     }
 

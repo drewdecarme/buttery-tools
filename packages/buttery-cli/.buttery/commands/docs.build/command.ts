@@ -1,8 +1,8 @@
 import type { CommandAction, CommandMeta, CommandOptions } from "../../../lib";
 import { LOG_DOCS } from "../docs/docs.logger";
 import { getButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
-import { buildForProduction } from "./_utils/buildForProduction";
-import { prepareBuildDirectory } from "./_utils/prepareBuildDirectory";
+import { buildForProduction } from "./docs.build.buildForProduction";
+import { prepareBuildDirectory } from "./docs.build.prepareBuildDirectory";
 
 export const meta: CommandMeta = {
   name: "build",

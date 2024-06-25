@@ -7,14 +7,13 @@ import { getButteryDocsDefineConfig } from "../../../.buttery/commands/docs/util
 const defineDocsConfig = await getButteryDocsDefineConfig();
 
 // https://vitejs.dev/config/
-export default defineDocsConfig(({ butteryDocsDirs }) => ({
+export default defineDocsConfig(() => ({
   // change the root here since we're looking at this directory
   root: import.meta.dirname,
   plugins: [
     remixCloudflareDevProxy(),
     remix({
       appDirectory: path.resolve(import.meta.dirname, "./app"),
-      buildDirectory: butteryDocsDirs.build.outDir,
     }),
   ],
 }));
