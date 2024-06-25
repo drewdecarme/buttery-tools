@@ -2,7 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import type { ButteryConfigTokens, ResolvedButteryConfig } from "@buttery/core";
-import { tokenLogger } from "../utils/util.logger";
+import { LOG_TOKENS } from "../../tokens/tokens.logger";
 import type { MakeTemplate } from "./MakeTemplate";
 
 export class MakeTemplates {
@@ -56,11 +56,11 @@ export class MakeTemplates {
       const filePath = path.resolve(this.outDir, `./${fileName}.ts`);
 
       try {
-        tokenLogger.debug(`Generating function "${fileName}" from template...`);
+        LOG_TOKENS.debug(`Generating function "${fileName}" from template...`);
         await writeFile(filePath, compiledFunctionContent, {
           encoding: "utf8",
         });
-        tokenLogger.debug(
+        LOG_TOKENS.debug(
           `Generating function "${fileName}" from template... done.`
         );
 
@@ -74,35 +74,35 @@ export class MakeTemplates {
         const err = new Error(
           `Error when generating "${fileName}" at "${filePath}": ${error}`
         );
-        tokenLogger.fatal(err);
+        LOG_TOKENS.fatal(err);
         throw err;
       }
     }
 
     // create the entry point barrel file
     try {
-      tokenLogger.debug("Creating config file...");
+      LOG_TOKENS.debug("Creating config file...");
       await writeFile(
         this.configOutFilePath,
         `export const config = ${JSON.stringify(this.config)}`,
         { encoding: "utf8" }
       );
       indexFileContent = indexFileContent.concat(`export * from "./config";\n`);
-      tokenLogger.debug("Creating config file... done");
-      tokenLogger.debug("Creating entry point...");
+      LOG_TOKENS.debug("Creating config file... done");
+      LOG_TOKENS.debug("Creating entry point...");
       await writeFile(this.entryFile, indexFileContent, { encoding: "utf8" });
-      tokenLogger.debug("Creating entry point... done.");
+      LOG_TOKENS.debug("Creating entry point... done.");
     } catch (error) {
       const err = new Error(
         `Error when generating the barrel file for consumption: ${error}`
       );
-      tokenLogger.fatal(err);
+      LOG_TOKENS.fatal(err);
       throw err;
     }
 
     // create the root css file
     try {
-      tokenLogger.debug("Creating root css...");
+      LOG_TOKENS.debug("Creating root css...");
       // wrap the tokens in the root
       tokensCSSFileContent = `:root {
 ${tokensCSSFileContent}}`;
@@ -111,7 +111,7 @@ ${tokensCSSFileContent}}`;
       });
     } catch (error) {
       const err = new Error(`Error when generating tokens CSS file: ${error}`);
-      tokenLogger.fatal(err);
+      LOG_TOKENS.fatal(err);
       throw err;
     }
   }

@@ -18,6 +18,7 @@
     "cli:dev": "yarn build --watch --local",
     "cli:build": "tsx ./scripts/build-local.ts",
     "lib:build": "yarn tsc --project tsconfig.lib.json",
+    "tokens:build": "tsx ./scripts/tokens-local.build.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
