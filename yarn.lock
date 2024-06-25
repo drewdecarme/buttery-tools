@@ -13206,9 +13206,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"invoicer@workspace:apps/invoicer":
+"invoicer@workspace:packages/app-invoicer":
   version: 0.0.0-use.local
-  resolution: "invoicer@workspace:apps/invoicer"
+  resolution: "invoicer@workspace:packages/app-invoicer"
   dependencies:
     "@babel/core": "npm:^7.24.7"
     "@babel/preset-react": "npm:^7.24.7"
@@ -19712,6 +19712,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"test-tokens@workspace:packages/app-test-tokens":
+  version: 0.0.0-use.local
+  resolution: "test-tokens@workspace:packages/app-test-tokens"
+  dependencies:
+    "@buttery/tokens": "workspace:^"
+    typescript: "npm:^5.5.2"
+  languageName: unknown
+  linkType: soft
+
 "text-table@npm:^0.2.0, text-table@npm:~0.2.0":
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
@@ -21014,9 +21023,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"website@workspace:apps/website":
+"website@workspace:packages/app-website":
   version: 0.0.0-use.local
-  resolution: "website@workspace:apps/website"
+  resolution: "website@workspace:packages/app-website"
   dependencies:
     "@buttery/components": "workspace:^"
     "@buttery/core": "workspace:^"

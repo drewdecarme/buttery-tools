@@ -1,16 +1,8 @@
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { getButteryConfig } from "@buttery/core";
+import { hashString } from "../_utils/util.hash-string";
 import type { ButteryDocsConfig } from "./shared.getButteryDocsConfig";
-
-/**
- * Takes a string and returns a hashed representation
- * of that string. This is done to provide a significantly
- * unique temp directory for serving the local docs configuration
- */
-export const hashString = (input: string) => {
-  return createHash("sha256").update(input).digest("hex");
-};
 
 export type ButteryDocsDirectories = Awaited<
   ReturnType<typeof getButteryDocsDirectories>

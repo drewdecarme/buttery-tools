@@ -6,9 +6,6 @@
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tokens.git"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "./dist/index.d.ts",
   "bin": {
     "buttery": "./bin/index.js"
   },

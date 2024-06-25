@@ -14,6 +14,7 @@
   "type": "module",
   "scripts": {
     "build": "yarn cli:build & yarn lib:build",
+    "dev": "yarn cli:build --watch --local",
     "cli:dev": "yarn build --watch --local",
     "cli:build": "tsx ./scripts/build-local.ts",
     "lib:build": "yarn tsc --project tsconfig.lib.json",
