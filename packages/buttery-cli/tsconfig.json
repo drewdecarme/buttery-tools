@@ -1,3 +1,6 @@
 {
-  "extends": "@buttery/tsconfig/vite/react"
+  "extends": "@buttery/tsconfig/vite/react",
+  "compilerOptions": {
+    "noEmit": true
+  }
 }

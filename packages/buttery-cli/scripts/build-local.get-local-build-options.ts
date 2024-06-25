@@ -1,4 +1,4 @@
-import type { CommandsBuildOptions } from "../.buttery/cmds/commands.build/build-commands.utils";
+import type { CommandsBuildOptions } from "../.buttery/commands/commands.build/build-commands.utils";
 
 export const getLocalBuildOptions = () => {
   const args = process.argv.slice(2);

@@ -1,6 +1,6 @@
 import React from "react";
 import { type RouteObject, createBrowserRouter } from "react-router-dom";
-import type { ButteryDocsGraph } from "../../../.buttery/cmds/docs.dev/_utils/types";
+import type { ButteryDocsGraph } from "../../../.buttery/commands/docs.dev/_utils/types";
 // @ts-expect-error data is created dynamically via the `dev` CLI command
 import { graph, header } from "./data";
 import RootRoute from "./routes/root";

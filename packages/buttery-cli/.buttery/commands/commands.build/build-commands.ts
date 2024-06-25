@@ -25,11 +25,11 @@ export async function buildCommands(options: CommandsBuildOptions) {
   };
 
   // clean the distribution dirs
-  // await buildCommandsCleanDistributionDirs(args);
+  await buildCommandsCleanDistributionDirs(args);
 
   // enrich the local package.json and build the binary directory
   await Promise.all([
-    // buildCommandsEnrichPackageJson(args),
+    buildCommandsEnrichPackageJson(args),
     buildCommandsCreateBinary(args),
   ]);
 }

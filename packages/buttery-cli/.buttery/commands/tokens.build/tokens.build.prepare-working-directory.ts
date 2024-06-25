@@ -1,11 +1,9 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { ResolvedButteryConfig } from "@buttery/core";
 import type { ButteryTokensDirectories } from "../tokens/tokens.getButteryTokensDirectories";
 import { LOG_TOKENS } from "../tokens/tokens.logger";
 
 export async function prepareWorkingDirectory(
-  config: ResolvedButteryConfig<"tokens">,
   dirs: ButteryTokensDirectories,
   options?: { isLocal?: boolean }
 ) {

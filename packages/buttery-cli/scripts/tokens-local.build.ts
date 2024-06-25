@@ -1,5 +1,5 @@
-import { buildTokens } from "../.buttery/cmds/tokens.build/tokens.build";
-import { LOG_TOKENS } from "../.buttery/cmds/tokens/tokens.logger";
+import { buildTokens } from "../.buttery/commands/tokens.build/tokens.build";
+import { LOG_TOKENS } from "../.buttery/commands/tokens/tokens.logger";
 
 /**
  * A script to run a more specific build process for the tokens

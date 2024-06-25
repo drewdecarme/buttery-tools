@@ -2,7 +2,7 @@ import { styled } from "@linaria/react";
 import { useLocation } from "@remix-run/react";
 import { type FC, type MouseEventHandler, useCallback } from "react";
 import React from "react";
-import type { ButteryDocsGraphTOC } from "../../../.buttery/cmds/docs/shared.types";
+import type { ButteryDocsGraphTOC } from "../../../.buttery/commands/docs/shared.types";
 import {
   makeColor,
   makeColorStatic,

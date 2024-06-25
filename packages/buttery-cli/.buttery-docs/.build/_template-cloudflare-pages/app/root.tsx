@@ -14,10 +14,10 @@ import { Layout as LayoutComponent } from "../../../components";
 import "../../../../.buttery-tokens/docs/index.css";
 // biome-ignore lint/style/useImportType: <explanation>
 import React from "react";
-import { getButteryDocsFiles } from "../../../../.buttery/cmds/docs/shared.getButteryDocFiles";
-import { getButteryDocsConfig } from "../../../../.buttery/cmds/docs/shared.getButteryDocsConfig";
-import { getButteryDocsGraph } from "../../../../.buttery/cmds/docs/shared.getButteryDocsGraph";
-import { orderButteryDocFiles } from "../../../../.buttery/cmds/docs/shared.orderButteryDocFiles";
+import { getButteryDocsFiles } from "../../../../.buttery/commands/docs/shared.getButteryDocFiles";
+import { getButteryDocsConfig } from "../../../../.buttery/commands/docs/shared.getButteryDocsConfig";
+import { getButteryDocsGraph } from "../../../../.buttery/commands/docs/shared.getButteryDocsGraph";
+import { orderButteryDocFiles } from "../../../../.buttery/commands/docs/shared.orderButteryDocFiles";
 import { bodyCSS } from "../../../components";
 
 const RemixNavLink: FC<JSX.IntrinsicElements["a"] & { href: string }> = memo(

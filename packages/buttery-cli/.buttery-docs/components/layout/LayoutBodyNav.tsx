@@ -3,7 +3,7 @@ import { styled } from "@linaria/react";
 import clsx from "clsx";
 import { type FC, useMemo } from "react";
 import React from "react";
-import type { ButteryDocsGraph } from "../../../.buttery/cmds/docs/shared.types";
+import type { ButteryDocsGraph } from "../../../.buttery/commands/docs/shared.types";
 import {
   makeColor,
   makeCustom,

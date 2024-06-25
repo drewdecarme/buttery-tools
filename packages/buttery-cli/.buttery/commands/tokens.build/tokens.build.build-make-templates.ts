@@ -1,4 +1,3 @@
-import { cp, watch as watchDir } from "node:fs/promises";
 import path from "node:path";
 
 import {
@@ -7,8 +6,7 @@ import {
 } from "@buttery/utils/esbuild";
 import { build } from "esbuild";
 
-import type { ResolvedButteryConfig } from "@buttery/core";
-
+import type { ButteryTokensConfig } from "../tokens/tokens.getButteryTokensConfig";
 import type { ButteryTokensDirectories } from "../tokens/tokens.getButteryTokensDirectories";
 import { LOG_TOKENS } from "../tokens/tokens.logger";
 import { MakeTemplates } from "./templates/MakeTemplates";
@@ -31,8 +29,8 @@ import { MakeTemplateResponsive } from "./templates/template.makeResponsive";
  * are then transpiled using esbuild. After the transpilation a plugin is also run
  * to create the TS types for each of the functions using a esbuild plugin.
  */
-export async function buildTemplates(
-  config: ResolvedButteryConfig<"tokens">,
+export async function buildMakeTemplates(
+  config: ButteryTokensConfig,
   dirs: ButteryTokensDirectories
 ) {
   const Templates = new MakeTemplates({
