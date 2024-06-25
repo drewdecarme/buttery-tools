@@ -13,7 +13,7 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "tokens:build && yarn cli:build && yarn lib:build",
+    "build": "yarn tokens:build && yarn cli:build && yarn lib:build",
     "dev": "yarn cli:build --watch --local",
     "cli:dev": "yarn build --watch --local",
     "cli:build": "tsx ./scripts/build-local.ts",
