@@ -82,16 +82,16 @@ async function generateAndTranspile(
     tokenLogger.debug("Transpiling generated files... done.");
 
     // move the index files
-    tokenLogger.debug("Distributing CSS files...");
-    await cp(
-      Templates.tokensCSSFile,
-      path.resolve(dirs.working.path, "./index.css"),
-      {
-        recursive: true,
-        force: true,
-      }
-    );
-    tokenLogger.debug("Distributing CSS files... done");
+    // tokenLogger.debug("Distributing CSS files...");
+    // await cp(
+    //   Templates.tokensCSSFile,
+    //   path.resolve(dirs.working.path, "./index.css"),
+    //   {
+    //     recursive: true,
+    //     force: true,
+    //   }
+    // );
+    // tokenLogger.debug("Distributing CSS files... done");
   } catch (error) {
     const err = new Error(error as string);
     tokenLogger.fatal(err);
