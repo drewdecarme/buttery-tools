@@ -7,7 +7,7 @@ import {
 } from "@buttery/utils/esbuild";
 import { build } from "esbuild";
 
-import { type ResolvedButteryConfig, getButteryConfig } from "@buttery/core";
+import type { ResolvedButteryConfig } from "@buttery/core";
 
 import type { ButteryTokensDirectories } from "../../tokens/tokens.util.getButteryTokensDirectories";
 import { MakeTemplates } from "../templates/MakeTemplates";
@@ -19,7 +19,6 @@ import { MakeTemplateFontWeight } from "../templates/template.makeFontWeight";
 import { MakeTemplateRem } from "../templates/template.makeRem";
 import { MakeTemplateReset } from "../templates/template.makeReset";
 import { MakeTemplateResponsive } from "../templates/template.makeResponsive";
-import { getResolvedVariables } from "./util.get-resolved-config-constants";
 import { launchPlayground } from "./util.launch-playground";
 import { tokenLogger } from "./util.logger";
 
@@ -82,16 +81,6 @@ async function generateAndTranspile(
     tokenLogger.debug("Transpiling generated files... done.");
 
     // move the index files
-    // tokenLogger.debug("Distributing CSS files...");
-    // await cp(
-    //   Templates.tokensCSSFile,
-    //   path.resolve(dirs.working.path, "./index.css"),
-    //   {
-    //     recursive: true,
-    //     force: true,
-    //   }
-    // );
-    // tokenLogger.debug("Distributing CSS files... done");
   } catch (error) {
     const err = new Error(error as string);
     tokenLogger.fatal(err);
@@ -113,13 +102,6 @@ export const buildFunctionsAndTokens = async (
     interactive: boolean;
   }
 ) => {
-  // Get the `buttery.config` to baseline some variables
-  // The `buttery.config` is included in the distribution via package.json files
-  // and it's set as a JS file so it can be consumed without a lot of configuration
-  tokenLogger.debug("Fetching necessary configuration files...");
-  const configs = await getButteryConfig("tokens");
-  tokenLogger.debug("Fetching necessary configuration files... done.");
-
   // build it once
   await generateAndTranspile(config, dirs);
 
