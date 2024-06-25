@@ -11,9 +11,8 @@ import {
 import { type FC, memo } from "react";
 import { Layout as LayoutComponent } from "../../../components";
 
-import "../../../../.buttery-tokens/docs/index.css";
-// biome-ignore lint/style/useImportType: <explanation>
-import React from "react";
+import "#buttery/tokens/docs/index.css";
+
 import { getButteryDocsFiles } from "../../../../.buttery/commands/docs/shared.getButteryDocFiles";
 import { getButteryDocsConfig } from "../../../../.buttery/commands/docs/shared.getButteryDocsConfig";
 import { getButteryDocsGraph } from "../../../../.buttery/commands/docs/shared.getButteryDocsGraph";
