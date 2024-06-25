@@ -11,30 +11,34 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
   const butteryDirs = await getButteryDocsDirectories(config);
   LOG_DOCS.debug("Building distribution files...");
 
-  switch (config.docs.build.target) {
-    case "cloudflare-pages": {
-      const configFile = path.resolve(
-        butteryDirs.build.appDir,
-        "./vite.config.ts"
-      );
-      process.env.REMIX_ROOT = butteryDirs.build.appDir;
+  try {
+    switch (config.docs.build.target) {
+      case "cloudflare-pages": {
+        const configFile = path.resolve(
+          butteryDirs.build.appDir,
+          "./vite.config.ts"
+        );
+        process.env.REMIX_ROOT = butteryDirs.build.appDir;
 
-      await runCommand(
-        `npx remix vite:build --config ${configFile} --emptyOutDir --logLevel=error`
-      );
+        await runCommand(
+          `npx remix vite:build --config ${configFile} --emptyOutDir --logLevel=error`
+        );
 
-      // Move the build to the local dist
-      await cp(butteryDirs.build.appDir, butteryDirs.build.outDir, {
-        recursive: true,
-      });
-      break;
+        // Move the build to the local dist
+        await cp(butteryDirs.build.appDir, butteryDirs.build.outDir, {
+          recursive: true,
+        });
+        break;
+      }
+
+      default:
+        exhaustiveMatchGuard(config.docs.build.target);
     }
 
-    default:
-      exhaustiveMatchGuard(config.docs.build.target);
+    LOG_DOCS.success(
+      `Successfully built production distribution into "${butteryDirs.build.outDir}"`
+    );
+  } catch (error) {
+    throw LOG_DOCS.fatal(new Error(error as string));
   }
-
-  LOG_DOCS.success(
-    `Successfully built production distribution into "${butteryDirs.build.outDir}"`
-  );
 };
