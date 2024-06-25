@@ -16,13 +16,15 @@ export type ButteryTokensDirectories = Awaited<
  * This is done to easily reconcile development as well as production use. Ideally all
  * we want is to find the "right" buttery/tokens directory to start putting files into
  */
-async function getButteryTokensDir() {
-  // TODO: Resolve this when the basic is working. Work out the internals of th
-  // const localConfig = await getButteryConfig("tokens", {
-  //   startingDirectory: import.meta.dirname,
-  // });
-  // const butteryTokensCliDir = localConfig.paths.butteryDir;
-  // console.log({ butteryTokensCliDir });
+async function getButteryTokensDir(isLocal: boolean) {
+  if (isLocal) {
+    const localConfig = await getButteryConfig("tokens", {
+      startingDirectory: import.meta.dirname,
+    });
+    const butteryTokensCliDir = localConfig.paths.butteryDir;
+    return butteryTokensCliDir;
+  }
+
   const butteryTokensPackageDir = findDirectoryUpwards("buttery-tokens");
   const butteryNodeModulesDir = findDirectoryUpwards(
     "node_modules",
@@ -44,7 +46,7 @@ export async function getButteryTokensDirectories(
   }
 ) {
   const isLocal = options?.isLocal ?? false;
-  const butteryTokensDir = await getButteryTokensDir();
+  const butteryTokensDir = await getButteryTokensDir(isLocal);
 
   if (!butteryTokensDir) {
     throw "Cannot locate a `@buttery/tokens` directory. This should not have happened.";
