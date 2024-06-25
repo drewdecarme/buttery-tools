@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@buttery/logger": "workspace:^",
-    "@buttery/tsconfig": "workspace:^"
+    "@buttery/tsconfig": "workspace:^",
+    "esbuild": "^0.21.5"
   }
 }

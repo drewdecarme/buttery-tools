@@ -3112,6 +3112,7 @@ __metadata:
   resolution: "@buttery/cli@workspace:packages/buttery-cli"
   dependencies:
     "@buttery/core": "workspace:^"
+    "@buttery/icons": "workspace:^"
     "@buttery/logger": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
     "@buttery/utils": "workspace:^"
@@ -3219,6 +3220,7 @@ __metadata:
   dependencies:
     "@buttery/logger": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
+    esbuild: "npm:^0.21.5"
     typescript: "npm:^5.5.2"
   languageName: unknown
   linkType: soft
@@ -3252,7 +3254,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/icons@workspace:packages/buttery-icons":
+"@buttery/icons@workspace:^, @buttery/icons@workspace:packages/buttery-icons":
   version: 0.0.0-use.local
   resolution: "@buttery/icons@workspace:packages/buttery-icons"
   dependencies:

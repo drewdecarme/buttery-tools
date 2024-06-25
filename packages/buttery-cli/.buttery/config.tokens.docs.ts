@@ -10,8 +10,8 @@ export const ConfigTokensDocs: ButteryConfigTokens = {
     size: 16,
     family: {
       heading:
-        'Poppins, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-      body: 'Poppins, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+        '"Source Sans 3", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+      body: '"Source Sans 3", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
     },
     weight: {
       bold: 700,
@@ -22,6 +22,7 @@ export const ConfigTokensDocs: ButteryConfigTokens = {
     },
     typography: {},
   },
+
   breakpoints: {
     "phone-small": 320,
     phone: 375,
@@ -40,7 +41,7 @@ export const ConfigTokensDocs: ButteryConfigTokens = {
     brightness: 76,
     application: {
       hues: {
-        primary: 42,
+        primary: 198,
         secondary: 170,
         warning: 60,
         danger: 359,
@@ -61,11 +62,18 @@ export const ConfigTokensDocs: ButteryConfigTokens = {
       },
     },
     static: {
-      background: "#fff",
-      surface: "#fff",
+      background: "#ffffff",
+      surface: "#ffffff",
     },
   },
   custom: {
-    "layout-header": 48,
+    "layout-header-height": {
+      value: 64,
+      storeAsRem: true,
+    },
+    "layout-max-width": {
+      value: 1440,
+      storeAsRem: true,
+    },
   },
 };

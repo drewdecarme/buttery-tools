@@ -1,10 +1,5 @@
-import {
-  makeColor,
-  makeFontWeight,
-  makeRem,
-  makeReset,
-} from "@buttery/tokens/_docs";
 import { css } from "@linaria/core";
+import { makeColor, makeFontWeight, makeRem, makeReset } from "../../library";
 
 export const layoutNavOverlineCSS = css`
   ${makeReset("anchor")};

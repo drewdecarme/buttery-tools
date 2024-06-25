@@ -1,16 +1,16 @@
+import { css } from "@linaria/core";
+import { styled } from "@linaria/react";
+import clsx from "clsx";
+import { type FC, useMemo } from "react";
+import React from "react";
+import type { ButteryDocsGraph } from "../../../.buttery/cmds/docs/shared.types";
 import {
   makeColor,
   makeCustom,
   makeFontWeight,
   makeRem,
   makeReset,
-} from "@buttery/tokens/_docs";
-import { css } from "@linaria/core";
-import { styled } from "@linaria/react";
-import clsx from "clsx";
-import { type FC, useMemo } from "react";
-import React from "react";
-import type { ButteryDocsGraph } from "../../../.buttery/cmds/docs.dev/_utils/types";
+} from "../../library";
 import { useLayoutContext } from "./layout.useLayoutContext";
 import { layoutNavOverlineCSS } from "./layout.utils";
 

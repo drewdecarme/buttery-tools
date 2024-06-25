@@ -2,9 +2,8 @@ import { existsSync, lstatSync } from "node:fs";
 import path from "node:path";
 import { LOG } from "./logger.js";
 import type { ButteryConfig, ButteryConfigPaths } from "./types.buttery-config";
-import { butteryConfigEvaluateFile } from "./uilt.buttery-config.evaluateFile.js";
-import { butteryConfigCheckFile } from "./util.buttery-config.checkFile.js";
-import { butteryConfigParseFile } from "./util.buttery-config.parseFile.js";
+import { butteryConfigGetFile } from "./util.buttery-config.getFile.js";
+import { butteryConfigGetModule } from "./util.buttery-config.getModule.js";
 
 type FoundButteryConfig = {
   config: ButteryConfig;
@@ -57,16 +56,15 @@ const getFullConfig = async (
   LOG.debug("Locating buttery configuration file...");
   const startingDir = directory ?? process.cwd();
   const butteryDir = findButteryDir(startingDir);
-  const butteryConfigPath = butteryConfigCheckFile(butteryDir);
-  const butteryConfigModule = await butteryConfigParseFile(butteryConfigPath);
-  const butteryConfig = await butteryConfigEvaluateFile(butteryConfigModule);
+  const butteryConfigFile = await butteryConfigGetFile(butteryDir);
+  const butteryConfig = await butteryConfigGetModule(butteryConfigFile);
 
   LOG.debug("Locating buttery configuration file... done.");
 
   return {
     config: butteryConfig,
     paths: {
-      config: butteryConfigPath,
+      config: butteryConfigFile.path,
       butteryDir,
       rootDir: path.dirname(butteryDir),
     },
