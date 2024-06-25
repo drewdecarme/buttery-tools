@@ -28,7 +28,9 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
         await cp(butteryDirs.build.appDir, butteryDirs.build.outDir, {
           recursive: true,
         });
-        const filesAndDirs = await readdir(butteryDirs.build.outDir);
+        const filesAndDirs = await readdir(butteryDirs.build.outDir, {
+          recursive: true,
+        });
         console.log(filesAndDirs);
         break;
       }
