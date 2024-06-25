@@ -1,9 +1,26 @@
+import type { ButteryConfigPaths, ButteryConfigTokens } from "@buttery/core";
 import chokidar from "chokidar";
 import { getButteryTokensConfig } from "../tokens/tokens.getButteryTokensConfig";
 import { getButteryTokensDirectories } from "../tokens/tokens.getButteryTokensDirectories";
 import { LOG_TOKENS } from "../tokens/tokens.logger";
 import { buildTemplates } from "./tokens.build.buildFunctionsAndTokens";
 import { prepareWorkingDirectory } from "./tokens.build.prepare-working-directory";
+
+async function createDirsAndBuildTemplates(
+  config: {
+    paths: ButteryConfigPaths;
+    tokens: ButteryConfigTokens;
+  },
+  isLocal: boolean
+) {
+  const dirs = await getButteryTokensDirectories(config, {
+    isLocal,
+  });
+
+  // create the necessary directories and build the templates 1 time
+  await prepareWorkingDirectory(config, dirs, { isLocal });
+  await buildTemplates(config, dirs);
+}
 
 export type TokensBuildOptions = {
   debug: boolean;
@@ -25,14 +42,15 @@ export async function buildTokens(
   const isLocal = !!options.local;
 
   // get the config and the directories needed to build
-  const config = await getButteryTokensConfig();
-  const dirs = await getButteryTokensDirectories(config, {
-    isLocal,
-  });
+  const { tokens, ...restConfig } = await getButteryTokensConfig();
 
-  // create the necessary directories and build the templates 1 time
-  await prepareWorkingDirectory(config, dirs, { isLocal });
-  await buildTemplates(config, dirs);
+  // convert the tokens to an array
+  const tokensConfig = Array.isArray(tokens) ? tokens : [tokens];
+  await Promise.all(
+    tokensConfig.map((t) =>
+      createDirsAndBuildTemplates({ tokens: t, ...restConfig }, isLocal)
+    )
+  );
 
   LOG_TOKENS.success("Build complete!");
 
@@ -43,14 +61,25 @@ export async function buildTokens(
   }
 
   // Watch the config anytime it changes
-  const watcher = chokidar.watch(config.paths.config);
-  LOG_TOKENS.watch(config.paths.config.concat(" for changes..."));
+  const watcher = chokidar.watch(restConfig.paths.config);
+  LOG_TOKENS.watch(restConfig.paths.config.concat(" for changes..."));
 
   // When the config changes...
   // re-fetch the config and build the templates
   watcher.on("change", async (file) => {
     LOG_TOKENS.watch(`"${file}" changed. Rebuilding tokens...`);
-    const updatedConfig = await getButteryTokensConfig();
-    await buildTemplates(updatedConfig, dirs);
+
+    // convert the tokens to an array
+    const { tokens: updatedTokens, ...restUpdatedConfig } =
+      await getButteryTokensConfig();
+    const updatedTokensConfig = Array.isArray(tokens) ? tokens : [tokens];
+    await Promise.all(
+      updatedTokensConfig.map((t) =>
+        createDirsAndBuildTemplates(
+          { tokens: t, ...restUpdatedConfig },
+          isLocal
+        )
+      )
+    );
   });
 }

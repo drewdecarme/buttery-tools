@@ -1,18 +1,14 @@
 import { existsSync, lstatSync } from "node:fs";
 import path from "node:path";
 import { LOG } from "./logger.js";
-import type { ButteryConfig } from "./types.buttery-config";
+import type { ButteryConfig, ButteryConfigPaths } from "./types.buttery-config";
 import { butteryConfigEvaluateFile } from "./uilt.buttery-config.evaluateFile.js";
 import { butteryConfigCheckFile } from "./util.buttery-config.checkFile.js";
 import { butteryConfigParseFile } from "./util.buttery-config.parseFile.js";
 
 type FoundButteryConfig = {
   config: ButteryConfig;
-  paths: {
-    config: string;
-    butteryDir: string;
-    rootDir: string;
-  };
+  paths: ButteryConfigPaths;
 };
 
 /**

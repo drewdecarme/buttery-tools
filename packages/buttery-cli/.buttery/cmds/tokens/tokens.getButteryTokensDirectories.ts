@@ -1,5 +1,9 @@
 import path from "node:path";
-import { type ResolvedButteryConfig, getButteryConfig } from "@buttery/core";
+import {
+  type ButteryConfigPaths,
+  type ButteryConfigTokens,
+  getButteryConfig,
+} from "@buttery/core";
 import { findDirectoryUpwards } from "@buttery/utils/node";
 
 export type ButteryTokensDirectories = Awaited<
@@ -40,7 +44,10 @@ async function getButteryTokensDir(isLocal: boolean) {
 }
 
 export async function getButteryTokensDirectories(
-  config: ResolvedButteryConfig<"tokens">,
+  config: {
+    paths: ButteryConfigPaths;
+    tokens: ButteryConfigTokens;
+  },
   options?: {
     isLocal?: boolean;
   }
