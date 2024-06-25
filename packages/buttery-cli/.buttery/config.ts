@@ -17,7 +17,7 @@ const config: ButteryConfig = {
     },
   },
   tokens: {
-    importName: "_tokens",
+    importName: "playground",
     gridSystem: 4,
     prefix: "buttery-tokens",
     strict: true,

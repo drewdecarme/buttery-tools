@@ -22,14 +22,16 @@ export async function buildTokens(
 ) {
   LOG_TOKENS.debug("Building buttery tokens...");
 
+  const isLocal = !!options.local;
+
   // get the config and the directories needed to build
   const config = await getButteryTokensConfig();
   const dirs = await getButteryTokensDirectories(config, {
-    isLocal: !!options.local,
+    isLocal,
   });
 
   // create the necessary directories and build the templates 1 time
-  await prepareWorkingDirectory(config, dirs);
+  await prepareWorkingDirectory(config, dirs, { isLocal });
   await buildTemplates(config, dirs);
 
   LOG_TOKENS.success("Build complete!");

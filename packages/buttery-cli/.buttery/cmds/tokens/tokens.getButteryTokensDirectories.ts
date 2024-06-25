@@ -21,7 +21,7 @@ async function getButteryTokensDir(isLocal: boolean) {
     const localConfig = await getButteryConfig("tokens", {
       startingDirectory: import.meta.dirname,
     });
-    const butteryTokensCliDir = localConfig.paths.butteryDir;
+    const butteryTokensCliDir = localConfig.paths.rootDir;
     return butteryTokensCliDir;
   }
 

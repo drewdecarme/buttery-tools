@@ -7,4 +7,7 @@ src/index.ts
 .buttery-docs/.build/*
 !.buttery-docs/.build/_template-*/
 !.buttery-docs/.build/_template-*/**
+
+.buttery-tokens/*
+!.buttery-tokens/_playground/*
 *storybook.log

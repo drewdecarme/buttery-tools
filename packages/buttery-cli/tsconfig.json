@@ -1,8 +1,3 @@
 {
-  "extends": "@buttery/tsconfig/library",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "noEmit": true
-  },
-  "include": ["scripts", "./.buttery", "lib", "./.buttery-docs"]
+  "extends": "@buttery/tsconfig/library"
 }
