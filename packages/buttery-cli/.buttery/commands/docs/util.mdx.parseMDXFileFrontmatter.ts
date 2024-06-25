@@ -1,4 +1,4 @@
-import { LOG } from "../_utils/util.logger";
+import { LOG_DOCS } from "./docs.logger";
 import { parseFilename } from "./shared.util.parseFilename";
 
 export async function parseMDXFileFrontmatter({
@@ -11,7 +11,7 @@ export async function parseMDXFileFrontmatter({
   const { route } = parseFilename(filename);
   // get the file
   if (!frontmatter.title) {
-    LOG.warning(
+    LOG_DOCS.warning(
       `"${filename}" is missing a frontmatter title. "${route}" will be used temporarily. Please ensure you add the title property in the document's frontmatter.`
     );
   }

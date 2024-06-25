@@ -1,13 +1,14 @@
 import path from "node:path";
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
-import { LOG } from "../../_utils/util.logger";
+
 import { runCommand } from "../../_utils/util.run-command";
+import { LOG_DOCS } from "../../docs/docs.logger";
 import type { ButteryDocsConfig } from "../../docs/shared.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../../docs/shared.getButteryDocsDirectories";
 
 export const buildForProduction = async (config: ButteryDocsConfig) => {
   const butteryDirs = await getButteryDocsDirectories(config);
-  LOG.debug("Building distribution files...");
+  LOG_DOCS.debug("Building distribution files...");
 
   switch (config.docs.build.target) {
     case "cloudflare-pages": {
@@ -27,7 +28,7 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
       exhaustiveMatchGuard(config.docs.build.target);
   }
 
-  LOG.success(
+  LOG_DOCS.success(
     `Successfully built production distribution into "${butteryDirs.build.outDir}"`
   );
 };

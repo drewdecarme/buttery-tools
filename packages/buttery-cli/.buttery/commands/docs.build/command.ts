@@ -1,5 +1,5 @@
 import type { CommandAction, CommandMeta, CommandOptions } from "../../../lib";
-import { LOG } from "../_utils/util.logger";
+import { LOG_DOCS } from "../docs/docs.logger";
 import { getButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
 import { buildForProduction } from "./_utils/buildForProduction";
 import { prepareBuildDirectory } from "./_utils/prepareBuildDirectory";
@@ -26,6 +26,6 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     await prepareBuildDirectory(butteryDocsConfig);
     await buildForProduction(butteryDocsConfig);
   } catch (error) {
-    throw LOG.fatal(new Error(error as string));
+    throw LOG_DOCS.fatal(new Error(error as string));
   }
 };

@@ -2,8 +2,8 @@ import { cp } from "node:fs/promises";
 import path, { basename } from "node:path";
 import chokidar from "chokidar";
 import type { Plugin } from "vite";
-import { LOG } from "../_utils/util.logger";
 import { writeButteryDocsGraphDevData } from "../docs.dev/util.dev.writeButteryDocsGraphDevData";
+import { LOG_DOCS } from "./docs.logger";
 import type { ButteryDocsConfig } from "./shared.getButteryDocsConfig";
 import type { ButteryDocsDirectories } from "./shared.getButteryDocsDirectories";
 
@@ -19,16 +19,16 @@ export function watchDocsPlugin(
 
       watcher.on("change", async (file) => {
         if (file.endsWith(".md")) {
-          LOG.watch(file.concat(" changed. Updating document..."));
+          LOG_DOCS.watch(file.concat(" changed. Updating document..."));
           const filename = basename(file);
           const outFile = path.resolve(butteryDirs.dev.docsDir, filename);
           // copy the new file
           await cp(file, outFile);
           // re-create the data for the base loader. This will update the nav
           // if a new file is created
-          LOG.debug("Re-creating routes...");
+          LOG_DOCS.debug("Re-creating routes...");
           await writeButteryDocsGraphDevData(butteryConfigs);
-          LOG.debug("Re-creating routes... done.");
+          LOG_DOCS.debug("Re-creating routes... done.");
         }
       });
 

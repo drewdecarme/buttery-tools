@@ -1,7 +1,7 @@
 import { cp, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
-import { LOG } from "../../_utils/util.logger";
+import { LOG_DOCS } from "../../docs/docs.logger";
 import type { ButteryDocsConfig } from "../../docs/shared.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../../docs/shared.getButteryDocsDirectories";
 
@@ -24,20 +24,20 @@ export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
     switch (config.docs.build.target) {
       case "cloudflare-pages": {
         // clean the routes
-        LOG.debug("Cleaning cloudflare pages routes directory...");
+        LOG_DOCS.debug("Cleaning cloudflare pages routes directory...");
         const remixRoutesDir = path.resolve(
           butteryDirs.build.appDir,
           "./app/routes"
         );
         await rm(remixRoutesDir, { recursive: true, force: true });
-        LOG.debug("Cleaning cloudflare pages routes directory... done.");
+        LOG_DOCS.debug("Cleaning cloudflare pages routes directory... done.");
 
         // copy over new routes
-        LOG.debug("Populating routes directory...");
+        LOG_DOCS.debug("Populating routes directory...");
         await cp(butteryDirs.docs, remixRoutesDir, {
           recursive: true,
         });
-        LOG.debug("Populating routes directory... done.");
+        LOG_DOCS.debug("Populating routes directory... done.");
 
         // write a temp package.json
         const packageJsonPath = path.resolve(
