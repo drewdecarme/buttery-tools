@@ -1,4 +1,4 @@
-import { makeFontFamily } from "@buttery/tokens/_website";
+import { makeFontFamily } from "@buttery/tokens/app-website";
 import type { MetaFunction } from "@remix-run/cloudflare";
 import { forwardRef } from "react";
 
@@ -7,8 +7,8 @@ export const meta: MetaFunction = () => {
     { title: "New Remix App" },
     {
       name: "description",
-      content: "Welcome to Remix! Using Vite and Cloudflare!"
-    }
+      content: "Welcome to Remix! Using Vite and Cloudflare!",
+    },
   ];
 };
 

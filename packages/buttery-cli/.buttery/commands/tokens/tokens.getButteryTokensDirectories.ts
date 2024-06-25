@@ -68,12 +68,23 @@ export async function getButteryTokensDirectories(
   // const workingPathSrc = path.resolve(workingPath, "./src");
   // const workingPathDist = path.resolve(workingPath, "./dist");
 
+  const outputPath = path.resolve(butteryTokensDir, workingName);
+
   return {
-    package: butteryTokensDir,
+    // TODO: Need a better name for package
+    root: butteryTokensDir,
     templateTSConfig: path.resolve(butteryTokensDir, "./tsconfig.json"),
     working: {
       path: workingPath,
       name: workingName,
+      css: path.resolve(workingPath, "./index.css"),
+    },
+    /**
+     * Where the generated token files will be placed
+     */
+    output: {
+      path: outputPath,
+      css: path.resolve(outputPath, "./index.css"),
     },
   };
 }

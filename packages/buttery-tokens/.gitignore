@@ -9,3 +9,8 @@ _*/
 
 !bin
 /.buttery-tokens
+
+app-website
+*/index.css
+*/index.d.ts
+*/index.js

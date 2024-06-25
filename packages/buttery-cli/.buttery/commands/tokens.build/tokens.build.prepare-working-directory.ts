@@ -17,23 +17,24 @@ export async function prepareWorkingDirectory(
 
   if (isLocal) {
     LOG_TOKENS.info(
-      "Build is being run locally. Skipping import file creation."
+      "Build is being run locally. Skipping import directory creation."
     );
     return;
   }
 
   // write the files needed to import from another library
-  const importFileContent = `export * from "./${path.relative(dirs.package, dirs.working.path)}/index.js";\n`;
+  const importFileContent = `export * from "../${path.relative(dirs.root, dirs.working.path)}/index.js";\n`;
   const tsConfigFileContent = JSON.stringify(
     { extends: "@buttery/tsconfig/library" },
     null,
     2
   );
+  await mkdir(dirs.output.path, { recursive: true }); // since it's a dir we need to make sure it's there.
   await Promise.all([
     writeFile(dirs.templateTSConfig, tsConfigFileContent),
     ...[".js", ".d.ts"].map((extension) =>
       writeFile(
-        path.resolve(dirs.package, dirs.working.name.concat(extension)),
+        path.resolve(dirs.output.path, "index".concat(extension)),
         importFileContent
       )
     ),

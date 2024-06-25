@@ -1,10 +1,10 @@
-import "@buttery/tokens/_website/index.css";
+import "@buttery/tokens/app-website/index.css";
 import {
   Links,
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration,
 } from "@remix-run/react";
 
 export function Layout({ children }: { children: React.ReactNode }) {

@@ -6,15 +6,16 @@
   "version": "1.0.0",
   "description": "the website",
   "scripts": {
-    "build": "remix vite:build",
+    "build": "yarn tokens:build && yarn app:build",
+    "app:build": "remix vite:build",
     "deploy": "wrangler pages deploy ./build/client",
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "wrangler pages dev ./build/client",
     "typecheck": "tsc",
     "typegen": "wrangler types",
-    "tokens:build": "yarn buttery-tokens build",
-    "tokens:dev": "yarn buttery-tokens:build --watch"
+    "tokens:build": "yarn buttery tokens build",
+    "tokens:dev": "yarn buttery tokens dev"
   },
   "dependencies": {
     "@buttery/components": "workspace:^",
