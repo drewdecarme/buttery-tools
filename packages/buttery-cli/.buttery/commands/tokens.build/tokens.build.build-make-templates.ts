@@ -6,7 +6,6 @@ import {
 } from "@buttery/utils/esbuild";
 import { build } from "esbuild";
 
-import { rename } from "node:fs/promises";
 import type { ButteryTokensConfig } from "../tokens/tokens.getButteryTokensConfig";
 import type { ButteryTokensDirectories } from "../tokens/tokens.getButteryTokensDirectories";
 import { LOG_TOKENS } from "../tokens/tokens.logger";
@@ -77,9 +76,4 @@ export async function buildMakeTemplates(
   LOG_TOKENS.debug("Transpiling generated files...");
   await build(buildOptions);
   LOG_TOKENS.debug("Transpiling generated files... done.");
-
-  // move the index.css file to the output dir
-  LOG_TOKENS.debug("Moving generated CSS file...");
-  await rename(dirs.working.css, dirs.output.css);
-  LOG_TOKENS.debug("Moving generated CSS file... done.");
 }
