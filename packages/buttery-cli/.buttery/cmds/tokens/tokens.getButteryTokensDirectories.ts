@@ -38,8 +38,12 @@ async function getButteryTokensDir() {
 }
 
 export async function getButteryTokensDirectories(
-  config: ResolvedButteryConfig<"tokens">
+  config: ResolvedButteryConfig<"tokens">,
+  options?: {
+    isLocal?: boolean;
+  }
 ) {
+  const isLocal = options?.isLocal ?? false;
   const butteryTokensDir = await getButteryTokensDir();
 
   if (!butteryTokensDir) {

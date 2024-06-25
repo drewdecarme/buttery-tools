@@ -24,7 +24,9 @@ export async function buildTokens(
 
   // get the config and the directories needed to build
   const config = await getButteryTokensConfig();
-  const dirs = await getButteryTokensDirectories(config);
+  const dirs = await getButteryTokensDirectories(config, {
+    isLocal: !!options.local,
+  });
 
   // create the necessary directories and build the templates 1 time
   await prepareWorkingDirectory(config, dirs);
