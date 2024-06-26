@@ -1,9 +1,6 @@
-import { constants, access, writeFile } from "node:fs/promises";
+// import { constants, access, writeFile } from "node:fs/promises";
 import path from "node:path";
-import type {
-  ButteryConfigCommands,
-  ResolvedButteryConfig,
-} from "@buttery/core";
+import type { ResolvedButteryConfig } from "@buttery/core";
 import { createEsbuildOptions } from "@buttery/utils/esbuild";
 import {
   exhaustiveMatchGuard,
@@ -18,7 +15,7 @@ import type { CommandOptions } from "../../../lib";
 import { LOG } from "../_utils/util.logger";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import {
-  templateCommandParent,
+  // templateCommandParent,
   templateIndex,
 } from "./build-commands.templates";
 import {
@@ -292,6 +289,7 @@ export class ESBuildPluginCommands {
         build.onEnd(async () => {
           // 2. get all of the command files and then parse them
           await this.buildCommandGraph(commandFiles);
+
           // // build the command program
           this.buildProgram(this.commandGraph, "program");
 

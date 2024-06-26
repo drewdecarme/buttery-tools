@@ -46,10 +46,7 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
           }
         );
         // TODO: Remove after debugging
-        const filesAndDirs = await readdir(butteryDirs.build.outDir, {
-          recursive: true,
-        });
-        console.log({ filesAndDirs });
+
         break;
       }
 
@@ -57,9 +54,18 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
         exhaustiveMatchGuard(config.docs.build.target);
     }
 
+    const filesAndDirs = await readdir(butteryDirs.build.outDir, {
+      recursive: true,
+      withFileTypes: true,
+    });
     LOG_DOCS.success(
       `Successfully built production distribution into "${butteryDirs.build.outDir}"`
     );
+    const files = filesAndDirs.filter((dirent) => dirent.isFile());
+    LOG_DOCS.success(`Built ${files.length} files:
+
+${files.reduce((accum, file) => accum.concat(`    - ${path.relative(butteryDirs.build.outDir, `${file.parentPath}/${file.name}`)}\n`), "")}      
+`);
   } catch (error) {
     throw LOG_DOCS.fatal(new Error(error as string));
   }

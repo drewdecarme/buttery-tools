@@ -1,8 +1,5 @@
-import {
-  type ButteryConfigPaths,
-  type ButteryConfigTokens,
-  getButteryConfig,
-} from "@buttery/core";
+import type { ButteryConfigPaths, ButteryConfigTokens } from "@buttery/core";
+import { getButteryConfig } from "@buttery/core";
 
 export type ButteryTokensConfig = {
   paths: ButteryConfigPaths;

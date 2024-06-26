@@ -1,5 +1,5 @@
 export {
   butteryConfigColorDefaultsPresets,
   butteryConfigColorDefaultsPreset,
-  butteryConfigColorDefaultsHarmonious
+  butteryConfigColorDefaultsHarmonious,
 } from "./types.buttery-config-tokens-color";
