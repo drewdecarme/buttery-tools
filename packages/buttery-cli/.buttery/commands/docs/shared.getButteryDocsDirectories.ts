@@ -55,7 +55,7 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
       templateDir: buildAppTemplateDir,
       appDir: buildAppDir,
       bundleDir: path.resolve(buildAppDir, "./build"),
-      outDir: path.resolve(userDocsDir, `./dist-${config.docs.build.target}`),
+      outDir: path.resolve(userDocsDir, "./dist"),
     },
   };
 }

@@ -2,8 +2,11 @@ import { cp, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import { LOG_DOCS } from "../docs/docs.logger";
+import { getButteryDocsFiles } from "../docs/shared.getButteryDocFiles";
 import type { ButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../docs/shared.getButteryDocsDirectories";
+import { getButteryDocsGraph } from "../docs/shared.getButteryDocsGraph";
+import { orderButteryDocFiles } from "../docs/shared.orderButteryDocFiles";
 
 /**
  * Creates a temporary directory that is a hash of the absolute directory
@@ -14,6 +17,9 @@ import { getButteryDocsDirectories } from "../docs/shared.getButteryDocsDirector
  */
 export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
   try {
+    const files = await getButteryDocsFiles(config);
+    const orderedFiles = orderButteryDocFiles(config, files);
+    const graph = await getButteryDocsGraph(config, orderedFiles);
     const butteryDirs = await getButteryDocsDirectories(config);
 
     // copy the template to the build dir
@@ -38,6 +44,23 @@ export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
           recursive: true,
         });
         LOG_DOCS.debug("Populating routes directory... done.");
+
+        LOG_DOCS.debug("Creating data file...");
+        const dataFilePath = path.resolve(
+          butteryDirs.build.appDir,
+          "./app/data.ts"
+        );
+        console.log({ dataFilePath });
+        await writeFile(
+          dataFilePath,
+          `import type { ResolvedButteryConfig } from "@buttery/core";
+import type { ButteryDocsGraph } from "../../../../.buttery/commands/docs/shared.types";
+
+export const graph: ButteryDocsGraph = ${JSON.stringify(graph, null, 2)};
+export const header: ResolvedButteryConfig<"docs">["docs"]["header"] = ${JSON.stringify(config.docs.header)};
+`
+        );
+        LOG_DOCS.debug("Creating data file... done");
 
         // write a temp package.json
         const packageJsonPath = path.resolve(

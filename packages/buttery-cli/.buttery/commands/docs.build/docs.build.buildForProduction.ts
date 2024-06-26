@@ -1,7 +1,7 @@
 import path from "node:path";
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 
-import { cp, readdir, rename } from "node:fs/promises";
+import { cp, readdir, rename, writeFile } from "node:fs/promises";
 import { runCommand } from "../_utils/util.run-command";
 import { LOG_DOCS } from "../docs/docs.logger";
 import type { ButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
@@ -32,6 +32,8 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
             recursive: true,
           }
         );
+
+        // move functions to local dist
         const functionsDir = path.resolve(
           butteryDirs.build.appDir,
           "./functions"
@@ -43,18 +45,11 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
             recursive: true,
           }
         );
-        const gitIgnore = path.resolve(
-          butteryDirs.build.appDir,
-          "./.gitignore"
-        );
-        await cp(
-          gitIgnore,
-          path.resolve(butteryDirs.build.outDir, "./.gitignore")
-        );
+        // TODO: Remove after debugging
         const filesAndDirs = await readdir(butteryDirs.build.outDir, {
           recursive: true,
         });
-        console.log(filesAndDirs);
+        console.log({ filesAndDirs });
         break;
       }
 
