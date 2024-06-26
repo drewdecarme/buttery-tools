@@ -5,18 +5,18 @@
   "type": "module",
   "exports": {
     ".": {
-      "default": "./dist/index.js",
       "import": "./dist/index.js",
       "node": "./dist/index.js",
       "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./svg": {
-      "default": "./svg/index.js",
       "import": "./svg/index.js",
       "node": "./svg/index.js",
       "require": "./svg/index.js",
-      "types": "./svg/index.d.ts"
+      "types": "./svg/index.d.ts",
+      "default": "./svg/index.js"
     }
   },
   "scripts": {

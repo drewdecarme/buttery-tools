@@ -25,9 +25,32 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
         );
 
         // Move the build to the local dist
-        await cp(butteryDirs.build.appDir, butteryDirs.build.outDir, {
-          recursive: true,
-        });
+        await cp(
+          butteryDirs.build.bundleDir,
+          path.resolve(butteryDirs.build.outDir, "./build"),
+          {
+            recursive: true,
+          }
+        );
+        const functionsDir = path.resolve(
+          butteryDirs.build.appDir,
+          "./functions"
+        );
+        await cp(
+          functionsDir,
+          path.resolve(butteryDirs.build.outDir, "./functions"),
+          {
+            recursive: true,
+          }
+        );
+        const gitIgnore = path.resolve(
+          butteryDirs.build.appDir,
+          "./.gitignore"
+        );
+        await cp(
+          gitIgnore,
+          path.resolve(butteryDirs.build.outDir, "./.gitignore")
+        );
         const filesAndDirs = await readdir(butteryDirs.build.outDir, {
           recursive: true,
         });

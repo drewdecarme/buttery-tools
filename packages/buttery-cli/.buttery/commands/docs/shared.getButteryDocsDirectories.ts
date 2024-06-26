@@ -26,7 +26,7 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
   const devAppTemplateDir = path.resolve(devDir, "./_template");
   const divAppServerDir = path.resolve(
     devDir,
-    hashString(config.paths.rootDir)
+    "dev.".concat(hashString(config.paths.rootDir))
   );
 
   // get some of the build paths
@@ -45,11 +45,17 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
       rootDir: divAppServerDir,
       docsDir: path.resolve(divAppServerDir, "./docs"),
     },
+    // TODO: Change this for next js
+    // dev: {
+    //   templateDir: path.resolve(devDir, "./_template-next"),
+    //   rootDir: divAppServerDir,
+    //   docsDir: path.resolve(divAppServerDir, "./docs"),
+    // },
     build: {
       templateDir: buildAppTemplateDir,
       appDir: buildAppDir,
       bundleDir: path.resolve(buildAppDir, "./build"),
-      outDir: path.resolve(userDocsDir, "./dist"),
+      outDir: path.resolve(userDocsDir, `./dist-${config.docs.build.target}`),
     },
   };
 }

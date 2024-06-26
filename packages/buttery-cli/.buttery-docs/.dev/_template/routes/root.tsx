@@ -2,7 +2,7 @@ import type { ButteryConfigDocs } from "@buttery/core";
 import React from "react";
 import { NavLink, Outlet, useLoaderData } from "react-router-dom";
 import { ScrollRestoration } from "react-router-dom";
-import type { ButteryDocsGraph } from "../../../../.buttery/commands/docs.dev/_utils/types";
+import type { ButteryDocsGraph } from "../../../../.buttery/commands/docs/shared.types";
 import { Layout, bodyCSS } from "../../../components";
 
 export default function RootRoute() {
