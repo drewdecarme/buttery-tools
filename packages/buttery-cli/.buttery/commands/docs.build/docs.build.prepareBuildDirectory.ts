@@ -1,6 +1,7 @@
-import { cp, rm, writeFile } from "node:fs/promises";
+import { copyFile, cp, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
+import { emptyDir } from "fs-extra";
 import { LOG_DOCS } from "../docs/docs.logger";
 import { getButteryDocsFiles } from "../docs/shared.getButteryDocFiles";
 import type { ButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
@@ -29,20 +30,46 @@ export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
 
     switch (config.docs.build.target) {
       case "cloudflare-pages": {
+        // delete the dist directory
+        await rm(butteryDirs.build.outDir, { recursive: true, force: true });
         // clean the routes
-        LOG_DOCS.debug("Cleaning cloudflare pages routes directory...");
         const remixRoutesDir = path.resolve(
           butteryDirs.build.appDir,
           "./app/routes"
         );
-        await rm(remixRoutesDir, { recursive: true, force: true });
+        LOG_DOCS.debug("Cleaning cloudflare pages routes directory...");
+        await emptyDir(remixRoutesDir);
         LOG_DOCS.debug("Cleaning cloudflare pages routes directory... done.");
 
         // copy over new routes
         LOG_DOCS.debug("Populating routes directory...");
-        await cp(butteryDirs.docs, remixRoutesDir, {
-          recursive: true,
+        const filesAndDirs = await readdir(butteryDirs.docs, {
+          withFileTypes: true,
         });
+        const docsWithRemixFileConventions = filesAndDirs.reduce<
+          Promise<void>[]
+        >((accum, dirent) => {
+          if (!dirent.isFile()) return accum;
+          const filePathSource = `${dirent.parentPath}/${dirent.name}`;
+          const fileNameDest =
+            dirent.name === "_index.md"
+              ? "_index.md"
+              : dirent.name
+                  .split(".")
+                  .reduce<string>((accum, segment, index, origArr) => {
+                    if (index === 0) {
+                      return segment;
+                    }
+                    if (index < origArr.length - 1) {
+                      return accum.concat("_.".concat(segment));
+                    }
+                    return accum.concat(".".concat(segment));
+                  }, "");
+
+          const filePathDest = path.resolve(remixRoutesDir, fileNameDest);
+          return accum.concat(copyFile(filePathSource, filePathDest));
+        }, []);
+        await Promise.all(docsWithRemixFileConventions);
         LOG_DOCS.debug("Populating routes directory... done.");
 
         LOG_DOCS.debug("Creating data file...");
@@ -50,7 +77,6 @@ export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
           butteryDirs.build.appDir,
           "./app/data.ts"
         );
-        console.log({ dataFilePath });
         await writeFile(
           dataFilePath,
           `import type { ResolvedButteryConfig } from "@buttery/core";

@@ -58,11 +58,12 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
       recursive: true,
       withFileTypes: true,
     });
-    LOG_DOCS.success(
-      `Successfully built production distribution into "${butteryDirs.build.outDir}"`
-    );
+
     const files = filesAndDirs.filter((dirent) => dirent.isFile());
-    LOG_DOCS.success(`Built ${files.length} files:
+    LOG_DOCS.success(`Successfully built documentation app!
+
+  Location: ${butteryDirs.build.outDir}
+  Total Files: ${files.length}
 
 ${files.reduce((accum, file) => accum.concat(`    - ${path.relative(butteryDirs.build.outDir, `${file.parentPath}/${file.name}`)}\n`), "")}      
 `);
