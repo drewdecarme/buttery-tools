@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "yarn buttery docs build",
-    "deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name butterytools-commands-docs"
+    "deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools-commands-docs"
   },
   "repository": {
     "type": "git",

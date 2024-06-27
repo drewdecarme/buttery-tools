@@ -3,7 +3,10 @@ import path from "node:path";
 import type { BuildOptions } from "esbuild";
 import esbuild from "esbuild";
 import { LOG } from "./logger.js";
-import type { ButteryConfig } from "./types.buttery-config";
+import type {
+  ButteryConfig,
+  GetButteryConfigOptions,
+} from "./types.buttery-config";
 import { getButteryConfigFile } from "./util.getButteryConfigFile.js";
 
 const hashString = (input: string) => {
@@ -13,18 +16,19 @@ const hashString = (input: string) => {
 // TODO: Add JSDoc
 export async function getButteryConfigModule(
   directory: string | undefined,
-  options?: {
-    watch?: boolean;
-    prompt?: boolean;
-  }
+  options?: GetButteryConfigOptions
 ): Promise<{ config: ButteryConfig; configPath: string; configDir: string }> {
+  // Resolve the options
   const watch = options?.watch ?? false;
   const prompt = options?.prompt ?? false;
+  const defaultConfig = options?.defaultConfig;
+
   try {
     // search for the config file starting with a directory or the current working directory
     const searchDirectory = directory ?? process.cwd();
     const butteryConfigFile = await getButteryConfigFile(searchDirectory, {
       prompt,
+      defaultConfig,
     });
 
     // hash the file filename and create some paths

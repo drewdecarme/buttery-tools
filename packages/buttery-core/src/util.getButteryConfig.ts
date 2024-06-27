@@ -4,6 +4,7 @@ import { LOG } from "./logger.js";
 import type {
   ButteryConfig,
   ButteryConfigPaths,
+  GetButteryConfigOptions,
 } from "./types.buttery-config.js";
 import { getButteryConfigModule } from "./util.getButteryConfigModule.js";
 
@@ -32,17 +33,17 @@ export type ResolvedButteryConfig<T extends keyof ButteryConfig> = Omit<
  */
 export const getButteryConfig = async <T extends keyof ButteryConfig>(
   nestedConfigKey: T,
-  options?: {
-    /**
-     * Optional starting directory to look for the config at
-     * @default process.cwd()
-     */
-    startingDirectory?: string;
-  }
+  options?: GetButteryConfigOptions
 ): Promise<ResolvedButteryConfig<T>> => {
+  // Resolve the options
+  const prompt = options?.prompt ?? false;
+  const watch = options?.watch ?? false;
+  const defaultConfig = options?.defaultConfig;
+
   try {
     const butteryConfigModule = await getButteryConfigModule(
-      options?.startingDirectory
+      options?.startingDirectory,
+      { prompt, watch, defaultConfig }
     );
     const butteryConfig: ButteryConfigWithPaths = {
       config: butteryConfigModule.config,

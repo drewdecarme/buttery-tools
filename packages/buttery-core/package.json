@@ -39,6 +39,7 @@
   "dependencies": {
     "@buttery/logger": "workspace:^",
     "@buttery/tsconfig": "workspace:^",
+    "@inquirer/prompts": "^5.0.7",
     "esbuild": "^0.21.5"
   }
 }
