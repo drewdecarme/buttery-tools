@@ -9,7 +9,15 @@ import {
 import { LOG } from "./logger.js";
 import type { GetButteryConfigOptions } from "./types.buttery-config";
 
-// TODO: Add JSDoc
+/**
+ * Starts from a provided starting and searches up the directory structure to
+ * find a .buttery/ directory, a .config file inside of it and then resolves the config if
+ * is populated with content. At any point in time the necessary directories, files or file requirements
+ * aren't met, it will throw.
+ *
+ * However, if a `option.prompt` is passed into the function, the function will then prompt the
+ * user for any missing information to ensure the necessary files are created and then subsequently used.
+ */
 export async function getButteryConfigFile(
   startingDirectory: string,
   options?: GetButteryConfigOptions

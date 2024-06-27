@@ -36,6 +36,7 @@ export type GetButteryConfigOptions = {
    * The key of the default config that should be added if and when
    * a directory / config isn't detected and the user indicated that they
    * would like to be prompted to reconcile the configuration.
+   * @default undefined
    */
   defaultConfig?: keyof ButteryConfig;
 };
