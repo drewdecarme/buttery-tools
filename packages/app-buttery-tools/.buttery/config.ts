@@ -1,8 +1,8 @@
 import type { ButteryConfig } from "@buttery/core";
 const config: ButteryConfig = {
   tokens: {
-    importName: "random",
-    prefix: "random-tokens",
+    importName: "tools",
+    prefix: "buttery-tools",
     strict: true,
     gridSystem: 4,
     suppressStrictWarnings: false,

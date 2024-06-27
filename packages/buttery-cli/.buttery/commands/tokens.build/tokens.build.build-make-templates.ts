@@ -44,7 +44,9 @@ export async function buildMakeTemplates(
   Templates.register(MakeTemplateRem);
   Templates.register(MakeTemplateResponsive);
   Templates.register(MakeTemplateColor);
-  Templates.register(MakeTemplateColorStatic);
+  if (config.tokens.color.static) {
+    Templates.register(MakeTemplateColorStatic);
+  }
   Templates.register(MakeTemplateReset);
   if (config.tokens.custom) {
     Templates.register(MakeTemplateCustom);
