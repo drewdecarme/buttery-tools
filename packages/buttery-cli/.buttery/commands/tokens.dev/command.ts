@@ -22,7 +22,7 @@ export const options: CommandOptions<"no-prompt"> = {
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
   try {
-    LOG_TOKENS.debug("Running `tokens.init` command");
+    LOG_TOKENS.debug("Running `tokens.dev` command");
     // enable configuration prompting by default
     const prompt = !options?.["no-prompt"];
 
@@ -30,8 +30,6 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
       prompt,
       defaultConfig: "tokens",
     });
-
-    console.log(JSON.stringify(config, null, 2));
   } catch (error) {
     throw LOG_TOKENS.fatal(new Error(error));
   }

@@ -6,6 +6,7 @@ import {
   promptUserForButteryConfigDefaults,
   promptUserForButteryDirLocation,
 } from "./buttery-core.utils.js";
+import { LOG } from "./logger.js";
 import type { GetButteryConfigOptions } from "./types.buttery-config";
 
 // TODO: Add JSDoc
@@ -22,16 +23,19 @@ export async function getButteryConfigFile(
 
   // Create a config directory and file based upon the answers that the user is prompted for
   if (!butteryDir && prompt) {
-    const userDefinedConfigDir =
+    LOG.warning(
+      "Cannot locate the `.buttery/config` file in your file structure. Let's create one."
+    );
+    const userButteryDir =
       await promptUserForButteryDirLocation(startingDirectory);
-    const userDefinedConfigDefaults = await promptUserForButteryConfigDefaults({
-      message: "Select 1 or many configurations you wish to auto create.",
+    const userButteryConfigDefaults = await promptUserForButteryConfigDefaults({
+      message: "Select 1 or many configurations you wish to default",
       defaultChecked: defaultConfig,
     });
     // set the butteryDir to the path that the user defined
-    butteryDir = path.dirname(userDefinedConfigDir);
+    butteryDir = userButteryDir;
     // create the default config
-    await createDefaultButteryConfig(butteryDir, userDefinedConfigDefaults);
+    await createDefaultButteryConfig(butteryDir, userButteryConfigDefaults);
   }
 
   if (!butteryDir) {
@@ -39,16 +43,20 @@ export async function getButteryConfigFile(
   }
 
   // Check for the config file in the .buttery directory
-  const configFilePath = path.join(butteryDir, "config.ts");
-  const doesConfigFileExist = existsSync(configFilePath);
+  const configFilePath = path.resolve(butteryDir, "./config.ts");
+  let doesConfigFileExist = existsSync(configFilePath);
 
   // Create a config file based upon the answers that the user is prompted for
   if (!doesConfigFileExist && prompt) {
+    LOG.warning(
+      `Found the .buttery directory at '${butteryDir}'. However, no \`config.ts\` file is present. Let's create one.`
+    );
     const userDefinedConfigDefaults = await promptUserForButteryConfigDefaults({
-      message: `Found the .buttery directory at '${butteryDir}'. However, no \`config.ts\` file is present. Let's create one. Which configurations would you like to default?`,
+      message: "Which configurations would you like to default?",
       defaultChecked: defaultConfig,
     });
     await createDefaultButteryConfig(butteryDir, userDefinedConfigDefaults);
+    doesConfigFileExist = true;
   }
 
   if (!doesConfigFileExist) {
@@ -56,15 +64,20 @@ export async function getButteryConfigFile(
   }
 
   let file = await readFile(configFilePath);
-  const isFileEmpty = file.length === 0;
+  let isFileEmpty = file.length === 0;
 
+  // Create a config file if the config file is empty
   if (isFileEmpty && prompt) {
+    LOG.warning(
+      `Found "config.ts" file at: '${configFilePath}'. However, this file is empty. Let's populate it.`
+    );
     const userDefinedConfigDefaults = await promptUserForButteryConfigDefaults({
-      message: `Found "config.ts" file at: '${configFilePath}'. However, this file is empty. Let's populate it. Which configurations would you like to default?`,
+      message: "Which configurations would you like to default?",
       defaultChecked: defaultConfig,
     });
     await createDefaultButteryConfig(butteryDir, userDefinedConfigDefaults);
     file = await readFile(configFilePath);
+    isFileEmpty = false;
   }
 
   if (isFileEmpty) {

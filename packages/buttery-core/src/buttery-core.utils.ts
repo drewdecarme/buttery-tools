@@ -25,16 +25,17 @@ export async function promptUserForButteryConfigDefaults({
 
 /**
  * Asks the user to write a location for the path of where the buttery directory
- * should be placed
+ * should be placed. Returns the resolved .buttery/ directory.
  */
 export async function promptUserForButteryDirLocation(
   startingDirectory: string
 ) {
-  return await input({
-    message:
-      "Cannot locate the `.buttery/config` file in your file structure. In what directory would you like to create one?",
+  const baseDir = await input({
+    message: "In what directory would you like to create one?",
     default: startingDirectory,
   });
+  const butteryDir = path.resolve(baseDir, "./.buttery");
+  return butteryDir;
 }
 
 /**
