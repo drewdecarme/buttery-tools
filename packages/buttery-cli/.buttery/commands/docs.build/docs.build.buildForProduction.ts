@@ -45,7 +45,6 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
             recursive: true,
           }
         );
-        // TODO: Remove after debugging
 
         break;
       }
