@@ -34,56 +34,57 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
   }
   const docsArtifacts = path.resolve(artifacts, "./docs");
   const docTargetApps = path.resolve(docsArtifacts, "./apps");
-  const docTargetDev = path.resolve(docTargetApps, "./.dev");
-  const docTargetDevTemplate = path.resolve(docTargetDev, "./_template");
-  const docTargetBuild = path.resolve(docTargetApps, "./.build");
 
-  const devDir = path.resolve(docsSrcFilesDir, "./.dev");
-  const devAppTemplateDir = path.resolve(devDir, "./_template");
-  const divAppServerDir = path.resolve(
-    devDir,
+  // dev
+  const docTargetDevDir = path.resolve(docTargetApps, "./_dev");
+  const docTargetDevTemplate = path.resolve(docTargetDevDir, "./_template");
+  const docTargetDevDynamicAppRoot = path.resolve(
+    docTargetDevDir,
     "dev.".concat(hashString(config.paths.rootDir))
   );
 
-  // get some of the build paths
-  const buildDir = path.resolve(docsSrcFilesDir, "./.build");
-  const buildAppTemplateDir = path.resolve(
-    buildDir,
+  // build
+  const docTargetBuildDir = path.resolve(docTargetApps, "./_build");
+  const docTargetBuildTemplate = path.resolve(
+    docTargetBuildDir,
     `./_template-${config.docs.build.target}`
   );
-  const buildAppDir = path.resolve(buildDir, hashString(config.paths.rootDir));
+  const docTargetBuildDynamicAppRoot = path.resolve(
+    docTargetBuildDir,
+    "build.".concat(hashString(config.paths.rootDir))
+  );
+
+  // output dirs
+  const outputRootDir = path.resolve(userDocsDir, "./dist");
+  const outputBundleDir = path.resolve(outputRootDir, "./build");
 
   return {
+    root: {
+      userDocs: userDefinedDocs,
+      userDocsPublic: path.resolve(userDefinedDocs, "./public"),
+    },
     artifacts: {
       root: artifacts,
       docs: {
         root: docsArtifacts,
         targetApps: {
-          root: docTargetApps
-        }
-      }
-    }
-
-
-    // OLD
-    docs: userDocsDir,
-    public: path.resolve(config.paths.butteryDir, "./docs/public"),
-    dev: {
-      templateDir: devAppTemplateDir,
-      rootDir: divAppServerDir,
-      docsDir: path.resolve(divAppServerDir, "./docs"),
+          root: docTargetApps,
+          dev: {
+            root: docTargetDevDir,
+            template: docTargetDevTemplate,
+            dynamicAppRoot: docTargetDevDynamicAppRoot,
+          },
+          build: {
+            root: docTargetBuildDir,
+            template: docTargetBuildTemplate,
+            dynamicAppRoot: docTargetBuildDynamicAppRoot,
+          },
+        },
+      },
     },
-    // TODO: Change this for next js
-    // dev: {
-    //   templateDir: path.resolve(devDir, "./_template-next"),
-    //   rootDir: divAppServerDir,
-    //   docsDir: path.resolve(divAppServerDir, "./docs"),
-    // },
-    build: {
-      templateDir: buildAppTemplateDir,
-      appDir: buildAppDir,
-      bundleDir: path.resolve(buildAppDir, "./build"),
-      outDir: path.resolve(userDocsDir, "./dist"),
+    output: {
+      root: outputRootDir,
+      bundleDir: outputBundleDir,
     },
   };
 }

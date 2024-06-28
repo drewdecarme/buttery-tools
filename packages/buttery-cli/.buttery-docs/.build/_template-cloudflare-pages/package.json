@@ -1,7 +1,0 @@
-{
-  "type": "module",
-  "dependencies": {
-    "@remix-run/cloudflare": "2.9.2",
-    "isbot": "4.4.0"
-  }
-}
