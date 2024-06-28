@@ -22,7 +22,7 @@ async function getTokensBuildRootDir(
   // If we're building this stuff locally we can just the .buttery-tokens build files
   // this folder. Same goes
   if (isLocal) {
-    return config.paths.rootDir;
+    return path.resolve(config.paths.rootDir, "./artifacts/tokens");
   }
 
   // CONTEXT - Run in context of THIS monorepo
@@ -74,13 +74,20 @@ export async function getButteryTokensDirectories(
     );
   const outputDirPath = getOutputPath(outputDirName);
 
-  const configUITemplatePath = path.resolve(import.meta.dirname, "./config-ui");
-  const configUiDynamicAppRoot = path.resolve(
+  const playgroundRoot = path.resolve(
     import.meta.dirname,
-    `./.config-ui.${outputDirName}.${hashString(outputDirPath)}`
+    "../../../artifacts/tokens/playground"
   );
-  const configUiDynamicAppPublic = path.resolve(
-    configUiDynamicAppRoot,
+  const playgroundTemplatePath = path.resolve(
+    playgroundRoot,
+    "./playground/_template"
+  );
+  const playgroundDynamicAppRoot = path.resolve(
+    playgroundRoot,
+    `./${outputDirName}.${hashString(outputDirPath)}`
+  );
+  const playgroundDynamicAppPublic = path.resolve(
+    playgroundDynamicAppRoot,
     "./public"
   );
 
@@ -98,10 +105,10 @@ export async function getButteryTokensDirectories(
      * of the template and then the location of the dynamically created app root
      * and public path to feed to the createServer vite function.
      */
-    configUI: {
-      template: configUITemplatePath,
-      dynamicAppRoot: configUiDynamicAppRoot,
-      dynamicAppPublic: configUiDynamicAppPublic,
+    playground: {
+      template: playgroundTemplatePath,
+      dynamicAppRoot: playgroundDynamicAppRoot,
+      dynamicAppPublic: playgroundDynamicAppPublic,
     },
     /**
      * The directory where the buttery token utilities

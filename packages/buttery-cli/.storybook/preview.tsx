@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/react";
-import "../.buttery-tokens/docs/index.css";
+import "../artifacts/tokens/.buttery-tokens/docs/index.css";
 import { bodyCSS } from "../.buttery-docs/components";
 
 const preview: Preview = {

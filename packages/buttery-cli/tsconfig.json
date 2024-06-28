@@ -6,17 +6,21 @@
     "baseUrl": ".",
     "paths": {
       // configuration ui tokens
-      "#tokens/config-ui": ["./.buttery-tokens/config-ui/index"],
-      "#tokens/config-ui/css": ["./.buttery-tokens/config-ui/index.css"],
+      "#tokens/config-ui": ["artifacts/tokens/.buttery-tokens/config-ui/index"],
+      "#tokens/config-ui/css": [
+        "artifacts/tokens/.buttery-tokens/config-ui/index.css"
+      ],
       // docs ui tokens
-      "#tokens/generated": ["./.buttery-tokens/generated/index"],
-      "#tokens/generated/css": ["./.buttery-tokens/generated/index.css"]
+      "#tokens/generated": ["artifacts/tokens/.buttery-tokens/generated/index"],
+      "#tokens/generated/css": [
+        "artifacts/tokens/.buttery-tokens/generated/index.css"
+      ]
     }
   },
   "include": [
     ".buttery/*",
     ".buttery-docs/**/*",
-    ".buttery-tokens/**/*",
+    "artifacts/tokens/.buttery-tokens/**/*",
     ".storybook/*",
     "lib",
     "scripts"

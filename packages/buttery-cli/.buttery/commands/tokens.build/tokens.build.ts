@@ -1,7 +1,7 @@
 import { select } from "@inquirer/prompts";
 import chokidar from "chokidar";
 import { LOG_TOKENS } from "../tokens/tokens.config.logger";
-import { launchConfigUI } from "./tokens.build.launch-config-ui";
+import { launchConfigUI } from "./tokens.build.launch-playground";
 import { runBuild } from "./tokens.build.run";
 import {
   type ButteryTokensConfig,
@@ -80,7 +80,7 @@ export async function build(
     LOG_TOKENS.watch(`"${file}" changed.`);
     LOG_TOKENS.watch("Rebuilding tokens...");
     if (interactive) {
-      // update the config?
+      //TODO: update the config?
     }
     await runBuild(config, { isLocal });
 

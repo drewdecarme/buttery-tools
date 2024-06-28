@@ -15,7 +15,7 @@ export async function launchConfigUI(
 
   // create an app from the template and put it into
   // the dynamically reconciled dynamicAppRoot
-  await cp(dirs.configUI.template, dirs.configUI.dynamicAppRoot, {
+  await cp(dirs.playground.template, dirs.playground.dynamicAppRoot, {
     recursive: true,
   });
 
@@ -24,18 +24,18 @@ export async function launchConfigUI(
     resolve: {
       alias: [
         {
-          find: "#buttery/tokens/config-ui/css",
+          find: "#buttery/tokens/playground/css",
           replacement: path.resolve(dirs.output.path, "./index.css"),
         },
         {
-          find: "#buttery/tokens/config-ui",
+          find: "#buttery/tokens/playground",
           replacement: path.resolve(dirs.output.path, "./index.ts"),
         },
       ],
     },
     configFile: false,
-    root: dirs.configUI.dynamicAppRoot,
-    publicDir: dirs.configUI.dynamicAppPublic,
+    root: dirs.playground.dynamicAppRoot,
+    publicDir: dirs.playground.dynamicAppPublic,
     server: {
       port: 1300,
     },

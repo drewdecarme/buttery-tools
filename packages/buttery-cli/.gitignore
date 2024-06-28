@@ -7,6 +7,4 @@
 !.buttery-docs/.build/_template*/
 !.buttery-docs/.build/_template*/**
 
-.buttery-tokens/*
-!.buttery-tokens/_*
-*storybook.log
+.buttery-tokens

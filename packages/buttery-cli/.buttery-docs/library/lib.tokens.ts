@@ -1,1 +1,1 @@
-export * from "../../.buttery-tokens/docs";
+export * from "../../artifacts/tokens/.buttery-tokens/docs";
