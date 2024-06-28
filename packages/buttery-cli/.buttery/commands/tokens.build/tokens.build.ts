@@ -3,7 +3,10 @@ import chokidar from "chokidar";
 import { LOG_TOKENS } from "../tokens/tokens.config.logger";
 import { launchConfigUI } from "./tokens.build.launch-config-ui";
 import { runBuild } from "./tokens.build.run";
-import { getButteryTokensConfig } from "./tokens.config.getButteryTokensConfig";
+import {
+  type ButteryTokensConfig,
+  getButteryTokensConfig,
+} from "./tokens.config.getButteryTokensConfig";
 
 export type BuildTokensOptions = {
   watch: boolean;
@@ -42,6 +45,8 @@ export async function build(
 
   if (interactive) {
     const { tokens, ...restConfig } = config;
+
+    let reconciledConfig: ButteryTokensConfig;
     if (Array.isArray(tokens)) {
       LOG_TOKENS.info("Detected more than one tokens configuration.");
       const choice = await select({
@@ -52,23 +57,17 @@ export async function build(
           value: i,
         })),
       });
-      launchConfigUI(
-        {
-          ...restConfig,
-          tokens: tokens[choice],
-        },
-        { isLocal }
-      );
+      reconciledConfig = {
+        ...restConfig,
+        tokens: tokens[choice],
+      };
     } else {
-      launchConfigUI(
-        {
-          ...restConfig,
-          tokens,
-        },
-        { isLocal }
-      );
+      reconciledConfig = {
+        ...restConfig,
+        tokens,
+      };
     }
-    // Check to see which tokens config should be run
+    launchConfigUI(reconciledConfig, { isLocal });
   }
 
   // Watch the config anytime it changes
@@ -80,7 +79,11 @@ export async function build(
   watcher.on("change", async (file) => {
     LOG_TOKENS.watch(`"${file}" changed.`);
     LOG_TOKENS.watch("Rebuilding tokens...");
+    if (interactive) {
+      // update the config?
+    }
     await runBuild(config, { isLocal });
+
     LOG_TOKENS.watch("Rebuilding tokens... done.");
   });
 }

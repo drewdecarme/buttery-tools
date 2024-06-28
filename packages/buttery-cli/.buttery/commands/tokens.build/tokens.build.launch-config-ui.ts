@@ -1,4 +1,4 @@
-import { cp, mkdir } from "node:fs/promises";
+import { cp } from "node:fs/promises";
 import path from "node:path";
 import react from "@vitejs/plugin-react";
 import wyw from "@wyw-in-js/vite";
@@ -15,7 +15,9 @@ export async function launchConfigUI(
 
   // create an app from the template and put it into
   // the dynamically reconciled dynamicAppRoot
-  await cp(dirs.configUI.template, dirs.configUI.dynamicAppRoot);
+  await cp(dirs.configUI.template, dirs.configUI.dynamicAppRoot, {
+    recursive: true,
+  });
 
   // create the server
   const server = await createServer({
@@ -23,11 +25,11 @@ export async function launchConfigUI(
       alias: [
         {
           find: "#buttery/tokens/config-ui/css",
-          replacement: path.resolve(dirs.output.path, "./config-ui/index.css"),
+          replacement: path.resolve(dirs.output.path, "./index.css"),
         },
         {
           find: "#buttery/tokens/config-ui",
-          replacement: path.resolve(dirs.output.path, "./config-ui/index.ts"),
+          replacement: path.resolve(dirs.output.path, "./index.ts"),
         },
       ],
     },

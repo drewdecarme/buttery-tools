@@ -7,7 +7,7 @@ import {
   makeFontWeight,
   makeRem,
   makeReset,
-} from "#buttery/tokens/playground";
+} from "#buttery/tokens/config-ui";
 import { useTabsContext } from "./Tab.context";
 
 export type TabLabelPropsNative = JSX.IntrinsicElements["button"];

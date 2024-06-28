@@ -1,4 +1,3 @@
-import { rename } from "node:fs/promises";
 import type { ResolvedButteryConfig } from "@buttery/core";
 import { LOG_TOKENS } from "../tokens/tokens.config.logger";
 import { buildMakeTemplates } from "./tokens.build.build-make-templates";
@@ -24,13 +23,6 @@ export async function runBuild(
       // create the necessary directories and build the templates 1 time
       await buildWorkingDirectory(dirs, { isLocal: options.isLocal });
       await buildMakeTemplates(iConfig, dirs);
-
-      if (options.isLocal) return;
-
-      // move the index.css file to the output dir
-      LOG_TOKENS.debug("Moving generated CSS file...");
-      await rename(dirs.working.css, dirs.output.css);
-      LOG_TOKENS.debug("Moving generated CSS file... done.");
     })
   );
 }

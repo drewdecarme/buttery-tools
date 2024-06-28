@@ -3,7 +3,7 @@ import {
   butteryConfigColorDefaultsHarmonious,
   butteryConfigColorDefaultsPresets,
 } from "@buttery/core/defaults";
-import { generatedTokens } from "playground/src/tokens/tokens-generated";
+import { generatedTokens } from "config-ui/src/tokens/tokens-generated";
 import { type ChangeEventHandler, type FC, useCallback } from "react";
 import { useColorContext } from "./Color.context";
 

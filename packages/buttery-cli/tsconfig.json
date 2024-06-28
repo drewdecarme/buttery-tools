@@ -9,13 +9,13 @@
       "#tokens/config-ui": ["./.buttery-tokens/config-ui/index"],
       "#tokens/config-ui/css": ["./.buttery-tokens/config-ui/index.css"],
       // docs ui tokens
-      "#tokens/docs": ["./.buttery-tokens/docs/index"],
-      "#tokens/docs/css": ["./.buttery-tokens/docs/index.css"]
+      "#tokens/generated": ["./.buttery-tokens/generated/index"],
+      "#tokens/generated/css": ["./.buttery-tokens/generated/index.css"]
     }
   },
   "include": [
     ".buttery/*",
-    ".buttery-docs/*",
+    ".buttery-docs/**/*",
     ".buttery-tokens/**/*",
     ".storybook/*",
     "lib",

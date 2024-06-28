@@ -1,7 +1,7 @@
 import { styled } from "@linaria/react";
 import type { FC, ReactElement } from "react";
 import React from "react";
-import { makeColor, makeRem } from "#buttery/tokens/playground";
+import { makeColor, makeRem } from "#buttery/tokens/config-ui";
 import type { TabProps } from "./Tab";
 import { TabsProvider, type TabsProviderProps } from "./Tab.context";
 import { TabLabel } from "./TabLabel";

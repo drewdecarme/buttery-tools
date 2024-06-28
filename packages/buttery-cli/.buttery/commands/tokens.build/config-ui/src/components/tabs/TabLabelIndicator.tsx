@@ -7,7 +7,7 @@ import {
   useImperativeHandle,
   useRef,
 } from "react";
-import { makeColor, makeRem } from "#buttery/tokens/playground";
+import { makeColor, makeRem } from "#buttery/tokens/config-ui";
 import { useTabsContext } from "./Tab.context";
 
 export type TabLabelIndicatorPropsNative = JSX.IntrinsicElements["div"];

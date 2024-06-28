@@ -65,12 +65,14 @@ export async function getButteryTokensDirectories(
     throw "Cannot locate a tokens directory to build the utilities to. This should not have happened.";
   }
 
-  const outputDirName = config.tokens.importName ?? "index";
-  const outputDirPath = path.resolve(
-    butteryTokensBuildRootDir,
-    "./.buttery-tokens",
-    outputDirName
-  );
+  const outputDirName = config.tokens.importName;
+  const getOutputPath = (importName: string | undefined) =>
+    path.resolve(
+      butteryTokensBuildRootDir,
+      "./.buttery-tokens",
+      importName ?? "index"
+    );
+  const outputDirPath = getOutputPath(outputDirName);
 
   const configUITemplatePath = path.resolve(import.meta.dirname, "./config-ui");
   const configUiDynamicAppRoot = path.resolve(
@@ -112,6 +114,7 @@ export async function getButteryTokensDirectories(
     output: {
       path: outputDirPath,
       name: outputDirName,
+      getOutputPath,
       cssFilePath: path.resolve(outputDirPath, "./index.css"),
     },
   };

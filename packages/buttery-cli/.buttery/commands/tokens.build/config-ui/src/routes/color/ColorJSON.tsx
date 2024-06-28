@@ -1,5 +1,5 @@
 import { styled } from "@linaria/react";
-import { makeColor, makeRem } from "#buttery/tokens/playground";
+import { makeColor, makeRem } from "#buttery/tokens/config-ui";
 import { useColorContext } from "./Color.context";
 
 const SPre = styled("pre")`
