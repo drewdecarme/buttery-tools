@@ -74,14 +74,12 @@ export async function getButteryTokensDirectories(
     );
   const outputDirPath = getOutputPath(outputDirName);
 
+  // the playground sits in the root of this repo
   const playgroundRoot = path.resolve(
     import.meta.dirname,
     "../../../artifacts/tokens/playground"
   );
-  const playgroundTemplatePath = path.resolve(
-    playgroundRoot,
-    "./playground/_template"
-  );
+  const playgroundTemplatePath = path.resolve(playgroundRoot, "./_template");
   const playgroundDynamicAppRoot = path.resolve(
     playgroundRoot,
     `./${outputDirName}.${hashString(outputDirPath)}`

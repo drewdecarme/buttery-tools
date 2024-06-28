@@ -1,7 +1,7 @@
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
-import { makeRem } from "#buttery/tokens/config-ui";
+import { makeRem } from "#buttery/tokens/playground";
 
 export type LayoutMainPanePropsNative = JSX.IntrinsicElements["div"];
 export type LayoutMainPaneProps = LayoutMainPanePropsNative;

@@ -1,5 +1,5 @@
 import { styled } from "@linaria/react";
-import { makeColor, makeRem } from "#buttery/tokens/config-ui";
+import { makeColor, makeRem } from "#buttery/tokens/playground";
 import { LayoutMainPane } from "./LayoutMainPane";
 
 export const LayoutMainPaneRight = styled(LayoutMainPane)`

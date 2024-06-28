@@ -6,7 +6,7 @@ import {
   makeFontFamily,
   makeFontWeight,
   makeRem,
-} from "#buttery/tokens/config-ui";
+} from "#buttery/tokens/playground";
 
 export type LayoutHeaderPropsNative = JSX.IntrinsicElements["header"];
 export type LayoutHeaderProps = LayoutHeaderPropsNative;

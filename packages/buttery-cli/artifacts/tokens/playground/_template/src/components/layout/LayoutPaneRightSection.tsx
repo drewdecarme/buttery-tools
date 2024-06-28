@@ -1,7 +1,7 @@
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
-import { makeColor, makeFontWeight, makeRem } from "#buttery/tokens/config-ui";
+import { makeColor, makeFontWeight, makeRem } from "#buttery/tokens/playground";
 
 export type LayoutPaneRightSectionPropsNative = JSX.IntrinsicElements["div"];
 export type LayoutPaneRightSectionPropsCustom = {

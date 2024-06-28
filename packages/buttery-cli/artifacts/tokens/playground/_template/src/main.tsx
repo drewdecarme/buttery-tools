@@ -7,7 +7,7 @@ import { ColorRoute } from "./routes/color";
 import { FontRoute } from "./routes/font";
 import Root from "./routes/root";
 
-import "#buttery/tokens/config-ui/css";
+import "#buttery/tokens/playground/css";
 import "./root.css";
 
 const router = createBrowserRouter([

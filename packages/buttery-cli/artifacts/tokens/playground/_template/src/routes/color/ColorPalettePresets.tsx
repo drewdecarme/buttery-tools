@@ -1,7 +1,7 @@
 import type { ButteryTokensColorPresets } from "@buttery/core";
 import { styled } from "@linaria/react";
 import type { FC } from "react";
-import { makeRem } from "#buttery/tokens/config-ui";
+import { makeRem } from "#buttery/tokens/playground";
 
 import { match } from "ts-pattern";
 import { hsbToHex } from "../../../../../.buttery/commands/tokens/utils/util.color-conversions";

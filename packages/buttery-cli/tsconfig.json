@@ -2,27 +2,15 @@
   "extends": "@buttery/tsconfig/vite/react",
   "compilerOptions": {
     "noEmit": true,
-    "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      // configuration ui tokens
-      "#tokens/config-ui": ["artifacts/tokens/.buttery-tokens/config-ui/index"],
-      "#tokens/config-ui/css": [
-        "artifacts/tokens/.buttery-tokens/config-ui/index.css"
+      "#buttery/tokens/playground/css": [
+        "./artifacts/tokens/.buttery-tokens/playground/index.css"
       ],
-      // docs ui tokens
-      "#tokens/generated": ["artifacts/tokens/.buttery-tokens/generated/index"],
-      "#tokens/generated/css": [
-        "artifacts/tokens/.buttery-tokens/generated/index.css"
+      // configuration ui tokens
+      "#buttery/tokens/playground": [
+        "./artifacts/tokens/.buttery-tokens/playground/index"
       ]
     }
-  },
-  "include": [
-    ".buttery/*",
-    ".buttery-docs/**/*",
-    "artifacts/tokens/.buttery-tokens/**/*",
-    ".storybook/*",
-    "lib",
-    "scripts"
-  ]
+  }
 }

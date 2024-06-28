@@ -29,7 +29,7 @@ export async function launchConfigUI(
         },
         {
           find: "#buttery/tokens/playground",
-          replacement: path.resolve(dirs.output.path, "./index.ts"),
+          replacement: path.resolve(dirs.output.path, "./index.js"),
         },
       ],
     },

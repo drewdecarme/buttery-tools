@@ -6,7 +6,7 @@ import {
   makeFontWeight,
   makeRem,
   makeReset,
-} from "#buttery/tokens/config-ui";
+} from "#buttery/tokens/playground";
 
 export type LayoutNavPropsNative = JSX.IntrinsicElements["nav"];
 export type LayoutNavPropsCustom = {
