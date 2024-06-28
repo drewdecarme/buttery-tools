@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { getButteryConfig } from "@buttery/core";
+import { findDirectoryUpwards } from "@buttery/utils/node";
 import { hashString } from "../_utils/util.hash-string";
 import type { ButteryDocsConfig } from "./shared.getButteryDocsConfig";
 
@@ -22,6 +23,21 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
   );
   const userDocsDir = path.resolve(config.paths.butteryDir, "./docs");
 
+  const userDefinedDocs = path.resolve(config.paths.butteryDir, "./docs");
+
+  const artifacts = findDirectoryUpwards("artifacts", undefined, {
+    startingDirectory: import.meta.dirname,
+  });
+
+  if (!artifacts) {
+    throw "Cannot locate artifacts directory to build documentation site. This should not have happened. Please log a Github issue.";
+  }
+  const docsArtifacts = path.resolve(artifacts, "./docs");
+  const docTargetApps = path.resolve(docsArtifacts, "./apps");
+  const docTargetDev = path.resolve(docTargetApps, "./.dev");
+  const docTargetDevTemplate = path.resolve(docTargetDev, "./_template");
+  const docTargetBuild = path.resolve(docTargetApps, "./.build");
+
   const devDir = path.resolve(docsSrcFilesDir, "./.dev");
   const devAppTemplateDir = path.resolve(devDir, "./_template");
   const divAppServerDir = path.resolve(
@@ -38,6 +54,18 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
   const buildAppDir = path.resolve(buildDir, hashString(config.paths.rootDir));
 
   return {
+    artifacts: {
+      root: artifacts,
+      docs: {
+        root: docsArtifacts,
+        targetApps: {
+          root: docTargetApps
+        }
+      }
+    }
+
+
+    // OLD
     docs: userDocsDir,
     public: path.resolve(config.paths.butteryDir, "./docs/public"),
     dev: {
