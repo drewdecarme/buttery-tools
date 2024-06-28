@@ -1,7 +1,7 @@
 import { rename } from "node:fs/promises";
 import type { ResolvedButteryConfig } from "@buttery/core";
-import { getButteryTokensDirectories } from "../tokens/tokens.getButteryTokensDirectories";
-import { LOG_TOKENS } from "../tokens/tokens.logger";
+import { getButteryTokensDirectories } from "../tokens/tokens.config.getButteryTokensDirectories";
+import { LOG_TOKENS } from "../tokens/tokens.config.logger";
 import { buildMakeTemplates } from "./tokens.build.build-make-templates";
 import { buildWorkingDirectory } from "./tokens.build.build-working-directory";
 

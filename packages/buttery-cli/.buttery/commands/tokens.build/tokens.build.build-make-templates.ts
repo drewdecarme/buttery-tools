@@ -6,9 +6,9 @@ import {
 } from "@buttery/utils/esbuild";
 import { build } from "esbuild";
 
-import type { ButteryTokensConfig } from "../tokens/tokens.getButteryTokensConfig";
-import type { ButteryTokensDirectories } from "../tokens/tokens.getButteryTokensDirectories";
-import { LOG_TOKENS } from "../tokens/tokens.logger";
+import type { ButteryTokensConfig } from "../tokens/tokens.config.getButteryTokensConfig";
+import type { ButteryTokensDirectories } from "../tokens/tokens.config.getButteryTokensDirectories";
+import { LOG_TOKENS } from "../tokens/tokens.config.logger";
 import { MakeTemplates } from "./templates/MakeTemplates";
 import { MakeTemplateColor } from "./templates/template.makeColor";
 import { MakeTemplateColorStatic } from "./templates/template.makeColorStatic";

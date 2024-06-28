@@ -1,7 +1,7 @@
 import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core";
 import { findDirectoryUpwards } from "@buttery/utils/node";
-import type { ButteryTokensConfig } from "./tokens.getButteryTokensConfig";
+import type { ButteryTokensConfig } from "./tokens.config.getButteryTokensConfig";
 
 export type ButteryTokensDirectories = Awaited<
   ReturnType<typeof getButteryTokensDirectories>

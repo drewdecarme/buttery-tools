@@ -1,9 +1,9 @@
 import { select } from "@inquirer/prompts";
 import chokidar from "chokidar";
-import { getButteryTokensConfig } from "../tokens/tokens.getButteryTokensConfig";
-import { LOG_TOKENS } from "../tokens/tokens.logger";
+import { getButteryTokensConfig } from "../tokens/tokens.config.getButteryTokensConfig";
+import { LOG_TOKENS } from "../tokens/tokens.config.logger";
+import { launchPlayground } from "./tokens.build.launch-interactive-playground";
 import { runBuild } from "./tokens.build.run";
-import { launchPlayground } from "./utils/util.launch-playground";
 
 export type BuildTokensOptions = {
   watch: boolean;
@@ -12,7 +12,7 @@ export type BuildTokensOptions = {
   prompt: boolean;
 };
 
-export async function buildTokens(
+export async function build(
   options: BuildTokensOptions & {
     /**
      * Not a publicly accessible option. This is used specifically

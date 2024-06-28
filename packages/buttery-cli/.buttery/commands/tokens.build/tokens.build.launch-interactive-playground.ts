@@ -3,8 +3,8 @@ import react from "@vitejs/plugin-react";
 import wyw from "@wyw-in-js/vite";
 import { createServer } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-import type { ButteryTokensConfig } from "../../tokens/tokens.getButteryTokensConfig";
-import { getButteryTokensDirectories } from "../../tokens/tokens.getButteryTokensDirectories";
+import type { ButteryTokensConfig } from "../tokens/tokens.config.getButteryTokensConfig";
+import { getButteryTokensDirectories } from "../tokens/tokens.config.getButteryTokensDirectories";
 
 export async function launchPlayground(
   config: ButteryTokensConfig,

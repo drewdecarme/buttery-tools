@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { ButteryTokensDirectories } from "../tokens/tokens.getButteryTokensDirectories";
-import { LOG_TOKENS } from "../tokens/tokens.logger";
+import type { ButteryTokensDirectories } from "../tokens/tokens.config.getButteryTokensDirectories";
+import { LOG_TOKENS } from "../tokens/tokens.config.logger";
 
 export async function buildWorkingDirectory(
   dirs: ButteryTokensDirectories,

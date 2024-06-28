@@ -4,8 +4,8 @@ import type { FC } from "react";
 import { makeRem } from "#buttery/tokens/playground";
 
 import { match } from "ts-pattern";
-import { hsbToHex } from "../../../../../.buttery/commands/tokens.build/utils/util.color-conversions";
-import { createColorVariants } from "../../../../../.buttery/commands/tokens.build/utils/util.create-color-variants";
+import { hsbToHex } from "../../../../../.buttery/commands/tokens/utils/util.color-conversions";
+import { createColorVariants } from "../../../../../.buttery/commands/tokens/utils/util.create-color-variants";
 
 const ColorContainer = styled("div")`
   display: flex;

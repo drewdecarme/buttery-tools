@@ -1,9 +1,6 @@
 import type { CommandAction, CommandOptions } from "../../../dist";
 import type { CommandMeta } from "../../../lib/types";
-import {
-  type BuildTokensOptions,
-  buildTokens,
-} from "../tokens.build/tokens.build";
+import { type BuildTokensOptions, build } from "../tokens/tokens.build";
 import { LOG_TOKENS } from "../tokens/tokens.logger";
 
 export const meta: CommandMeta = {
@@ -38,7 +35,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     const prompt = !options?.["no-prompt"];
     const interactive = !options.interactive;
 
-    await buildTokens({
+    await build({
       debug: false,
       interactive,
       prompt,

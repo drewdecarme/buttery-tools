@@ -2,7 +2,7 @@ import { produce } from "immer";
 import {
   getHueFromHex,
   hsbToHex,
-} from "../../../../../.buttery/commands/tokens.build/utils/util.color-conversions";
+} from "../../../../../.buttery/commands/tokens/utils/util.color-conversions";
 import { useColorContext } from "./Color.context";
 
 export function ColorSelectHues() {
