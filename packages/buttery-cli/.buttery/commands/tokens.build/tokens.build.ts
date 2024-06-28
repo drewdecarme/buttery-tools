@@ -1,9 +1,9 @@
 import { select } from "@inquirer/prompts";
 import chokidar from "chokidar";
-import { getButteryTokensConfig } from "../tokens/tokens.config.getButteryTokensConfig";
 import { LOG_TOKENS } from "../tokens/tokens.config.logger";
-import { launchPlayground } from "./tokens.build.launch-interactive-playground";
+import { launchConfigUI } from "./tokens.build.launch-config-ui";
 import { runBuild } from "./tokens.build.run";
+import { getButteryTokensConfig } from "./tokens.config.getButteryTokensConfig";
 
 export type BuildTokensOptions = {
   watch: boolean;
@@ -52,7 +52,7 @@ export async function build(
           value: i,
         })),
       });
-      launchPlayground(
+      launchConfigUI(
         {
           ...restConfig,
           tokens: tokens[choice],
@@ -60,7 +60,7 @@ export async function build(
         { isLocal }
       );
     } else {
-      launchPlayground(
+      launchConfigUI(
         {
           ...restConfig,
           tokens,

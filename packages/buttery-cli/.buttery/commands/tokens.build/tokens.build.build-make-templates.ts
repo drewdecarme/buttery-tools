@@ -6,8 +6,8 @@ import {
 } from "@buttery/utils/esbuild";
 import { build } from "esbuild";
 
-import type { ButteryTokensConfig } from "../tokens/tokens.config.getButteryTokensConfig";
-import type { ButteryTokensDirectories } from "../tokens/tokens.config.getButteryTokensDirectories";
+import type { ButteryTokensConfig } from "./tokens.config.getButteryTokensConfig";
+import type { ButteryTokensDirectories } from "./tokens.config.getButteryTokensDirectories";
 import { LOG_TOKENS } from "../tokens/tokens.config.logger";
 import { MakeTemplates } from "./templates/MakeTemplates";
 import { MakeTemplateColor } from "./templates/template.makeColor";
@@ -35,7 +35,7 @@ export async function buildMakeTemplates(
 ) {
   const Templates = new MakeTemplates({
     config: config,
-    outDir: dirs.working.path,
+    outDir: dirs.output.path,
   });
 
   // Register the templates that should be generated
@@ -55,16 +55,16 @@ export async function buildMakeTemplates(
   // Create a plugin to eventually transpile the .tokens directory
   // and assemble the ESBuild options for that entry / barrel file.
   const tsPlugin = new EsbuildPluginTypescriptCompiler({
-    tsConfigPath: dirs.templateTSConfig,
+    tsConfigPath: dirs.root.tsConfigPath,
   });
   const buildOptions = createEsbuildOptions({
     entryPoints: [Templates.entryFile],
-    outfile: path.resolve(dirs.working.path, "./index.js"),
+    outfile: path.resolve(dirs.output.path, "./index.js"),
     plugins: [
       // transpile and create files
       tsPlugin.getPlugin({
         filePathToTranspile: Templates.entryFile,
-        extraArgs: [`--outDir ${dirs.working.path}`],
+        extraArgs: [`--outDir ${dirs.output.path}`],
       }),
     ],
   });

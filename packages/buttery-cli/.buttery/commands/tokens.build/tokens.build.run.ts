@@ -1,9 +1,9 @@
 import { rename } from "node:fs/promises";
 import type { ResolvedButteryConfig } from "@buttery/core";
-import { getButteryTokensDirectories } from "../tokens/tokens.config.getButteryTokensDirectories";
 import { LOG_TOKENS } from "../tokens/tokens.config.logger";
 import { buildMakeTemplates } from "./tokens.build.build-make-templates";
 import { buildWorkingDirectory } from "./tokens.build.build-working-directory";
+import { getButteryTokensDirectories } from "./tokens.config.getButteryTokensDirectories";
 
 export async function runBuild(
   { tokens, ...restConfig }: ResolvedButteryConfig<"tokens">,

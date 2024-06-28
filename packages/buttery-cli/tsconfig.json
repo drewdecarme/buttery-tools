@@ -5,10 +5,12 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "#buttery/tokens/playground": ["./.buttery-tokens/playground/index"],
-      "#buttery/tokens/playground/css": [
-        "./.buttery-tokens/playground/index.css"
-      ]
+      // configuration ui tokens
+      "#tokens/config-ui": ["./.buttery-tokens/config-ui/index"],
+      "#tokens/config-ui/css": ["./.buttery-tokens/config-ui/index.css"],
+      // docs ui tokens
+      "#tokens/docs": ["./.buttery-tokens/docs/index"],
+      "#tokens/docs/css": ["./.buttery-tokens/docs/index.css"]
     }
   },
   "include": [
