@@ -1,9 +1,10 @@
-import { cp } from "node:fs/promises";
+import { cp, writeFile } from "node:fs/promises";
 import path from "node:path";
 import react from "@vitejs/plugin-react";
 import wyw from "@wyw-in-js/vite";
 import { createServer } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { createPlaygroundDataFile } from "./tokens.build.create-playground-datafile";
 import type { ButteryTokensConfig } from "./tokens.config.getButteryTokensConfig";
 import { getButteryTokensDirectories } from "./tokens.config.getButteryTokensDirectories";
 
@@ -23,6 +24,8 @@ export async function launchConfigUI(
     }
   );
 
+  await createPlaygroundDataFile(config, options);
+
   // create the server
   const server = await createServer({
     resolve: {
@@ -30,10 +33,6 @@ export async function launchConfigUI(
         {
           find: "#buttery/tokens/generated/css",
           replacement: path.resolve(dirs.output.path, "./index.css"),
-        },
-        {
-          find: "#buttery/tokens/generated",
-          replacement: path.resolve(dirs.output.path, "./index.js"),
         },
         {
           find: "#buttery/tokens/playground/css",

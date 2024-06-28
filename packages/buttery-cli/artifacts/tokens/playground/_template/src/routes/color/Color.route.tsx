@@ -1,4 +1,5 @@
-import React from "react";
+import type { ButteryConfigTokens } from "@buttery/core";
+import { useLoaderData } from "react-router-dom";
 import { LayoutMainContent } from "../../components/layout/LayoutMainContent";
 import { LayoutMainPaneLeft } from "../../components/layout/LayoutMainPaneLeft";
 import { LayoutMainPaneRight } from "../../components/layout/LayoutMainPaneRight";
@@ -8,6 +9,8 @@ import { Tabs } from "../../components/tabs/Tabs";
 import { ColorMode } from "./ColorMode";
 
 export const ColorRoute = () => {
+  const color = useLoaderData() as ButteryConfigTokens["color"];
+  console.log({ color });
   return (
     <>
       <LayoutMainPaneLeft>

@@ -9,10 +9,10 @@ export type LayoutProps = LayoutPropsNative;
 const SDiv = styled("div")`
   display: grid;
   grid-template-areas:
-    "layout-side-nav  layout-header"
+    "layout-header layout-header"
     "layout-side-nav   layout-main";
-  grid-template-rows: ${makeRem(64)} 100vh;
-  grid-template-columns: ${makeRem(80)} 1fr;
+  grid-template-rows: ${makeRem(60)} 100vh;
+  grid-template-columns: ${makeRem(44)} 1fr;
 `;
 
 export const Layout = forwardRef<HTMLDivElement, LayoutProps>(function Layout(

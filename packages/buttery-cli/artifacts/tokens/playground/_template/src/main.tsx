@@ -10,6 +10,7 @@ import Root from "./routes/root";
 import "#buttery/tokens/playground/css";
 import "#buttery/tokens/generated/css";
 import "./root.css";
+import { config } from "./token-config";
 
 const router = createBrowserRouter([
   {
@@ -19,10 +20,20 @@ const router = createBrowserRouter([
     children: [
       {
         path: "color",
+        loader: () => {
+          return Array.isArray(config.tokens)
+            ? config.tokens[0].color
+            : config.tokens.color;
+        },
         element: <ColorRoute />,
       },
       {
         path: "font",
+        loader: () => {
+          return Array.isArray(config.tokens)
+            ? config.tokens[0].font
+            : config.tokens.font;
+        },
         element: <FontRoute />,
       },
     ],

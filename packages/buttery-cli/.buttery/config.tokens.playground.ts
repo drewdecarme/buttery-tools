@@ -60,6 +60,6 @@ export const ConfigTokensPlayground: ButteryConfigTokens = {
     },
   },
   custom: {
-    "layout-header": 48,
+    "layout-header": 60,
   },
 };

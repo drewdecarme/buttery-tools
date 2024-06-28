@@ -14,7 +14,7 @@ const STabs = styled("div")`
   gap: ${makeRem(4)};
   padding: ${makeRem(4)};
   border-radius: ${makeRem(4)};
-  background: ${makeColor("neutral", { variant: "50" })};
+  background: ${makeColor("neutral", { variant: "50", opacity: 0.2 })};
   position: relative;
 `;
 

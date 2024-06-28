@@ -1,6 +1,7 @@
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
+import { NavLink } from "react-router-dom";
 import {
   makeColor,
   makeFontFamily,
@@ -9,7 +10,12 @@ import {
 } from "#buttery/tokens/playground";
 
 export type LayoutHeaderPropsNative = JSX.IntrinsicElements["header"];
-export type LayoutHeaderProps = LayoutHeaderPropsNative;
+export type LayoutHeaderPropsCustom = {
+  btLogoSrc: string;
+  btLogoAlt: string;
+};
+export type LayoutHeaderProps = LayoutHeaderPropsNative &
+  LayoutHeaderPropsCustom;
 
 const SHeader = styled("header")`
   grid-area: layout-header;
@@ -20,6 +26,7 @@ const SHeader = styled("header")`
   position: sticky;
   top: 0;
   background: #fff;
+  justify-content: space-between;
 
   .title {
     font-family: ${makeFontFamily("body")};
@@ -27,13 +34,50 @@ const SHeader = styled("header")`
     font-size: ${makeRem(12)};
     text-transform: uppercase;
   }
+
+  .logo {
+    height: ${makeRem(64)};
+    display: grid;
+    place-items: center;
+    position: sticky;
+    top: 0;
+
+    img {
+      width: auto;
+      height: ${makeRem(32)};
+    }
+  }
+
+  & > div {
+    display: flex;
+    align-items: center;
+    gap: ${makeRem(16)};
+
+    &:last-child {
+      a {
+        height: ${makeRem(24)};
+        color: ${makeColor("neutral")};
+      }
+    }
+  }
 `;
 
 export const LayoutHeader = forwardRef<HTMLElement, LayoutHeaderProps>(
-  function LayoutHeader({ children, className, ...restProps }, ref) {
+  function LayoutHeader(
+    { children, className, btLogoAlt, btLogoSrc, ...restProps },
+    ref
+  ) {
     return (
       <SHeader {...restProps} className={clsx(className)} ref={ref}>
-        {children}
+        <div>
+          <NavLink to="/">
+            <div className="logo">
+              <img src={btLogoSrc} alt={btLogoAlt} />
+            </div>
+          </NavLink>
+          <h1 className="title">buttery tokens</h1>
+        </div>
+        <div>{children}</div>
       </SHeader>
     );
   }

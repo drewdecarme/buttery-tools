@@ -1,6 +1,7 @@
 import { select } from "@inquirer/prompts";
 import chokidar from "chokidar";
 import { LOG_TOKENS } from "../tokens/tokens.config.logger";
+import { createPlaygroundDataFile } from "./tokens.build.create-playground-datafile";
 import { launchConfigUI } from "./tokens.build.launch-playground";
 import { runBuild } from "./tokens.build.run";
 import {
@@ -43,10 +44,11 @@ export async function build(
 
   if (!watch) return;
 
+  let reconciledConfig: ButteryTokensConfig;
+
   if (interactive) {
     const { tokens, ...restConfig } = config;
 
-    let reconciledConfig: ButteryTokensConfig;
     if (Array.isArray(tokens)) {
       LOG_TOKENS.info("Detected more than one tokens configuration.");
       const choice = await select({
@@ -80,10 +82,9 @@ export async function build(
     LOG_TOKENS.watch(`"${file}" changed.`);
     LOG_TOKENS.watch("Rebuilding tokens...");
     if (interactive) {
-      //TODO: update the config?
+      await createPlaygroundDataFile(reconciledConfig, { isLocal });
     }
     await runBuild(config, { isLocal });
-
     LOG_TOKENS.watch("Rebuilding tokens... done.");
   });
 }
