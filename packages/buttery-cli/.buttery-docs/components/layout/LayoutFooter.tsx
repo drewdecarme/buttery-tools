@@ -1,6 +1,5 @@
 import { styled } from "@linaria/react";
 import type { FC } from "react";
-import React from "react";
 import { makeColor, makeRem } from "../../library";
 
 const SLayoutFooter = styled("footer")`

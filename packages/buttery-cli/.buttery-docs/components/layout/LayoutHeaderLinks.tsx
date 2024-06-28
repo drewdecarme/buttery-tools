@@ -3,7 +3,6 @@ import { IconComponent } from "@buttery/icons";
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 import type { FC } from "react";
-import React from "react";
 import { match } from "ts-pattern";
 import { makeColor, makeRem, makeReset } from "../../library";
 

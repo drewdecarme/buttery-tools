@@ -3,7 +3,7 @@ import path from "node:path";
 import type { ButteryTokensDirectories } from "../tokens/tokens.getButteryTokensDirectories";
 import { LOG_TOKENS } from "../tokens/tokens.logger";
 
-export async function prepareWorkingDirectory(
+export async function buildWorkingDirectory(
   dirs: ButteryTokensDirectories,
   options?: { isLocal?: boolean }
 ) {

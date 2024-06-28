@@ -1,14 +1,14 @@
 import path from "node:path";
-import type { ButteryConfigPaths, ButteryConfigTokens } from "@buttery/core";
-import { getButteryConfig } from "@buttery/core";
+import type { ResolvedButteryConfig } from "@buttery/core";
 import { findDirectoryUpwards } from "@buttery/utils/node";
+import type { ButteryTokensConfig } from "./tokens.getButteryTokensConfig";
 
 export type ButteryTokensDirectories = Awaited<
   ReturnType<typeof getButteryTokensDirectories>
 >;
 
 /**
- * Does some recursive upwards directory searching for the property buttery tokens
+ * Does some recursive upwards directory searching for the correct buttery tokens
  * directory to start publishing files to. In this case, it first tries to look for the
  * mono repo directory name. If it can't find that we can assume that this package
  * is being used outside the scope of this mono-repo and that the buttery tokens directory
@@ -17,12 +17,16 @@ export type ButteryTokensDirectories = Awaited<
  * This is done to easily reconcile development as well as production use. Ideally all
  * we want is to find the "right" buttery/tokens directory to start putting files into
  */
-async function getButteryTokensDir(isLocal: boolean) {
+async function getButteryTokensDir(
+  config: ResolvedButteryConfig<"tokens">,
+  isLocal: boolean
+) {
   if (isLocal) {
-    const localConfig = await getButteryConfig("tokens", {
-      startingDirectory: import.meta.dirname,
-    });
-    const butteryTokensCliDir = localConfig.paths.rootDir;
+    const butteryTokensCliDir = path.resolve(
+      config.paths.rootDir,
+      "./.buttery-tokens"
+    );
+    console.log(config.paths);
     return butteryTokensCliDir;
   }
 
@@ -41,16 +45,13 @@ async function getButteryTokensDir(isLocal: boolean) {
 }
 
 export async function getButteryTokensDirectories(
-  config: {
-    paths: ButteryConfigPaths;
-    tokens: ButteryConfigTokens;
-  },
-  options?: {
-    isLocal?: boolean;
+  config: ButteryTokensConfig,
+  options: {
+    isLocal: boolean;
   }
 ) {
   const isLocal = options?.isLocal ?? false;
-  const butteryTokensDir = await getButteryTokensDir(isLocal);
+  const butteryTokensDir = await getButteryTokensDir(config, isLocal);
 
   if (!butteryTokensDir) {
     throw "Cannot locate a `@buttery/tokens` directory. This should not have happened.";

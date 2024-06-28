@@ -1,42 +1,32 @@
 import path from "node:path";
-import type { ButteryConfigTokens } from "@buttery/core";
 import react from "@vitejs/plugin-react";
 import wyw from "@wyw-in-js/vite";
 import { createServer } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+import type { ButteryTokensConfig } from "../../tokens/tokens.getButteryTokensConfig";
+import { getButteryTokensDirectories } from "../../tokens/tokens.getButteryTokensDirectories";
 
-export async function launchPlayground(configTokens: ButteryConfigTokens) {
-  const { transpiledFilesOutFile, tokensRootPath, transpiledFilesOutDir } =
-    await getResolvedVariables(configTokens);
+export async function launchPlayground(
+  config: ButteryTokensConfig,
+  options: { isLocal: boolean }
+) {
+  const dirs = await getButteryTokensDirectories(config, options);
 
-  const playgroundDir = path.resolve(tokensRootPath, "./playground");
+  const playgroundDir = path.resolve(dirs.root, "./_playground");
   const playgroundPublicDir = path.resolve(playgroundDir, "./public");
+
+  console.log(dirs.root);
 
   const server = await createServer({
     resolve: {
       alias: [
         {
-          find: "@buttery/tokens/generated/css",
-          replacement: path.resolve(transpiledFilesOutDir, "./index.css"),
+          find: "#buttery/tokens/playground/css",
+          replacement: path.resolve(dirs.root, "./playground/index.css"),
         },
         {
-          find: "@buttery/tokens/generated",
-          replacement: transpiledFilesOutFile,
-        },
-
-        {
-          find: "@buttery/tokens/css",
-          replacement: path.resolve(
-            tokensRootPath,
-            "./.tokens/_tokens/index.css"
-          ),
-        },
-        {
-          find: "@buttery/tokens",
-          replacement: path.resolve(
-            tokensRootPath,
-            "./.tokens/_tokens/index.ts"
-          ),
+          find: "#buttery/tokens/playground",
+          replacement: path.resolve(dirs.root, "./playground/index.ts"),
         },
       ],
     },
@@ -45,7 +35,7 @@ export async function launchPlayground(configTokens: ButteryConfigTokens) {
     root: playgroundDir,
     publicDir: playgroundPublicDir,
     server: {
-      port: 1337,
+      port: 1300,
     },
     plugins: [
       react(),
@@ -53,7 +43,6 @@ export async function launchPlayground(configTokens: ButteryConfigTokens) {
       wyw({
         include: ["**/*.{ts,tsx}"],
         babelOptions: {
-          plugins: ["@babel/plugin-transform-export-namespace-from"],
           presets: ["@babel/preset-typescript", "@babel/preset-react"],
         },
       }),

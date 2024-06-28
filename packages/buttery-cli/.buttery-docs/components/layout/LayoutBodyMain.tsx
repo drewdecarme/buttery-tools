@@ -1,6 +1,5 @@
 import { styled } from "@linaria/react";
 import type { FC, ReactNode } from "react";
-import React from "react";
 import {
   makeColor,
   makeColorStatic,

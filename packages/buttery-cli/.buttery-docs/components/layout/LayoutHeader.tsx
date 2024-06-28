@@ -1,7 +1,6 @@
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 import type { FC } from "react";
-import React from "react";
 import {
   makeColor,
   makeColorStatic,

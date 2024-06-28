@@ -17,18 +17,15 @@ import { LOG_TOKENS } from "../.buttery/commands/tokens/tokens.logger";
  * run the same build but put the tokens in a different spot since
  * the CLI cannot have the tokens as a dependency.
  */
-export async function tokensLocalBuild() {
-  try {
-    LOG_TOKENS.info("Building tokens locally to the CLI.");
-    await buildTokens({
-      debug: true,
-      interactive: false,
-      watch: false,
-      local: true,
-    });
-  } catch (error) {
-    throw LOG_TOKENS.fatal(new Error(error as string));
-  }
+try {
+  LOG_TOKENS.info("Developing tokens locally to the CLI.");
+  await buildTokens({
+    prompt: false,
+    debug: true,
+    interactive: true,
+    watch: true,
+    local: true,
+  });
+} catch (error) {
+  throw LOG_TOKENS.fatal(new Error(error as string));
 }
-
-tokensLocalBuild();

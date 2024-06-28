@@ -18,7 +18,8 @@
     "cli:dev": "yarn build --watch --local",
     "cli:build": "tsx ./scripts/build-local.ts",
     "lib:build": "yarn tsc --project tsconfig.lib.json",
-    "tokens:build": "tsx ./scripts/tokens-local.build.ts",
+    "tokens:build": "tsx ./scripts/local.tokens.build.ts",
+    "tokens:dev": "tsx ./scripts/local.tokens.dev.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -74,7 +75,7 @@
     "@buttery/icons": "workspace:^",
     "@buttery/logger": "workspace:^",
     "@buttery/utils": "workspace:^",
-    "@inquirer/prompts": "^5.0.6",
+    "@inquirer/prompts": "^5.0.7",
     "@linaria/core": "^6.2.0",
     "@linaria/react": "^6.2.1",
     "@mdx-js/loader": "^3.0.1",

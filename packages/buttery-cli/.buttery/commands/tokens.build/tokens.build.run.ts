@@ -1,14 +1,14 @@
 import { rename } from "node:fs/promises";
-import { getButteryTokensConfig } from "../tokens/tokens.getButteryTokensConfig";
+import type { ResolvedButteryConfig } from "@buttery/core";
 import { getButteryTokensDirectories } from "../tokens/tokens.getButteryTokensDirectories";
 import { LOG_TOKENS } from "../tokens/tokens.logger";
 import { buildMakeTemplates } from "./tokens.build.build-make-templates";
-import { prepareWorkingDirectory } from "./tokens.build.prepare-working-directory";
+import { buildWorkingDirectory } from "./tokens.build.build-working-directory";
 
-export async function createAndRunBuilds(isLocal: boolean) {
-  // get the config and the directories needed to build
-  const { tokens, ...restConfig } = await getButteryTokensConfig();
-
+export async function runBuild(
+  { tokens, ...restConfig }: ResolvedButteryConfig<"tokens">,
+  options: { isLocal: boolean }
+) {
   // convert the tokens to an array
   const tokensConfig = Array.isArray(tokens) ? tokens : [tokens];
 
@@ -16,16 +16,16 @@ export async function createAndRunBuilds(isLocal: boolean) {
     tokensConfig.map(async (t) => {
       const iConfig = { ...restConfig, tokens: t };
       const dirs = await getButteryTokensDirectories(iConfig, {
-        isLocal,
+        isLocal: options.isLocal,
       });
 
       LOG_TOKENS.debug(`Building "${iConfig.tokens.importName ?? "index"}"`);
 
       // create the necessary directories and build the templates 1 time
-      await prepareWorkingDirectory(dirs, { isLocal });
+      await buildWorkingDirectory(dirs, { isLocal: options.isLocal });
       await buildMakeTemplates(iConfig, dirs);
 
-      if (isLocal) return;
+      if (options.isLocal) return;
 
       // move the index.css file to the output dir
       LOG_TOKENS.debug("Moving generated CSS file...");
