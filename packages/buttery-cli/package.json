@@ -14,12 +14,12 @@
   "type": "module",
   "scripts": {
     "build": "yarn tokens:build && yarn cli:build && yarn lib:build",
-    "dev": "yarn cli:build --watch --local",
-    "cli:dev": "yarn build --watch --local",
-    "cli:build": "tsx ./scripts/build-local.ts",
-    "lib:build": "yarn tsc --project tsconfig.lib.json",
+    "dev": "yarn cli:dev",
+    "cli:dev": "tsx ./scripts/local.commands.dev",
+    "cli:build": "tsx ./scripts/local.commands.build.ts",
     "tokens:build": "tsx ./scripts/local.tokens.build.ts",
     "tokens:dev": "tsx ./scripts/local.tokens.dev.ts",
+    "lib:build": "yarn tsc --project tsconfig.lib.json",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

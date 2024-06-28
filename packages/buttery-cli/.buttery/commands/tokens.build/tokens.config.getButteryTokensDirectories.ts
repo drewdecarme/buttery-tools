@@ -75,10 +75,14 @@ export async function getButteryTokensDirectories(
   const outputDirPath = getOutputPath(outputDirName);
 
   // the playground sits in the root of this repo
-  const playgroundRoot = path.resolve(
-    import.meta.dirname,
-    "../../../artifacts/tokens/playground"
-  );
+  const artifactsDir = findDirectoryUpwards("artifacts", undefined, {
+    startingDirectory: import.meta.dirname,
+  });
+  if (!artifactsDir) {
+    throw "Cannot locate artifacts directory to launch interactive UI. This should not have happened. Please log a Github issue.";
+  }
+  const tokensRoot = path.resolve(artifactsDir, "./tokens");
+  const playgroundRoot = path.resolve(tokensRoot, "./playground");
   const playgroundTemplatePath = path.resolve(playgroundRoot, "./_template");
   const playgroundDynamicAppRoot = path.resolve(
     playgroundRoot,
@@ -103,10 +107,17 @@ export async function getButteryTokensDirectories(
      * of the template and then the location of the dynamically created app root
      * and public path to feed to the createServer vite function.
      */
-    playground: {
-      template: playgroundTemplatePath,
-      dynamicAppRoot: playgroundDynamicAppRoot,
-      dynamicAppPublic: playgroundDynamicAppPublic,
+    artifacts: {
+      root: artifactsDir,
+      tokens: {
+        root: tokensRoot,
+        playground: {
+          root: playgroundRoot,
+          template: playgroundTemplatePath,
+          dynamicAppRoot: playgroundDynamicAppRoot,
+          dynamicAppPublic: playgroundDynamicAppPublic,
+        },
+      },
     },
     /**
      * The directory where the buttery token utilities

@@ -2,7 +2,7 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
 import { confirm, input, select } from "@inquirer/prompts";
-import { LOG_TOKENS } from "../tokens/tokens.logger";
+import { LOG_TOKENS } from "../tokens/tokens.config.logger";
 
 export const meta: CommandMeta = {
   name: "init",

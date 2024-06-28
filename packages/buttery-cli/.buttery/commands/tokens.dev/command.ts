@@ -1,7 +1,7 @@
 import type { CommandAction, CommandOptions } from "../../../dist";
 import type { CommandMeta } from "../../../lib/types";
-import { type BuildTokensOptions, build } from "../tokens/tokens.build";
-import { LOG_TOKENS } from "../tokens/tokens.logger";
+import { type BuildTokensOptions, build } from "../tokens.build/tokens.build";
+import { LOG_TOKENS } from "../tokens/tokens.config.logger";
 
 export const meta: CommandMeta = {
   name: "dev",
@@ -33,7 +33,9 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     LOG_TOKENS.debug("Running `tokens.dev` command");
     // enable configuration prompting by default
     const prompt = !options?.["no-prompt"];
-    const interactive = !options.interactive;
+    const interactive = Boolean(options?.interactive);
+
+    console.log({ prompt, interactive });
 
     await build({
       debug: false,

@@ -15,27 +15,45 @@ export async function launchConfigUI(
 
   // create an app from the template and put it into
   // the dynamically reconciled dynamicAppRoot
-  await cp(dirs.playground.template, dirs.playground.dynamicAppRoot, {
-    recursive: true,
-  });
+  await cp(
+    dirs.artifacts.tokens.playground.template,
+    dirs.artifacts.tokens.playground.dynamicAppRoot,
+    {
+      recursive: true,
+    }
+  );
 
   // create the server
   const server = await createServer({
     resolve: {
       alias: [
         {
-          find: "#buttery/tokens/playground/css",
+          find: "#buttery/tokens/generated/css",
           replacement: path.resolve(dirs.output.path, "./index.css"),
         },
         {
-          find: "#buttery/tokens/playground",
+          find: "#buttery/tokens/generated",
           replacement: path.resolve(dirs.output.path, "./index.js"),
+        },
+        {
+          find: "#buttery/tokens/playground/css",
+          replacement: path.resolve(
+            dirs.artifacts.tokens.root,
+            "./.buttery-tokens/playground/index.css"
+          ),
+        },
+        {
+          find: "#buttery/tokens/playground",
+          replacement: path.resolve(
+            dirs.artifacts.tokens.root,
+            "./.buttery-tokens/playground/index.js"
+          ),
         },
       ],
     },
     configFile: false,
-    root: dirs.playground.dynamicAppRoot,
-    publicDir: dirs.playground.dynamicAppPublic,
+    root: dirs.artifacts.tokens.playground.dynamicAppRoot,
+    publicDir: dirs.artifacts.tokens.playground.dynamicAppPublic,
     server: {
       port: 1300,
     },
