@@ -2,7 +2,7 @@ import { type RouteObject, createBrowserRouter } from "react-router-dom";
 // @ts-expect-error data is created dynamically via the `dev` CLI command
 import { graph, header } from "./data";
 import RootRoute from "./routes/root";
-import type { ButteryDocsGraph } from ".buttery/commands/docs/shared.types";
+import type { ButteryDocsGraph } from ".buttery/commands/docs/docs.types";
 
 const createRoute = (graph: ButteryDocsGraph): RouteObject[] => {
   const routes = Object.values(graph).reduce<RouteObject[]>(
