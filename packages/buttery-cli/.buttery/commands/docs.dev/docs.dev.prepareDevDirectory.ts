@@ -1,6 +1,6 @@
 import { cp, rm } from "node:fs/promises";
-import type { ButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../docs/shared.getButteryDocsDirectories";
+import type { ButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectories";
 
 /**
  * Creates a temporary directory that is a hash of the absolute directory

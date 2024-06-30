@@ -2,10 +2,10 @@ import { cp } from "node:fs/promises";
 import path, { basename } from "node:path";
 import chokidar from "chokidar";
 import type { Plugin } from "vite";
-import { writeButteryDocsGraphDevData } from "../docs.dev/util.dev.writeButteryDocsGraphDevData";
+import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
+import type { ButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
 import { LOG_DOCS } from "./docs.logger";
-import type { ButteryDocsConfig } from "./shared.getButteryDocsConfig";
-import type { ButteryDocsDirectories } from "./shared.getButteryDocsDirectories";
+import { writeButteryDocsGraphDevData } from "./docs.writeButteryDocsGraphDevData";
 
 // vite-plugin-watch-markdown.js
 export function watchDocsPlugin(

@@ -1,8 +1,8 @@
 import type { ButteryConfigDocsOrder } from "@buttery/core";
 
 import { kebabToPascalCase } from "../_utils/util.kebab-to-pascal-case";
-import type { FileObj } from "./shared.types";
-import { parseFilename } from "./shared.util.parseFilename";
+import { parseFilename } from "./docs.parseFilename";
+import type { FileObj } from "./docs.types";
 
 export function autoOrderButteryDocFiles(files: FileObj[]) {
   // try to create the file order automatically

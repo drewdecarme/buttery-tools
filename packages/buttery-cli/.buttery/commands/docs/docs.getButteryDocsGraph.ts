@@ -1,8 +1,8 @@
+import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { LOG_DOCS } from "./docs.logger";
-import type { ButteryDocsConfig } from "./shared.getButteryDocsConfig";
 
-import type { ButteryDocsGraph, FileObj } from "./shared.types";
-import { parseMdxFile } from "./util.mdx.parseMDXFile";
+import { parseMdxFile } from "./docs.parseMDXFile";
+import type { ButteryDocsGraph, FileObj } from "./docs.types";
 
 /**
  * Creates a graph/object representation of the the files

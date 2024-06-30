@@ -1,10 +1,10 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
-import { getButteryDocsFiles } from "../docs/shared.getButteryDocFiles";
-import type { ButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../docs/shared.getButteryDocsDirectories";
-import { getButteryDocsGraph } from "../docs/shared.getButteryDocsGraph";
-import { orderButteryDocFiles } from "../docs/shared.orderButteryDocFiles";
+import { getButteryDocsFiles } from "./docs.getButteryDocFiles";
+import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
+import { getButteryDocsGraph } from "./docs.getButteryDocsGraph";
+import { orderButteryDocFiles } from "./docs.orderButteryDocFiles";
 
 /**
  * Writes the necessary data from the configs that create

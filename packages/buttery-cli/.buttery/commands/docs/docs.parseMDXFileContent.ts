@@ -6,7 +6,7 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
-import type { ButteryDocsGraphTOC } from "./shared.types";
+import type { ButteryDocsGraphTOC } from "./docs.types";
 
 export function parseMDXFileContent(markdownContent: string) {
   const file = unified()

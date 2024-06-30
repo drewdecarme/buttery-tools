@@ -1,7 +1,7 @@
 import path from "node:path";
 import react from "@vitejs/plugin-react";
 import { createServer } from "vite";
-import { getButteryDocsDefineConfig } from "../docs/util.vite.defineBaseDocsConfig";
+import { getButteryDocsDefineConfig } from "../docs/docs.defineBaseDocsConfig";
 
 export const createDevServer = async () => {
   const defineDocsConfig = await getButteryDocsDefineConfig();

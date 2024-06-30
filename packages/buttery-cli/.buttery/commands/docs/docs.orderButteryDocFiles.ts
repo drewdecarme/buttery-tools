@@ -1,8 +1,8 @@
 import type { ButteryConfigDocsOrder } from "@buttery/core";
+import { autoOrderButteryDocFiles } from "./docs.autoOrderButteryDocFiles";
+import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { LOG_DOCS } from "./docs.logger";
-import { autoOrderButteryDocFiles } from "./shared.autoOrderButteryDocFiles";
-import type { ButteryDocsConfig } from "./shared.getButteryDocsConfig";
-import type { FileObj } from "./shared.types";
+import type { FileObj } from "./docs.types";
 
 export function orderButteryDocFiles(
   docsConfig: ButteryDocsConfig,

@@ -1,10 +1,10 @@
 import type { CommandAction, CommandMeta } from "../../../lib/types.js";
 import { LOG_DOCS } from "../docs/docs.logger.js";
 
-import { getButteryDocsConfig } from "../docs/shared.getButteryDocsConfig.js";
-import { createDevServer } from "./util.dev.createDevServer.js";
-import { prepareDevDirectory } from "./util.dev.prepareDevDirectory.js";
-import { writeButteryDocsGraphDevData } from "./util.dev.writeButteryDocsGraphDevData.js";
+import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig.js";
+import { writeButteryDocsGraphDevData } from "../docs/docs.writeButteryDocsGraphDevData.js";
+import { createDevServer } from "./docs.dev.createDevServer.js";
+import { prepareDevDirectory } from "./docs.dev.prepareDevDirectory.js";
 
 export const meta: CommandMeta = {
   name: "dev",

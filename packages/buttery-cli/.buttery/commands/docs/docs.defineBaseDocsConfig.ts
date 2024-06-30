@@ -5,10 +5,10 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import { type UserConfig, mergeConfig } from "vite";
-import { getButteryDocsConfig } from "./shared.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "./shared.getButteryDocsDirectories";
-import { transformMarkdownAssetPath } from "./util.vite.vite-plugin-transform-markdown-asset-path";
-import { watchDocsPlugin } from "./util.vite.vite-plugin-watch-docs";
+import { getButteryDocsConfig } from "./docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
+import { transformMarkdownAssetPath } from "./docs.vite-plugin-transform-markdown-asset-path";
+import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
 
 export async function getButteryDocsDefineConfig() {
   const butteryDocsConfig = await getButteryDocsConfig();

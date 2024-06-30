@@ -1,11 +1,11 @@
 import path from "node:path";
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 
-import { cp, readdir, rename, writeFile } from "node:fs/promises";
+import { cp, readdir } from "node:fs/promises";
 import { runCommand } from "../_utils/util.run-command";
+import type { ButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectories";
 import { LOG_DOCS } from "../docs/docs.logger";
-import type { ButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../docs/shared.getButteryDocsDirectories";
 
 export const buildForProduction = async (config: ButteryDocsConfig) => {
   const butteryDirs = await getButteryDocsDirectories(config);

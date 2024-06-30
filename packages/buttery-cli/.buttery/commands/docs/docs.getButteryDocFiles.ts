@@ -1,7 +1,7 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import type { ButteryDocsConfig } from "./shared.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "./shared.getButteryDocsDirectories";
+import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
 
 function getRoutePath(filename: string) {
   // TODO: Needs more scenarios and testing

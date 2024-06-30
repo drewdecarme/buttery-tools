@@ -1,5 +1,5 @@
 import { LOG_DOCS } from "./docs.logger";
-import { parseFilename } from "./shared.util.parseFilename";
+import { parseFilename } from "./docs.parseFilename";
 
 export async function parseMDXFileFrontmatter({
   frontmatter,

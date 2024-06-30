@@ -2,12 +2,12 @@ import { copyFile, cp, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import { emptyDir } from "fs-extra";
+import { getButteryDocsFiles } from "../docs/docs.getButteryDocFiles";
+import type { ButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectories";
+import { getButteryDocsGraph } from "../docs/docs.getButteryDocsGraph";
 import { LOG_DOCS } from "../docs/docs.logger";
-import { getButteryDocsFiles } from "../docs/shared.getButteryDocFiles";
-import type { ButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../docs/shared.getButteryDocsDirectories";
-import { getButteryDocsGraph } from "../docs/shared.getButteryDocsGraph";
-import { orderButteryDocFiles } from "../docs/shared.orderButteryDocFiles";
+import { orderButteryDocFiles } from "../docs/docs.orderButteryDocFiles";
 
 /**
  * Creates a temporary directory that is a hash of the absolute directory

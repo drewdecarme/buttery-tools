@@ -2,7 +2,7 @@ import path from "node:path";
 import { vitePlugin as remix } from "@remix-run/dev";
 import { cloudflareDevProxyVitePlugin as remixCloudflareDevProxy } from "@remix-run/dev";
 
-import { getButteryDocsDefineConfig } from "../../../../.buttery/commands/docs/util.vite.defineBaseDocsConfig";
+import { getButteryDocsDefineConfig } from "../../../../.buttery/commands/docs/docs.defineBaseDocsConfig";
 
 const defineDocsConfig = await getButteryDocsDefineConfig();
 
