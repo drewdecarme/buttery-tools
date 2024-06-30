@@ -1,7 +1,3 @@
-import { styled } from "@linaria/react";
-import { useLocation } from "@remix-run/react";
-import { type FC, type MouseEventHandler, useCallback } from "react";
-import type { ButteryDocsGraphTOC } from "../../../.buttery/commands/docs/shared.types";
 import {
   makeColor,
   makeColorStatic,
@@ -9,7 +5,11 @@ import {
   makeFontWeight,
   makeRem,
   makeReset,
-} from "../../library";
+} from "@buttery/tokens/docs";
+import { styled } from "@linaria/react";
+import { useLocation } from "@remix-run/react";
+import { type FC, type MouseEventHandler, useCallback } from "react";
+import type { ButteryDocsGraphTOC } from "../../../../.buttery/commands/docs/shared.types";
 import { getGraphValueThatMatchesPathname } from "../../library";
 import { useDetermineActiveSection } from "./layout.useDetermineActiveSection";
 import { useLayoutContext } from "./layout.useLayoutContext";

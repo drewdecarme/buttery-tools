@@ -1,6 +1,11 @@
+import {
+  makeColor,
+  makeCustom,
+  makeFontFamily,
+  makeRem,
+} from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
-import { makeColor, makeCustom, makeFontFamily, makeRem } from "../../library";
 import { LayoutProvider, type LayoutProviderProps } from "./Layout.context";
 import { LayoutBodyMain } from "./LayoutBodyMain";
 import { LayoutBodyNav } from "./LayoutBodyNav";

@@ -13,15 +13,26 @@ export const prepareDevDirectory = async (config: ButteryDocsConfig) => {
   try {
     const butteryDirs = await getButteryDocsDirectories(config);
     // copy the template to the dev dir
-    await cp(butteryDirs.dev.templateDir, butteryDirs.dev.rootDir, {
-      recursive: true,
-    });
+    await cp(
+      butteryDirs.artifacts.docs.apps.dev.template,
+      butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
+      {
+        recursive: true,
+      }
+    );
     // clean the dev/docs dir
-    await rm(butteryDirs.dev.docsDir, { recursive: true, force: true });
-    // populate the dev/docs dir
-    await cp(butteryDirs.docs, butteryDirs.dev.docsDir, {
+    await rm(butteryDirs.artifacts.docs.apps.dev.dynamicApp.docs, {
       recursive: true,
+      force: true,
     });
+    // populate the dev/docs dir
+    await cp(
+      butteryDirs.userDocs.root,
+      butteryDirs.artifacts.docs.apps.dev.dynamicApp.docs,
+      {
+        recursive: true,
+      }
+    );
   } catch (error) {
     throw `Failed to copy necessary files to dev directory for development: ${error}`;
   }

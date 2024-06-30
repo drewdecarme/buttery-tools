@@ -1,13 +1,13 @@
-import { css } from "@linaria/core";
-import { styled } from "@linaria/react";
-import type { FC } from "react";
 import {
   makeColor,
   makeColorStatic,
   makeCustom,
   makeFontWeight,
   makeRem,
-} from "../../library";
+} from "@buttery/tokens/docs";
+import { css } from "@linaria/core";
+import { styled } from "@linaria/react";
+import type { FC } from "react";
 import { LayoutHeaderLinks } from "./LayoutHeaderLinks";
 import { useLayoutContext } from "./layout.useLayoutContext";
 

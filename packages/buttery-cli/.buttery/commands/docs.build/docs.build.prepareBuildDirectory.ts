@@ -23,18 +23,22 @@ export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
     const graph = await getButteryDocsGraph(config, orderedFiles);
     const butteryDirs = await getButteryDocsDirectories(config);
 
-    // copy the template to the build dir
-    await cp(butteryDirs.build.templateDir, butteryDirs.build.appDir, {
-      recursive: true,
-    });
+    // Create the hashed build directory by copying the template to that directory recursively
+    await cp(
+      butteryDirs.artifacts.docs.apps.build.template,
+      butteryDirs.artifacts.docs.apps.build.dynamicAppRoot,
+      {
+        recursive: true,
+      }
+    );
 
     switch (config.docs.build.target) {
       case "cloudflare-pages": {
-        // delete the dist directory
-        await rm(butteryDirs.build.outDir, { recursive: true, force: true });
+        // Delete the entire output directory in the users .buttery/docs directory
+        await rm(butteryDirs.output.root, { recursive: true, force: true });
         // clean the routes
         const remixRoutesDir = path.resolve(
-          butteryDirs.build.appDir,
+          butteryDirs.artifacts.docs.apps.build.dynamicAppRoot,
           "./app/routes"
         );
         LOG_DOCS.debug("Cleaning cloudflare pages routes directory...");
@@ -43,7 +47,7 @@ export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
 
         // copy over new routes
         LOG_DOCS.debug("Populating routes directory...");
-        const filesAndDirs = await readdir(butteryDirs.docs, {
+        const filesAndDirs = await readdir(butteryDirs.userDocs.root, {
           withFileTypes: true,
         });
         const docsWithRemixFileConventions = filesAndDirs.reduce<
@@ -74,7 +78,7 @@ export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
 
         LOG_DOCS.debug("Creating data file...");
         const dataFilePath = path.resolve(
-          butteryDirs.build.appDir,
+          butteryDirs.artifacts.docs.apps.build.dynamicAppRoot,
           "./app/data.ts"
         );
         await writeFile(
@@ -90,7 +94,7 @@ export const header: ResolvedButteryConfig<"docs">["docs"]["header"] = ${JSON.st
 
         // write a temp package.json
         const packageJsonPath = path.resolve(
-          butteryDirs.build.appDir,
+          butteryDirs.artifacts.docs.apps.build.dynamicAppRoot,
           "./package.json"
         );
         const packageJsonContent = {

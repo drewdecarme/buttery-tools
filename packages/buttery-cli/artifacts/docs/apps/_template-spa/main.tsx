@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
-import "../../../.buttery-tokens/docs/index.css";
+import "@buttery/tokens/docs/index.css";
 
 // biome-ignore lint/style/noNonNullAssertion: This is always going to exist
 ReactDOM.createRoot(document.getElementById("root")!).render(

@@ -21,7 +21,7 @@ export async function getButteryDocsFiles(config: ButteryDocsConfig) {
 
   // get the files inside of the docs directory
   // and enrich them with some of the data
-  const docsDirContents = await readdir(docsDirectories.docs, {
+  const docsDirContents = await readdir(docsDirectories.userDocs.root, {
     recursive: false,
     withFileTypes: true,
   });

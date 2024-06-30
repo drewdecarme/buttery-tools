@@ -56,7 +56,6 @@ export const action: CommandAction = async () => {
     server.printUrls();
     server.bindCLIShortcuts({ print: true });
   } catch (error) {
-    console.log(error);
     throw LOG_DOCS.fatal(new Error(error as string));
   }
 };

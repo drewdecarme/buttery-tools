@@ -11,7 +11,7 @@ import {
 import { type FC, memo } from "react";
 import { Layout as LayoutComponent } from "../../../components";
 
-import "#buttery/tokens/docs/index.css";
+import "@buttery/tokens/docs/index.css";
 
 import { bodyCSS } from "../../../components";
 import { graph, header } from "./data";

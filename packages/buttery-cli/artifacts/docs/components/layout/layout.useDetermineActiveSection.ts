@@ -4,11 +4,8 @@ import { useCallback, useEffect, useRef } from "react";
  * Custom hook to determine and set the active section based on the current pathname.
  * It uses IntersectionObserver to track which heading is currently in view and updates
  * the corresponding anchor link to an active state.
- *
- * @param {string} pathname - The current pathname of the application.
- * @returns {void}
  */
-export const useDetermineActiveSection = (pathname: string) => {
+export function useDetermineActiveSection(pathname: string) {
   const headingsRef = useRef<NodeListOf<HTMLHeadingElement> | null>(null);
   const anchorsRef = useRef<NodeListOf<HTMLAnchorElement> | null>(null);
   const activeHashRef = useRef<string | null>(null);
@@ -74,4 +71,4 @@ export const useDetermineActiveSection = (pathname: string) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [pathname]);
-};
+}

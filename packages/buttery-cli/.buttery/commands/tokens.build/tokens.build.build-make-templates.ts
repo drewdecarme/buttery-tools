@@ -6,18 +6,18 @@ import {
 } from "@buttery/utils/esbuild";
 import { build } from "esbuild";
 
+import { LOG_TOKENS } from "../tokens/tokens.config.logger";
+import { MakeTemplates } from "./make-templates/MakeTemplates";
+import { MakeTemplateColor } from "./make-templates/template.makeColor";
+import { MakeTemplateColorStatic } from "./make-templates/template.makeColorStatic";
+import { MakeTemplateCustom } from "./make-templates/template.makeCustom";
+import { MakeTemplateFontFamily } from "./make-templates/template.makeFontFamily";
+import { MakeTemplateFontWeight } from "./make-templates/template.makeFontWeight";
+import { MakeTemplateRem } from "./make-templates/template.makeRem";
+import { MakeTemplateReset } from "./make-templates/template.makeReset";
+import { MakeTemplateResponsive } from "./make-templates/template.makeResponsive";
 import type { ButteryTokensConfig } from "./tokens.config.getButteryTokensConfig";
 import type { ButteryTokensDirectories } from "./tokens.config.getButteryTokensDirectories";
-import { LOG_TOKENS } from "../tokens/tokens.config.logger";
-import { MakeTemplates } from "./templates/MakeTemplates";
-import { MakeTemplateColor } from "./templates/template.makeColor";
-import { MakeTemplateColorStatic } from "./templates/template.makeColorStatic";
-import { MakeTemplateCustom } from "./templates/template.makeCustom";
-import { MakeTemplateFontFamily } from "./templates/template.makeFontFamily";
-import { MakeTemplateFontWeight } from "./templates/template.makeFontWeight";
-import { MakeTemplateRem } from "./templates/template.makeRem";
-import { MakeTemplateReset } from "./templates/template.makeReset";
-import { MakeTemplateResponsive } from "./templates/template.makeResponsive";
 
 /**
  * Provided a config and a collection of directories, this function gathers

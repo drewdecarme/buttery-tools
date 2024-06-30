@@ -16,9 +16,9 @@ export async function getButteryDocsDefineConfig() {
 
   // https://vitejs.dev/config/
   const baseConfig: UserConfig = {
-    publicDir: butteryDocsDirs.public,
+    publicDir: butteryDocsDirs.userDocs.public,
     build: {
-      outDir: butteryDocsDirs.build.outDir,
+      outDir: butteryDocsDirs.output.root,
     },
     plugins: [
       transformMarkdownAssetPath(),
@@ -36,6 +36,7 @@ export async function getButteryDocsDefineConfig() {
             },
           ],
           [
+            // @ts-expect-error This is a mismatch from the type-system
             rehypeShiki,
             {
               theme: "dark-plus",

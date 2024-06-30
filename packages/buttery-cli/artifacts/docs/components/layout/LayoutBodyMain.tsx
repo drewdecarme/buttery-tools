@@ -1,12 +1,12 @@
-import { styled } from "@linaria/react";
-import type { FC, ReactNode } from "react";
 import {
   makeColor,
   makeColorStatic,
   makeCustom,
   makeRem,
   makeReset,
-} from "../../library/lib.tokens";
+} from "@buttery/tokens/docs";
+import { styled } from "@linaria/react";
+import type { FC, ReactNode } from "react";
 
 const SLayoutBodyMain = styled("section")`
   grid-area: layout-main;

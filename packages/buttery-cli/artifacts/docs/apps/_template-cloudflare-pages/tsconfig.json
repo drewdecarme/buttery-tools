@@ -2,7 +2,7 @@
   "extends": "@buttery/tsconfig/vite/react",
   "compilerOptions": {
     "paths": {
-      "#buttery/tokens/docs/*": ["../../../.buttery-tokens/docs/*"]
+      "@buttery/tokens/docs/*": ["../../../.buttery-tokens/docs/*"]
     }
   }
 }

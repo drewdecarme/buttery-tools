@@ -15,10 +15,11 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
     switch (config.docs.build.target) {
       case "cloudflare-pages": {
         const configFile = path.resolve(
-          butteryDirs.build.appDir,
+          butteryDirs.artifacts.docs.apps.build.dynamicAppRoot,
           "./vite.config.ts"
         );
-        process.env.REMIX_ROOT = butteryDirs.build.appDir;
+        process.env.REMIX_ROOT =
+          butteryDirs.artifacts.docs.apps.build.dynamicAppRoot;
 
         await runCommand(
           `npx remix vite:build --config ${configFile} --emptyOutDir --logLevel=error`
@@ -26,8 +27,11 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
 
         // Move the build to the local dist
         await cp(
-          butteryDirs.build.bundleDir,
-          path.resolve(butteryDirs.build.outDir, "./build"),
+          path.resolve(
+            butteryDirs.artifacts.docs.apps.build.dynamicAppRoot,
+            "./build"
+          ),
+          path.resolve(butteryDirs.output.root, "./build"),
           {
             recursive: true,
           }
@@ -35,12 +39,12 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
 
         // move functions to local dist
         const functionsDir = path.resolve(
-          butteryDirs.build.appDir,
+          butteryDirs.artifacts.docs.apps.build.dynamicAppRoot,
           "./functions"
         );
         await cp(
           functionsDir,
-          path.resolve(butteryDirs.build.outDir, "./functions"),
+          path.resolve(butteryDirs.output.root, "./functions"),
           {
             recursive: true,
           }
@@ -53,7 +57,7 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
         exhaustiveMatchGuard(config.docs.build.target);
     }
 
-    const filesAndDirs = await readdir(butteryDirs.build.outDir, {
+    const filesAndDirs = await readdir(butteryDirs.output.root, {
       recursive: true,
       withFileTypes: true,
     });
@@ -61,10 +65,10 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
     const files = filesAndDirs.filter((dirent) => dirent.isFile());
     LOG_DOCS.success(`Successfully built documentation app!
 
-  Location: ${butteryDirs.build.outDir}
+  Location: ${butteryDirs.output.root}
   Total Files: ${files.length}
 
-${files.reduce((accum, file) => accum.concat(`    - ${path.relative(butteryDirs.build.outDir, `${file.parentPath}/${file.name}`)}\n`), "")}      
+${files.reduce((accum, file) => accum.concat(`    - ${path.relative(butteryDirs.output.root, `${file.parentPath}/${file.name}`)}\n`), "")}      
 `);
   } catch (error) {
     throw LOG_DOCS.fatal(new Error(error as string));

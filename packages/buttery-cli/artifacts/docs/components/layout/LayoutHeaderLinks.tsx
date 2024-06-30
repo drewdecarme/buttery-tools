@@ -1,10 +1,10 @@
 import type { ButteryConfigDocsHeaderLink } from "@buttery/core";
 import { IconComponent } from "@buttery/icons";
+import { makeColor, makeRem, makeReset } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { makeColor, makeRem, makeReset } from "../../library";
 
 const SDiv = styled("div")`
   display: flex;
