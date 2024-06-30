@@ -21,32 +21,6 @@ export const meta: CommandMeta = {
 export const action: CommandAction = async () => {
   try {
     const config = await getButteryDocsConfig();
-
-    // nextx js // TODO: Add next js
-    // await prepareDevDirectory(config);
-    // const files = await getButteryDocsFiles(config);
-    // const orderedFiles = orderButteryDocFiles(config, files);
-    // const graph = await getButteryDocsGraph(config, orderedFiles);
-    // const dirs = await getButteryDocsDirectories(config);
-
-    // // write the routes
-    // const appRouterDir = path.resolve(dirs.dev.rootDir, "./src/app");
-
-    // // await runCommand(`yarn next dev ${dirs.dev.rootDir}`);
-
-    // const nextDev = spawn("yarn", ["next", "dev", dirs.dev.rootDir]); // Replace with your actual command and arguments
-
-    // // Listen for data on stdout
-    // nextDev.stdout.on("data", (data) => {
-    //   console.log(`${data}`);
-    // });
-
-    // // Listen for data on stderr
-    // nextDev.stderr.on("data", (data) => {
-    //   console.error(`stderr: ${data}`);
-    // });
-
-    // TODO: Put this behind a config - This is for react router
     await prepareDevDirectory(config);
     await writeButteryDocsGraphDevData(config);
     const server = await createDevServer();
