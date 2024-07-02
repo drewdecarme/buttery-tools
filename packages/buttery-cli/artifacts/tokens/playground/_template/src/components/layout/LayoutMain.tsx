@@ -9,7 +9,7 @@ export type LayoutMainProps = LayoutMainPropsNative;
 const SMain = styled("main")`
   grid-area: layout-main;
   display: grid;
-  grid-template-columns: ${makeRem(300)} 1fr ${makeRem(300)};
+  grid-template-columns: ${makeRem(300)} 1fr auto;
   width: 100%;
 `;
 

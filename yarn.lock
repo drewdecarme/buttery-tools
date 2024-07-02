@@ -3132,7 +3132,9 @@ __metadata:
     "@mdx-js/rollup": "npm:^3.0.1"
     "@next/mdx": "npm:^14.2.4"
     "@remix-run/cloudflare": "npm:^2.9.2"
-    "@remix-run/react": "npm:^2.9.2"
+    "@remix-run/node": "npm:^2.10.0"
+    "@remix-run/react": "npm:^2.10.0"
+    "@remix-run/serve": "npm:^2.10.0"
     "@shikijs/rehype": "npm:^1.9.0"
     "@storybook/addon-essentials": "npm:8.1.10"
     "@storybook/addon-interactions": "npm:8.1.10"
@@ -3142,6 +3144,7 @@ __metadata:
     "@storybook/react": "npm:8.1.10"
     "@storybook/react-vite": "npm:8.1.10"
     "@storybook/test": "npm:8.1.10"
+    "@types/express": "npm:^4"
     "@types/fs-extra": "npm:^11.0.4"
     "@types/mdx": "npm:^2.0.13"
     "@types/node": "npm:^20.14.8"
@@ -3155,6 +3158,7 @@ __metadata:
     commander: "npm:^12.1.0"
     cosmiconfig: "npm:^9.0.0"
     esbuild: "npm:^0.21.5"
+    express: "npm:^4.19.2"
     fs-extra: "npm:^11.2.0"
     gray-matter: "npm:^4.0.3"
     handlebars: "npm:^4.7.8"
@@ -6198,7 +6202,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/cloudflare@npm:2.10.0, @remix-run/cloudflare@npm:^2.10.0, @remix-run/cloudflare@npm:latest":
+"@remix-run/cloudflare@npm:2.10.0, @remix-run/cloudflare@npm:^2.10.0":
   version: 2.10.0
   resolution: "@remix-run/cloudflare@npm:2.10.0"
   dependencies:
@@ -6386,7 +6390,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/node@npm:2.10.0":
+"@remix-run/express@npm:2.10.0":
+  version: 2.10.0
+  resolution: "@remix-run/express@npm:2.10.0"
+  dependencies:
+    "@remix-run/node": "npm:2.10.0"
+  peerDependencies:
+    express: ^4.19.2
+    typescript: ^5.1.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/3e358d857ef941b9a6f56a1677a93907030d7434827fcb81a5a8d648161d55e7f15121308a01ee71d29dad984fa3ae77923b082e40eae448d6079e7875b050c5
+  languageName: node
+  linkType: hard
+
+"@remix-run/node@npm:2.10.0, @remix-run/node@npm:^2.10.0":
   version: 2.10.0
   resolution: "@remix-run/node@npm:2.10.0"
   dependencies:
@@ -6477,6 +6496,24 @@ __metadata:
   version: 1.17.0
   resolution: "@remix-run/router@npm:1.17.0"
   checksum: 10c0/6f39cb81c5dec3d3cb901cfc05ef1c745d23192def7d83e6d1a53c43cbb5d7ff488055fd1418ac72f904ff41b3d3ca339d223677994150f276c648123ce166f7
+  languageName: node
+  linkType: hard
+
+"@remix-run/serve@npm:^2.10.0":
+  version: 2.10.0
+  resolution: "@remix-run/serve@npm:2.10.0"
+  dependencies:
+    "@remix-run/express": "npm:2.10.0"
+    "@remix-run/node": "npm:2.10.0"
+    chokidar: "npm:^3.5.3"
+    compression: "npm:^1.7.4"
+    express: "npm:^4.19.2"
+    get-port: "npm:5.1.1"
+    morgan: "npm:^1.10.0"
+    source-map-support: "npm:^0.5.21"
+  bin:
+    remix-serve: dist/cli.js
+  checksum: 10c0/b77784c86329c1c7c4437f4fdb6ad7f1750b471e05aacdd755cf7af3bd8850c474deb41eaaec022c13e923a947f4ef41b3bef5551af9a54b1b3f901da9813008
   languageName: node
   linkType: hard
 
@@ -8334,7 +8371,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:^4.7.0":
+"@types/express@npm:^4, @types/express@npm:^4.7.0":
   version: 4.17.21
   resolution: "@types/express@npm:4.17.21"
   dependencies:
@@ -9238,6 +9275,38 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"_template-remix-2f864c@workspace:packages/buttery-cli/artifacts/tokens/playground/_template-remix":
+  version: 0.0.0-use.local
+  resolution: "_template-remix-2f864c@workspace:packages/buttery-cli/artifacts/tokens/playground/_template-remix"
+  dependencies:
+    "@cloudflare/workers-types": "npm:^4.20240512.0"
+    "@remix-run/cloudflare": "npm:^2.10.0"
+    "@remix-run/cloudflare-pages": "npm:^2.10.0"
+    "@remix-run/dev": "npm:^2.10.0"
+    "@remix-run/react": "npm:^2.10.0"
+    "@types/react": "npm:^18.2.20"
+    "@types/react-dom": "npm:^18.2.7"
+    "@typescript-eslint/eslint-plugin": "npm:^6.7.4"
+    "@typescript-eslint/parser": "npm:^6.7.4"
+    autoprefixer: "npm:^10.4.19"
+    eslint: "npm:^8.38.0"
+    eslint-import-resolver-typescript: "npm:^3.6.1"
+    eslint-plugin-import: "npm:^2.28.1"
+    eslint-plugin-jsx-a11y: "npm:^6.7.1"
+    eslint-plugin-react: "npm:^7.33.2"
+    eslint-plugin-react-hooks: "npm:^4.6.0"
+    isbot: "npm:^4.1.0"
+    postcss: "npm:^8.4.38"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    tailwindcss: "npm:^3.4.4"
+    typescript: "npm:^5.1.6"
+    vite: "npm:^5.1.0"
+    vite-tsconfig-paths: "npm:^4.2.1"
+    wrangler: "npm:3.57.1"
+  languageName: unknown
+  linkType: soft
+
 "abbrev@npm:^2.0.0":
   version: 2.0.0
   resolution: "abbrev@npm:2.0.0"
@@ -9848,6 +9917,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"basic-auth@npm:~2.0.1":
+  version: 2.0.1
+  resolution: "basic-auth@npm:2.0.1"
+  dependencies:
+    safe-buffer: "npm:5.1.2"
+  checksum: 10c0/05f56db3a0fc31c89c86b605231e32ee143fb6ae38dc60616bc0970ae6a0f034172def99e69d3aed0e2c9e7cac84e2d63bc51a0b5ff6ab5fc8808cc8b29923c1
+  languageName: node
+  linkType: hard
+
 "better-opn@npm:^3.0.2":
   version: 3.0.2
   resolution: "better-opn@npm:3.0.2"
@@ -10029,15 +10107,6 @@ __metadata:
   checksum: 10c0/27cac81cff434ed2876058d72e7c4789d11ff1120ef32c9de48f59eab58179b66710c488987d295ae89a228f835fc66d088652dffeb8e3ba8659f80eb091d55e
   languageName: node
   linkType: hard
-
-"build.d3bae9d75ff1b565c9d2f8f2b325ae37f44e1ed6c70faa8b2fbab0628e8d1808-ea31d8@workspace:packages/buttery-cli/artifacts/docs/apps/build.d3bae9d75ff1b565c9d2f8f2b325ae37f44e1ed6c70faa8b2fbab0628e8d1808":
-  version: 0.0.0-use.local
-  resolution: "build.d3bae9d75ff1b565c9d2f8f2b325ae37f44e1ed6c70faa8b2fbab0628e8d1808-ea31d8@workspace:packages/buttery-cli/artifacts/docs/apps/build.d3bae9d75ff1b565c9d2f8f2b325ae37f44e1ed6c70faa8b2fbab0628e8d1808"
-  dependencies:
-    "@remix-run/cloudflare": "npm:latest"
-    isbot: "npm:4.4.0"
-  languageName: unknown
-  linkType: soft
 
 "builtins@npm:^5.0.0":
   version: 5.1.0
@@ -11085,7 +11154,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"depd@npm:2.0.0":
+"depd@npm:2.0.0, depd@npm:~2.0.0":
   version: 2.0.0
   resolution: "depd@npm:2.0.0"
   checksum: 10c0/58bd06ec20e19529b06f7ad07ddab60e504d9e0faca4bd23079fac2d279c3594334d736508dc350e06e510aba5e22e4594483b3a6562ce7c17dd797f4cc4ad2c
@@ -13192,7 +13261,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-port@npm:^5.1.1":
+"get-port@npm:5.1.1, get-port@npm:^5.1.1":
   version: 5.1.1
   resolution: "get-port@npm:5.1.1"
   checksum: 10c0/2873877a469b24e6d5e0be490724a17edb39fafc795d1d662e7bea951ca649713b4a50117a473f9d162312cb0e946597bd0e049ed2f866e79e576e8e213d3d1c
@@ -17147,6 +17216,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"morgan@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "morgan@npm:1.10.0"
+  dependencies:
+    basic-auth: "npm:~2.0.1"
+    debug: "npm:2.6.9"
+    depd: "npm:~2.0.0"
+    on-finished: "npm:~2.3.0"
+    on-headers: "npm:~1.0.2"
+  checksum: 10c0/684db061daca28f8d8e3bfd50bd0d21734401b46f74ea76f6df7785d45698fcd98f6d3b81a6bad59f8288c429183afba728c428e8f66d2e8c30fd277af3b5b3a
+  languageName: node
+  linkType: hard
+
 "mri@npm:^1.1.0, mri@npm:^1.2.0":
   version: 1.2.0
   resolution: "mri@npm:1.2.0"
@@ -17872,6 +17954,15 @@ __metadata:
   dependencies:
     ee-first: "npm:1.1.1"
   checksum: 10c0/46fb11b9063782f2d9968863d9cbba33d77aa13c17f895f56129c274318b86500b22af3a160fe9995aa41317efcd22941b6eba747f718ced08d9a73afdb087b4
+  languageName: node
+  linkType: hard
+
+"on-finished@npm:~2.3.0":
+  version: 2.3.0
+  resolution: "on-finished@npm:2.3.0"
+  dependencies:
+    ee-first: "npm:1.1.1"
+  checksum: 10c0/c904f9e518b11941eb60279a3cbfaf1289bd0001f600a950255b1dede9fe3df8cd74f38483550b3bb9485165166acb5db500c3b4c4337aec2815c88c96fcc2ea
   languageName: node
   linkType: hard
 

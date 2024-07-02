@@ -4,4 +4,8 @@ import { LayoutMainPane } from "./LayoutMainPane";
 
 export const LayoutMainPaneLeft = styled(LayoutMainPane)`
   border-right: ${makeRem(1)} solid ${makeColor("neutral", { variant: "50" })};
+  padding-top: ${makeRem(16)};
+  p {
+    font-size: ${makeRem(12)};
+  }
 `;

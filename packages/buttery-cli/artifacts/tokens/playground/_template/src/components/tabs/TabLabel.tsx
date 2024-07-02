@@ -22,7 +22,7 @@ const SButton = styled("button")`
   flex: 1;
   display: grid;
   place-content: center;
-  height: ${makeRem(32)};
+  height: ${makeRem(24)};
   font-family: ${makeFontFamily("body")};
   font-size: ${makeRem(12)};
   color: ${makeColor("neutral", { variant: "200" })};

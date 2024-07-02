@@ -1,19 +1,10 @@
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
-import { NavLink } from "react-router-dom";
-import {
-  makeColor,
-  makeFontFamily,
-  makeFontWeight,
-  makeRem,
-} from "#buttery/tokens/playground";
+import { makeColor, makeRem } from "#buttery/tokens/playground";
 
 export type LayoutHeaderPropsNative = JSX.IntrinsicElements["header"];
-export type LayoutHeaderPropsCustom = {
-  btLogoSrc: string;
-  btLogoAlt: string;
-};
+export type LayoutHeaderPropsCustom = Record<string, unknown>;
 export type LayoutHeaderProps = LayoutHeaderPropsNative &
   LayoutHeaderPropsCustom;
 
@@ -27,26 +18,6 @@ const SHeader = styled("header")`
   top: 0;
   background: #fff;
   justify-content: space-between;
-
-  .title {
-    font-family: ${makeFontFamily("body")};
-    font-weight: ${makeFontWeight("bold")};
-    font-size: ${makeRem(12)};
-    text-transform: uppercase;
-  }
-
-  .logo {
-    height: ${makeRem(64)};
-    display: grid;
-    place-items: center;
-    position: sticky;
-    top: 0;
-
-    img {
-      width: auto;
-      height: ${makeRem(32)};
-    }
-  }
 
   & > div {
     display: flex;
@@ -69,14 +40,7 @@ export const LayoutHeader = forwardRef<HTMLElement, LayoutHeaderProps>(
   ) {
     return (
       <SHeader {...restProps} className={clsx(className)} ref={ref}>
-        <div>
-          <NavLink to="/">
-            <div className="logo">
-              <img src={btLogoSrc} alt={btLogoAlt} />
-            </div>
-          </NavLink>
-          <h1 className="title">buttery tokens</h1>
-        </div>
+        <div />
         <div>{children}</div>
       </SHeader>
     );

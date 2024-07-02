@@ -2,7 +2,7 @@ import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import { select } from "@inquirer/prompts";
 import type { CommandAction, CommandMeta } from "../../../lib";
 import { LOG } from "../_utils/util.logger";
-import { formatRouteOrder } from "./util.formatRouteOrder";
+import { formatRouteOrder } from "./docs.format.formatRouteOrder";
 
 export const meta: CommandMeta = {
   name: "format",

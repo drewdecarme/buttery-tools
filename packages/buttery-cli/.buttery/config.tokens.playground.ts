@@ -29,9 +29,9 @@ export const ConfigTokensPlayground: ButteryConfigTokens = {
   },
   color: {
     mode: "presets",
-    tone: "jewel",
-    saturation: 83,
-    brightness: 76,
+    tone: "fluorescent",
+    saturation: 82,
+    brightness: 90,
     application: {
       hues: {
         primary: 42,

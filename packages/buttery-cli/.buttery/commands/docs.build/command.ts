@@ -1,6 +1,6 @@
 import type { CommandAction, CommandMeta, CommandOptions } from "../../../lib";
+import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
 import { LOG_DOCS } from "../docs/docs.logger";
-import { getButteryDocsConfig } from "../docs/shared.getButteryDocsConfig";
 import { buildForProduction } from "./docs.build.buildForProduction";
 import { prepareBuildDirectory } from "./docs.build.prepareBuildDirectory";
 

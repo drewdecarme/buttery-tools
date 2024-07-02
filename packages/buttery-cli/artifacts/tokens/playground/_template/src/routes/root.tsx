@@ -8,22 +8,28 @@ import { LayoutNav } from "../components/layout/LayoutNav";
 export default function Root() {
   return (
     <Layout>
-      <LayoutNav>
+      <LayoutNav
+        btLogoSrc="/images/buttery-tokens-logo.png"
+        btLogoAlt="buttery-tokens-logo"
+      >
         <li>
           <NavLink to="/color">
-            <IconComponent icon="palette" />
+            <div>
+              <IconComponent icon="palette" />
+            </div>
+            <div>Palette</div>
           </NavLink>
         </li>
         <li>
           <NavLink to="/font">
-            <IconComponent icon="text-font-stroke-rounded" />
+            <div>
+              <IconComponent icon="text-font-stroke-rounded" />
+            </div>
+            <div>Typography</div>
           </NavLink>
         </li>
       </LayoutNav>
-      <LayoutHeader
-        btLogoSrc="/images/buttery-tokens-logo.png"
-        btLogoAlt="buttery-tokens-logo"
-      >
+      <LayoutHeader>
         <a
           href="https://github.com/drewdecarme/buttery-tools/tree/main/packages/buttery-tokens"
           target="_blank"
