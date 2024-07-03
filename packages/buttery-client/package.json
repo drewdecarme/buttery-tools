@@ -1,7 +1,7 @@
 {
-  "name": "@buttery/fetch",
+  "name": "@buttery/client",
   "version": "1.0.0",
-  "description": "A TS fetch client with 0 dependencies",
+  "description": "A TS API client with 0 dependencies",
   "main": "dist/index.js",
   "publishConfig": {
     "access": "public"
@@ -18,5 +18,9 @@
   "license": "MIT",
   "devDependencies": {
     "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "@buttery/tsconfig": "workspace:^",
+    "@buttery/utils": "workspace:^"
   }
 }

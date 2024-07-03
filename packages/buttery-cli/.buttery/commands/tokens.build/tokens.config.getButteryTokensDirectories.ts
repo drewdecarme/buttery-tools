@@ -83,6 +83,15 @@ export async function getButteryTokensDirectories(
   }
   const tokensRoot = path.resolve(artifactsDir, "./tokens");
   const playgroundRoot = path.resolve(tokensRoot, "./playground");
+  const playgroundClient = path.resolve(playgroundRoot, "./client");
+  const playgroundClientPublic = path.resolve(playgroundClient, "./public");
+  const playgroundServer = path.resolve(playgroundRoot, "./server");
+  const playgroundServerEntry = path.resolve(playgroundServer, "./index.ts");
+  const playgroundServerConfig = path.resolve(
+    playgroundServer,
+    `./${outputDirName}.${hashString(outputDirPath)}`
+  );
+
   const playgroundTemplatePath = path.resolve(playgroundRoot, "./_template");
   const playgroundDynamicAppRoot = path.resolve(
     playgroundRoot,
@@ -113,8 +122,26 @@ export async function getButteryTokensDirectories(
         root: tokensRoot,
         playground: {
           root: playgroundRoot,
+          client: {
+            root: playgroundClient,
+            public: playgroundClientPublic,
+          },
+          server: {
+            root: playgroundServer,
+            entry: playgroundServerEntry,
+            config: playgroundServerConfig,
+          },
+          /**
+           * @deprecated
+           */
           template: playgroundTemplatePath,
+          /**
+           * @deprecated
+           */
           dynamicAppRoot: playgroundDynamicAppRoot,
+          /**
+           * @deprecated
+           */
           dynamicAppPublic: playgroundDynamicAppPublic,
         },
       },

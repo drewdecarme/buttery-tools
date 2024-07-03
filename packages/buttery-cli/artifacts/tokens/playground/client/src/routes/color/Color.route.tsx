@@ -1,5 +1,7 @@
 import type { ButteryConfigTokens } from "@buttery/core";
-import { useLoaderData } from "react-router-dom";
+import { type FormEventHandler, useCallback, useState } from "react";
+import { useFetcher, useLoaderData } from "react-router-dom";
+import { apiClient } from "../../api";
 import { LayoutMainContent } from "../../components/layout/LayoutMainContent";
 import { LayoutMainPaneLeft } from "../../components/layout/LayoutMainPaneLeft";
 import { LayoutMainPaneSection } from "../../components/layout/LayoutMainPaneSection";
@@ -9,14 +11,24 @@ import { ColorMode } from "./ColorMode";
 import { ColorPaneSectionSettings } from "./ColorPaneSectionSettings";
 
 export const ColorRoute = () => {
-  const color = useLoaderData() as ButteryConfigTokens["color"];
-  console.log({ color });
+  const config = useLoaderData() as ButteryConfigTokens;
+  const fetcher = useFetcher();
+  console.log({ config });
+
+  const [liveConfig, setLiveConfig] = useState(config);
+
+  const handleSubmit = useCallback<
+    FormEventHandler<HTMLFormElement>
+  >(async () => {
+    await apiClient.config.saveConfig(liveConfig);
+  }, [liveConfig]);
+
   return (
     <>
       <LayoutMainPaneLeft>
         <Tabs btInitActiveTab="settings">
           <Tab btId="settings" btLabel="Settings">
-            <ColorPaneSectionSettings color={color} />
+            <ColorPaneSectionSettings color={liveConfig.color} />
           </Tab>
           <Tab btId="graph" btLabel="Graph">
             <LayoutMainPaneSection
@@ -32,7 +44,11 @@ export const ColorRoute = () => {
         </Tabs>
         <ColorMode />
       </LayoutMainPaneLeft>
-      <LayoutMainContent>{/* <ColorPalette /> */}</LayoutMainContent>
+      <LayoutMainContent>
+        <fetcher.Form onSubmit={handleSubmit}>
+          <button type="submit">save</button>
+        </fetcher.Form>
+      </LayoutMainContent>
     </>
   );
 };

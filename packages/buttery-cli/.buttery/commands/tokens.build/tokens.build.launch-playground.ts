@@ -1,10 +1,14 @@
-import { cp } from "node:fs/promises";
+import { spawn } from "node:child_process";
+import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { createEsbuildOptions } from "@buttery/utils/esbuild";
 import react from "@vitejs/plugin-react";
 import wyw from "@wyw-in-js/vite";
+import { build } from "esbuild";
+
 import { createServer } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-import { createPlaygroundDataFile } from "./tokens.build.create-playground-datafile";
+
 import type { ButteryTokensConfig } from "./tokens.config.getButteryTokensConfig";
 import { getButteryTokensDirectories } from "./tokens.config.getButteryTokensDirectories";
 
@@ -14,17 +18,46 @@ export async function launchConfigUI(
 ) {
   const dirs = await getButteryTokensDirectories(config, options);
 
-  // create an app from the template and put it into
-  // the dynamically reconciled dynamicAppRoot
-  await cp(
-    dirs.artifacts.tokens.playground.template,
-    dirs.artifacts.tokens.playground.dynamicAppRoot,
-    {
-      recursive: true,
-    }
+  const PLAYGROUND_SERVER_PORT = 8789;
+
+  // create the  config directory
+  await mkdir(dirs.artifacts.tokens.playground.server.config, {
+    recursive: true,
+  });
+
+  // populate the config
+  await writeFile(
+    path.resolve(
+      dirs.artifacts.tokens.playground.server.config,
+      "./config.json"
+    ),
+    JSON.stringify(config.tokens, null, 2)
   );
 
-  await createPlaygroundDataFile(config, options);
+  await build(
+    createEsbuildOptions({
+      entryPoints: [dirs.artifacts.tokens.playground.server.entry],
+      outdir: dirs.artifacts.tokens.playground.server.root,
+    })
+  );
+
+  // start the server
+  spawn(
+    "node",
+    [path.resolve(dirs.artifacts.tokens.playground.server.root, "./index.js")],
+    {
+      stdio: "inherit",
+      env: {
+        ...process.env,
+        PLAYGROUND_SERVER_CONFIG_SAVE_FILE_PATH: path.resolve(
+          config.paths.butteryDir,
+          "./config.tokens.ts"
+        ),
+        PLAYGROUND_SERVER_PORT: PLAYGROUND_SERVER_PORT.toString(),
+        PLAYGROUND_SERVER_CONFIG_DIRECTORY: `${dirs.artifacts.tokens.playground.server.config}`,
+      },
+    }
+  );
 
   // create the server
   const server = await createServer({
@@ -51,10 +84,13 @@ export async function launchConfigUI(
       ],
     },
     configFile: false,
-    root: dirs.artifacts.tokens.playground.dynamicAppRoot,
-    publicDir: dirs.artifacts.tokens.playground.dynamicAppPublic,
+    root: dirs.artifacts.tokens.playground.client.root,
+    publicDir: dirs.artifacts.tokens.playground.client.public,
     server: {
       port: 1300,
+      proxy: {
+        "/api": `http://localhost:${PLAYGROUND_SERVER_PORT}`,
+      },
     },
     plugins: [
       // watch the config and then rebuild the config.data.file

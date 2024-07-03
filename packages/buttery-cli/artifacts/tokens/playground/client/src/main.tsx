@@ -10,20 +10,14 @@ import Root from "./routes/root";
 import "#buttery/tokens/playground/css";
 import "#buttery/tokens/generated/css";
 import "./root.css";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import type { ButteryConfigTokens } from "@buttery/core";
+import { apiClient } from "./api";
 
-const configDir = path.resolve(import.meta.dirname, "./configs");
-
-async function getConfig(): Promise<ButteryConfigTokens> {
+async function getConfig() {
   try {
-    const configPath = path.resolve(configDir, "./config.json");
-    const configFile = await readFile(configPath, "utf8");
-    const configJson = JSON.parse(configFile);
-    return configJson as ButteryConfigTokens;
+    const config = await apiClient.config.getLatestConfig();
+    return json(config);
   } catch (error) {
-    throw "Cannot locate / parse config JSON";
+    console.log(error);
   }
 }
 
@@ -35,12 +29,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "color",
-        loader: async () => {
-          try {
-            const config = await getConfig();
-            return json({ config });
-          } catch (error) {}
-        },
+        loader: getConfig,
         element: <ColorRoute />,
       },
       {
