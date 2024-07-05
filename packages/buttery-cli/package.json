@@ -54,6 +54,7 @@
     "@buttery/tsconfig": "workspace:^",
     "@chromatic-com/storybook": "^1.5.0",
     "@cloudflare/workers-types": "^4.20240620.0",
+    "@ngneat/falso": "^7.2.0",
     "@remix-run/cloudflare": "^2.9.2",
     "@storybook/addon-essentials": "8.1.10",
     "@storybook/addon-interactions": "8.1.10",
