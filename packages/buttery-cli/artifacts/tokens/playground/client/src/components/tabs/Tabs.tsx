@@ -1,4 +1,5 @@
 import { styled } from "@linaria/react";
+import clsx from "clsx";
 import type { FC, ReactElement } from "react";
 import React from "react";
 import { makeColor, makeRem } from "#buttery/tokens/playground";
@@ -16,14 +17,26 @@ const STabs = styled("div")`
   border-radius: ${makeRem(4)};
   background: ${makeColor("neutral", { variant: "50", opacity: 0.2 })};
   position: relative;
+
+  &.on-surface {
+    background: white;
+  }
 `;
 
 export const Tabs: FC<
-  TabsProviderProps & { children: ReactElement<TabProps>[] }
-> = ({ children, ...restProps }) => {
+  TabsProviderProps & {
+    children: ReactElement<TabProps>[];
+    onSurface?: boolean;
+  }
+> = ({ children, onSurface, ...restProps }) => {
   return (
     <TabsProvider {...restProps}>
-      <STabs className="tabs" role="tablist">
+      <STabs
+        className={clsx("tabs", {
+          "on-surface": onSurface,
+        })}
+        role="tablist"
+      >
         <TabLabelIndicator />
         {React.Children.map(children ?? [], (child, index) => {
           return (

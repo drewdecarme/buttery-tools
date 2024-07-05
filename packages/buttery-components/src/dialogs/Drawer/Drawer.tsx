@@ -1,13 +1,13 @@
-import { ForwardedRef, ReactNode, forwardRef } from "react";
+import { type ForwardedRef, type ReactNode, forwardRef } from "react";
 
+import clsx from "clsx";
 import { DialogProvider } from "../Dialog.context";
 import {
-  UseDialogOptions,
-  DialogDefaultState,
-  DialogRef,
+  type DialogDefaultState,
+  type DialogRef,
+  type UseDialogOptions,
   useDialog,
 } from "../dialog.useDialog";
-import clsx from "clsx";
 import styles from "./drawer.styles";
 
 export type DrawerPropsNative = Omit<JSX.IntrinsicElements["dialog"], "ref">;

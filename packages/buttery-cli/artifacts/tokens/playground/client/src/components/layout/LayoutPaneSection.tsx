@@ -3,13 +3,13 @@ import { clsx } from "clsx";
 import { forwardRef } from "react";
 import { makeColor, makeFontWeight, makeRem } from "#buttery/tokens/playground";
 
-export type LayoutMainPaneSectionPropsNative = JSX.IntrinsicElements["div"];
-export type LayoutMainPaneSectionPropsCustom = {
+export type LayoutPaneSectionPropsNative = JSX.IntrinsicElements["div"];
+export type LayoutPaneSectionPropsCustom = {
   btTitle?: string;
   btSubtitle?: string;
 };
-export type LayoutMainPaneSectionProps = LayoutMainPaneSectionPropsNative &
-  LayoutMainPaneSectionPropsCustom;
+export type LayoutPaneSectionProps = LayoutPaneSectionPropsNative &
+  LayoutPaneSectionPropsCustom;
 
 const SDiv = styled("div")`
   padding: ${makeRem(16)} 0;
@@ -41,10 +41,10 @@ const SDiv = styled("div")`
   }
 `;
 
-export const LayoutMainPaneSection = forwardRef<
+export const LayoutPaneSection = forwardRef<
   HTMLDivElement,
-  LayoutMainPaneSectionProps
->(function LayoutMainPaneSection(
+  LayoutPaneSectionProps
+>(function LayoutPaneSection(
   { children, className, btTitle, btSubtitle, ...restProps },
   ref
 ) {

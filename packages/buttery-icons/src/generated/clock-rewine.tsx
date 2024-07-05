@@ -3,7 +3,7 @@ interface SVGRProps {
   title?: string;
   titleId?: string;
 }
-const SvgPalette = ({
+const SvgClockRewine = ({
   title,
   titleId,
   ...props
@@ -19,24 +19,18 @@ const SvgPalette = ({
     {title ? <title id={titleId}>{title}</title> : null}
     <path
       stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       strokeWidth={1.5}
-      d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10c.842 0 2 .116 2-1 0-.609-.317-1.079-.631-1.546-.46-.683-.917-1.359-.369-2.454.667-1.333 1.778-1.333 3.482-1.333.851 0 1.851 0 3.018-.167 2.101-.3 2.5-1.592 2.5-3.5Z"
+      d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2C7.522 2 3.774 4.943 2.5 9H5"
     />
     <path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={2}
-      d="M7 15.002 7.009 15"
-    />
-    <circle cx={9.5} cy={8.5} r={1.5} stroke="currentColor" strokeWidth={1.5} />
-    <circle
-      cx={16.5}
-      cy={9.5}
-      r={1.5}
-      stroke="currentColor"
       strokeWidth={1.5}
+      d="M12 8v4l2 2M2 12q0 .505.045 1M9 22a10 10 0 0 1-1-.392M3.21 17a11 11 0 0 1-.515-1.154m2.136 3.46q.46.495.977.923"
     />
   </svg>
 );
-export default SvgPalette;
+export default SvgClockRewine;

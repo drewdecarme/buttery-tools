@@ -3119,6 +3119,7 @@ __metadata:
   resolution: "@buttery/cli@workspace:packages/buttery-cli"
   dependencies:
     "@buttery/client": "workspace:^"
+    "@buttery/components": "workspace:^"
     "@buttery/core": "workspace:^"
     "@buttery/icons": "workspace:^"
     "@buttery/logger": "workspace:^"

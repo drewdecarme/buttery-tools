@@ -1,6 +1,7 @@
 import type { Preview } from "@storybook/react";
 import "../artifacts/tokens/.buttery-tokens/docs/index.css";
-import { bodyCSS } from "../.buttery-docs/components";
+import "../artifacts/tokens/.buttery-tokens/playground/index.css";
+import React from "react";
 
 const preview: Preview = {
   parameters: {
@@ -13,7 +14,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <div className={bodyCSS}>
+      <div>
         <Story />
       </div>
     ),

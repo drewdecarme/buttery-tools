@@ -7,7 +7,7 @@ export type LayoutMainContentPropsNative = JSX.IntrinsicElements["div"];
 export type LayoutMainContentProps = LayoutMainContentPropsNative;
 
 const SDiv = styled("div")`
-  background: ${makeColor("neutral", { variant: "50", opacity: 0.25 })};
+  /* background: ${makeColor("neutral", { variant: "50", opacity: 0.25 })}; */
 `;
 
 export const LayoutMainContent = forwardRef<

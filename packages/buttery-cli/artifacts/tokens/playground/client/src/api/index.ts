@@ -4,6 +4,7 @@ import {
   type ButteryClientConstructorParams,
 } from "@buttery/client";
 import type { ButteryConfigTokens } from "@buttery/core";
+import type { GetConfigHistoryApiResponse } from "artifacts/tokens/playground/server";
 
 class ApiClientConfig extends ButteryClientBranch {
   /**
@@ -20,6 +21,15 @@ class ApiClientConfig extends ButteryClientBranch {
    */
   async getLatestConfig() {
     const config = await this.get<ButteryConfigTokens>("");
+    return config;
+  }
+
+  /**
+   * Fetches the most recent config from all of the
+   * configs in the directory
+   */
+  async getConfigHistory() {
+    const config = await this.get<GetConfigHistoryApiResponse>("/history");
     return config;
   }
 }

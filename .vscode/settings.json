@@ -1,5 +1,12 @@
 {
-  "cSpell.words": ["autofix", "brainer", "fooded", "frontmatter", "invoicer"],
+  "cSpell.words": [
+    "autofix",
+    "brainer",
+    "Dateify",
+    "fooded",
+    "frontmatter",
+    "invoicer"
+  ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.formatOnSave": true
 }

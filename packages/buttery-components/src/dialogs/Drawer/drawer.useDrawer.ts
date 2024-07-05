@@ -1,6 +1,5 @@
-
-import { useRef, useCallback, useMemo, MutableRefObject } from "react";
-import { DialogDefaultState, DialogRef } from "../dialog.useDialog";
+import { type MutableRefObject, useCallback, useMemo, useRef } from "react";
+import type { DialogDefaultState, DialogRef } from "../dialog.useDialog";
 
 export function useDrawer<T extends DialogDefaultState>() {
   const drawerRef = useRef<DialogRef<T>>(null);

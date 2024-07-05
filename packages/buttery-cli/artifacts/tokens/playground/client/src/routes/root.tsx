@@ -1,11 +1,24 @@
+import type { ButteryConfigTokens } from "@buttery/core";
 import { IconComponent } from "@buttery/icons";
-import { NavLink, Outlet, ScrollRestoration } from "react-router-dom";
+import { useState } from "react";
+import {
+  NavLink,
+  Outlet,
+  ScrollRestoration,
+  useLoaderData,
+} from "react-router-dom";
 import { Layout } from "../components/layout/Layout";
-import { LayoutHeader } from "../components/layout/LayoutHeader";
 import { LayoutMain } from "../components/layout/LayoutMain";
+import { LayoutMainContent } from "../components/layout/LayoutMainContent";
+import { LayoutMainContentActions } from "../components/layout/LayoutMainContentActions";
 import { LayoutNav } from "../components/layout/LayoutNav";
+import { LayoutPane } from "../components/layout/LayoutPane";
+import { ActionBar } from "../features/action-bar";
+import { ConfigProvider } from "../features/config/Config.context";
 
 export default function Root() {
+  const config = useLoaderData() as ButteryConfigTokens;
+
   return (
     <Layout>
       <LayoutNav
@@ -17,7 +30,6 @@ export default function Root() {
             <div>
               <IconComponent icon="palette" />
             </div>
-            <div>Palette</div>
           </NavLink>
         </li>
         <li>
@@ -25,22 +37,21 @@ export default function Root() {
             <div>
               <IconComponent icon="text-font-stroke-rounded" />
             </div>
-            <div>Typography</div>
           </NavLink>
         </li>
       </LayoutNav>
-      <LayoutHeader>
-        <a
-          href="https://github.com/drewdecarme/buttery-tools/tree/main/packages/buttery-tokens"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <IconComponent icon="github-circle-solid-rounded" />
-        </a>
-      </LayoutHeader>
-      <LayoutMain>
-        <Outlet />
-      </LayoutMain>
+      <ConfigProvider initConfig={config}>
+        <LayoutPane>
+          <Outlet />
+        </LayoutPane>
+        <LayoutMain>
+          <LayoutMainContent>
+            <LayoutMainContentActions>
+              <ActionBar />
+            </LayoutMainContentActions>
+          </LayoutMainContent>
+        </LayoutMain>
+      </ConfigProvider>
       <ScrollRestoration />
     </Layout>
   );

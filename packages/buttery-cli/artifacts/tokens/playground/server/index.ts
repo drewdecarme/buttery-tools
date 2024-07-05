@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import bodyParser from "body-parser";
 import express, { type Request, type Response } from "express";
@@ -23,6 +23,37 @@ configRouter.route("/").get(async (_request, response, next) => {
     const configFile = await readFile(configPath, "utf8");
     const configJson = JSON.parse(configFile);
     return response.json(configJson);
+  } catch (error) {
+    next(error);
+  }
+});
+
+export type GetConfigHistoryApiResponse = {
+  filename: string;
+  date: string | null;
+  isOriginal: boolean;
+}[];
+configRouter.route("/history").get(async (_request, response, next) => {
+  try {
+    const files = await readdir(configDir);
+    const parsedFiles = files.map<GetConfigHistoryApiResponse[0]>((file) => {
+      try {
+        const timestamp = file.split("-")[1].split(".")[0];
+        const date = new Date(Number(timestamp));
+        return {
+          filename: file,
+          date: date.toISOString(),
+          isOriginal: false,
+        };
+      } catch (error) {
+        return {
+          filename: file,
+          date: null,
+          isOriginal: true,
+        };
+      }
+    });
+    return response.json(parsedFiles);
   } catch (error) {
     next(error);
   }
@@ -57,7 +88,7 @@ apiRouter.use("/config", configRouter);
 app.use("/api", apiRouter);
 
 // Centralized error handling middleware
-app.use((err: any, _req: Request, res: Response) => {
+app.use((err: Error, _req: Request, res: Response) => {
   console.error(err.stack);
   res.status(500).json({ message: "Internal Server Error" });
 });

@@ -9,6 +9,7 @@ import Root from "./routes/root";
 
 import "#buttery/tokens/playground/css";
 import "#buttery/tokens/generated/css";
+import "@buttery/components/css";
 import "./root.css";
 import { apiClient } from "./api";
 
@@ -24,12 +25,12 @@ async function getConfig() {
 const router = createBrowserRouter([
   {
     path: "/",
+    loader: getConfig,
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
       {
         path: "color",
-        loader: getConfig,
         element: <ColorRoute />,
       },
       {

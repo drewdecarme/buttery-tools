@@ -3,7 +3,7 @@ interface SVGRProps {
   title?: string;
   titleId?: string;
 }
-const SvgPalette = ({
+const SvgFloppyDisk = ({
   title,
   titleId,
   ...props
@@ -19,24 +19,22 @@ const SvgPalette = ({
     {title ? <title id={titleId}>{title}</title> : null}
     <path
       stroke="currentColor"
+      strokeLinejoin="round"
       strokeWidth={1.5}
-      d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10c.842 0 2 .116 2-1 0-.609-.317-1.079-.631-1.546-.46-.683-.917-1.359-.369-2.454.667-1.333 1.778-1.333 3.482-1.333.851 0 1.851 0 3.018-.167 2.101-.3 2.5-1.592 2.5-3.5Z"
+      d="M8 22v-3c0-1.886 0-2.828.586-3.414S10.114 15 12 15s2.828 0 3.414.586S16 17.114 16 19v3"
     />
     <path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={2}
-      d="M7 15.002 7.009 15"
+      strokeWidth={1.5}
+      d="M10 7h4"
     />
-    <circle cx={9.5} cy={8.5} r={1.5} stroke="currentColor" strokeWidth={1.5} />
-    <circle
-      cx={16.5}
-      cy={9.5}
-      r={1.5}
+    <path
       stroke="currentColor"
       strokeWidth={1.5}
+      d="M3 11.858c0-4.576 0-6.864 1.387-8.314a5 5 0 0 1 .157-.157C5.994 2 8.282 2 12.858 2c1.085 0 1.608.004 2.105.19.479.178.88.512 1.682 1.181l2.196 1.83c1.062.885 1.592 1.327 1.876 1.932C21 7.737 21 8.428 21 9.81V13c0 3.75 0 5.625-.955 6.939a5 5 0 0 1-1.106 1.106C17.625 22 15.749 22 12 22s-5.625 0-6.939-.955a5 5 0 0 1-1.106-1.106C3 18.625 3 16.749 3 13z"
     />
   </svg>
 );
-export default SvgPalette;
+export default SvgFloppyDisk;

@@ -2,13 +2,7 @@ import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  makeColor,
-  makeFontFamily,
-  makeFontWeight,
-  makeRem,
-  makeReset,
-} from "#buttery/tokens/playground";
+import { makeColor, makeRem, makeReset } from "#buttery/tokens/playground";
 
 export type LayoutNavPropsNative = JSX.IntrinsicElements["nav"];
 export type LayoutNavPropsCustom = {
@@ -18,7 +12,7 @@ export type LayoutNavPropsCustom = {
 export type LayoutNavProps = LayoutNavPropsNative & LayoutNavPropsCustom;
 
 const SNav = styled("nav")`
-  grid-area: layout-side-nav;
+  grid-area: layout-nav;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,10 +56,9 @@ const SNav = styled("nav")`
         font-size: ${makeRem(16)};
         gap: ${makeRem(8)};
         transition: all 0.15s ease-in-out;
-        width: fit-content;
-        padding: ${makeRem(8)};
+        width: ${makeRem(44)};
+        height: ${makeRem(44)};
         border-radius: ${makeRem(4)};
-        min-width: ${makeRem(180)};
         text-decoration: none;
         /* border: ${makeRem(1)} solid transparent; */
         color: ${makeColor("neutral", { variant: "200" })};
@@ -74,11 +67,6 @@ const SNav = styled("nav")`
           &:first-child {
             width: ${makeRem(20)};
             height: ${makeRem(20)};
-          }
-
-          &:last-child {
-            flex: 1;
-            font-size: ${makeRem(12)};
           }
         }
 
@@ -90,14 +78,8 @@ const SNav = styled("nav")`
 
         &.active {
           color: ${makeColor("neutral")};
-          background: white;
-          color: white;
-          /* background: rgba(255, 255, 255, 0.1); */ // dark
-          background: white;
-
-          & > div {
-            color: ${makeColor("neutral")};
-          }
+          background: ${makeColor("primary", { variant: "50" })};
+          color: ${makeColor("neutral")};
         }
       }
     }
