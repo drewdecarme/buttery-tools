@@ -24,8 +24,6 @@ const SLi = styled("li")`
   }
 
   &::before {
-    /* content: "v" counter(list-counter);
-    counter-increment: list-counter; */
     content: "v" attr(data-index);
     position: absolute;
     background: ${makeColor("neutral")};
