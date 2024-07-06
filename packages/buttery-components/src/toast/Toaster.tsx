@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { createPortal } from "react-dom";
+import ReactDOM from "react-dom";
 import { Toast } from "./Toast";
 import { getToastOptions, toastContainerId } from "./toast.utils";
 
@@ -17,58 +17,57 @@ export function Toaster<
     {}
   );
   const mutationObserverRef = useRef<MutationObserver | undefined>(undefined);
-  const ref = useCallback<RefCallback<HTMLDivElement>>((targetNode) => {
-    if (!targetNode) return;
+  const toasterRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    if (typeof window === "undefined" || !toasterRef.current) return;
+
+    // disconnect when the toaster mounts.
     const callback: MutationCallback = (mutationList) => {
       for (const mutation of mutationList) {
-        if (mutation.type === "childList") {
-          if (mutation.addedNodes.length) {
-            for (const addedNode of mutation.addedNodes) {
-              const toastProps =
-                getToastOptions<ToastComponentProps>(addedNode);
-              setToasts((prevState) => ({
-                ...prevState,
-                [toastProps.id]: toastProps,
-              }));
-            }
+        if (mutation.type !== "childList") return;
+
+        if (mutation.addedNodes.length) {
+          for (const addedNode of mutation.addedNodes) {
+            const toastProps = getToastOptions<ToastComponentProps>(addedNode);
+            setToasts((prevState) => ({
+              ...prevState,
+              [toastProps.id]: toastProps,
+            }));
           }
-          if (mutation.removedNodes.length) {
-            for (const removedNode of mutation.removedNodes) {
-              const toastProps = getToastOptions(removedNode);
-              setToasts((prevState) => {
-                const { [toastProps.id]: deletedToast, ...restState } =
-                  prevState;
-                return restState;
-              });
-            }
+        }
+        if (mutation.removedNodes.length) {
+          for (const removedNode of mutation.removedNodes) {
+            const toastProps = getToastOptions(removedNode);
+            setToasts((prevState) => {
+              const { [toastProps.id]: deletedToast, ...restState } = prevState;
+              return restState;
+            });
           }
-        } else if (mutation.type === "attributes") {
-          console.log(`The ${mutation.attributeName} attribute was modified.`);
         }
       }
     };
 
     mutationObserverRef.current = new MutationObserver(callback);
-    mutationObserverRef.current.observe(targetNode, {
+    console.log("Connecting mutation observer");
+    mutationObserverRef.current.observe(toasterRef.current, {
       attributes: true,
       childList: true,
       subtree: true,
     });
-  }, []);
 
-  useEffect(() => {
     // disconnect when the toaster is removed.
     return () => {
+      console.log("Disconnecting mutation observer");
       mutationObserverRef.current?.disconnect();
     };
   }, []);
 
   return (
     <>
-      <div id={toastContainerId} style={{ display: "none" }} ref={ref} />
+      <div id={toastContainerId} style={{ display: "none" }} ref={toasterRef} />
       {Object.values(toasts).length > 0 &&
-        createPortal(
+        ReactDOM.createPortal(
           Object.values(toasts).map((toast) => {
             const id = toast.id.toString();
             return (

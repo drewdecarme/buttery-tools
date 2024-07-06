@@ -1,6 +1,5 @@
 import type { ButteryConfigTokens } from "@buttery/core";
 import { IconComponent } from "@buttery/icons";
-import { useState } from "react";
 import {
   NavLink,
   Outlet,
@@ -13,6 +12,7 @@ import { LayoutMainContent } from "../components/layout/LayoutMainContent";
 import { LayoutMainContentActions } from "../components/layout/LayoutMainContentActions";
 import { LayoutNav } from "../components/layout/LayoutNav";
 import { LayoutPane } from "../components/layout/LayoutPane";
+import { Toaster } from "../components/toast";
 import { ActionBar } from "../features/action-bar";
 import { ConfigProvider } from "../features/config/Config.context";
 
@@ -53,6 +53,7 @@ export default function Root() {
         </LayoutMain>
       </ConfigProvider>
       <ScrollRestoration />
+      <Toaster />
     </Layout>
   );
 }

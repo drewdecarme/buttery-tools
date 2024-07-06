@@ -33,7 +33,6 @@ export class ButteryClient {
     requestInit: RequestInit
   ): Promise<Response> {
     const url = this.getRequestURL(route);
-    console.log({ url });
     return fetch(url, requestInit);
   }
 

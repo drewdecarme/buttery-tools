@@ -3,8 +3,8 @@ import {
   butteryConfigColorDefaultsHarmonious,
   butteryConfigColorDefaultsPresets,
 } from "@buttery/core/defaults";
+import { config } from "@buttery/tokens/playground";
 import { type ChangeEventHandler, type FC, useCallback } from "react";
-import { config } from "#buttery/tokens/playground";
 
 const modeOptions: ButteryTokensColor["mode"][] = ["harmonious", "presets"];
 

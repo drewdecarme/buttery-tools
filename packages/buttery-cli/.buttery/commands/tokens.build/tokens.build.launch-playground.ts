@@ -64,18 +64,18 @@ export async function launchConfigUI(
     resolve: {
       alias: [
         {
-          find: "#buttery/tokens/generated/css",
+          find: "@buttery/tokens/generated/css",
           replacement: path.resolve(dirs.output.path, "./index.css"),
         },
         {
-          find: "#buttery/tokens/playground/css",
+          find: "@buttery/tokens/playground/css",
           replacement: path.resolve(
             dirs.artifacts.tokens.root,
             "./.buttery-tokens/playground/index.css"
           ),
         },
         {
-          find: "#buttery/tokens/playground",
+          find: "@buttery/tokens/playground",
           replacement: path.resolve(
             dirs.artifacts.tokens.root,
             "./.buttery-tokens/playground/index.js"

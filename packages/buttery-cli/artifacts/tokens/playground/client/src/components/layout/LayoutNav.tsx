@@ -1,8 +1,8 @@
+import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
 import { NavLink } from "react-router-dom";
-import { makeColor, makeRem, makeReset } from "#buttery/tokens/playground";
 
 export type LayoutNavPropsNative = JSX.IntrinsicElements["nav"];
 export type LayoutNavPropsCustom = {
@@ -19,9 +19,8 @@ const SNav = styled("nav")`
   padding: 0 ${makeRem(16)};
   position: sticky;
   top: 0;
-  background: ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
-
-  /* background: ${makeColor("neutral")}; */ // dark
+  background: ${makeColor("neutral", { variant: "50", opacity: 0.6 })};
+  border-bottom: ${makeRem(1)} solid ${makeColor("neutral", { variant: "50" })};
 
   .title {
     display: flex;

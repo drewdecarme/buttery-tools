@@ -38,6 +38,7 @@ export const ConfigTokensPlayground: ButteryConfigTokens = {
         secondary: 170,
         warning: 60,
         danger: 359,
+        success: 131,
       },
       variants: {
         mode: "auto",

@@ -1,13 +1,13 @@
-import { styled } from "@linaria/react";
-import { clsx } from "clsx";
-import { type ReactNode, forwardRef } from "react";
 import {
   makeColor,
   makeFontFamily,
   makeFontWeight,
   makeRem,
   makeReset,
-} from "#buttery/tokens/playground";
+} from "@buttery/tokens/playground";
+import { styled } from "@linaria/react";
+import { clsx } from "clsx";
+import { type ReactNode, forwardRef } from "react";
 import { useTabsContext } from "./Tab.context";
 
 export type TabLabelPropsNative = JSX.IntrinsicElements["button"];

@@ -1,7 +1,7 @@
+import { makeFontWeight, makeRem } from "@buttery/tokens/playground";
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
-import { makeFontWeight, makeRem } from "#buttery/tokens/playground";
 
 export type DrawerHeaderPropsNative = JSX.IntrinsicElements["header"];
 export type DrawerHeaderPropsCustom = {

@@ -1,7 +1,7 @@
+import { makeColor, makeFontFamily, makeRem } from "@buttery/tokens/playground";
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
-import { makeColor, makeFontFamily, makeRem } from "#buttery/tokens/playground";
 import { dateify } from "../../utils";
 
 export type VersionHistoryListItemPropsNative = JSX.IntrinsicElements["li"];

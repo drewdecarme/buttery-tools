@@ -1,7 +1,7 @@
+import { makeColor, makeRem } from "@buttery/tokens/playground";
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
-import { makeColor, makeRem } from "#buttery/tokens/playground";
 
 export type LayoutMainContentActionsPropsNative = JSX.IntrinsicElements["div"];
 export type LayoutMainContentActionsPropsCustom = Record<string, unknown>;

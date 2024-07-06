@@ -2,16 +2,13 @@
 import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core";
 import { createEsbuildOptions } from "@buttery/utils/esbuild";
-import {
-  exhaustiveMatchGuard,
-  importCommand,
-  kebabToCamel,
-} from "@buttery/utils/ts";
+import { exhaustiveMatchGuard, kebabToCamel } from "@buttery/utils/ts";
 import type { Plugin } from "esbuild";
 import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
 import type { CommandOptions } from "../../../lib";
+import { dynamicImport } from "../_utils/util.dyamic-import";
 import { LOG } from "../_utils/util.logger";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import {
@@ -134,7 +131,7 @@ export class ESBuildPluginCommands {
 
       for (const commandSegment of commandSegments) {
         try {
-          const commandFileContent = await importCommand(outPath);
+          const commandFileContent = await dynamicImport(outPath);
 
           const properties: CommandGraphProperties = {
             meta: commandFileContent?.meta,

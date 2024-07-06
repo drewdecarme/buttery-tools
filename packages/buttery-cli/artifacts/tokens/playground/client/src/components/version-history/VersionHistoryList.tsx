@@ -1,7 +1,7 @@
+import { makeReset } from "@buttery/tokens/playground";
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
-import { makeReset } from "#buttery/tokens/playground";
 
 export type VersionHistoryListPropsNative = JSX.IntrinsicElements["ol"];
 export type VersionHistoryListProps = VersionHistoryListPropsNative;

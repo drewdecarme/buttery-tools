@@ -7,8 +7,8 @@ import { ColorRoute } from "./routes/color";
 import { FontRoute } from "./routes/font";
 import Root from "./routes/root";
 
-import "#buttery/tokens/playground/css";
-import "#buttery/tokens/generated/css";
+import "@buttery/tokens/playground/css";
+import "@buttery/tokens/generated/css";
 import "@buttery/components/css";
 import "./root.css";
 import { apiClient } from "./api";

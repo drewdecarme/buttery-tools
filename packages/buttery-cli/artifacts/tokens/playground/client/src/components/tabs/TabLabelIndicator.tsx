@@ -1,3 +1,4 @@
+import { makeColor, makeRem } from "@buttery/tokens/playground";
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import {
@@ -7,7 +8,6 @@ import {
   useImperativeHandle,
   useRef,
 } from "react";
-import { makeColor, makeRem } from "#buttery/tokens/playground";
 import { useTabsContext } from "./Tab.context";
 
 export type TabLabelIndicatorPropsNative = JSX.IntrinsicElements["div"];

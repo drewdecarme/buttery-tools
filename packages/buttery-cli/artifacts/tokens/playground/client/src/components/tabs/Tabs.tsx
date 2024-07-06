@@ -1,8 +1,8 @@
+import { makeColor, makeRem } from "@buttery/tokens/playground";
 import { styled } from "@linaria/react";
 import clsx from "clsx";
 import type { FC, ReactElement } from "react";
 import React from "react";
-import { makeColor, makeRem } from "#buttery/tokens/playground";
 import type { TabProps } from "./Tab";
 import { TabsProvider, type TabsProviderProps } from "./Tab.context";
 import { TabLabel } from "./TabLabel";

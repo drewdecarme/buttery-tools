@@ -4,11 +4,11 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "#buttery/tokens/playground/css": [
+      "@buttery/tokens/playground/css": [
         "./artifacts/tokens/.buttery-tokens/playground/index.css"
       ],
       // configuration ui tokens
-      "#buttery/tokens/playground": [
+      "@buttery/tokens/playground": [
         "./artifacts/tokens/.buttery-tokens/playground/index"
       ],
       "@buttery/tokens/docs/css": [

@@ -1,10 +1,11 @@
 import { IconComponent } from "@buttery/icons";
 import { makeRem } from "@buttery/tokens/docs";
-import { css } from "@linaria/core";
+import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { type FormEventHandler, forwardRef, useCallback } from "react";
 import { useFetcher } from "react-router-dom";
 import { apiClient } from "../../api";
+import { useToast } from "../../components/toast";
 import { useConfigContext } from "../config";
 import { ActionBarButton } from "./ActionBarButton";
 import { ActionBarVersionHistory } from "./ActionBarVersionHistory";
@@ -15,49 +16,49 @@ export type ActionBarPropsNative = Omit<
 >;
 export type ActionBarProps = ActionBarPropsNative;
 
-const formStyles = css`
+const SDiv = styled("div")`
   display: flex;
   align-items: center;
-  gap: ${makeRem(8)};
+  gap: ${makeRem(4)};
 `;
 
 export const ActionBar = forwardRef<HTMLFormElement, ActionBarProps>(
   function ActionBar({ children, className, ...restProps }, ref) {
     const { liveConfig } = useConfigContext();
     const fetcher = useFetcher();
+    const { create } = useToast();
 
-    const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
-      async (e) => {
-        const formData = new FormData(e.currentTarget);
-        const name = formData.get("name");
-
-        switch (name) {
-          case "save":
-            await apiClient.config.saveConfig(liveConfig);
-            break;
-
-          default:
-            console.log(`No action specified for ${name}`);
-            break;
-        }
-
+    const handleSubmit = useCallback<
+      FormEventHandler<HTMLFormElement>
+    >(async () => {
+      try {
         await apiClient.config.saveConfig(liveConfig);
-      },
-      [liveConfig]
-    );
+        create({
+          message: "Configuration successfully saved!",
+          variant: "success",
+        });
+      } catch (error) {
+        create({
+          message: "There was an error when trying to save the config",
+          variant: "error",
+        });
+      }
+    }, [liveConfig, create]);
 
     return (
-      <fetcher.Form
-        onSubmit={handleSubmit}
-        {...restProps}
-        className={clsx(formStyles, className)}
-        ref={ref}
-      >
+      <SDiv>
         <ActionBarVersionHistory />
-        <ActionBarButton type="submit" name="save">
-          <IconComponent icon="floppy-disk" />
-        </ActionBarButton>
-      </fetcher.Form>
+        <fetcher.Form
+          onSubmit={handleSubmit}
+          {...restProps}
+          className={clsx(className)}
+          ref={ref}
+        >
+          <ActionBarButton type="submit" name="intent" value="save">
+            <IconComponent icon="floppy-disk" />
+          </ActionBarButton>
+        </fetcher.Form>
+      </SDiv>
     );
   }
 );
