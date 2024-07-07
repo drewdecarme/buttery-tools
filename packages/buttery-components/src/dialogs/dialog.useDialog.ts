@@ -1,7 +1,7 @@
 import {
-  MutableRefObject,
-  Ref,
-  RefCallback,
+  type MutableRefObject,
+  type Ref,
+  type RefCallback,
   useCallback,
   useImperativeHandle,
   useMemo,

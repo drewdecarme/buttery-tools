@@ -28,6 +28,7 @@
     "upgrade-storybook": "npx storybook@next upgrade --prerelease"
   },
   "dependencies": {
+    "@buttery/icons": "workspace:^",
     "@buttery/utils": "workspace:^",
     "clsx": "^2.1.1",
     "dom": "^0.0.3",

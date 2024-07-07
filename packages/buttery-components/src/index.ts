@@ -1,4 +1,5 @@
 export * from "./dialogs";
-export * from "./toast";
+export * from "./popovers/toast";
+export * from "./popovers/menu";
 export * from "./hooks";
 export * from "./utils";

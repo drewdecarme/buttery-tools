@@ -7,7 +7,7 @@ import { Toaster } from "./Toaster";
 import { useToast } from "./toast.useToast";
 
 const meta: Meta = {
-  title: "Playground / Toast",
+  title: "Popovers / Toast",
 } satisfies Meta<typeof meta>;
 
 export default meta;

@@ -1,13 +1,13 @@
 import {
-  ReactNode,
+  type ReactNode,
   memo,
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from "react";
-import { useDynamicNode } from "./hook.useDynamicNode";
 import { createPortal } from "react-dom";
+import { useDynamicNode } from "./hook.useDynamicNode";
 
 export const usePortal = () => {
   const { getDynamicNode, destroyNode } = useDynamicNode();
@@ -23,9 +23,9 @@ export const usePortal = () => {
     if (!isOpen) destroyNode();
   }, [destroyNode, isOpen]);
 
-  const togglePortal = () => {
+  const togglePortal = useCallback(() => {
     setIsOpen((prevState) => !prevState);
-  };
+  }, []);
 
   const closePortal = useCallback(() => {
     setIsOpen(false);
@@ -50,6 +50,6 @@ export const usePortal = () => {
 
   return useMemo(
     () => ({ togglePortal, closePortal, openPortal, Portal }),
-    [Portal, closePortal, openPortal]
+    [Portal, closePortal, openPortal, togglePortal]
   );
 };
