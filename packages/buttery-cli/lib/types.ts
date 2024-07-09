@@ -42,19 +42,21 @@ export type CommandOptionType =
   | CommandOptionTypeBoolean
   | CommandOptionTypeNumber;
 
+type InferOptionType<T extends boolean | number | string> = T extends boolean
+  ? CommandOptionTypeBoolean
+  : T extends number
+    ? CommandOptionTypeNumber
+    : T extends string
+      ? CommandOptionTypeValue
+      : never;
+
 export type CommandOptions<
   T extends Record<string, boolean | number | string>,
 > = {
-  [K in keyof T]: T[K] extends boolean
-    ? CommandOptionTypeBoolean
-    : T[K] extends number
-      ? CommandOptionTypeNumber
-      : T[K] extends string
-        ? CommandOptionTypeValue
-        : never;
+  [K in keyof T]: InferOptionType<T[K]>;
 };
 
-type InferOptionType<T> = T extends { type: "boolean" }
+type InferOptionValue<T> = T extends { type: "boolean" }
   ? boolean
   : T extends { type: "number" }
     ? number
@@ -65,6 +67,6 @@ type InferOptionType<T> = T extends { type: "boolean" }
 export type CommandAction<T> = (params: {
   args: unknown;
   options: {
-    [K in keyof T]: InferOptionType<T[K]>;
+    [K in keyof T]: InferOptionValue<T[K]>;
   };
 }) => Promise<void>;

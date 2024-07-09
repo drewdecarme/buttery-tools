@@ -2,7 +2,7 @@ import { existsSync, lstatSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import {
-  createDefaultButteryConfig,
+  createDefaultButteryConfigAndDirs,
   promptUserForButteryConfigDefaults,
   promptUserForButteryDirLocation,
 } from "./buttery-core.utils.js";
@@ -42,8 +42,12 @@ export async function getButteryConfigFile(
     });
     // set the butteryDir to the path that the user defined
     butteryDir = userButteryDir;
+
     // create the default config
-    await createDefaultButteryConfig(butteryDir, userButteryConfigDefaults);
+    await createDefaultButteryConfigAndDirs(
+      butteryDir,
+      userButteryConfigDefaults
+    );
   }
 
   if (!butteryDir) {
@@ -63,7 +67,10 @@ export async function getButteryConfigFile(
       message: "Which configurations would you like to default?",
       defaultChecked: defaultConfig,
     });
-    await createDefaultButteryConfig(butteryDir, userDefinedConfigDefaults);
+    await createDefaultButteryConfigAndDirs(
+      butteryDir,
+      userDefinedConfigDefaults
+    );
     doesConfigFileExist = true;
   }
 
@@ -83,7 +90,10 @@ export async function getButteryConfigFile(
       message: "Which configurations would you like to default?",
       defaultChecked: defaultConfig,
     });
-    await createDefaultButteryConfig(butteryDir, userDefinedConfigDefaults);
+    await createDefaultButteryConfigAndDirs(
+      butteryDir,
+      userDefinedConfigDefaults
+    );
     file = await readFile(configFilePath);
     isFileEmpty = false;
   }

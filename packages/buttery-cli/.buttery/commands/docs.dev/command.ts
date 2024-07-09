@@ -20,10 +20,10 @@ export const options: CommandOptions<{
 }> = {
   "no-prompt": {
     type: "boolean",
-    defaultValue: false,
     alias: "np",
     description:
       "Disables CLI prompts if any configuration values are not expected / well formed.",
+    defaultValue: false,
   },
 };
 
@@ -32,6 +32,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
 
   try {
     const config = await getButteryDocsConfig({ prompt });
+
     await prepareDevDirectory(config);
     await writeButteryDocsGraphDevData(config);
     const server = await createDevServer();

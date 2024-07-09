@@ -1,8 +1,10 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import { checkbox, input } from "@inquirer/prompts";
 import type { ButteryConfig } from "./types.buttery-config";
 import { butteryConfigDefaults } from "./util.butteryConfigDefaults.js";
+
 /**
  * Asks the user to select which keys in the buttery config
  * should create defaults for
@@ -43,13 +45,54 @@ export async function promptUserForButteryDirLocation(
  * this function creates a default buttery config in the directory
  * with the defaults that map directly to the provided config keys
  */
-export async function createDefaultButteryConfig(
+export async function createDefaultButteryConfigAndDirs(
   butteryDir: string,
   configs: (keyof ButteryConfig)[]
 ) {
   try {
-    // create the buttery dir
+    // create the necessary dirs and files
+    // creates the buttery dir and the nested dirs needed to
+    // store the files
     await mkdir(butteryDir, { recursive: true });
+    const createButteryDirs = configs.reduce<Promise<void>[]>(
+      (accum, configKey) => {
+        const dirPath = path.resolve(butteryDir, `./${configKey}`);
+
+        switch (configKey) {
+          case "tokens":
+            return accum;
+
+          case "commands": {
+            const fn = async () => {
+              await mkdir(dirPath, { recursive: true });
+            };
+            return accum.concat(fn());
+          }
+
+          case "docs": {
+            const fn = async () => {
+              await mkdir(dirPath, { recursive: true });
+
+              const indexFilePath = path.resolve(dirPath, "./_index.md");
+              await writeFile(
+                indexFilePath,
+                `---
+title: Home
+---
+
+# Home\n`
+              );
+            };
+            return accum.concat(fn());
+          }
+
+          default:
+            return exhaustiveMatchGuard(configKey);
+        }
+      },
+      []
+    );
+    await Promise.all(createButteryDirs);
 
     // crete the buttery/config content
     const butteryConfigPath = path.resolve(butteryDir, "./config.ts");
@@ -68,6 +111,6 @@ export default config\n`;
       encoding: "utf8",
     });
   } catch (error) {
-    throw `Error when trying to create a default buttery/config file: ${error}`;
+    throw `Error when trying to create a default .buttery/config file: ${error}`;
   }
 }
