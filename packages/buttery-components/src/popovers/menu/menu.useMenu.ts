@@ -1,17 +1,23 @@
 import { useCallback, useMemo, useRef } from "react";
-import type { MenuRef } from "./menu.utils";
+import type { MenuOptions, MenuRef } from "./menu.utils";
 
-export const useMenu = <T extends HTMLElement = HTMLElement>() => {
+export const useMenu = <T extends HTMLElement = HTMLElement>(
+  options?: MenuOptions
+) => {
   const menuRef = useRef<MenuRef | null>(null);
   const targetRef = useRef<T | null>(null);
 
   const openMenu = useCallback(() => {
-    menuRef.current?.handleOpen();
-  }, []);
+    menuRef.current?.handleOpen(options);
+  }, [options]);
 
   const closeMenu = useCallback(() => {
     menuRef.current?.handleClose();
   }, []);
+
+  const toggleMenu = useCallback(() => {
+    menuRef.current?.handleToggle(options);
+  }, [options]);
 
   return useMemo(
     () => ({
@@ -19,7 +25,8 @@ export const useMenu = <T extends HTMLElement = HTMLElement>() => {
       targetRef,
       openMenu,
       closeMenu,
+      toggleMenu,
     }),
-    [openMenu, closeMenu]
+    [openMenu, closeMenu, toggleMenu]
   );
 };

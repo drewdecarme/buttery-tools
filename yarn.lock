@@ -3234,7 +3234,6 @@ __metadata:
     "@storybook/addon-essentials": "npm:^8.1.10"
     "@storybook/addon-interactions": "npm:^8.1.10"
     "@storybook/addon-links": "npm:^8.1.10"
-    "@storybook/addon-onboarding": "npm:^8.1.10"
     "@storybook/blocks": "npm:^8.1.10"
     "@storybook/react": "npm:^8.1.10"
     "@storybook/react-vite": "npm:^8.1.10"

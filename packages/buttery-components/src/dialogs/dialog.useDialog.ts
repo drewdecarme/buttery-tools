@@ -53,8 +53,8 @@ export const useDialog = <T extends DialogDefaultState = DialogDefaultState>(
   const iDialogRef = useRef<HTMLDialogElement | null>(null);
   const [dialogState, setDialogState] = useState<DialogState<T>>();
   const { Portal, openPortal, closePortal } = usePortal();
-  const dialogEventClickRef = useRef<void | null>(null);
-  const dialogEventCancelRef = useRef<void | null>(null);
+  const dialogEventClickRef = useRef<((e: MouseEvent) => void) | null>(null);
+  const dialogEventCancelRef = useRef<((e: Event) => void) | null>(null);
 
   const closeDialog = useCallback(async () => {
     if (!iDialogRef.current) return;
@@ -62,7 +62,7 @@ export const useDialog = <T extends DialogDefaultState = DialogDefaultState>(
 
     const onClose = params?.onClose ?? (() => void 0);
     // add the class close to the dialog to add any closing animations
-    dialogNode.dataset["close"] = "true";
+    dialogNode.dataset.close = "true";
 
     // get the animations on the entire dialog and wait until they complete
     const animations = dialogNode.getAnimations({ subtree: true });
@@ -115,28 +115,24 @@ export const useDialog = <T extends DialogDefaultState = DialogDefaultState>(
       }
 
       // Add some event listeners
-      dialogEventCancelRef.current = dialogNode.addEventListener(
-        "cancel",
-        (e) => {
-          // prevent the close event from firing.
-          e.preventDefault();
-          closeDialog();
-        }
-      );
+      dialogEventCancelRef.current = (e) => {
+        // prevent the close event from firing.
+        e.preventDefault();
+        closeDialog();
+      };
+      dialogNode.addEventListener("cancel", dialogEventCancelRef.current);
 
       // short circuit
       if (!enableBackdropClose) return;
 
       // Close the dialog if the dialog::backdrop is clicked
-      dialogEventClickRef.current = dialogNode.addEventListener(
-        "click",
-        ({ target }) => {
-          const { nodeName } = target as HTMLDialogElement;
-          if (nodeName === "DIALOG") {
-            closeDialog();
-          }
+      dialogEventClickRef.current = ({ target }) => {
+        const { nodeName } = target as HTMLDialogElement;
+        if (nodeName === "DIALOG") {
+          closeDialog();
         }
-      );
+      };
+      dialogNode.addEventListener("click", dialogEventClickRef.current);
     },
     [closeDialog, params.closeOnBackdropClick, params.type]
   );

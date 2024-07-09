@@ -1,3 +1,4 @@
+import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import {
   type RefCallback,
@@ -5,10 +6,16 @@ import {
   useCallback,
   useImperativeHandle,
   useRef,
+  useState,
 } from "react";
 import { usePortal } from "../../hooks";
 import { MenuProvider } from "./Menu.context";
-import type { MenuRef } from "./menu.utils";
+import {
+  type MenuOptionPosition,
+  type MenuOptions,
+  type MenuRef,
+  setPopoverPositionStyles,
+} from "./menu.utils";
 
 export type MenuPropsNative = JSX.IntrinsicElements["div"];
 export type MenuPropsCustom = {
@@ -16,15 +23,24 @@ export type MenuPropsCustom = {
 };
 export type MenuProps = MenuPropsNative & MenuPropsCustom;
 
+const SArticle = styled("article")`
+  position: fixed;
+
+  &:popover-open {
+    position: fixed;
+    inset: unset;
+  }
+`;
+
 export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
   { children, className, targetRef, ...restProps },
   ref
 ) {
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const { Portal, openPortal, closePortal } = usePortal();
-  const windowEventListenerRef = useRef<((e: KeyboardEvent) => void) | null>(
-    null
-  );
+  const windowListenerKey = useRef<((e: KeyboardEvent) => void) | null>(null);
+  const windowListenerMouse = useRef<((e: MouseEvent) => void) | null>(null);
+  const menuPositionRef = useRef<MenuOptionPosition>("bottom-left");
 
   const handleCloseMenu = useCallback(async () => {
     if (!popoverRef.current) return;
@@ -32,15 +48,18 @@ export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
     // add the close class to run the transition/animations with .close
     popoverRef.current.classList.replace("open", "close");
     // wait for all of the animations to run with .close
-    const popoverAnimations = popoverRef.current.getAnimations();
-    await Promise.all(popoverAnimations);
+    const animations = popoverRef.current.getAnimations({ subtree: true });
+    await Promise.allSettled(animations.map((animation) => animation.finished));
     // hide the popover when the animations complete
     popoverRef.current?.hidePopover();
     // remove event listeners
-    if (!windowEventListenerRef.current) return;
-    window.removeEventListener("keydown", windowEventListenerRef.current);
+    if (!windowListenerKey.current || !windowListenerMouse.current) return;
+    window.removeEventListener("keydown", windowListenerKey.current);
+    window.removeEventListener("click", windowListenerMouse.current);
     // close the portal afterwards
     closePortal();
+    // clean the ref
+    popoverRef.current = null;
   }, [closePortal]);
 
   // when the portal opens, the div will mount and the popover ref callback will run
@@ -51,34 +70,81 @@ export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
       popoverRef.current = node;
       // turn the div into a popover
       popoverRef.current.popover = "manual";
+
+      if (!popoverRef.current || !targetRef.current) {
+        console.warn(
+          "Popover or Target aren't defined. Cannot determine position of popover."
+        );
+        return;
+      }
+
+      // show the popover
       popoverRef.current.showPopover();
+
+      // position the article near the target
+      setPopoverPositionStyles(menuPositionRef.current, {
+        popoverNode: popoverRef.current,
+        targetNode: targetRef.current,
+      });
+
       // add the open class to run the transition/animations associated with .open
       popoverRef.current.classList.add("open");
 
       // add event listeners
-      windowEventListenerRef.current = (e) => {
+      windowListenerKey.current = (e) => {
         if (e.key !== "Escape") return;
         handleCloseMenu();
       };
-      window.addEventListener("keydown", windowEventListenerRef.current);
+      windowListenerMouse.current = (e) => {
+        const clickedElement = e.target as HTMLElement;
+        if (
+          popoverRef.current?.contains(clickedElement) ||
+          targetRef.current?.contains(clickedElement)
+        ) {
+          // clicked either on a child of the popover or the
+          // target that launched the menu. Do nothing here.
+          return;
+        }
+        handleCloseMenu();
+      };
+      window.addEventListener("keydown", windowListenerKey.current);
+      window.addEventListener("click", windowListenerMouse.current);
     },
-    [handleCloseMenu]
+    [handleCloseMenu, targetRef]
+  );
+
+  const handleOpen = useCallback<(options?: MenuOptions) => void>(
+    (options) => {
+      menuPositionRef.current = options?.dxPosition || "bottom-left";
+      openPortal();
+    },
+    [openPortal]
   );
 
   useImperativeHandle(ref, () => ({
-    handleOpen: () => {
-      console.log(targetRef.current);
-      openPortal();
-    },
+    handleOpen,
     handleClose: handleCloseMenu,
+    handleToggle: (options) => {
+      // this means that the popover is open
+      if (popoverRef.current) {
+        handleCloseMenu();
+        // popover doesn't exist, thus is closed
+      } else {
+        handleOpen(options);
+      }
+    },
   }));
 
   return (
     <Portal>
       <MenuProvider closeMenu={handleCloseMenu}>
-        <div {...restProps} className={clsx(className)} ref={initPopoverRef}>
+        <SArticle
+          {...restProps}
+          className={clsx(className)}
+          ref={initPopoverRef}
+        >
           {children}
-        </div>
+        </SArticle>
       </MenuProvider>
     </Portal>
   );
