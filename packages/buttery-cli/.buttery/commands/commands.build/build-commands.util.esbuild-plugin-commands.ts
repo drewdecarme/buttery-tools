@@ -7,7 +7,7 @@ import type { Plugin } from "esbuild";
 import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
-import type { CommandOptions } from "../../../lib";
+import type { CommandOptionType, CommandOptions } from "../../../lib";
 import { dynamicImport } from "../_utils/util.dyamic-import";
 import { LOG } from "../_utils/util.logger";
 import { getCommandFiles } from "./build-commands.get-command-files";
@@ -187,10 +187,12 @@ export class ESBuildPluginCommands {
       }
 
       // options
-      const commandOptions = props.options ?? ({} as CommandOptions<"">);
-      const commandOptionEntires = Object.entries(commandOptions);
+      const commandOptions = props.options ?? {};
+      const commandOptionEntires =
+        Object.entries<CommandOptionType>(commandOptions);
       for (const [flag, option] of commandOptionEntires) {
         switch (option.type) {
+          case "number":
           case "value": {
             this.appendToProgramString(`.option(
                   "-${option.alias}, --${flag} <value>",
@@ -209,7 +211,6 @@ export class ESBuildPluginCommands {
 
           default:
             exhaustiveMatchGuard(option);
-            break;
         }
       }
 

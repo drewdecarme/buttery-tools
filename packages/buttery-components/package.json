@@ -39,6 +39,8 @@
     "@babel/core": "^7.24.7",
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
+    "@buttery/core": "workspace:^",
+    "@buttery/docs": "workspace:^",
     "@chromatic-com/storybook": "^1.5.0",
     "@linaria/core": "^6.2.0",
     "@linaria/react": "^6.2.1",

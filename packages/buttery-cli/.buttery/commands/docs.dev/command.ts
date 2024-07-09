@@ -1,4 +1,8 @@
-import type { CommandAction, CommandMeta } from "../../../lib/types.js";
+import type {
+  CommandAction,
+  CommandMeta,
+  CommandOptions,
+} from "../../../lib/types.js";
 import { LOG_DOCS } from "../docs/docs.logger.js";
 
 import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig.js";
@@ -11,9 +15,23 @@ export const meta: CommandMeta = {
   description: "Run the development instance",
 };
 
-export const action: CommandAction = async () => {
+export const options: CommandOptions<{
+  "no-prompt": boolean;
+}> = {
+  "no-prompt": {
+    type: "boolean",
+    defaultValue: false,
+    alias: "np",
+    description:
+      "Disables CLI prompts if any configuration values are not expected / well formed.",
+  },
+};
+
+export const action: CommandAction<typeof options> = async ({ options }) => {
+  const prompt = !options?.["no-prompt"];
+
   try {
-    const config = await getButteryDocsConfig();
+    const config = await getButteryDocsConfig({ prompt });
     await prepareDevDirectory(config);
     await writeButteryDocsGraphDevData(config);
     const server = await createDevServer();

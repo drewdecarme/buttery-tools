@@ -3225,6 +3225,8 @@ __metadata:
     "@babel/core": "npm:^7.24.7"
     "@babel/preset-react": "npm:^7.24.7"
     "@babel/preset-typescript": "npm:^7.24.7"
+    "@buttery/core": "workspace:^"
+    "@buttery/docs": "workspace:^"
     "@buttery/icons": "workspace:^"
     "@buttery/utils": "workspace:^"
     "@chromatic-com/storybook": "npm:^1.5.0"

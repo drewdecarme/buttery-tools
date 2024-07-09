@@ -21,21 +21,50 @@ type CommandOptionShared = {
   description: string;
   required?: boolean;
 };
+
 type CommandOptionTypeValue = CommandOptionShared & {
   type: "value";
+  defaultValue?: string;
 };
+
 type CommandOptionTypeBoolean = CommandOptionShared & {
   type: "boolean";
-};
-type CommandOptionType = CommandOptionTypeValue | CommandOptionTypeBoolean;
-
-export type CommandOptions<T extends string> = {
-  [key in T]: CommandOptionType;
+  defaultValue?: boolean;
 };
 
-// @ts-ignore
-export type CommandAction<O extends CommandOptions = CommandOptions> =
-  (params: {
-    args: unknown;
-    options: { [key in keyof O]: string };
-  }) => Promise<void>;
+type CommandOptionTypeNumber = CommandOptionShared & {
+  type: "number";
+  defaultValue?: number;
+};
+
+export type CommandOptionType =
+  | CommandOptionTypeValue
+  | CommandOptionTypeBoolean
+  | CommandOptionTypeNumber;
+
+export type CommandOptions<
+  T extends Record<string, boolean | number | string>,
+> = {
+  [K in keyof T]: T[K] extends boolean
+    ? CommandOptionTypeBoolean
+    : T[K] extends number
+      ? CommandOptionTypeNumber
+      : T[K] extends string
+        ? CommandOptionTypeValue
+        : never;
+};
+
+type InferOptionType<T> = T extends { type: "boolean" }
+  ? boolean
+  : T extends { type: "number" }
+    ? number
+    : T extends { type: "value" }
+      ? string
+      : never;
+
+export type CommandAction<T> = (params: {
+  args: unknown;
+  options: {
+    [K in keyof T]: InferOptionType<T[K]>;
+  };
+}) => Promise<void>;

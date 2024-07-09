@@ -3,6 +3,9 @@
   "compilerOptions": {
     "noEmit": true,
     "baseUrl": ".",
+    "strict": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
     "paths": {
       "@buttery/tokens/playground/css": [
         "./artifacts/tokens/.buttery-tokens/playground/index.css"
