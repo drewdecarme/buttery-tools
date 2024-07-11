@@ -11,6 +11,8 @@ import {
 import { usePortal } from "../../hooks";
 import { MenuProvider } from "./Menu.context";
 import {
+  type MenuOptionArrow,
+  type MenuOptionOffset,
   type MenuOptionPosition,
   type MenuOptions,
   type MenuRef,
@@ -41,6 +43,11 @@ export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
   const windowListenerKey = useRef<((e: KeyboardEvent) => void) | null>(null);
   const windowListenerMouse = useRef<((e: MouseEvent) => void) | null>(null);
   const menuPositionRef = useRef<MenuOptionPosition>("bottom-left");
+  const arrowSizeRef = useRef<MenuOptionArrow>({
+    size: 16,
+    color: "transparent",
+  });
+  const offsetRef = useRef<MenuOptionOffset>(0);
 
   const handleCloseMenu = useCallback(async () => {
     if (!popoverRef.current) return;
@@ -73,7 +80,7 @@ export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
 
       if (!popoverRef.current || !targetRef.current) {
         console.warn(
-          "Popover or Target aren't defined. Cannot determine position of popover."
+          "Popover or target isn't defined. Cannot determine position of popover."
         );
         return;
       }
@@ -83,6 +90,8 @@ export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
 
       // position the article near the target
       setPopoverPositionStyles(menuPositionRef.current, {
+        arrow: arrowSizeRef.current,
+        offset: offsetRef.current,
         popoverNode: popoverRef.current,
         targetNode: targetRef.current,
       });
@@ -116,6 +125,11 @@ export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
   const handleOpen = useCallback<(options?: MenuOptions) => void>(
     (options) => {
       menuPositionRef.current = options?.dxPosition || "bottom-left";
+      arrowSizeRef.current = {
+        size: options?.dxArrow?.size ?? 16,
+        color: options?.dxArrow?.color ?? "transparent",
+      };
+      offsetRef.current = options?.dxOffset ?? 0;
       openPortal();
     },
     [openPortal]

@@ -1,18 +1,12 @@
 import { css } from "@linaria/core";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Menu } from "./Menu";
+import { Menu, MenuProps } from "./Menu";
 import { useMenu } from "./menu.useMenu";
-import type { MenuOptionPosition } from "./menu.utils";
-
-const meta: Meta = {
-  title: "Popovers / Menu",
-  parameters: {
-    layout: "centered",
-  },
-} satisfies Meta<typeof meta>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
+import type {
+  MenuOptionArrow,
+  MenuOptionPosition,
+  MenuOptions,
+} from "./menu.utils";
 
 const MenuCSS = css`
   border: 1px solid red;
@@ -58,16 +52,22 @@ function MenuExample({
   right,
   bottom,
   label,
+  arrow,
+  offset,
 }: {
   label: MenuOptionPosition;
   top?: number | string;
   left?: number | string;
   right?: number | string;
   bottom?: number | string;
+  arrow?: MenuOptionArrow;
+  offset?: number;
 }) {
   const { toggleMenu, targetRef, menuRef, closeMenu } =
     useMenu<HTMLButtonElement>({
       dxPosition: label,
+      dxArrow: arrow,
+      dxOffset: offset,
     });
   return (
     <>
@@ -119,26 +119,132 @@ function MenuExample({
     </>
   );
 }
-
-export const Basic = () => {
+type MenuGridProps = {
+  arrow?: MenuOptionArrow;
+  offset?: number;
+};
+function MenuGrid({ arrow, offset }: MenuGridProps) {
   return (
     <>
       {/* bottom */}
-      <MenuExample label="bottom-left" top={10} left={10} />
-      <MenuExample label="bottom-center" top={10} left="calc(50% - 50px)" />
-      <MenuExample label="bottom-right" top={10} right={10} />
+      <MenuExample
+        arrow={arrow}
+        offset={offset}
+        label="bottom-left"
+        top={10}
+        left={10}
+      />
+      <MenuExample
+        arrow={arrow}
+        offset={offset}
+        label="bottom-center"
+        top={10}
+        left="calc(50% - 50px)"
+      />
+      <MenuExample
+        arrow={arrow}
+        offset={offset}
+        label="bottom-right"
+        top={10}
+        right={10}
+      />
       {/* left */}
-      <MenuExample label="left-top" top={66} right={10} />
-      <MenuExample label="left-middle" top={"calc(50% - 22px)"} right={10} />
-      <MenuExample label="left-bottom" bottom={66} right={10} />
+      <MenuExample
+        arrow={arrow}
+        offset={offset}
+        label="left-top"
+        top={66}
+        right={10}
+      />
+      <MenuExample
+        arrow={arrow}
+        offset={offset}
+        label="left-middle"
+        top={"calc(50% - 22px)"}
+        right={10}
+      />
+      <MenuExample
+        arrow={arrow}
+        offset={offset}
+        label="left-bottom"
+        bottom={66}
+        right={10}
+      />
       {/* top */}
-      <MenuExample label="top-right" bottom={10} right={10} />
-      <MenuExample label="top-center" bottom={10} left="calc(50% - 50px)" />
-      <MenuExample label="top-left" bottom={10} left={10} />
+      <MenuExample
+        arrow={arrow}
+        offset={offset}
+        label="top-right"
+        bottom={10}
+        right={10}
+      />
+      <MenuExample
+        arrow={arrow}
+        offset={offset}
+        label="top-center"
+        bottom={10}
+        left="calc(50% - 50px)"
+      />
+      <MenuExample
+        arrow={arrow}
+        offset={offset}
+        label="top-left"
+        bottom={10}
+        left={10}
+      />
       {/* right */}
-      <MenuExample label="right-bottom" bottom={66} left={10} />
-      <MenuExample label="right-middle" top={"calc(50% - 22px)"} left={10} />
-      <MenuExample label="right-top" top={66} left={10} />
+      <MenuExample
+        arrow={arrow}
+        offset={offset}
+        label="right-bottom"
+        bottom={66}
+        left={10}
+      />
+      <MenuExample
+        arrow={arrow}
+        offset={offset}
+        label="right-middle"
+        top={"calc(50% - 22px)"}
+        left={10}
+      />
+      <MenuExample
+        arrow={arrow}
+        offset={offset}
+        label="right-top"
+        top={66}
+        left={10}
+      />
     </>
   );
+}
+
+const meta: Meta = {
+  // @ts-ignore
+  component: MenuGrid,
+  title: "Popovers / Menu",
+  parameters: {
+    layout: "centered",
+  },
+} satisfies Meta<typeof meta>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Basic: Story = {
+  args: {} as MenuGridProps,
+};
+
+export const WithOffset: Story = {
+  args: {
+    offset: 16,
+  } as MenuGridProps,
+};
+
+export const WithArrow: Story = {
+  args: {
+    arrow: {
+      size: 24,
+      color: "green",
+    },
+  } as MenuGridProps,
 };
