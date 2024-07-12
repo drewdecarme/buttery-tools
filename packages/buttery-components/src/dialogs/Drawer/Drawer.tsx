@@ -1,6 +1,6 @@
 import { type ForwardedRef, type ReactNode, forwardRef } from "react";
 
-import clsx from "clsx";
+import { classes } from "../../utils";
 import { DialogProvider } from "../Dialog.context";
 import {
   type DialogDefaultState,
@@ -44,7 +44,7 @@ export const Drawer = forwardRef(function Drawer<T extends DialogDefaultState>(
       <DialogProvider initialState={dialogState} closeDialog={closeDialog}>
         <dialog
           ref={dialogRef}
-          className={clsx("drawer", styles, dxOrientation, className)}
+          className={classes("drawer", styles, dxOrientation, className)}
         >
           {children}
         </dialog>

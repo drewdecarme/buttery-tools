@@ -1,23 +1,35 @@
 import { css } from "@linaria/core";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Menu, MenuProps } from "./Menu";
+import { Menu } from "./Menu";
 import { useMenu } from "./menu.useMenu";
-import type {
-  MenuOptionArrow,
-  MenuOptionPosition,
-  MenuOptions,
-} from "./menu.utils";
+import type { MenuOptionArrow, MenuOptionPosition } from "./menu.utils";
 
 const MenuCSS = css`
-  border: 1px solid red;
   opacity: 0;
+  border: none;
   transform: scale(0.9);
+  filter: drop-shadow(3px 8px 28px rgba(130, 130, 130, 0.3));
+  border-radius: 0.5rem;
+
+  header {
+    padding: 1rem;
+    h1,
+    h2 {
+      margin: 0;
+    }
+  }
+  & > div {
+    padding: 0 1rem;
+  }
+  footer {
+    padding: 1rem;
+  }
 
   /* Animation for appearing */
   @keyframes appear {
     from {
       opacity: 0;
-      transform: scale(0.8);
+      transform: scale(0.9);
     }
     to {
       opacity: 1;
@@ -33,7 +45,7 @@ const MenuCSS = css`
     }
     to {
       opacity: 0;
-      transform: scale(0.8);
+      transform: scale(0.9);
     }
   }
 
@@ -243,8 +255,8 @@ export const WithOffset: Story = {
 export const WithArrow: Story = {
   args: {
     arrow: {
-      size: 24,
-      color: "green",
+      size: 16,
+      color: "white",
     },
   } as MenuGridProps,
 };

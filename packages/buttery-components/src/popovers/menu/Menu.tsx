@@ -1,14 +1,13 @@
 import { styled } from "@linaria/react";
-import { clsx } from "clsx";
 import {
   type RefCallback,
   forwardRef,
   useCallback,
   useImperativeHandle,
   useRef,
-  useState,
 } from "react";
 import { usePortal } from "../../hooks";
+import { classes } from "../../utils";
 import { MenuProvider } from "./Menu.context";
 import {
   type MenuOptionArrow,
@@ -154,7 +153,7 @@ export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
       <MenuProvider closeMenu={handleCloseMenu}>
         <SArticle
           {...restProps}
-          className={clsx(className)}
+          className={classes(className)}
           ref={initPopoverRef}
         >
           {children}

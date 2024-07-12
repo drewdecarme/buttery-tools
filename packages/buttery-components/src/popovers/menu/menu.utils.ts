@@ -299,16 +299,17 @@ function calculateArrowPosition(
   // calculate left
   let arrowLeft = "";
   let arrowTop = "";
+  const adjustmentFactor = 0.15;
   if (resolvedPosition.startsWith("bottom")) {
     const top = arrow * -1;
     const left = relativeTargetOffsetLeftToPopover + offsetLeftCenterTarget;
-    arrowTop = `${top}px`;
+    arrowTop = `${top - top * adjustmentFactor}px`;
     arrowLeft = `${left}px`;
   }
 
   if (resolvedPosition.startsWith("top")) {
     const left = relativeTargetOffsetLeftToPopover + offsetLeftCenterTarget;
-    arrowTop = "100%";
+    arrowTop = `calc(100% - ${arrow * adjustmentFactor}px)`;
     arrowLeft = `${left}px`;
   }
 
@@ -316,13 +317,13 @@ function calculateArrowPosition(
     const top = relativeTargetOffsetTopToPopover + offsetTopCenterTarget;
     const left = arrow * -1;
     arrowTop = `${top}px`;
-    arrowLeft = `${left}px`;
+    arrowLeft = `${left - left * adjustmentFactor}px`;
   }
 
   if (resolvedPosition.startsWith("left")) {
     const top = relativeTargetOffsetTopToPopover + offsetTopCenterTarget;
     arrowTop = `${top}px`;
-    arrowLeft = "100%";
+    arrowLeft = `calc(100% - ${arrow * adjustmentFactor}px)`;
   }
 
   return { arrowTop, arrowLeft };
