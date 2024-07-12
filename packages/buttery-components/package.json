@@ -28,8 +28,6 @@
     "upgrade-storybook": "npx storybook@next upgrade --prerelease"
   },
   "dependencies": {
-    "@buttery/icons": "workspace:^",
-    "@buttery/utils": "workspace:^",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -39,9 +37,9 @@
     "@babel/preset-typescript": "^7.24.7",
     "@buttery/core": "workspace:^",
     "@buttery/docs": "workspace:^",
+    "@buttery/icons": "workspace:^",
     "@chromatic-com/storybook": "^1.6.1",
     "@linaria/core": "^6.2.0",
-    "@linaria/react": "^6.2.1",
     "@ngneat/falso": "^7.2.0",
     "@storybook/addon-essentials": "^8.2.1",
     "@storybook/addon-interactions": "^8.2.1",

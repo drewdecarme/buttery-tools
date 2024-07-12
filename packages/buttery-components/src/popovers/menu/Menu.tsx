@@ -1,4 +1,4 @@
-import { styled } from "@linaria/react";
+import { css } from "@linaria/core";
 import {
   type RefCallback,
   forwardRef,
@@ -24,7 +24,7 @@ export type MenuPropsCustom = {
 };
 export type MenuProps = MenuPropsNative & MenuPropsCustom;
 
-const SArticle = styled("article")`
+const articleCSS = css`
   position: fixed;
 
   &:popover-open {
@@ -151,13 +151,13 @@ export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
   return (
     <Portal>
       <MenuProvider closeMenu={handleCloseMenu}>
-        <SArticle
+        <article
           {...restProps}
-          className={classes(className)}
+          className={classes(articleCSS, className)}
           ref={initPopoverRef}
         >
           {children}
-        </SArticle>
+        </article>
       </MenuProvider>
     </Portal>
   );

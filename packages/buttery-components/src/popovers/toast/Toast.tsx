@@ -1,4 +1,4 @@
-import { styled } from "@linaria/react";
+import { css } from "@linaria/core";
 import {
   type FC,
   type ReactNode,
@@ -6,12 +6,13 @@ import {
   useCallback,
   useEffect,
 } from "react";
+import { classes } from "../../utils";
 
 export type ToastProps = {
   id: string;
 };
 
-const SDiv = styled("div")`
+const divCSS = css`
   opacity: 0;
   transition: all 0.15s ease-in-out;
   padding: 0;
@@ -59,8 +60,8 @@ export const Toast: FC<
   }, []);
 
   return (
-    <SDiv ref={ref} className="toast" id={id}>
+    <div ref={ref} className={classes("toast", divCSS)} id={id}>
       {children}
-    </SDiv>
+    </div>
   );
 };

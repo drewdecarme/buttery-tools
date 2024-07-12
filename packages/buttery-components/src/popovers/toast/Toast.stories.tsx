@@ -1,8 +1,9 @@
 import { randParagraph } from "@ngneat/falso";
 import type { Meta } from "@storybook/react";
 
-import { styled } from "@linaria/react";
+import { css } from "@linaria/core";
 import type { FC } from "react";
+import { classes } from "../../utils";
 import { Toaster } from "./Toaster";
 import { useToast } from "./toast.useToast";
 
@@ -12,7 +13,7 @@ const meta: Meta = {
 
 export default meta;
 
-const SDiv = styled("div")`
+const divCSS = css`
   width: 400px;
   padding: 16px;
   border-radius: 8px;
@@ -32,7 +33,7 @@ type SampleToastProps = {
 };
 
 const ToastComponent: FC<SampleToastProps> = (props) => {
-  return <SDiv className={props.variant}>{props.message}</SDiv>;
+  return <div className={classes(divCSS, props.variant)}>{props.message}</div>;
 };
 
 export const Example = () => {

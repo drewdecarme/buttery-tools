@@ -1,6 +1,7 @@
-import { styled } from "@linaria/react";
-import type { FC, MouseEventHandler, ReactElement, RefCallback } from "react";
-import React, { useCallback, useRef } from "react";
+import { css } from "@linaria/core";
+import type { FC, ReactElement } from "react";
+import React from "react";
+import { classes } from "../../utils";
 import { usePopover } from "../popover.usePopover";
 
 type TooltipSharedProps = Pick<
@@ -40,7 +41,7 @@ type TooltipCustomProps =
     };
 export type TooltipProps = TooltipSharedProps & TooltipCustomProps;
 
-const SDiv = styled("div")`
+const divCSS = css`
   &:popover-open {
     inset: unset;
     border: 0;
@@ -67,15 +68,15 @@ export const Tooltip: FC<TooltipProps> = ({
             "aria-labelledby": restProps.dxId,
             ...handlers,
           })}
-          <SDiv
+          <div
             role="tooltip"
             id={restProps.dxId}
             ref={popoverRef}
             style={style}
-            className={className}
+            className={classes(divCSS, className)}
           >
             {restProps.dxLabel}
-          </SDiv>
+          </div>
         </>
       );
 
