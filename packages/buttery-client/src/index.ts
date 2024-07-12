@@ -6,9 +6,9 @@ export type ButteryClientConstructorParams = {
   hostname?: string;
   baseRoute: string;
 };
-type ButteryClientMethodPostOptions = {
+type ButteryClientMethodPostOptions<T extends Record<string, unknown>> = {
   type: "json";
-  body: Record<string, unknown>;
+  body: T;
 };
 //   | { type: "multipart/form-data" };
 
@@ -90,8 +90,17 @@ export class ButteryClientBranch {
     }
   }
 
-  async post(route: string, options: ButteryClientMethodPostOptions) {
+  async post<PostResponse, PostRequest extends Record<string, unknown>>(
+    route: string,
+    options: ButteryClientMethodPostOptions<PostRequest>
+  ) {
     const url = this.getFullRoute(route);
-    return this.client.post(url, options);
+    try {
+      const res = await this.client.post(url, options);
+      const json = await res.json();
+      return json as PostResponse;
+    } catch (error) {
+      throw new Error(error as string);
+    }
   }
 }

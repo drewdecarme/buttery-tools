@@ -1,5 +1,10 @@
 import type { GetConfigHistoryApiResponse } from "artifacts/tokens/playground/server";
-import { useEffect, useState } from "react";
+import {
+  type MouseEventHandler,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { apiClient } from "../../api";
 import {
   Drawer,
@@ -7,6 +12,7 @@ import {
   DrawerHeader,
   useDrawer,
 } from "../../components/dialog";
+import { useToast } from "../../components/toast";
 import {
   VersionHistory,
   VersionHistoryList,
@@ -17,16 +23,28 @@ import { ActionBarButton } from "./ActionBarButton";
 export function ActionBarActionVersionHistory() {
   const { openDrawer, drawerRef } = useDrawer();
   const [history, setHistory] = useState<GetConfigHistoryApiResponse>([]);
+  const { create } = useToast();
+
+  const getHistory = useCallback<() => Promise<void>>(async () => {
+    try {
+      const res = await apiClient.config.getConfigHistory();
+      setHistory(res.reverse());
+    } catch (error) {
+      create({
+        message: "There was an error when trying to fetch the version history.",
+        variant: "error",
+      });
+    }
+  }, [create]);
+
+  const handleOpenDrawer = useCallback(async () => {
+    await getHistory();
+    openDrawer(undefined);
+  }, [openDrawer, getHistory]);
 
   useEffect(() => {
-    async function getHistory() {
-      try {
-        const history = await apiClient.config.getConfigHistory();
-        setHistory(history.reverse());
-      } catch (error) {}
-    }
     getHistory();
-  }, []);
+  }, [getHistory]);
 
   return (
     <>
@@ -39,6 +57,7 @@ export function ActionBarActionVersionHistory() {
                 <VersionHistoryListItem
                   key={entry.date}
                   dxDate={entry.date}
+                  dxTitle={entry.title}
                   data-index={history.length - (i + 1)}
                 />
               ))}
@@ -48,7 +67,7 @@ export function ActionBarActionVersionHistory() {
       </Drawer>
       <ActionBarButton
         type="button"
-        onClick={openDrawer}
+        onClick={handleOpenDrawer}
         dxVariant="secondary"
         dxIcon="clock-rewine"
       >

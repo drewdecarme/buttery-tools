@@ -13,6 +13,9 @@ export type DrawerProps = ButteryDrawerProps & {
 };
 
 const styles = css`
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
   &.right-to-left {
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;

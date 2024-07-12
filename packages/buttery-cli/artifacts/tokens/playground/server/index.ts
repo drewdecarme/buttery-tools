@@ -1,5 +1,6 @@
 import { readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import type { ButteryConfigTokens } from "@buttery/core";
 import bodyParser from "body-parser";
 import express, { type Request, type Response } from "express";
 
@@ -17,6 +18,32 @@ app.use(bodyParser.json());
 const apiRouter = express.Router();
 const configRouter = express.Router();
 
+const filenameDelimiter = "__";
+const encodeTitle = (title: string) => title.replace(/\s+/g, "-");
+const decodeTitle = (title: string) => title.replace(/-/g, " ");
+const parseConfigFilename = (filename: string) => {
+  const filenameWithoutExt = filename.split(".json")[0];
+  const segments = filenameWithoutExt.split(filenameDelimiter);
+
+  const timestampRaw = segments[0];
+  const timestamp = new Date(Number(timestampRaw)).toISOString();
+
+  const titleRaw = segments[1];
+  const title = decodeTitle(titleRaw);
+  return {
+    title,
+    timestamp,
+  };
+};
+
+type ConfigAndProperties = {
+  filename: string;
+  title: string;
+  date: string | null;
+  isOriginal: boolean;
+};
+
+export type GetConfigApiResponse = ConfigAndProperties;
 configRouter.route("/").get(async (_request, response, next) => {
   try {
     const configPath = path.resolve(configDir, "./config.json");
@@ -28,57 +55,74 @@ configRouter.route("/").get(async (_request, response, next) => {
   }
 });
 
-export type GetConfigHistoryApiResponse = {
-  filename: string;
-  date: string | null;
-  isOriginal: boolean;
-}[];
+export type GetConfigHistoryApiResponse = ConfigAndProperties[];
 configRouter.route("/history").get(async (_request, response, next) => {
   try {
     const files = await readdir(configDir);
-    const parsedFiles = files.map<GetConfigHistoryApiResponse[0]>((file) => {
+    const parsedFiles = files.reduce<ConfigAndProperties[]>((accum, file) => {
       try {
-        const timestamp = file.split("-")[1].split(".")[0];
-        const date = new Date(Number(timestamp));
-        return {
+        const { timestamp, title } = parseConfigFilename(file);
+        return accum.concat({
           filename: file,
-          date: date.toISOString(),
+          title: title,
+          date: timestamp,
           isOriginal: false,
-        };
+        });
       } catch (error) {
-        return {
-          filename: file,
-          date: null,
-          isOriginal: true,
-        };
+        return [
+          {
+            filename: file,
+            title: "Original",
+            date: null,
+            isOriginal: true,
+          },
+          // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
+          ...accum,
+        ];
       }
-    });
+    }, []);
     return response.json(parsedFiles);
   } catch (error) {
     next(error);
   }
 });
 
+export type PostConfigApiResponse = ConfigAndProperties;
+export type PostConfigApiRequest = {
+  title: string;
+  config: ButteryConfigTokens;
+};
 configRouter.route("/").post(async (request, response, next) => {
   try {
     const timestamp = new Date().getTime();
-    const configPath = path.resolve(configDir, `./config-${timestamp}.json`);
+    const title = encodeTitle(request.body.title);
+    const configPath = path.resolve(
+      configDir,
+      `./${timestamp}${filenameDelimiter}${title}.json`
+    );
     const writeSaveFile = writeFile(
       saveFile,
       `import type { ButteryConfigTokens } from "@buttery/core";
 export const tokens: ButteryConfigTokens = ${JSON.stringify(
-        request.body,
+        request.body.config,
         null,
         2
       )};
 `
     );
+
     const writeHistoryFile = writeFile(
       configPath,
-      JSON.stringify(request.body, null, 2)
+      JSON.stringify(request.body.config, null, 2)
     );
     await Promise.all([writeHistoryFile, writeSaveFile]);
-    return response.json(request.body);
+    const resPayload: PostConfigApiResponse = {
+      date: new Date(timestamp).toISOString(),
+      title: decodeTitle(title),
+      isOriginal: false,
+      filename: configPath,
+    };
+    return response.json(resPayload);
   } catch (error) {
     next(error);
   }

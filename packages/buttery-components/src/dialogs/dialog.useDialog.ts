@@ -15,10 +15,7 @@ export type DialogDefaultState = Record<string, unknown>;
 
 export type DialogRef<T extends DialogDefaultState = DialogDefaultState> = {
   handleOpen: (
-    e:
-      | React.MouseEvent<HTMLElement>
-      | React.FocusEvent<HTMLElement>
-      | undefined,
+    e: React.MouseEvent<HTMLElement> | undefined,
     initialData?: T
   ) => void;
   handleClose: () => void;

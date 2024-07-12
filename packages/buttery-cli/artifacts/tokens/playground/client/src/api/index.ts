@@ -4,15 +4,26 @@ import {
   type ButteryClientConstructorParams,
 } from "@buttery/client";
 import type { ButteryConfigTokens } from "@buttery/core";
-import type { GetConfigHistoryApiResponse } from "artifacts/tokens/playground/server";
+import type {
+  GetConfigHistoryApiResponse,
+  PostConfigApiRequest,
+  PostConfigApiResponse,
+} from "artifacts/tokens/playground/server";
 
 class ApiClientConfig extends ButteryClientBranch {
   /**
    * Creates a new version of the buttery config
    * to the file system with a timestamp
    */
-  async saveConfig(tokensConfig: ButteryConfigTokens) {
-    this.post("", { type: "json", body: tokensConfig });
+  async saveConfig(body: PostConfigApiRequest) {
+    const res = await this.post<PostConfigApiResponse, PostConfigApiRequest>(
+      "",
+      {
+        type: "json",
+        body,
+      }
+    );
+    return res;
   }
 
   /**

@@ -4,7 +4,14 @@ import { type FormEventHandler, forwardRef, useCallback } from "react";
 import { useFetcher } from "react-router-dom";
 import { apiClient } from "../../api";
 import { Button } from "../../components/buttons";
-import { Menu, MenuFooter, MenuHeader, useMenu } from "../../components/menu";
+import { InputText } from "../../components/inputs";
+import {
+  Menu,
+  MenuBody,
+  MenuFooter,
+  MenuHeader,
+  useMenu,
+} from "../../components/menu";
 import { useToast } from "../../components/toast";
 import { useConfigContext } from "../config";
 import { ActionBarButton } from "./ActionBarButton";
@@ -31,30 +38,32 @@ export const ActionBarActionSave = forwardRef<
   const fetcher = useFetcher();
   const { create } = useToast();
 
-  const handleSubmit = useCallback<
-    FormEventHandler<HTMLFormElement>
-  >(async () => {
-    try {
-      await apiClient.config.saveConfig(liveConfig);
-      create({
-        message: "Configuration successfully saved!",
-        variant: "success",
-      });
-    } catch (error) {
-      create({
-        message: "There was an error when trying to save the config",
-        variant: "error",
-      });
-    }
-  }, [liveConfig, create]);
+  const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
+    async (e) => {
+      try {
+        closeMenu();
+        const formData = new FormData(e.currentTarget);
+        const title = formData.get("version-name") as string;
+        const res = await apiClient.config.saveConfig({
+          title,
+          config: liveConfig,
+        });
+        create({
+          message: `Successfully saved version: "${res.title}"!`,
+          variant: "success",
+        });
+      } catch (error) {
+        create({
+          message: "There was an error when trying to save the config",
+          variant: "error",
+        });
+      }
+    },
+    [liveConfig, create, closeMenu]
+  );
 
   return (
-    <fetcher.Form
-      onSubmit={handleSubmit}
-      {...restProps}
-      className={clsx(className)}
-      ref={ref}
-    >
+    <>
       <ActionBarButton
         type="button"
         ref={targetRef}
@@ -71,36 +80,40 @@ export const ActionBarActionSave = forwardRef<
           width: makeRem(300),
         }}
       >
-        <MenuHeader>
-          <h2>Save a version</h2>
-        </MenuHeader>
-        <div>
-          <label>
-            Describe the changes in this version
-            <input type="text" name="version-name" />
-          </label>
-        </div>
-
-        <MenuFooter>
-          <Button
-            type="button"
-            onClick={closeMenu}
-            dxVariant="text"
-            dxSize="sm"
-          >
-            Close
-          </Button>
-          <Button
-            type="submit"
-            name="intent"
-            value="save"
-            dxVariant="primary"
-            dxSize="sm"
-          >
-            Save
-          </Button>
-        </MenuFooter>
+        <fetcher.Form
+          onSubmit={handleSubmit}
+          {...restProps}
+          className={clsx(className)}
+          ref={ref}
+        >
+          <MenuHeader>
+            <h2>Save a version</h2>
+          </MenuHeader>
+          <MenuBody>
+            <InputText
+              dxSize="sm"
+              dxLabel="Describe the changes in this version"
+              name="version-name"
+              pattern="[a-zA-Z0-9\s]*"
+              title="Please enter only letters, numbers, and spaces."
+              required
+            />
+          </MenuBody>
+          <MenuFooter>
+            <Button
+              type="button"
+              dxVariant="text"
+              dxSize="sm"
+              onClick={closeMenu}
+            >
+              Close
+            </Button>
+            <Button type="submit" dxVariant="primary" dxSize="sm">
+              Save
+            </Button>
+          </MenuFooter>
+        </fetcher.Form>
       </Menu>
-    </fetcher.Form>
+    </>
   );
 });

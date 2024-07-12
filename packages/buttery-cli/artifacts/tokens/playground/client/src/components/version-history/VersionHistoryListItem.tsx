@@ -1,4 +1,9 @@
-import { makeColor, makeFontFamily, makeRem } from "@buttery/tokens/playground";
+import {
+  makeColor,
+  makeFontFamily,
+  makeFontWeight,
+  makeRem,
+} from "@buttery/tokens/playground";
 import { styled } from "@linaria/react";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
@@ -7,6 +12,7 @@ import { dateify } from "../../utils";
 export type VersionHistoryListItemPropsNative = JSX.IntrinsicElements["li"];
 export type VersionHistoryListItemPropsCustom = {
   dxDate: string | null;
+  dxTitle: string;
 };
 export type VersionHistoryListItemProps = VersionHistoryListItemPropsNative &
   VersionHistoryListItemPropsCustom;
@@ -15,12 +21,17 @@ const SLi = styled("li")`
   position: relative;
 
   && {
-    height: ${makeRem(72)};
-    padding-left: ${makeRem(40)};
+    height: ${makeRem(92)};
+    padding-left: ${makeRem(48)};
     font-family: ${makeFontFamily("body")};
     font-size: ${makeRem(14)};
     display: flex;
     align-items: center;
+  }
+
+  .title {
+    font-size: ${makeRem(16)};
+    font-weight: ${makeFontWeight("semi-bold")};
   }
 
   &::before {
@@ -55,13 +66,18 @@ export const VersionHistoryListItem = forwardRef<
   HTMLLIElement,
   VersionHistoryListItemProps
 >(function VersionHistoryListItem(
-  { children, className, dxDate, ...restProps },
+  { children, className, dxDate, dxTitle, ...restProps },
   ref
 ) {
   return (
     <SLi {...restProps} className={clsx(className)} ref={ref}>
-      {dateify.format(dxDate ?? undefined, { format: "6/17/20 9:42 AM" })}
-      {children}
+      <div>
+        <div className="title">{dxTitle}</div>
+        <div>
+          {dateify.format(dxDate ?? undefined, { format: "6/17/20 9:42 AM" })}
+        </div>
+        {children}
+      </div>
     </SLi>
   );
 });

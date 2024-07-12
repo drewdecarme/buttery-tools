@@ -19,20 +19,6 @@ const menuCSS = css`
   filter: drop-shadow(3px 8px 28px rgba(130, 130, 130, 0.3));
   border-radius: 0.5rem;
 
-  header {
-    padding: 1rem;
-    h1,
-    h2 {
-      margin: 0;
-    }
-  }
-  & > div {
-    padding: 0 1rem;
-  }
-  footer {
-    padding: 1rem;
-  }
-
   /* Animation for appearing */
   @keyframes appear {
     from {
@@ -82,10 +68,11 @@ export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
 });
 
 export const MenuHeader = styled("header")`
+  padding: 1rem;
   h1,
   h2,
   h3 {
-    font-weight: ${makeFontWeight("semi-bold")};
+    font-weight: ${makeFontWeight("regular")};
     margin: 0;
     font-size: ${makeRem(16)};
   }
@@ -95,4 +82,9 @@ export const MenuFooter = styled("footer")`
   display: flex;
   justify-content: flex-end;
   gap: ${makeRem(16)};
+  padding: 1rem;
+`;
+
+export const MenuBody = styled("div")`
+  padding: 0 1rem;
 `;
