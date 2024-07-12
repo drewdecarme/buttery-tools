@@ -1,8 +1,8 @@
 import { css } from "@linaria/core";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Menu } from "./Menu";
+import type { MenuOptionArrow, MenuOptionPosition } from "./menu.types";
 import { useMenu } from "./menu.useMenu";
-import type { MenuOptionArrow, MenuOptionPosition } from "./menu.utils";
 
 const MenuCSS = css`
   opacity: 0;

@@ -9,14 +9,14 @@ import {
 import { usePortal } from "../../hooks";
 import { classes } from "../../utils";
 import { MenuProvider } from "./Menu.context";
-import {
-  type MenuOptionArrow,
-  type MenuOptionOffset,
-  type MenuOptionPosition,
-  type MenuOptions,
-  type MenuRef,
-  setPopoverPositionStyles,
-} from "./menu.utils";
+import type {
+  MenuOptionArrow,
+  MenuOptionOffset,
+  MenuOptionPosition,
+  MenuOptions,
+  MenuRef,
+} from "./menu.types";
+import { setPopoverPositionStyles } from "./menu.utils";
 
 export type MenuPropsNative = JSX.IntrinsicElements["div"];
 export type MenuPropsCustom = {

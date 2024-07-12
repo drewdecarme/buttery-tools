@@ -9,7 +9,7 @@ import {
 import { Layout } from "../components/layout/Layout";
 import { LayoutMain } from "../components/layout/LayoutMain";
 import { LayoutMainContent } from "../components/layout/LayoutMainContent";
-import { LayoutMainContentActions } from "../components/layout/LayoutMainContentActions";
+import { LayoutMainTools } from "../components/layout/LayoutMainTools";
 import { LayoutNav } from "../components/layout/LayoutNav";
 import { LayoutPane } from "../components/layout/LayoutPane";
 import { Toaster } from "../components/toast";
@@ -45,11 +45,10 @@ export default function Root() {
           <Outlet />
         </LayoutPane>
         <LayoutMain>
-          <LayoutMainContent>
-            <LayoutMainContentActions>
-              <ActionBar />
-            </LayoutMainContentActions>
-          </LayoutMainContent>
+          <LayoutMainTools>
+            <ActionBar />
+          </LayoutMainTools>
+          <LayoutMainContent>hello</LayoutMainContent>
         </LayoutMain>
       </ConfigProvider>
       <ScrollRestoration />

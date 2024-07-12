@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef } from "react";
-import type { MenuOptions, MenuRef } from "./menu.utils";
+import type { MenuOptions, MenuRef } from "./menu.types";
 
 export const useMenu = <T extends HTMLElement = HTMLElement>(
   options?: MenuOptions

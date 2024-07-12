@@ -1,4 +1,3 @@
-import { IconComponent } from "@buttery/icons";
 import type { GetConfigHistoryApiResponse } from "artifacts/tokens/playground/server";
 import { useEffect, useState } from "react";
 import { apiClient } from "../../api";
@@ -15,7 +14,7 @@ import {
 } from "../../components/version-history";
 import { ActionBarButton } from "./ActionBarButton";
 
-export function ActionBarVersionHistory() {
+export function ActionBarActionVersionHistory() {
   const { openDrawer, drawerRef } = useDrawer();
   const [history, setHistory] = useState<GetConfigHistoryApiResponse>([]);
 
@@ -47,8 +46,13 @@ export function ActionBarVersionHistory() {
           </VersionHistory>
         </DrawerBody>
       </Drawer>
-      <ActionBarButton type="button" onClick={openDrawer}>
-        <IconComponent icon="clock-rewine" />
+      <ActionBarButton
+        type="button"
+        onClick={openDrawer}
+        dxVariant="secondary"
+        dxIcon="clock-rewine"
+      >
+        Version History
       </ActionBarButton>
     </>
   );
