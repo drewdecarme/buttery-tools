@@ -2,7 +2,6 @@ import { classes } from "@buttery/components";
 
 import {
   makeColor,
-  makeColorStatic,
   makeFontFamily,
   makeRem,
   makeReset,

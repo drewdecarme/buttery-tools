@@ -1,10 +1,5 @@
 import type { GetConfigHistoryApiResponse } from "artifacts/tokens/playground/server";
-import {
-  type MouseEventHandler,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { useCallback, useEffect, useState } from "react";
 import { apiClient } from "../../api";
 import {
   Drawer,
