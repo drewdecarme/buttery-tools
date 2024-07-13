@@ -77,8 +77,7 @@ const SNav = styled("nav")`
 
         &.active {
           color: ${makeColor("neutral")};
-          background: ${makeColor("primary", { variant: "50" })};
-          color: ${makeColor("neutral")};
+          background: ${makeColor("primary")};
         }
       }
     }

@@ -34,7 +34,7 @@ export const ConfigTokensPlayground: ButteryConfigTokens = {
     brightness: 90,
     application: {
       hues: {
-        primary: 42,
+        primary: 47,
         secondary: 170,
         warning: 60,
         danger: 359,

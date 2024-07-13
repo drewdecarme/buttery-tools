@@ -16,7 +16,7 @@ export type TabLabelIndicatorProps = TabLabelIndicatorPropsNative;
 const SDiv = styled("div")`
   position: absolute;
   border-radius: ${makeRem(4)};
-  background: ${makeColor("primary", { variant: "200" })};
+  background: ${makeColor("primary")};
   transition: left 0.25s;
 `;
 

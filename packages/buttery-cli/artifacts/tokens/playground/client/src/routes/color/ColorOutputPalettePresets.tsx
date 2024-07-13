@@ -2,10 +2,10 @@ import type { ButteryTokensColorPresets } from "@buttery/core";
 import { makeRem } from "@buttery/tokens/playground";
 import { styled } from "@linaria/react";
 import type { FC } from "react";
+import { hsbToHex } from ".buttery/commands/tokens.build/utils/util.color-conversions";
+import { createColorVariants } from ".buttery/commands/tokens.build/utils/util.create-color-variants";
 
 import { match } from "ts-pattern";
-import { hsbToHex } from "../../../../../.buttery/commands/tokens/utils/util.color-conversions";
-import { createColorVariants } from "../../../../../.buttery/commands/tokens/utils/util.create-color-variants";
 
 const ColorContainer = styled("div")`
   display: flex;
@@ -30,6 +30,8 @@ const ColorVariants = styled("div")`
 
   & > * {
     height: ${makeRem(48)};
+    display: grid;
+    place-content: center;
     flex: 1;
   }
 `;
@@ -38,7 +40,7 @@ const ColorDescription = styled("div")`
   grid-area: description;
 `;
 
-export const ColorPalettePresets: FC<ButteryTokensColorPresets> = ({
+export const ColorOutputPalettePresets: FC<ButteryTokensColorPresets> = ({
   saturation,
   brightness,
   application,
@@ -46,9 +48,16 @@ export const ColorPalettePresets: FC<ButteryTokensColorPresets> = ({
 }) => {
   return (
     <>
-      <h3>{"colors (from picker)"}</h3>
+      <h3>Application Colors</h3>
+      <p style={{ maxWidth: "60ch" }}>
+        These are the dynamic colors in your application. These colors can
+        typically include colors that link the app to your brand, status colors
+        such as success and error, as well as any neutral colors to illustrate
+        color balance and depth.
+      </p>
       {Object.entries(application.hues).map(([hue, hueValue]) => {
         const colorHex = hsbToHex(hueValue, saturation, brightness);
+
         return (
           <ColorContainer key={`color-${hue}`}>
             <ColorDescription>{hue}</ColorDescription>
@@ -68,15 +77,19 @@ export const ColorPalettePresets: FC<ButteryTokensColorPresets> = ({
                       max: Number(application.variants.scaleMax),
                     }
                   );
-                  return variants.map((variant, i) => (
-                    <div
-                      key={`color-${hue}-variant-${i.toString()}`}
-                      style={{
-                        gridArea: `v${i}`,
-                        backgroundColor: variant,
-                      }}
-                    />
-                  ));
+                  return variants.map(({ name, value }, i) => {
+                    return (
+                      <div
+                        key={`color-${hue}-variant-${i.toString()}`}
+                        style={{
+                          gridArea: `v${i}`,
+                          backgroundColor: value,
+                        }}
+                      >
+                        {name}
+                      </div>
+                    );
+                  });
                 })
                 // TODO: Build out the manual variants
                 .with({ mode: "manual" }, (variantConfig) => {

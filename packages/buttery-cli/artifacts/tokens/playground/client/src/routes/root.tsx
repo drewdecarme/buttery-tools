@@ -15,6 +15,7 @@ import { LayoutPane } from "../components/layout/LayoutPane";
 import { Toaster } from "../components/toast";
 import { ActionBar } from "../features/action-bar";
 import { ConfigProvider } from "../features/config/Config.context";
+import { Output } from "../features/output";
 
 export default function Root() {
   const config = useLoaderData() as ButteryConfigTokens;
@@ -48,7 +49,9 @@ export default function Root() {
           <LayoutMainTools>
             <ActionBar />
           </LayoutMainTools>
-          <LayoutMainContent>hello</LayoutMainContent>
+          <LayoutMainContent>
+            <Output />
+          </LayoutMainContent>
         </LayoutMain>
       </ConfigProvider>
       <ScrollRestoration />

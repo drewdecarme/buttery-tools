@@ -12,7 +12,7 @@ export const createColorVariants = (
     ? [chroma(hex).brighten(min), hex, chroma(hex).darken(options.max)]
     : [chroma(hex).brighten(min), hex];
   const variants = chroma.scale(scaleArr).mode("lab").colors(numberOfVariants);
-  return variants;
+  return variants.map((v, i) => ({ name: i === 0 ? 50 : i * 100, value: v }));
 };
 
 export const createColorTokens = (
@@ -41,19 +41,16 @@ export const createColorTokensVariants = ({
 }) => {
   const variants = createColorVariants(hex, numOfVariants, options);
 
-  const variantTokens = variants.reduce((iAccum, hueVariant, i) => {
-    let hueVariantName: number;
-    if (i === 0) {
-      hueVariantName = 50;
-    } else {
-      hueVariantName = i * 100;
-    }
-    const { h, s, b } = hexToHsb(hueVariant);
-    const variantHsl = hsbToHsl(h, s, b);
-    const vh = `  ${prefix}-${name}-${hueVariantName}-h: ${variantHsl.h};\n`;
-    const vS = `  ${prefix}-${name}-${hueVariantName}-s: ${variantHsl.s}%;\n`;
-    const vL = `  ${prefix}-${name}-${hueVariantName}-l: ${variantHsl.l}%;\n`;
-    return iAccum.concat(vh).concat(vS).concat(vL);
-  }, "");
+  const variantTokens = variants.reduce(
+    (iAccum, { name: hueVariantName, value: hueVariant }, i) => {
+      const { h, s, b } = hexToHsb(hueVariant);
+      const variantHsl = hsbToHsl(h, s, b);
+      const vh = `  ${prefix}-${name}-${hueVariantName}-h: ${variantHsl.h};\n`;
+      const vS = `  ${prefix}-${name}-${hueVariantName}-s: ${variantHsl.s}%;\n`;
+      const vL = `  ${prefix}-${name}-${hueVariantName}-l: ${variantHsl.l}%;\n`;
+      return iAccum.concat(vh).concat(vS).concat(vL);
+    },
+    ""
+  );
   return variantTokens;
 };

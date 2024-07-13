@@ -63,7 +63,7 @@ const SButton = styled("button")`
 
   &.primary {
     background: ${makeColor("primary")};
-    color: white;
+    color: ${makeColor("neutral")};
 
     &:hover {
       background: ${makeColor("primary", { variant: "600" })};
