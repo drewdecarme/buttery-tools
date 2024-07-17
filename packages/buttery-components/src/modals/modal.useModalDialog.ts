@@ -9,11 +9,10 @@ import {
   useState,
 } from "react";
 import { usePortal } from "../hooks";
-import { exhaustiveMatchGuard } from "../utils";
 
-export type DialogDefaultState = Record<string, unknown>;
+export type ModalDefaultState = Record<string, unknown>;
 
-export type DialogRef<T extends DialogDefaultState = DialogDefaultState> = {
+export type ModalRef<T extends ModalDefaultState = ModalDefaultState> = {
   handleOpen: (
     e: React.MouseEvent<HTMLElement> | undefined,
     initialData?: T
@@ -22,13 +21,9 @@ export type DialogRef<T extends DialogDefaultState = DialogDefaultState> = {
   nodeRef: MutableRefObject<HTMLDialogElement | null>;
 };
 
-export type DialogState<T extends DialogDefaultState = DialogDefaultState> = T;
+export type ModalState<T extends ModalDefaultState = ModalDefaultState> = T;
 
-export type UseDialogOptions = {
-  /**
-   * The type of dialog that should be rendered
-   */
-  type: "modal" | "default";
+export type UseModalOptions = {
   /**
    * Option to determine if the dialog should be closed
    * by clicking on the ::backdrop element
@@ -42,20 +37,20 @@ export type UseDialogOptions = {
   onClose?: () => void;
 };
 
-export const useDialog = <T extends DialogDefaultState = DialogDefaultState>(
-  params: UseDialogOptions & {
-    ref: MutableRefObject<DialogRef<T>> | Ref<DialogRef<T>>;
+export const useModalDialog = <T extends ModalDefaultState = ModalDefaultState>(
+  params: UseModalOptions & {
+    ref: MutableRefObject<ModalRef<T>> | Ref<ModalRef<T>>;
   }
 ) => {
-  const iDialogRef = useRef<HTMLDialogElement | null>(null);
-  const [dialogState, setDialogState] = useState<DialogState<T>>();
+  const iModalRef = useRef<HTMLDialogElement | null>(null);
+  const [dialogState, setModalState] = useState<ModalState<T>>();
   const { Portal, openPortal, closePortal } = usePortal();
   const dialogEventClickRef = useRef<((e: MouseEvent) => void) | null>(null);
   const dialogEventCancelRef = useRef<((e: Event) => void) | null>(null);
 
-  const closeDialog = useCallback(async () => {
-    if (!iDialogRef.current) return;
-    const dialogNode = iDialogRef.current;
+  const closeModal = useCallback(async () => {
+    if (!iModalRef.current) return;
+    const dialogNode = iModalRef.current;
 
     const onClose = params?.onClose ?? (() => void 0);
     // add the class close to the dialog to add any closing animations
@@ -87,35 +82,18 @@ export const useDialog = <T extends DialogDefaultState = DialogDefaultState>(
   const dialogRef = useCallback<RefCallback<HTMLDialogElement>>(
     (dialogNode) => {
       if (!dialogNode) return;
-      iDialogRef.current = dialogNode;
+      iModalRef.current = dialogNode;
 
       // Reconcile some params
-      const type = params.type ?? "default";
       const enableBackdropClose = params.closeOnBackdropClick ?? true;
 
-      // Add the type to the dialogs className
-      dialogNode.classList.add(type);
-
-      // Open the dialog
-      switch (type) {
-        case "default":
-          dialogNode.show();
-          break;
-
-        case "modal":
-          dialogNode.showModal();
-          break;
-
-        default:
-          exhaustiveMatchGuard(type);
-          break;
-      }
+      dialogNode.showModal();
 
       // Add some event listeners
       dialogEventCancelRef.current = (e) => {
         // prevent the close event from firing.
         e.preventDefault();
-        closeDialog();
+        closeModal();
       };
       dialogNode.addEventListener("cancel", dialogEventCancelRef.current);
 
@@ -126,12 +104,12 @@ export const useDialog = <T extends DialogDefaultState = DialogDefaultState>(
       dialogEventClickRef.current = ({ target }) => {
         const { nodeName } = target as HTMLDialogElement;
         if (nodeName === "DIALOG") {
-          closeDialog();
+          closeModal();
         }
       };
       dialogNode.addEventListener("click", dialogEventClickRef.current);
     },
-    [closeDialog, params.closeOnBackdropClick, params.type]
+    [closeModal, params.closeOnBackdropClick]
   );
 
   /**
@@ -141,11 +119,11 @@ export const useDialog = <T extends DialogDefaultState = DialogDefaultState>(
   useImperativeHandle(params.ref, () => {
     return {
       handleOpen(_, initState = {} as T) {
-        setDialogState(initState);
+        setModalState(initState);
         openPortal();
       },
-      handleClose: closeDialog,
-      nodeRef: iDialogRef,
+      handleClose: closeModal,
+      nodeRef: iModalRef,
     };
   });
 
@@ -154,8 +132,8 @@ export const useDialog = <T extends DialogDefaultState = DialogDefaultState>(
       dialogRef,
       dialogState,
       Portal,
-      closeDialog,
+      closeModal,
     }),
-    [Portal, closeDialog, dialogRef, dialogState]
+    [Portal, closeModal, dialogRef, dialogState]
   );
 };

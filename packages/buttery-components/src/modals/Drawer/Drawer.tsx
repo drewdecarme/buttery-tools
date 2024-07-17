@@ -1,18 +1,18 @@
 import { type ForwardedRef, type ReactNode, forwardRef } from "react";
 
 import { classes } from "../../utils";
-import { DialogProvider } from "../Dialog.context";
+import { ModalProvider } from "../Modal.context";
 import {
-  type DialogDefaultState,
-  type DialogRef,
-  type UseDialogOptions,
-  useDialog,
-} from "../dialog.useDialog";
+  type ModalDefaultState,
+  type ModalRef,
+  type UseModalOptions,
+  useModalDialog,
+} from "../modal.useModalDialog";
 import styles from "./drawer.styles";
 
 export type DrawerPropsNative = Omit<JSX.IntrinsicElements["dialog"], "ref">;
 export type DrawerPropsCustom = Pick<
-  UseDialogOptions,
+  UseModalOptions,
   "onClose" | "closeOnBackdropClick"
 > & {
   children: ReactNode;
@@ -24,31 +24,30 @@ export type DrawerPropsCustom = Pick<
 };
 export type DrawerProps = DrawerPropsNative & DrawerPropsCustom;
 
-export const Drawer = forwardRef(function Drawer<T extends DialogDefaultState>(
+export const Drawer = forwardRef(function Drawer<T extends ModalDefaultState>(
   {
     children,
     dxOrientation = "left-to-right",
     className,
     ...restProps
   }: DrawerProps,
-  ref: ForwardedRef<DialogRef<T>>
+  ref: ForwardedRef<ModalRef<T>>
 ) {
-  const { Portal, dialogRef, dialogState, closeDialog } = useDialog<T>({
+  const { Portal, dialogRef, dialogState, closeModal } = useModalDialog<T>({
     ref,
-    type: "modal",
     ...restProps,
   });
 
   return (
     <Portal>
-      <DialogProvider initialState={dialogState} closeDialog={closeDialog}>
+      <ModalProvider initialState={dialogState} closeModal={closeModal}>
         <dialog
           ref={dialogRef}
           className={classes("drawer", styles, dxOrientation, className)}
         >
           {children}
         </dialog>
-      </DialogProvider>
+      </ModalProvider>
     </Portal>
   );
 });

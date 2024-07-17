@@ -3,7 +3,7 @@ import { Drawer } from "./Drawer";
 import { useDrawer } from "./drawer.useDrawer";
 
 const meta: Meta = {
-  title: "Dialogs / Drawer",
+  title: "Modals / Drawer",
 } satisfies Meta<typeof meta>;
 
 export default meta;
@@ -13,7 +13,9 @@ export const RightToLeft = () => {
 
   return (
     <>
-      <button onClick={openDrawer}>Toggle Drawer</button>
+      <button type="button" onClick={openDrawer}>
+        Toggle Drawer
+      </button>
       <Drawer ref={drawerRef} dxOrientation="right-to-left">
         This is some drawer content!
       </Drawer>
@@ -26,8 +28,10 @@ export const LeftToRight = () => {
 
   return (
     <>
-      <button onClick={openDrawer}>Toggle Drawer</button>
-      <Drawer ref={drawerRef} dxSize="lg" dxOrientation="left-to-right">
+      <button type="button" onClick={openDrawer}>
+        Toggle Drawer
+      </button>
+      <Drawer ref={drawerRef} dxOrientation="left-to-right">
         This is some drawer content!
       </Drawer>
     </>

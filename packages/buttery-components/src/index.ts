@@ -1,4 +1,4 @@
-export * from "./dialogs";
+export * from "./modals";
 export * from "./popovers/toast";
 export * from "./popovers/menu";
 export * from "./popovers/tooltip";
