@@ -75,7 +75,7 @@ function MenuExample({
   arrow?: MenuOptionArrow;
   offset?: number;
 }) {
-  const { toggleMenu, targetRef, menuRef, closeMenu } =
+  const { targetRef, menuRef, closeMenu, toggleMenu } =
     useMenu<HTMLButtonElement>({
       dxPosition: label,
       dxArrow: arrow,

@@ -7,6 +7,7 @@ import type { ButteryDocsGraph } from ".buttery/commands/docs/docs.types";
 export default function RootRoute() {
   const loaderData = useLoaderData() as {
     graph: ButteryDocsGraph;
+    url: string;
     header: ButteryConfigDocs["header"];
   };
 
@@ -14,6 +15,7 @@ export default function RootRoute() {
     <div className={bodyCSS}>
       <Layout
         graph={loaderData.graph}
+        url={loaderData.url}
         header={loaderData.header}
         NavLinkComponent={NavLink}
       >

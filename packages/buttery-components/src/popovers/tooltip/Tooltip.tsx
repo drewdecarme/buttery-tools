@@ -1,8 +1,8 @@
 import { css } from "@linaria/core";
-import type { FC, ReactElement } from "react";
-import React from "react";
+import type { FC, MouseEventHandler, ReactElement } from "react";
+import React, { useCallback, useMemo } from "react";
+import { usePopover } from "../../hooks";
 import { classes } from "../../utils";
-import { usePopover } from "../popover.usePopover";
 
 type TooltipSharedProps = Pick<
   JSX.IntrinsicElements["div"],
@@ -57,7 +57,29 @@ export const Tooltip: FC<TooltipProps> = ({
   style,
   ...restProps
 }) => {
-  const { popoverRef, handlers } = usePopover();
+  const { popoverRef, showPopover, hidePopover } = usePopover();
+
+  const handleFocusIn = useCallback<
+    MouseEventHandler<HTMLButtonElement>
+  >(() => {
+    showPopover();
+  }, [showPopover]);
+
+  const handleFocusOut = useCallback<
+    MouseEventHandler<HTMLButtonElement>
+  >(() => {
+    hidePopover();
+  }, [hidePopover]);
+
+  const tooltipHandlers = useMemo(
+    () => ({
+      onFocus: handleFocusIn,
+      onBlur: handleFocusOut,
+      onMouseEnter: handleFocusIn,
+      onMouseLeave: handleFocusOut,
+    }),
+    [handleFocusIn, handleFocusOut]
+  );
 
   switch (restProps.dxType) {
     case "label":
@@ -66,7 +88,7 @@ export const Tooltip: FC<TooltipProps> = ({
           {React.cloneElement(React.Children.only(children), {
             // @ts-expect-error string's aren't recognized. still valid though
             "aria-labelledby": restProps.dxId,
-            ...handlers,
+            ...tooltipHandlers,
           })}
           <div
             role="tooltip"

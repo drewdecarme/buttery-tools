@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Modal, type ModalProps } from "./Modal";
+import styles from "./modal.styles";
 import { useModal } from "./modal.useModal";
 
 function ModalStory(props: Omit<ModalProps, "children">) {
@@ -10,7 +11,7 @@ function ModalStory(props: Omit<ModalProps, "children">) {
       <button type="button" onClick={openModal}>
         Toggle Modal
       </button>
-      <Modal ref={modalRef} {...props}>
+      <Modal ref={modalRef} {...props} className={styles}>
         This is some drawer content!
       </Modal>
     </>

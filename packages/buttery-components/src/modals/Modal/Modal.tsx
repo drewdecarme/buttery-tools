@@ -8,7 +8,6 @@ import {
   type UseModalOptions,
   useModalDialog,
 } from "../modal.useModalDialog";
-import styles from "./modal.styles";
 
 export type ModalPropsNative = Omit<JSX.IntrinsicElements["dialog"], "ref">;
 export type ModalPropsCustom = Pick<
@@ -32,10 +31,7 @@ export const Modal = forwardRef(function Modal<T extends ModalDefaultState>(
   return (
     <Portal>
       <ModalProvider initialState={dialogState} closeModal={closeModal}>
-        <dialog
-          ref={dialogRef}
-          className={classes("modal", styles, dxSize, className)}
-        >
+        <dialog ref={dialogRef} className={classes("modal", dxSize, className)}>
           {children}
         </dialog>
       </ModalProvider>

@@ -61,7 +61,7 @@ export function Layout({ children, ...restProps }: LayoutProps) {
       <LayoutBody>
         <LayoutBodyNav />
         <LayoutBodyMain>{children}</LayoutBodyMain>
-        <LayoutBodyTOC />
+        <LayoutBodyTOC url={restProps.url} />
       </LayoutBody>
       <LayoutFooter />
     </LayoutProvider>

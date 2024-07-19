@@ -115,10 +115,12 @@ export function ContentsNode({
     </li>
   ));
 }
-
-export const LayoutBodyTOC: FC = () => {
+export type LayoutBodyTOCProps = {
+  url: string;
+};
+export const LayoutBodyTOC: FC<LayoutBodyTOCProps> = ({ url }) => {
   const { NavLinkComponent, graph } = useLayoutContext();
-  const { pathname } = useLocation();
+  const { pathname } = new URL(url);
   const currentGraph = getGraphValueThatMatchesPathname(pathname, graph);
   useDetermineActiveSection(pathname);
 

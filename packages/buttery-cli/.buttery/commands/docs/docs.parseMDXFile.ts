@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import path from "node:path";
 import matter from "gray-matter";
 import { parseMDXFileContent } from "./docs.parseMDXFileContent";
 import { parseMDXFileFrontmatter } from "./docs.parseMDXFileFrontmatter";
@@ -27,6 +28,7 @@ export const parseMdxFile = async ({
     return {
       fsPath,
       filename,
+      ext: path.extname(fsPath),
       toc,
       meta,
       section,

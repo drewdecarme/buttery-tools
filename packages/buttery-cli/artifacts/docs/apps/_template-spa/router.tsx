@@ -7,10 +7,24 @@ import type { ButteryDocsGraph } from ".buttery/commands/docs/docs.types";
 const createRoute = (graph: ButteryDocsGraph): RouteObject[] => {
   const routes = Object.values(graph).reduce<RouteObject[]>(
     (accum, graphValue) => {
+      console.log;
       const route = {
         path: graphValue.routeAbs,
         lazy: async () => {
-          const module = await import(`./docs/${graphValue.filename}.md`);
+          // biome-ignore lint/suspicious/noExplicitAny: Any is actually a module.
+          let module: any;
+          switch (graphValue.fileExtension) {
+            case ".md":
+              module = await import(`./docs/${graphValue.filename}.md`);
+              break;
+
+            case ".mdx":
+              module = await import(`./docs/${graphValue.filename}.mdx`);
+              break;
+
+            default:
+              throw `No case handling exists for a file with an extension of "${graphValue.fileExtension}"`;
+          }
           const Component = module.default;
           return { Component };
         },
@@ -29,10 +43,13 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <RootRoute />,
-    loader: () => ({
-      graph,
-      header: header ?? null,
-    }),
+    loader: ({ request: { url } }) => {
+      return {
+        graph,
+        url,
+        header: header ?? null,
+      };
+    },
     children: createRoute(graph),
   },
 ]);

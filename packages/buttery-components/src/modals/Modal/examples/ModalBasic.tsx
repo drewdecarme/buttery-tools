@@ -1,5 +1,7 @@
 import { css } from "@linaria/core";
-export default css`
+import { Modal } from "../Modal";
+import { useModal } from "../modal.useModal";
+const styles = css`
   /* Animation for appearing */
   @keyframes appear {
     from {
@@ -75,3 +77,18 @@ export default css`
     }
   }
 `;
+
+export function ModalBasic() {
+  const { modalRef, openModal } = useModal();
+
+  return (
+    <>
+      <button type="button" onClick={openModal}>
+        Open Modal
+      </button>
+      <Modal ref={modalRef} className={styles}>
+        This is a basic modal
+      </Modal>
+    </>
+  );
+}

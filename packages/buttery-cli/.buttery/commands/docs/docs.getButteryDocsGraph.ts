@@ -26,6 +26,7 @@ export async function getButteryDocsGraph(
       meta: { title },
       section,
       segments,
+      ext,
       // content,
       routeAbs,
       filename,
@@ -46,6 +47,7 @@ export async function getButteryDocsGraph(
         title: sectionTitle,
         filepath: file.fsPath,
         filename,
+        fileExtension: ext,
         routeAbs: `/${section === "_index" ? "" : section}`,
         routeRel: section === "_index" ? "/" : section,
         toc: [],
@@ -67,6 +69,7 @@ export async function getButteryDocsGraph(
           title: "",
           filepath: "",
           filename: "",
+          fileExtension: "",
           routeAbs: "",
           routeRel: "",
           toc: [],
@@ -78,6 +81,7 @@ export async function getButteryDocsGraph(
         currentGraph[segment].title = title;
         currentGraph[segment].filepath = file.fsPath;
         currentGraph[segment].filename = file.filename;
+        currentGraph[segment].fileExtension = ext;
         currentGraph[segment].routeAbs = routeAbs;
         currentGraph[segment].routeRel = segment;
         currentGraph[segment].toc = toc;

@@ -1,11 +1,4 @@
-import {
-  type FC,
-  type RefCallback,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { type FC, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { Toast } from "./Toast";
 import { getToastOptions, toastContainerId } from "./toast.utils";
