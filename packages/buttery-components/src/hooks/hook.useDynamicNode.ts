@@ -23,6 +23,6 @@ export const useDynamicNode = () => {
       getDynamicNode,
       destroyNode,
     }),
-    [destroyNode, getDynamicNode],
+    [destroyNode, getDynamicNode]
   );
 };

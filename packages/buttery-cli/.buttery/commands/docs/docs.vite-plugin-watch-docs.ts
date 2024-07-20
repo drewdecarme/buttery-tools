@@ -18,13 +18,14 @@ export function watchDocsPlugin(
       const watcher = chokidar.watch(butteryDirs.userDocs.root);
 
       watcher.on("change", async (file) => {
-        if (file.endsWith(".md")) {
+        if (file.endsWith(".md") || file.endsWith(".mdx")) {
           LOG_DOCS.watch(file.concat(" changed. Updating document..."));
           const filename = basename(file);
           const outFile = path.resolve(
             butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
             filename
           );
+          console.log(outFile);
           // copy the new file
           await cp(file, outFile);
           // re-create the data for the base loader. This will update the nav

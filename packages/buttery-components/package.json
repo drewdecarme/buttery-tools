@@ -23,6 +23,7 @@
   "scripts": {
     "test": "test",
     "build": "vite build && yarn tsc --project tsconfig.types.json",
+    "insert-examples": "npx tsx ./scripts/insert-example-code.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "upgrade-storybook": "npx storybook@next upgrade --prerelease"
@@ -49,7 +50,9 @@
     "@storybook/react-vite": "^8.2.1",
     "@storybook/test": "^8.2.1",
     "@wyw-in-js/vite": "^0.5.3",
+    "glob": "^11.0.0",
     "storybook": "^8.2.1",
+    "tsx": "^4.16.2",
     "typescript": "^5.5.2",
     "vite": "^5.3.1"
   }

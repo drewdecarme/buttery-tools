@@ -78,13 +78,13 @@ const styles = css`
   }
 `;
 
-export function ModalBasic() {
+export default function ModalBase() {
   const { modalRef, openModal } = useModal();
 
   return (
     <>
       <button type="button" onClick={openModal}>
-        Open Modal
+        Open Modal t
       </button>
       <Modal ref={modalRef} className={styles}>
         This is a basic modal
