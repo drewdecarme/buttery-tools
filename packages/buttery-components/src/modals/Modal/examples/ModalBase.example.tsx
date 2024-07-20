@@ -84,7 +84,7 @@ export default function ModalBase() {
   return (
     <>
       <button type="button" onClick={openModal}>
-        Open Modal t
+        Open Modal
       </button>
       <Modal ref={modalRef} className={styles}>
         This is a basic modal

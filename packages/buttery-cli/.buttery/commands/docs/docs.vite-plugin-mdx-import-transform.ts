@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import path from "node:path";
 import type { Plugin } from "vite";
 
@@ -11,18 +12,21 @@ export function mdxImportTransform(options: MdxImportTransformOptions): Plugin {
     name: "vite-plugin-mdx-import-transform",
     transform(code: string, id: string) {
       if (!id.endsWith(".mdx")) return;
-      console.log(code);
 
       // Adjusted regex to capture everything after example: until example:end
       const regex = /\{\/\* example:"([^"]+)" \*\/\}/g;
-      const result = code.replace(regex, (match, p1) => {
-        console.log({ match, p1 });
+      const result = code.replace(regex, (_match, p1) => {
+        console.log({ _match, p1 });
         const transformedPath = path.join(options.rootPath, p1);
+        const codeBlock = readFileSync(transformedPath, { encoding: "utf8" });
         return `
 
 import { default as Component } from "${transformedPath}"
 
 <Component />
+\`\`\`tsx
+${codeBlock}
+\`\`\`
 
 `;
         // Use capturedGroup if needed in your replacement logic
