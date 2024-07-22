@@ -4,6 +4,122 @@ title: Modal
 
 # Modal
 
-this is test before content
+A controlled, semantically correct and accessible modal dialog that interupts the user's flow to focus on itself.
+The HTML element that appears is a dialog that is enhanced with the `modal` attribute.
 {/* example:"/src/modals/Modal/examples/ModalBase.example.tsx" */}
-this is test after content
+The semantics of a dialog specifically state that a `<dialog />` can either be a **modal** or **non-modal** dialog.
+In order to reduce confusion on what to use when, the `<Modal />` component should be used when you want to explicitly stop
+the user from their flow to do something else that is contained in the modal that is being launched.
+
+This library exercises the opionin that all non-modal dialogs should be controlled using the `Popover API`. All Modals
+are blocking elements and should be treated as such. In addition, all modals expecting to receive `modalRef` will surface
+modal dialogs which cause the rest of the page to become inert.
+
+## Usage
+
+The `useModal` hook boasts a renderless stateful mechanism that is controlled internally by the `<Modal />`
+component via the `useImperativeHandle` hook exported from React. This hook allows us to control the modal without
+expicitally instantiating a stateful variable such as `isOpen` in order to control the modal. This keeps the rendering
+logic of the modal interal to the `<Modal />` component and doesn't muddy the implementation up with needless state.
+
+> **Accessibility:** It's important to note that all of the native modal dialog acessibility rules exist for the `<Modal />` component. You can view all of the controls
+> associated with a native modal dialog by viewing the [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog#accessibility)
+
+To launch a modal, simply import the `useModal` hook, pass the `<Modal />` the `modalRef` vairable that can be destructed
+from the `useModal` hook, and then use the `openModal` function to launch it.
+
+```tsx
+import { Modal, useModal } from "@buttery/components";
+
+export default function ModalUsage() {
+  const { modalRef, openModal } = useModal();
+
+  return (
+    <>
+      <button type="button" onClick={openModal}>
+        Open a bare bones example
+      </button>
+      <Modal ref={modalRef}>
+        This is the simplest implementation of a modal
+      </Modal>
+    </>
+  );
+}
+```
+
+## Installation
+
+```bash
+# yarn
+yarn add @buttery/components
+
+# npm
+npm install @buttery/components
+```
+
+## Basic Example
+
+## Styling
+
+### CSS-in-JS
+
+### Style Objects
+
+## Examples
+
+### Animation
+
+### Styling the `:backdrop`
+
+## Technical Details
+
+A lot of the beef of the functionality lies within the `<Modal />` component. The `useModal` hook exposes a few controls as
+well as the ref to intercept those controls that lie within the modal component.
+
+### Imperatively controlling the Modal
+
+The ref of the modal is passed through the `useImperativeHandle` hook where the ref is "replaced" with a few internal mechanisms
+such as `open` `close` and `toggle`. This is how the `useModal` hook can then use the ref as if it were a factory with some functions.
+This cleans up the impelementation of how the `<Modal />` component is instantiated thus moving any top-level rendering logic to
+control the modal, inside of the modal itself.
+
+```tsx
+/**
+ * Override the ref and add 2 functions to open and close
+ * the dialog
+ */
+useImperativeHandle(params.ref, () => {
+  return {
+    handleOpen(_, initState = {} as T) {
+      setModalState(initState);
+      openPortal();
+    },
+    handleClose: closeModal,
+    nodeRef: iModalRef,
+  };
+});
+```
+
+The above is kind of yucky and doesn't provide a good API. The below code
+is the source of the `useModal` hook which makes the interface
+for managing the modal itself.
+
+{/* fence:"src/modals/Modal/modal.useModal.ts" */}
+
+### Re-using modal dialog functionality
+
+All of the functionality of the modal is containeed within the `useModalDialog` which the `<Modal />` uses
+to implement the following:
+
+- Open and close the modal dialog
+- Wait for any CSS animations to complete when opening and closing the modal
+- Create a dynamic node for which the modal is attached to using react Portals.
+
+This hook is created to enable any other custom implementation of a modal dialog
+to be re-used using the `useModalDialog` hook.
+
+## APIs
+
+### `<Modal />`
+
+### `useModal`

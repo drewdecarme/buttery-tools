@@ -15,18 +15,25 @@ export function mdxImportTransform(options: MdxImportTransformOptions): Plugin {
 
       // Adjusted regex to capture everything after example: until example:end
       const regex = /\{\/\* example:"([^"]+)" \*\/\}/g;
-      const result = code.replace(regex, (_match, p1) => {
+      const transformedPreview = code.replace(regex, (_match, p1) => {
         console.log({ _match, p1 });
         const transformedPath = path.join(options.rootPath, p1);
+        const previewBlockPath = path.join(
+          options.rootPath,
+          "/src/docs/PreviewBlock.tsx"
+        );
         const codeBlock = readFileSync(transformedPath, { encoding: "utf8" });
         return `
 
-import { default as Component } from "${transformedPath}"
+import { PreviewBlock } from "${previewBlockPath}";
+import { default as Component } from "${transformedPath}";
 
-<Component />
-\`\`\`tsx
-${codeBlock}
-\`\`\`
+<PreviewBlock>
+  <Component />
+  \`\`\`tsx
+  ${codeBlock}
+  \`\`\`
+</PreviewBlock>
 
 `;
         // Use capturedGroup if needed in your replacement logic
@@ -50,8 +57,24 @@ ${codeBlock}
       //   }
       // );
 
+      // Adjusted regex to capture everything after example: until example:end
+      const fenceRegex = /\{\/\* fence:"([^"]+)" \*\/\}/g;
+      const transformedFence = transformedPreview.replace(
+        fenceRegex,
+        (_match, p1) => {
+          console.log({ _match, p1 });
+          const transformedPath = path.join(options.rootPath, p1);
+          const codeBlock = readFileSync(transformedPath, { encoding: "utf8" });
+          return `
+\`\`\`tsx
+  ${codeBlock}
+  \`\`\`
+`;
+        }
+      );
+
       return {
-        code: result,
+        code: transformedFence,
         map: null, // Provide source map if necessary
       };
     },
