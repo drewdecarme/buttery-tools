@@ -1,13 +1,13 @@
 import { type ForwardedRef, type ReactNode, forwardRef } from "react";
 
-import { classes } from "../../utils";
-import { ModalProvider } from "../Modal.context";
 import {
   type ModalDefaultState,
   type ModalRef,
   type UseModalOptions,
   useModalDialog,
-} from "../modal.useModalDialog";
+} from "../../hooks";
+import { classes } from "../../utils";
+import { ModalProvider } from "../Modal.context";
 
 export type ModalPropsNative = Omit<JSX.IntrinsicElements["dialog"], "ref">;
 export type ModalPropsCustom = Pick<

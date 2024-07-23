@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { usePortal } from "../hooks";
+import { usePortal } from ".";
 
 export type ModalDefaultState = Record<string, unknown>;
 
@@ -37,20 +37,45 @@ export type UseModalOptions = {
   onClose?: () => void;
 };
 
+/**
+ * A custom hook that can turn any dialog element into a modal dialog.
+ *
+ * This hook provides a modal dialog with the ability to open, close, and handle specific events.
+ * It integrates with the `usePortal` hook to manage the portal for rendering the modal dialog in the DOM.
+ * The hook returns a set of properties and functions to control the modal's behavior.
+ *
+ * @example
+ * // Example usage:
+ * const modalRef = useRef(null);
+ * const { dialogRef, Portal } = useModalDialog({
+ *   ref: modalRef,
+ *   closeOnBackdropClick: true,
+ *   onClose: () => console.log('Modal closed'),
+ * });
+ *
+ * return (
+ *   <Portal>
+ *     <dialog ref={dialogRef}>
+ *       <p>Modal Content</p>
+ *       <button onClick={() => modalRef.current.handleClose()}>Close</button>
+ *     </dialog>
+ *   </Portal>
+ * );
+ */
 export const useModalDialog = <T extends ModalDefaultState = ModalDefaultState>(
   params: UseModalOptions & {
     ref: MutableRefObject<ModalRef<T>> | Ref<ModalRef<T>>;
   }
 ) => {
-  const iModalRef = useRef<HTMLDialogElement | null>(null);
+  const modalRef = useRef<HTMLDialogElement | null>(null);
   const [dialogState, setModalState] = useState<ModalState<T>>();
   const { Portal, openPortal, closePortal } = usePortal();
   const dialogEventClickRef = useRef<((e: MouseEvent) => void) | null>(null);
   const dialogEventCancelRef = useRef<((e: Event) => void) | null>(null);
 
   const closeModal = useCallback(async () => {
-    if (!iModalRef.current) return;
-    const dialogNode = iModalRef.current;
+    if (!modalRef.current) return;
+    const dialogNode = modalRef.current;
 
     const onClose = params?.onClose ?? (() => void 0);
     // add the class close to the dialog to add any closing animations
@@ -82,7 +107,7 @@ export const useModalDialog = <T extends ModalDefaultState = ModalDefaultState>(
   const dialogRef = useCallback<RefCallback<HTMLDialogElement>>(
     (dialogNode) => {
       if (!dialogNode) return;
-      iModalRef.current = dialogNode;
+      modalRef.current = dialogNode;
 
       // Reconcile some params
       const enableBackdropClose = params.closeOnBackdropClick ?? true;
@@ -123,7 +148,7 @@ export const useModalDialog = <T extends ModalDefaultState = ModalDefaultState>(
         openPortal();
       },
       handleClose: closeModal,
-      nodeRef: iModalRef,
+      nodeRef: modalRef,
     };
   });
 

@@ -19,15 +19,16 @@ export function watchDocsPlugin(
 
       watcher.on("change", async (file) => {
         if (file.endsWith(".md") || file.endsWith(".mdx")) {
-          LOG_DOCS.watch(file.concat(" changed. Updating document..."));
+          LOG_DOCS.watch(file.concat(" changed..."));
           const filename = basename(file);
           const outFile = path.resolve(
             butteryDirs.artifacts.docs.apps.dev.dynamicApp.docs,
             filename
           );
-          console.log(outFile);
           // copy the new file
+          LOG_DOCS.debug("Updating document...");
           await cp(file, outFile);
+          LOG_DOCS.debug("Updating document... done.");
           // re-create the data for the base loader. This will update the nav
           // if a new file is created
           LOG_DOCS.debug("Re-creating routes...");
