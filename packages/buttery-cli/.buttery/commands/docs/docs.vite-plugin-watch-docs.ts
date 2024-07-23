@@ -22,7 +22,7 @@ export function watchDocsPlugin(
           LOG_DOCS.watch(file.concat(" changed. Updating document..."));
           const filename = basename(file);
           const outFile = path.resolve(
-            butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
+            butteryDirs.artifacts.docs.apps.dev.dynamicApp.docs,
             filename
           );
           console.log(outFile);
