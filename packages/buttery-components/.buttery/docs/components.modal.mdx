@@ -59,6 +59,18 @@ npm install @buttery/components
 
 ## Basic Example
 
+The below example is what you would most likely see in the wild. It includes a modal header, scrollable body, and a footer that
+contains a close and action button. It has minimal styles but attempts to show you what you can do with those styles.
+
+{/* example:"/src/modals/Modal/examples/ModalBasic.example.tsx" */}
+
+Unlike other Headless UI libraries, Buttery Components only exports hooks and basic components you need to use relatively complex
+functionality. You might think that there would be a `<ModalHeader /> `, `<ModalBody />`, and `<ModalFooter />` components but
+that offers too much opinion on how those components should be implemented and also makes an uncessary complex abstraction to interface
+when consuming the components.
+
+Instead, it's up to the user to style those internal components in the modal however they see fit.
+
 ## Styling
 
 ### CSS-in-JS
@@ -67,9 +79,17 @@ npm install @buttery/components
 
 ## Examples
 
+### Barebones
+
 ### Animation
 
+### Different sizes
+
+### Code splitting modal content
+
 ### Styling the `:backdrop`
+
+### Setting internal state before opening
 
 ## Technical Details
 

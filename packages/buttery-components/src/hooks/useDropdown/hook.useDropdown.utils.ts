@@ -1,5 +1,9 @@
 import { css } from "@linaria/core";
-import type { MenuOptionArrow, MenuOptionPosition } from "./menu.types";
+import type {
+  DropdownOptionArrow,
+  DropdownOptionPosition,
+  DropdownOptions,
+} from "./hook.useDropdown.types";
 
 const arrowBaseClassName = css`
   overflow: visible;
@@ -49,7 +53,7 @@ const arrowRight = css`
   }
 `;
 
-const arrowClassNames: { [key in MenuOptionPosition]: string } = {
+const arrowClassNames: { [key in DropdownOptionPosition]: string } = {
   "bottom-center": arrowUp,
   "bottom-left": arrowUp,
   "bottom-right": arrowUp,
@@ -64,18 +68,32 @@ const arrowClassNames: { [key in MenuOptionPosition]: string } = {
   "right-bottom": arrowLeft,
 };
 
-export function setPopoverPositionStyles(
-  position: MenuOptionPosition,
+export const processDropdownOptions = (
+  options?: DropdownOptions
+): Required<DropdownOptions> => ({
+  dxPosition: options?.dxPosition || "bottom-left",
+  dxArrow: {
+    size: options?.dxArrow?.size ?? 0,
+    color: options?.dxArrow?.color ?? "transparent",
+  },
+  dxOffset: options?.dxOffset ?? 0,
+});
+
+export function setDropdownPositionStyles<
+  TargetElement extends HTMLElement = HTMLElement,
+  DropdownElement extends HTMLElement = HTMLElement,
+>(
+  position: DropdownOptionPosition,
   {
     offset,
     arrow,
-    popoverNode,
+    dropdownNode,
     targetNode,
   }: {
-    arrow: MenuOptionArrow;
+    arrow: DropdownOptionArrow;
     offset: number;
-    popoverNode: HTMLDivElement;
-    targetNode: HTMLElement;
+    dropdownNode: DropdownElement;
+    targetNode: TargetElement;
   }
 ) {
   const targetBox = targetNode.getBoundingClientRect();
@@ -87,19 +105,19 @@ export function setPopoverPositionStyles(
   }
 
   const { popoverTop, popoverLeft, resolvedPosition } =
-    calculatePopoverPosition(position, {
+    calculateDropdownPosition(position, {
       targetBox,
-      offset: arrow.size || offset,
+      offset: offset || arrow.size,
       popover: {
         // using offsets here to ignore any scaling while also
         // factoring in padding, margin, border and possible scroll bars
-        height: popoverNode.offsetHeight,
-        width: popoverNode.offsetWidth,
+        height: dropdownNode.offsetHeight,
+        width: dropdownNode.offsetWidth,
       },
     });
 
-  popoverNode.style.setProperty("top", `${popoverTop}px`);
-  popoverNode.style.setProperty("left", `${popoverLeft}px`);
+  dropdownNode.style.setProperty("top", `${popoverTop}px`);
+  dropdownNode.style.setProperty("left", `${popoverLeft}px`);
 
   if (!arrow) return;
 
@@ -110,16 +128,16 @@ export function setPopoverPositionStyles(
     popoverTop,
   });
 
-  popoverNode.classList.add(arrowBaseClassName);
-  popoverNode.style.setProperty("--arrow-size", `${arrow.size}px`);
-  popoverNode.style.setProperty("--arrow-left", arrowLeft);
-  popoverNode.style.setProperty("--arrow-top", arrowTop);
-  popoverNode.style.setProperty("--arrow-color", arrow.color ?? "transparent");
-  popoverNode.classList.add(arrowClassNames[resolvedPosition]);
+  dropdownNode.classList.add(arrowBaseClassName);
+  dropdownNode.style.setProperty("--arrow-size", `${arrow.size}px`);
+  dropdownNode.style.setProperty("--arrow-left", arrowLeft);
+  dropdownNode.style.setProperty("--arrow-top", arrowTop);
+  dropdownNode.style.setProperty("--arrow-color", arrow.color ?? "transparent");
+  dropdownNode.classList.add(arrowClassNames[resolvedPosition]);
 }
 
-function calculatePopoverPosition(
-  position: MenuOptionPosition,
+function calculateDropdownPosition(
+  position: DropdownOptionPosition,
   {
     offset,
     targetBox,
@@ -220,7 +238,7 @@ function calculatePopoverPosition(
 }
 
 function calculateArrowPosition(
-  resolvedPosition: MenuOptionPosition,
+  resolvedPosition: DropdownOptionPosition,
   {
     targetBox,
     arrow,
@@ -233,8 +251,8 @@ function calculateArrowPosition(
     popoverLeft: number;
   }
 ) {
-  const relativeTargetOffsetLeftToPopover = targetBox.left - popoverLeft; // the relative left part of the target is to the popover
-  const relativeTargetOffsetTopToPopover = targetBox.top - popoverTop; // the relative top part of the target is to the popover
+  const relativeTargetOffsetLeftToDropdown = targetBox.left - popoverLeft; // the relative left part of the target is to the popover
+  const relativeTargetOffsetTopToDropdown = targetBox.top - popoverTop; // the relative top part of the target is to the popover
   const halfOfTargetWidth = targetBox.width / 2;
   const halfOfTargetHeight = targetBox.height / 2;
   const halfOfArrow = arrow / 2;
@@ -247,26 +265,26 @@ function calculateArrowPosition(
   const adjustmentFactor = 0.15;
   if (resolvedPosition.startsWith("bottom")) {
     const top = arrow * -1;
-    const left = relativeTargetOffsetLeftToPopover + offsetLeftCenterTarget;
+    const left = relativeTargetOffsetLeftToDropdown + offsetLeftCenterTarget;
     arrowTop = `${top - top * adjustmentFactor}px`;
     arrowLeft = `${left}px`;
   }
 
   if (resolvedPosition.startsWith("top")) {
-    const left = relativeTargetOffsetLeftToPopover + offsetLeftCenterTarget;
+    const left = relativeTargetOffsetLeftToDropdown + offsetLeftCenterTarget;
     arrowTop = `calc(100% - ${arrow * adjustmentFactor}px)`;
     arrowLeft = `${left}px`;
   }
 
   if (resolvedPosition.startsWith("right")) {
-    const top = relativeTargetOffsetTopToPopover + offsetTopCenterTarget;
+    const top = relativeTargetOffsetTopToDropdown + offsetTopCenterTarget;
     const left = arrow * -1;
     arrowTop = `${top}px`;
     arrowLeft = `${left - left * adjustmentFactor}px`;
   }
 
   if (resolvedPosition.startsWith("left")) {
-    const top = relativeTargetOffsetTopToPopover + offsetTopCenterTarget;
+    const top = relativeTargetOffsetTopToDropdown + offsetTopCenterTarget;
     arrowTop = `${top}px`;
     arrowLeft = `calc(100% - ${arrow * adjustmentFactor}px)`;
   }

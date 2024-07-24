@@ -6,17 +6,13 @@ import {
   useImperativeHandle,
   useRef,
 } from "react";
-import { usePortal } from "../../hooks";
+import {
+  type DropdownOptions,
+  type DropdownRef,
+  useDropdown,
+  usePortal,
+} from "../../hooks";
 import { classes } from "../../utils";
-import { MenuProvider } from "./Menu.context";
-import type {
-  MenuOptionArrow,
-  MenuOptionOffset,
-  MenuOptionPosition,
-  MenuOptions,
-  MenuRef,
-} from "./menu.types";
-import { setPopoverPositionStyles } from "./menu.utils";
 
 export type MenuPropsNative = JSX.IntrinsicElements["div"];
 export type MenuPropsCustom = {
@@ -33,70 +29,42 @@ const articleCSS = css`
   }
 `;
 
-export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
+export const Menu = forwardRef<DropdownRef, MenuProps>(function Menu(
   { children, className, targetRef, ...restProps },
   ref
 ) {
-  const popoverRef = useRef<HTMLDivElement | null>(null);
   const { Portal, openPortal, closePortal } = usePortal();
+  const { dropdownRef, popoverRef, initDropdown, closeDropdown, openDropdown } =
+    useDropdown(targetRef);
+
   const windowListenerKey = useRef<((e: KeyboardEvent) => void) | null>(null);
   const windowListenerMouse = useRef<((e: MouseEvent) => void) | null>(null);
-  const menuPositionRef = useRef<MenuOptionPosition>("bottom-left");
-  const arrowSizeRef = useRef<MenuOptionArrow>({
-    size: 16,
-    color: "transparent",
-  });
-  const offsetRef = useRef<MenuOptionOffset>(0);
+
+  const handleOpenMenu = useCallback<(options?: DropdownOptions) => void>(
+    (options) => {
+      initDropdown(options);
+      openPortal();
+    },
+    [openPortal, initDropdown]
+  );
 
   const handleCloseMenu = useCallback(async () => {
-    if (!popoverRef.current) return;
-
-    // add the close class to run the transition/animations with .close
-    popoverRef.current.classList.replace("open", "close");
-    // wait for all of the animations to run with .close
-    const animations = popoverRef.current.getAnimations({ subtree: true });
-    await Promise.allSettled(animations.map((animation) => animation.finished));
-    // hide the popover when the animations complete
-    popoverRef.current?.hidePopover();
+    // close the dropdown
+    await closeDropdown();
     // remove event listeners
     if (!windowListenerKey.current || !windowListenerMouse.current) return;
     window.removeEventListener("keydown", windowListenerKey.current);
     window.removeEventListener("click", windowListenerMouse.current);
     // close the portal afterwards
     closePortal();
-    // clean the ref
-    popoverRef.current = null;
-  }, [closePortal]);
+  }, [closePortal, closeDropdown]);
 
   // when the portal opens, the div will mount and the popover ref callback will run
-  const initPopoverRef = useCallback<RefCallback<HTMLDivElement>>(
+  const menuRefCallback = useCallback<RefCallback<HTMLDivElement>>(
     (node) => {
-      if (!node) return;
-      // set the internal ref
-      popoverRef.current = node;
-      // turn the div into a popover
-      popoverRef.current.popover = "manual";
-
-      if (!popoverRef.current || !targetRef.current) {
-        console.warn(
-          "Popover or target isn't defined. Cannot determine position of popover."
-        );
-        return;
-      }
-
-      // show the popover
-      popoverRef.current.showPopover();
-
-      // position the article near the target
-      setPopoverPositionStyles(menuPositionRef.current, {
-        arrow: arrowSizeRef.current,
-        offset: offsetRef.current,
-        popoverNode: popoverRef.current,
-        targetNode: targetRef.current,
-      });
-
-      // add the open class to run the transition/animations associated with .open
-      popoverRef.current.classList.add("open");
+      // open the dropdown
+      dropdownRef(node);
+      openDropdown();
 
       // add event listeners
       windowListenerKey.current = (e) => {
@@ -118,24 +86,11 @@ export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
       window.addEventListener("keydown", windowListenerKey.current);
       window.addEventListener("click", windowListenerMouse.current);
     },
-    [handleCloseMenu, targetRef]
-  );
-
-  const handleOpen = useCallback<(options?: MenuOptions) => void>(
-    (options) => {
-      menuPositionRef.current = options?.dxPosition || "bottom-left";
-      arrowSizeRef.current = {
-        size: options?.dxArrow?.size ?? 16,
-        color: options?.dxArrow?.color ?? "transparent",
-      };
-      offsetRef.current = options?.dxOffset ?? 0;
-      openPortal();
-    },
-    [openPortal]
+    [handleCloseMenu, targetRef, popoverRef, dropdownRef, openDropdown]
   );
 
   useImperativeHandle(ref, () => ({
-    handleOpen,
+    handleOpen: handleOpenMenu,
     handleClose: handleCloseMenu,
     handleToggle: (options) => {
       // this means that the popover is open
@@ -143,22 +98,20 @@ export const Menu = forwardRef<MenuRef, MenuProps>(function Menu(
         handleCloseMenu();
         // popover doesn't exist, thus is closed
       } else {
-        handleOpen(options);
+        handleOpenMenu(options);
       }
     },
   }));
 
   return (
     <Portal>
-      <MenuProvider closeMenu={handleCloseMenu}>
-        <article
-          {...restProps}
-          className={classes(articleCSS, className)}
-          ref={initPopoverRef}
-        >
-          {children}
-        </article>
-      </MenuProvider>
+      <article
+        {...restProps}
+        className={classes(articleCSS, className)}
+        ref={menuRefCallback}
+      >
+        {children}
+      </article>
     </Portal>
   );
 });
