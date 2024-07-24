@@ -1,8 +1,8 @@
 import { css } from "@linaria/core";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Menu } from "./Menu";
-import type { MenuOptionArrow, MenuOptionPosition } from "./menu.types";
-import { useMenu } from "./menu.useMenu";
+import type { DropdownOptionArrow, DropdownOptionPosition } from "../../hooks";
+import { DropdownMenu } from "./DropdownMenu";
+import { useDropdownMenu } from "./dropdown-menu.useDropdownMenu";
 
 const MenuCSS = css`
   opacity: 0;
@@ -67,16 +67,16 @@ function MenuExample({
   arrow,
   offset,
 }: {
-  label: MenuOptionPosition;
+  label: DropdownOptionPosition;
   top?: number | string;
   left?: number | string;
   right?: number | string;
   bottom?: number | string;
-  arrow?: MenuOptionArrow;
+  arrow?: DropdownOptionArrow;
   offset?: number;
 }) {
   const { targetRef, menuRef, closeMenu, toggleMenu } =
-    useMenu<HTMLButtonElement>({
+    useDropdownMenu<HTMLButtonElement>({
       dxPosition: label,
       dxArrow: arrow,
       dxOffset: offset,
@@ -99,7 +99,7 @@ function MenuExample({
       >
         {label}
       </button>
-      <Menu
+      <DropdownMenu
         ref={menuRef}
         targetRef={targetRef}
         className={MenuCSS}
@@ -127,12 +127,12 @@ function MenuExample({
             Close
           </button>
         </footer>
-      </Menu>
+      </DropdownMenu>
     </>
   );
 }
 type MenuGridProps = {
-  arrow?: MenuOptionArrow;
+  arrow?: DropdownOptionArrow;
   offset?: number;
 };
 function MenuGrid({ arrow, offset }: MenuGridProps) {
@@ -233,7 +233,7 @@ function MenuGrid({ arrow, offset }: MenuGridProps) {
 const meta: Meta = {
   // @ts-ignore
   component: MenuGrid,
-  title: "Popovers / Menu",
+  title: "Popovers / DropdownMenu",
   parameters: {
     layout: "centered",
   },

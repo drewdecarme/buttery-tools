@@ -1,10 +1,10 @@
 import { useCallback, useMemo, useRef } from "react";
-import type { MenuOptions, MenuRef } from "./menu.types";
+import type { DropdownOptions, DropdownRef } from "../../hooks";
 
-export const useMenu = <T extends HTMLElement = HTMLElement>(
-  options?: MenuOptions
+export const useDropdownMenu = <T extends HTMLElement = HTMLElement>(
+  options?: DropdownOptions
 ) => {
-  const menuRef = useRef<MenuRef | null>(null);
+  const menuRef = useRef<DropdownRef | null>(null);
   const targetRef = useRef<T | null>(null);
 
   const openMenu = useCallback(() => {
