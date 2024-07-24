@@ -1,0 +1,56 @@
+---
+title: useDropdown
+---
+
+# useDropdown
+
+An full acssible & opionated abstraction that adds functionality to any clickable target and any DOM node
+to turn it into a popover using the Popover API that is positioned close to the target that launched it.
+
+This hook is great for easily turning any node into a context menu, navbar menu etc...
+{/* example:"src/hooks/useDropdown/examples/UseDropdown.example.tsx" */}
+
+## Usages
+
+The `useDropdown` hook boasts an easy to understand API as well as an API that is easy to integrate into other Component models (e.g. `<DropdownMenu />`, and `<DropdownNav />`). This hook
+easlily allow us to duplicate the dropdown functionality (arrows, positioning, viewport collision detection, etc...) into any other
+Component that requires it.
+
+This hook is the primary controller for controlling other functionality in some of the Buttery Components inside of the components section.
+
+{/* fence:"src/hooks/useDropdown/examples/UseDropdown.example.tsx" */}
+
+### Why not use `popovertarget`?
+
+There are a few reasons why using the [popover APIS native HTML attributes](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API#html_attributes)
+doesn't fully satisfy our needs here.
+
+1. **Animations** - The hook uses some standard JS interfaces to easily await the conclusion of any animations attached to the `dropdownNode`. This makes it way eaiser to define CSS animations that add character to your elements.
+2. **Positioning** - Depending upon the options that are declared with the `useDropdown` hook, a set of styles and CSS variable tokens are created to easily position the `popover` close to it's target. This kind of automatic style calculation falls outside of the Popover API specification.
+3. **Typescript** - Using hooks alllows us to get more speficic with the attributes required of the nodes we're using. It also fits will into the JS model that we have already adapted in mordern front-end development.
+
+## Installation
+
+```bash
+# yarn
+yarn add @buttery/components
+
+# npm
+npm install @buttery/components
+```
+
+## Styling
+
+### CSS-in-JS
+
+### Style Objects
+
+## Examples
+
+### Barebones
+
+### Adding keyboard functionality
+
+## APIs
+
+### `useDropdown`
