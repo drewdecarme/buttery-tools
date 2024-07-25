@@ -8,7 +8,7 @@ export const useDropdownMenu = <T extends HTMLElement = HTMLElement>(
   const targetRef = useRef<T | null>(null);
 
   const openMenu = useCallback(() => {
-    menuRef.current?.handleOpen(options);
+    menuRef.current?.handleOpen(undefined, options);
   }, [options]);
 
   const closeMenu = useCallback(() => {
@@ -16,7 +16,7 @@ export const useDropdownMenu = <T extends HTMLElement = HTMLElement>(
   }, []);
 
   const toggleMenu = useCallback(() => {
-    menuRef.current?.handleToggle(options);
+    menuRef.current?.handleToggle(undefined, options);
   }, [options]);
 
   return useMemo(

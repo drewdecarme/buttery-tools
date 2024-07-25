@@ -1,0 +1,68 @@
+---
+title: Dropdown Nav
+---
+
+# Dropdown Nav
+
+An abstraction that that extends upon the `useDropdown` hook to easily
+add accessible, keyboard and mouse aware, SSR enabled navigation dropdowns.
+
+These dropdowns can be as simple as a an unordered list with some links or as complex
+as one of those super dropdowns you see on really fancy technical websites.
+
+{/* example:"src/popovers/dropdown-nav/examples/DropdownNav.example.tsx" */}
+
+## Usage
+
+The `<DropdownNav />` and the `useDropdownNav` component and hook attempt to provide
+an out of the box way to easily and simply add any type of navigational dropdown that you
+would need for a navbar or a side nav bar.
+
+The below implementation is the `useDropdownNav` at it's most basic.
+
+{/* example:"src/popovers/dropdown-nav/examples/DropdownNavBarebones.example.tsx" */}
+
+The `useDropdownNav` hook has the exact same API as the `useDropdown` hook except that it
+requires an ID in order to link the `<button />` to the `<DropdownNav />` componnet.
+
+## Why not just `useDropdown`?
+
+The `useDropdownNav` hook allows for all of the same options that the `useDropdown` hook allows for
+but the `useDropdownNav` hook and the `<DropdownNav />` component enahnce the existing functionality
+to make the nodes fully acessible as well as automatically add the keyboard events that users expect
+from any navbar experience.
+
+The `useDropdownNav` hook is just an extension of the `useDropdown` hook to make reptetive elemnets of
+a web experience just a little bit easier and faster to implement.
+
+And this is true of the other `useDropdownXXXX` hooks and components.
+
+## Why not just `useDropdownMenu`?
+
+Simply put, it not accessible or SEO friendly. The `useDropdownMenu` (as explained in the documentation) employs
+the use of portals and dynamic node creation to:
+
+1. Render the menu outside the context of the HTML heirarchy
+2. Focus the user's attention to the first actionable Node
+3. Potentially reduce the client bundle down by code-splitting the content of the popover.
+
+All of the above points aim to remove the content of the `<DropdownMenu />` from the DOM until it
+is needed.
+
+### SEO
+
+On the contrary, [navigation menus need to be SEO friendly](https://www.concretecms.com/about/blog/web-design/the-ultimate-guide-to-navigation-bars-and-web-menus#why-navigation-matters) by always existing in the DOM so web crawlers
+can index the internal page links and develop a mapped understading of how the site flows. If the navigation
+menu is hidden before any user interaction, the site rank could fall due to cralwers inability to programatically
+navigate the site.
+
+### User Experience
+
+Imagine trying to shop for a car where you can't see any the car you want until you walk up to the parking spot
+that the car is sitting in. You don't get a good overview of what's in the lot until you actually roll up to the spot.
+This makes navigating that lot or viewing what car you want almost impossible and would most likely cause you to leave
+without even attemping to make a purchase.
+
+An navigation menu works the same way where since it always exsits in the DOM, screen readers and other
+assitive technologies aren't excluded from the same experience that fully abled users are. Assitive technologies
+can parse and read the information that it needs to give _everybody_ the same experience.

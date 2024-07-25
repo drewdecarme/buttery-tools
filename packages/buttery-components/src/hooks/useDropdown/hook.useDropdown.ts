@@ -6,9 +6,9 @@ import {
 } from "./hook.useDropdown.utils";
 
 export type DropdownRef = {
-  handleOpen: (options?: DropdownOptions) => void;
+  handleOpen: (e?: MouseEvent, options?: DropdownOptions) => void;
   handleClose: () => void;
-  handleToggle: (options?: DropdownOptions) => void;
+  handleToggle: (e?: MouseEvent, options?: DropdownOptions) => void;
 };
 
 export const useDropdown = <
@@ -43,34 +43,41 @@ export const useDropdown = <
     popoverRef.current?.hidePopover();
   }, []);
 
-  const openDropdown = useCallback(() => {
-    if (!popoverRef.current || !targetRef.current) {
-      console.warn(
-        "Popover and/or target aren't defined. Cannot determine position of popover."
-      );
-      return;
-    }
-
-    // show the popover
-    popoverRef.current.showPopover();
-
-    // position the dropdown element near the target
-    setDropdownPositionStyles(dropdownOptionsRef.current.dxPosition, {
-      arrow: dropdownOptionsRef.current.dxArrow,
-      offset: dropdownOptionsRef.current.dxOffset,
-      dropdownNode: popoverRef.current,
-      targetNode: targetRef.current,
-    });
-
-    // add the open class to run the transition/animations associated with .open
-    popoverRef.current.classList.add("open");
-  }, [targetRef]);
-
   const initDropdown = useCallback<(options?: DropdownOptions) => void>(
     (options) => {
       dropdownOptionsRef.current = processDropdownOptions(options);
     },
     []
+  );
+
+  const openDropdown = useCallback<DropdownRef["handleOpen"]>(
+    (_e, options) => {
+      if (!popoverRef.current || !targetRef.current) {
+        console.warn(
+          "Popover and/or target aren't defined. Cannot determine position of popover."
+        );
+        return;
+      }
+
+      if (options) {
+        initDropdown(options);
+      }
+
+      // show the popover
+      popoverRef.current.showPopover();
+
+      // position the dropdown element near the target
+      setDropdownPositionStyles(dropdownOptionsRef.current.dxPosition, {
+        arrow: dropdownOptionsRef.current.dxArrow,
+        offset: dropdownOptionsRef.current.dxOffset,
+        dropdownNode: popoverRef.current,
+        targetNode: targetRef.current,
+      });
+
+      // add the open class to run the transition/animations associated with .open
+      popoverRef.current.classList.add("open");
+    },
+    [targetRef, initDropdown]
   );
 
   return { dropdownRef, popoverRef, closeDropdown, initDropdown, openDropdown };
