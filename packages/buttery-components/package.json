@@ -42,6 +42,7 @@
     "@chromatic-com/storybook": "^1.6.1",
     "@linaria/core": "^6.2.0",
     "@ngneat/falso": "^7.2.0",
+    "@storybook/addon-a11y": "^8.2.6",
     "@storybook/addon-essentials": "^8.2.1",
     "@storybook/addon-interactions": "^8.2.1",
     "@storybook/addon-links": "^8.2.1",

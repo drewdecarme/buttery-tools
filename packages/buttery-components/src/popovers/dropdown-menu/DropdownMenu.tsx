@@ -1,4 +1,3 @@
-import { css } from "@linaria/core";
 import {
   type RefCallback,
   forwardRef,
@@ -9,6 +8,7 @@ import {
 import {
   type DropdownOptions,
   type DropdownRef,
+  type DropdownRefHandleOpen,
   useDropdown,
   usePortal,
 } from "../../hooks";
@@ -21,14 +21,8 @@ export type DropdownMenuPropsCustom = {
 export type DropdownMenuProps = DropdownMenuPropsNative &
   DropdownMenuPropsCustom;
 
-const articleCSS = css`
-  position: fixed;
-
-  &:popover-open {
-    position: fixed;
-    inset: unset;
-  }
-`;
+type EventKeyboard = ((e: KeyboardEvent) => void) | null;
+type EventMouse = ((e: MouseEvent) => void) | null;
 
 export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
   function DropdownMenu({ children, className, targetRef, ...restProps }, ref) {
@@ -41,13 +35,11 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
       openDropdown,
     } = useDropdown(targetRef);
 
-    const windowListenerKey = useRef<((e: KeyboardEvent) => void) | null>(null);
-    const windowListenerMouse = useRef<((e: MouseEvent) => void) | null>(null);
+    const windowListenerKey = useRef<EventKeyboard>(null);
+    const windowListenerMouse = useRef<EventMouse>(null);
 
-    const handleOpenDropdownMenu = useCallback<
-      (options?: DropdownOptions) => void
-    >(
-      (options) => {
+    const handleOpenDropdownMenu = useCallback<DropdownRefHandleOpen>(
+      (_e, options) => {
         initDropdown(options);
         openPortal();
       },
@@ -104,13 +96,13 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
     useImperativeHandle(ref, () => ({
       handleOpen: handleOpenDropdownMenu,
       handleClose: handleCloseDropdownMenu,
-      handleToggle: (options) => {
+      handleToggle: (_e, options) => {
         // this means that the popover is open
         if (popoverRef.current) {
           handleCloseDropdownMenu();
           // popover doesn't exist, thus is closed
         } else {
-          handleOpenDropdownMenu(options);
+          handleOpenDropdownMenu(undefined, options);
         }
       },
     }));
@@ -119,7 +111,7 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
       <Portal>
         <article
           {...restProps}
-          className={classes(articleCSS, className)}
+          className={classes(className)}
           ref={menuRefCallback}
         >
           {children}

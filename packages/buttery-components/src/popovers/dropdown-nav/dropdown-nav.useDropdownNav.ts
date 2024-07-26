@@ -45,7 +45,7 @@ export const useDropdownNav = (options: UseDropdownOptions) => {
 
   const targetProps = useMemo<JSX.IntrinsicElements["button"]>(
     () => ({
-      "aria-haspopup": true,
+      type: "button",
       "aria-expanded": false,
       "aria-controls": options.id,
       onKeyDown: handleTargetKeyDown,
@@ -56,7 +56,7 @@ export const useDropdownNav = (options: UseDropdownOptions) => {
   );
 
   const dropdownProps = useMemo<
-    Pick<JSX.IntrinsicElements["article"], "id"> & {
+    Pick<JSX.IntrinsicElements["article"], "id" | "role"> & {
       ref: typeof dropdownNavRef;
       targetRef: typeof targetRef;
     }

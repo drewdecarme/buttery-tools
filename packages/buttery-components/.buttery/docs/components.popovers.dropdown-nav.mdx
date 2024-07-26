@@ -12,6 +12,12 @@ as one of those super dropdowns you see on really fancy technical websites.
 
 {/* example:"src/popovers/dropdown-nav/examples/DropdownNav.example.tsx" */}
 
+This specific abstraction provides support when you would like to send the user to another page.
+
+> **NOTE:** It's important to note that this should be used when you want the user **to go somewhere**; not to **do something**.
+> If you're looking to provide some functionailty that isn't a navigation event, then you should consider using the
+> the [DropdownMenu](./components.popovers.dropdown-nav.mdx) component.
+
 ## Usage
 
 The `<DropdownNav />` and the `useDropdownNav` component and hook attempt to provide
@@ -66,3 +72,36 @@ without even attemping to make a purchase.
 An navigation menu works the same way where since it always exsits in the DOM, screen readers and other
 assitive technologies aren't excluded from the same experience that fully abled users are. Assitive technologies
 can parse and read the information that it needs to give _everybody_ the same experience.
+
+## Examples
+
+### Barebones
+
+This is the most basic instance you can get (that is without any styling)
+{/* example:"src/popovers/dropdown-nav/examples/DropdownNavBarebones.example.tsx" */}
+
+### Nested Menus
+
+Creating accessible menus is incredibly simple. Create another component that uses both the `<DropdownNav />` component and the hook to spread
+the controls over the target and dropdown. The Popover API handles the `topLevel` instance for you.
+{/* example:"src/popovers/dropdown-nav/examples/DropdownNavNestedNav.example.tsx" */}
+
+### Recursive Menus from Trees
+
+At some points, you might recieve a structure as a nested tree. This is extreamly common when dealing with content management
+systems like [Prismic]() or [Contentful](). In order to parse these and surface your nested sub-menus, you can write a recursive
+component that will render itself as far deep as the menus will go.
+
+Consider this structure:
+
+```ts
+type MenuTree = {
+  name: string;
+  root: string;
+  links: { display: string; to?: string; menu?: MenuTree }[];
+};
+```
+
+This type references itself when there is a `menu` option in the links. We can write a component that
+can process this type effectively while using the `<DropdownNav />` component and associated hook.
+{/* example:"src/popovers/dropdown-nav/examples/DropdownNavRecursion.example.tsx" */}

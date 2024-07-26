@@ -5,10 +5,15 @@ import {
   setDropdownPositionStyles,
 } from "./hook.useDropdown.utils";
 
+export type DropdownRefHandleOpen = (
+  e?: Event,
+  options?: DropdownOptions
+) => void;
+
 export type DropdownRef = {
-  handleOpen: (e?: MouseEvent, options?: DropdownOptions) => void;
+  handleOpen: DropdownRefHandleOpen;
   handleClose: () => void;
-  handleToggle: (e?: MouseEvent, options?: DropdownOptions) => void;
+  handleToggle: DropdownRefHandleOpen;
 };
 
 export const useDropdown = <
@@ -32,7 +37,7 @@ export const useDropdown = <
   }, []);
 
   const closeDropdown = useCallback(async () => {
-    if (!popoverRef.current) return;
+    if (!popoverRef.current || !targetRef.current) return;
 
     // add the close class to run the transition/animations with .close
     popoverRef.current.classList.replace("open", "close");
@@ -41,7 +46,10 @@ export const useDropdown = <
     await Promise.allSettled(animations.map((animation) => animation.finished));
     // hide the popover when the animations complete
     popoverRef.current?.hidePopover();
-  }, []);
+
+    popoverRef.current.ariaExpanded = "false";
+    targetRef.current.ariaExpanded = "false";
+  }, [targetRef.current]);
 
   const initDropdown = useCallback<(options?: DropdownOptions) => void>(
     (options) => {
@@ -58,6 +66,9 @@ export const useDropdown = <
         );
         return;
       }
+
+      popoverRef.current.ariaExpanded = "true";
+      targetRef.current.ariaExpanded = "true";
 
       if (options) {
         initDropdown(options);
