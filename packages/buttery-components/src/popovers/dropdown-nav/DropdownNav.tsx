@@ -7,19 +7,21 @@ import {
 import { type DropdownRef, useDropdown } from "../../hooks";
 import { classes } from "../../utils";
 
-export type DropdownNavPropsNative = JSX.IntrinsicElements["div"];
-export type DropdownNavPropsCustom = {
-  targetRef: React.MutableRefObject<HTMLElement | null>;
+export type DropdownNavPropsNative = JSX.IntrinsicElements["div"] & {
+  id: string;
 };
-export type DropdownNavProps = DropdownNavPropsNative & DropdownNavPropsCustom;
+export type DropdownNavProps = DropdownNavPropsNative;
 
 export const DropdownNav = forwardRef<DropdownRef, DropdownNavProps>(
-  function DropdownNav(
-    { children, className, targetRef, id, ...restProps },
-    ref
-  ) {
-    const { dropdownRef, popoverRef, closeDropdown, openDropdown } =
-      useDropdown(targetRef);
+  function DropdownNav({ children, className, id, ...restProps }, ref) {
+    const {
+      setDropdownRef,
+      dropdownRef,
+      targetRef,
+      closeDropdown,
+      openDropdown,
+      toggleDropdown,
+    } = useDropdown<HTMLElement>({ id });
 
     /**
      * Intercepts the ref and adds functionality
@@ -28,25 +30,15 @@ export const DropdownNav = forwardRef<DropdownRef, DropdownNavProps>(
     useImperativeHandle(ref, () => ({
       handleOpen: openDropdown,
       handleClose: closeDropdown,
-      handleToggle: (e, options) => {
-        const isPopoverOpen = popoverRef.current?.classList.contains("open");
-
-        // close the dropdown
-        if (isPopoverOpen) {
-          return closeDropdown();
-        }
-
-        // open the dropdown
-        openDropdown(e, options);
-      },
+      handleToggle: toggleDropdown,
     }));
 
     // when the portal opens, the article will mount and the popover ref callback will run
     // NOTE that this will only run one time
-    const dropdownNavRefCallback = useCallback<RefCallback<HTMLDivElement>>(
+    const articleRef = useCallback<RefCallback<HTMLElement>>(
       (node) => {
         // init the dropdown
-        dropdownRef(node);
+        setDropdownRef(node);
 
         // Close the dropdown when Escape is pressed
         window.addEventListener("keydown", (e) => {
@@ -59,7 +51,7 @@ export const DropdownNav = forwardRef<DropdownRef, DropdownNavProps>(
         window.addEventListener("click", (e) => {
           const clickedElement = e.target as HTMLElement;
           if (
-            popoverRef.current?.contains(clickedElement) ||
+            dropdownRef.current?.contains(clickedElement) ||
             targetRef.current?.contains(clickedElement)
           ) {
             return;
@@ -67,7 +59,7 @@ export const DropdownNav = forwardRef<DropdownRef, DropdownNavProps>(
           closeDropdown();
         });
       },
-      [closeDropdown, targetRef, popoverRef, dropdownRef]
+      [closeDropdown, targetRef, dropdownRef, setDropdownRef]
     );
 
     return (
@@ -75,7 +67,7 @@ export const DropdownNav = forwardRef<DropdownRef, DropdownNavProps>(
         {...restProps}
         id={id}
         className={classes(className)}
-        ref={dropdownNavRefCallback}
+        ref={articleRef}
       >
         {children}
       </article>

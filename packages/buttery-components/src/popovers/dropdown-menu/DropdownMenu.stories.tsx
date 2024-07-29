@@ -75,18 +75,16 @@ function MenuExample({
   arrow?: DropdownOptionArrow;
   offset?: number;
 }) {
-  const { targetRef, menuRef, closeMenu, toggleMenu } =
-    useDropdownMenu<HTMLButtonElement>({
-      dxPosition: label,
-      dxArrow: arrow,
-      dxOffset: offset,
-    });
+  const { targetProps, dropdownProps, closeMenu } = useDropdownMenu({
+    id: label,
+    dxPosition: label,
+    dxArrow: arrow,
+    dxOffset: offset,
+  });
   return (
     <>
       <button
-        type="button"
-        onClick={toggleMenu}
-        ref={targetRef}
+        {...targetProps}
         style={{
           position: "fixed",
           top,
@@ -100,8 +98,7 @@ function MenuExample({
         {label}
       </button>
       <DropdownMenu
-        ref={menuRef}
-        targetRef={targetRef}
+        {...dropdownProps}
         className={MenuCSS}
         style={{
           width: 300,

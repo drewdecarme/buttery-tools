@@ -38,9 +38,7 @@ export default () => {
           <a href="/">Home</a>
         </li>
         <li>
-          <button type="button" {...targetProps}>
-            Products
-          </button>
+          <button {...targetProps}>Products</button>
           <DropdownNav {...dropdownProps}>
             <ul>
               {products.map((product) => (

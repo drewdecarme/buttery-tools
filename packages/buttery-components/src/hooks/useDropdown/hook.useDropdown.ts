@@ -1,4 +1,5 @@
-import { type RefCallback, useCallback, useRef } from "react";
+import { useCallback, useRef } from "react";
+import { ensurePopover, ensureTarget, usePopover } from "../hook.usePopover";
 import type { DropdownOptions } from "./hook.useDropdown.types";
 import {
   processDropdownOptions,
@@ -6,7 +7,7 @@ import {
 } from "./hook.useDropdown.utils";
 
 export type DropdownRefHandleOpen = (
-  e?: Event,
+  e?: React.MouseEvent,
   options?: DropdownOptions
 ) => void;
 
@@ -16,80 +17,65 @@ export type DropdownRef = {
   handleToggle: DropdownRefHandleOpen;
 };
 
-export const useDropdown = <
-  TargetElement extends HTMLElement | null = HTMLElement,
-  DropdownElement extends HTMLElement | null = HTMLElement,
->(
-  targetRef: React.MutableRefObject<TargetElement | null>,
-  options?: DropdownOptions
+export const useDropdown = <PopoverElement extends HTMLElement>(
+  options: DropdownOptions
 ) => {
-  const popoverRef = useRef<DropdownElement | null>(null);
-  const dropdownOptionsRef = useRef<Required<DropdownOptions>>(
-    processDropdownOptions(options)
-  );
-
-  const dropdownRef = useCallback<RefCallback<DropdownElement>>((node) => {
-    if (!node) return;
-    popoverRef.current = node;
-    popoverRef.current.popover = "manual";
-    popoverRef.current.style.position = "fixed";
-    popoverRef.current.style.inset = "unset";
-  }, []);
-
-  const closeDropdown = useCallback(async () => {
-    if (!popoverRef.current || !targetRef.current) return;
-
-    // add the close class to run the transition/animations with .close
-    popoverRef.current.classList.replace("open", "close");
-    // wait for all of the animations to run with .close
-    const animations = popoverRef.current.getAnimations({ subtree: true });
-    await Promise.allSettled(animations.map((animation) => animation.finished));
-    // hide the popover when the animations complete
-    popoverRef.current?.hidePopover();
-
-    popoverRef.current.ariaExpanded = "false";
-    targetRef.current.ariaExpanded = "false";
-  }, [targetRef.current]);
-
-  const initDropdown = useCallback<(options?: DropdownOptions) => void>(
-    (options) => {
-      dropdownOptionsRef.current = processDropdownOptions(options);
-    },
-    []
-  );
+  const {
+    popoverRef,
+    targetRef,
+    setPopoverRef,
+    setTargetRef,
+    showPopover,
+    hidePopover,
+  } = usePopover<PopoverElement>({ id: options.id });
 
   const openDropdown = useCallback<DropdownRef["handleOpen"]>(
-    (_e, options) => {
-      if (!popoverRef.current || !targetRef.current) {
-        console.warn(
-          "Popover and/or target aren't defined. Cannot determine position of popover."
-        );
+    (e, options) => {
+      if (
+        !ensurePopover(popoverRef.current) ||
+        !ensureTarget(targetRef.current)
+      ) {
         return;
       }
 
-      popoverRef.current.ariaExpanded = "true";
-      targetRef.current.ariaExpanded = "true";
-
-      if (options) {
-        initDropdown(options);
-      }
-
-      // show the popover
-      popoverRef.current.showPopover();
+      const parsedOptions = processDropdownOptions(options);
 
       // position the dropdown element near the target
-      setDropdownPositionStyles(dropdownOptionsRef.current.dxPosition, {
-        arrow: dropdownOptionsRef.current.dxArrow,
-        offset: dropdownOptionsRef.current.dxOffset,
+      setDropdownPositionStyles(parsedOptions.dxPosition, {
+        arrow: parsedOptions.dxArrow,
+        offset: parsedOptions.dxOffset,
         dropdownNode: popoverRef.current,
         targetNode: targetRef.current,
       });
 
-      // add the open class to run the transition/animations associated with .open
-      popoverRef.current.classList.add("open");
+      // show the popover
+      showPopover();
     },
-    [targetRef, initDropdown]
+    [targetRef.current, popoverRef.current, showPopover]
   );
 
-  return { dropdownRef, popoverRef, closeDropdown, initDropdown, openDropdown };
+  const closeDropdown = useCallback(() => {
+    hidePopover();
+  }, [hidePopover]);
+
+  const toggleDropdown = useCallback<DropdownRefHandleOpen>(
+    (e, options) => {
+      const isPopoverOpen = popoverRef.current?.classList.contains("open");
+      if (isPopoverOpen) {
+        return closeDropdown();
+      }
+      openDropdown(e, options);
+    },
+    [popoverRef.current, closeDropdown, openDropdown]
+  );
+
+  return {
+    dropdownRef: popoverRef,
+    setDropdownRef: setPopoverRef,
+    targetRef,
+    setTargetRef,
+    closeDropdown,
+    openDropdown,
+    toggleDropdown,
+  };
 };

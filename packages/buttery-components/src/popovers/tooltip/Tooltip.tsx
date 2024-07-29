@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 import type { FC, MouseEventHandler, ReactElement } from "react";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { usePopover } from "../../hooks";
 import { classes } from "../../utils";
 
@@ -8,6 +8,11 @@ type TooltipSharedProps = Pick<
   JSX.IntrinsicElements["div"],
   "className" | "style"
 > & {
+  /**
+   * The string that will accessibly tie the control and the tooltip
+   * label together. This is required for accessibility reasons.
+   */
+  dxId: string;
   children: ReactElement<HTMLButtonElement>;
 };
 type TooltipCustomProps =
@@ -19,11 +24,7 @@ type TooltipCustomProps =
        * @example "Notifications"
        */
       dxType: "label";
-      /**
-       * The string that will accessibly tie the control and the tooltip
-       * label together. This is required for accessibility reasons.
-       */
-      dxId: string;
+
       /**
        * The string of text that should be displayed when the control
        * is hovered or focused
@@ -55,9 +56,13 @@ export const Tooltip: FC<TooltipProps> = ({
   children,
   className,
   style,
+  dxId,
   ...restProps
 }) => {
-  const { popoverRef, showPopover, hidePopover } = usePopover();
+  const { setPopoverRef, setTargetRef, showPopover, hidePopover } =
+    usePopover<HTMLDivElement>({
+      id: dxId,
+    });
 
   const handleFocusIn = useCallback<
     MouseEventHandler<HTMLButtonElement>
@@ -88,12 +93,12 @@ export const Tooltip: FC<TooltipProps> = ({
           {React.cloneElement(React.Children.only(children), {
             // @ts-expect-error string's aren't recognized. still valid though
             "aria-labelledby": restProps.dxId,
+            ref: setTargetRef,
             ...tooltipHandlers,
           })}
           <div
             role="tooltip"
-            id={restProps.dxId}
-            ref={popoverRef}
+            ref={setPopoverRef}
             style={style}
             className={classes(divCSS, className)}
           >

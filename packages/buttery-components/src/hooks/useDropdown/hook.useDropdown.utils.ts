@@ -69,8 +69,8 @@ const arrowClassNames: { [key in DropdownOptionPosition]: string } = {
 };
 
 export const processDropdownOptions = (
-  options?: DropdownOptions
-): Required<DropdownOptions> => ({
+  options?: Omit<DropdownOptions, "id">
+): Required<Omit<DropdownOptions, "id">> => ({
   dxPosition: options?.dxPosition || "bottom-left",
   dxArrow: {
     size: options?.dxArrow?.size ?? 0,

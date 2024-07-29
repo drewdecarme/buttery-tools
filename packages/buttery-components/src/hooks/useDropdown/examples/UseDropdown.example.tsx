@@ -1,17 +1,18 @@
-import { useRef } from "react";
 import { useDropdown } from "../hook.useDropdown";
 
-export default function ExampleUseDropdown() {
-  const targetRef = useRef<HTMLButtonElement | null>(null);
-  const { openDropdown, closeDropdown, dropdownRef } = useDropdown(targetRef);
+export default () => {
+  const { openDropdown, closeDropdown, setDropdownRef, setTargetRef } =
+    useDropdown({
+      id: "use-dropdown",
+    });
 
   return (
     <>
-      <button type="button" ref={targetRef} onClick={openDropdown}>
+      <button type="button" ref={setTargetRef} onClick={openDropdown}>
         Open Dropdown
       </button>
       <article
-        ref={dropdownRef}
+        ref={setDropdownRef}
         style={{
           border: "1px solid red",
         }}
@@ -23,4 +24,4 @@ export default function ExampleUseDropdown() {
       </article>
     </>
   );
-}
+};

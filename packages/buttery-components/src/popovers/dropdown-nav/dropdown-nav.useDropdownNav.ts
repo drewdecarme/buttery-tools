@@ -2,15 +2,10 @@ import { useCallback, useMemo, useRef } from "react";
 import type { DropdownOptions, DropdownRef } from "../../hooks";
 
 export type UseDropdownOptions = Partial<DropdownOptions> & {
-  /**
-   * The ID of the dropdown. This id is used for accessibility purposes to ensure
-   * that dropdown and the target have the necessary aria-roles.
-   */
   id: string;
 };
 export const useDropdownNav = (options: UseDropdownOptions) => {
   const dropdownNavRef = useRef<DropdownRef | null>(null);
-  const targetRef = useRef<HTMLButtonElement | null>(null);
 
   const openNav = useCallback(() => {
     dropdownNavRef.current?.handleOpen(undefined, options);
@@ -43,28 +38,22 @@ export const useDropdownNav = (options: UseDropdownOptions) => {
     [toggleNav]
   );
 
-  const targetProps = useMemo<JSX.IntrinsicElements["button"]>(
-    () => ({
-      type: "button",
-      "aria-expanded": false,
-      "aria-controls": options.id,
+  const targetProps = useMemo<JSX.IntrinsicElements["button"]>(() => {
+    return {
       onKeyDown: handleTargetKeyDown,
       onClick: toggleNav,
-      ref: targetRef,
-    }),
-    [handleTargetKeyDown, options.id, toggleNav]
-  );
+      "aria-controls": options.id,
+    };
+  }, [handleTargetKeyDown, toggleNav, options.id]);
 
   const dropdownProps = useMemo<
-    Pick<JSX.IntrinsicElements["article"], "id" | "role"> & {
+    Pick<Required<JSX.IntrinsicElements["article"]>, "id"> & {
       ref: typeof dropdownNavRef;
-      targetRef: typeof targetRef;
     }
   >(
     () => ({
       id: options.id,
       ref: dropdownNavRef,
-      targetRef,
     }),
     [options.id]
   );
