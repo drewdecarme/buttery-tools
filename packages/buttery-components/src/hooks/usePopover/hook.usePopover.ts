@@ -49,8 +49,6 @@ export const usePopover = <PopoverElement extends HTMLElement>({
       if (!node) return;
       popoverRef.current = node;
       popoverRef.current.popover = "manual";
-      popoverRef.current.style.position = "fixed";
-      popoverRef.current.style.inset = "unset";
       popoverRef.current.id = id;
 
       const popoverId = popoverRef.current.id;

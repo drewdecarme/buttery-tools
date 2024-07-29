@@ -4,30 +4,30 @@ title: useDropdown
 
 # useDropdown
 
-An full acssible & opionated abstraction that adds functionality to any clickable target and any DOM node
-to turn it into a popover using the Popover API that is positioned close to the target that launched it.
+Extends the `usePopover` hook to turn any node into a custom, accessible dropdown component inclusive of
+custom positioning, gaps, arrows, and keyboard navigation.
 
 This hook is great for easily turning any node into a context menu, navbar menu etc...
+
 {/* example:"src/hooks/useDropdown/examples/UseDropdown.example.tsx" */}
 
 ## Usages
 
-The `useDropdown` hook boasts an easy to understand API as well as an API that is easy to integrate into other Component models (e.g. `<DropdownMenu />`, and `<DropdownNav />`). This hook
-easlily allow us to duplicate the dropdown functionality (arrows, positioning, viewport collision detection, etc...) into any other
-Component that requires it.
+The `useDropdown` extends the `usePopover` link to essentially add more functionality and keyboard interactiveity to a standard popover node.
+This abstraction enables us to create more complex popovers that can be easily integrated into component models (e.g. `<DropdownMenu />`, and `<DropdownNav />`).
 
-This hook is the primary controller for controlling other functionality in some of the Buttery Components inside of the components section.
+This hook is utilized in any `DropdownXXX` component, but also allows the user to easily integrate the dropdown functionality (arrows, positioning, viewport
+collision detection, etc...) into any other Component or HTML node that requires it.
 
 {/* fence:"src/hooks/useDropdown/examples/UseDropdown.example.tsx" */}
 
-### Why not use `popovertarget`?
+### Why not use `usePopover`?
 
-There are a few reasons why using the [popover APIS native HTML attributes](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API#html_attributes)
-doesn't fully satisfy our needs here.
+[On top of all of the reasons for using the `usePopover` hook](./hooks.usePopover.mdx), there are additional reasons we would use this hook instead of just simply the `usePopover`.
 
-1. **Animations** - The hook uses some standard JS interfaces to easily await the conclusion of any animations attached to the `dropdownNode`. This makes it way eaiser to define CSS animations that add character to your elements.
-2. **Positioning** - Depending upon the options that are declared with the `useDropdown` hook, a set of styles and CSS variable tokens are created to easily position the `popover` close to it's target. This kind of automatic style calculation falls outside of the Popover API specification.
-3. **Typescript** - Using hooks alllows us to get more speficic with the attributes required of the nodes we're using. It also fits will into the JS model that we have already adapted in mordern front-end development.
+1. **Positioning** - Depending upon the options that are declared with the `useDropdown` hook, a set of styles and CSS variable tokens are created to easily position the `popover` close to it's target. This kind of automatic style calculation falls outside of the Popover API specification.
+2. **Arrows** - It's a common treatment to see arrows included with popovers to indicate where the target was that launched it. This hook calculates the poisitoin of the arrow based upon size and positioning.
+   {/* 4. **Keyboard Functionality** - By their nature, Popovers lack the typeof semantics that a dialog would. This hook adds some accessible and default listeners to make your dropdown behave as you would expect it would. */}
 
 ## Installation
 
@@ -48,8 +48,6 @@ npm install @buttery/components
 ## Examples
 
 ### Barebones
-
-### Adding keyboard functionality
 
 ## APIs
 
