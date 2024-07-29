@@ -1,0 +1,52 @@
+---
+title: usePortal
+---
+
+# usePortal
+
+Returns a `<Portal />` component and imperative controls to launch and create a nested React component
+outside of the current DOM tree.
+
+The example below gives you an understanding of how to manage the portal as well as position the portal relative
+to the target that instantiated it.
+
+{/* example:"src/hooks/usePortal/examples/UsePortal.example.tsx" */}
+
+## Usages
+
+This hook utilizes the [useDynamicNode](./hooks.useDynamicNode.mdx) hook to create a node at the root of the document
+in which to attach a React portal to. Imperative functions are also exported along with the component to easily manage
+when the portal should render it's children and when not to.\_createMdxContent
+
+By default, this component hides the content of the portal from the DOM until it reaches an `isOpen` state. Once `isOpen=true`
+then the portal will create a dynamic node, attach it to the root of the DOM and then render the children of the portal into that
+dynamic node.
+
+> **NOTE** It's important to note that since the DOM node is being placed outside of the current tree, any relatively or inherited
+> styling will not apply. It's up to the developer to position the content of the portal where it should go.
+
+## Installation
+
+```bash
+# yarn
+yarn add @buttery/components
+
+# npm
+npm install @buttery/components
+```
+
+## Styling
+
+### CSS-in-JS
+
+### Style Objects
+
+## Examples
+
+### Barebones (WIP)
+
+### Positioning the portal (WIP)
+
+## APIs
+
+### `usePortal`

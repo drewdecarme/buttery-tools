@@ -1,10 +1,9 @@
-import type { Meta } from "@storybook/react";
-import { usePortal } from "./hook.usePortal";
-import { breakpointMap, useBreakpoint } from "./hook.useBreakpoint";
-import { useToggle } from "./hook.useToggle";
-import { useCarousel } from "./hook.useCarousel";
 import { randFullName, randIceHockeyTeam, randJobTitle } from "@ngneat/falso";
+import type { Meta } from "@storybook/react";
 import { useRef } from "react";
+import { breakpointMap, useBreakpoint } from "./hook.useBreakpoint";
+import { useCarousel } from "./hook.useCarousel";
+import { useToggle } from "./hook.useToggle";
 
 const meta: Meta = {
   title: "Utils / Hooks",
@@ -15,24 +14,14 @@ const meta: Meta = {
 
 export default meta;
 
-export const UsePortal = () => {
-  const { togglePortal, Portal } = usePortal();
-
-  return (
-    <div>
-      <button onClick={togglePortal}>Toggle Portal</button>
-      <Portal>
-        {/* This content can be dynamically imported */}
-        <div>Portal Content</div>
-      </Portal>
-    </div>
-  );
-};
-
 export const UseToggle = () => {
   const [isOpen, toggle] = useToggle();
 
-  return <button onClick={toggle}>Click to {isOpen ? "close" : "open"}</button>;
+  return (
+    <button type="button" onClick={toggle}>
+      Click to {isOpen ? "close" : "open"}
+    </button>
+  );
 };
 
 export const UseCarousel = () => {
