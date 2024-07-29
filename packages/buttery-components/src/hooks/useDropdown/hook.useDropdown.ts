@@ -30,7 +30,7 @@ export const useDropdown = <PopoverElement extends HTMLElement>(
   } = usePopover<PopoverElement>({ id: options.id });
 
   const openDropdown = useCallback<DropdownRef["handleOpen"]>(
-    (e, options) => {
+    (e) => {
       if (
         !ensurePopover(popoverRef.current) ||
         !ensureTarget(targetRef.current)
@@ -40,6 +40,9 @@ export const useDropdown = <PopoverElement extends HTMLElement>(
 
       const parsedOptions = processDropdownOptions(options);
 
+      // show the popover
+      showPopover();
+
       // position the dropdown element near the target
       setDropdownPositionStyles(parsedOptions.dxPosition, {
         arrow: parsedOptions.dxArrow,
@@ -47,26 +50,19 @@ export const useDropdown = <PopoverElement extends HTMLElement>(
         dropdownNode: popoverRef.current,
         targetNode: targetRef.current,
       });
-
-      // show the popover
-      showPopover();
     },
-    [targetRef.current, popoverRef.current, showPopover]
+    [targetRef.current, popoverRef.current, showPopover, options]
   );
-
-  const closeDropdown = useCallback(() => {
-    hidePopover();
-  }, [hidePopover]);
 
   const toggleDropdown = useCallback<DropdownRefHandleOpen>(
     (e, options) => {
       const isPopoverOpen = popoverRef.current?.classList.contains("open");
       if (isPopoverOpen) {
-        return closeDropdown();
+        return hidePopover();
       }
       openDropdown(e, options);
     },
-    [popoverRef.current, closeDropdown, openDropdown]
+    [popoverRef.current, hidePopover, openDropdown]
   );
 
   return {
@@ -74,7 +70,7 @@ export const useDropdown = <PopoverElement extends HTMLElement>(
     setDropdownRef: setPopoverRef,
     targetRef,
     setTargetRef,
-    closeDropdown,
+    closeDropdown: hidePopover,
     openDropdown,
     toggleDropdown,
   };

@@ -30,7 +30,7 @@ export type DropdownOptions = {
    * Where the menu should display when open relative
    * to the clicked target. The way that this can be
    * interpreted is to read it as **"I want my menu to display
-   * next to the targets `bottom-left` corner."**.
+   * relative to the targets `bottom-left` corner."**.
    * @default 'bottom-left'
    */
   dxPosition?: DropdownOptionPosition;

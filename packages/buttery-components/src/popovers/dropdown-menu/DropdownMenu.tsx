@@ -31,16 +31,12 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
       targetRef,
       closeDropdown,
       openDropdown,
-    } = useDropdown<HTMLElement>({ id: options.id });
+    } = useDropdown<HTMLElement>(options);
 
     const windowListenerKey = useRef<EventKeyboard>(null);
     const windowListenerMouse = useRef<EventMouse>(null);
 
-    const handleOpenDropdownMenu = useCallback<DropdownRefHandleOpen>(() => {
-      openPortal();
-    }, [openPortal]);
-
-    const handleCloseDropdownMenu = useCallback(() => {
+    const handleClose = useCallback(() => {
       // close the dropdown
       closeDropdown();
       // remove event listeners
@@ -49,20 +45,18 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
       window.removeEventListener("click", windowListenerMouse.current);
       // close the portal afterwards
       closePortal();
-      // clear the ref
-      dropdownRef.current = null;
-    }, [closePortal, closeDropdown, dropdownRef]);
+    }, [closePortal, closeDropdown]);
 
     useImperativeHandle(ref, () => ({
-      handleOpen: handleOpenDropdownMenu,
-      handleClose: handleCloseDropdownMenu,
+      handleOpen: openPortal,
+      handleClose,
       handleToggle: (_e, options) => {
         // this means that the popover is open
         if (dropdownRef.current) {
-          handleCloseDropdownMenu();
+          handleClose();
           // popover doesn't exist, thus is closed
         } else {
-          handleOpenDropdownMenu(undefined, options);
+          openPortal();
         }
       },
     }));
@@ -72,12 +66,13 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
       (node) => {
         // open the dropdown
         setDropdownRef(node);
-        openDropdown(undefined, options);
+
+        openDropdown();
 
         // add event listeners
         windowListenerKey.current = (e) => {
           if (e.key !== "Escape") return;
-          handleCloseDropdownMenu();
+          handleClose();
         };
         windowListenerMouse.current = (e) => {
           const clickedElement = e.target as HTMLElement;
@@ -89,19 +84,12 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
             // target that launched the menu. Do nothing here.
             return;
           }
-          handleCloseDropdownMenu();
+          handleClose();
         };
         window.addEventListener("keydown", windowListenerKey.current);
         window.addEventListener("click", windowListenerMouse.current);
       },
-      [
-        options,
-        handleCloseDropdownMenu,
-        targetRef,
-        dropdownRef,
-        setDropdownRef,
-        openDropdown,
-      ]
+      [handleClose, targetRef, dropdownRef, setDropdownRef, openDropdown]
     );
 
     return (

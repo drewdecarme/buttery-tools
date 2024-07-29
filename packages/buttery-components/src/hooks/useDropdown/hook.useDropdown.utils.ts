@@ -148,6 +148,8 @@ function calculateDropdownPosition(
     popover: { height: number; width: number };
   }
 ) {
+  console.log("popover-dimensions", JSON.stringify(popover, null, 2));
+
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
 
