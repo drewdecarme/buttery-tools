@@ -1,53 +1,35 @@
-import { type ForwardedRef, type ReactNode, forwardRef } from "react";
+import { type ForwardedRef, forwardRef } from "react";
 
-import {
-  type ModalDefaultState,
-  type ModalRef,
-  type UseModalOptions,
-  useModalDialog,
-} from "../../hooks";
+import type { ModalDefaultState, ModalRef } from "../../hooks";
 import { classes } from "../../utils";
-import { ModalProvider } from "../Modal.context";
-import styles from "./drawer.styles";
+import { Modal, type ModalPropsCustom, type ModalPropsNative } from "../Modal";
 
-export type DrawerPropsNative = Omit<JSX.IntrinsicElements["dialog"], "ref">;
-export type DrawerPropsCustom = Pick<
-  UseModalOptions,
-  "onClose" | "closeOnBackdropClick"
-> & {
-  children: ReactNode;
-  dxOrientation?:
-    | "left-to-right"
-    | "right-to-left"
-    | "top-to-bottom"
-    | "bottom-to-top";
+export type DrawerPropsNative = ModalPropsNative;
+export type DrawerPropsCustom = ModalPropsCustom & {
+  dxOrientation?: "slide-left" | "slide-right" | "slide-down" | "slide-up";
 };
 export type DrawerProps = DrawerPropsNative & DrawerPropsCustom;
 
 export const Drawer = forwardRef(function Drawer<T extends ModalDefaultState>(
   {
     children,
-    dxOrientation = "left-to-right",
+    dxOrientation = "slide-left",
     className,
     ...restProps
   }: DrawerProps,
   ref: ForwardedRef<ModalRef<T>>
 ) {
-  const { Portal, dialogRef, dialogState, closeModal } = useModalDialog<T>({
-    ref,
-    ...restProps,
-  });
-
   return (
-    <Portal>
-      <ModalProvider initialState={dialogState} closeModal={closeModal}>
-        <dialog
-          ref={dialogRef}
-          className={classes("drawer", styles, dxOrientation, className)}
-        >
-          {children}
-        </dialog>
-      </ModalProvider>
-    </Portal>
+    <Modal
+      {...restProps}
+      className={classes("drawer", dxOrientation, className)}
+      // @ts-expect-error The ref's matchup however TS doesn't like the fact that you
+      // can instantiate it with a different state. We're not concerned with this since
+      // we're only using this component as a ref proxy and don't care about the types
+      // internally to this component
+      ref={ref}
+    >
+      {children}
+    </Modal>
   );
 });
