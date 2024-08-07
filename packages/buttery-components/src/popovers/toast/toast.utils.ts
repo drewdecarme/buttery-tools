@@ -1,3 +1,5 @@
+import type { FC } from "react";
+
 export const toastContainerId = "toast-container";
 
 export function deCapitalizeFirstLetter(string: string) {
@@ -8,24 +10,57 @@ export function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export const getToastOptions = <
-  ToastOptions extends Record<string, string | number | boolean>,
->(
-  node: Node
-): ToastOptions & { id: string } => {
-  const toast = node as HTMLElement;
+export type ToastOptions = {
+  closeToast: () => void;
+};
 
-  const options = Object.entries(toast.dataset).reduce<ToastOptions>(
-    (accum, [dataKey, dataValue]) => {
-      if (!dataKey.startsWith("option")) return accum;
-      const plainKey = deCapitalizeFirstLetter(dataKey.replace("option", ""));
-      return Object.assign(accum, { [plainKey]: dataValue });
-    },
-    {} as ToastOptions
-  );
+export type ToastComponent<T extends Record<string, unknown>> = FC<
+  T & ToastOptions
+>;
+
+const globalRefId = "buttery-toasts";
+
+export const getToasterOptionsMap = <T extends Record<string, unknown>>() => {
+  if (!window[globalRefId]) {
+    window[globalRefId] = new Map<string, T>();
+  }
+  return window[globalRefId] as Map<string, T>;
+};
+
+export const getToastOptions = <T extends Record<string, unknown>>(
+  node: Node
+): T & { id: string } => {
+  const toastNode = node as HTMLElement;
+  const toastId = toastNode.id;
+  const optionsMap = getToasterOptionsMap<T>();
+  const options = optionsMap.get(toastId);
+
+  if (!options) {
+    throw new Error(
+      `Cannot find options for "${toastId}". This should not have happened. Please log an issue.`
+    );
+  }
 
   return {
-    id: toast.getAttribute("name") as string,
+    id: toastId,
     ...options,
   };
+};
+
+export const deleteToastOptions = <T extends Record<string, unknown>>(
+  toastId: string
+) => {
+  const optionsMap = getToasterOptionsMap<T>();
+  console.log("Deleting toast options", toastId);
+  optionsMap.delete(toastId);
+};
+
+export const setToastOptions = <T>(
+  options: T & { closeToast: () => void }
+): string => {
+  const optionsMap = getToasterOptionsMap();
+  const toastId = window.crypto.randomUUID();
+
+  optionsMap.set(toastId, options);
+  return toastId;
 };

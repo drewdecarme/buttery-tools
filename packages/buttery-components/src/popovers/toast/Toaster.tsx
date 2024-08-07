@@ -1,11 +1,22 @@
 import { type FC, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { Toast } from "./Toast";
-import { getToastOptions, toastContainerId } from "./toast.utils";
+import {
+  deleteToastOptions,
+  getToastOptions,
+  toastContainerId,
+} from "./toast.utils";
 
-export function Toaster<
-  ToastComponentProps extends Record<string, string | number | boolean>,
->({ ToastComponent }: { ToastComponent: FC<ToastComponentProps> }) {
+export function Toaster<ToastComponentProps extends Record<string, unknown>>({
+  ToastComponent,
+  id,
+}: {
+  ToastComponent: FC<ToastComponentProps>;
+  /**
+   * The ID of the toaster where the toasts will be added. A mutation observer
+   */
+  id?: string;
+}) {
   const [toasts, setToasts] = useState<{ [key: string]: ToastComponentProps }>(
     {}
   );
@@ -34,6 +45,7 @@ export function Toaster<
             const toastProps = getToastOptions(removedNode);
             setToasts((prevState) => {
               const { [toastProps.id]: deletedToast, ...restState } = prevState;
+              deleteToastOptions(toastProps.id);
               return restState;
             });
           }
@@ -58,14 +70,17 @@ export function Toaster<
 
   return (
     <>
-      <div id={toastContainerId} style={{ display: "none" }} ref={toasterRef} />
+      <div
+        id={id ?? toastContainerId}
+        style={{ display: "none" }}
+        ref={toasterRef}
+      />
       {Object.values(toasts).length > 0 &&
         ReactDOM.createPortal(
-          Object.values(toasts).map((toast) => {
-            const id = toast.id.toString();
+          Object.entries(toasts).map(([id, toastProps]) => {
             return (
               <Toast key={id} id={id}>
-                <ToastComponent {...toast} />
+                <ToastComponent {...toastProps} />
               </Toast>
             );
           }),
