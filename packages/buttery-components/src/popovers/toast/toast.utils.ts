@@ -18,13 +18,11 @@ export type ToastComponent<T extends Record<string, unknown>> = FC<
   T & ToastOptions
 >;
 
-const globalRefId = "buttery-toasts";
-
 export const getToasterOptionsMap = <T extends Record<string, unknown>>() => {
-  if (!window[globalRefId]) {
-    window[globalRefId] = new Map<string, T>();
+  if (!window.buttery_toasts) {
+    window.buttery_toasts = new Map<string, T>();
   }
-  return window[globalRefId] as Map<string, T>;
+  return window.buttery_toasts as Map<string, T>;
 };
 
 export const getToastOptions = <T extends Record<string, unknown>>(

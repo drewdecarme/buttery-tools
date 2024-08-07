@@ -55,10 +55,19 @@ For this use case, you can create multiple `<Toaster />` components and add `id`
 the toaster and the `useToast` hook. The result will be transparent to the user but
 this might provide some more isolated DX for certain pieces of the app.
 
+{/* example:"src/popovers/toast/examples/ToastMultipleToasters.example.tsx" */}
+
+This example consolidates the `ToastComponent` for each toaster inline into the `ToastComponent`
+prop of the toaster. To ensure that the types matchup, the `<Toaster />` is a generic functional
+component that can take the ToastComponentProps as a generic.
+
 > **Monorepo NOTE**: This method also allows you to use the Toast component across multiple
 > packages to support different use cases, but when used in one app, the user will not be able
 > to discerne any difference. (e.g. it will look like the same toast mechanism regardless
 > of where it's used)
+
+Each toaster can share the same styles since their references to props are maintained
+in a completely different mechanism
 
 ## API
 

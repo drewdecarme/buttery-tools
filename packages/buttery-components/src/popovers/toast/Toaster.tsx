@@ -2,24 +2,28 @@ import { type FC, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { Toast } from "./Toast";
 import {
+  type ToastComponent,
+  type ToastOptions,
   deleteToastOptions,
   getToastOptions,
   toastContainerId,
 } from "./toast.utils";
 
-export function Toaster<ToastComponentProps extends Record<string, unknown>>({
+export function Toaster<
+  ToastComponentProps extends { [key: string]: unknown },
+>({
   ToastComponent,
   id,
 }: {
-  ToastComponent: FC<ToastComponentProps>;
+  ToastComponent: ToastComponent<ToastComponentProps>;
   /**
    * The ID of the toaster where the toasts will be added. A mutation observer
    */
   id?: string;
 }) {
-  const [toasts, setToasts] = useState<{ [key: string]: ToastComponentProps }>(
-    {}
-  );
+  const [toasts, setToasts] = useState<{
+    [key: string]: ToastComponentProps & ToastOptions;
+  }>({});
   const mutationObserverRef = useRef<MutationObserver | undefined>(undefined);
   const toasterRef = useRef<HTMLDivElement | null>(null);
 
@@ -33,7 +37,9 @@ export function Toaster<ToastComponentProps extends Record<string, unknown>>({
 
         if (mutation.addedNodes.length) {
           for (const addedNode of mutation.addedNodes) {
-            const toastProps = getToastOptions<ToastComponentProps>(addedNode);
+            const toastProps = getToastOptions<
+              ToastComponentProps & ToastOptions
+            >(addedNode);
             setToasts((prevState) => ({
               ...prevState,
               [toastProps.id]: toastProps,

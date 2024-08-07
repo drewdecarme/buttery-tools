@@ -1,9 +1,5 @@
 import { useCallback, useMemo } from "react";
-import {
-  getToasterOptionsMap,
-  setToastOptions,
-  toastContainerId,
-} from "./toast.utils";
+import { setToastOptions, toastContainerId } from "./toast.utils";
 
 export const useToast = <
   ToastOptions extends Record<string, unknown>,
