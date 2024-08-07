@@ -36,16 +36,19 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
     const windowListenerKey = useRef<EventKeyboard>(null);
     const windowListenerMouse = useRef<EventMouse>(null);
 
-    const handleClose = useCallback(() => {
+    const handleClose = useCallback(async () => {
       // close the dropdown
-      closeDropdown();
+      await closeDropdown();
+      dropdownRef.current = null;
       // remove event listeners
       if (!windowListenerKey.current || !windowListenerMouse.current) return;
       window.removeEventListener("keydown", windowListenerKey.current);
       window.removeEventListener("click", windowListenerMouse.current);
       // close the portal afterwards
       closePortal();
-    }, [closePortal, closeDropdown]);
+
+      dropdownRef.current = null;
+    }, [closePortal, closeDropdown, dropdownRef]);
 
     useImperativeHandle(ref, () => ({
       handleOpen: openPortal,
@@ -76,16 +79,18 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
         };
         windowListenerMouse.current = (e) => {
           const clickedElement = e.target as HTMLElement;
-          if (
-            dropdownRef.current?.contains(clickedElement) ||
-            targetRef.current?.contains(clickedElement)
-          ) {
-            // clicked either on a child of the popover or the
-            // target that launched the menu. Do nothing here.
+          const clickedDropdownChild =
+            dropdownRef.current?.contains(clickedElement);
+          const clickedTargetChild =
+            targetRef.current?.contains(clickedElement);
+
+          if (clickedTargetChild) return;
+          if (clickedDropdownChild && clickedElement.nodeName !== "BUTTON")
             return;
-          }
+
           handleClose();
         };
+
         window.addEventListener("keydown", windowListenerKey.current);
         window.addEventListener("click", windowListenerMouse.current);
       },

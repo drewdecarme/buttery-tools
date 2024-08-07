@@ -2,7 +2,7 @@
 title: usePortal
 ---
 
-# usePortal
+# `usePortal`
 
 Returns a `<Portal />` component and imperative controls to launch and create a nested React component
 outside of the current DOM tree.
@@ -16,7 +16,7 @@ to the target that instantiated it.
 
 This hook utilizes the [useDynamicNode](./hooks.useDynamicNode.mdx) hook to create a node at the root of the document
 in which to attach a React portal to. Imperative functions are also exported along with the component to easily manage
-when the portal should render it's children and when not to.\_createMdxContent
+when the portal should render it's children and when not to.
 
 By default, this component hides the content of the portal from the DOM until it reaches an `isOpen` state. Once `isOpen=true`
 then the portal will create a dynamic node, attach it to the root of the DOM and then render the children of the portal into that

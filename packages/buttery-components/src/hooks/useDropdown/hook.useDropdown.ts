@@ -54,6 +54,7 @@ export const useDropdown = <PopoverElement extends HTMLElement>(
         return;
       }
 
+      // apply the options
       const parsedOptions = processDropdownOptions(options);
 
       // show the popover
