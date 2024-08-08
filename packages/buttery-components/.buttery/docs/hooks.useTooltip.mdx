@@ -1,0 +1,59 @@
+---
+title: useTooltip
+---
+
+# useTooltip
+
+A fully accessible, semantically correct, and SSR enabled hook
+for creating a bubble near a focusable target to provide clarifying
+or auxialry information to the user surrounding the use of that target.
+
+{/* example:"src/hooks/useTooltip/examples/UseTooltip.example.tsx" */}
+
+A tooltip can be a
+
+# Styling
+
+## Examples
+
+### Barebones
+
+### Toggletip
+
+A toggle tip is exactly the same thing as a tooltip in what it surfaces, but it replaces an action
+that would normally be associated with the button and instead uses the click event to surface the tooltip.
+
+This is espcially helpful when you want to click on something and reveal some content instead of hovering/
+mousing over the content to view it.
+
+You can easily enable this functionality by changing the `dxStrategy` in the `useTooltip` hook.
+
+{/* example:"src/hooks/useTooltip/examples/UseTooltipToggletip.example.tsx" */}
+
+### Accessible burst count
+
+Naturally, as with any application, there are instances where actions are going to be ambiguous
+which thus makes a target ambiguous. Let's take a "like" button for instance shown in the example below.
+
+{/* example:"src/hooks/useTooltip/examples/UseTooltipWithCount.example.tsx" */}
+
+There is a primary action which associated with _**smashing that like button**_, but to screen readers it's not
+ultimately clear unless we add some more content.
+
+Luckily, we can add another `id` to the content inside of the button to further context how many likes
+there are associated with that button. You can see that the `dxLabeledBy` prop takes in a space delimaited
+value which tells the screen reader how to interpret the button.
+
+```ts
+const { targetProps, tooltipProps } = useTooltip({
+  id: "likes-label",
+  dxType: "label",
+  // readers find the ids and then read them sequentually
+  dxLabeledBy: "likes-count likes-label",
+  dxPosition: "top-center",
+  dxArrow: {
+    size: 8,
+    color: "black",
+  },
+});
+```

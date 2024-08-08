@@ -3171,7 +3171,7 @@ __metadata:
     next: "npm:^14.2.4"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    react-router-dom: "npm:^6.23.1"
+    react-router-dom: "npm:^6.26.0"
     rehype-autolink-headings: "npm:^7.1.0"
     rehype-parse: "npm:^9.0.0"
     rehype-shiki: "npm:^0.0.9"
@@ -3343,7 +3343,7 @@ __metadata:
     immer: "npm:^10.1.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    react-router-dom: "npm:^6.23.1"
+    react-router-dom: "npm:^6.26.0"
     ts-pattern: "npm:^5.2.0"
     tsx: "npm:^4.15.7"
     typescript: "npm:^5.5.2"
@@ -6555,6 +6555,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@remix-run/router@npm:1.19.0":
+  version: 1.19.0
+  resolution: "@remix-run/router@npm:1.19.0"
+  checksum: 10c0/8c1503a535035f43747fea063b027aa841690c19a6bd8b6251c53d3aab4d4cae89b0bd4809dc7ab69fdbe61897f43c2683b82fc4cdc5785f9166cf2ea60e5932
+  languageName: node
+  linkType: hard
+
 "@remix-run/serve@npm:^2.10.0":
   version: 2.10.0
   resolution: "@remix-run/serve@npm:2.10.0"
@@ -9163,7 +9170,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.2.7, @types/react-dom@npm:^18.3.0":
+"@types/react-dom@npm:^18.3.0":
   version: 18.3.0
   resolution: "@types/react-dom@npm:18.3.0"
   dependencies:
@@ -9192,7 +9199,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.2.20, @types/react@npm:^18.3.3":
+"@types/react@npm:^18.3.3":
   version: 18.3.3
   resolution: "@types/react@npm:18.3.3"
   dependencies:
@@ -10258,8 +10265,8 @@ __metadata:
     "@remix-run/cloudflare-pages": "npm:^2.10.0"
     "@remix-run/dev": "npm:^2.10.0"
     "@remix-run/react": "npm:^2.10.0"
-    "@types/react": "npm:^18.2.20"
-    "@types/react-dom": "npm:^18.2.7"
+    "@types/react": "npm:^18.3.3"
+    "@types/react-dom": "npm:^18.3.0"
     "@typescript-eslint/eslint-plugin": "npm:^6.7.4"
     "@typescript-eslint/parser": "npm:^6.7.4"
     autoprefixer: "npm:^10.4.19"
@@ -10271,8 +10278,8 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^4.6.0"
     isbot: "npm:^4.1.0"
     postcss: "npm:^8.4.38"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
     tailwindcss: "npm:^3.4.4"
     typescript: "npm:^5.1.6"
     vite: "npm:^5.1.0"
@@ -19979,7 +19986,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.2.0, react-dom@npm:^18.3.1":
+"react-dom@npm:^18.3.1":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
   dependencies:
@@ -20091,7 +20098,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6.23.1, react-router-dom@npm:^6.23.1":
+"react-router-dom@npm:6.23.1":
   version: 6.23.1
   resolution: "react-router-dom@npm:6.23.1"
   dependencies:
@@ -20117,6 +20124,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-router-dom@npm:^6.26.0":
+  version: 6.26.0
+  resolution: "react-router-dom@npm:6.26.0"
+  dependencies:
+    "@remix-run/router": "npm:1.19.0"
+    react-router: "npm:6.26.0"
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 10c0/f59a5b72b1dab6480f97f20fa49b601cb1366e6e1c8def7fd727ccbc4e8cf527f64f7aedd2889534de222dc86634a23e2ed108b99e5443e7b5401a4db104e611
+  languageName: node
+  linkType: hard
+
 "react-router@npm:6.23.1":
   version: 6.23.1
   resolution: "react-router@npm:6.23.1"
@@ -20136,6 +20156,17 @@ __metadata:
   peerDependencies:
     react: ">=16.8"
   checksum: 10c0/ad9c924d16dc4f5c90dff588e9a69d37488d2ad537de1ddbdf3b68561658c6e3fd1b8b12d16d50f19177f6547748c54e948d477e921f9230799ac71acfec24cf
+  languageName: node
+  linkType: hard
+
+"react-router@npm:6.26.0":
+  version: 6.26.0
+  resolution: "react-router@npm:6.26.0"
+  dependencies:
+    "@remix-run/router": "npm:1.19.0"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 10c0/498b97cac077170096715609e65e0039b64e497612ed585b8d3b88733310d23e7ca76ce189b09b6fbc65ca8df1595ca20ccac05a84006803843dfa05107d9540
   languageName: node
   linkType: hard
 
@@ -20165,7 +20196,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.2.0, react@npm:^18.3.1":
+"react@npm:^18.3.1":
   version: 18.3.1
   resolution: "react@npm:18.3.1"
   dependencies:
