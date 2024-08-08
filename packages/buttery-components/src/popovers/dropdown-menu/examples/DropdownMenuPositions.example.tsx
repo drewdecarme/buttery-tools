@@ -1,9 +1,6 @@
 import { css } from "@linaria/core";
 import { useMemo, useState } from "react";
-import type {
-  DropdownOptionArrow,
-  DropdownOptionPosition,
-} from "../../../hooks";
+import type { DropdownOptionPosition } from "../../../hooks";
 import { DropdownMenu } from "../DropdownMenu";
 import { useDropdownMenu } from "../dropdown-menu.useDropdownMenu";
 

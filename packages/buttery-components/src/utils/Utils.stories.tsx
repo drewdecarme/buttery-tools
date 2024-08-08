@@ -1,7 +1,7 @@
 import type { Meta } from "@storybook/react";
+import { ResponsiveDesktop } from "./ResponsiveDesktop";
 import { ResponsiveMobile } from "./ResponsiveMobile";
 import { ResponsiveTablet } from "./ResponsiveTablet";
-import { ResponsiveDesktop } from "./ResponsiveDesktop";
 const meta: Meta = {
   title: "Utils / Responsive",
   parameters: {

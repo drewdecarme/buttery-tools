@@ -1,4 +1,5 @@
-import { DropdownNav, useDropdownNav } from "@buttery/components";
+import { DropdownNav } from "../DropdownNav";
+import { useDropdownNav } from "../dropdown-nav.useDropdownNav";
 
 type MenuTree = {
   name: string;

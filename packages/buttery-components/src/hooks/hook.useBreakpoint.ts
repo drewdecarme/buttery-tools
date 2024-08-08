@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 /**
  * Represents different predefined breakpoints for responsive design.
@@ -19,7 +19,7 @@ type UseBreakpointParams = Breakpoint | BreakpointFromTo;
 
 const calculateSize = (
   breakpoint: UseBreakpointParams,
-  windowWidth: number,
+  windowWidth: number
 ) => {
   if (typeof breakpoint === "string") {
     return windowWidth > breakpointMap[breakpoint];
