@@ -27,10 +27,8 @@ export type PopoverOptions = {
    */
   id: string;
 };
-export const usePopover = <PopoverElement extends HTMLElement>({
-  id,
-}: PopoverOptions) => {
-  const popoverRef = useRef<PopoverElement | null>(null);
+export const usePopover = <T extends HTMLElement>({ id }: PopoverOptions) => {
+  const popoverRef = useRef<T | null>(null);
   const targetRef = useRef<HTMLButtonElement | null>(null);
 
   const setTargetRef = useCallback<RefCallback<HTMLButtonElement>>(
@@ -44,7 +42,7 @@ export const usePopover = <PopoverElement extends HTMLElement>({
     [id]
   );
 
-  const setPopoverRef = useCallback<RefCallback<PopoverElement>>(
+  const setPopoverRef = useCallback<RefCallback<T>>(
     (node) => {
       if (!node) return;
       popoverRef.current = node;

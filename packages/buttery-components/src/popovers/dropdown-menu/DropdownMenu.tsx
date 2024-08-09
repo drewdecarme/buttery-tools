@@ -12,6 +12,7 @@ import {
   useDropdown,
   usePortal,
 } from "../../hooks";
+import { getIsDropdownOpen } from "../../hooks/useDropdown/hook.useDropdown.utils";
 import { classes } from "../../utils";
 
 export type DropdownMenuPropsNative = JSX.IntrinsicElements["div"] & {
@@ -46,8 +47,6 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
       window.removeEventListener("click", windowListenerMouse.current);
       // close the portal afterwards
       closePortal();
-
-      dropdownRef.current = null;
     }, [closePortal, closeDropdown, dropdownRef]);
 
     useImperativeHandle(ref, () => ({
@@ -65,8 +64,12 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
     }));
 
     // when the portal opens, the div will mount and the popover ref callback will run
+    // this will also run when the component unmounts so we need to make sure that
+    // we return early if there isn't a node in order to prevent window listeners
+    // from continually being created thus making a memory leak.
     const articleRef = useCallback<RefCallback<HTMLDivElement>>(
       (node) => {
+        if (!node) return;
         // open the dropdown
         setDropdownRef(node);
 
@@ -78,6 +81,10 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
           handleClose();
         };
         windowListenerMouse.current = (e) => {
+          const isDropdownOpen = getIsDropdownOpen(dropdownRef);
+          if (!isDropdownOpen) return;
+          // debugger;
+
           const clickedElement = e.target as HTMLElement;
           const clickedDropdownChild =
             dropdownRef.current?.contains(clickedElement);

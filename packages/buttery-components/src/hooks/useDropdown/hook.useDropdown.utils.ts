@@ -291,3 +291,9 @@ function calculateArrowPosition(
 
   return { arrowTop, arrowLeft };
 }
+
+export const getIsDropdownOpen = <T extends HTMLElement>(
+  popoverRef: React.MutableRefObject<T | null>
+): boolean => {
+  return !!popoverRef.current?.classList.contains("open");
+};

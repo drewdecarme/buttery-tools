@@ -1,5 +1,6 @@
 import type { Meta } from "@storybook/react";
-import { default as ExampleUsePortal } from "./examples/UsePortal.example";
+import ExampleUsePortal from "./examples/UsePortal.example";
+import ExampleUsePortalPositioning from "./examples/UsePortalPositioning.example";
 
 const meta: Meta = {
   title: "Hooks / usePortal",
@@ -8,3 +9,4 @@ const meta: Meta = {
 export default meta;
 
 export const Base = ExampleUsePortal;
+export const Positioning = ExampleUsePortalPositioning;

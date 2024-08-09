@@ -6,6 +6,7 @@ import {
 } from "../usePopover/hook.usePopover";
 import type { DropdownOptions } from "./hook.useDropdown.types";
 import {
+  getIsDropdownOpen,
   processDropdownOptions,
   setDropdownPositionStyles,
 } from "./hook.useDropdown.utils";
@@ -21,7 +22,7 @@ export type DropdownRef = {
   handleToggle: DropdownRefHandleOpen;
 };
 
-export const useDropdown = <PopoverElement extends HTMLElement>(
+export const useDropdown = <T extends HTMLElement>(
   options: DropdownOptions
 ) => {
   const {
@@ -31,9 +32,9 @@ export const useDropdown = <PopoverElement extends HTMLElement>(
     setTargetRef,
     showPopover,
     hidePopover,
-  } = usePopover<PopoverElement>({ id: options.id });
+  } = usePopover<T>({ id: options.id });
 
-  const setDropdownRef = useCallback<RefCallback<PopoverElement>>(
+  const setDropdownRef = useCallback<RefCallback<T>>(
     (node) => {
       setPopoverRef(node);
       // add a few more styles specific to the dropdown version of the popover
@@ -71,15 +72,21 @@ export const useDropdown = <PopoverElement extends HTMLElement>(
     [targetRef.current, popoverRef.current, showPopover, options]
   );
 
+  const closeDropdown = useCallback(async () => {
+    const isPopoverOpen = getIsDropdownOpen(popoverRef);
+    if (!isPopoverOpen) return;
+    await hidePopover();
+  }, [hidePopover, popoverRef]);
+
   const toggleDropdown = useCallback<DropdownRefHandleOpen>(
     (e, options) => {
-      const isPopoverOpen = popoverRef.current?.classList.contains("open");
+      const isPopoverOpen = getIsDropdownOpen(popoverRef);
       if (isPopoverOpen) {
-        return hidePopover();
+        return closeDropdown();
       }
       openDropdown(e, options);
     },
-    [popoverRef.current, hidePopover, openDropdown]
+    [closeDropdown, openDropdown, popoverRef]
   );
 
   return {
@@ -87,7 +94,7 @@ export const useDropdown = <PopoverElement extends HTMLElement>(
     setDropdownRef: setDropdownRef,
     targetRef,
     setTargetRef,
-    closeDropdown: hidePopover,
+    closeDropdown,
     openDropdown,
     toggleDropdown,
   };

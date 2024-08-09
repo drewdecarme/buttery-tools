@@ -4,7 +4,8 @@ title: Dropdown Menu
 
 # Dropdown Menu
 
-An abstraction that that extends upon the `useDropdown` hook to easily
+An component abstraction that that extends the [useDropdown](./hooks.useDropdown.mdx) hook and
+incorpoates the [usePortal](./hooks.usePortal.mdx) hook to easily
 add accessible, keyboard and mouse aware, SSR ready, flyout & context menus.
 
 This component provides some easy tools for creating context menus, flyout menus,
@@ -38,7 +39,7 @@ focusable element on the page.
 
 The below implementation is the `useDropdownMenu` at it's most basic.
 
-{/* example:"src/popovers/dropdown-nav/examples/DropdownNavBarebones.example.tsx" */}
+{/* example:"src/popovers/dropdown-menu/examples/DropdownMenuBarebones.example.tsx" */}
 
 The `useDropdownMenu` hook has the exact same API as the `useDropdown` hook except that it
 requires an ID in order to link the `<button />` to the `<DropdownMenu />` componnet.
@@ -66,11 +67,6 @@ hook to render the menu content in the portal. Due to this, the content of the m
 crawled.
 
 ## Examples
-
-### Barebones
-
-This is the most basic instance you can get (that is without any styling)
-{/* example:"src/popovers/dropdown-menu/examples/DropdownMenuBarebones.example.tsx" */}
 
 ### With Offset
 
