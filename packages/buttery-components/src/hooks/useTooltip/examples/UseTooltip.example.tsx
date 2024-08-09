@@ -23,13 +23,18 @@ const targetCss = css`
 export default () => {
   const { targetProps, tooltipProps } = useTooltip({
     id: "save",
-    dxType: "label",
+    dxType: "tooltip",
+    dxKind: "label",
     dxLabeledBy: "save",
   });
 
   return (
     <>
-      <button {...targetProps} className={targetCss}>
+      <button
+        {...targetProps}
+        className={targetCss}
+        onClick={() => alert("Saved!!")}
+      >
         Save
       </button>
       <div {...tooltipProps} className={tooltipCss}>

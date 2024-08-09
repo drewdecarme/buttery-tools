@@ -2,33 +2,65 @@
 title: useTooltip
 ---
 
-# useTooltip
+# `useTooltip`
 
 A fully accessible, semantically correct, and SSR enabled hook
 for creating a bubble near a focusable target to provide clarifying
 or auxialry information to the user surrounding the use of that target.
 
+{/* fence:"src/hooks/useTooltip/examples/UseTooltip.code.tsx" */}
+
+The `useTooltip` hook is an extension of the [useDropdown](./hooks.useDropdown.mdx) hook that internally uses the [usePopover](./hooks.usePopover.mdx)
+hook to turn the `tooltip` target into a [Popover](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API). The `useDropdown` hook enables us to easily position the tooltip around the target
+element.
+
+## Types
+
+There are two kinds of tooltips that each have specific accessibility requirements depending upon how they're used and then impelemneted.
+
+> For accessibility purposes, the only node that can launch any kind of tooltip is the `<button />` element.
+
+### Tooltip
+
+This is the standard tooltip which surfaces a bubble near a actionable element that either labels or describes the action that
+is associated with it. Since the action is fired using `onClick`, a tooltip is launched using `focus|blur|mouseOver|mouseOut`.
+
+This is very helpful when an action is ambiguous and it needs further content to describe or label it.
+
+Eaxmples of this include but aren't limited to:
+
+- Icon only buttons that do something
+- Icon only buttons that do something and also display the status of something (i.e. "like" button and count on social media)
+- Collapsed navigation buttons
+- Dense toolbar buttons that aren't immediately clear of what their pupose is.
+
+You can easily enable this functionality by changing the `dxType="tooltip"` in the `useTooltip` hook.
+
 {/* example:"src/hooks/useTooltip/examples/UseTooltip.example.tsx" */}
-
-A tooltip can be a
-
-# Styling
-
-## Examples
-
-### Barebones
 
 ### Toggletip
 
-A toggle tip is exactly the same thing as a tooltip in what it surfaces, but it replaces an action
-that would normally be associated with the button and instead uses the click event to surface the tooltip.
+This is a type of tooltip that surfaces a bubble near an actionable element that only reveals information supplementary; it does not have an
+action associated with it since the toggle tip is launched via `onClick`. It's basically the same thing as a tooltip however the only function
+is to provide more information that contexts an adjacent element or concept
 
 This is espcially helpful when you want to click on something and reveal some content instead of hovering/
 mousing over the content to view it.
 
-You can easily enable this functionality by changing the `dxStrategy` in the `useTooltip` hook.
+Examples of this include but aren't limited to:
+
+- Information icons near a group of elements to describe a purpose
+- Icon inline with a text intput to provide more information about the input's nature or requirements
+
+You can easily enable this functionality by changing the `dxType="toggletip"` in the `useTooltip` hook.
 
 {/* example:"src/hooks/useTooltip/examples/UseTooltipToggletip.example.tsx" */}
+
+## Styling
+
+## Examples
+
+### Barebones
 
 ### Accessible burst count
 

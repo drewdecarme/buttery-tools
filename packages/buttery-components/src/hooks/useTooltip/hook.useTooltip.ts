@@ -1,19 +1,10 @@
 import { type RefCallback, useCallback, useEffect, useMemo } from "react";
-import { type DropdownOptions, ensurePopover, useDropdown } from "..";
 import { exhaustiveMatchGuard } from "../../utils";
+import { type DropdownOptions, useDropdown } from "../useDropdown";
+import { ensurePopover } from "../usePopover";
 
-export type UseTooltipOptions = DropdownOptions & {
-  /**
-   * The optional strategy in which the tooltip should be
-   * launched.
-   * - **"focus/hover"** should be used for targets that also have an action associated
-   * with them like doing something or going somewhere
-   * - **"click"** turns the target into a supplemental action where the only action
-   * that is associated with the target is providing more information
-   *
-   * @default "focus/hover"
-   */
-  dxStrategy?: "focus/hover" | "click";
+export type UseTooltipOptionsTooltip = DropdownOptions & {
+  dxType: "tooltip";
 } & (
     | {
         /**
@@ -22,7 +13,7 @@ export type UseTooltipOptions = DropdownOptions & {
          * a visible label but otherwise is hidden due to design or space.
          * @example "Notifications"
          */
-        dxType: "label";
+        dxKind: "label";
         /**
          * This is an accessibility control that helps further context
          * what the screen reader is going to interpret. This field can be many node
@@ -47,16 +38,23 @@ export type UseTooltipOptions = DropdownOptions & {
          * on how to do something with a particular control
          * @example "View notifications and manage settings"
          */
-        dxType: "description";
+        dxKind: "description";
       }
   );
+export type UseTooltipOptionsToggleTip = DropdownOptions & {
+  dxType: "toggletip";
+  dxDescribedBy: string;
+};
+
+export type UseTooltipOptions =
+  | UseTooltipOptionsTooltip
+  | UseTooltipOptionsToggleTip;
 
 export const useTooltip = <T extends HTMLElement>(
   options: UseTooltipOptions
 ) => {
   const {
     dropdownRef,
-    targetRef,
     setDropdownRef,
     setTargetRef,
     openDropdown,
@@ -77,50 +75,50 @@ export const useTooltip = <T extends HTMLElement>(
     [setDropdownRef, dropdownRef.current]
   );
 
-  const targetEvents = useMemo<JSX.IntrinsicElements["button"]>(() => {
-    const strategy = options.dxStrategy ?? "focus/hover";
-
-    switch (strategy) {
-      case "focus/hover":
-        return {
+  const targetProps = useMemo<JSX.IntrinsicElements["button"]>(() => {
+    switch (options.dxType) {
+      case "tooltip": {
+        let props: JSX.IntrinsicElements["button"] = {
           onFocus: () => openDropdown(),
           onBlur: () => closeDropdown(),
           onMouseEnter: () => openDropdown(),
           onMouseLeave: () => closeDropdown(),
         };
+        switch (options.dxKind) {
+          case "label":
+            props = {
+              ...props,
+              ref: setTargetRef,
+              type: "button",
+              "aria-labelledby": options.dxLabeledBy,
+            };
+            break;
 
-      case "click":
+          case "description":
+            props = {
+              ...props,
+              ref: setTargetRef,
+              type: "button",
+              "aria-labelledby": options.id,
+            };
+            break;
+
+          default:
+            exhaustiveMatchGuard(options);
+        }
+        return props;
+      }
+
+      case "toggletip":
         return {
+          ref: setTargetRef,
           onClick: toggleDropdown,
-        };
-
-      default:
-        return exhaustiveMatchGuard(strategy);
-    }
-  }, [options.dxStrategy, openDropdown, closeDropdown, toggleDropdown]);
-
-  const targetProps = useMemo<JSX.IntrinsicElements["button"]>(() => {
-    switch (options.dxType) {
-      case "label":
-        return {
-          ...targetEvents,
-          ref: setTargetRef,
-          type: "button",
-          "aria-labelledby": options.dxLabeledBy,
-        };
-
-      case "description":
-        return {
-          ...targetEvents,
-          ref: setTargetRef,
-          type: "button",
-          "aria-labelledby": options.id,
         };
 
       default:
         return exhaustiveMatchGuard(options);
     }
-  }, [options, setTargetRef, targetEvents]);
+  }, [options, openDropdown, closeDropdown, toggleDropdown, setTargetRef]);
 
   const tooltipProps = useMemo(
     () => ({

@@ -58,9 +58,8 @@ const IconInfo: FC = () => (
 export default () => {
   const { targetProps, tooltipProps } = useTooltip({
     id: "help",
-    dxType: "label",
-    dxStrategy: "click",
-    dxLabeledBy: "help",
+    dxType: "toggletip",
+    dxDescribedBy: "",
   });
 
   return (
