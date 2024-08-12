@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { useDynamicNode } from "../hook.useDynamicNode";
+import { useDynamicNode } from "../useDynamicNode/hook.useDynamicNode";
 
 export const usePortal = () => {
   const { getDynamicNode, destroyNode } = useDynamicNode();

@@ -1,4 +1,4 @@
-export { useDynamicNode } from "./hook.useDynamicNode";
+export { useDynamicNode } from "./useDynamicNode/hook.useDynamicNode";
 export { useBreakpoint, type BreakpointFromTo } from "./hook.useBreakpoint";
 export { useToggle } from "./hook.useToggle";
 export { useCarousel } from "./hook.useCarousel";
