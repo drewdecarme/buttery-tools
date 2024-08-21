@@ -6,7 +6,9 @@ title: Modal
 
 A controlled, semantically correct and accessible modal dialog that interupts the user's flow to focus on itself.
 The HTML element that appears is a dialog that is enhanced with the `modal` attribute.
-{/* example:"/src/modals/Modal/examples/ModalBase.example.tsx" */}
+
+{/* fence:"/src/modals/Modal/examples/ModalUsage.example.tsx" */}
+
 The semantics of a dialog specifically state that a `<dialog />` can either be a **modal** or **non-modal** dialog.
 In order to reduce confusion on what to use when, the `<Modal />` component should be used when you want to explicitly stop
 the user from their flow to do something else that is contained in the modal that is being launched.
@@ -28,24 +30,7 @@ logic of the modal interal to the `<Modal />` component and doesn't muddy the im
 To launch a modal, simply import the `useModal` hook, pass the `<Modal />` the `modalRef` vairable that can be destructed
 from the `useModal` hook, and then use the `openModal` function to launch it.
 
-```tsx
-import { Modal, useModal } from "@buttery/components";
-
-export default function ModalUsage() {
-  const { modalRef, openModal } = useModal();
-
-  return (
-    <>
-      <button type="button" onClick={openModal}>
-        Open a bare bones example
-      </button>
-      <Modal ref={modalRef}>
-        This is the simplest implementation of a modal
-      </Modal>
-    </>
-  );
-}
-```
+{/* example:"/src/modals/Modal/examples/ModalBase.example.tsx" */}
 
 ## Installation
 

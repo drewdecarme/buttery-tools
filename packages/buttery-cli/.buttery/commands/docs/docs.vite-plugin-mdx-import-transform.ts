@@ -32,7 +32,7 @@ import { default as Component${matchNum} } from "${transformedPath}";
 <PreviewBlock${matchNum}>
   <Component${matchNum} />
   \`\`\`tsx
-  ${codeBlock}
+${codeBlock}
   \`\`\`
 </PreviewBlock${matchNum}>
 
