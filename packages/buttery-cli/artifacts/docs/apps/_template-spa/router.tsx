@@ -1,14 +1,14 @@
 import { type RouteObject, createBrowserRouter } from "react-router-dom";
 // @ts-expect-error data is created dynamically via the `dev` CLI command
 import { graph, header } from "./data";
+import DocsRoute from "./routes/docs";
 import RootRoute from "./routes/root";
 import type { ButteryDocsGraph } from ".buttery/commands/docs/docs.types";
 
 const createRoute = (graph: ButteryDocsGraph): RouteObject[] => {
   const routes = Object.values(graph).reduce<RouteObject[]>(
     (accum, graphValue) => {
-      console.log;
-      const route = {
+      const route: RouteObject = {
         path: graphValue.routeAbs,
         lazy: async () => {
           // biome-ignore lint/suspicious/noExplicitAny: Any is actually a module.
@@ -39,6 +39,8 @@ const createRoute = (graph: ButteryDocsGraph): RouteObject[] => {
   return routes;
 };
 
+const [indexRoute, ...restRoutes] = createRoute(graph);
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -50,6 +52,16 @@ export const router = createBrowserRouter([
         header: header ?? null,
       };
     },
-    children: createRoute(graph),
+    children: [
+      {
+        lazy: indexRoute.lazy,
+        index: true,
+      },
+      {
+        element: <DocsRoute />,
+
+        children: restRoutes,
+      },
+    ],
   },
 ]);
