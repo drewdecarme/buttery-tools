@@ -1,6 +1,11 @@
 import type { ButteryConfigDocsHeaderLink } from "@buttery/core";
 import { IconComponent } from "@buttery/icons";
-import { makeColor, makeRem, makeReset } from "@buttery/tokens/docs";
+import {
+  makeColor,
+  makeFontWeight,
+  makeRem,
+  makeReset,
+} from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
 import type { FC } from "react";
@@ -17,6 +22,7 @@ const SUl = styled("ul")`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 1rem;
   & + & {
     padding-left: ${makeRem(16)};
     margin-left: ${makeRem(16)};
@@ -44,6 +50,12 @@ const internalCss = css`
 
   &:hover {
     color: ${makeColor("primary")};
+    text-decoration: underline;
+  }
+
+  &.active {
+    color: ${makeColor("primary")};
+    font-weight: ${makeFontWeight("bold")};
   }
 `;
 

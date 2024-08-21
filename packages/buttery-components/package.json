@@ -23,7 +23,6 @@
   "scripts": {
     "test": "test",
     "build": "vite build && yarn tsc --project tsconfig.types.json",
-    "insert-examples": "npx tsx ./scripts/insert-example-code.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "upgrade-storybook": "npx storybook@next upgrade --prerelease"
