@@ -34,6 +34,16 @@ const config: ButteryConfig = {
         display: "Getting Started",
         routeOrder: ["quick-start", "why"],
       },
+      hooks: {
+        display: "hooks",
+        routeOrder: [
+          "useDynamicNode",
+          "usePortal",
+          "usePopover",
+          "useDropdown",
+          "useTooltip",
+        ],
+      },
       components: {
         display: "Components",
         routeOrder: [
