@@ -2,14 +2,16 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import type { Plugin } from "vite";
 
-type MdxImportTransformOptions = {
+type MdxTransformCodeExamplesOptions = {
   rootPath: string;
 };
 
-export function mdxImportTransform(options: MdxImportTransformOptions): Plugin {
+export function mdxTransformCodeExamples(
+  options: MdxTransformCodeExamplesOptions
+): Plugin {
   return {
     enforce: "pre",
-    name: "vite-plugin-mdx-import-transform",
+    name: "vite-plugin-mdx-transform-code",
     transform(code: string, id: string) {
       if (!id.endsWith(".mdx")) return;
 

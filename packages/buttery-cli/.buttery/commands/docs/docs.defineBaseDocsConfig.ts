@@ -7,7 +7,8 @@ import remarkFrontmatter from "remark-frontmatter";
 import { type UserConfig, mergeConfig } from "vite";
 import { getButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
-import { mdxImportTransform } from "./docs.vite-plugin-mdx-import-transform";
+import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
+import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports";
 import { transformMarkdownAssetPath } from "./docs.vite-plugin-transform-markdown-asset-path";
 import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
 
@@ -45,9 +46,13 @@ export async function getButteryDocsDefineConfig() {
           ],
         ],
       }),
-      mdxImportTransform({
+      mdxTransformImports({
         rootPath: butteryDocsConfig.paths.rootDir,
       }),
+      mdxTransformCodeExamples({
+        rootPath: butteryDocsConfig.paths.rootDir,
+      }),
+
       watchDocsPlugin(butteryDocsConfig, butteryDocsDirs),
       wyw({
         include: "/**/*.(ts|tsx)",
