@@ -6,14 +6,14 @@ import {
   makeReset,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
-import { styled } from "@linaria/react";
+import { NavLink } from "@remix-run/react";
 import clsx from "clsx";
 import { type FC, useMemo } from "react";
 import type { ButteryDocsGraph } from "../../../../.buttery/commands/docs/docs.types";
 import { useLayoutContext } from "./layout.useLayoutContext";
 import { layoutNavOverlineCSS } from "./layout.utils";
 
-const SNav = styled("nav")`
+const navStyles = css`
   grid-area: layout-sidebar;
   align-self: start;
   border-right: ${makeRem(1)} solid
@@ -25,7 +25,7 @@ const SNav = styled("nav")`
   align-self: start;
 `;
 
-const SNavContent = styled("div")`
+const navContentStyles = css`
   position: sticky;
   padding: ${makeRem(32)};
   top: ${makeCustom("layout-header-height")};
@@ -34,33 +34,7 @@ const SNavContent = styled("div")`
   }
 `;
 
-const SUl = styled("ul")`
-  list-style-type: none;
-  padding-left: 0;
-  margin-left: 0;
-  position: relative;
-
-  & & {
-    li {
-      margin-left: ${makeRem(16)};
-      &:before {
-        content: "";
-        position: absolute;
-        left: ${makeRem(8)};
-        top: 0;
-        bottom: 0;
-        width: ${makeRem(1)};
-        background: ${makeColor("neutral", { variant: "50" })};
-      }
-    }
-  }
-
-  li {
-    padding: 0;
-  }
-`;
-
-const SSection = styled("section")`
+const sectionStyles = css`
   margin-bottom: ${makeRem(16)};
   & + & {
     padding-top: ${makeRem(16)};
@@ -69,35 +43,61 @@ const SSection = styled("section")`
   }
 `;
 
-const anchorCss = css`
-  height: ${makeRem(24)};
-  text-decoration: none;
-  color: ${makeColor("neutral")};
-  padding: ${makeRem(2)} ${makeRem(8)};
-  border-radius: ${makeRem(4)};
-  font-size: ${makeRem(14)};
-  display: flex;
-  align-items: center;
-  margin-bottom: ${makeRem(4)};
-  transition: all 0.15s ease-in-out;
+// const ulStyles = css`
+//   list-style-type: none;
+//   padding-left: 0;
+//   margin-left: 0;
+//   position: relative;
 
-  &:visited {
-    color: inherit;
-  }
+//   & {
+//     li {
+//       margin-left: ${makeRem(16)};
+//       &:before {
+//         content: "";
+//         position: absolute;
+//         left: ${makeRem(8)};
+//         top: 0;
+//         bottom: 0;
+//         width: ${makeRem(1)};
+//         background: ${makeColor("neutral", { variant: "50" })};
+//       }
+//     }
+//   }
 
-  &.active {
-    background: ${makeColor("primary", { variant: "300", opacity: 0.2 })};
-    color: ${makeColor("primary")};
-    font-weight: ${makeFontWeight("semi-bold")};
-  }
-  &:not(.active) {
-    &:hover {
-      background: ${makeColor("primary", { variant: "200", opacity: 0.2 })};
-      color: ${makeColor("primary")};
-      font-weight: ${makeFontWeight("semi-bold")};
-    }
-  }
-`;
+//   li {
+//     padding: 0;
+//   }
+// `;
+
+// const anchorCss = css`
+//   height: ${makeRem(24)};
+//   text-decoration: none;
+//   color: ${makeColor("neutral")};
+//   padding: ${makeRem(2)} ${makeRem(8)};
+//   border-radius: ${makeRem(4)};
+//   font-size: ${makeRem(14)};
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: ${makeRem(4)};
+//   transition: all 0.15s ease-in-out;
+
+//   &:visited {
+//     color: inherit;
+//   }
+
+//   &.active {
+//     background: ${makeColor("primary", { variant: "300", opacity: 0.2 })};
+//     color: ${makeColor("primary")};
+//     font-weight: ${makeFontWeight("semi-bold")};
+//   }
+//   &:not(.active) {
+//     &:hover {
+//       background: ${makeColor("primary", { variant: "200", opacity: 0.2 })};
+//       color: ${makeColor("primary")};
+//       font-weight: ${makeFontWeight("semi-bold")};
+//     }
+//   }
+// `;
 
 const anchorOverlineCSS = css`
   ${makeReset("anchor")};
@@ -118,59 +118,48 @@ const anchorOverlineCSS = css`
  */
 export type NavItemProps = {
   graph: ButteryDocsGraph;
-  NavLinkComponent: JSX.ElementType;
 };
-const NavItem: FC<NavItemProps> = ({ graph, NavLinkComponent }) => {
-  return (
-    <SUl>
-      {Object.entries(graph).map(([graphKey, graphValue]) => {
-        return (
-          <li key={graphKey}>
-            <NavLinkComponent
-              to={graphValue.routeAbs}
-              className={anchorCss}
-              end
-            >
-              {graphValue.routeTitle}
-            </NavLinkComponent>
-            {Object.entries(graphValue.pages).length > 0
-              ? NavItem({ graph: graphValue.pages, NavLinkComponent })
-              : null}
-          </li>
-        );
-      })}
-    </SUl>
-  );
-};
+// const NavItem: FC<NavItemProps> = ({ graph }) => {
+//   return (
+//     <ul className={ulStyles}>
+//       {Object.entries(graph).map(([graphKey, graphValue]) => {
+//         return (
+//           <li key={graphKey}>
+//             <NavLink to={graphValue.routeAbs} className={anchorCss} end>
+//               {graphValue.routeTitle}
+//             </NavLink>
+//             {Object.entries(graphValue.pages).length > 0
+//               ? NavItem({ graph: graphValue.pages })
+//               : null}
+//           </li>
+//         );
+//       })}
+//     </ul>
+//   );
+// };
 
 export const LayoutBodyNav: FC = () => {
-  const { graph, NavLinkComponent } = useLayoutContext();
-  return useMemo(
-    () => (
-      <SNav>
-        <SNavContent>
-          {Object.entries(graph).map(([sectionKey, sectionValues]) => {
-            if (sectionKey === "_index") return null;
-            return (
-              <SSection key={sectionKey}>
-                <NavLinkComponent
-                  to={sectionValues.routeAbs}
-                  className={clsx(anchorOverlineCSS)}
-                >
-                  <h1 className={layoutNavOverlineCSS}>
-                    {sectionValues.routeTitle}
-                  </h1>
-                </NavLinkComponent>
-                <NavItem
-                  graph={sectionValues.pages}
-                  NavLinkComponent={NavLinkComponent}
-                />
-              </SSection>
-            );
-          })}
-        </SNavContent>
-      </SNav>
-    ),
-    [graph, NavLinkComponent]
+  const { graph } = useLayoutContext();
+  return (
+    <nav className={navStyles}>
+      <div className={navContentStyles}>
+        {Object.entries(graph).map(([sectionKey, sectionValues]) => {
+          if (sectionKey === "_index") return null;
+          return (
+            <section key={sectionKey} className={sectionStyles}>
+              <NavLink
+                to={sectionValues.routeAbs}
+                className={anchorOverlineCSS}
+              >
+                <h1 className={layoutNavOverlineCSS}>
+                  {sectionValues.routeTitle}
+                </h1>
+              </NavLink>
+              {/* <NavItem graph={sectionValues.pages} /> */}
+            </section>
+          );
+        })}
+      </div>
+    </nav>
   );
 };

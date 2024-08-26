@@ -5,26 +5,32 @@ import type {
 
 export const graph: ButteryDocsGraph = {
   _index: {
-    title: "_index",
+    routeTitle: "_index",
+    routeMeta: [{ title: "Home" }],
     filepath: "/some-absolute-path/_index.md",
     filename: "_index",
+    fileExtension: "md",
     routeAbs: "/",
     routeRel: "/",
     toc: [],
     pages: {},
   },
   introduction: {
-    title: "introduction",
+    routeTitle: "introduction",
+    routeMeta: [{ title: "Introduction" }],
     filepath: "/some-absolute-path/introduction.md",
     filename: "introduction",
+    fileExtension: "md",
     routeAbs: "/introduction",
     routeRel: "introduction",
     toc: [],
     pages: {
       architecture: {
-        title: "Architecture",
+        routeTitle: "Architecture",
+        routeMeta: [{ title: "Architecture" }],
         filepath: "/some-absolute-path/introduction.architecture.md",
         filename: "introduction.architecture",
+        fileExtension: "md",
         routeAbs: "/introduction/architecture",
         routeRel: "architecture",
         toc: [
@@ -46,18 +52,22 @@ export const graph: ButteryDocsGraph = {
     },
   },
   reference: {
-    title: "reference",
+    routeTitle: "reference",
+    routeMeta: [{ title: "Reference" }],
     filepath: "/some-absolute-path/reference.md",
+    fileExtension: "md",
     filename: "reference",
     routeAbs: "/reference",
     routeRel: "reference",
     toc: [],
     pages: {
       cli: {
-        title: "CLI Reference",
+        routeTitle: "CLI Reference",
         filepath: "/some-absolute-path/reference.cli.md",
+        routeMeta: [{ title: "CLI Reference" }],
         filename: "reference.cli",
         routeAbs: "/reference/cli",
+        fileExtension: "md",
         routeRel: "cli",
         toc: [
           {

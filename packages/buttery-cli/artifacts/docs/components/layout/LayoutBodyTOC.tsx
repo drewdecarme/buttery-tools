@@ -6,8 +6,10 @@ import {
   makeRem,
   makeReset,
 } from "@buttery/tokens/docs";
-import { styled } from "@linaria/react";
+
+import { css } from "@linaria/core";
 import { useLocation } from "@remix-run/react";
+import clsx from "clsx";
 import { type FC, type MouseEventHandler, useCallback } from "react";
 import type { ButteryDocsGraphTOC } from "../../../../.buttery/commands/docs/docs.types";
 import { getGraphValueThatMatchesPathname } from "../../library";
@@ -15,7 +17,7 @@ import { useDetermineActiveSection } from "./layout.useDetermineActiveSection";
 import { useLayoutContext } from "./layout.useLayoutContext";
 import { layoutNavOverlineCSS } from "./layout.utils";
 
-const SLayoutBodyTOC = styled("article")`
+const layoutBodyStyles = css`
   grid-area: layout-toc;
   background: ${makeColorStatic("background")};
 
@@ -38,7 +40,7 @@ const SLayoutBodyTOC = styled("article")`
   }
 `;
 
-const SUl = styled("ul")`
+const ulStyles = css`
   ${makeReset("ul")};
 
   & ul {
@@ -70,16 +72,14 @@ const SUl = styled("ul")`
   }
 `;
 
-const SOverline = styled("div")`
+const overlineStyles = css`
   margin-bottom: ${makeRem(16)};
 `;
 
 export function ContentsNode({
   tableOfContents,
-  NavLinkComponent,
 }: {
   tableOfContents: ButteryDocsGraphTOC[];
-  NavLinkComponent: JSX.ElementType;
 }) {
   const handleClick = useCallback<MouseEventHandler<HTMLAnchorElement>>((e) => {
     e.preventDefault();
@@ -106,32 +106,28 @@ export function ContentsNode({
       </a>
       {toc.children.length > 0 && (
         <ul key={`group-${toc.level}-${i}`}>
-          <ContentsNode
-            tableOfContents={toc.children}
-            NavLinkComponent={NavLinkComponent}
-          />
+          <ContentsNode tableOfContents={toc.children} />
         </ul>
       )}
     </li>
   ));
 }
 export const LayoutBodyTOC: FC = () => {
-  const { NavLinkComponent, graph } = useLayoutContext();
+  const { graph } = useLayoutContext();
   const { pathname } = useLocation();
   const currentGraph = getGraphValueThatMatchesPathname(pathname, graph);
   useDetermineActiveSection(pathname);
 
   return (
-    <SLayoutBodyTOC>
+    <article className={layoutBodyStyles}>
       <div>
-        <SOverline className={layoutNavOverlineCSS}>on this page</SOverline>
-        <SUl>
-          <ContentsNode
-            tableOfContents={currentGraph.toc}
-            NavLinkComponent={NavLinkComponent}
-          />
-        </SUl>
+        <div className={clsx(layoutNavOverlineCSS, overlineStyles)}>
+          on this page
+        </div>
+        <ul className={ulStyles}>
+          <ContentsNode tableOfContents={currentGraph.toc} />
+        </ul>
       </div>
-    </SLayoutBodyTOC>
+    </article>
   );
 };

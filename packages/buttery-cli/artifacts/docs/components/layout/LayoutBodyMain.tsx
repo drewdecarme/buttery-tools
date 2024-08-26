@@ -5,10 +5,11 @@ import {
   makeRem,
   makeReset,
 } from "@buttery/tokens/docs";
-import { styled } from "@linaria/react";
+import { css } from "@linaria/core";
+
 import type { FC, ReactNode } from "react";
 
-const SLayoutBodyMain = styled("section")`
+const layoutBodyMainStyles = css`
   grid-area: layout-main;
   background: ${makeColorStatic("background")};
   position: sticky;
@@ -153,8 +154,8 @@ const SLayoutBodyMain = styled("section")`
 
 export const LayoutBodyMain: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <SLayoutBodyMain>
+    <section className={layoutBodyMainStyles}>
       <div>{children}</div>
-    </SLayoutBodyMain>
+    </section>
   );
 };

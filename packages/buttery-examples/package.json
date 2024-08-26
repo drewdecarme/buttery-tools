@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "dependencies": {
-    "@buttery/commands": "workspace:^",
-    "@buttery/utils": "workspace:^"
+    "@buttery/commands": "workspace:",
+    "@buttery/utils": "workspace:"
   }
 }

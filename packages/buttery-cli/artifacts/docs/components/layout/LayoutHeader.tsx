@@ -6,12 +6,12 @@ import {
   makeRem,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
-import { styled } from "@linaria/react";
+import { NavLink } from "@remix-run/react";
 import type { FC } from "react";
 import { LayoutHeaderLinks } from "./LayoutHeaderLinks";
 import { useLayoutContext } from "./layout.useLayoutContext";
 
-const SLayoutHeader = styled("header")`
+const layoutHeaderStyles = css`
   grid-area: layout-header;
   position: sticky;
   top: 0;
@@ -50,13 +50,13 @@ const anchorCSS = css`
   }
 `;
 
-const SImg = styled("img")`
+const imgStyles = css`
   height: 60%;
   width: auto;
   object-fit: contain;
 `;
 
-const SDiv = styled("div")`
+const divStyles = css`
   font-size: ${makeRem(16)};
   text-transform: uppercase;
   color: ${makeColor("neutral")};
@@ -64,25 +64,26 @@ const SDiv = styled("div")`
 `;
 
 export const LayoutHeader: FC = () => {
-  const { header, NavLinkComponent } = useLayoutContext();
+  const { header } = useLayoutContext();
 
   return (
-    <SLayoutHeader>
+    <header className={layoutHeaderStyles}>
       <div>
         {header && (
-          <NavLinkComponent href="/" className={anchorCSS}>
+          <NavLink to="/" className={anchorCSS}>
             {header?.logo && (
-              <SImg src={header.logo.src} alt={header.logo.alt} />
+              <img
+                className={imgStyles}
+                src={header.logo.src}
+                alt={header.logo.alt}
+              />
             )}
-            {header?.title && <SDiv>{header.title}</SDiv>}
-          </NavLinkComponent>
+            {header?.title && <div className={divStyles}>{header.title}</div>}
+          </NavLink>
         )}
 
-        <LayoutHeaderLinks
-          links={header?.links}
-          NavLinkComponent={NavLinkComponent}
-        />
+        <LayoutHeaderLinks links={header?.links} />
       </div>
-    </SLayoutHeader>
+    </header>
   );
 };

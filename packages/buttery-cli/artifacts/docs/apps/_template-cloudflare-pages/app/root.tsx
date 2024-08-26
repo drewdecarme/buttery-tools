@@ -9,15 +9,18 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import { type FC, memo } from "react";
-import { Layout as LayoutComponent } from "../../../components";
+import {
+  Layout as LayoutComponent,
+  bodyCSS,
+} from "../../../components/layout/Layout";
 
 import "@buttery/tokens/docs/index.css";
 
-import { bodyCSS } from "../../../components";
 import { graph, header } from "./data";
 
 const RemixNavLink: FC<JSX.IntrinsicElements["a"] & { href: string }> = memo(
   function RemixNavLink({ children, href, ...restProps }) {
+    console.log({ href });
     return (
       <NavLink to={href} {...restProps} end>
         {children}
@@ -57,6 +60,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body className={bodyCSS}>
         <LayoutComponent
           header={loaderData.header}
+          // @ts-expect-error mismatch
           graph={loaderData.graph}
           NavLinkComponent={RemixNavLink}
         >

@@ -32,18 +32,15 @@ export const prepareRemixApp = async (config: ButteryDocsConfig) => {
       }
     );
 
+    const routesDir = path.resolve(
+      butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
+      "./app/routes"
+    );
+
     switch (config.docs.build.target) {
       case "cloudflare-pages": {
         // Delete the entire output directory in the users .buttery/docs directory
         await rm(butteryDirs.output.root, { recursive: true, force: true });
-        // clean the routes
-        const routesDir = path.resolve(
-          butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
-          "./app/routes"
-        );
-        // LOG_DOCS.debug("Cleaning cloudflare pages routes directory...");
-        // await emptyDir(routesDir);
-        // LOG_DOCS.debug("Cleaning cloudflare pages routes directory... done.");
 
         // copy over new routes
         LOG_DOCS.debug("Populating routes directory with docs...");
@@ -62,7 +59,7 @@ export const prepareRemixApp = async (config: ButteryDocsConfig) => {
                   .split(".")
                   .reduce<string>((accum, segment, index, origArr) => {
                     if (index === 0) {
-                      return "_app.".concat(segment);
+                      return "_docs.".concat(segment);
                     }
                     if (index < origArr.length - 1) {
                       return accum.concat("_.".concat(segment));

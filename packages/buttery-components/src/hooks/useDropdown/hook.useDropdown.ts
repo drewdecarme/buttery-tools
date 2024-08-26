@@ -1,4 +1,4 @@
-import { type RefCallback, useCallback, useRef } from "react";
+import { type RefCallback, useCallback } from "react";
 import {
   ensurePopover,
   ensureTarget,

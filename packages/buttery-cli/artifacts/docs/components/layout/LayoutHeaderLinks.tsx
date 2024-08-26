@@ -7,17 +7,17 @@ import {
   makeReset,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
-import { styled } from "@linaria/react";
+import { NavLink } from "@remix-run/react";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
-const SDiv = styled("div")`
+const divStyles = css`
   display: flex;
   justify-content: flex-end;
   align-items: center;
 `;
 
-const SUl = styled("ul")`
+const ulStyles = css`
   ${makeReset("ul")};
   display: flex;
   justify-content: flex-end;
@@ -30,7 +30,7 @@ const SUl = styled("ul")`
   }
 `;
 
-const SAnchorSocial = styled("a")`
+const anchorSocialStyles = css`
   ${makeReset("anchor")};
   display: grid;
   place-content: center;
@@ -61,24 +61,28 @@ const internalCss = css`
 
 export const LayoutHeaderLinks: FC<{
   links?: ButteryConfigDocsHeaderLink[][];
-  NavLinkComponent: JSX.ElementType;
-}> = ({ links = [], NavLinkComponent }) => {
+}> = ({ links = [] }) => {
   return (
-    <SDiv>
+    <div className={divStyles}>
       {links.map((linkSection, i) => {
         return (
-          <SUl key={`section-${i.toString()}`}>
+          <ul className={ulStyles} key={`section-${i.toString()}`}>
             {linkSection.map((link) => (
               <li key={link.href}>
                 {match(link)
                   .with({ type: "social" }, (socialLink) => {
                     return (
-                      <SAnchorSocial href={socialLink.href} target="_blank">
+                      <a
+                        className={anchorSocialStyles}
+                        href={socialLink.href}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         <IconComponent
                           icon="github-circle-solid-rounded"
                           ddSize={makeRem(28)}
                         />
-                      </SAnchorSocial>
+                      </a>
                     );
                   })
                   .with({ type: "text" }, (socialLink) => {
@@ -86,20 +90,17 @@ export const LayoutHeaderLinks: FC<{
                   })
                   .with({ type: "internal" }, (internalLink) => {
                     return (
-                      <NavLinkComponent
-                        to={internalLink.href}
-                        className={internalCss}
-                      >
+                      <NavLink to={internalLink.href} className={internalCss}>
                         {internalLink.text}
-                      </NavLinkComponent>
+                      </NavLink>
                     );
                   })
                   .exhaustive()}
               </li>
             ))}
-          </SUl>
+          </ul>
         );
       })}
-    </SDiv>
+    </div>
   );
 };
