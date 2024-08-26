@@ -1,6 +1,6 @@
 import { makeCustom, makeRem } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
-import type { ReactNode } from "react";
+import { type ReactNode, useMemo } from "react";
 import { LayoutBodyMain } from "./LayoutBodyMain";
 import { LayoutBodyNav } from "./LayoutBodyNav";
 import { LayoutBodyTOC } from "./LayoutBodyTOC";
@@ -22,7 +22,12 @@ export function LayoutBody(props: { children: ReactNode }) {
     <main className={bodyStyles}>
       <LayoutBodyNav />
       <LayoutBodyMain>{props.children}</LayoutBodyMain>
-      <LayoutBodyTOC />
+      {useMemo(
+        () => (
+          <LayoutBodyTOC />
+        ),
+        []
+      )}
     </main>
   );
 }

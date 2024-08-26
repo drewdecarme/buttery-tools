@@ -38,16 +38,16 @@ export async function getButteryDocsDefineConfig() {
       },
     },
     plugins: [
-      wyw({
-        displayName: true,
-        include: "/**/*.(ts|tsx)",
-        features: {
-          useWeakRefInEval: false,
-        },
-        babelOptions: {
-          presets: ["@babel/preset-typescript", "@babel/preset-react"],
-        },
-      }),
+      {
+        enforce: "pre",
+        ...wyw({
+          displayName: true,
+          include: "/**/*.(ts|tsx)",
+          babelOptions: {
+            presets: ["@babel/preset-typescript", "@babel/preset-react"],
+          },
+        }),
+      },
       transformMarkdownAssetPath(),
       mdx({
         remarkPlugins: [remarkFrontmatter],
