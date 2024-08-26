@@ -15,11 +15,17 @@ export type ButteryDocsGraphTOC = {
   children: ButteryDocsGraphTOC[];
 };
 
+export type ButteryDocsGraphFrontmatter = {
+  title?: string;
+  meta: ({ title: string } | { name: string; content: string })[];
+};
+
 export type ButteryDocsGraphValue = {
-  title: string;
   // content: string;
   routeAbs: string;
   routeRel: string;
+  routeTitle: ButteryDocsGraphFrontmatter["title"];
+  routeMeta: ButteryDocsGraphFrontmatter["meta"];
   filepath: string;
   filename: string;
   fileExtension: string;

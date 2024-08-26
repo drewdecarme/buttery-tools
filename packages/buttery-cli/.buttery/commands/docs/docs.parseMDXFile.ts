@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import { parseMDXFileContent } from "./docs.parseMDXFileContent";
 import { parseMDXFileFrontmatter } from "./docs.parseMDXFileFrontmatter";
 import { parseMDXFileName } from "./docs.parseMDXFilename";
-import type { FileObj } from "./docs.types";
+import type { ButteryDocsGraphFrontmatter, FileObj } from "./docs.types";
 
 export const parseMdxFile = async ({
   filename,
@@ -14,7 +14,8 @@ export const parseMdxFile = async ({
   try {
     // parse the frontmatter away from the markdown content
     const rawMdxContent = await readFile(fsPath, { encoding: "utf8" });
-    const { data: frontmatter, content: mdxContent } = matter(rawMdxContent);
+    const { data, content: mdxContent } = matter(rawMdxContent);
+    const frontmatter = data as ButteryDocsGraphFrontmatter;
 
     // parse the frontmatter
     const meta = await parseMDXFileFrontmatter({ frontmatter, filename });

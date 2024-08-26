@@ -10,6 +10,9 @@ const defineDocsConfig = await getButteryDocsDefineConfig();
 export default defineDocsConfig(({ butteryDocsDirs }) => ({
   // change the root here since we're looking at this directory
   root: import.meta.dirname,
+  server: {
+    port: 1400,
+  },
   resolve: {
     alias: {
       "@buttery/tokens/docs": path.resolve(
@@ -22,6 +25,11 @@ export default defineDocsConfig(({ butteryDocsDirs }) => ({
     remixCloudflareDevProxy(),
     remix({
       appDirectory: path.resolve(import.meta.dirname, "./app"),
+      future: {
+        v3_fetcherPersist: true,
+        v3_relativeSplatPath: true,
+        v3_throwAbortReason: true,
+      },
     }),
   ],
 }));

@@ -23,11 +23,10 @@ export async function getButteryDocsGraph(
     const parsedFile = await parseMdxFile(file);
     if (!parsedFile) return;
     const {
-      meta: { title },
+      meta: { title, meta },
       section,
       segments,
       ext,
-      // content,
       routeAbs,
       filename,
       toc,
@@ -44,7 +43,8 @@ export async function getButteryDocsGraph(
         );
       }
       graph[section] = {
-        title: sectionTitle,
+        routeTitle: sectionTitle,
+        routeMeta: meta,
         filepath: file.fsPath,
         filename,
         fileExtension: ext,
@@ -66,19 +66,21 @@ export async function getButteryDocsGraph(
       const segment = segments[i];
       if (!currentGraph[segment]) {
         currentGraph[segment] = {
-          title: "",
+          routeTitle: "",
           filepath: "",
           filename: "",
           fileExtension: "",
           routeAbs: "",
           routeRel: "",
+          routeMeta: [],
           toc: [],
           pages: {},
         };
       }
 
       if (i === segments.length - 1) {
-        currentGraph[segment].title = title;
+        currentGraph[segment].routeTitle = title;
+        currentGraph[segment].routeMeta = meta;
         currentGraph[segment].filepath = file.fsPath;
         currentGraph[segment].filename = file.filename;
         currentGraph[segment].fileExtension = ext;

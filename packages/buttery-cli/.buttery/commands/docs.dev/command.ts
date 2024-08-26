@@ -5,10 +5,11 @@ import type {
 } from "../../../lib/types.js";
 import { LOG_DOCS } from "../docs/docs.logger.js";
 
+import path from "node:path";
+import { createServer } from "vite";
 import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig.js";
-import { writeButteryDocsGraphDevData } from "../docs/docs.writeButteryDocsGraphDevData.js";
-import { createDevServer } from "./docs.dev.createDevServer.js";
-import { prepareDevDirectory } from "./docs.dev.prepareDevDirectory.js";
+import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectories.js";
+import { prepareRemixApp } from "./docs.dev.prepareRemixApp.js";
 
 export const meta: CommandMeta = {
   name: "dev",
@@ -32,13 +33,18 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
 
   try {
     const config = await getButteryDocsConfig({ prompt });
+    const dirs = await getButteryDocsDirectories(config);
 
-    await prepareDevDirectory(config);
-    await writeButteryDocsGraphDevData(config);
-    const server = await createDevServer();
+    await prepareRemixApp(config);
+
+    const server = await createServer({
+      configFile: path.resolve(
+        dirs.artifacts.docs.apps.dev.dynamicApp.root,
+        "./vite.config.ts"
+      ),
+    });
 
     await server.listen();
-
     server.printUrls();
     server.bindCLIShortcuts({ print: true });
   } catch (error) {

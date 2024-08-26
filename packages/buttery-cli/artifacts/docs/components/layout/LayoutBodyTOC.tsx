@@ -7,8 +7,8 @@ import {
   makeReset,
 } from "@buttery/tokens/docs";
 import { styled } from "@linaria/react";
+import { useLocation } from "@remix-run/react";
 import { type FC, type MouseEventHandler, useCallback } from "react";
-import { useLocation, useNavigation } from "react-router-dom";
 import type { ButteryDocsGraphTOC } from "../../../../.buttery/commands/docs/docs.types";
 import { getGraphValueThatMatchesPathname } from "../../library";
 import { useDetermineActiveSection } from "./layout.useDetermineActiveSection";

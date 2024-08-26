@@ -16,7 +16,7 @@ import { orderButteryDocFiles } from "../docs/docs.orderButteryDocFiles";
  * a directory in the hashed directory to enable dynamic importing with vite.
  * https://vitejs.dev/guide/features#dynamic-import
  */
-export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
+export const prepareRemixApp = async (config: ButteryDocsConfig) => {
   try {
     const files = await getButteryDocsFiles(config);
     const orderedFiles = orderButteryDocFiles(config, files);
@@ -25,8 +25,8 @@ export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
 
     // Create the hashed build directory by copying the template to that directory recursively
     await cp(
-      butteryDirs.artifacts.docs.apps.build.template,
-      butteryDirs.artifacts.docs.apps.build.dynamicAppRoot,
+      butteryDirs.artifacts.docs.apps.dev.template,
+      butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
       {
         recursive: true,
       }
@@ -38,7 +38,7 @@ export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
         await rm(butteryDirs.output.root, { recursive: true, force: true });
         // clean the routes
         const routesDir = path.resolve(
-          butteryDirs.artifacts.docs.apps.build.dynamicAppRoot,
+          butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
           "./app/routes"
         );
         // LOG_DOCS.debug("Cleaning cloudflare pages routes directory...");
@@ -56,19 +56,21 @@ export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
           if (!dirent.isFile()) return accum;
           const filePathSource = `${dirent.parentPath}/${dirent.name}`;
           const fileNameDest =
-            dirent.name === "_index.md"
-              ? "_index.md"
+            dirent.name === "_index.md" || dirent.name === "_index.mdx"
+              ? dirent.name
               : dirent.name
                   .split(".")
                   .reduce<string>((accum, segment, index, origArr) => {
                     if (index === 0) {
-                      return segment;
+                      return "_app.".concat(segment);
                     }
                     if (index < origArr.length - 1) {
                       return accum.concat("_.".concat(segment));
                     }
                     return accum.concat(".".concat(segment));
                   }, "");
+
+          console.log({ fileNameDest });
 
           const filePathDest = path.resolve(routesDir, fileNameDest);
           return accum.concat(copyFile(filePathSource, filePathDest));
@@ -78,7 +80,7 @@ export const prepareBuildDirectory = async (config: ButteryDocsConfig) => {
 
         LOG_DOCS.debug("Creating data file...");
         const dataFilePath = path.resolve(
-          butteryDirs.artifacts.docs.apps.build.dynamicAppRoot,
+          butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
           "./app/data.ts"
         );
         await writeFile(
@@ -94,7 +96,7 @@ export const header: ResolvedButteryConfig<"docs">["docs"]["header"] = ${JSON.st
 
         // write a temp package.json
         const packageJsonPath = path.resolve(
-          butteryDirs.artifacts.docs.apps.build.dynamicAppRoot,
+          butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
           "./package.json"
         );
         const packageJsonContent = {

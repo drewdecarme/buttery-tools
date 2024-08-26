@@ -131,7 +131,7 @@ const NavItem: FC<NavItemProps> = ({ graph, NavLinkComponent }) => {
               className={anchorCss}
               end
             >
-              {graphValue.title}
+              {graphValue.routeTitle}
             </NavLinkComponent>
             {Object.entries(graphValue.pages).length > 0
               ? NavItem({ graph: graphValue.pages, NavLinkComponent })
@@ -158,7 +158,7 @@ export const LayoutBodyNav: FC = () => {
                   className={clsx(anchorOverlineCSS)}
                 >
                   <h1 className={layoutNavOverlineCSS}>
-                    {sectionValues.title}
+                    {sectionValues.routeTitle}
                   </h1>
                 </NavLinkComponent>
                 <NavItem
