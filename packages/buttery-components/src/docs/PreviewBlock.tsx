@@ -4,7 +4,7 @@ import {
   type MouseEventHandler,
   forwardRef,
   useCallback,
-  useState,
+  useState
 } from "react";
 import { classes } from "../utils";
 
@@ -107,7 +107,7 @@ export const PreviewBlock = forwardRef<HTMLDivElement, PreviewBlockProps>(
         <div
           className={classes("content", {
             preview: activeTab === 0,
-            code: activeTab === 1,
+            code: activeTab === 1
           })}
         >
           {React.Children.toArray(children)[activeTab]}

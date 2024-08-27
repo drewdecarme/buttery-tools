@@ -15,9 +15,12 @@ export function mdxTransformCodeExamples(
     transform(code: string, id: string) {
       if (!id.endsWith(".mdx")) return;
 
+      /**
+       * Adjusted regex to capture everything after example: until example:end
+       *
+       * TODO: This needs to be fixed to fix any issues
+       */
       let matchNum = 1;
-
-      // Adjusted regex to capture everything after example: until example:end
       const regex = /\{\/\* example:"([^"]+)" \*\/\}/g;
       const transformedPreview = code.replace(regex, (_match, p1) => {
         const transformedPath = path.join(options.rootPath, p1);
@@ -34,7 +37,7 @@ import { default as Component${matchNum} } from "${transformedPath}";
 <PreviewBlock${matchNum}>
   <Component${matchNum} />
   \`\`\`tsx
-${codeBlock}
+  ${codeBlock}
   \`\`\`
 </PreviewBlock${matchNum}>
 
@@ -43,22 +46,7 @@ ${codeBlock}
         return newCode;
       });
 
-      // Apply your transformation logic here
-      // const transformedImports = code.replace(
-      //   /import\s+(\w+|\{[\w\s,]+\})\s+from\s+['"](~\/[^'"]+)['"]/g,
-      //   (_match, p1, p2) => {
-      //     return `import ${p1} from '${transformedPath}'`;
-      //   }
-      // );
-
-      // // Transform strings with paths starting with tilde (~)
-      // const transformedStrings = transformedImports.replace(
-      //   /['"](~\/[^'"]+)['"]/g,
-      //   (match, p1) => {
-      //     const transformedPath = getTransformedPath(p1, options);
-      //     return `'${transformedPath}'`;
-      //   }
-      // );
+      // const transformedPreview = code;
 
       // Adjusted regex to capture everything after example: until example:end
       const fenceRegex = /\{\/\* fence:"([^"]+)" \*\/\}/g;

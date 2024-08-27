@@ -3,29 +3,16 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration,
-  isRouteErrorResponse,
-  json,
-  useLoaderData,
-  useRouteError,
-  useRouteLoaderData
+  ScrollRestoration
 } from "@remix-run/react";
-import { Layout as LayoutComponent } from "../../../components/layout/Layout";
 
 import "@buttery/tokens/docs/index.css";
 
+import { Layout as LayoutRoot } from "../../../components/layout/Layout";
 import { LayoutHeader } from "../../../components/layout/LayoutHeader";
 import { header } from "./data";
 
-export async function loader() {
-  return json({
-    header: header ?? null
-  });
-}
-
 export function Layout({ children }: { children: React.ReactNode }) {
-  // const loaderData = useRouteLoaderData<typeof loader>("root");
-
   return (
     <html lang="en">
       <head>
@@ -44,12 +31,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
-        {/* <LayoutHeader header={loaderData?.header ?? {}} /> */}
+      <LayoutRoot>
+        <LayoutHeader header={header} />
         {children}
         <ScrollRestoration />
         <Scripts />
-      </body>
+      </LayoutRoot>
     </html>
   );
 }

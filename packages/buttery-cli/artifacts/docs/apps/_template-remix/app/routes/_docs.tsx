@@ -14,18 +14,17 @@ export async function loader() {
 
 export default function DocsLayout() {
   const loaderData = useLoaderData<typeof loader>();
-  console.log({ loaderData });
 
   return (
     <LayoutBody>
-      {/* <LayoutBodyNav graph={loaderData?.graph ?? {}} /> */}
+      <LayoutBodyNav graph={loaderData?.graph ?? {}} />
       <LayoutBodyMain>
         <Outlet />
       </LayoutBodyMain>
-      {/* <LayoutBodyTOC
+      <LayoutBodyTOC
         // @ts-expect-error mismatch
         graph={loaderData?.graph ?? {}}
-      /> */}
+      />
     </LayoutBody>
   );
 }

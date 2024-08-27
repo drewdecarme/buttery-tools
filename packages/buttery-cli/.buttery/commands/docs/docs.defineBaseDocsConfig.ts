@@ -38,7 +38,14 @@ export async function getButteryDocsDefineConfig() {
       },
     },
     plugins: [
-      remixCloudflareDevProxy(),
+      transformMarkdownAssetPath(),
+      // TODO: Fix this
+      mdxTransformCodeExamples({
+        rootPath: butteryDocsConfig.paths.rootDir,
+      }),
+      mdxTransformImports({
+        rootPath: butteryDocsConfig.paths.rootDir,
+      }),
       mdx({
         remarkPlugins: [remarkFrontmatter],
         rehypePlugins: [
@@ -61,28 +68,20 @@ export async function getButteryDocsDefineConfig() {
           ],
         ],
       }),
-      remix({
-        // manifest: true,
-        // future: {
-        //   v3_fetcherPersist: true,
-        //   v3_relativeSplatPath: true,
-        //   v3_throwAbortReason: true,
-        // },
-      }),
-      transformMarkdownAssetPath(),
-      mdxTransformImports({
-        rootPath: butteryDocsConfig.paths.rootDir,
-      }),
-      mdxTransformCodeExamples({
-        rootPath: butteryDocsConfig.paths.rootDir,
-      }),
-
       wyw({
-        // displayName: true,
         include: "/**/*.(ts|tsx)",
         babelOptions: {
           compact: false,
           presets: ["@babel/preset-typescript", "@babel/preset-react"],
+        },
+      }),
+      remixCloudflareDevProxy(),
+      remix({
+        manifest: true,
+        future: {
+          v3_fetcherPersist: true,
+          v3_relativeSplatPath: true,
+          v3_throwAbortReason: true,
         },
       }),
 
