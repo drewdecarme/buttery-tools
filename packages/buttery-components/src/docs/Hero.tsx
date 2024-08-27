@@ -71,12 +71,10 @@ export function Hero() {
             Stop <span className="highlight">re-writing</span> the hard stuff.
           </h1>
           <p>
-            100% unstyled and completely WCAG AA compliant hooks and components
-            that actually help you increase your development velocity by
-            seamlessly integrating with{" "}
-            <span className="highlight alt">
-              any styling method or framework.
-            </span>
+            100% unstyled, WCAG AA compliant React hooks and components that
+            significantly increase your development velocity by seamlessly
+            integrating with{" "}
+            <span className="highlight alt">any styling methodology.</span>
           </p>
         </div>
       </div>
