@@ -1,15 +1,15 @@
+import type { ButteryConfigDocs } from "@buttery/core";
 import {
   makeColor,
   makeColorStatic,
   makeCustom,
   makeFontWeight,
-  makeRem,
+  makeRem
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";
 import type { FC } from "react";
 import { LayoutHeaderLinks } from "./LayoutHeaderLinks";
-import { useLayoutContext } from "./layout.useLayoutContext";
 
 const layoutHeaderStyles = css`
   grid-area: layout-header;
@@ -63,9 +63,9 @@ const divStyles = css`
   font-weight: ${makeFontWeight("bold")};
 `;
 
-export const LayoutHeader: FC = () => {
-  const { header } = useLayoutContext();
+export type LayoutHeaderProps = { header: ButteryConfigDocs["header"] | null };
 
+export const LayoutHeader: FC<LayoutHeaderProps> = ({ header }) => {
   return (
     <header className={layoutHeaderStyles}>
       <div>

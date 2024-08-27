@@ -7,27 +7,24 @@ import {
   isRouteErrorResponse,
   json,
   useLoaderData,
-  useRouteError
+  useRouteError,
+  useRouteLoaderData
 } from "@remix-run/react";
-import {
-  Layout as LayoutComponent,
-  bodyCSS
-} from "../../../components/layout/Layout";
+import { Layout as LayoutComponent } from "../../../components/layout/Layout";
 
 import "@buttery/tokens/docs/index.css";
 
-import { graph, header } from "./data";
+import { LayoutHeader } from "../../../components/layout/LayoutHeader";
+import { header } from "./data";
 
 export async function loader() {
   return json({
-    graph: graph,
     header: header ?? null
   });
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const loaderData = useLoaderData<typeof loader>();
-  const error = useRouteError();
+  // const loaderData = useRouteLoaderData<typeof loader>("root");
 
   return (
     <html lang="en">
@@ -47,47 +44,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      {error ? (
-        <body>Error</body>
-      ) : (
-        <body className={bodyCSS}>
-          <LayoutComponent
-            header={loaderData.header}
-            // @ts-expect-error mismatch
-            graph={loaderData.graph}
-          >
-            {children}
-          </LayoutComponent>
-          <ScrollRestoration />
-          <Scripts />
-        </body>
-      )}
+      <body>
+        {/* <LayoutHeader header={loaderData?.header ?? {}} /> */}
+        {children}
+        <ScrollRestoration />
+        <Scripts />
+      </body>
     </html>
   );
 }
 
 export default function App() {
   return <Outlet />;
-}
-
-export function ErrorBoundary() {
-  const error = useRouteError();
-
-  if (isRouteErrorResponse(error)) {
-    return (
-      <>
-        <h1>
-          {error.status} {error.statusText}
-        </h1>
-        <p>{error.data}</p>
-      </>
-    );
-  }
-
-  return (
-    <>
-      <h1>Error!</h1>
-      <p>{error?.message ?? "Unknown error"}</p>
-    </>
-  );
 }

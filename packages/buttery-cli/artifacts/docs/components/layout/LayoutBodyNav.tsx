@@ -9,8 +9,8 @@ import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";
 import type { FC } from "react";
 import { LayoutBodyNavItem } from "./LayoutBodyNavItem";
-import { useLayoutContext } from "./layout.useLayoutContext";
 import { layoutNavOverlineCSS } from "./layout.utils";
+import type { ButteryDocsGraph } from ".buttery/commands/docs/docs.types";
 
 const navStyles = css`
   grid-area: layout-sidebar;
@@ -55,12 +55,13 @@ const anchorOverlineCSS = css`
   }
 `;
 
-export const LayoutBodyNav: FC = () => {
-  const { graph } = useLayoutContext();
+export type LayoutBodyNavProps = { graph: ButteryDocsGraph | null };
+
+export const LayoutBodyNav: FC<LayoutBodyNavProps> = ({ graph }) => {
   return (
     <nav className={navStyles}>
       <div className={navContentStyles}>
-        {Object.entries(graph).map(([sectionKey, sectionValues]) => {
+        {Object.entries(graph ?? {}).map(([sectionKey, sectionValues]) => {
           if (sectionKey === "_index") return null;
           return (
             <section key={sectionKey} className={sectionStyles}>

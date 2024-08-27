@@ -64,7 +64,7 @@
     "@types/babel__core": "7.20.5",
     "@types/babel__preset-env": "7.9.7",
     "@types/chroma-js": "2.4.4",
-    "tsx": "4.18.0",
+    "tsx": "4.19.0",
     "typescript": "5.5.4"
   },
   "buttery-tokens": {}

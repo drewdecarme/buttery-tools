@@ -4,7 +4,7 @@ import {
   makeColor,
   makeFontWeight,
   makeRem,
-  makeReset,
+  makeReset
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";

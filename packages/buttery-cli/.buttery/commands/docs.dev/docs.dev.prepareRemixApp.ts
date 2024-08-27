@@ -23,6 +23,16 @@ export const prepareRemixApp = async (config: ButteryDocsConfig) => {
     const graph = await getButteryDocsGraph(config, orderedFiles);
     const butteryDirs = await getButteryDocsDirectories(config);
 
+    // delete the existing app
+    console.log(
+      "Deleting",
+      butteryDirs.artifacts.docs.apps.dev.dynamicApp.root
+    );
+    await rm(butteryDirs.artifacts.docs.apps.dev.dynamicApp.root, {
+      recursive: true,
+      force: true,
+    });
+
     // Create the hashed build directory by copying the template to that directory recursively
     await cp(
       butteryDirs.artifacts.docs.apps.dev.template,
@@ -98,6 +108,7 @@ export const header: ResolvedButteryConfig<"docs">["docs"]["header"] = ${JSON.st
         );
         const packageJsonContent = {
           type: "module",
+          sideEffects: false,
           dependencies: {
             "@remix-run/cloudflare": "latest",
             isbot: "4.4.0",

@@ -35,7 +35,8 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
   // TODO: Change this when we can run this with Remix
   const docTargetDevTemplate = path.resolve(
     artifactsDocsAppsDir,
-    `./_template-${config.docs.build.target}`
+    // `./_template-${config.docs.build.target}`
+    "./_template-remix"
   );
   const docTargetDevDynamicApp = path.resolve(
     artifactsDocsAppsDir,

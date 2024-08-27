@@ -43,7 +43,7 @@
     "@buttery/tsconfig": "workspace:",
     "@svgr/cli": "8.1.0",
     "@svgr/core": "8.1.0",
-    "tsx": "4.18.0",
+    "tsx": "4.19.0",
     "typescript": "5.5.4",
     "vite": "5.4.2"
   }

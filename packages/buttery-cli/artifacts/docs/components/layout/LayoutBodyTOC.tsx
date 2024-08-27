@@ -4,17 +4,19 @@ import {
   makeCustom,
   makeFontWeight,
   makeRem,
-  makeReset,
+  makeReset
 } from "@buttery/tokens/docs";
 
 import { css } from "@linaria/core";
 import { useLocation } from "@remix-run/react";
 import clsx from "clsx";
 import { type FC, type MouseEventHandler, useCallback } from "react";
-import type { ButteryDocsGraphTOC } from "../../../../.buttery/commands/docs/docs.types";
+import type {
+  ButteryDocsGraph,
+  ButteryDocsGraphTOC
+} from "../../../../.buttery/commands/docs/docs.types";
 import { getGraphValueThatMatchesPathname } from "../../library";
 import { useDetermineActiveSection } from "./layout.useDetermineActiveSection";
-import { useLayoutContext } from "./layout.useLayoutContext";
 import { layoutNavOverlineCSS } from "./layout.utils";
 
 const layoutBodyStyles = css`
@@ -77,7 +79,7 @@ const overlineStyles = css`
 `;
 
 export function ContentsNode({
-  tableOfContents,
+  tableOfContents
 }: {
   tableOfContents: ButteryDocsGraphTOC[];
 }) {
@@ -95,7 +97,7 @@ export function ContentsNode({
 
     window.scrollTo({
       top: offset,
-      behavior: "smooth",
+      behavior: "smooth"
     });
   }, []);
 
@@ -112,10 +114,13 @@ export function ContentsNode({
     </li>
   ));
 }
-export const LayoutBodyTOC: FC = () => {
-  const { graph } = useLayoutContext();
+
+export type LayoutBodyTOCProps = {
+  graph: ButteryDocsGraph | null;
+};
+export const LayoutBodyTOC: FC<LayoutBodyTOCProps> = ({ graph }) => {
   const { pathname } = useLocation();
-  const currentGraph = getGraphValueThatMatchesPathname(pathname, graph);
+  const currentGraph = getGraphValueThatMatchesPathname(pathname, graph ?? {});
   useDetermineActiveSection(pathname);
 
   return (

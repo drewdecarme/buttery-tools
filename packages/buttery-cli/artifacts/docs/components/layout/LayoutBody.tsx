@@ -1,11 +1,13 @@
 import { makeCustom, makeRem } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
-import { type ReactNode, useMemo } from "react";
-import { LayoutBodyMain } from "./LayoutBodyMain";
-import { LayoutBodyNav } from "./LayoutBodyNav";
-import { LayoutBodyTOC } from "./LayoutBodyTOC";
 
-const bodyStyles = css`
+import { clsx } from "clsx";
+import { forwardRef } from "react";
+
+export type LayoutBodyPropsNative = JSX.IntrinsicElements["main"];
+export type LayoutBodyProps = LayoutBodyPropsNative;
+
+const layoutBodyStyles = css`
   display: grid;
   grid-area: layout-body;
   grid-template-columns: ${makeRem(300)} 1fr ${makeRem(300)};
@@ -17,17 +19,16 @@ const bodyStyles = css`
   width: 100%;
 `;
 
-export function LayoutBody(props: { children: ReactNode }) {
-  return (
-    <main className={bodyStyles}>
-      <LayoutBodyNav />
-      <LayoutBodyMain>{props.children}</LayoutBodyMain>
-      {useMemo(
-        () => (
-          <LayoutBodyTOC />
-        ),
-        []
-      )}
-    </main>
-  );
-}
+export const LayoutBody = forwardRef<HTMLElement, LayoutBodyProps>(
+  function LayoutBody({ children, className, ...restProps }, ref) {
+    return (
+      <main
+        {...restProps}
+        className={clsx(layoutBodyStyles, className)}
+        ref={ref}
+      >
+        {children}
+      </main>
+    );
+  }
+);

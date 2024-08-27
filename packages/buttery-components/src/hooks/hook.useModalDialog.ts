@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { usePortal } from ".";
+import { usePortal } from "./usePortal/hook.usePortal";
 
 export type ModalDefaultState = Record<string, unknown>;
 

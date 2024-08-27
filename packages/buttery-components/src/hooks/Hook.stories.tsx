@@ -8,8 +8,8 @@ import { useToggle } from "./hook.useToggle";
 const meta: Meta = {
   title: "Utils / Hooks",
   parameters: {
-    layout: "centered",
-  },
+    layout: "centered"
+  }
 } satisfies Meta<typeof meta>;
 
 export default meta;
@@ -29,7 +29,7 @@ export const UseCarousel = () => {
     [...new Array(5)].map(() => ({
       name: randFullName(),
       job: randJobTitle(),
-      favIceHockeyTeam: randIceHockeyTeam(),
+      favIceHockeyTeam: randIceHockeyTeam()
     }))
   );
   const { currentItem, next, prev } = useCarousel(itemsRef.current);
@@ -42,18 +42,22 @@ export const UseCarousel = () => {
           justifyContent: "space-around",
           gap: "1rem",
           width: "min-content",
-          margin: "0 auto",
+          margin: "0 auto"
         }}
       >
-        <button onClick={prev}>back</button>
-        <button onClick={next}>forward</button>
+        <button type="button" onClick={prev}>
+          back
+        </button>
+        <button type="button" onClick={next}>
+          forward
+        </button>
       </div>
       <pre
         style={{
           padding: " 1rem",
           fontSize: "1rem",
           background: "#ccc",
-          borderRadius: ".5rem",
+          borderRadius: ".5rem"
         }}
       >
         {JSON.stringify(currentItem, null, 2)}
@@ -71,7 +75,7 @@ export const UseBreakpoint = () => {
   return (
     <div
       style={{
-        maxWidth: "50ch",
+        maxWidth: "50ch"
       }}
     >
       <div>
@@ -87,7 +91,7 @@ export const UseBreakpoint = () => {
       <span
         style={{
           color: "blue",
-          fontWeight: "bold",
+          fontWeight: "bold"
         }}
       >
         BLUE
@@ -97,7 +101,7 @@ export const UseBreakpoint = () => {
         <li>
           GREATER THAN:{" "}
           <code>
-            <strong>{breakpointMap["mobile"]}px</strong>
+            <strong>{breakpointMap.mobile}px</strong>
           </code>
         </li>
       </ul>
@@ -106,7 +110,7 @@ export const UseBreakpoint = () => {
         style={{
           height: "2rem",
           width: "100%",
-          background: shouldRender ? "blue" : "#ccc",
+          background: shouldRender ? "blue" : "#ccc"
         }}
       />
       <br />
@@ -116,7 +120,7 @@ export const UseBreakpoint = () => {
         <span
           style={{
             color: "green",
-            fontWeight: "bold",
+            fontWeight: "bold"
           }}
         >
           GREEN
@@ -126,13 +130,13 @@ export const UseBreakpoint = () => {
           <li>
             GREATER THAN:&nbsp;
             <code>
-              <strong>{breakpointMap["tablet"]}px</strong>
+              <strong>{breakpointMap.tablet}px</strong>
             </code>
           </li>
           <li>
             LESS THAN OR EQUAL TO:&nbsp;
             <code>
-              <strong>{breakpointMap["desktop"] - 1}px</strong>
+              <strong>{breakpointMap.desktop - 1}px</strong>
             </code>
           </li>
         </ul>
@@ -140,7 +144,7 @@ export const UseBreakpoint = () => {
           style={{
             height: "2rem",
             width: "100%",
-            background: shouldRenderBetween ? "green" : "#ccc",
+            background: shouldRenderBetween ? "green" : "#ccc"
           }}
         />
       </div>
@@ -151,7 +155,7 @@ export const UseBreakpoint = () => {
         <span
           style={{
             color: "red",
-            fontWeight: "bold",
+            fontWeight: "bold"
           }}
         >
           RED
@@ -161,7 +165,7 @@ export const UseBreakpoint = () => {
           <li>
             GREATER THAN:{" "}
             <code>
-              <strong>{breakpointMap["desktop"]}px</strong>
+              <strong>{breakpointMap.desktop}px</strong>
             </code>
           </li>
         </ul>
@@ -171,7 +175,7 @@ export const UseBreakpoint = () => {
         style={{
           height: "2rem",
           width: "100%",
-          background: shouldRenderMax ? "red" : "#ccc",
+          background: shouldRenderMax ? "red" : "#ccc"
         }}
       />
     </div>

@@ -2,13 +2,14 @@ import {
   makeColor,
   makeCustom,
   makeFontFamily,
-  makeRem,
+  makeRem
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
-import { LayoutProvider, type LayoutProviderProps } from "./Layout.context";
-import { LayoutHeader } from "./LayoutHeader";
 
-export const bodyCSS = css`
+import { clsx } from "clsx";
+import { forwardRef } from "react";
+
+export const bodyStyles = css`
   font-family: ${makeFontFamily("body")};
   margin: 0;
 
@@ -35,12 +36,16 @@ export const bodyCSS = css`
   background: ${makeColor("neutral", { variant: "50", opacity: 0.12 })};
 `;
 
-export type LayoutProps = LayoutProviderProps;
-export function Layout({ children, ...restProps }: LayoutProps) {
+export type LayoutPropsNative = JSX.IntrinsicElements["body"];
+export type LayoutProps = LayoutPropsNative;
+
+export const Layout = forwardRef<HTMLBodyElement, LayoutProps>(function Layout(
+  { children, className, ...restProps },
+  ref
+) {
   return (
-    <LayoutProvider {...restProps}>
-      <LayoutHeader />
+    <body {...restProps} className={clsx(bodyStyles, className)} ref={ref}>
       {children}
-    </LayoutProvider>
+    </body>
   );
-}
+});
