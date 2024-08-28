@@ -7,6 +7,7 @@ import wyw from "@wyw-in-js/vite";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
+import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { type UserConfig, mergeConfig } from "vite";
 import { getButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
@@ -26,7 +27,8 @@ export async function getButteryDocsDefineConfig() {
       outDir: butteryDocsDirs.output.root
     },
     server: {
-      port: 1400
+      port: 1400,
+      open: true
     },
 
     resolve: {
@@ -54,7 +56,7 @@ export async function getButteryDocsDefineConfig() {
         rootPath: butteryDocsConfig.paths.rootDir
       }),
       mdx({
-        remarkPlugins: [remarkFrontmatter],
+        remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
         rehypePlugins: [
           rehypeSlug,
           [

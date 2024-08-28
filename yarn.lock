@@ -3404,6 +3404,7 @@ __metadata:
     remark-frontmatter: "npm:5.0.0"
     remark-gfm: "npm:4.0.0"
     remark-mdx: "npm:3.0.1"
+    remark-mdx-frontmatter: "npm:^5.0.0"
     remark-parse: "npm:11.0.0"
     remark-rehype: "npm:11.1.0"
     rollup: "npm:4.21.1"
@@ -5920,7 +5921,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/cloudflare@npm:2.11.2":
+"@remix-run/cloudflare@npm:2.11.2, @remix-run/cloudflare@npm:latest":
   version: 2.11.2
   resolution: "@remix-run/cloudflare@npm:2.11.2"
   dependencies:
@@ -8650,6 +8651,15 @@ __metadata:
     vite: "npm:5.4.2"
     vite-tsconfig-paths: "npm:5.0.1"
     wrangler: "npm:3.72.2"
+  languageName: unknown
+  linkType: soft
+
+"app.193d15a275b8a53fdff951d9698f8312f26eeacc6233f34be308abbf210a0bc4-132c8a@workspace:packages/buttery-cli/artifacts/docs/apps/app.193d15a275b8a53fdff951d9698f8312f26eeacc6233f34be308abbf210a0bc4":
+  version: 0.0.0-use.local
+  resolution: "app.193d15a275b8a53fdff951d9698f8312f26eeacc6233f34be308abbf210a0bc4-132c8a@workspace:packages/buttery-cli/artifacts/docs/apps/app.193d15a275b8a53fdff951d9698f8312f26eeacc6233f34be308abbf210a0bc4"
+  dependencies:
+    "@remix-run/cloudflare": "npm:latest"
+    isbot: "npm:4.4.0"
   languageName: unknown
   linkType: soft
 
@@ -11591,6 +11601,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"estree-util-value-to-estree@npm:^3.0.0":
+  version: 3.1.2
+  resolution: "estree-util-value-to-estree@npm:3.1.2"
+  dependencies:
+    "@types/estree": "npm:^1.0.0"
+  checksum: 10c0/fb0fa42f44488eeb2357b60dc3fd5581422b0a36144fd90639fd3963c7396f225e7d7efeee0144b0a7293ea00e4ec9647b8302d057d48f894e8d5775c3c72eb7
+  languageName: node
+  linkType: hard
+
 "estree-util-visit@npm:^1.0.0":
   version: 1.2.1
   resolution: "estree-util-visit@npm:1.2.1"
@@ -13649,17 +13668,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"isbot@npm:4.4.0, isbot@npm:^4.1.0":
+  version: 4.4.0
+  resolution: "isbot@npm:4.4.0"
+  checksum: 10c0/8cccbd8151a859c4a6c46578aa25984a5cad90ff91b375ab644c20f0a2bf02defa5429739b2de94f68b045d37766837e12991d858ad7cdf5f01e0071d4342e49
+  languageName: node
+  linkType: hard
+
 "isbot@npm:5.1.17":
   version: 5.1.17
   resolution: "isbot@npm:5.1.17"
   checksum: 10c0/b4adee17c54bee4cfca5ed9ab1b3151f4df558a1d3b37c94bbd3b7e1f7e4a5130efdc2f54bae83e6fe3371d40576dcd90cd7072823a85b9e0a517eb51e057074
-  languageName: node
-  linkType: hard
-
-"isbot@npm:^4.1.0":
-  version: 4.4.0
-  resolution: "isbot@npm:4.4.0"
-  checksum: 10c0/8cccbd8151a859c4a6c46578aa25984a5cad90ff91b375ab644c20f0a2bf02defa5429739b2de94f68b045d37766837e12991d858ad7cdf5f01e0071d4342e49
   languageName: node
   linkType: hard
 
@@ -18132,6 +18151,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"remark-mdx-frontmatter@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "remark-mdx-frontmatter@npm:5.0.0"
+  dependencies:
+    "@types/mdast": "npm:^4.0.0"
+    estree-util-is-identifier-name: "npm:^3.0.0"
+    estree-util-value-to-estree: "npm:^3.0.0"
+    toml: "npm:^3.0.0"
+    unified: "npm:^11.0.0"
+    yaml: "npm:^2.0.0"
+  checksum: 10c0/fba25d087b09135231826820afbc9de2f80850ede362b5435246774c204e0de892250165c8de7c313803470073285621ce11d7b8bf7515a4f9164688294119d7
+  languageName: node
+  linkType: hard
+
 "remark-mdx@npm:3.0.1, remark-mdx@npm:^3.0.0":
   version: 3.0.1
   resolution: "remark-mdx@npm:3.0.1"
@@ -21197,6 +21230,15 @@ __metadata:
   version: 4.0.0
   resolution: "yallist@npm:4.0.0"
   checksum: 10c0/2286b5e8dbfe22204ab66e2ef5cc9bbb1e55dfc873bbe0d568aa943eb255d131890dfd5bf243637273d31119b870f49c18fcde2c6ffbb7a7a092b870dc90625a
+  languageName: node
+  linkType: hard
+
+"yaml@npm:^2.0.0":
+  version: 2.5.0
+  resolution: "yaml@npm:2.5.0"
+  bin:
+    yaml: bin.mjs
+  checksum: 10c0/771a1df083c8217cf04ef49f87244ae2dd7d7457094425e793b8f056159f167602ce172aa32d6bca21f787d24ec724aee3cecde938f6643564117bd151452631
   languageName: node
   linkType: hard
 

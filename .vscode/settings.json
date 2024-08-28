@@ -5,7 +5,8 @@
     "Dateify",
     "fooded",
     "frontmatter",
-    "invoicer"
+    "invoicer",
+    "Jsonify"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.formatOnSave": true

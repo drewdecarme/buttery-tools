@@ -16,8 +16,8 @@ import type {
   ButteryDocsGraphTOC
 } from "../../../../.buttery/commands/docs/docs.types";
 import { getGraphValueThatMatchesPathname } from "../../library";
+import { LayoutTextOverline } from "./LayoutTextOverline";
 import { useDetermineActiveSection } from "./layout.useDetermineActiveSection";
-import { layoutNavOverlineCSS } from "./layout.utils";
 
 const layoutBodyStyles = css`
   grid-area: layout-toc;
@@ -126,9 +126,9 @@ export const LayoutBodyTOC: FC<LayoutBodyTOCProps> = ({ graph }) => {
   return (
     <article className={layoutBodyStyles}>
       <div>
-        <div className={clsx(layoutNavOverlineCSS, overlineStyles)}>
+        <LayoutTextOverline className={overlineStyles}>
           on this page
-        </div>
+        </LayoutTextOverline>
         <ul className={ulStyles}>
           <ContentsNode tableOfContents={currentGraph.toc} />
         </ul>

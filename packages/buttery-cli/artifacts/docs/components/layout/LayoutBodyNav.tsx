@@ -9,7 +9,8 @@ import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";
 import type { FC } from "react";
 import { LayoutBodyNavItem } from "./LayoutBodyNavItem";
-import { layoutNavOverlineCSS } from "./layout.utils";
+import { LayoutTextOverline } from "./LayoutTextOverline";
+
 import type { ButteryDocsGraph } from ".buttery/commands/docs/docs.types";
 
 const navStyles = css`
@@ -69,9 +70,9 @@ export const LayoutBodyNav: FC<LayoutBodyNavProps> = ({ graph }) => {
                 to={sectionValues.routeAbs}
                 className={anchorOverlineCSS}
               >
-                <h1 className={layoutNavOverlineCSS}>
+                <LayoutTextOverline>
                   {sectionValues.routeTitle}
-                </h1>
+                </LayoutTextOverline>
               </NavLink>
               <LayoutBodyNavItem graph={sectionValues.pages} />
             </section>
