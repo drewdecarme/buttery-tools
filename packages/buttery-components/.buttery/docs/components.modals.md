@@ -1,5 +1,9 @@
 ---
 title: Modals
+meta:
+  - title: Modals | Buttery Components
+  - name: description
+    content: A collection of modal dialog components designed to easily and imperatively control blocking UI dialogs.
 ---
 
 # Modals

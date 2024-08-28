@@ -12,7 +12,6 @@ type MdxTransformImportsOptions = {
 export function mdxTransformImports(
   options: MdxTransformImportsOptions
 ): Plugin {
-  console.log({ options });
   return {
     enforce: "pre",
     name: "vite-plugin-mdx-transform-imports",
@@ -30,8 +29,8 @@ export function mdxTransformImports(
 
       return {
         code: transformedStrings,
-        map: null, // Provide source map if necessary
+        map: null // Provide source map if necessary
       };
-    },
+    }
   };
 }

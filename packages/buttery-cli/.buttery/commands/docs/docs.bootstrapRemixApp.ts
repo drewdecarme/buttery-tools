@@ -24,11 +24,12 @@ export const bootstrapRemixApp = async (config: ButteryDocsConfig) => {
     const butteryDirs = await getButteryDocsDirectories(config);
 
     // delete the existing app
-    LOG_DOCS.info(`Deleting ${butteryDirs.artifacts.apps.generated.root}`);
+    LOG_DOCS.debug("Cleaning application directory...");
     await rm(butteryDirs.artifacts.apps.generated.root, {
       recursive: true,
       force: true
     });
+    LOG_DOCS.debug("Cleaning application directory... done.");
 
     // Create the hashed build directory by copying the template to that directory recursively
     await cp(
@@ -75,8 +76,6 @@ export const bootstrapRemixApp = async (config: ButteryDocsConfig) => {
                     }
                     return accum.concat(".".concat(segment));
                   }, "");
-
-          console.log({ fileNameDest });
 
           const filePathDest = path.resolve(routesDir, fileNameDest);
           return accum.concat(copyFile(filePathSource, filePathDest));

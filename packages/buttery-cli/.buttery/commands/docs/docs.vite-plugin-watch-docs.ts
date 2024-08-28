@@ -32,7 +32,6 @@ export function watchDocsPlugin(
             outFileName
           );
 
-          console.log({ outFile });
           try {
             // copy the new file
             LOG_DOCS.debug("Updating document...");

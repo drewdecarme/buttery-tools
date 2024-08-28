@@ -87,13 +87,7 @@ export async function getButteryDocsDefineConfig() {
           v3_throwAbortReason: true
         }
       }),
-      watchDocsPlugin(butteryDocsConfig, butteryDocsDirs),
-      visualizer({
-        emitFile: true,
-        filename: "stats.html",
-        projectRoot: butteryDocsDirs.artifacts.apps.generated.root,
-        open: true
-      })
+      watchDocsPlugin(butteryDocsConfig, butteryDocsDirs)
     ]
   };
 

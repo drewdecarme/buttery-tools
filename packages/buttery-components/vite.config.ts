@@ -5,16 +5,16 @@ import { defineConfig, mergeConfig } from "vite";
 export default mergeConfig(
   createLibraryConfig({
     rootDir: __dirname,
-    type: "react",
+    type: "react"
   }),
   defineConfig({
     plugins: [
       wyw({
         include: ["**/*.{ts,tsx}"],
         babelOptions: {
-          presets: ["@babel/preset-typescript", "@babel/preset-react"],
-        },
-      }),
-    ],
+          presets: ["@babel/preset-typescript", "@babel/preset-react"]
+        }
+      })
+    ]
   })
 );
