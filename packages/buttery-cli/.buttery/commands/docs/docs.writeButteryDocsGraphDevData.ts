@@ -21,7 +21,7 @@ export const writeButteryDocsGraphDevData = async (
 
   await writeFile(
     path.resolve(
-      butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
+      butteryDirs.artifacts.apps.generated.root,
       "./data.js"
     ),
     `export const graph = ${JSON.stringify(graph, null, 2)};

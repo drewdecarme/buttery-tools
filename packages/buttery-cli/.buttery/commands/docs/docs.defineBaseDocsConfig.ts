@@ -23,28 +23,35 @@ export async function getButteryDocsDefineConfig() {
   const baseConfig: UserConfig = {
     publicDir: butteryDocsDirs.userDocs.public,
     build: {
-      outDir: butteryDocsDirs.output.root,
+      outDir: butteryDocsDirs.output.root
     },
     server: {
-      port: 1400,
+      port: 1400
     },
 
     resolve: {
       alias: {
         "@buttery/tokens/docs": path.resolve(
           butteryDocsDirs.artifacts.root,
-          "./tokens/.buttery-tokens/docs"
-        ),
-      },
+          "../tokens/.buttery-tokens/docs"
+        )
+      }
     },
     plugins: [
+      wyw({
+        include: "/**/*.(ts|tsx)",
+        babelOptions: {
+          compact: false,
+          presets: ["@babel/preset-typescript", "@babel/preset-react"]
+        }
+      }),
       transformMarkdownAssetPath(),
       // TODO: Fix this
       mdxTransformCodeExamples({
-        rootPath: butteryDocsConfig.paths.rootDir,
+        rootPath: butteryDocsConfig.paths.rootDir
       }),
       mdxTransformImports({
-        rootPath: butteryDocsConfig.paths.rootDir,
+        rootPath: butteryDocsConfig.paths.rootDir
       }),
       mdx({
         remarkPlugins: [remarkFrontmatter],
@@ -55,25 +62,18 @@ export async function getButteryDocsDefineConfig() {
             {
               behavior: "wrap",
               headingProperties: {
-                className: "heading",
-              },
-            },
+                className: "heading"
+              }
+            }
           ],
           [
             // @ts-expect-error This is a mismatch from the type-system
             rehypeShiki,
             {
-              theme: "dark-plus",
-            },
-          ],
-        ],
-      }),
-      wyw({
-        include: "/**/*.(ts|tsx)",
-        babelOptions: {
-          compact: false,
-          presets: ["@babel/preset-typescript", "@babel/preset-react"],
-        },
+              theme: "dark-plus"
+            }
+          ]
+        ]
       }),
       remixCloudflareDevProxy(),
       remix({
@@ -81,12 +81,12 @@ export async function getButteryDocsDefineConfig() {
         future: {
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true,
-          v3_throwAbortReason: true,
-        },
+          v3_throwAbortReason: true
+        }
       }),
 
-      watchDocsPlugin(butteryDocsConfig, butteryDocsDirs),
-    ],
+      watchDocsPlugin(butteryDocsConfig, butteryDocsDirs)
+    ]
   };
 
   return function defineConfig<T extends UserConfig = UserConfig>(

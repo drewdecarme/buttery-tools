@@ -10,7 +10,7 @@ export const meta: CommandMeta = {
     "Build the necessary assets required to create actions, fetchers, and components to render the Buttery Docs template.",
 };
 
-export const options: CommandOptions<"watch"> = {
+export const options: CommandOptions<{ watch: boolean }> = {
   watch: {
     alias: "w",
     description: "Run the build in watch mode",

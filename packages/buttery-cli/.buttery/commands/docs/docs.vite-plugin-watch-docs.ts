@@ -21,19 +21,31 @@ export function watchDocsPlugin(
         if (file.endsWith(".md") || file.endsWith(".mdx")) {
           LOG_DOCS.watch(file.concat(" changed..."));
           const filename = basename(file);
+          const outFileName =
+            filename === "_index"
+              ? filename
+              : butteryDirs.artifacts.apps.generated.app.routePrefix.concat(
+                  filename
+                );
           const outFile = path.resolve(
-            butteryDirs.artifacts.docs.apps.dev.dynamicApp.docs,
-            filename
+            butteryDirs.artifacts.apps.generated.app.routes,
+            outFileName
           );
-          // copy the new file
-          LOG_DOCS.debug("Updating document...");
-          await cp(file, outFile);
-          LOG_DOCS.debug("Updating document... done.");
-          // re-create the data for the base loader. This will update the nav
-          // if a new file is created
-          LOG_DOCS.debug("Re-creating routes...");
-          await writeButteryDocsGraphDevData(butteryConfigs);
-          LOG_DOCS.debug("Re-creating routes... done.");
+
+          console.log({ outFile });
+          try {
+            // copy the new file
+            LOG_DOCS.debug("Updating document...");
+            await cp(file, outFile);
+            LOG_DOCS.debug("Updating document... done.");
+            // re-create the data for the base loader. This will update the nav
+            // if a new file is created
+            LOG_DOCS.debug("Re-creating routes...");
+            await writeButteryDocsGraphDevData(butteryConfigs);
+            LOG_DOCS.debug("Re-creating routes... done.");
+          } catch (error) {
+            LOG_DOCS.fatal(new Error(error as string));
+          }
         }
       });
 
@@ -41,6 +53,6 @@ export function watchDocsPlugin(
       server.httpServer?.on("close", () => {
         watcher.close();
       });
-    },
+    }
   };
 }

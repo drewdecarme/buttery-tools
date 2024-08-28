@@ -24,26 +24,23 @@ export const prepareRemixApp = async (config: ButteryDocsConfig) => {
     const butteryDirs = await getButteryDocsDirectories(config);
 
     // delete the existing app
-    console.log(
-      "Deleting",
-      butteryDirs.artifacts.docs.apps.dev.dynamicApp.root
-    );
-    await rm(butteryDirs.artifacts.docs.apps.dev.dynamicApp.root, {
+    LOG_DOCS.info(`Deleting ${butteryDirs.artifacts.apps.generated.root}`);
+    await rm(butteryDirs.artifacts.apps.generated.root, {
       recursive: true,
-      force: true,
+      force: true
     });
 
     // Create the hashed build directory by copying the template to that directory recursively
     await cp(
-      butteryDirs.artifacts.docs.apps.dev.template,
-      butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
+      butteryDirs.artifacts.apps.template.root,
+      butteryDirs.artifacts.apps.generated.root,
       {
-        recursive: true,
+        recursive: true
       }
     );
 
     const routesDir = path.resolve(
-      butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
+      butteryDirs.artifacts.apps.generated.root,
       "./app/routes"
     );
 
@@ -55,7 +52,7 @@ export const prepareRemixApp = async (config: ButteryDocsConfig) => {
         // copy over new routes
         LOG_DOCS.debug("Populating routes directory with docs...");
         const filesAndDirs = await readdir(butteryDirs.userDocs.root, {
-          withFileTypes: true,
+          withFileTypes: true
         });
         const docsWithRemixFileConventions = filesAndDirs.reduce<
           Promise<void>[]
@@ -69,7 +66,9 @@ export const prepareRemixApp = async (config: ButteryDocsConfig) => {
                   .split(".")
                   .reduce<string>((accum, segment, index, origArr) => {
                     if (index === 0) {
-                      return "_docs.".concat(segment);
+                      return butteryDirs.artifacts.apps.generated.app.routePrefix.concat(
+                        segment
+                      );
                     }
                     if (index < origArr.length - 1) {
                       return accum.concat("_.".concat(segment));
@@ -87,7 +86,7 @@ export const prepareRemixApp = async (config: ButteryDocsConfig) => {
 
         LOG_DOCS.debug("Creating data file...");
         const dataFilePath = path.resolve(
-          butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
+          butteryDirs.artifacts.apps.generated.root,
           "./app/data.ts"
         );
         await writeFile(
@@ -103,7 +102,7 @@ export const header: ResolvedButteryConfig<"docs">["docs"]["header"] = ${JSON.st
 
         // write a temp package.json
         const packageJsonPath = path.resolve(
-          butteryDirs.artifacts.docs.apps.dev.dynamicApp.root,
+          butteryDirs.artifacts.apps.generated.root,
           "./package.json"
         );
         const packageJsonContent = {
@@ -111,8 +110,8 @@ export const header: ResolvedButteryConfig<"docs">["docs"]["header"] = ${JSON.st
           sideEffects: false,
           dependencies: {
             "@remix-run/cloudflare": "latest",
-            isbot: "4.4.0",
-          },
+            isbot: "4.4.0"
+          }
         };
         const packageJsonString = JSON.stringify(packageJsonContent, null, 2);
         await writeFile(packageJsonPath, packageJsonString);
