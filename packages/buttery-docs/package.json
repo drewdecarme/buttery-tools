@@ -24,8 +24,8 @@
     "build": "yarn buttery docs build"
   },
   "devDependencies": {
-    "@buttery/cli": "workspace:",
-    "@buttery/tsconfig": "workspace:",
+    "@buttery/cli": "workspace:^",
+    "@buttery/tsconfig": "workspace:^",
     "typescript": "5.5.4"
   }
 }

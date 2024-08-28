@@ -11,7 +11,7 @@ import { butteryConfigDefaults } from "./util.butteryConfigDefaults.js";
  */
 export async function promptUserForButteryConfigDefaults({
   message,
-  defaultChecked,
+  defaultChecked
 }: {
   message: string;
   defaultChecked: keyof ButteryConfig | undefined;
@@ -20,8 +20,8 @@ export async function promptUserForButteryConfigDefaults({
     message,
     choices: Object.keys(butteryConfigDefaults).map((key) => ({
       value: key as keyof ButteryConfig,
-      checked: key === defaultChecked,
-    })),
+      checked: key === defaultChecked
+    }))
   });
 }
 
@@ -34,7 +34,7 @@ export async function promptUserForButteryDirLocation(
 ) {
   const baseDir = await input({
     message: "In what directory would you like to create one?",
-    default: startingDirectory,
+    default: startingDirectory
   });
   const butteryDir = path.resolve(baseDir, "./.buttery");
   return butteryDir;
@@ -99,7 +99,7 @@ title: Home
     const configJson = configs.reduce(
       (accum, config) =>
         Object.assign(accum, {
-          [config]: butteryConfigDefaults[config],
+          [config]: butteryConfigDefaults[config]
         }),
       {}
     );
@@ -108,7 +108,7 @@ const config: ButteryConfig = ${JSON.stringify(configJson, null, 2)};
 export default config\n`;
 
     await writeFile(butteryConfigPath, butteryConfigContent, {
-      encoding: "utf8",
+      encoding: "utf8"
     });
   } catch (error) {
     throw `Error when trying to create a default .buttery/config file: ${error}`;

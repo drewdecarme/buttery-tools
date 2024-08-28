@@ -2,12 +2,12 @@ import { copyFile, cp, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import { emptyDir } from "fs-extra";
-import { getButteryDocsFiles } from "../docs/docs.getButteryDocFiles";
-import type { ButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectories";
-import { getButteryDocsGraph } from "../docs/docs.getButteryDocsGraph";
-import { LOG_DOCS } from "../docs/docs.logger";
-import { orderButteryDocFiles } from "../docs/docs.orderButteryDocFiles";
+import { getButteryDocsFiles } from "./docs.getButteryDocFiles";
+import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
+import { getButteryDocsGraph } from "./docs.getButteryDocsGraph";
+import { LOG_DOCS } from "./docs.logger";
+import { orderButteryDocFiles } from "./docs.orderButteryDocFiles";
 
 /**
  * Creates a temporary directory that is a hash of the absolute directory
@@ -16,7 +16,7 @@ import { orderButteryDocFiles } from "../docs/docs.orderButteryDocFiles";
  * a directory in the hashed directory to enable dynamic importing with vite.
  * https://vitejs.dev/guide/features#dynamic-import
  */
-export const prepareRemixApp = async (config: ButteryDocsConfig) => {
+export const bootstrapRemixApp = async (config: ButteryDocsConfig) => {
   try {
     const files = await getButteryDocsFiles(config);
     const orderedFiles = orderButteryDocFiles(config, files);

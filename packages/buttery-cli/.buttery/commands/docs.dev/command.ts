@@ -1,19 +1,19 @@
 import type {
   CommandAction,
   CommandMeta,
-  CommandOptions,
+  CommandOptions
 } from "../../../lib/types.js";
 import { LOG_DOCS } from "../docs/docs.logger.js";
 
 import path from "node:path";
 import { createServer } from "vite";
+import { bootstrapRemixApp } from "../docs/docs.bootstrapRemixApp.js";
 import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig.js";
 import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectories.js";
-import { prepareRemixApp } from "./docs.dev.prepareRemixApp.js";
 
 export const meta: CommandMeta = {
   name: "dev",
-  description: "Run the development instance",
+  description: "Run the development instance"
 };
 
 export const options: CommandOptions<{
@@ -24,8 +24,8 @@ export const options: CommandOptions<{
     alias: "np",
     description:
       "Disables CLI prompts if any configuration values are not expected / well formed.",
-    defaultValue: false,
-  },
+    defaultValue: false
+  }
 };
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
@@ -35,13 +35,13 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     const config = await getButteryDocsConfig({ prompt });
     const dirs = await getButteryDocsDirectories(config);
 
-    await prepareRemixApp(config);
+    await bootstrapRemixApp(config);
 
     const viteServer = await createServer({
       configFile: path.resolve(
         dirs.artifacts.apps.generated.root,
         "./vite.config.ts"
-      ),
+      )
     });
 
     await viteServer.listen();

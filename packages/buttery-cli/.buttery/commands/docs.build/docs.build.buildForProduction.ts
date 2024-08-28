@@ -18,8 +18,7 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
           butteryDirs.artifacts.apps.generated.root,
           "./vite.config.ts"
         );
-        process.env.REMIX_ROOT =
-          butteryDirs.artifacts.apps.generated.root;
+        process.env.REMIX_ROOT = butteryDirs.artifacts.apps.generated.root;
 
         await runCommand(
           `npx remix vite:build --config ${configFile} --emptyOutDir --logLevel=error`
@@ -27,13 +26,10 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
 
         // Move the build to the local dist
         await cp(
-          path.resolve(
-            butteryDirs.artifacts.apps.generated.root,
-            "./build"
-          ),
+          path.resolve(butteryDirs.artifacts.apps.generated.root, "./build"),
           path.resolve(butteryDirs.output.root, "./build"),
           {
-            recursive: true,
+            recursive: true
           }
         );
 
@@ -46,7 +42,7 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
           functionsDir,
           path.resolve(butteryDirs.output.root, "./functions"),
           {
-            recursive: true,
+            recursive: true
           }
         );
 
@@ -59,7 +55,7 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
 
     const filesAndDirs = await readdir(butteryDirs.output.root, {
       recursive: true,
-      withFileTypes: true,
+      withFileTypes: true
     });
 
     const files = filesAndDirs.filter((dirent) => dirent.isFile());

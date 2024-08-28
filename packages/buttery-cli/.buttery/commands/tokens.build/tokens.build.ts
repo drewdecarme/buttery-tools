@@ -5,7 +5,7 @@ import { launchConfigUI } from "./tokens.build.launch-playground";
 import { runBuild } from "./tokens.build.run";
 import {
   type ButteryTokensConfig,
-  getButteryTokensConfig,
+  getButteryTokensConfig
 } from "./tokens.config.getButteryTokensConfig";
 
 export type BuildTokensOptions = {
@@ -34,7 +34,7 @@ export async function build(
   const config = await getButteryTokensConfig({
     startingDirectory: isLocal ? import.meta.dirname : process.cwd(),
     prompt,
-    defaultConfig: "tokens",
+    defaultConfig: "tokens"
   });
 
   LOG_TOKENS.debug("Building buttery tokens...");
@@ -55,17 +55,17 @@ export async function build(
           "Please select which configuration you would like to load into the interactive token config UI",
         choices: tokens.map((tokenConfig, i) => ({
           name: tokenConfig.importName,
-          value: i,
-        })),
+          value: i
+        }))
       });
       reconciledConfig = {
         ...restConfig,
-        tokens: tokens[choice],
+        tokens: tokens[choice]
       };
     } else {
       reconciledConfig = {
         ...restConfig,
-        tokens,
+        tokens
       };
     }
     launchConfigUI(reconciledConfig, { isLocal });

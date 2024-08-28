@@ -20,7 +20,7 @@
     "typescript": "5.5.4"
   },
   "dependencies": {
-    "@buttery/tsconfig": "workspace:",
-    "@buttery/utils": "workspace:"
+    "@buttery/tsconfig": "workspace:^",
+    "@buttery/utils": "workspace:^"
   }
 }

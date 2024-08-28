@@ -8,7 +8,9 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
+import { visualizer } from "rollup-plugin-visualizer";
 import { type UserConfig, mergeConfig } from "vite";
+import Inspect from "vite-plugin-inspect";
 import { getButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
 import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
@@ -30,7 +32,6 @@ export async function getButteryDocsDefineConfig() {
       port: 1400,
       open: true
     },
-
     resolve: {
       alias: {
         "@buttery/tokens/docs": path.resolve(
@@ -47,14 +48,10 @@ export async function getButteryDocsDefineConfig() {
           presets: ["@babel/preset-typescript", "@babel/preset-react"]
         }
       }),
-      transformMarkdownAssetPath(),
       // TODO: Fix this
-      mdxTransformCodeExamples({
-        rootPath: butteryDocsConfig.paths.rootDir
-      }),
-      mdxTransformImports({
-        rootPath: butteryDocsConfig.paths.rootDir
-      }),
+      // mdxTransformCodeExamples({
+      //   rootPath: butteryDocsConfig.paths.rootDir
+      // }),
       mdx({
         remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
         rehypePlugins: [
@@ -77,6 +74,10 @@ export async function getButteryDocsDefineConfig() {
           ]
         ]
       }),
+      mdxTransformImports({
+        rootPath: butteryDocsConfig.paths.rootDir
+      }),
+      transformMarkdownAssetPath(),
       remixCloudflareDevProxy(),
       remix({
         manifest: true,
@@ -86,8 +87,13 @@ export async function getButteryDocsDefineConfig() {
           v3_throwAbortReason: true
         }
       }),
-
-      watchDocsPlugin(butteryDocsConfig, butteryDocsDirs)
+      watchDocsPlugin(butteryDocsConfig, butteryDocsDirs),
+      visualizer({
+        emitFile: true,
+        filename: "stats.html",
+        projectRoot: butteryDocsDirs.artifacts.apps.generated.root,
+        open: true
+      })
     ]
   };
 

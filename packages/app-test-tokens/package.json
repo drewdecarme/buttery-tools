@@ -9,7 +9,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@buttery/tokens": "workspace:"
+    "@buttery/tokens": "workspace:^"
   },
   "devDependencies": {
     "typescript": "5.5.4"

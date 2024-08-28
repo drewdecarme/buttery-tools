@@ -9,7 +9,6 @@ import {
 
 import { css } from "@linaria/core";
 import { useLocation } from "@remix-run/react";
-import clsx from "clsx";
 import { type FC, type MouseEventHandler, useCallback } from "react";
 import type {
   ButteryDocsGraph,

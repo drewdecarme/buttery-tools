@@ -22,10 +22,10 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "dependencies": {
-    "@buttery/cli": "workspace:"
+    "@buttery/cli": "workspace:^"
   },
   "devDependencies": {
-    "@buttery/core": "workspace:",
-    "@buttery/tsconfig": "workspace:"
+    "@buttery/core": "workspace:^",
+    "@buttery/tsconfig": "workspace:^"
   }
 }

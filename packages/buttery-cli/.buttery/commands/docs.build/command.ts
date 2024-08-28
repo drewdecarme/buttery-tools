@@ -1,29 +1,21 @@
-import type { CommandAction, CommandMeta, CommandOptions } from "../../../lib";
+import type { CommandAction, CommandMeta } from "../../../lib";
+import { bootstrapRemixApp } from "../docs/docs.bootstrapRemixApp";
 import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
 import { LOG_DOCS } from "../docs/docs.logger";
 import { buildForProduction } from "./docs.build.buildForProduction";
-import { prepareBuildDirectory } from "./docs.build.prepareBuildDirectory";
 
 export const meta: CommandMeta = {
   name: "build",
   description:
-    "Build the necessary assets required to create actions, fetchers, and components to render the Buttery Docs template.",
+    "Build the necessary assets required to create actions, fetchers, and components to render the Buttery Docs template."
 };
 
-export const options: CommandOptions<{ watch: boolean }> = {
-  watch: {
-    alias: "w",
-    description: "Run the build in watch mode",
-    type: "boolean",
-    required: false,
-  },
-};
-
-export const action: CommandAction<typeof options> = async ({ options }) => {
+export const action: CommandAction = async () => {
   try {
     const butteryDocsConfig = await getButteryDocsConfig();
 
-    await prepareBuildDirectory(butteryDocsConfig);
+    await bootstrapRemixApp(butteryDocsConfig);
+
     await buildForProduction(butteryDocsConfig);
   } catch (error) {
     throw LOG_DOCS.fatal(new Error(error as string));
