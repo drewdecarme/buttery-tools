@@ -23,7 +23,7 @@ export async function getButteryDocsFiles(config: ButteryDocsConfig) {
   // and enrich them with some of the data
   const docsDirContents = await readdir(docsDirectories.userDocs.root, {
     recursive: false,
-    withFileTypes: true,
+    withFileTypes: true
   });
 
   const enrichedButteryDocsFiles = docsDirContents.reduce<
@@ -37,12 +37,17 @@ export async function getButteryDocsFiles(config: ButteryDocsConfig) {
     if (!isFile) return accum;
     const fsPath = dirent.parentPath.concat("/").concat(dirent.name);
     const filename = path.parse(dirent.name).name;
+
+    // ignore Mac specific meta files
+    if (filename === ".DS_Store") {
+      return accum;
+    }
     const routePath = getRoutePath(filename);
 
     return accum.concat({
       fsPath,
       filename,
-      routePath,
+      routePath
     });
   }, []);
   return enrichedButteryDocsFiles;

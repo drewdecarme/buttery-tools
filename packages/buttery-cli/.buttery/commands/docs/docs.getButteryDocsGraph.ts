@@ -29,7 +29,7 @@ export async function getButteryDocsGraph(
       ext,
       routeAbs,
       filename,
-      toc,
+      toc
     } = parsedFile;
 
     const sectionTitle =
@@ -51,7 +51,7 @@ export async function getButteryDocsGraph(
         routeAbs: `/${section === "_index" ? "" : section}`,
         routeRel: section === "_index" ? "/" : section,
         toc: [],
-        pages: {},
+        pages: {}
       };
     }
 
@@ -74,7 +74,7 @@ export async function getButteryDocsGraph(
           routeRel: "",
           routeMeta: [],
           toc: [],
-          pages: {},
+          pages: {}
         };
       }
 

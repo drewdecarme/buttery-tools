@@ -59,6 +59,11 @@ export const bootstrapRemixApp = async (config: ButteryDocsConfig) => {
           Promise<void>[]
         >((accum, dirent) => {
           if (!dirent.isFile()) return accum;
+
+          // ignore mac specific meta files
+          if (dirent.name === ".DS_Store") {
+            return accum;
+          }
           const filePathSource = `${dirent.parentPath}/${dirent.name}`;
           const fileNameDest =
             dirent.name === "_index.md" || dirent.name === "_index.mdx"
