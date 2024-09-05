@@ -2510,6 +2510,7 @@ __metadata:
     "@buttery/cli": "workspace:^"
     "@buttery/core": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
+    "@linaria/core": "npm:^6.2.0"
   bin:
     buttery: ./bin/index.js
   languageName: unknown
@@ -7520,24 +7521,6 @@ __metadata:
 "app.323bd201ea1207ee8a871158c98cc4c088884fed787f3991eea8b6fb01a53617-51d614@workspace:packages/buttery-cli/artifacts/docs/apps/app.323bd201ea1207ee8a871158c98cc4c088884fed787f3991eea8b6fb01a53617":
   version: 0.0.0-use.local
   resolution: "app.323bd201ea1207ee8a871158c98cc4c088884fed787f3991eea8b6fb01a53617-51d614@workspace:packages/buttery-cli/artifacts/docs/apps/app.323bd201ea1207ee8a871158c98cc4c088884fed787f3991eea8b6fb01a53617"
-  dependencies:
-    "@remix-run/cloudflare": "npm:latest"
-    isbot: "npm:4.4.0"
-  languageName: unknown
-  linkType: soft
-
-"app.501ea914d0aac327866788de69d5c398bd812748abb06478442010f1ff456eb7-9b0021@workspace:packages/buttery-cli/artifacts/docs/apps/app.501ea914d0aac327866788de69d5c398bd812748abb06478442010f1ff456eb7":
-  version: 0.0.0-use.local
-  resolution: "app.501ea914d0aac327866788de69d5c398bd812748abb06478442010f1ff456eb7-9b0021@workspace:packages/buttery-cli/artifacts/docs/apps/app.501ea914d0aac327866788de69d5c398bd812748abb06478442010f1ff456eb7"
-  dependencies:
-    "@remix-run/cloudflare": "npm:latest"
-    isbot: "npm:4.4.0"
-  languageName: unknown
-  linkType: soft
-
-"app.88e666c3b8b135543bc9cb9d3f6a6a1e670359e27a2fdb7cf5f7553e83e2e1e1-fdece6@workspace:packages/buttery-cli/artifacts/docs/apps/app.88e666c3b8b135543bc9cb9d3f6a6a1e670359e27a2fdb7cf5f7553e83e2e1e1":
-  version: 0.0.0-use.local
-  resolution: "app.88e666c3b8b135543bc9cb9d3f6a6a1e670359e27a2fdb7cf5f7553e83e2e1e1-fdece6@workspace:packages/buttery-cli/artifacts/docs/apps/app.88e666c3b8b135543bc9cb9d3f6a6a1e670359e27a2fdb7cf5f7553e83e2e1e1"
   dependencies:
     "@remix-run/cloudflare": "npm:latest"
     isbot: "npm:4.4.0"

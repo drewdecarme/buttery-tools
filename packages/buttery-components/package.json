@@ -25,6 +25,7 @@
     "build": "yarn build:lib && yarn build:docs",
     "build:lib": "vite build && yarn tsc --project tsconfig.types.json",
     "build:docs": "yarn buttery docs build",
+    "deploy:docs": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools-components-docs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "upgrade-storybook": "npx storybook@next upgrade --prerelease"

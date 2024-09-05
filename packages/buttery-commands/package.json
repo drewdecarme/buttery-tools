@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "dependencies": {
-    "@buttery/cli": "workspace:^"
+    "@buttery/cli": "workspace:^",
+    "@linaria/core": "^6.2.0"
   },
   "devDependencies": {
     "@buttery/core": "workspace:^",

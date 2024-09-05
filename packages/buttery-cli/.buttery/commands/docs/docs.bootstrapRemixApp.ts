@@ -125,10 +125,6 @@ export const header: ResolvedButteryConfig<"docs">["docs"]["header"] = ${JSON.st
       default:
         exhaustiveMatchGuard(config.docs.build.target);
     }
-
-    // // clean the dev/docs dir
-    // await rm(butteryDirs.dev.docsDir, { recursive: true, force: true });
-    // // populate the dev/docs dir
   } catch (error) {
     throw `Failed to copy necessary files to dev directory for development: ${error}`;
   }
