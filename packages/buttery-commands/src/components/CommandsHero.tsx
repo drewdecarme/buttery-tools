@@ -54,7 +54,7 @@ const hero = css`
 export function CommandsHero() {
   return (
     <div className={hero}>
-      <img className="blob" src="/wave-haikei.png" alt="bg" />
+      <img className="blob" src="/images/hero-bg.png" alt="bg" />
       <div className="title">
         <h1>Authoring CLIs doesn't have to suck.</h1>
         <p>
@@ -62,7 +62,7 @@ export function CommandsHero() {
           from a file. <strong>It's that simple.</strong>
         </p>
       </div>
-      <img src="/hero.png" alt="hero-2" className="hero-img" />
+      <img src="/images/hero-img.png" alt="hero-2" className="hero-img" />
     </div>
   );
 }

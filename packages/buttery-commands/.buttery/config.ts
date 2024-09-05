@@ -3,7 +3,7 @@ import type { ButteryConfig } from "@buttery/core";
 const config: ButteryConfig = {
   docs: {
     build: {
-      target: "cloudflare-pages",
+      target: "cloudflare-pages"
     },
     order: {
       guide: {
@@ -13,21 +13,37 @@ const config: ButteryConfig = {
           "features",
           "getting-started",
           "routing",
-          "writing-a-command",
-        ],
+          "writing-a-command"
+        ]
       },
       reference: {
         display: "Reference",
-        routeOrder: ["config"],
-      },
+        routeOrder: ["config"]
+      }
     },
     header: {
       title: "Buttery Commands",
       logo: {
-        src: "/buttery-commands-logo-5.png",
-        alt: "buttery-commands",
+        src: "/images/buttery-commands-logo.png",
+        alt: "buttery-commands"
       },
-    },
-  },
+      links: [
+        [
+          {
+            type: "social",
+            provider: "github",
+            href: "https://github.com/drewdecarme/buttery-tools"
+          }
+        ],
+        [
+          {
+            type: "internal",
+            text: "Getting Started",
+            href: "/getting-started"
+          }
+        ]
+      ]
+    }
+  }
 };
 export default config;
