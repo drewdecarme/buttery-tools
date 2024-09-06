@@ -39,8 +39,7 @@ export const getButteryConfig = async <T extends keyof ButteryConfig>(
 ): Promise<ResolvedButteryConfig<T>> => {
   // Resolve the options
   const optionPrompt = options?.prompt ?? false;
-  // const optionWatch = options?.watch ?? false;
-  const optionWatch = false;
+  const optionWatch = options?.watch ?? false;
   const optionDefaultConfig = options?.defaultConfig;
   const optionStartingDirectory = options?.startingDirectory;
 

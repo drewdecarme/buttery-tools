@@ -1,5 +1,5 @@
 import type { CommandAction, CommandMeta } from "../../../lib";
-import { bootstrapRemixApp } from "../docs/docs.bootstrapRemixApp";
+import { bootstrapApp } from "../docs/docs.bootstrapApp";
 import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
 import { LOG_DOCS } from "../docs/docs.logger";
 import { buildForProduction } from "./docs.build.buildForProduction";
@@ -14,7 +14,7 @@ export const action: CommandAction = async () => {
   try {
     const butteryDocsConfig = await getButteryDocsConfig();
 
-    await bootstrapRemixApp(butteryDocsConfig);
+    await bootstrapApp(butteryDocsConfig);
 
     await buildForProduction(butteryDocsConfig);
   } catch (error) {

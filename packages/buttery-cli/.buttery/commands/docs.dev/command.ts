@@ -7,9 +7,14 @@ import { LOG_DOCS } from "../docs/docs.logger.js";
 
 import path from "node:path";
 import { createServer } from "vite";
-import { bootstrapRemixApp } from "../docs/docs.bootstrapRemixApp.js";
+import { LOG } from "../_utils/util.logger.js";
+import { bootstrapApp } from "../docs/docs.bootstrapApp.js";
+import { bootstrapAppDataFile } from "../docs/docs.bootstrapAppDataFile.js";
+import { getButteryDocsFiles } from "../docs/docs.getButteryDocFiles.js";
 import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig.js";
 import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectories.js";
+import { getButteryDocsGraph } from "../docs/docs.getButteryDocsGraph.js";
+import { orderButteryDocFiles } from "../docs/docs.orderButteryDocFiles.js";
 
 export const meta: CommandMeta = {
   name: "dev",
@@ -32,16 +37,47 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
   const prompt = !options?.["no-prompt"];
 
   try {
-    const config = await getButteryDocsConfig({ prompt, watch: true });
+    const config = await getButteryDocsConfig({ prompt });
     const dirs = await getButteryDocsDirectories(config);
 
-    await bootstrapRemixApp(config);
+    await bootstrapApp(config);
 
     const viteServer = await createServer({
       configFile: path.resolve(
         dirs.artifacts.apps.generated.root,
         "./vite.config.ts"
-      )
+      ),
+      clearScreen: false, // we want to see all of the logs
+      plugins: [
+        {
+          name: "watch-buttery-config",
+          configureServer(server) {
+            const butteryConfigFilePath = config.paths.config;
+            LOG.watch(
+              `Watching the '.buttery/config' file for changes: ${butteryConfigFilePath}`
+            );
+            server.watcher.add(butteryConfigFilePath);
+            server.watcher.on("change", async (file) => {
+              if (file !== butteryConfigFilePath) return;
+              try {
+                LOG.watch(`'.buttery/config' file changed. Rebuilding...`);
+                const config = await getButteryDocsConfig();
+                const files = await getButteryDocsFiles(config);
+                const orderedFiles = orderButteryDocFiles(config, files);
+                const graph = await getButteryDocsGraph(config, orderedFiles);
+
+                await bootstrapAppDataFile({ config, graph });
+              } catch (error) {
+                throw LOG.fatal(
+                  new Error(
+                    `Error when rebuilding the '.buttery/config' file: ${error}`
+                  )
+                );
+              }
+            });
+          }
+        }
+      ]
     });
 
     await viteServer.listen();

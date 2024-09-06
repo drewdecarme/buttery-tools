@@ -30,16 +30,16 @@ const config: ButteryConfig = {
       links: [
         [
           {
-            type: "social",
-            provider: "github",
-            href: "https://github.com/drewdecarme/buttery-tools"
+            type: "internal",
+            text: "Getting Started",
+            href: "/guide/getting-started"
           }
         ],
         [
           {
-            type: "internal",
-            text: "Getting Started",
-            href: "/getting-started"
+            type: "social",
+            provider: "github",
+            href: "https://github.com/drewdecarme/buttery-tools"
           }
         ]
       ]

@@ -1,7 +1,7 @@
 import { copyFile, cp, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { exhaustiveMatchGuard } from "@buttery/utils/ts";
-import { emptyDir } from "fs-extra";
+import { bootstrapAppDataFile } from "./docs.bootstrapAppDataFile";
 import { getButteryDocsFiles } from "./docs.getButteryDocFiles";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
@@ -16,7 +16,7 @@ import { orderButteryDocFiles } from "./docs.orderButteryDocFiles";
  * a directory in the hashed directory to enable dynamic importing with vite.
  * https://vitejs.dev/guide/features#dynamic-import
  */
-export const bootstrapRemixApp = async (config: ButteryDocsConfig) => {
+export const bootstrapApp = async (config: ButteryDocsConfig) => {
   try {
     const files = await getButteryDocsFiles(config);
     const orderedFiles = orderButteryDocFiles(config, files);
@@ -24,12 +24,12 @@ export const bootstrapRemixApp = async (config: ButteryDocsConfig) => {
     const butteryDirs = await getButteryDocsDirectories(config);
 
     // delete the existing app
-    LOG_DOCS.debug("Cleaning application directory...");
-    await rm(butteryDirs.artifacts.apps.generated.root, {
+    LOG_DOCS.debug("Removing existing routes...");
+    await rm(butteryDirs.artifacts.apps.generated.app.routes, {
       recursive: true,
       force: true
     });
-    LOG_DOCS.debug("Cleaning application directory... done.");
+    LOG_DOCS.debug("Removing existing routes... done.");
 
     // Create the hashed build directory by copying the template to that directory recursively
     await cp(
@@ -88,21 +88,9 @@ export const bootstrapRemixApp = async (config: ButteryDocsConfig) => {
         await Promise.all(docsWithRemixFileConventions);
         LOG_DOCS.debug("Populating routes directory with docs... done.");
 
-        LOG_DOCS.debug("Creating data file...");
-        const dataFilePath = path.resolve(
-          butteryDirs.artifacts.apps.generated.root,
-          "./app/data.ts"
-        );
-        await writeFile(
-          dataFilePath,
-          `import type { ResolvedButteryConfig } from "@buttery/core";
-import type { ButteryDocsGraph } from "../../../../.buttery/commands/docs/shared.types";
-
-export const graph: ButteryDocsGraph = ${JSON.stringify(graph, null, 2)};
-export const header: ResolvedButteryConfig<"docs">["docs"]["header"] = ${JSON.stringify(config.docs.header)};
-`
-        );
-        LOG_DOCS.debug("Creating data file... done");
+        // write the data file that creates the order, table of contents,
+        // and headers
+        await bootstrapAppDataFile({ config, graph });
 
         // write a temp package.json
         const packageJsonPath = path.resolve(

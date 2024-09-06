@@ -8,19 +8,19 @@ import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
 import type { CommandOptionType } from "../../../lib";
-import { dynamicImport } from "../_utils/util.dyamic-import";
+import { dynamicImport } from "../_utils/util.dynamic-import";
 import { LOG } from "../_utils/util.logger";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import {
   // templateCommandParent,
-  templateIndex,
+  templateIndex
 } from "./build-commands.templates";
 import {
   type ButteryCLIDirectories,
   type CommandFile,
   type CommandGraph,
   type CommandGraphProperties,
-  getButteryCommandsDirectories,
+  getButteryCommandsDirectories
 } from "./build-commands.utils";
 
 export type EntryTemplateData = {
@@ -138,12 +138,12 @@ export class ESBuildPluginCommands {
             segment_name: name,
             action: commandFileContent?.action,
             args: commandFileContent?.args,
-            options: commandFileContent?.options,
+            options: commandFileContent?.options
           };
           if (!currentCommandGraph[commandSegment]) {
             currentCommandGraph[commandSegment] = {
               properties,
-              commands: {},
+              commands: {}
             };
           }
           currentCommandGraph = currentCommandGraph[commandSegment].commands;
@@ -297,7 +297,7 @@ export class ESBuildPluginCommands {
             cli_name: this.config.commands.name,
             cli_description: this.config.commands.description,
             cli_version: this.config.commands.version,
-            cli_commands: this.programString,
+            cli_commands: this.programString
           };
 
           // // Reset some internally tracked values
@@ -313,20 +313,17 @@ export class ESBuildPluginCommands {
             ...createEsbuildOptions({
               stdin: {
                 contents: templateResult,
-                loader: "ts",
+                loader: "ts"
               },
-              outfile: path.resolve(
-                this.config.paths.rootDir,
-                "./bin/index.js"
-              ),
+              outfile: path.resolve(this.config.paths.rootDir, "./bin/index.js")
             }),
             bundle: true,
             minify: true,
-            external: ["commander"], // externalize commander
+            external: ["commander"] // externalize commander
           });
           this.logBuildComplete();
         });
-      },
+      }
     };
   }
 }
