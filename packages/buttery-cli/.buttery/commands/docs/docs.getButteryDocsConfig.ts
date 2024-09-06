@@ -1,4 +1,7 @@
-import { type GetButteryConfigOptions, getButteryConfig } from "@buttery/core";
+import {
+  type GetButteryConfigOptions,
+  getButteryConfig
+} from "../_buttery-config/index.js";
 
 export type ButteryDocsConfig = Awaited<
   ReturnType<typeof getButteryDocsConfig>

@@ -32,7 +32,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
   const prompt = !options?.["no-prompt"];
 
   try {
-    const config = await getButteryDocsConfig({ prompt });
+    const config = await getButteryDocsConfig({ prompt, watch: true });
     const dirs = await getButteryDocsDirectories(config);
 
     await bootstrapRemixApp(config);
