@@ -31,6 +31,6 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
-    "typescript": "5.5.4"
+    "typescript": "5.6.2"
   }
 }

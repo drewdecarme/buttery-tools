@@ -26,7 +26,6 @@
     "@linaria/core": "^6.2.0"
   },
   "devDependencies": {
-    "@buttery/core": "workspace:^",
     "@buttery/tsconfig": "workspace:^"
   }
 }

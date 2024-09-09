@@ -6,19 +6,19 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "./packages/**"
+      "./packages/*"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/drewdecarme/starter-ts-cli.git"
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
   },
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/drewdecarme/starter-ts-cli/issues"
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
-  "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "packageManager": "yarn@4.4.1",
   "scripts": {
     "build": "turbo build",
@@ -26,11 +26,7 @@
     "clean": "npx rimraf ./**/node_modules && npx rimraf ./**/dist"
   },
   "dependencies": {
-    "@changesets/cli": "2.27.7"
-  },
-  "resolutions": {
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "@changesets/cli": "2.27.8"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
