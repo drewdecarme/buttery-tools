@@ -1,4 +1,4 @@
-import type { ButteryConfigTokens } from "@buttery/core";
+import type { ButteryConfigTokens } from "../../_buttery-config";
 
 export type CompileFunctionParams = {
   config: ButteryConfigTokens;
@@ -57,7 +57,7 @@ export class MakeTemplate {
     this.css = options.css;
     this.methods = {
       createTypeUnion: this.createUnionType,
-      cssVar: this.cssVar,
+      cssVar: this.cssVar
     };
   }
 
@@ -82,16 +82,16 @@ export class MakeTemplate {
         description: this.functionDescription,
         importClause: `import { ${this.functionName} } from "@buttery/tokens${
           config.importName ? `/${config.importName}` : ""
-        }";`,
+        }";`
       },
       functionName: this.functionName,
       variableBody: this.variableBody,
       cssVarPrefix: `--${config.prefix}-${this.variableBody}`,
-      methods: this.methods,
+      methods: this.methods
     };
     return {
       compiledFunctionContent: this.template(compileArgs),
-      compiledCSSVars: this.css(compileArgs),
+      compiledCSSVars: this.css(compileArgs)
     };
   }
 }

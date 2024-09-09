@@ -37,7 +37,7 @@ export async function getButteryConfigModule(options: {
 }): Promise<ButteryConfig> {
   const builtConfigOutFile = path.resolve(
     options.butteryStoreDirectoryPath,
-    `./config.${hashString(options.butteryConfigFilePath)}.js`
+    `./config/${hashString(options.butteryConfigFilePath)}.js`
   );
 
   try {
@@ -51,7 +51,7 @@ export async function getButteryConfigModule(options: {
       format: "esm",
       outfile: builtConfigOutFile,
       packages: "external",
-      minify: !options.watch,
+      minify: true,
       tsconfigRaw: JSON.stringify(
         {
           extends: "@buttery/tsconfig/library"

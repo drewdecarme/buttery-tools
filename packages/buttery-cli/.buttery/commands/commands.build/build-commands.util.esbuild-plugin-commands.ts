@@ -1,6 +1,5 @@
 // import { constants, access, writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { ResolvedButteryConfig } from "@buttery/core";
 import { createEsbuildOptions } from "@buttery/utils/esbuild";
 import { exhaustiveMatchGuard, kebabToCamel } from "@buttery/utils/ts";
 import type { Plugin } from "esbuild";
@@ -8,6 +7,7 @@ import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
 import type { CommandOptionType } from "../../../lib";
+import type { ResolvedButteryConfig } from "../_buttery-config";
 import { dynamicImport } from "../_utils/util.dynamic-import";
 import { LOG } from "../_utils/util.logger";
 import { getCommandFiles } from "./build-commands.get-command-files";

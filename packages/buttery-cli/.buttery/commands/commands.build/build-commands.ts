@@ -1,4 +1,4 @@
-import { getButteryConfig } from "@buttery/core";
+import { getButteryConfig } from "../_buttery-config";
 import { LOG } from "../_utils/util.logger";
 
 import { buildCommandsCleanDistributionDirs } from "./build-commands.clean-distribution-dirs";
@@ -7,7 +7,7 @@ import { buildCommandsEnrichPackageJson } from "./build-commands.enrich-package-
 
 import type {
   CommandsBuildFunctionArgs,
-  CommandsBuildOptions,
+  CommandsBuildOptions
 } from "./build-commands.utils";
 /**
  * This function is the main build command that reads the .buttery/config
@@ -21,7 +21,7 @@ export async function buildCommands(options: CommandsBuildOptions) {
 
   const args: CommandsBuildFunctionArgs = {
     config,
-    options,
+    options
   };
 
   // clean the distribution dirs
@@ -30,6 +30,6 @@ export async function buildCommands(options: CommandsBuildOptions) {
   // enrich the local package.json and build the binary directory
   await Promise.all([
     buildCommandsEnrichPackageJson(args),
-    buildCommandsCreateBinary(args),
+    buildCommandsCreateBinary(args)
   ]);
 }

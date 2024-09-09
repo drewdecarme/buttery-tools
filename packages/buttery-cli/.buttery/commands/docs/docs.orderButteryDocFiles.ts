@@ -1,4 +1,4 @@
-import type { ButteryConfigDocsOrder } from "@buttery/core";
+import type { ButteryConfigDocsOrder } from "../_buttery-config";
 import { autoOrderButteryDocFiles } from "./docs.autoOrderButteryDocFiles";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { LOG_DOCS } from "./docs.logger";

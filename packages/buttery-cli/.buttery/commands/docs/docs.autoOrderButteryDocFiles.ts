@@ -1,5 +1,4 @@
-import type { ButteryConfigDocsOrder } from "@buttery/core";
-
+import type { ButteryConfigDocsOrder } from "../_buttery-config";
 import { kebabToPascalCase } from "../_utils/util.kebab-to-pascal-case";
 import { parseFilename } from "./docs.parseFilename";
 import type { FileObj } from "./docs.types";
@@ -14,8 +13,8 @@ export function autoOrderButteryDocFiles(files: FileObj[]) {
       return Object.assign(accum, {
         [section]: {
           display: kebabToPascalCase(section),
-          routeOrder: [route],
-        },
+          routeOrder: [route]
+        }
       });
     }
     const routeOrder = accum[section].routeOrder;
@@ -31,8 +30,8 @@ export function autoOrderButteryDocFiles(files: FileObj[]) {
     return Object.assign(accum, {
       [section]: {
         ...accum[section],
-        routeOrder,
-      },
+        routeOrder
+      }
     });
   }, {});
 }

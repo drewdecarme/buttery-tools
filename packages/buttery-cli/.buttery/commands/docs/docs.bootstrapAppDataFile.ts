@@ -19,7 +19,7 @@ export async function bootstrapAppDataFile(params: {
     );
     await writeFile(
       dataFilePath,
-      `import type { ResolvedButteryConfig } from "@buttery/core";
+      `import type { ResolvedButteryConfig } from "@buttery/cli";
 import type { ButteryDocsGraph } from "../../../../.buttery/commands/docs/shared.types";
 
 export const graph: ButteryDocsGraph = ${JSON.stringify(params.graph, null, 2)};

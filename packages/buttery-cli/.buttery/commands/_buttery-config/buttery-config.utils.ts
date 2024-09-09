@@ -103,7 +103,7 @@ title: Home
         }),
       {}
     );
-    const butteryConfigContent = `import type { ButteryConfig } from "@buttery/core"
+    const butteryConfigContent = `import type { ButteryConfig } from "@buttery/cli"
 const config: ButteryConfig = ${JSON.stringify(configJson, null, 2)};
 export default config\n`;
 

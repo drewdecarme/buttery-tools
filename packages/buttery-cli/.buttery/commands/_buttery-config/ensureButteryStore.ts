@@ -15,7 +15,7 @@ export async function ensureButteryStore(options: { butteryDir: string }) {
   const butteryStoreDir = path.resolve(options.butteryDir, "./.store");
 
   // ensure an entry in the .gitignore
-  await ensureGitIgnoreEntry(".store/*", { butteryDir: options.butteryDir });
+  await ensureGitIgnoreEntry(".store", { butteryDir: options.butteryDir });
 
   try {
     await ensureDir(butteryStoreDir);

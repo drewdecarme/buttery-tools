@@ -1,9 +1,9 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import type { ResolvedButteryConfig } from "@buttery/core";
+import type { ResolvedButteryConfig } from "../_buttery-config";
 import {
   type CommandFile,
-  getButteryCommandsDirectories,
+  getButteryCommandsDirectories
 } from "./build-commands.utils";
 
 // This is the name of the file that is a command
@@ -27,7 +27,7 @@ export const getCommandFiles = async (
   const commandFiles: CommandFile[] = [];
 
   const commandDirEntries = await readdir(dirs.commandsDir, {
-    withFileTypes: true,
+    withFileTypes: true
   });
 
   for (const entry of commandDirEntries) {
@@ -43,7 +43,7 @@ export const getCommandFiles = async (
     // check the directory 1 level deep to find the `command` file.
     if (isDirectory) {
       const nestedDirEntries = await readdir(commandDirEntryPath, {
-        withFileTypes: true,
+        withFileTypes: true
       });
 
       // search for a file that matches the criteria
@@ -74,7 +74,7 @@ export const getCommandFiles = async (
       commandPath,
       commandSegments: commandPath.split("/")[0].split("."),
       inPath: commandDirEntryPath,
-      outPath: path.resolve(dirs.binDir, commandPath),
+      outPath: path.resolve(dirs.binDir, commandPath)
     });
   }
 
