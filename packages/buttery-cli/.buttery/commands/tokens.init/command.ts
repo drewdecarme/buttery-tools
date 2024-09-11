@@ -2,21 +2,21 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
 import { confirm, input, select } from "@inquirer/prompts";
-import { LOG_TOKENS } from "../tokens/tokens.config.logger";
+import { LOG_TOKENS } from "../tokens/tokens.logger";
 
 export const meta: CommandMeta = {
   name: "init",
-  description: "Initialize buttery tokens via a few prompts",
+  description: "Initialize buttery tokens via a few prompts"
 };
 
-export const options: CommandOptions<"auto"> = {
+export const options: CommandOptions<{ auto: boolean }> = {
   auto: {
+    type: "boolean",
     alias: "a",
     description:
       "Skips the prompts and initializes buttery tokens with all of the defaults",
-    type: "boolean",
-    required: false,
-  },
+    required: false
+  }
 };
 
 const systemFont = `system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`;
@@ -30,7 +30,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     gridSystem: 4,
     prefix: "buttery",
     strict: true,
-    suppressStrictWarnings: false,
+    suppressStrictWarnings: false
   };
 
   // working directory
@@ -38,7 +38,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     ? defaultWorkingDir
     : await input({
         message: "Where is the root of the project that you're initializing?",
-        default: defaultWorkingDir,
+        default: defaultWorkingDir
       });
 
   // prefix
@@ -49,7 +49,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     ? tokenDefaults.prefix
     : await input({
         message: "Please indicate a prefix.",
-        default: tokenDefaults.prefix,
+        default: tokenDefaults.prefix
       });
 
   // grid system
@@ -62,16 +62,16 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
         message: "Please select a grid system below",
         choices: [4, 8, 10].map((value) => ({
           value: value.toString(),
-          description: value.toString(),
+          description: value.toString()
         })),
-        default: tokenDefaults.gridSystem.toString(),
+        default: tokenDefaults.gridSystem.toString()
       });
 
   const strictMode = options.auto
     ? tokenDefaults.strict
     : await confirm({
         message: "Would you like to enable strict mode?",
-        default: tokenDefaults.strict,
+        default: tokenDefaults.strict
       });
 
   try {
