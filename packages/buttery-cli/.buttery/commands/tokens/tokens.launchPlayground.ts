@@ -16,11 +16,8 @@ export async function launchPlayground(
 
   // create the dev server
   const viteServer = await createServer({
+    root: dirs.artifacts.playground.root,
     publicDir: path.resolve(dirs.artifacts.playground.root, "./public"),
-    configFile: path.resolve(
-      dirs.artifacts.playground.root,
-      "./vite.config.ts"
-    ),
     clearScreen: false, // we want to see all of the logs,
     server: {
       port: 1500,
