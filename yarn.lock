@@ -1289,7 +1289,6 @@ __metadata:
     "@babel/core": "npm:7.25.2"
     "@babel/preset-react": "npm:7.24.7"
     "@babel/preset-typescript": "npm:7.24.7"
-    "@buttery/client": "workspace:^"
     "@buttery/icons": "workspace:^"
     "@buttery/logger": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
@@ -1362,16 +1361,6 @@ __metadata:
     vite-plugin-inspect: "npm:^0.8.7"
   bin:
     buttery: ./bin/index.js
-  languageName: unknown
-  linkType: soft
-
-"@buttery/client@workspace:^, @buttery/client@workspace:packages/buttery-client":
-  version: 0.0.0-use.local
-  resolution: "@buttery/client@workspace:packages/buttery-client"
-  dependencies:
-    "@buttery/tsconfig": "workspace:^"
-    "@buttery/utils": "workspace:^"
-    typescript: "npm:5.6.2"
   languageName: unknown
   linkType: soft
 
