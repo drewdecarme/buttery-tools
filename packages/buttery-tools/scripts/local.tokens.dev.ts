@@ -1,5 +1,5 @@
-import { build } from "../.buttery/commands/tokens.build/tokens.build";
-import { LOG_TOKENS } from "../.buttery/commands/tokens/tokens.config.logger";
+import { buildButteryTokens } from "../.buttery/commands/tokens/tokens.buildButteryTokens";
+import { LOG_TOKENS } from "../.buttery/commands/tokens/tokens.logger";
 
 /**
  * A script to run a more specific build process for the tokens
@@ -13,18 +13,18 @@ import { LOG_TOKENS } from "../.buttery/commands/tokens/tokens.config.logger";
  * in a different spot.
  *
  * The idea here is that we use the same build command with a "private"
- * or a non-publicly accessible CLI option called local that will
+ * or a non-publicly accessible CLI option called `isLocal` that will
  * run the same build but put the tokens in a different spot since
  * the CLI cannot have the tokens as a dependency.
  */
 try {
   LOG_TOKENS.info("Developing tokens locally to the CLI.");
-  await build({
+  await buildButteryTokens({
     prompt: false,
     debug: true,
     interactive: true,
     watch: true,
-    local: true,
+    isLocal: true
   });
 } catch (error) {
   throw LOG_TOKENS.fatal(new Error(error as string));
