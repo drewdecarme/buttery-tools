@@ -1,5 +1,0 @@
----
-title: Welcome!
----
-
-# Buttery Docs

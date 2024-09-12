@@ -1282,9 +1282,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@buttery/cli@workspace:^, @buttery/cli@workspace:packages/buttery-cli":
+"@buttery/cli@workspace:packages/buttery-tools":
   version: 0.0.0-use.local
-  resolution: "@buttery/cli@workspace:packages/buttery-cli"
+  resolution: "@buttery/cli@workspace:packages/buttery-tools"
   dependencies:
     "@babel/core": "npm:7.25.2"
     "@babel/preset-react": "npm:7.24.7"
@@ -1364,18 +1364,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/commands@workspace:packages/buttery-commands":
-  version: 0.0.0-use.local
-  resolution: "@buttery/commands@workspace:packages/buttery-commands"
-  dependencies:
-    "@buttery/cli": "workspace:^"
-    "@buttery/tsconfig": "workspace:^"
-    "@linaria/core": "npm:^6.2.0"
-  bin:
-    buttery: ./bin/index.js
-  languageName: unknown
-  linkType: soft
-
 "@buttery/components@workspace:^, @buttery/components@workspace:packages/buttery-components":
   version: 0.0.0-use.local
   resolution: "@buttery/components@workspace:packages/buttery-components"
@@ -1383,7 +1371,6 @@ __metadata:
     "@babel/core": "npm:7.25.2"
     "@babel/preset-react": "npm:7.24.7"
     "@babel/preset-typescript": "npm:7.24.7"
-    "@buttery/docs": "workspace:^"
     "@buttery/icons": "workspace:^"
     "@chromatic-com/storybook": "npm:2.0.0"
     "@linaria/core": "npm:6.2.0"
@@ -1404,18 +1391,6 @@ __metadata:
     tsx: "npm:4.19.0"
     typescript: "npm:5.6.2"
     vite: "npm:5.4.4"
-  languageName: unknown
-  linkType: soft
-
-"@buttery/docs@workspace:^, @buttery/docs@workspace:packages/buttery-docs":
-  version: 0.0.0-use.local
-  resolution: "@buttery/docs@workspace:packages/buttery-docs"
-  dependencies:
-    "@buttery/cli": "workspace:^"
-    "@buttery/tsconfig": "workspace:^"
-    typescript: "npm:5.6.2"
-  bin:
-    buttery: ./bin/index.js
   languageName: unknown
   linkType: soft
 
@@ -1441,16 +1416,6 @@ __metadata:
   dependencies:
     chalk: "npm:5.3.0"
     typescript: "npm:5.6.2"
-  languageName: unknown
-  linkType: soft
-
-"@buttery/tokens@workspace:, @buttery/tokens@workspace:^, @buttery/tokens@workspace:packages/buttery-tokens":
-  version: 0.0.0-use.local
-  resolution: "@buttery/tokens@workspace:packages/buttery-tokens"
-  dependencies:
-    "@buttery/cli": "workspace:^"
-  bin:
-    buttery: ./bin/index.js
   languageName: unknown
   linkType: soft
 
@@ -5778,28 +5743,6 @@ __metadata:
   checksum: 10c0/57b06ae984bc32a0d22592c87384cd88fe4511b1dd7581497831c56d41939c8a001b28e7b853e1450f2bf61992dfcaa8ae2d0d161a0a90c4fb631ef07098fbac
   languageName: node
   linkType: hard
-
-"app-buttery-tools@workspace:packages/app-buttery-tools":
-  version: 0.0.0-use.local
-  resolution: "app-buttery-tools@workspace:packages/app-buttery-tools"
-  dependencies:
-    "@buttery/tokens": "workspace:"
-    "@cloudflare/workers-types": "npm:4.20240909.0"
-    "@remix-run/cloudflare": "npm:2.12.0"
-    "@remix-run/cloudflare-pages": "npm:2.12.0"
-    "@remix-run/dev": "npm:2.12.0"
-    "@remix-run/react": "npm:2.12.0"
-    "@types/react": "npm:18.3.5"
-    "@types/react-dom": "npm:18.3.0"
-    isbot: "npm:5.1.17"
-    react: "npm:18.3.1"
-    react-dom: "npm:18.3.1"
-    typescript: "npm:5.6.2"
-    vite: "npm:5.4.4"
-    vite-tsconfig-paths: "npm:5.0.1"
-    wrangler: "npm:3.76.0"
-  languageName: unknown
-  linkType: soft
 
 "arg@npm:^5.0.1":
   version: 5.0.2
@@ -15725,31 +15668,6 @@ __metadata:
   checksum: 10c0/696bdc1acf3806374bdeb4b9b9856b79ee70b31e92f325dfab9b8c8c7e14bb6ddffa9f895a214770c4fb8fea45a21f34ca64310f74e877292a90f4a9966c9c2f
   languageName: node
   linkType: hard
-
-"website@workspace:packages/app-website":
-  version: 0.0.0-use.local
-  resolution: "website@workspace:packages/app-website"
-  dependencies:
-    "@buttery/components": "workspace:^"
-    "@buttery/tokens": "workspace:^"
-    "@cloudflare/workers-types": "npm:4.20240909.0"
-    "@remix-run/cloudflare": "npm:2.12.0"
-    "@remix-run/cloudflare-pages": "npm:2.12.0"
-    "@remix-run/dev": "npm:2.12.0"
-    "@remix-run/react": "npm:2.12.0"
-    "@types/react": "npm:18.3.5"
-    "@types/react-dom": "npm:18.3.0"
-    isbot: "npm:5.1.17"
-    miniflare: "npm:3.20240821.2"
-    node-fetch: "npm:3.3.2"
-    react: "npm:18.3.1"
-    react-dom: "npm:18.3.1"
-    typescript: "npm:5.6.2"
-    vite: "npm:5.4.4"
-    vite-tsconfig-paths: "npm:5.0.1"
-    wrangler: "npm:3.76.0"
-  languageName: unknown
-  linkType: soft
 
 "whatwg-encoding@npm:^2.0.0":
   version: 2.0.0
