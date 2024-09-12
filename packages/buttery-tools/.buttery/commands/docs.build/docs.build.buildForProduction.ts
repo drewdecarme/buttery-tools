@@ -15,10 +15,10 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
     switch (config.docs.build.target) {
       case "cloudflare-pages": {
         const configFile = path.resolve(
-          butteryDirs.artifacts.apps.generated.root,
+          butteryDirs.lib.apps.generated.root,
           "./vite.config.ts"
         );
-        process.env.REMIX_ROOT = butteryDirs.artifacts.apps.generated.root;
+        process.env.REMIX_ROOT = butteryDirs.lib.apps.generated.root;
 
         await runCommand(
           `npx remix vite:build --config ${configFile} --emptyOutDir --logLevel=error`
@@ -26,7 +26,7 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
 
         // Move the build to the local dist
         await cp(
-          path.resolve(butteryDirs.artifacts.apps.generated.root, "./build"),
+          path.resolve(butteryDirs.lib.apps.generated.root, "./build"),
           path.resolve(butteryDirs.output.root, "./build"),
           {
             recursive: true
@@ -35,7 +35,7 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
 
         // move functions to local dist
         const functionsDir = path.resolve(
-          butteryDirs.artifacts.apps.generated.root,
+          butteryDirs.lib.apps.generated.root,
           "./functions"
         );
         await cp(

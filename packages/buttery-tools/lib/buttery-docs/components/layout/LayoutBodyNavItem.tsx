@@ -3,6 +3,7 @@ import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";
 import type { FC } from "react";
 import type { ButteryDocsGraph } from "../../../../.buttery/commands/docs/docs.types";
+import { classes } from "../../../buttery-components";
 
 const ulStyles = css`
   list-style-type: none;
@@ -10,9 +11,10 @@ const ulStyles = css`
   margin-left: 0;
   position: relative;
 
-  & {
+  &.nested {
     li {
       margin-left: ${makeRem(16)};
+
       &:before {
         content: "";
         position: absolute;
@@ -66,10 +68,14 @@ const anchorCss = css`
  */
 export type NavItemProps = {
   graph: ButteryDocsGraph;
+  isNested?: boolean;
 };
-export const LayoutBodyNavItem: FC<NavItemProps> = ({ graph }) => {
+export const LayoutBodyNavItem: FC<NavItemProps> = ({
+  graph,
+  isNested = false
+}) => {
   return (
-    <ul className={ulStyles}>
+    <ul className={classes(ulStyles, { nested: isNested })}>
       {Object.entries(graph).map(([graphKey, graphValue]) => {
         return (
           <li key={graphKey}>
@@ -77,7 +83,7 @@ export const LayoutBodyNavItem: FC<NavItemProps> = ({ graph }) => {
               {graphValue.routeTitle}
             </NavLink>
             {Object.entries(graphValue.pages).length > 0 ? (
-              <LayoutBodyNavItem graph={graphValue.pages} />
+              <LayoutBodyNavItem graph={graphValue.pages} isNested />
             ) : null}
           </li>
         );

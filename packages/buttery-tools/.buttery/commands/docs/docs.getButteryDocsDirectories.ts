@@ -14,27 +14,27 @@ export type ButteryDocsDirectories = Awaited<
 export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
   const userCreatedDocsDir = path.resolve(config.paths.butteryDir, "./docs");
 
-  const artifacts = findDirectoryUpwards("artifacts", undefined, {
+  const lib = findDirectoryUpwards("lib", undefined, {
     startingDirectory: import.meta.dirname
   });
 
-  if (!artifacts) {
-    throw "Cannot locate artifacts directory to build documentation site. This should not have happened. Please log a Github issue.";
+  if (!lib) {
+    throw "Cannot locate lib directory to build documentation site. This should not have happened. Please log a Github issue.";
   }
 
-  // artifacts directories
-  const artifactsRootDir = path.resolve(artifacts, "./docs");
-  const artifactsAppsDir = path.resolve(artifactsRootDir, "./apps");
-  const artifactsComponentsDir = path.resolve(artifactsRootDir, "./components");
-  const artifactsLibDir = path.resolve(artifactsRootDir, "./lib");
+  // lib directories
+  const libRootDir = path.resolve(lib, "./buttery-docs");
+  const libAppsDir = path.resolve(libRootDir, "./apps");
+  const libComponentsDir = path.resolve(libRootDir, "./components");
+  const libLibDir = path.resolve(libRootDir, "./lib");
 
   // apps directories
   const templateName = `./_template-${config.docs.build.target}`;
   const appName = "app.".concat(hashString(config.paths.rootDir));
 
-  const appTemplateRootDir = path.resolve(artifactsAppsDir, templateName);
+  const appTemplateRootDir = path.resolve(libAppsDir, templateName);
 
-  const appGenRootDir = path.resolve(artifactsAppsDir, appName);
+  const appGenRootDir = path.resolve(libAppsDir, appName);
   const appGenAppRootDir = path.resolve(appGenRootDir, "./app");
   const appGenAppRoutesDir = path.resolve(appGenAppRootDir, "./routes");
 
@@ -52,10 +52,10 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
       root: userCreatedDocsDir,
       public: path.resolve(userCreatedDocsDir, "./public")
     },
-    artifacts: {
-      root: artifactsRootDir,
+    lib: {
+      root: libRootDir,
       apps: {
-        root: artifactsAppsDir,
+        root: libAppsDir,
         template: {
           root: appTemplateRootDir
         },
@@ -72,8 +72,8 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
           }
         }
       },
-      components: artifactsComponentsDir,
-      lib: artifactsLibDir
+      components: libComponentsDir,
+      lib: libLibDir
     },
     output: {
       root: outputRootDir,

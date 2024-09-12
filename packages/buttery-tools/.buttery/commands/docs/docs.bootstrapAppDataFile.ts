@@ -14,7 +14,7 @@ export async function bootstrapAppDataFile(params: {
   try {
     LOG_DOCS.debug("Creating data file...");
     const dataFilePath = path.resolve(
-      dirs.artifacts.apps.generated.root,
+      dirs.lib.apps.generated.root,
       "./app/data.ts"
     );
     await writeFile(

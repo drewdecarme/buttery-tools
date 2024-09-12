@@ -54,6 +54,14 @@ const anchorOverlineCSS = css`
       color: ${makeColor("primary")};
     }
   }
+
+  &:not(.active) {
+    & + ul {
+      display: none;
+    }
+  }
+
+ 
 `;
 
 export type LayoutBodyNavProps = { graph: ButteryDocsGraph | null };

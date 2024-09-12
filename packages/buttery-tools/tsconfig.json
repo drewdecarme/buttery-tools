@@ -8,17 +8,19 @@
     "strictPropertyInitialization": true,
     "paths": {
       "@buttery/tokens/playground/css": [
-        "./artifacts/tokens/.buttery-tokens/playground/index.css"
+        "./lib/buttery-tokens/.buttery-tokens/playground/index.css"
       ],
       // configuration ui tokens
       "@buttery/tokens/playground": [
-        "./artifacts/tokens/.buttery-tokens/playground/index"
+        "./lib/buttery-tokens/.buttery-tokens/playground/index"
       ],
       "@buttery/tokens/docs/css": [
-        "./artifacts/tokens/.buttery-tokens/docs/index.css"
+        "./lib/buttery-tokens/.buttery-tokens/docs/index.css"
       ],
       // configuration ui tokens
-      "@buttery/tokens/docs": ["./artifacts/tokens/.buttery-tokens/docs/index"]
+      "@buttery/tokens/docs": [
+        "./lib/buttery-tokens/.buttery-tokens/docs/index"
+      ]
     }
   }
 }

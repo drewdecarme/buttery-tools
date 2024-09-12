@@ -6,15 +6,15 @@ import {
 } from "@buttery/utils/esbuild";
 import { build } from "esbuild";
 
-import { MakeTemplates } from "../../../artifacts/tokens/make-templates/MakeTemplates";
-import { MakeTemplateColor } from "../../../artifacts/tokens/make-templates/template.makeColor";
-import { MakeTemplateColorStatic } from "../../../artifacts/tokens/make-templates/template.makeColorStatic";
-import { MakeTemplateCustom } from "../../../artifacts/tokens/make-templates/template.makeCustom";
-import { MakeTemplateFontFamily } from "../../../artifacts/tokens/make-templates/template.makeFontFamily";
-import { MakeTemplateFontWeight } from "../../../artifacts/tokens/make-templates/template.makeFontWeight";
-import { MakeTemplateRem } from "../../../artifacts/tokens/make-templates/template.makeRem";
-import { MakeTemplateReset } from "../../../artifacts/tokens/make-templates/template.makeReset";
-import { MakeTemplateResponsive } from "../../../artifacts/tokens/make-templates/template.makeResponsive";
+import { MakeTemplates } from "../../../lib/buttery-tokens/make-templates/MakeTemplates";
+import { MakeTemplateColor } from "../../../lib/buttery-tokens/make-templates/template.makeColor";
+import { MakeTemplateColorStatic } from "../../../lib/buttery-tokens/make-templates/template.makeColorStatic";
+import { MakeTemplateCustom } from "../../../lib/buttery-tokens/make-templates/template.makeCustom";
+import { MakeTemplateFontFamily } from "../../../lib/buttery-tokens/make-templates/template.makeFontFamily";
+import { MakeTemplateFontWeight } from "../../../lib/buttery-tokens/make-templates/template.makeFontWeight";
+import { MakeTemplateRem } from "../../../lib/buttery-tokens/make-templates/template.makeRem";
+import { MakeTemplateReset } from "../../../lib/buttery-tokens/make-templates/template.makeReset";
+import { MakeTemplateResponsive } from "../../../lib/buttery-tokens/make-templates/template.makeResponsive";
 
 import type { ButteryTokensConfig } from "./tokens.getButteryTokensConfig";
 import type { ButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";

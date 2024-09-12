@@ -20,10 +20,7 @@ export const writeButteryDocsGraphDevData = async (
   const butteryDirs = await getButteryDocsDirectories(config);
 
   await writeFile(
-    path.resolve(
-      butteryDirs.artifacts.apps.generated.root,
-      "./data.js"
-    ),
+    path.resolve(butteryDirs.lib.apps.generated.root, "./data.js"),
     `export const graph = ${JSON.stringify(graph, null, 2)};
 export const header = ${JSON.stringify(config.docs.header)}\n`
   );

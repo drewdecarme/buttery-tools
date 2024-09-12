@@ -33,8 +33,8 @@ export async function getButteryDocsDefineConfig() {
     resolve: {
       alias: {
         "@buttery/tokens/docs": path.resolve(
-          butteryDocsDirs.artifacts.root,
-          "../tokens/.buttery-tokens/docs"
+          butteryDocsDirs.lib.root,
+          "../buttery-tokens/.buttery-tokens/docs"
         )
       }
     },

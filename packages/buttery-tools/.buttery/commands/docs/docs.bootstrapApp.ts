@@ -25,7 +25,7 @@ export const bootstrapApp = async (config: ButteryDocsConfig) => {
 
     // delete the existing app
     LOG_DOCS.debug("Removing existing routes...");
-    await rm(butteryDirs.artifacts.apps.generated.app.routes, {
+    await rm(butteryDirs.lib.apps.generated.app.routes, {
       recursive: true,
       force: true
     });
@@ -33,15 +33,15 @@ export const bootstrapApp = async (config: ButteryDocsConfig) => {
 
     // Create the hashed build directory by copying the template to that directory recursively
     await cp(
-      butteryDirs.artifacts.apps.template.root,
-      butteryDirs.artifacts.apps.generated.root,
+      butteryDirs.lib.apps.template.root,
+      butteryDirs.lib.apps.generated.root,
       {
         recursive: true
       }
     );
 
     const routesDir = path.resolve(
-      butteryDirs.artifacts.apps.generated.root,
+      butteryDirs.lib.apps.generated.root,
       "./app/routes"
     );
 
@@ -72,7 +72,7 @@ export const bootstrapApp = async (config: ButteryDocsConfig) => {
                   .split(".")
                   .reduce<string>((accum, segment, index, origArr) => {
                     if (index === 0) {
-                      return butteryDirs.artifacts.apps.generated.app.routePrefix.concat(
+                      return butteryDirs.lib.apps.generated.app.routePrefix.concat(
                         segment
                       );
                     }
@@ -94,7 +94,7 @@ export const bootstrapApp = async (config: ButteryDocsConfig) => {
 
         // write a temp package.json
         const packageJsonPath = path.resolve(
-          butteryDirs.artifacts.apps.generated.root,
+          butteryDirs.lib.apps.generated.root,
           "./package.json"
         );
         const packageJsonContent = {

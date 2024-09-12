@@ -44,7 +44,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
 
     const viteServer = await createServer({
       configFile: path.resolve(
-        dirs.artifacts.apps.generated.root,
+        dirs.lib.apps.generated.root,
         "./vite.config.ts"
       ),
       clearScreen: false, // we want to see all of the logs

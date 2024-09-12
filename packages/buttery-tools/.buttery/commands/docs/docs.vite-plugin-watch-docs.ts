@@ -24,11 +24,9 @@ export function watchDocsPlugin(
           const outFileName =
             filename === "_index"
               ? filename
-              : butteryDirs.artifacts.apps.generated.app.routePrefix.concat(
-                  filename
-                );
+              : butteryDirs.lib.apps.generated.app.routePrefix.concat(filename);
           const outFile = path.resolve(
-            butteryDirs.artifacts.apps.generated.app.routes,
+            butteryDirs.lib.apps.generated.app.routes,
             outFileName
           );
 
