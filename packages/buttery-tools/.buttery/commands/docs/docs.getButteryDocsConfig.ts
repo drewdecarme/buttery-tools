@@ -12,5 +12,8 @@ export type ButteryDocsConfig = Awaited<
  * `buttery.config.ts` file
  */
 export async function getButteryDocsConfig(options?: GetButteryConfigOptions) {
-  return await getButteryConfig("docs", options);
+  return await getButteryConfig("docs", {
+    ...options,
+    defaultConfig: "docs"
+  });
 }

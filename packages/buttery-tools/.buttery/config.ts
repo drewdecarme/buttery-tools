@@ -10,13 +10,12 @@ const config: ButteryConfig = {
     version: "0.0.1"
   },
   docs: {
-    build: {
-      target: "cloudflare-pages"
-    },
+    buildTarget: "cloudflare-pages",
+    routeStrategy: "section-folders",
     header: {
       title: "buttery.tools",
       logo: {
-        src: "/buttery-components-logo-transparent.png",
+        src: "/images/buttery-tools-butter-man-transparent.png",
         alt: "buttery-components-logo"
       },
       links: [
@@ -40,6 +39,11 @@ const config: ButteryConfig = {
             type: "internal",
             text: "buttery.tokens",
             href: "/tokens"
+          },
+          {
+            type: "internal",
+            text: "buttery.logs",
+            href: "/logs"
           }
         ],
         [
@@ -51,6 +55,32 @@ const config: ButteryConfig = {
         ]
       ]
     }
+    // order: {
+    //   introduction: {
+    //     display: "Introduction",
+    //     routeOrder: ["architecture", "how-is-this-different-than"]
+    //   },
+    //   commands: {
+    //     display: "buttery.commands",
+    //     routeOrder: []
+    //   },
+    //   docs: {
+    //     display: "buttery.docs",
+    //     routeOrder: []
+    //   },
+    //   components: {
+    //     display: "buttery.components",
+    //     routeOrder: []
+    //   },
+    //   tokens: {
+    //     display: "buttery.tokens",
+    //     routeOrder: []
+    //   },
+    //   reference: {
+    //     display: "Reference",
+    //     routeOrder: []
+    //   }
+    // }
   },
   tokens: [ConfigTokensDocs, ConfigTokensPlayground]
 };

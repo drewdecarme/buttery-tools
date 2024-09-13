@@ -1,9 +1,10 @@
 import {
   makeColor,
+  makeColorStatic,
   makeCustom,
   makeFontWeight,
   makeRem,
-  makeReset
+  makeReset,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";
@@ -46,6 +47,7 @@ const sectionStyles = css`
 const anchorOverlineCSS = css`
   ${makeReset("anchor")};
   transition: all 0.15s ease-in-out;
+  transition: all 0.25s;
 
   &.active,
   &:hover {
@@ -55,13 +57,19 @@ const anchorOverlineCSS = css`
     }
   }
 
-  &:not(.active) {
-    & + ul {
-      display: none;
-    }
+  & + ul {
+    max-height: 1000px;
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+    margin-right: initial;
   }
 
- 
+  &:not(.active) {
+    & + ul {
+      max-height: 0;
+      margin: 0;
+    }
+  }
 `;
 
 export type LayoutBodyNavProps = { graph: ButteryDocsGraph | null };

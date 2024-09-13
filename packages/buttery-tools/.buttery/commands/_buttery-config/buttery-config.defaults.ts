@@ -65,9 +65,8 @@ export const butteryConfigDefaultTokens: ButteryConfigTokens = {
   }
 };
 export const butteryConfigDefaultDocs: ButteryConfigDocs = {
-  build: {
-    target: "cloudflare-pages"
-  }
+  buildTarget: "cloudflare-pages",
+  routeStrategy: "section-folders"
 };
 export const butteryConfigDefaultCommands: ButteryConfigCommands = {
   name: "random",

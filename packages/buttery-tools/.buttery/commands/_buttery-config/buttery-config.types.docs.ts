@@ -41,9 +41,12 @@ export type ButteryConfigDocsHeader = {
 };
 
 export type ButteryConfigDocs = {
-  build: {
-    target: "cloudflare-pages";
-  };
+  buildTarget: "cloudflare-pages";
+  /**
+   * Indicates the way that your .buttery/docs folder is organized.
+   * @default 'section-folders'
+   */
+  routeStrategy?: "section-folders" | "flat";
   /**
    * A key that allows you to configure how the navigation
    * will display as well as how it should be organized. Order is a

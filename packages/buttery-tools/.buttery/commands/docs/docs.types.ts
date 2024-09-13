@@ -5,6 +5,7 @@ export type CompileArgs = {
 export type FileObj = {
   fsPath: string;
   filename: string;
+  routeFileName: string;
   routePath: string;
 };
 

@@ -29,7 +29,7 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
   const libLibDir = path.resolve(libRootDir, "./lib");
 
   // apps directories
-  const templateName = `./_template-${config.docs.build.target}`;
+  const templateName = `./_template-${config.docs.buildTarget}`;
   const appName = "app.".concat(hashString(config.paths.rootDir));
 
   const appTemplateRootDir = path.resolve(libAppsDir, templateName);

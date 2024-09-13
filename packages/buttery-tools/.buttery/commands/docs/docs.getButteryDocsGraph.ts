@@ -36,12 +36,6 @@ export async function getButteryDocsGraph(
       config.docs?.order?.[section]?.display ?? section.replace(/-/g, " ");
 
     if (section && !graph[section]) {
-      if (file.filename.includes(".")) {
-        const sectionName = file.filename.split(".")[0];
-        throw new Error(
-          `It appears your missing a section file for "${file.filename}". Please create a "${sectionName}.md" file in your ./buttery/docs directory.`
-        );
-      }
       graph[section] = {
         routeTitle: sectionTitle,
         routeMeta: meta,
