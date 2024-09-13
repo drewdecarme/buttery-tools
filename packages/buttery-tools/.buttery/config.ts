@@ -54,33 +54,51 @@ const config: ButteryConfig = {
           }
         ]
       ]
+    },
+    order: {
+      introduction: {
+        display: "Introduction",
+        routeOrder: ["architecture", "how-is-this-different-than"]
+      },
+      commands: {
+        display: "buttery.commands",
+        routeOrder: []
+      },
+      docs: {
+        display: "buttery.docs",
+        routeOrder: []
+      },
+      components: {
+        display: "buttery.components",
+        routeOrder: [
+          "getting-started",
+          "getting-started.why",
+          "getting-started.quick-start",
+          "hooks",
+          "hooks.useDynamicNode",
+          "hooks.usePortal",
+          "hooks.usePopover",
+          "hooks.useDropdown",
+          "hooks.useTooltip",
+          "components",
+          "components.modals",
+          "components.modals.modal",
+          "components.modals.drawer",
+          "components.popovers",
+          "components.popovers.toasts",
+          "components.popovers.dropdown-menu",
+          "components.popovers.dropdown-nav"
+        ]
+      },
+      tokens: {
+        display: "buttery.tokens",
+        routeOrder: []
+      },
+      reference: {
+        display: "Reference",
+        routeOrder: []
+      }
     }
-    // order: {
-    //   introduction: {
-    //     display: "Introduction",
-    //     routeOrder: ["architecture", "how-is-this-different-than"]
-    //   },
-    //   commands: {
-    //     display: "buttery.commands",
-    //     routeOrder: []
-    //   },
-    //   docs: {
-    //     display: "buttery.docs",
-    //     routeOrder: []
-    //   },
-    //   components: {
-    //     display: "buttery.components",
-    //     routeOrder: []
-    //   },
-    //   tokens: {
-    //     display: "buttery.tokens",
-    //     routeOrder: []
-    //   },
-    //   reference: {
-    //     display: "Reference",
-    //     routeOrder: []
-    //   }
-    // }
   },
   tokens: [ConfigTokensDocs, ConfigTokensPlayground]
 };

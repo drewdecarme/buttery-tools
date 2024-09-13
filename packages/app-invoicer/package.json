@@ -18,7 +18,6 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@buttery/components": "workspace:^",
     "@clerk/remix": "4.2.24",
     "@icon-park/react": "1.4.2",
     "@linaria/core": "6.2.0",

@@ -1364,36 +1364,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/components@workspace:^, @buttery/components@workspace:packages/buttery-components":
-  version: 0.0.0-use.local
-  resolution: "@buttery/components@workspace:packages/buttery-components"
-  dependencies:
-    "@babel/core": "npm:7.25.2"
-    "@babel/preset-react": "npm:7.24.7"
-    "@babel/preset-typescript": "npm:7.24.7"
-    "@buttery/icons": "workspace:^"
-    "@chromatic-com/storybook": "npm:2.0.0"
-    "@linaria/core": "npm:6.2.0"
-    "@ngneat/falso": "npm:7.2.0"
-    "@storybook/addon-a11y": "npm:8.3.0"
-    "@storybook/addon-essentials": "npm:8.3.0"
-    "@storybook/addon-interactions": "npm:8.3.0"
-    "@storybook/addon-links": "npm:8.3.0"
-    "@storybook/blocks": "npm:8.3.0"
-    "@storybook/react": "npm:8.3.0"
-    "@storybook/react-vite": "npm:8.3.0"
-    "@storybook/test": "npm:8.3.0"
-    "@wyw-in-js/vite": "npm:0.5.4"
-    glob: "npm:11.0.0"
-    react: "npm:18.3.1"
-    react-dom: "npm:18.3.1"
-    storybook: "npm:8.3.0"
-    tsx: "npm:4.19.0"
-    typescript: "npm:5.6.2"
-    vite: "npm:5.4.4"
-  languageName: unknown
-  linkType: soft
-
 "@buttery/icons@workspace:^, @buttery/icons@workspace:packages/buttery-icons":
   version: 0.0.0-use.local
   resolution: "@buttery/icons@workspace:packages/buttery-icons"
@@ -4112,18 +4082,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-a11y@npm:8.3.0":
-  version: 8.3.0
-  resolution: "@storybook/addon-a11y@npm:8.3.0"
-  dependencies:
-    "@storybook/addon-highlight": "npm:8.3.0"
-    axe-core: "npm:^4.2.0"
-  peerDependencies:
-    storybook: ^8.3.0
-  checksum: 10c0/9ae1396dd4c3c564785dc46d4bdd17a3d60c63284ef94a29b4f058a791280b2accc3c5c99307a236511e5ccc57b157ff8fdb07663260cb143bf8910d8611602d
-  languageName: node
-  linkType: hard
-
 "@storybook/addon-actions@npm:8.3.0":
   version: 8.3.0
   resolution: "@storybook/addon-actions@npm:8.3.0"
@@ -5856,13 +5814,6 @@ __metadata:
   dependencies:
     possible-typed-array-names: "npm:^1.0.0"
   checksum: 10c0/d07226ef4f87daa01bd0fe80f8f310982e345f372926da2e5296aecc25c41cab440916bbaa4c5e1034b453af3392f67df5961124e4b586df1e99793a1374bdb2
-  languageName: node
-  linkType: hard
-
-"axe-core@npm:^4.2.0":
-  version: 4.9.1
-  resolution: "axe-core@npm:4.9.1"
-  checksum: 10c0/ac9e5a0c6fa115a43ebffc32a1d2189e1ca6431b5a78e88cdcf94a72a25c5964185682edd94fe6bdb1cb4266c0d06301b022866e0e50dcdf6e3cefe556470110
   languageName: node
   linkType: hard
 
@@ -9308,7 +9259,6 @@ __metadata:
     "@babel/core": "npm:7.25.2"
     "@babel/preset-react": "npm:7.24.7"
     "@babel/preset-typescript": "npm:7.24.7"
-    "@buttery/components": "workspace:^"
     "@chromatic-com/storybook": "npm:2.0.0"
     "@clerk/remix": "npm:4.2.24"
     "@cloudflare/workers-types": "npm:4.20240909.0"

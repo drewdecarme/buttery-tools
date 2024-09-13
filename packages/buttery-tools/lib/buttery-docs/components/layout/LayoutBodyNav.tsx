@@ -1,13 +1,12 @@
 import {
   makeColor,
-  makeColorStatic,
   makeCustom,
   makeFontWeight,
   makeRem,
   makeReset,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
-import { NavLink } from "@remix-run/react";
+import { NavLink, useLocation } from "@remix-run/react";
 import type { FC } from "react";
 import { LayoutBodyNavItem } from "./LayoutBodyNavItem";
 import { LayoutTextOverline } from "./LayoutTextOverline";
@@ -46,8 +45,6 @@ const sectionStyles = css`
 
 const anchorOverlineCSS = css`
   ${makeReset("anchor")};
-  transition: all 0.15s ease-in-out;
-  transition: all 0.25s;
 
   &.active,
   &:hover {
@@ -56,42 +53,40 @@ const anchorOverlineCSS = css`
       color: ${makeColor("primary")};
     }
   }
-
-  & + ul {
-    max-height: 1000px;
-    transition: all 0.5s ease-in-out;
-    overflow: hidden;
-    margin-right: initial;
-  }
-
-  &:not(.active) {
-    & + ul {
-      max-height: 0;
-      margin: 0;
-    }
-  }
 `;
 
 export type LayoutBodyNavProps = { graph: ButteryDocsGraph | null };
 
 export const LayoutBodyNav: FC<LayoutBodyNavProps> = ({ graph }) => {
+  const { pathname } = useLocation();
+
   return (
     <nav className={navStyles}>
       <div className={navContentStyles}>
-        {Object.entries(graph ?? {}).map(([sectionKey, sectionValues]) => {
-          if (sectionKey === "_index") return null;
-          return (
-            <section key={sectionKey} className={sectionStyles}>
-              <NavLink
-                to={sectionValues.routeAbs}
-                className={anchorOverlineCSS}
-              >
-                <LayoutTextOverline>
-                  {sectionValues.routeTitle}
-                </LayoutTextOverline>
-              </NavLink>
-              <LayoutBodyNavItem graph={sectionValues.pages} />
-            </section>
+        {Object.entries(graph ?? {}).map(([pageKey, pageValues]) => {
+          if (
+            pageKey === "_index" ||
+            !pathname.startsWith("/".concat(pageKey))
+          ) {
+            return null;
+          }
+          return Object.entries(pageValues.pages).map(
+            ([sectionKey, sectionValues]) => {
+              if (sectionKey === "_index") return null;
+              return (
+                <section key={sectionKey} className={sectionStyles}>
+                  <NavLink
+                    to={sectionValues.routeAbs}
+                    className={anchorOverlineCSS}
+                  >
+                    <LayoutTextOverline>
+                      {sectionValues.routeTitle}
+                    </LayoutTextOverline>
+                  </NavLink>
+                  <LayoutBodyNavItem graph={sectionValues.pages} />
+                </section>
+              );
+            }
           );
         })}
       </div>
