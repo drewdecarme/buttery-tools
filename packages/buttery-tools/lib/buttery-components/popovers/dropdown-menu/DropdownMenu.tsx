@@ -8,7 +8,6 @@ import {
 import {
   type DropdownOptions,
   type DropdownRef,
-  type DropdownRefHandleOpen,
   useDropdown,
   usePortal,
 } from "../../hooks";
@@ -83,7 +82,6 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
         windowListenerMouse.current = (e) => {
           const isDropdownOpen = getIsDropdownOpen(dropdownRef);
           if (!isDropdownOpen) return;
-          // debugger;
 
           const clickedElement = e.target as HTMLElement;
           const clickedDropdownChild =
