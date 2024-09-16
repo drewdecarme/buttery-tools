@@ -1,23 +1,22 @@
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useId, useMemo, useRef } from "react";
 import type { DropdownOptions, DropdownRef } from "../../hooks";
 
-export type UseDropdownOptions = Partial<DropdownOptions> & {
-  id: string;
-};
+export type UseDropdownOptions = Partial<DropdownOptions>;
 export const useDropdownNav = (options: UseDropdownOptions) => {
+  const id = useId();
   const dropdownNavRef = useRef<DropdownRef | null>(null);
 
   const openNav = useCallback(() => {
-    dropdownNavRef.current?.handleOpen(undefined, options);
-  }, [options]);
+    dropdownNavRef.current?.handleOpen(undefined, { ...options, id });
+  }, [options, id]);
 
   const closeNav = useCallback(() => {
     dropdownNavRef.current?.handleClose();
   }, []);
 
   const toggleNav = useCallback(() => {
-    dropdownNavRef.current?.handleToggle(undefined, options);
-  }, [options]);
+    dropdownNavRef.current?.handleToggle(undefined, { ...options, id });
+  }, [options, id]);
 
   const handleTargetKeyDown = useCallback<
     Required<JSX.IntrinsicElements["button"]>["onKeyDown"]
@@ -42,9 +41,9 @@ export const useDropdownNav = (options: UseDropdownOptions) => {
     return {
       onKeyDown: handleTargetKeyDown,
       onClick: toggleNav,
-      "aria-controls": options.id,
+      "aria-controls": id
     };
-  }, [handleTargetKeyDown, toggleNav, options.id]);
+  }, [handleTargetKeyDown, toggleNav, id]);
 
   const dropdownProps = useMemo<
     Pick<Required<JSX.IntrinsicElements["article"]>, "id"> & {
@@ -52,10 +51,10 @@ export const useDropdownNav = (options: UseDropdownOptions) => {
     }
   >(
     () => ({
-      id: options.id,
-      ref: dropdownNavRef,
+      id,
+      ref: dropdownNavRef
     }),
-    [options.id]
+    [id]
   );
 
   return useMemo(
@@ -64,7 +63,7 @@ export const useDropdownNav = (options: UseDropdownOptions) => {
       dropdownProps,
       openNav,
       closeNav,
-      toggleNav,
+      toggleNav
     }),
     [targetProps, dropdownProps, openNav, closeNav, toggleNav]
   );

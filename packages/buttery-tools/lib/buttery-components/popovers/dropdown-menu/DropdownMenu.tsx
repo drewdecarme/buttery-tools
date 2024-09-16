@@ -52,7 +52,7 @@ export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
     useImperativeHandle(ref, () => ({
       handleOpen: openPortal,
       handleClose,
-      handleToggle: (_e, options) => {
+      handleToggle: (_e) => {
         // this means that the popover is open
         if (dropdownRef.current) {
           handleClose();

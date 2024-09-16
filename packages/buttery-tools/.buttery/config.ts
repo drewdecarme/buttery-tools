@@ -21,29 +21,40 @@ const config: ButteryConfig = {
       links: [
         [
           {
-            type: "internal",
-            text: "buttery.components",
-            href: "/components"
-          },
-          {
-            type: "internal",
-            text: "buttery.commands",
-            href: "/commands"
-          },
-          {
-            type: "internal",
-            text: "buttery.docs",
-            href: "/docs"
-          },
-          {
-            type: "internal",
-            text: "buttery.tokens",
-            href: "/tokens"
-          },
-          {
-            type: "internal",
-            text: "buttery.logs",
-            href: "/logs"
+            type: "dropdown",
+            text: "Products",
+            items: [
+              {
+                text: "buttery.components",
+                href: "/components",
+                iconAlt: "components-logo",
+                iconSrc: "/images/buttery-components-logo-transparent.png"
+              },
+              {
+                text: "buttery.commands",
+                href: "/commands",
+                iconAlt: "commands-logo",
+                iconSrc: "/images/buttery-components-logo-transparent.png"
+              },
+              {
+                text: "buttery.docs",
+                href: "/docs",
+                iconAlt: "docs-logo",
+                iconSrc: "/images/buttery-components-logo-transparent.png"
+              },
+              {
+                text: "buttery.tokens",
+                href: "/tokens",
+                iconAlt: "tokens-logo",
+                iconSrc: "/images/buttery-components-logo-transparent.png"
+              },
+              {
+                text: "buttery.logs",
+                href: "/logs",
+                iconAlt: "logs-logo",
+                iconSrc: "/images/buttery-components-logo-transparent.png"
+              }
+            ]
           }
         ],
         [

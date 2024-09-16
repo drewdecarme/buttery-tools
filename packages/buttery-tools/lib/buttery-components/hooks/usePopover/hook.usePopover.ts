@@ -76,7 +76,11 @@ export const usePopover = <T extends HTMLElement>({ id }: PopoverOptions) => {
 
     popoverRef.current.showPopover();
     popoverRef.current.ariaExpanded = "true";
-    popoverRef.current.classList.add("open");
+    if (popoverRef.current.classList.contains("close")) {
+      popoverRef.current.classList.replace("close", "open");
+    } else {
+      popoverRef.current.classList.add("open");
+    }
 
     if (ensureTarget(targetRef.current)) {
       targetRef.current.ariaExpanded = "true";
@@ -90,7 +94,7 @@ export const usePopover = <T extends HTMLElement>({ id }: PopoverOptions) => {
     // add the close class to make any transitions associated with
     popoverRef.current.classList.replace("open", "close");
     const animations = popoverRef.current.getAnimations({
-      subtree: true,
+      subtree: true
     });
     // wait for all of the animations to run with .close
     await Promise.allSettled(animations.map((animation) => animation.finished));
@@ -109,6 +113,6 @@ export const usePopover = <T extends HTMLElement>({ id }: PopoverOptions) => {
     setPopoverRef,
     setTargetRef,
     showPopover,
-    hidePopover,
+    hidePopover
   };
 };

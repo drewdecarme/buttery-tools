@@ -2,13 +2,13 @@ import { type RefCallback, useCallback } from "react";
 import {
   ensurePopover,
   ensureTarget,
-  usePopover,
+  usePopover
 } from "../usePopover/hook.usePopover";
 import type { DropdownOptions } from "./hook.useDropdown.types";
 import {
   getIsDropdownOpen,
   processDropdownOptions,
-  setDropdownPositionStyles,
+  setDropdownPositionStyles
 } from "./hook.useDropdown.utils";
 
 export type DropdownRefHandleOpen = (
@@ -31,7 +31,7 @@ export const useDropdown = <T extends HTMLElement>(
     setPopoverRef,
     setTargetRef,
     showPopover,
-    hidePopover,
+    hidePopover
   } = usePopover<T>({ id: options.id });
 
   const setDropdownRef = useCallback<RefCallback<T>>(
@@ -66,7 +66,7 @@ export const useDropdown = <T extends HTMLElement>(
         arrow: parsedOptions.dxArrow,
         offset: parsedOptions.dxOffset,
         dropdownNode: popoverRef.current,
-        targetNode: targetRef.current,
+        targetNode: targetRef.current
       });
     },
     [targetRef.current, popoverRef.current, showPopover, options]
@@ -96,6 +96,6 @@ export const useDropdown = <T extends HTMLElement>(
     setTargetRef,
     closeDropdown,
     openDropdown,
-    toggleDropdown,
+    toggleDropdown
   };
 };

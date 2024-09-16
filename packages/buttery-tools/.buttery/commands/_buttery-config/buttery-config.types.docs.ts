@@ -1,7 +1,32 @@
+export type ButteryConfigDocsHeaderLinkTypeSocial = {
+  type: "social";
+  provider: "github" | "discord";
+  href: string;
+};
+export type ButteryConfigDocsHeaderLinkTypeText = {
+  type: "text";
+  text: string;
+  href: string;
+};
+export type ButteryConfigDocsHeaderLinkTypeInternal = {
+  type: "internal";
+  text: string;
+  href: string;
+};
+export type ButteryConfigDocsHeaderLinkTypeDropdown = {
+  type: "dropdown";
+  text: string;
+  items: (Omit<ButteryConfigDocsHeaderLinkTypeInternal, "type"> & {
+    iconSrc: string;
+    iconAlt: string;
+  })[];
+};
 export type ButteryConfigDocsHeaderLink =
-  | { type: "social"; provider: "github" | "discord"; href: string }
-  | { type: "text"; text: string; href: string }
-  | { type: "internal"; text: string; href: string };
+  | ButteryConfigDocsHeaderLinkTypeSocial
+  | ButteryConfigDocsHeaderLinkTypeText
+  | ButteryConfigDocsHeaderLinkTypeInternal
+  | ButteryConfigDocsHeaderLinkTypeDropdown;
+
 export type ButteryConfigDocsOrder = {
   [section: string]: {
     /**

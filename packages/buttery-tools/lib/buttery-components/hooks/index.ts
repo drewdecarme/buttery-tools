@@ -7,3 +7,4 @@ export * from "./usePopover";
 export * from "./useDropdown";
 export * from "./hook.useModalDialog";
 export * from "./usePortal/hook.usePortal";
+export * from "./useIntervalState";

@@ -1,14 +1,14 @@
-import type { ButteryConfigDocs } from "@buttery/core";
 import {
   makeColor,
   makeColorStatic,
   makeCustom,
   makeFontWeight,
-  makeRem
+  makeRem,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";
 import type { FC } from "react";
+import type { ButteryConfigDocs } from "../../../../.buttery/commands/_buttery-config";
 import { LayoutHeaderLinks } from "./LayoutHeaderLinks";
 
 const layoutHeaderStyles = css`
