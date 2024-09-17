@@ -29,9 +29,9 @@ export const ConfigTokensDocs: ButteryConfigTokens = {
     desktop: 1280
   },
   color: {
-    mode: "presets",
-    tone: "jewel",
     application: {
+      mode: "presets",
+      tone: "jewel",
       saturation: 83,
       brightness: 76,
       hues: {

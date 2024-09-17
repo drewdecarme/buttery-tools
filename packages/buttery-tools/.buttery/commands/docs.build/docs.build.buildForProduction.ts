@@ -12,7 +12,7 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
   LOG_DOCS.debug("Building distribution files...");
 
   try {
-    switch (config.docs.build.target) {
+    switch (config.docs.buildTarget) {
       case "cloudflare-pages": {
         const configFile = path.resolve(
           butteryDirs.lib.apps.generated.root,
@@ -50,7 +50,7 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
       }
 
       default:
-        exhaustiveMatchGuard(config.docs.build.target);
+        exhaustiveMatchGuard(config.docs.buildTarget);
     }
 
     const filesAndDirs = await readdir(butteryDirs.output.root, {
