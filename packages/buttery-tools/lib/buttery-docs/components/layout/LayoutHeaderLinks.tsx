@@ -85,6 +85,7 @@ export const LayoutHeaderLinks: FC<{
                           href={socialLink.href}
                           target="_blank"
                           rel="noreferrer"
+                          aria-label={socialLink.label}
                         >
                           <IconComponent
                             icon="github-circle-solid-rounded"

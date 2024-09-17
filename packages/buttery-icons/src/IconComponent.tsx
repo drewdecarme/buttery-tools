@@ -8,7 +8,7 @@ export type IconComponentCustom = {
    * The height and width of the icon in px, em or rem
    * @default inherit
    */
-  ddSize?: string;
+  ddSize?: string | number | "inherit";
 };
 export type IconComponent = IconComponentNative & IconComponentCustom;
 

@@ -69,7 +69,8 @@ const config: ButteryConfig = {
           {
             type: "social",
             provider: "github",
-            href: "https://github.com/drewdecarme/buttery-tools"
+            href: "https://github.com/drewdecarme/buttery-tools",
+            label: "View Buttery Tools on GitHub"
           }
         ]
       ]

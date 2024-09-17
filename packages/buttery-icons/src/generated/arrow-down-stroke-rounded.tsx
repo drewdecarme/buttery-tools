@@ -3,7 +3,7 @@ interface SVGRProps {
   title?: string;
   titleId?: string;
 }
-const SvgCheckmarkCircle02StrokeRounded = ({
+const SvgArrowDownStrokeRounded = ({
   title,
   titleId,
   ...props
@@ -19,16 +19,11 @@ const SvgCheckmarkCircle02StrokeRounded = ({
     {title ? <title id={titleId}>{title}</title> : null}
     <path
       stroke="currentColor"
-      strokeWidth={1.5}
-      d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10 10-4.477 10-10Z"
-    />
-    <path
-      stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
-      d="m8 12.5 2.5 2.5L16 9"
+      d="M18 9s-4.419 6-6 6-6-6-6-6"
     />
   </svg>
 );
-export default SvgCheckmarkCircle02StrokeRounded;
+export default SvgArrowDownStrokeRounded;

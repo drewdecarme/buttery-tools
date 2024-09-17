@@ -2,6 +2,12 @@ export type ButteryConfigDocsHeaderLinkTypeSocial = {
   type: "social";
   provider: "github" | "discord";
   href: string;
+  /**
+   * Since these types of links only display icons, we need to ensure
+   * that we provide a label that is accompanies the icon in order to ensure
+   * that our links are 100% accessible.
+   */
+  label: string;
 };
 export type ButteryConfigDocsHeaderLinkTypeText = {
   type: "text";

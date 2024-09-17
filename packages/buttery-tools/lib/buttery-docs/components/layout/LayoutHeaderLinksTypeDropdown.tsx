@@ -1,3 +1,4 @@
+import { IconComponent } from "@buttery/icons";
 import {
   makeColor,
   makeFontFamily,
@@ -6,7 +7,7 @@ import {
   makeReset,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
-import { Link, NavLink } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import { DropdownNav, useDropdownNav } from "../../../buttery-components";
 import type { ButteryConfigDocsHeaderLinkTypeDropdown } from ".buttery/commands/_buttery-config";
 
@@ -14,10 +15,14 @@ const buttonStyles = css`
   ${makeReset("button")};
   font-size: ${makeRem(16)};
   font-family: ${makeFontFamily("body")};
+  cursor: pointer;
+
+  display: flex;
+  gap: ${makeRem(8)};
+  align-items: center;
 
   &:hover {
     color: ${makeColor("primary")};
-    text-decoration: underline;
   }
 
   &.active {
@@ -100,7 +105,8 @@ const dropdownStyles = css`
         /* font-style: italic; */
       }
 
-      &.active {
+      &.active,
+      &:hover {
         .title,
         .sub-title {
           color: ${makeColor("primary")};
@@ -122,6 +128,7 @@ export function LayoutHeaderLinksTypeDropdown(
     <>
       <button type="button" {...targetProps} className={buttonStyles}>
         {props.text}
+        <IconComponent icon="arrow-down-stroke-rounded" ddSize={24} />
       </button>
       <DropdownNav {...dropdownProps} className={dropdownStyles}>
         <ul>
