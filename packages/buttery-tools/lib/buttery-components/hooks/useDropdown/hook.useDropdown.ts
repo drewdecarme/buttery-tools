@@ -46,30 +46,32 @@ export const useDropdown = <T extends HTMLElement>(
     [setPopoverRef, popoverRef.current]
   );
 
-  const openDropdown = useCallback<DropdownRef["handleOpen"]>(() => {
-    if (
-      !ensurePopover(popoverRef.current) ||
-      !ensureTarget(targetRef.current)
-    ) {
-      return;
-    }
+  const openDropdown = useCallback<DropdownRef["handleOpen"]>(
+    (e, pOptions) => {
+      if (
+        !ensurePopover(popoverRef.current) ||
+        !ensureTarget(targetRef.current)
+      ) {
+        return;
+      }
 
-    // apply the options
-    const parsedOptions = processDropdownOptions(options);
+      // apply the options either from the hook or
+      // from the params which take precedence.
+      const parsedOptions = processDropdownOptions(pOptions ?? options);
 
-    // show the popover
-    showPopover();
+      // show the popover
+      showPopover();
 
-    console.log(parsedOptions);
-
-    // position the dropdown element near the target
-    setDropdownPositionStyles(parsedOptions.dxPosition, {
-      arrow: parsedOptions.dxArrow,
-      offset: parsedOptions.dxOffset,
-      dropdownNode: popoverRef.current,
-      targetNode: targetRef.current
-    });
-  }, [targetRef.current, popoverRef.current, showPopover, options]);
+      // position the dropdown element near the target
+      setDropdownPositionStyles(parsedOptions.dxPosition, {
+        arrow: parsedOptions.dxArrow,
+        offset: parsedOptions.dxOffset,
+        dropdownNode: popoverRef.current,
+        targetNode: targetRef.current
+      });
+    },
+    [targetRef.current, popoverRef.current, showPopover, options]
+  );
 
   const closeDropdown = useCallback(async () => {
     const isPopoverOpen = getIsDropdownOpen(popoverRef);

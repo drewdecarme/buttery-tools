@@ -22,37 +22,45 @@ const config: ButteryConfig = {
         [
           {
             type: "dropdown",
-            text: "Products",
+            text: "View the tools",
             items: [
               {
-                text: "buttery.components",
+                text: "Buttery Components",
+                subText:
+                  "Headless, accessible & style method agnostic React components that you can import, re-export and/or copy & paste",
                 href: "/components",
                 iconAlt: "components-logo",
-                iconSrc: "/images/buttery-components-logo-transparent.png"
+                iconSrc: "/images/buttery-logo-components.png"
               },
               {
-                text: "buttery.commands",
+                text: "Buttery Commands",
+                subText:
+                  "Build a TS CLI the same way you would define NextJS or Remix routes",
                 href: "/commands",
                 iconAlt: "commands-logo",
-                iconSrc: "/images/buttery-components-logo-transparent.png"
+                iconSrc: "/images/buttery-logo-commands.png"
               },
               {
-                text: "buttery.docs",
+                text: "Buttery Docs",
+                subText: "Co-located, SSR ready, dead simple .md & .mdx docs",
                 href: "/docs",
                 iconAlt: "docs-logo",
-                iconSrc: "/images/buttery-components-logo-transparent.png"
+                iconSrc: "/images/buttery-logo-docs.png"
               },
               {
-                text: "buttery.tokens",
+                text: "Buttery Tokens",
+                subText:
+                  "Easily create, use, and scale a pure CSS design token system with 100% type-safety",
                 href: "/tokens",
                 iconAlt: "tokens-logo",
-                iconSrc: "/images/buttery-components-logo-transparent.png"
+                iconSrc: "/images/buttery-logo-tokens.png"
               },
               {
-                text: "buttery.logs",
+                text: "Buttery Logs",
+                subText: "Isomorphic logging for full-stack apps",
                 href: "/logs",
                 iconAlt: "logs-logo",
-                iconSrc: "/images/buttery-components-logo-transparent.png"
+                iconSrc: "/images/buttery-logo-logs.png"
               }
             ]
           }

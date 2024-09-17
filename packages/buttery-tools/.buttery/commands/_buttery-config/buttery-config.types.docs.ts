@@ -17,6 +17,7 @@ export type ButteryConfigDocsHeaderLinkTypeDropdown = {
   type: "dropdown";
   text: string;
   items: (Omit<ButteryConfigDocsHeaderLinkTypeInternal, "type"> & {
+    subText?: string;
     iconSrc: string;
     iconAlt: string;
   })[];

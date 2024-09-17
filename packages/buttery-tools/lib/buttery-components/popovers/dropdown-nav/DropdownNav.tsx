@@ -43,50 +43,52 @@ export const DropdownNav = forwardRef<DropdownRef, DropdownNavProps>(
       window.removeEventListener("click", windowListenerMouse.current);
     }, [closeDropdown]);
 
-    const handleOpen = useCallback<DropdownRefHandleOpen>(() => {
-      console.log("opening dropdown");
-      openDropdown();
+    const handleOpen = useCallback<DropdownRefHandleOpen>(
+      (e, options) => {
+        openDropdown(e, options);
 
-      // Close the dropdown when Escape is pressed
-      windowListenerKey.current = (e) => {
-        if (e.key !== "Escape") return;
-        handleClose();
-      };
-      window.addEventListener("keydown", windowListenerKey.current);
+        // Close the dropdown when Escape is pressed
+        windowListenerKey.current = (e) => {
+          if (e.key !== "Escape") return;
+          handleClose();
+        };
+        window.addEventListener("keydown", windowListenerKey.current);
 
-      // Close the dropdown when anything besides the target + it's children
-      // and the dropdown it's children are clicked.
-      windowListenerMouse.current = (e) => {
-        const clickedElement = e.target as HTMLElement;
+        // Close the dropdown when anything besides the target + it's children
+        // and the dropdown it's children are clicked.
+        windowListenerMouse.current = (e) => {
+          const clickedElement = e.target as HTMLElement;
 
-        // Check if the clicked element an anchor tag or is
-        // an element that is a descendent of an anchor tag
-        const anchorTags = Array.from(
-          dropdownRef.current?.getElementsByTagName("a") ?? []
-        );
-        for (const anchorTag of anchorTags) {
-          if (
-            anchorTag === clickedElement ||
-            anchorTag.contains(clickedElement)
-          ) {
-            return handleClose();
+          // Check if the clicked element an anchor tag or is
+          // an element that is a descendent of an anchor tag
+          const anchorTags = Array.from(
+            dropdownRef.current?.getElementsByTagName("a") ?? []
+          );
+          for (const anchorTag of anchorTags) {
+            if (
+              anchorTag === clickedElement ||
+              anchorTag.contains(clickedElement)
+            ) {
+              return handleClose();
+            }
           }
-        }
 
-        // Check if the clicked element is a child of the target
-        // or is a child of the dropdown. If it does then we're not
-        // going to do anything.
-        if (
-          dropdownRef.current?.contains(clickedElement) ||
-          targetRef.current?.contains(clickedElement)
-        ) {
-          return;
-        }
+          // Check if the clicked element is a child of the target
+          // or is a child of the dropdown. If it does then we're not
+          // going to do anything.
+          if (
+            dropdownRef.current?.contains(clickedElement) ||
+            targetRef.current?.contains(clickedElement)
+          ) {
+            return;
+          }
 
-        handleClose();
-      };
-      window.addEventListener("click", windowListenerMouse.current);
-    }, [handleClose, targetRef, dropdownRef, openDropdown]);
+          handleClose();
+        };
+        window.addEventListener("click", windowListenerMouse.current);
+      },
+      [handleClose, targetRef, dropdownRef, openDropdown]
+    );
 
     const handleToggle = useCallback<DropdownRefHandleOpen>(
       (e, options) => {

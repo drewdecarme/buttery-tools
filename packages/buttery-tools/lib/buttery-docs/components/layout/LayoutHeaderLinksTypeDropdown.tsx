@@ -6,7 +6,7 @@ import {
   makeReset,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
-import { Link } from "@remix-run/react";
+import { Link, NavLink } from "@remix-run/react";
 import { DropdownNav, useDropdownNav } from "../../../buttery-components";
 import type { ButteryConfigDocsHeaderLinkTypeDropdown } from ".buttery/commands/_buttery-config";
 
@@ -69,22 +69,42 @@ const dropdownStyles = css`
 
   ul {
     ${makeReset("ul")};
+    padding: ${makeRem(16)} 0;
 
     a {
       ${makeReset("anchor")};
-      font-size: ${makeRem(16)};
       font-family: ${makeFontFamily("body")};
       display: grid;
-      grid-template-columns: ${makeRem(44)} auto;
+      grid-template-columns: ${makeRem(48)} auto;
       gap: ${makeRem(8)};
       align-items: center;
       padding: ${makeRem(8)} ${makeRem(16)};
 
       img {
-        max-height: ${makeRem(40)};
+        max-height: ${makeRem(36)};
+        justify-self: center;
+        align-self: middle;
         max-width: auto;
         object-fit: contain;
         place-content: center;
+      }
+
+      .title {
+        font-size: ${makeRem(16)};
+        font-weight: ${makeFontWeight("semi-bold")};
+      }
+
+      .sub-title {
+        font-size: ${makeRem(14)};
+        color: ${makeColor("neutral", { variant: "500" })};
+        /* font-style: italic; */
+      }
+
+      &.active {
+        .title,
+        .sub-title {
+          color: ${makeColor("primary")};
+        }
       }
     }
   }
@@ -108,10 +128,15 @@ export function LayoutHeaderLinksTypeDropdown(
           {props.items.map((item) => {
             return (
               <li key={item.href}>
-                <Link to={item.href}>
+                <NavLink to={item.href}>
                   <img src={item.iconSrc} alt={item.iconAlt} />
-                  <div>{item.text}</div>
-                </Link>
+                  <div>
+                    <div className="title">{item.text}</div>
+                    {item.subText && (
+                      <div className="sub-title">{item.subText}</div>
+                    )}
+                  </div>
+                </NavLink>
               </li>
             );
           })}
