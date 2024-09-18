@@ -31,7 +31,7 @@ import { LOG } from "../_logger/util.ts.logger";
  * are then transpiled using esbuild. After the transpilation a plugin is also run
  * to create the TS types for each of the functions using a esbuild plugin.
  */
-export async function buildMakeFunctionsFromTemplates(
+export async function buildMakeUtilsFromTemplates(
   config: ButteryTokensConfig,
   dirs: ButteryTokensDirectories
 ) {
@@ -45,7 +45,7 @@ export async function buildMakeFunctionsFromTemplates(
   Templates.register(MakeTemplateFontWeight);
   Templates.register(MakeTemplateRem);
   Templates.register(MakeTemplateResponsive);
-  Templates.register(MakeTemplateColor);
+  // Templates.register(MakeTemplateColor);
   if (config.tokens.color.static) {
     Templates.register(MakeTemplateColorStatic);
   }
@@ -61,14 +61,14 @@ export async function buildMakeFunctionsFromTemplates(
   });
   const buildOptions = createEsbuildOptions({
     entryPoints: [Templates.entryFile],
-    outfile: path.resolve(dirs.output.path, "./index.js"),
-    plugins: [
-      // transpile and create files
-      tsPlugin.getPlugin({
-        filePathToTranspile: Templates.entryFile,
-        extraArgs: [`--outDir ${dirs.output.path}`]
-      })
-    ]
+    outfile: path.resolve(dirs.output.path, "./index.js")
+    // plugins: [
+    //   // transpile and create files
+    //   tsPlugin.getPlugin({
+    //     filePathToTranspile: Templates.entryFile,
+    //     extraArgs: [`--outDir ${dirs.output.path}`]
+    //   })
+    // ]
   });
 
   // Generate all of the registered templates

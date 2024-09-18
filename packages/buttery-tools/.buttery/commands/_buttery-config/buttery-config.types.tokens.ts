@@ -13,12 +13,12 @@ export type ButteryConfigTokens = {
    * to have tokens created for them. Naturally, it doesn't make sense to do some import gymnastics where
    * you need to destructure the import on an unknown key.
    *
-   * Instead, adding the `importName` will build your tokens to another directory inside of the buttery tokens
+   * Instead, adding the `namespace` will build your tokens to another directory inside of the buttery tokens
    * package where then can be easily imported using an barrel file of that name at the root of the buttery
    * tokens distro. All of the documentation will update with the import name so you can be sure that you're importing
    * the right thing
    */
-  importName?: string;
+  namespace?: string;
   /**
    * ## Description
    * The integer that will regulate the visual harmony of the application by enforcing strict spacing requirements

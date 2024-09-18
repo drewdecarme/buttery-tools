@@ -18,7 +18,7 @@ const template: CompileFunction = ({
   functionName,
   cssVarPrefix
 }) => {
-  const hueNames = Object.keys(config.color.application.hues).concat("neutral");
+  const hueNames = Object.keys(config.color.brand.hues).concat("neutral");
   const hueUnion = methods.createTypeUnion(hueNames);
 
   const hueVariants = [...new Array(8)].map((_v, i) => {

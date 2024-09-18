@@ -1,22 +1,18 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { LOG } from "../_logger/util.ts.logger";
+import { LOG } from "../_logger";
 import type { ButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";
 
-export async function buildMakeFunctionsOutputDirectory(
-  dirs: ButteryTokensDirectories,
-  options: { isLocal: boolean }
+/**
+ * Enrich the output directory with files for proper imports
+ * and types
+ */
+export async function buildMakeUtilsCreateTypes(
+  dirs: ButteryTokensDirectories
 ) {
-  // create a unique directory in the working directory
-  // make a working dir we can always expect in any resolved tokens
-  // directory. This working dir will enable us to build some files to
-  // make imports work the way we want to.
-  await mkdir(dirs.output.path, { recursive: true });
-
-  if (options.isLocal) {
-    LOG.info("Build is being run locally. Skipping import directory creation.");
-    return;
-  }
+  LOG.debug(
+    `Enriching the utils output directory with TS assets: ${dirs.output.path}`
+  );
 
   // write the files needed to import from another library
   const importFileContent = `export * from "../${path.relative(dirs.root.path, dirs.output.path)}/index.js";\n`;

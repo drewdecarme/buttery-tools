@@ -1,7 +1,7 @@
 import type { ButteryConfigTokens } from "./commands/_buttery-config";
 
 export const ConfigTokensDocs: ButteryConfigTokens = {
-  importName: "docs",
+  namespace: "docs",
   gridSystem: 4,
   prefix: "buttery-docs",
   strict: true,

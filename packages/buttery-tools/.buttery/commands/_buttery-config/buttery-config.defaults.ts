@@ -7,7 +7,7 @@ import type { ButteryConfigTokens } from "./buttery-config.types.tokens";
 const systemFont = `system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`;
 
 export const butteryConfigDefaultTokens: ButteryConfigTokens = {
-  importName: "random",
+  namespace: "random",
   prefix: "random-tokens",
   strict: true,
   gridSystem: 4,

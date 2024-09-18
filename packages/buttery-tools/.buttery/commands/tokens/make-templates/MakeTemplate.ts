@@ -81,7 +81,7 @@ export class MakeTemplate {
       docs: {
         description: this.functionDescription,
         importClause: `import { ${this.functionName} } from "@buttery/tokens${
-          config.importName ? `/${config.importName}` : ""
+          config.namespace ? `/${config.namespace}` : ""
         }";`
       },
       functionName: this.functionName,

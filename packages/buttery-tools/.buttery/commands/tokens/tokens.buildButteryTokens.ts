@@ -1,6 +1,6 @@
 import chokidar from "chokidar";
 import { LOG } from "../_logger/util.ts.logger";
-import { buildMakeFunctions } from "./tokens.buildMakeFunctions";
+import { buildMakeUtils } from "./tokens.buildMakeUtils";
 import { getButteryTokensConfig } from "./tokens.getButteryTokensConfig";
 import { launchPlayground } from "./tokens.launchPlayground";
 
@@ -20,7 +20,7 @@ export async function buildButteryTokens(options: BuildButteryTokensParams) {
   const config = await getButteryTokensConfig(options);
 
   // build the make functions
-  await buildMakeFunctions(config, { isLocal: options.isLocal });
+  await buildMakeUtils(config);
 
   // listen to any changes to the `.buttery/config`
   if (!options.watch) return;
@@ -30,7 +30,7 @@ export async function buildButteryTokens(options: BuildButteryTokensParams) {
   watcher.on("change", async (file) => {
     LOG.watch(`"${file}" changed.`);
     LOG.watch("Rebuilding tokens...");
-    await buildMakeFunctions(config, { isLocal: options.isLocal });
+    await buildMakeUtils(config);
     LOG.watch("Rebuilding tokens... done.");
   });
 

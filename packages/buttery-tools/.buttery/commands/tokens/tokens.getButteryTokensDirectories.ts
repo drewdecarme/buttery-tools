@@ -1,5 +1,7 @@
 import path from "node:path";
+import { ensureDir } from "fs-extra";
 import { findDirectoryUpwards } from "../../../utils/node";
+import { LOG } from "../_logger/util.ts.logger";
 import type { ButteryTokensConfig } from "./tokens.getButteryTokensConfig";
 
 export type ButteryTokensDirectories = Awaited<
@@ -12,92 +14,54 @@ export type ButteryTokensDirectories = Awaited<
  * that will contain all of the dynamically generated files needed to import and run
  * any `make` utilities.
  */
-async function getTokensBuildRootDir(
-  config: ButteryTokensConfig,
-  isLocal: boolean
-) {
-  // CONTEXT - Run in context to THIS package - tokens for the docs and tokens playground UI
-  //
-  // If we're building this stuff locally we can just the .buttery-tokens build files
-  // this folder. Same goes
-  if (isLocal) {
-    return path.resolve(config.paths.rootDir, "./artifacts/tokens");
-  }
-
-  // CONTEXT - Run in context of THIS monorepo
-  //
-  // if we're building the buttery tokens in this mono-repo for other buttery packages
-  // it means that we're going to run the CLI from the buttery-tokens package so
-  // we're going to stick the build output in there
-  const butteryTokensPackageDir = findDirectoryUpwards("buttery-tokens");
-  if (butteryTokensPackageDir) return butteryTokensPackageDir;
-
-  // CONTEXT - Run in context of a project that has downloaded this from the npm registry
-  //
-  // if we're running the buttery tokens dev|build command _outside_ of the context
-  // of the mono-repo then we're going to search up the directory structure until
-  // we find the node_modules and then search down that until we find the @buttery directory
+async function getTokensOutputDir(config: ButteryTokensConfig) {
+  // search up the directory structure until
+  // we find the `node_modules` and then search down that until we find the @buttery directory
   // we'll stick the build output in there.
-  const butteryNodeModulesDir = findDirectoryUpwards(
-    "node_modules",
-    "@buttery"
-  );
-  if (butteryNodeModulesDir) {
-    return path.resolve(butteryNodeModulesDir, "./tokens");
+  const nodeModules = findDirectoryUpwards("node_modules");
+  if (!nodeModules) {
+    throw LOG.fatal(
+      new Error(
+        "Unable to locate `node_modules` in your directory structure. This should not have happened. Please raise a Github issue."
+      )
+    );
   }
-  return undefined;
+
+  // resolve the @buttery/tokens directory
+  const namespace = config.tokens.namespace
+    ? "/".concat(config.tokens.namespace)
+    : "";
+  const nodeModulesButteryDir = path.resolve(
+    nodeModules,
+    "./@buttery/tokens".concat(namespace)
+  );
+  await ensureDir(nodeModulesButteryDir);
+  return nodeModulesButteryDir;
 }
 
-export async function getButteryTokensDirectories(
-  config: ButteryTokensConfig,
-  options: {
-    isLocal: boolean;
-  }
-) {
-  const isLocal = options?.isLocal ?? false;
-  const butteryTokensBuildRootDir = await getTokensBuildRootDir(
-    config,
-    isLocal
-  );
+export async function getButteryTokensDirectories(config: ButteryTokensConfig) {
+  const tokensOutDir = await getTokensOutputDir(config);
 
-  if (!butteryTokensBuildRootDir) {
+  console.log(tokensOutDir);
+
+  if (!tokensOutDir) {
     throw "Cannot locate a tokens directory to build the utilities to. This should not have happened.";
   }
 
-  const outputDirName = config.tokens.importName;
-
-  const getOutputPath = (importName: string | undefined) =>
-    path.resolve(butteryTokensBuildRootDir, importName ?? "index");
-  const outputDirPath = getOutputPath(outputDirName);
-
   // the playground sits in the root of this repo
-  const tokenArtifactsDir = findDirectoryUpwards("artifacts", undefined, {
+  const tokensLib = findDirectoryUpwards("lib", "buttery-tokens", {
     startingDirectory: import.meta.dirname
   });
-  if (!tokenArtifactsDir) {
-    throw "Cannot locate `artifacts` directory to launch the interactive playground. This should not have happened. Please log a Github issue.";
+  if (!tokensLib) {
+    throw "Cannot locate the tokens library assets to launch the interactive playground. This should not have happened. Please log a Github issue.";
   }
 
-  const artifactsRootDir = path.resolve(tokenArtifactsDir, "./tokens");
-
-  const artifactsPlaygroundRoot = path.resolve(
-    artifactsRootDir,
-    "./playground"
-  );
-  const artifactsMakeTemplatesRoot = path.resolve(
-    artifactsRootDir,
-    "./make-templates"
-  );
-  const artifactsLibraryRoot = path.resolve(artifactsRootDir, "./library");
+  const tokensLibPlaygroundRoot = path.resolve(tokensLib, "./playground");
 
   return {
-    /**
-     * The root dir where a .buttery-tokens directory will be created.
-     * This directory will contain the output of the `make` utilities
-     */
     root: {
-      path: butteryTokensBuildRootDir,
-      tsConfigPath: path.resolve(butteryTokensBuildRootDir, "./tsconfig.json")
+      path: tokensOutDir,
+      tsConfigPath: path.resolve(tokensOutDir, "./tsconfig.json")
     },
     /**
      * The UI for the configuration UI playground. We provide the location
@@ -105,15 +69,9 @@ export async function getButteryTokensDirectories(
      * and public path to feed to the createServer vite function.
      */
     artifacts: {
-      root: artifactsRootDir,
+      root: tokensLib,
       playground: {
-        root: artifactsPlaygroundRoot
-      },
-      library: {
-        root: artifactsLibraryRoot
-      },
-      "make-templates": {
-        root: artifactsMakeTemplatesRoot
+        root: tokensLibPlaygroundRoot
       }
     },
     /**
@@ -125,10 +83,8 @@ export async function getButteryTokensDirectories(
      * created
      */
     output: {
-      path: outputDirPath,
-      name: outputDirName,
-      getOutputPath,
-      cssFilePath: path.resolve(outputDirPath, "./index.css")
+      path: tokensOutDir,
+      cssFilePath: path.resolve(tokensOutDir, "./index.css")
     }
   };
 }

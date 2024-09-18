@@ -1,7 +1,7 @@
 import type { ButteryConfigTokens } from "./commands/_buttery-config";
 
 export const ConfigTokensPlayground: ButteryConfigTokens = {
-  importName: "playground",
+  namespace: "playground",
   gridSystem: 4,
   prefix: "buttery-tokens",
   strict: true,
@@ -28,11 +28,11 @@ export const ConfigTokensPlayground: ButteryConfigTokens = {
     desktop: 1280
   },
   color: {
-    mode: "presets",
-    tone: "fluorescent",
-    saturation: 82,
-    brightness: 90,
-    application: {
+    brand: {
+      mode: "category",
+      tone: "fluorescent",
+      saturation: 82,
+      brightness: 90,
       hues: {
         primary: 47,
         secondary: 170,
@@ -42,17 +42,14 @@ export const ConfigTokensPlayground: ButteryConfigTokens = {
       },
       variants: {
         mode: "auto",
-        total: 10,
-        scaleMin: 2,
-        scaleMax: 2
+        numOfVariants: 10
       }
     },
-    neutral: {
+    shade: {
       base: "#030305",
       variants: {
         mode: "auto",
-        total: 10,
-        scaleMin: 5
+        numOfVariants: 10
       }
     },
     static: {
