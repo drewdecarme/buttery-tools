@@ -3,11 +3,10 @@ import type {
   CommandMeta,
   CommandOptions
 } from "../../../lib/types.js";
-import { LOG_DOCS } from "../docs/docs.logger.js";
 
 import path from "node:path";
 import { createServer } from "vite";
-import { LOG } from "../_utils/util.logger.js";
+import { LOG } from "../_logger/util.ts.logger.js";
 import { bootstrapApp } from "../docs/docs.bootstrapApp.js";
 import { bootstrapAppDataFile } from "../docs/docs.bootstrapAppDataFile.js";
 import { getButteryDocsFiles } from "../docs/docs.getButteryDocFiles.js";
@@ -84,6 +83,6 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     viteServer.printUrls();
     viteServer.bindCLIShortcuts({ print: true });
   } catch (error) {
-    throw LOG_DOCS.fatal(new Error(error as string));
+    throw LOG.fatal(new Error(error as string));
   }
 };

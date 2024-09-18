@@ -1,5 +1,5 @@
+import { kebabToPascalCase } from "../../../utils/ts/util.ts.kebab-to-pascal-case";
 import type { ButteryConfigDocsOrder } from "../_buttery-config";
-import { kebabToPascalCase } from "../_utils/util.kebab-to-pascal-case";
 import { parseFilename } from "./docs.parseFilename";
 import type { FileObj } from "./docs.types";
 

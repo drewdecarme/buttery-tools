@@ -1,5 +1,5 @@
+import { LOG } from "../.buttery/commands/_logger/util.ts.logger";
 import { buildButteryTokens } from "../.buttery/commands/tokens/tokens.buildButteryTokens";
-import { LOG_TOKENS } from "../.buttery/commands/tokens/tokens.logger";
 
 /**
  * A script to run a more specific build process for the tokens
@@ -18,7 +18,7 @@ import { LOG_TOKENS } from "../.buttery/commands/tokens/tokens.logger";
  * the CLI cannot have the tokens as a dependency.
  */
 try {
-  LOG_TOKENS.info("Building tokens locally to the CLI.");
+  LOG.info("Building tokens locally to the CLI.");
   await buildButteryTokens({
     prompt: false,
     debug: true,
@@ -27,5 +27,5 @@ try {
     isLocal: true
   });
 } catch (error) {
-  throw LOG_TOKENS.fatal(new Error(error as string));
+  throw LOG.fatal(new Error(error as string));
 }

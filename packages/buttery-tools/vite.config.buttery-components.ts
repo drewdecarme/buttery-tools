@@ -1,6 +1,6 @@
-import { createLibraryConfig } from "@buttery/utils/vite";
 import wyw from "@wyw-in-js/vite";
 import { defineConfig, mergeConfig } from "vite";
+import { createLibraryConfig } from "./utils/vite";
 
 export default mergeConfig(
   createLibraryConfig({

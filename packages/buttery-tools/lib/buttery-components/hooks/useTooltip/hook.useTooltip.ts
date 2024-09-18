@@ -1,4 +1,4 @@
-import { type RefCallback, useCallback, useEffect, useMemo } from "react";
+import { type RefCallback, useCallback, useMemo } from "react";
 import { exhaustiveMatchGuard } from "../../utils";
 import { type DropdownOptions, useDropdown } from "../useDropdown";
 import { ensurePopover } from "../usePopover";
@@ -59,7 +59,7 @@ export const useTooltip = <T extends HTMLElement>(
     setTargetRef,
     openDropdown,
     closeDropdown,
-    toggleDropdown,
+    toggleDropdown
   } = useDropdown<T>(options);
 
   const setTooltipRef = useCallback<RefCallback<T>>(
@@ -82,7 +82,7 @@ export const useTooltip = <T extends HTMLElement>(
           onFocus: () => openDropdown(),
           onBlur: () => closeDropdown(),
           onMouseEnter: () => openDropdown(),
-          onMouseLeave: () => closeDropdown(),
+          onMouseLeave: () => closeDropdown()
         };
         switch (options.dxKind) {
           case "label":
@@ -90,7 +90,7 @@ export const useTooltip = <T extends HTMLElement>(
               ...props,
               ref: setTargetRef,
               type: "button",
-              "aria-labelledby": options.dxLabeledBy,
+              "aria-labelledby": options.dxLabeledBy
             };
             break;
 
@@ -99,7 +99,7 @@ export const useTooltip = <T extends HTMLElement>(
               ...props,
               ref: setTargetRef,
               type: "button",
-              "aria-labelledby": options.id,
+              "aria-labelledby": options.id
             };
             break;
 
@@ -112,7 +112,7 @@ export const useTooltip = <T extends HTMLElement>(
       case "toggletip":
         return {
           ref: setTargetRef,
-          onClick: toggleDropdown,
+          onClick: toggleDropdown
         };
 
       default:
@@ -122,7 +122,7 @@ export const useTooltip = <T extends HTMLElement>(
 
   const tooltipProps = useMemo(
     () => ({
-      ref: setTooltipRef,
+      ref: setTooltipRef
     }),
     [setTooltipRef]
   );
@@ -130,7 +130,7 @@ export const useTooltip = <T extends HTMLElement>(
   return useMemo(
     () => ({
       targetProps,
-      tooltipProps,
+      tooltipProps
     }),
     [targetProps, tooltipProps]
   );

@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { LOG } from "../_logger/util.ts.logger";
 import type { ButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";
-import { LOG_TOKENS } from "./tokens.logger";
 
 export async function buildMakeFunctionsOutputDirectory(
   dirs: ButteryTokensDirectories,
@@ -14,16 +14,14 @@ export async function buildMakeFunctionsOutputDirectory(
   await mkdir(dirs.output.path, { recursive: true });
 
   if (options.isLocal) {
-    LOG_TOKENS.info(
-      "Build is being run locally. Skipping import directory creation."
-    );
+    LOG.info("Build is being run locally. Skipping import directory creation.");
     return;
   }
 
   // write the files needed to import from another library
   const importFileContent = `export * from "../${path.relative(dirs.root.path, dirs.output.path)}/index.js";\n`;
   const tsConfigFileContent = JSON.stringify(
-    { extends: "@buttery/tsconfig/library" },
+    { extends: path.resolve("../../../tsconfig.build-lib.json") },
     null,
     2
   );

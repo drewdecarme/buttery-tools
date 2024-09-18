@@ -1,5 +1,5 @@
 import { getButteryConfig } from "../_buttery-config";
-import { LOG } from "../_utils/util.logger";
+import { LOG } from "../_logger/util.ts.logger";
 
 import { buildCommandsCleanDistributionDirs } from "./build-commands.clean-distribution-dirs";
 import { buildCommandsCreateBinary } from "./build-commands.create-binary";

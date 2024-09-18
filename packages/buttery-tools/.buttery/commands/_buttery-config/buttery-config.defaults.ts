@@ -1,6 +1,7 @@
 import type { ButteryConfig } from "./buttery-config.types";
 import type { ButteryConfigCommands } from "./buttery-config.types.commands";
 import type { ButteryConfigDocs } from "./buttery-config.types.docs";
+import type { ButteryConfigIcons } from "./buttery-config.types.icons";
 import type { ButteryConfigTokens } from "./buttery-config.types.tokens";
 
 const systemFont = `system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`;
@@ -74,9 +75,15 @@ export const butteryConfigDefaultCommands: ButteryConfigCommands = {
   commandsDir: "commands",
   version: "0.0.1"
 };
+export const butteryConfigDefaultIcons: ButteryConfigIcons = {
+  namespace: undefined,
+  outDir: undefined,
+  svgDir: undefined
+};
 
 export const butteryConfigDefaults: Required<ButteryConfig> = {
   tokens: butteryConfigDefaultTokens,
   docs: butteryConfigDefaultDocs,
-  commands: butteryConfigDefaultCommands
+  commands: butteryConfigDefaultCommands,
+  icons: butteryConfigDefaultIcons
 };

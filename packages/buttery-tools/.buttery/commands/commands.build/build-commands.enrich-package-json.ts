@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { LOG } from "../_utils/util.logger";
+import { LOG } from "../_logger/util.ts.logger";
 import type { CommandsBuildFunctionArgs } from "./build-commands.utils";
 
 // TODO: Update this description
@@ -11,7 +11,7 @@ import type { CommandsBuildFunctionArgs } from "./build-commands.utils";
 // from the command line without having to worry about manually adding
 // those properties to their `package.json`
 export async function buildCommandsEnrichPackageJson({
-  config,
+  config
 }: CommandsBuildFunctionArgs) {
   try {
     const packageJsonPath = path.resolve(
@@ -19,15 +19,15 @@ export async function buildCommandsEnrichPackageJson({
       "./package.json"
     );
     const packageJsonString = await readFile(packageJsonPath, {
-      encoding: "utf8",
+      encoding: "utf8"
     });
     const packageJson = JSON.parse(packageJsonString);
     const packageJsonCLIProperties = {
       type: "module",
       types: "./dist/index.d.ts",
       bin: {
-        [config.commands.name]: "./bin/index.js",
-      },
+        [config.commands.name]: "./bin/index.js"
+      }
     };
     const packageJsonPropertiesEntries = Object.entries(
       packageJsonCLIProperties

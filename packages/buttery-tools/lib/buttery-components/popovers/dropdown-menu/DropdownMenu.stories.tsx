@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 import DropdownMenuExample from "./examples/DropdownMenu.example";
 import DropdownMenuBarebonesExample from "./examples/DropdownMenuBarebones.example";
 import DropdownMenuGroupsExample from "./examples/DropdownMenuGroups.example";

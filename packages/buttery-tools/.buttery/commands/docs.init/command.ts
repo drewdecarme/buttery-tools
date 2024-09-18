@@ -3,7 +3,7 @@ import { input, select } from "@inquirer/prompts";
 
 import type { CommandAction, CommandMeta } from "../../../lib";
 import { getButteryConfig } from "../_buttery-config";
-import { LOG } from "../_utils/util.logger";
+import { LOG } from "../_logger/util.ts.logger";
 
 export const meta: CommandMeta = {
   name: "init",

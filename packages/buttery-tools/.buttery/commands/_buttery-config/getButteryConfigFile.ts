@@ -1,7 +1,7 @@
 import { existsSync, lstatSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { LOG } from "../_utils/util.logger.js";
+import { LOG } from "../_logger/util.ts.logger.js";
 import type { GetButteryConfigOptions } from "./buttery-config.types.js";
 import {
   createDefaultButteryConfigAndDirs,

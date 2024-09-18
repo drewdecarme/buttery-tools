@@ -1,6 +1,6 @@
 import path from "node:path";
-import { findDirectoryUpwards } from "@buttery/utils/node";
-import { hashString } from "../_utils/util.hash-string";
+import { findDirectoryUpwards } from "../../../utils/node";
+import { hashString } from "../../../utils/ts/util.ts.hash-string";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 
 export type ButteryDocsDirectories = Awaited<

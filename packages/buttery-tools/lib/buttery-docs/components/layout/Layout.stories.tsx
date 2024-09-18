@@ -5,7 +5,6 @@ import { graph, toc } from "./Layout.stories.data";
 
 const meta: Meta = {
   title: "Layout",
-  // @ts-expect-error Props mismatch
   component: Layout,
 } satisfies Meta<typeof meta>;
 

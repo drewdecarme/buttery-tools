@@ -1,6 +1,6 @@
 import path from "node:path";
 import { ensureDir } from "fs-extra";
-import { LOG } from "../_utils/util.logger";
+import { LOG } from "../_logger/util.ts.logger";
 import { ensureGitIgnoreEntry } from "./ensureGitignoreEntry";
 
 /**

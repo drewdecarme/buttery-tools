@@ -11,7 +11,7 @@ import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { type UserConfig, mergeConfig } from "vite";
 import { getButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
-import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
+// import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
 import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports";
 import { transformMarkdownAssetPath } from "./docs.vite-plugin-transform-markdown-asset-path";
 import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";

@@ -1,7 +1,7 @@
 import type { CommandAction, CommandOptions } from "../../../dist";
 import type { CommandMeta } from "../../../lib/types";
+import { LOG } from "../_logger/util.ts.logger";
 import { buildButteryTokens } from "../tokens/tokens.buildButteryTokens";
-import { LOG_TOKENS } from "../tokens/tokens.logger";
 
 export const meta: CommandMeta = {
   name: "dev",
@@ -42,7 +42,7 @@ export const options: CommandOptions<{
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
   try {
-    LOG_TOKENS.debug("Running `tokens.dev` command");
+    LOG.debug("Running `tokens.dev` command");
 
     // TODO: Create a central function to reconcile options from defaultOptions
 
@@ -54,6 +54,6 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
       isLocal: false
     });
   } catch (error) {
-    throw LOG_TOKENS.fatal(new Error(error));
+    throw LOG.fatal(new Error(error));
   }
 };

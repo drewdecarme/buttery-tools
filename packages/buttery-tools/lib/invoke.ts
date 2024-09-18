@@ -1,5 +1,5 @@
 import path from "node:path";
-import { findDirectoryUpwards } from "@buttery/utils/node";
+import { findDirectoryUpwards } from "../utils/node";
 
 const butteryPath = findDirectoryUpwards("node_modules", "@buttery", {
   startingDirectory: import.meta.dirname

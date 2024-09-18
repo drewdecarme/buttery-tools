@@ -1,7 +1,7 @@
 import { appendFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { ensureFile } from "fs-extra";
-import { LOG } from "../_utils/util.logger";
+import { LOG } from "../_logger/util.ts.logger";
 
 /**
  * Adds an entry to the .gitignore file in the .buttery directory if

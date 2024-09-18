@@ -1,26 +1,25 @@
 // import { constants, access, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { createEsbuildOptions } from "@buttery/utils/esbuild";
-import { exhaustiveMatchGuard, kebabToCamel } from "@buttery/utils/ts";
 import type { Plugin } from "esbuild";
 import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
+
 import type { CommandOptionType } from "../../../lib";
+import { createEsbuildOptions } from "../../../utils/esbuild";
+import { dynamicImport } from "../../../utils/node/util.node.dynamic-import";
+import { exhaustiveMatchGuard, kebabToCamel } from "../../../utils/ts";
 import type { ResolvedButteryConfig } from "../_buttery-config";
-import { dynamicImport } from "../_utils/util.dynamic-import";
-import { LOG } from "../_utils/util.logger";
+import { LOG } from "../_logger/util.ts.logger";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import {
   // templateCommandParent,
   templateIndex
 } from "./build-commands.templates";
-import {
-  type ButteryCLIDirectories,
-  type CommandFile,
-  type CommandGraph,
-  type CommandGraphProperties,
-  getButteryCommandsDirectories
+import type {
+  CommandFile,
+  CommandGraph,
+  CommandGraphProperties
 } from "./build-commands.utils";
 
 export type EntryTemplateData = {
@@ -35,7 +34,7 @@ export type EntryTemplateData = {
  */
 export class ESBuildPluginCommands {
   private config: ResolvedButteryConfig<"commands">;
-  private dirs: ButteryCLIDirectories;
+  // private dirs: ButteryCLIDirectories;
 
   private runNumber: number;
   private commandGraph: CommandGraph;
@@ -43,7 +42,7 @@ export class ESBuildPluginCommands {
 
   constructor(config: ResolvedButteryConfig<"commands">) {
     this.config = config;
-    this.dirs = getButteryCommandsDirectories(config);
+    // this.dirs = getButteryCommandsDirectories(config);
     this.runNumber = 0;
     this.commandGraph = {};
     this.programString = "";

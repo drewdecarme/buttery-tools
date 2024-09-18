@@ -1,6 +1,5 @@
 import { readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { LOG } from "../utils";
 
 /**
  * Reads a directory that contains the svg files, loops through all
@@ -11,12 +10,9 @@ import { LOG } from "../utils";
 async function createIconTypes() {
   try {
     const iconDir = path.resolve(import.meta.dirname, "../svg");
-    LOG.debug(`Fetching icon files from: "${iconDir}"...`);
     const iconFileNames = await readdir(iconDir);
-    LOG.debug(`Fetching icon files from: "${iconDir}"... done.`);
 
     // create a union string from the file names
-    LOG.debug("Creating types from icon file names...");
     const fileContent = iconFileNames.reduce(
       (accum, iconFileName, i, origArr) => {
         const fileName = iconFileName.split(".svg")[0];
@@ -28,16 +24,11 @@ async function createIconTypes() {
       },
       "export type IconNames ="
     );
-    LOG.debug("Creating types from icon file names... done.");
 
     const outFile = path.resolve(import.meta.dirname, "../src/icon.types.ts");
-    LOG.debug(`Writing types to: "${outFile}"...`);
     await writeFile(outFile, fileContent);
-    LOG.debug(`Writing types to: "${outFile}"... done.`);
-    LOG.success("Successfully create icon types.");
   } catch (error) {
     const err = new Error(error as string);
-    throw LOG.fatal(err);
   }
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "@buttery/cli",
   "version": "0.0.1",
-  "description": "A file based CLI designed to making writing a CLI as easy as exporting a few funcitons in a file",
+  "description": "A file based CLI designed to making writing a CLI as easy as exporting a few functions in a file",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
@@ -19,7 +19,7 @@
     "cli:build": "tsx ./scripts/local.commands.build.ts",
     "tokens:build": "tsx ./scripts/local.tokens.build.ts",
     "tokens:dev": "tsx ./scripts/local.tokens.dev.ts",
-    "lib:build": "yarn tsc --project tsconfig.lib.json",
+    "lib:build": "yarn tsc --project tsconfig.library.json",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -51,7 +51,6 @@
     "@babel/core": "7.25.2",
     "@babel/preset-react": "7.24.7",
     "@babel/preset-typescript": "7.24.7",
-    "@buttery/tsconfig": "workspace:^",
     "@chromatic-com/storybook": "2.0.0",
     "@cloudflare/workers-types": "4.20240909.0",
     "@ngneat/falso": "7.2.0",
@@ -71,15 +70,15 @@
     "@types/node": "22.5.4",
     "@types/react": "18.3.5",
     "@types/react-dom": "18.3.0",
-    "esbuild": "0.23.1",
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "esbuild": "^0.23.1",
+    "glob": "^11.0.0",
     "storybook": "8.3.0",
     "tsx": "4.19.0",
-    "typescript": "5.6.2"
+    "typescript": "^5.6.2"
   },
   "dependencies": {
     "@buttery/icons": "workspace:^",
-    "@buttery/logger": "workspace:^",
-    "@buttery/utils": "workspace:^",
     "@inquirer/prompts": "5.5.0",
     "@linaria/core": "6.2.0",
     "@mdx-js/react": "3.0.1",
@@ -98,7 +97,7 @@
     "commander": "12.1.0",
     "cosmiconfig": "9.0.0",
     "express": "4.20.0",
-    "fs-extra": "11.2.0",
+    "fs-extra": "^11.2.0",
     "gray-matter": "4.0.3",
     "handlebars": "4.7.8",
     "install": "0.13.0",

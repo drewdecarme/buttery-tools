@@ -1,7 +1,7 @@
 import type { CommandAction, CommandMeta } from "../../../lib";
+import { LOG } from "../_logger/util.ts.logger";
 import { bootstrapApp } from "../docs/docs.bootstrapApp";
 import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
-import { LOG_DOCS } from "../docs/docs.logger";
 import { buildForProduction } from "./docs.build.buildForProduction";
 
 export const meta: CommandMeta = {
@@ -18,6 +18,6 @@ export const action: CommandAction = async () => {
 
     await buildForProduction(butteryDocsConfig);
   } catch (error) {
-    throw LOG_DOCS.fatal(new Error(error as string));
+    throw LOG.fatal(new Error(error as string));
   }
 };

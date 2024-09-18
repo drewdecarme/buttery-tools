@@ -1,6 +1,6 @@
 import type { CommandAction, CommandMeta, CommandOptions } from "../../../lib";
+import { LOG } from "../_logger/util.ts.logger";
 import { buildButteryTokens } from "../tokens/tokens.buildButteryTokens";
-import { LOG_TOKENS } from "../tokens/tokens.logger";
 
 export const meta: CommandMeta = {
   name: "build",
@@ -27,6 +27,6 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
       isLocal: false
     });
   } catch (error) {
-    throw LOG_TOKENS.fatal(new Error(error as string));
+    throw LOG.fatal(new Error(error as string));
   }
 };

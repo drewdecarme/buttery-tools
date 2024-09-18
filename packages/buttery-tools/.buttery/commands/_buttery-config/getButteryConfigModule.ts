@@ -1,8 +1,11 @@
 import path from "node:path";
 import esbuild from "esbuild";
-import { dynamicImport } from "../_utils/util.dynamic-import";
-import { hashString } from "../_utils/util.hash-string";
-import { LOG } from "../_utils/util.logger";
+import tsconfigJsonLibrary from "../../../tsconfig.library.json" assert {
+  type: "json"
+};
+import { dynamicImport } from "../../../utils/node/util.node.dynamic-import";
+import { hashString } from "../../../utils/ts/util.ts.hash-string";
+import { LOG } from "../_logger/util.ts.logger";
 import type { ButteryConfig } from "./buttery-config.types";
 
 async function importButteryConfigModule(
@@ -43,6 +46,7 @@ export async function getButteryConfigModule(options: {
   try {
     // use the rebuild API since a file watcher will be implemented
     // to re-call this function when things change in the app
+    const tsconfigRaw = JSON.stringify(tsconfigJsonLibrary, null, 2);
     const context = await esbuild.context({
       entryPoints: [options.butteryConfigFilePath],
       bundle: true,
@@ -52,13 +56,7 @@ export async function getButteryConfigModule(options: {
       outfile: builtConfigOutFile,
       packages: "external",
       minify: true,
-      tsconfigRaw: JSON.stringify(
-        {
-          extends: "@buttery/tsconfig/library"
-        },
-        null,
-        2
-      )
+      tsconfigRaw
     });
     LOG.debug("Transpiling the '.buttery/config' file...");
     await context.rebuild();

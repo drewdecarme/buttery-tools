@@ -3,7 +3,7 @@ import type {
   CommandMeta,
   CommandOptions
 } from "../../../lib/types.js";
-import { LOG } from "../_utils/index.js";
+import { LOG } from "../_logger/util.ts.logger.js";
 import { buildCommands } from "./build-commands.js";
 
 export const meta: CommandMeta = {

@@ -1,14 +1,14 @@
 import type { ResolvedButteryConfig } from "../_buttery-config";
+import { LOG } from "../_logger/util.ts.logger";
 import { buildMakeFunctionsFromTemplates } from "./tokens.buildMakeFunctionsFromTemplates";
 import { buildMakeFunctionsOutputDirectory } from "./tokens.buildMakeFunctionsOutputDirectory";
 import { getButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";
-import { LOG_TOKENS } from "./tokens.logger";
 
 export async function buildMakeFunctions(
   { tokens, ...restConfig }: ResolvedButteryConfig<"tokens">,
   options: { isLocal: boolean }
 ) {
-  LOG_TOKENS.debug("Building make functions...");
+  LOG.debug("Building make functions...");
   // convert the tokens to an array
   const tokensConfig = Array.isArray(tokens) ? tokens : [tokens];
 
@@ -19,7 +19,7 @@ export async function buildMakeFunctions(
         isLocal: options.isLocal
       });
 
-      LOG_TOKENS.debug(`Building "${iConfig.tokens.importName ?? "index"}"`);
+      LOG.debug(`Building "${iConfig.tokens.importName ?? "index"}"`);
 
       // Create the make functions output directory
       await buildMakeFunctionsOutputDirectory(dirs, {
@@ -31,5 +31,5 @@ export async function buildMakeFunctions(
     })
   );
 
-  LOG_TOKENS.success("Building make functions... complete.");
+  LOG.success("Building make functions... complete.");
 }

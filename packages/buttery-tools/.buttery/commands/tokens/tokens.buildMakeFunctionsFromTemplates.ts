@@ -1,25 +1,25 @@
 import path from "node:path";
 
+import { build } from "esbuild";
 import {
   EsbuildPluginTypescriptCompiler,
   createEsbuildOptions
-} from "@buttery/utils/esbuild";
-import { build } from "esbuild";
+} from "../../../utils/esbuild";
 
-import { MakeTemplates } from "../../../lib/buttery-tokens/make-templates/MakeTemplates";
-import { MakeTemplateColor } from "../../../lib/buttery-tokens/make-templates/template.makeColor";
-import { MakeTemplateColorStatic } from "../../../lib/buttery-tokens/make-templates/template.makeColorStatic";
-import { MakeTemplateCustom } from "../../../lib/buttery-tokens/make-templates/template.makeCustom";
-import { MakeTemplateFontFamily } from "../../../lib/buttery-tokens/make-templates/template.makeFontFamily";
-import { MakeTemplateFontWeight } from "../../../lib/buttery-tokens/make-templates/template.makeFontWeight";
-import { MakeTemplateRem } from "../../../lib/buttery-tokens/make-templates/template.makeRem";
-import { MakeTemplateReset } from "../../../lib/buttery-tokens/make-templates/template.makeReset";
-import { MakeTemplateResponsive } from "../../../lib/buttery-tokens/make-templates/template.makeResponsive";
+import { MakeTemplates } from "./make-templates/MakeTemplates";
+import { MakeTemplateColor } from "./make-templates/template.makeColor";
+import { MakeTemplateColorStatic } from "./make-templates/template.makeColorStatic";
+import { MakeTemplateCustom } from "./make-templates/template.makeCustom";
+import { MakeTemplateFontFamily } from "./make-templates/template.makeFontFamily";
+import { MakeTemplateFontWeight } from "./make-templates/template.makeFontWeight";
+import { MakeTemplateRem } from "./make-templates/template.makeRem";
+import { MakeTemplateReset } from "./make-templates/template.makeReset";
+import { MakeTemplateResponsive } from "./make-templates/template.makeResponsive";
 
 import type { ButteryTokensConfig } from "./tokens.getButteryTokensConfig";
 import type { ButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";
 
-import { LOG_TOKENS } from "./tokens.logger";
+import { LOG } from "../_logger/util.ts.logger";
 
 /**
  * Provided a config and a collection of directories, this function gathers
@@ -72,12 +72,12 @@ export async function buildMakeFunctionsFromTemplates(
   });
 
   // Generate all of the registered templates
-  LOG_TOKENS.debug("Generating make functions...");
+  LOG.debug("Generating make functions...");
   await Templates.generate();
-  LOG_TOKENS.debug("Generating make functions.. done.");
+  LOG.debug("Generating make functions.. done.");
 
   // Transpile the templates
-  LOG_TOKENS.debug("Transpiling generated files...");
+  LOG.debug("Transpiling generated files...");
   await build(buildOptions);
-  LOG_TOKENS.debug("Transpiling generated files... done.");
+  LOG.debug("Transpiling generated files... done.");
 }

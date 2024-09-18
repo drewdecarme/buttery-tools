@@ -41,7 +41,7 @@ export const getButteryCommandsDirectories = (
 export type CommandGraphProperties = {
   segment_name: string;
   meta: CommandMeta;
-  options?: CommandOptions<"">;
+  options?: CommandOptions;
   args?: CommandArgs;
   action?: CommandAction;
 };

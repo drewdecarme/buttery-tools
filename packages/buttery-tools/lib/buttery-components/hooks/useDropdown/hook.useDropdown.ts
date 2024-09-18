@@ -47,7 +47,7 @@ export const useDropdown = <T extends HTMLElement>(
   );
 
   const openDropdown = useCallback<DropdownRef["handleOpen"]>(
-    (e, pOptions) => {
+    (_e, pOptions) => {
       if (
         !ensurePopover(popoverRef.current) ||
         !ensureTarget(targetRef.current)

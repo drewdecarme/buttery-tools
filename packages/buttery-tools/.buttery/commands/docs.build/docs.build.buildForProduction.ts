@@ -1,15 +1,15 @@
 import path from "node:path";
-import { exhaustiveMatchGuard } from "@buttery/utils/ts";
+import { exhaustiveMatchGuard } from "../../../utils/ts";
 
 import { cp, readdir } from "node:fs/promises";
-import { runCommand } from "../_utils/util.run-command";
+import { runCommand } from "../../../utils/node/util.node.run-command";
+import { LOG } from "../_logger/util.ts.logger";
 import type { ButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectories";
-import { LOG_DOCS } from "../docs/docs.logger";
 
 export const buildForProduction = async (config: ButteryDocsConfig) => {
   const butteryDirs = await getButteryDocsDirectories(config);
-  LOG_DOCS.debug("Building distribution files...");
+  LOG.debug("Building distribution files...");
 
   try {
     switch (config.docs.buildTarget) {
@@ -59,7 +59,7 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
     });
 
     const files = filesAndDirs.filter((dirent) => dirent.isFile());
-    LOG_DOCS.success(`Successfully built documentation app!
+    LOG.success(`Successfully built documentation app!
 
   Location: ${butteryDirs.output.root}
   Total Files: ${files.length}
@@ -67,6 +67,6 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
 ${files.reduce((accum, file) => accum.concat(`    - ${path.relative(butteryDirs.output.root, `${file.parentPath}/${file.name}`)}\n`), "")}      
 `);
   } catch (error) {
-    throw LOG_DOCS.fatal(new Error(error as string));
+    throw LOG.fatal(new Error(error as string));
   }
 };

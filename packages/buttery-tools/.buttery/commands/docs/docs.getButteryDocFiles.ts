@@ -1,10 +1,10 @@
 import { type Dirent, readdirSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import { exhaustiveMatchGuard } from "@buttery/utils/ts";
+import { exhaustiveMatchGuard } from "../../../utils/ts";
+import { LOG } from "../_logger/util.ts.logger";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
-import { LOG_DOCS } from "./docs.logger";
 import type { FileObj } from "./docs.types";
 
 function getRoutePath(filename: string, options?: { staticBaseName?: string }) {
@@ -81,7 +81,7 @@ export async function getButteryDocsFiles(
     withFileTypes: true
   });
 
-  LOG_DOCS.info(`Detected routeStrategy: ${config.docs.routeStrategy}`);
+  LOG.info(`Detected routeStrategy: ${config.docs.routeStrategy}`);
 
   const routeStrategy = config.docs.routeStrategy ?? "section-folders";
   const routePrefix = docsDirectories.lib.apps.generated.app.routePrefix;

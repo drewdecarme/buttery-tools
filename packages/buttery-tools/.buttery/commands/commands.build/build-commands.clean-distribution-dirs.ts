@@ -1,6 +1,6 @@
 import { rm } from "node:fs/promises";
 import path from "node:path";
-import { LOG } from "../_utils";
+import { LOG } from "../_logger/util.ts.logger";
 import type { CommandsBuildFunction } from "./build-commands.utils";
 
 /**
@@ -13,7 +13,7 @@ export const buildCommandsCleanDistributionDirs: CommandsBuildFunction =
       const foldersToDelete = ["./bin"].map((folder) =>
         rm(path.resolve(config.paths.rootDir, folder), {
           recursive: true,
-          force: true,
+          force: true
         })
       );
       await Promise.all(foldersToDelete);

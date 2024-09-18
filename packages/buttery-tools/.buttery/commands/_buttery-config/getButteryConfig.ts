@@ -1,5 +1,5 @@
 import path from "node:path";
-import { LOG } from "../_utils/util.logger.js";
+import { LOG } from "../_logger/util.ts.logger.js";
 import type {
   ButteryConfig,
   ButteryConfigPaths,

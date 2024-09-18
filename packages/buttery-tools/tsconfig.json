@@ -1,26 +1,25 @@
 {
-  "extends": "@buttery/tsconfig/vite/react",
   "compilerOptions": {
-    "noEmit": true,
-    "baseUrl": ".",
-    "strict": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "paths": {
-      "@buttery/tokens/playground/css": [
-        "./lib/buttery-tokens/.buttery-tokens/playground/index.css"
-      ],
-      // configuration ui tokens
-      "@buttery/tokens/playground": [
-        "./lib/buttery-tokens/.buttery-tokens/playground/index"
-      ],
-      "@buttery/tokens/docs/css": [
-        "./lib/buttery-tokens/.buttery-tokens/docs/index.css"
-      ],
-      // configuration ui tokens
-      "@buttery/tokens/docs": [
-        "./lib/buttery-tokens/.buttery-tokens/docs/index"
-      ]
-    }
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   }
 }

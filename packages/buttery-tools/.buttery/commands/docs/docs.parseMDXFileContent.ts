@@ -10,13 +10,16 @@ import type { ButteryDocsGraphTOC } from "./docs.types";
 
 export function parseMDXFileContent(markdownContent: string) {
   const file = unified()
+    // @ts-expect-error There's some weird mismatch between types
     .use(remarkParse)
     .use(remarkMdx)
     .use(remarkRehype)
     .use(rehypeSlug)
+    // @ts-expect-error There's some weird mismatch between types
     .use(rehypeStringify)
     .processSync(markdownContent);
   const tree = unified()
+    // @ts-expect-error There's some weird mismatch between types
     .use(rehypeParse, { fragment: true })
     .parse(file.toString());
 
@@ -51,7 +54,7 @@ export function parseMDXFileContent(markdownContent: string) {
         level,
         title,
         link,
-        children: [],
+        children: []
       };
 
       while (stack.length && stack[stack.length - 1].level >= level) {

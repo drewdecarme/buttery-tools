@@ -2,7 +2,7 @@ import {
   makeColor,
   makeCustom,
   makeFontFamily,
-  makeRem
+  makeRem,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 

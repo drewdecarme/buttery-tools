@@ -1,4 +1,4 @@
-import { type FC, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { Toast } from "./Toast";
 import {
@@ -10,7 +10,7 @@ import {
 } from "./toast.utils";
 
 export function Toaster<
-  ToastComponentProps extends { [key: string]: unknown },
+  ToastComponentProps extends { [key: string]: unknown }
 >({
   ToastComponent,
   id,

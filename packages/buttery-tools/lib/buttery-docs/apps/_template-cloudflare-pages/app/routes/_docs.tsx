@@ -5,12 +5,12 @@ import { LayoutBodyNav } from "../../../../components/layout/LayoutBodyNav";
 import { LayoutBodyTOC } from "../../../../components/layout/LayoutBodyTOC";
 
 import type { HeadersFunction, MetaFunction } from "@remix-run/cloudflare";
-import { getGraphValueThatMatchesPathname } from "../../../../library";
+import { getGraphValueThatMatchesPathname } from "../../../../utils";
 import { graph } from "../data";
 
 export async function loader() {
   return json({
-    graph: graph ?? null
+    graph: graph ?? null,
   });
 }
 
@@ -18,7 +18,7 @@ export const headers: HeadersFunction = () => ({ "Cache-Control": "no-cache" });
 
 export const meta: MetaFunction<typeof loader> = ({
   location: { pathname },
-  data
+  data,
 }) => {
   if (!data?.graph) return [];
   // @ts-expect-error graph and Jsonify graph are the same but typed differently

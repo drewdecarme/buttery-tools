@@ -13,6 +13,6 @@ export type ButteryTokensConfig = {
 export const getButteryTokensConfig = (options?: GetButteryConfigOptions) =>
   getButteryConfig("tokens", {
     ...options,
-    startingDirectory: options?.isLocal ? import.meta.dirname : process.cwd(),
+    startingDirectory: process.cwd(),
     defaultConfig: "tokens"
   });

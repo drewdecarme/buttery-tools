@@ -1,8 +1,8 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { ResolvedButteryConfig } from "../_buttery-config";
+import { LOG } from "../_logger/util.ts.logger";
 import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
-import { LOG_DOCS } from "./docs.logger";
 import type { ButteryDocsGraph } from "./docs.types";
 
 export async function bootstrapAppDataFile(params: {
@@ -12,7 +12,7 @@ export async function bootstrapAppDataFile(params: {
   const dirs = await getButteryDocsDirectories(params.config);
 
   try {
-    LOG_DOCS.debug("Creating data file...");
+    LOG.debug("Creating data file...");
     const dataFilePath = path.resolve(
       dirs.lib.apps.generated.root,
       "./app/data.ts"
@@ -26,6 +26,6 @@ export const graph: ButteryDocsGraph = ${JSON.stringify(params.graph, null, 2)};
 export const header: ResolvedButteryConfig<"docs">["docs"]["header"] = ${JSON.stringify(params.config.docs.header)};
 `
     );
-    LOG_DOCS.debug("Creating data file... done");
+    LOG.debug("Creating data file... done");
   } catch (error) {}
 }

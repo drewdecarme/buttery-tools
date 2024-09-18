@@ -1,8 +1,8 @@
 import chokidar from "chokidar";
+import { LOG } from "../_logger/util.ts.logger";
 import { buildMakeFunctions } from "./tokens.buildMakeFunctions";
 import { getButteryTokensConfig } from "./tokens.getButteryTokensConfig";
 import { launchPlayground } from "./tokens.launchPlayground";
-import { LOG_TOKENS } from "./tokens.logger";
 
 export type BuildButteryTokensOptions = {
   debug: boolean;
@@ -25,13 +25,13 @@ export async function buildButteryTokens(options: BuildButteryTokensParams) {
   // listen to any changes to the `.buttery/config`
   if (!options.watch) return;
   const watcher = chokidar.watch(config.paths.config);
-  LOG_TOKENS.watch(config.paths.config.concat(" for changes..."));
+  LOG.watch(config.paths.config.concat(" for changes..."));
 
   watcher.on("change", async (file) => {
-    LOG_TOKENS.watch(`"${file}" changed.`);
-    LOG_TOKENS.watch("Rebuilding tokens...");
+    LOG.watch(`"${file}" changed.`);
+    LOG.watch("Rebuilding tokens...");
     await buildMakeFunctions(config, { isLocal: options.isLocal });
-    LOG_TOKENS.watch("Rebuilding tokens... done.");
+    LOG.watch("Rebuilding tokens... done.");
   });
 
   // watch and launch the interactive UI

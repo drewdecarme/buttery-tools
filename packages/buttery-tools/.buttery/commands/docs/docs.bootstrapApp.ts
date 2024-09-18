@@ -1,12 +1,12 @@
 import { copyFile, cp, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { exhaustiveMatchGuard } from "@buttery/utils/ts";
+import { exhaustiveMatchGuard } from "../../../utils/ts";
+import { LOG } from "../_logger/util.ts.logger";
 import { bootstrapAppDataFile } from "./docs.bootstrapAppDataFile";
 import { getButteryDocsFiles } from "./docs.getButteryDocFiles";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
 import { getButteryDocsGraph } from "./docs.getButteryDocsGraph";
-import { LOG_DOCS } from "./docs.logger";
 import { orderButteryDocFiles } from "./docs.orderButteryDocFiles";
 
 /**
@@ -24,12 +24,12 @@ export const bootstrapApp = async (config: ButteryDocsConfig) => {
     const butteryDirs = await getButteryDocsDirectories(config);
 
     // delete the existing app
-    LOG_DOCS.debug("Removing existing routes...");
+    LOG.debug("Removing existing routes...");
     await rm(butteryDirs.lib.apps.generated.app.routes, {
       recursive: true,
       force: true
     });
-    LOG_DOCS.debug("Removing existing routes... done.");
+    LOG.debug("Removing existing routes... done.");
 
     // Create the hashed build directory by copying the template to that directory recursively
     await cp(
@@ -51,7 +51,7 @@ export const bootstrapApp = async (config: ButteryDocsConfig) => {
       return copyFile(file.fsPath, routeFilePath);
     }, []);
     await Promise.all(newRouteFiles);
-    LOG_DOCS.debug("Populating routes directory with docs... done.");
+    LOG.debug("Populating routes directory with docs... done.");
 
     // switch (config.docs.build.target) {
     //   case "cloudflare-pages": {
@@ -59,7 +59,7 @@ export const bootstrapApp = async (config: ButteryDocsConfig) => {
     //     await rm(butteryDirs.output.root, { recursive: true, force: true });
 
     //     // copy over new routes
-    //     LOG_DOCS.debug("Populating routes directory with docs...");
+    //     LOG.debug("Populating routes directory with docs...");
 
     //     const filesAndDirs = await readdir(butteryDirs.userDocs.root, {
     //       withFileTypes: true
@@ -95,7 +95,7 @@ export const bootstrapApp = async (config: ButteryDocsConfig) => {
     //       return accum.concat(copyFile(filePathSource, filePathDest));
     //     }, []);
     //     await Promise.all(docsWithRemixFileConventions);
-    //     LOG_DOCS.debug("Populating routes directory with docs... done.");
+    //     LOG.debug("Populating routes directory with docs... done.");
 
     // write the data file that creates the order, table of contents,
     // and headers

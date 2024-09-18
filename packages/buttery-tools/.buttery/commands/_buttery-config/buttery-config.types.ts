@@ -1,5 +1,6 @@
 import type { ButteryConfigCommands } from "./buttery-config.types.commands";
 import type { ButteryConfigDocs } from "./buttery-config.types.docs";
+import type { ButteryConfigIcons } from "./buttery-config.types.icons";
 import type { ButteryConfigTokens } from "./buttery-config.types.tokens";
 
 export type ButteryConfigPaths = {
@@ -13,6 +14,7 @@ export type ButteryConfig = {
   commands?: ButteryConfigCommands;
   tokens?: ButteryConfigTokens | ButteryConfigTokens[];
   docs?: ButteryConfigDocs;
+  icons?: ButteryConfigIcons;
 };
 
 export type GetButteryConfigOptions = {

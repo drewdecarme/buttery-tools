@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { exhaustiveMatchGuard } from "@buttery/utils/ts";
 import { checkbox, input } from "@inquirer/prompts";
+import { exhaustiveMatchGuard } from "../../../utils/ts/index.js";
 import { butteryConfigDefaults } from "./buttery-config.defaults.js";
 import type { ButteryConfig } from "./buttery-config.types.js";
 
@@ -60,6 +60,7 @@ export async function createDefaultButteryConfigAndDirs(
 
         switch (configKey) {
           case "tokens":
+          case "icons":
             return accum;
 
           case "commands": {

@@ -1,5 +1,5 @@
 import path from "node:path";
-import { findDirectoryUpwards } from "@buttery/utils/node";
+import { findDirectoryUpwards } from "../../../utils/node";
 import type { ButteryTokensConfig } from "./tokens.getButteryTokensConfig";
 
 export type ButteryTokensDirectories = Awaited<

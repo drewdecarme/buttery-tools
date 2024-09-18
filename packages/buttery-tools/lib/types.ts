@@ -51,7 +51,7 @@ type InferOptionType<T extends boolean | number | string> = T extends boolean
       : never;
 
 export type CommandOptions<
-  T extends Record<string, boolean | number | string>
+  T extends Record<string, boolean | number | string> = Record<string, string>
 > = {
   [K in keyof T]: InferOptionType<T[K]>;
 };
