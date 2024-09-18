@@ -1,4 +1,4 @@
-import type { ButteryConfigTokens } from "../.buttery/commands/_buttery-config/";
+import type { ButteryConfigTokens } from "./commands/_buttery-config";
 
 export const ConfigTokensDocs: ButteryConfigTokens = {
   importName: "docs",
@@ -29,8 +29,8 @@ export const ConfigTokensDocs: ButteryConfigTokens = {
     desktop: 1280
   },
   color: {
-    application: {
-      mode: "presets",
+    brand: {
+      mode: "category",
       tone: "jewel",
       saturation: 83,
       brightness: 76,
@@ -42,17 +42,16 @@ export const ConfigTokensDocs: ButteryConfigTokens = {
       },
       variants: {
         mode: "auto",
-        total: 10,
+        numOfVariants: 10,
         scaleMin: 2,
         scaleMax: 2
       }
     },
-    neutral: {
+    shade: {
       base: "#030305",
       variants: {
         mode: "auto",
-        total: 10,
-        scaleMin: 5
+        numOfVariants: 10
       }
     },
     static: {

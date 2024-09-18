@@ -1,4 +1,4 @@
-import chalk, { type ChalkInstance } from "chalk";
+import chalk, { type Chalk } from "chalk";
 
 type ButteryLoggerOptionLevel = "info" | "timer" | "debug" | "warn" | "error";
 type ButteryLoggerOptionFormat = "json" | "basic";
@@ -27,7 +27,7 @@ type ButteryLoggerOptions = {
 export class ButteryLogger {
   private logLevel: ButteryLoggerOptionLevel;
   private logLevelValue: { [key in ButteryLoggerOptionLevel]: number };
-  private logLevelColor: { [key in ButteryLoggerOptionLevel]: ChalkInstance };
+  private logLevelColor: { [key in ButteryLoggerOptionLevel]: Chalk };
   //   private format: ButteryLoggerOptionFormat;
   private prefix: string;
   private logLevelStringMaxLength: number;

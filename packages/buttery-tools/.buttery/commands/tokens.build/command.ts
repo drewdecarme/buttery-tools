@@ -1,4 +1,8 @@
-import type { CommandAction, CommandMeta, CommandOptions } from "../../../lib";
+import type {
+  CommandAction,
+  CommandMeta,
+  CommandOptions
+} from "../../../lib/buttery-commands";
 import { LOG } from "../_logger/util.ts.logger";
 import { buildButteryTokens } from "../tokens/tokens.buildButteryTokens";
 

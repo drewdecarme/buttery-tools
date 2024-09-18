@@ -1,4 +1,4 @@
-import type { ButteryConfigTokens } from "@buttery/core";
+import type { ButteryConfigTokens } from "./commands/_buttery-config";
 
 export const ConfigTokensPlayground: ButteryConfigTokens = {
   importName: "playground",
@@ -11,21 +11,21 @@ export const ConfigTokensPlayground: ButteryConfigTokens = {
     family: {
       heading:
         'Poppins, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-      body: 'Poppins, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+      body: 'Poppins, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
     },
     weight: {
       bold: 700,
       "semi-bold": 600,
       medium: 500,
       regular: 400,
-      light: 300,
+      light: 300
     },
-    typography: {},
+    typography: {}
   },
   breakpoints: {
     phone: 375,
     tablet: 768,
-    desktop: 1280,
+    desktop: 1280
   },
   color: {
     mode: "presets",
@@ -38,29 +38,29 @@ export const ConfigTokensPlayground: ButteryConfigTokens = {
         secondary: 170,
         warning: 60,
         danger: 359,
-        success: 131,
+        success: 131
       },
       variants: {
         mode: "auto",
         total: 10,
         scaleMin: 2,
-        scaleMax: 2,
-      },
+        scaleMax: 2
+      }
     },
     neutral: {
       base: "#030305",
       variants: {
         mode: "auto",
         total: 10,
-        scaleMin: 5,
-      },
+        scaleMin: 5
+      }
     },
     static: {
       background: "#fff",
-      surface: "#fff",
-    },
+      surface: "#fff"
+    }
   },
   custom: {
-    "layout-header": 60,
-  },
+    "layout-header": 60
+  }
 };

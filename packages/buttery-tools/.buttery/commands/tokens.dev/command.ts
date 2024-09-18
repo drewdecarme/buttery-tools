@@ -1,5 +1,8 @@
-import type { CommandAction, CommandOptions } from "../../../dist";
-import type { CommandMeta } from "../../../lib/types";
+import type {
+  CommandAction,
+  CommandMeta,
+  CommandOptions
+} from "../../../lib/buttery-commands";
 import { LOG } from "../_logger/util.ts.logger";
 import { buildButteryTokens } from "../tokens/tokens.buildButteryTokens";
 
@@ -54,6 +57,6 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
       isLocal: false
     });
   } catch (error) {
-    throw LOG.fatal(new Error(error));
+    throw LOG.fatal(new Error(error as string));
   }
 };

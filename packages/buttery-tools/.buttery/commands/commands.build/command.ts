@@ -2,7 +2,7 @@ import type {
   CommandAction,
   CommandMeta,
   CommandOptions
-} from "../../../lib/types.js";
+} from "../../../lib/buttery-commands";
 import { LOG } from "../_logger/util.ts.logger.js";
 import { buildCommands } from "./build-commands.js";
 

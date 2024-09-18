@@ -39,23 +39,25 @@ export const butteryConfigDefaultTokens: ButteryConfigTokens = {
     }
   },
   color: {
-    mode: "presets",
-    tone: "fluorescent",
-    brightness: 95,
-    saturation: 84,
-    application: {
+    brand: {
+      mode: "category",
+      tone: "fluorescent",
+      brightness: 95,
+      saturation: 84,
       hues: {
         primary: 32,
         secondary: 84
       },
       variants: {
-        mode: "auto"
+        mode: "auto",
+        numOfVariants: 10
       }
     },
-    neutral: {
+    shade: {
       base: "#000000",
       variants: {
-        mode: "auto"
+        mode: "auto",
+        numOfVariants: 10
       }
     }
   },

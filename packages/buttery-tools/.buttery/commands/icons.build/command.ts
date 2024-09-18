@@ -1,7 +1,13 @@
 import { readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { CommandMeta } from "../../../lib/types";
+import type { CommandAction, CommandMeta } from "../../../lib/buttery-commands";
 import { LOG } from "../_logger/util.ts.logger";
+
+export const meta: CommandMeta = {
+  name: "icons",
+  // TODO: Fix this description
+  description: "Create buttery icons"
+};
 
 /**
  * Reads a directory that contains the svg files, loops through all
@@ -9,7 +15,7 @@ import { LOG } from "../_logger/util.ts.logger";
  * to a file that is then subsequently imported into the icon component.
  * This provides intellisense and TS auto completion when importing an icon
  */
-async function createIconTypes() {
+export const action: CommandAction = async () => {
   try {
     const iconDir = path.resolve(import.meta.dirname, "../svg");
     LOG.debug(`Fetching icon files from: "${iconDir}"...`);
@@ -40,10 +46,4 @@ async function createIconTypes() {
     const err = new Error(error as string);
     throw LOG.fatal(err);
   }
-}
-
-export const meta: CommandMeta = {
-  name: "icons",
-  // TODO: Fix this description
-  description: "Create buttery icons"
 };

@@ -1,7 +1,11 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { CommandAction, CommandMeta, CommandOptions } from "@buttery/cli";
 import { confirm, input, select } from "@inquirer/prompts";
+import type {
+  CommandAction,
+  CommandMeta,
+  CommandOptions
+} from "../../../lib/buttery-commands";
 import { LOG } from "../_logger/util.ts.logger";
 
 export const meta: CommandMeta = {

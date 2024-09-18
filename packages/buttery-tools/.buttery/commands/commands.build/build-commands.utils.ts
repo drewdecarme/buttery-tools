@@ -1,10 +1,11 @@
 import path from "node:path";
+
 import type {
   CommandAction,
   CommandArgs,
   CommandMeta,
   CommandOptions
-} from "../../../lib";
+} from "../../../lib/buttery-commands";
 import type { ResolvedButteryConfig } from "../_buttery-config";
 
 export type CommandsBuildOptions = {

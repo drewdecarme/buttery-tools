@@ -1,6 +1,5 @@
-import { copyFile, cp, readdir, rm, writeFile } from "node:fs/promises";
+import { copyFile, cp, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { exhaustiveMatchGuard } from "../../../utils/ts";
 import { LOG } from "../_logger/util.ts.logger";
 import { bootstrapAppDataFile } from "./docs.bootstrapAppDataFile";
 import { getButteryDocsFiles } from "./docs.getButteryDocFiles";

@@ -5,7 +5,7 @@ import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
 
-import type { CommandOptionType } from "../../../lib";
+import type { CommandOptionType } from "../../../lib/buttery-commands";
 import { createEsbuildOptions } from "../../../utils/esbuild";
 import { dynamicImport } from "../../../utils/node/util.node.dynamic-import";
 import { exhaustiveMatchGuard, kebabToCamel } from "../../../utils/ts";

@@ -1,4 +1,4 @@
-import type { CommandAction, CommandMeta } from "../../../lib";
+import type { CommandAction, CommandMeta } from "../../../lib/buttery-commands";
 import { LOG } from "../_logger/util.ts.logger";
 import { bootstrapApp } from "../docs/docs.bootstrapApp";
 import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";

@@ -1,5 +1,5 @@
 import { select } from "@inquirer/prompts";
-import type { CommandAction, CommandMeta } from "../../../lib";
+import type { CommandAction, CommandMeta } from "../../../lib/buttery-commands";
 import { exhaustiveMatchGuard } from "../../../utils/ts";
 import { LOG } from "../_logger/util.ts.logger";
 import { formatRouteOrder } from "./docs.format.formatRouteOrder";

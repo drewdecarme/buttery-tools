@@ -1,7 +1,7 @@
 import path from "node:path";
 import { input, select } from "@inquirer/prompts";
 
-import type { CommandAction, CommandMeta } from "../../../lib";
+import type { CommandAction, CommandMeta } from "../../../lib/buttery-commands";
 import { getButteryConfig } from "../_buttery-config";
 import { LOG } from "../_logger/util.ts.logger";
 

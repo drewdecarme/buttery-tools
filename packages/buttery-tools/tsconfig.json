@@ -1,4 +1,10 @@
 {
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "./.buttery/**/*.ts",
+    "./.buttery/**/*.tsx"
+  ],
   "compilerOptions": {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
