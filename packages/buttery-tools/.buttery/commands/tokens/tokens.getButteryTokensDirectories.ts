@@ -18,8 +18,15 @@ async function getTokensOutputDir(config: ButteryTokensConfig) {
   // search up the directory structure until
   // we find the `node_modules` and then search down that until we find the @buttery directory
   // we'll stick the build output in there.
-  const nodeModules = findDirectoryUpwards("node_modules");
-  if (!nodeModules) {
+  const startingDirectory = path.resolve(config.paths.rootDir, "../");
+  LOG.debug(
+    `Starting to search for node_modules at directory: ${startingDirectory}`
+  );
+
+  const node_modules_path = findDirectoryUpwards("node_modules", undefined, {
+    startingDirectory
+  });
+  if (!node_modules_path) {
     throw LOG.fatal(
       new Error(
         "Unable to locate `node_modules` in your directory structure. This should not have happened. Please raise a Github issue."
@@ -27,12 +34,14 @@ async function getTokensOutputDir(config: ButteryTokensConfig) {
     );
   }
 
+  LOG.debug(`Resolved "node_modules" directory: "${node_modules_path}"`);
+
   // resolve the @buttery/tokens directory
   const namespace = config.tokens.namespace
     ? "/".concat(config.tokens.namespace)
     : "";
   const nodeModulesButteryDir = path.resolve(
-    nodeModules,
+    node_modules_path,
     "./@buttery/tokens".concat(namespace)
   );
   await ensureDir(nodeModulesButteryDir);

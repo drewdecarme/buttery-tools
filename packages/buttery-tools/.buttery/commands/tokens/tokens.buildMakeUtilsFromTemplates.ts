@@ -61,14 +61,14 @@ export async function buildMakeUtilsFromTemplates(
   });
   const buildOptions = createEsbuildOptions({
     entryPoints: [Templates.entryFile],
-    outfile: path.resolve(dirs.output.path, "./index.js")
-    // plugins: [
-    //   // transpile and create files
-    //   tsPlugin.getPlugin({
-    //     filePathToTranspile: Templates.entryFile,
-    //     extraArgs: [`--outDir ${dirs.output.path}`]
-    //   })
-    // ]
+    outfile: path.resolve(dirs.output.path, "./index.js"),
+    plugins: [
+      // transpile and create files
+      tsPlugin.getPlugin({
+        filePathToTranspile: Templates.entryFile,
+        extraArgs: [`--outDir ${dirs.output.path} --noEmit false`]
+      })
+    ]
   });
 
   // Generate all of the registered templates
