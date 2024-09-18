@@ -20,6 +20,5 @@
     "declarationMap": true,
     "allowImportingTsExtensions": false
   },
-  "include": ["src", "commands", "lib"],
-  "exclude": ["butter.config.ts"]
+  "include": ["src", "commands", "lib"]
 }

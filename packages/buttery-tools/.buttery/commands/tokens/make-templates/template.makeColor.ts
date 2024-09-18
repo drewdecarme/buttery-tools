@@ -1,9 +1,14 @@
 import { match } from "ts-pattern";
-import { hexToHsb, hsbToHex, hsbToHsl } from "../utils/util.color-conversions";
+
+import {
+  hexToHsb,
+  hsbToHex,
+  hsbToHsl
+} from "../color-utils/util.color-conversions";
 import {
   createColorTokens,
   createColorTokensVariants
-} from "../utils/util.create-color-variants";
+} from "../color-utils/util.create-color-variants";
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 
 const template: CompileFunction = ({

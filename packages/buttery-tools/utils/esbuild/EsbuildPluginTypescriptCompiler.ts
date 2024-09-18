@@ -48,11 +48,7 @@ export class EsbuildPluginTypescriptCompiler {
           }
 
           try {
-            execSync(
-              `tsc ${
-                options?.filePathToTranspile ?? ""
-              } --project ${tsconfigPath} `
-            );
+            execSync(`tsc --project ${tsconfigPath} `);
           } catch (error) {
             console.log(error);
           }

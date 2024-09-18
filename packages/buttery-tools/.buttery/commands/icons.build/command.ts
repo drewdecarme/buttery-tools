@@ -1,5 +1,6 @@
 import { readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import type { CommandMeta } from "../../../lib/types";
 import { LOG } from "../_logger/util.ts.logger";
 
 /**
@@ -41,4 +42,8 @@ async function createIconTypes() {
   }
 }
 
-createIconTypes();
+export const meta: CommandMeta = {
+  name: "icons",
+  // TODO: Fix this description
+  description: "Create buttery icons"
+};

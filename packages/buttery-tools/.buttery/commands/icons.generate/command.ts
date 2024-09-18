@@ -40,5 +40,3 @@ async function createIconTypes() {
     throw LOG.fatal(err);
   }
 }
-
-createIconTypes();

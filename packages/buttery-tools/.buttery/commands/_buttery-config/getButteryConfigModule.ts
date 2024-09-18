@@ -1,8 +1,6 @@
 import path from "node:path";
 import esbuild from "esbuild";
-import tsconfigJsonLibrary from "../../../tsconfig.library.json" assert {
-  type: "json"
-};
+import tsconfigJsonLibrary from "../../../tsconfig.library.json";
 import { dynamicImport } from "../../../utils/node/util.node.dynamic-import";
 import { hashString } from "../../../utils/ts/util.ts.hash-string";
 import { LOG } from "../_logger/util.ts.logger";
@@ -51,7 +49,7 @@ export async function getButteryConfigModule(options: {
       entryPoints: [options.butteryConfigFilePath],
       bundle: true,
       platform: "node",
-      target: ["node22.1.0"],
+      target: ["esnext"],
       format: "esm",
       outfile: builtConfigOutFile,
       packages: "external",

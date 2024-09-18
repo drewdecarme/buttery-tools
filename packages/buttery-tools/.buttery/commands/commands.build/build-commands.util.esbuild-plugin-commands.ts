@@ -171,9 +171,14 @@ export class ESBuildPluginCommands {
         `const ${cmdVariableName} = ${parentCmd}.command("${cmdName}")`
       );
 
-      const props = properties as CommandGraphProperties;
+      const props = properties as Partial<CommandGraphProperties>;
 
       // meta
+      if (!props.meta) {
+        throw new Error(
+          `No "meta" export from command "${cmdName}". Please ensure you export a "meta" constant from the file.`
+        );
+      }
       this.appendToProgramString(`.description("${props.meta.description}")`);
 
       // args
