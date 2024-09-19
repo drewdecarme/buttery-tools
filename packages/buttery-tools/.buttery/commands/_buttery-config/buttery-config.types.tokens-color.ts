@@ -128,7 +128,7 @@ export type ButteryTokensColorShadeVariants =
   | ButteryTokensColorShadeVariantAuto
   | ButteryTokensColorShadeVariantManual;
 export type ButteryTokensColorShade = {
-  base: HEX;
+  values: { [shadeName: string]: HEX };
   variants: ButteryTokensColorShadeVariants;
 };
 

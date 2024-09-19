@@ -46,7 +46,9 @@ export const ConfigTokensPlayground: ButteryConfigTokens = {
       }
     },
     shade: {
-      base: "#030305",
+      values: {
+        neutral: "#030305"
+      },
       variants: {
         mode: "auto",
         numOfVariants: 10

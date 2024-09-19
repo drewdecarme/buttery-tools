@@ -1,5 +1,6 @@
 import {
-  makeColor,
+  makeColorBrand,
+  makeColorShade,
   makeCustom,
   makeFontWeight,
   makeRem,
@@ -8,16 +9,15 @@ import {
 import { css } from "@linaria/core";
 import { NavLink, useLocation } from "@remix-run/react";
 import type { FC } from "react";
+import type { ButteryDocsGraph } from "../../../../.buttery/commands/docs/docs.types";
 import { LayoutBodyNavItem } from "./LayoutBodyNavItem";
 import { LayoutTextOverline } from "./LayoutTextOverline";
-
-import type { ButteryDocsGraph } from ".buttery/commands/docs/docs.types";
 
 const navStyles = css`
   grid-area: layout-sidebar;
   align-self: start;
   border-right: ${makeRem(1)} solid
-    ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
+    ${makeColorShade("neutral", { variant: "50", opacity: 0.5 })};
   max-height: ${`calc(100% - ${makeCustom("layout-header-height")})`};
   overflow-y: auto;
   position: sticky;
@@ -39,7 +39,7 @@ const sectionStyles = css`
   & + & {
     padding-top: ${makeRem(16)};
     border-top: ${makeRem(1)} solid
-      ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
+      ${makeColorShade("neutral", { variant: "50", opacity: 0.5 })};
   }
 `;
 
@@ -50,7 +50,7 @@ const anchorOverlineCSS = css`
   &:hover {
     & > * {
       font-weight: ${makeFontWeight("bold")};
-      color: ${makeColor("primary")};
+      color: ${makeColorBrand("primary")};
     }
   }
 `;

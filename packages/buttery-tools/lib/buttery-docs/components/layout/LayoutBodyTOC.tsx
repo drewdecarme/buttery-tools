@@ -1,10 +1,11 @@
 import {
-  makeColor,
+  makeColorBrand,
+  makeColorShade,
   makeColorStatic,
   makeCustom,
   makeFontWeight,
   makeRem,
-  makeReset
+  makeReset,
 } from "@buttery/tokens/docs";
 
 import { css } from "@linaria/core";
@@ -12,9 +13,9 @@ import { useLocation } from "@remix-run/react";
 import { type FC, type MouseEventHandler, useCallback } from "react";
 import type {
   ButteryDocsGraph,
-  ButteryDocsGraphTOC
+  ButteryDocsGraphTOC,
 } from "../../../../.buttery/commands/docs/docs.types";
-import { getGraphValueThatMatchesPathname } from "../../library";
+import { getGraphValueThatMatchesPathname } from "../../utils";
 import { LayoutTextOverline } from "./LayoutTextOverline";
 import { useDetermineActiveSection } from "./layout.useDetermineActiveSection";
 
@@ -36,7 +37,7 @@ const layoutBodyStyles = css`
       bottom: ${makeRem(32)};
       width: ${makeRem(1)};
       border-left: ${makeRem(1)} solid
-        ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
+        ${makeColorShade("neutral", { variant: "50", opacity: 0.5 })};
     }
   }
 `;
@@ -54,19 +55,19 @@ const ulStyles = css`
       display: flex;
       align-items: center;
       height: ${makeRem(32)};
-      color: ${makeColor("neutral")};
+      color: ${makeColorShade("neutral")};
       transition: all 0.15s ease-in-out;
       font-size: ${makeRem(14)};
 
       &:not(.active) {
         &:hover {
-          color: ${makeColor("secondary")};
+          color: ${makeColorBrand("secondary")};
           text-decoration: underline;
         }
       }
 
       &.active {
-        color: ${makeColor("secondary")};
+        color: ${makeColorBrand("secondary")};
         font-weight: ${makeFontWeight("semi-bold")};
       }
     }
@@ -78,7 +79,7 @@ const overlineStyles = css`
 `;
 
 export function ContentsNode({
-  tableOfContents
+  tableOfContents,
 }: {
   tableOfContents: ButteryDocsGraphTOC[];
 }) {
@@ -96,7 +97,7 @@ export function ContentsNode({
 
     window.scrollTo({
       top: offset,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   }, []);
 

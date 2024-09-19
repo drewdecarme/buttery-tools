@@ -36,5 +36,5 @@ export async function buildButteryTokens(options: BuildButteryTokensParams) {
 
   // watch and launch the interactive UI
   if (!options.interactive) return;
-  await launchPlayground(config, options);
+  await launchPlayground(config);
 }

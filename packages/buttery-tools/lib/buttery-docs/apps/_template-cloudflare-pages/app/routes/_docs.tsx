@@ -31,7 +31,10 @@ export default function DocsLayout() {
 
   return (
     <LayoutBody>
-      <LayoutBodyNav graph={loaderData?.graph ?? {}} />
+      <LayoutBodyNav
+        // @ts-expect-error mismatch
+        graph={loaderData?.graph ?? {}}
+      />
       <LayoutBodyMain>
         <Outlet />
       </LayoutBodyMain>

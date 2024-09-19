@@ -1,7 +1,6 @@
 import {
-  makeColor,
+  makeColorBrand,
   makeCustom,
-  makeFontWeight,
   makeRem,
   makeReset,
 } from "@buttery/tokens/docs";
@@ -36,19 +35,19 @@ const containerStyles = css`
         transform: translateY(0);
       }
       &.primary {
-        background-color: ${makeColor("primary", {
+        background-color: ${makeColorBrand("primary", {
           variant: "50",
           opacity: 0.1,
         })};
-        color: ${makeColor("primary", { variant: "900" })};
+        color: ${makeColorBrand("primary", { variant: "900" })};
       }
       &.secondary {
-        background-color: ${makeColor("secondary", {
+        background-color: ${makeColorBrand("secondary", {
           variant: "50",
           opacity: 0.1,
         })};
         padding: 0 1rem;
-        color: ${makeColor("secondary", { variant: "900" })};
+        color: ${makeColorBrand("secondary", { variant: "900" })};
       }
 
       &.entering {
@@ -118,13 +117,13 @@ const cardStyles = css`
   }
 `;
 
-const overlineStyles = css`
-  font-size: ${makeRem(16)};
-  text-transform: uppercase;
-  font-weight: ${makeFontWeight("bold")};
-  margin: 0 auto;
-  text-align: center;
-`;
+// const overlineStyles = css`
+//   font-size: ${makeRem(16)};
+//   text-transform: uppercase;
+//   font-weight: ${makeFontWeight("bold")};
+//   margin: 0 auto;
+//   text-align: center;
+// `;
 
 const cardData: {
   title: string;

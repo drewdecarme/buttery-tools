@@ -10,7 +10,7 @@ import {
 } from "../color-utils/util.color-conversions";
 import {
   type ColorModels,
-  createColorBrandModelVariants,
+  createColorModelVariants,
   createColorTokensFromColorModels
 } from "../color-utils/util.create-color-variants";
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
@@ -42,9 +42,9 @@ const template: CompileFunction = ({
   });
   const hueVariantUnion = methods.createTypeUnion(hueVariants);
 
-  return `export type Color = ${hueUnion};
-export type ColorVariant = ${hueVariantUnion};
-export type MakeColorBrand = (tokenName: Color, options?: { variant?: ColorVariant; opacity?: number }) => string;
+  return `export type ColorBrand = ${hueUnion};
+export type ColorBrandVariant = ${hueVariantUnion};
+export type MakeColorBrand = (tokenName: ColorBrand, options?: { variant?: ColorBrandVariant; opacity?: number }) => string;
 
 /**
  * ## Description
@@ -101,10 +101,10 @@ const css: CompileFunction = ({
             hsl: hsbToHsl(hueValue, brand.saturation, brand.brightness),
             rgb: hexToRgb(hex)
           };
-          const variantColorModels = createColorBrandModelVariants(
-            baseColorModel,
-            brand.variants
-          );
+          const variantColorModels = createColorModelVariants(baseColorModel, {
+            strategy: "min-hex-max",
+            ...brand.variants
+          });
           return accum.concat([baseColorModel, ...variantColorModels]);
         },
         []
@@ -121,10 +121,10 @@ const css: CompileFunction = ({
             hsl: hexToHsl(hexValue),
             rgb: hexToRgb(hexValue)
           };
-          const variantColorModels = createColorBrandModelVariants(
-            baseColorModel,
-            brand.variants
-          );
+          const variantColorModels = createColorModelVariants(baseColorModel, {
+            strategy: "min-hex-max",
+            ...brand.variants
+          });
           return accum.concat([baseColorModel, ...variantColorModels]);
         },
         []

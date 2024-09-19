@@ -1,5 +1,6 @@
 import {
-  makeColor,
+  makeColorBrand,
+  makeColorShade,
   makeColorStatic,
   makeCustom,
   makeRem,
@@ -21,7 +22,7 @@ const layoutBodyMainStyles = css`
   }
 
   code {
-    background: ${makeColor("neutral", { variant: "50", opacity: 0.5 })};
+    background: ${makeColorShade("neutral", { variant: "50", opacity: 0.5 })};
     padding: ${makeRem(4)};
     border-radius: ${makeRem(4)};
   }
@@ -34,14 +35,14 @@ const layoutBodyMainStyles = css`
   }
 
   blockquote {
-    background-color: ${makeColor("secondary", {
+    background-color: ${makeColorBrand("secondary", {
       variant: "500",
       opacity: 0.1,
     })} !important;
     margin: 0;
     padding: ${makeRem(16)};
     border-radius: ${makeRem(8)};
-    border: ${makeRem(2)} solid ${makeColor("secondary")};
+    border: ${makeRem(2)} solid ${makeColorBrand("secondary")};
 
     & > p {
       margin: 0;
@@ -51,7 +52,7 @@ const layoutBodyMainStyles = css`
 
   table {
     --bd-table-border: ${makeRem(1)} solid
-      ${makeColor("neutral", { variant: "50" })};
+      ${makeColorShade("neutral", { variant: "50" })};
     border-spacing: 0;
     border: var(--bd-table-border);
     width: 100%;
@@ -59,11 +60,14 @@ const layoutBodyMainStyles = css`
 
     code {
       font-size: ${makeRem(12)};
-      color: ${makeColor("secondary")};
+      color: ${makeColorBrand("secondary")};
     }
 
     thead {
-      background: ${makeColor("secondary", { variant: "50", opacity: 0.3 })};
+      background: ${makeColorBrand("secondary", {
+        variant: "50",
+        opacity: 0.3,
+      })};
     }
 
     tr {
@@ -117,7 +121,7 @@ const layoutBodyMainStyles = css`
 
     h2 {
       border-bottom: ${makeRem(1)} solid
-        ${makeColor("neutral", { variant: "50" })};
+        ${makeColorShade("neutral", { variant: "50" })};
 
       & + p {
         margin: ${makeRem(16)} 0;
@@ -138,11 +142,11 @@ const layoutBodyMainStyles = css`
       z-index: 9;
 
       a {
-        background-color: ${makeColor("secondary", {
+        background-color: ${makeColorBrand("secondary", {
           variant: "50",
           opacity: 0.2,
         })};
-        color: ${makeColor("secondary", { variant: "700" })} !important;
+        color: ${makeColorBrand("secondary", { variant: "700" })} !important;
         padding: 0 ${makeRem(4)};
         &:hover {
           text-decoration: underline;

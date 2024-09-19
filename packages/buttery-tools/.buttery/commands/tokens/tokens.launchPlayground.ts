@@ -7,12 +7,11 @@ import { getButteryTokensDirectories } from "./tokens.getButteryTokensDirectorie
 import { launchPlaygroundGetConfig } from "./tokens.launchPlaygroundGetConfig";
 
 export async function launchPlayground(
-  config: ResolvedButteryConfig<"tokens">,
-  options: { isLocal: boolean }
+  config: ResolvedButteryConfig<"tokens">
 ) {
   // resolve a config and the buttery tokens directories
   const reconciledConfig = await launchPlaygroundGetConfig(config);
-  const dirs = await getButteryTokensDirectories(reconciledConfig, options);
+  const dirs = await getButteryTokensDirectories(reconciledConfig);
 
   // create the dev server
   const viteServer = await createServer({

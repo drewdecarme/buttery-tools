@@ -22,7 +22,7 @@ export async function launchPlaygroundGetConfig(
         message:
           "Please select which configuration you would like to load into the interactive token config UI",
         choices: tokens.map((tokenConfig, i) => ({
-          name: tokenConfig.importName,
+          name: tokenConfig.namespace,
           value: i
         }))
       });

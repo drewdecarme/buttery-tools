@@ -1,4 +1,9 @@
-import { makeColor, makeFontWeight, makeRem } from "@buttery/tokens/docs";
+import {
+  makeColorBrand,
+  makeColorShade,
+  makeFontWeight,
+  makeRem,
+} from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";
 import type { FC } from "react";
@@ -22,7 +27,7 @@ const ulStyles = css`
         top: 0;
         bottom: 0;
         width: ${makeRem(1)};
-        background: ${makeColor("neutral", { variant: "50" })};
+        background: ${makeColorShade("neutral", { variant: "50" })};
       }
     }
   }
@@ -35,7 +40,7 @@ const ulStyles = css`
 const anchorCss = css`
   height: ${makeRem(24)};
   text-decoration: none;
-  color: ${makeColor("neutral")};
+  color: ${makeColorShade("neutral")};
   padding: ${makeRem(2)} ${makeRem(8)};
   border-radius: ${makeRem(4)};
   font-size: ${makeRem(14)};
@@ -49,14 +54,17 @@ const anchorCss = css`
   }
 
   &.active {
-    background: ${makeColor("primary", { variant: "300", opacity: 0.2 })};
-    color: ${makeColor("primary")};
+    background: ${makeColorBrand("primary", { variant: "300", opacity: 0.2 })};
+    color: ${makeColorBrand("primary")};
     font-weight: ${makeFontWeight("semi-bold")};
   }
   &:not(.active) {
     &:hover {
-      background: ${makeColor("primary", { variant: "200", opacity: 0.2 })};
-      color: ${makeColor("primary")};
+      background: ${makeColorBrand("primary", {
+        variant: "200",
+        opacity: 0.2,
+      })};
+      color: ${makeColorBrand("primary")};
       font-weight: ${makeFontWeight("semi-bold")};
     }
   }
@@ -72,7 +80,7 @@ export type NavItemProps = {
 };
 export const LayoutBodyNavItem: FC<NavItemProps> = ({
   graph,
-  isNested = false
+  isNested = false,
 }) => {
   return (
     <ul className={classes(ulStyles, { nested: isNested })}>

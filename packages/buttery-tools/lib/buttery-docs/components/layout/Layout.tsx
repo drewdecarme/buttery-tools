@@ -1,5 +1,5 @@
 import {
-  makeColor,
+  makeColorShade,
   makeCustom,
   makeFontFamily,
   makeRem,
@@ -33,7 +33,7 @@ export const bodyStyles = css`
       line-height: 1.5;
     }
   }
-  background: ${makeColor("neutral", { variant: "50", opacity: 0.12 })};
+  background: ${makeColorShade("neutral", { variant: "50", opacity: 0.12 })};
 `;
 
 export type LayoutPropsNative = JSX.IntrinsicElements["body"];

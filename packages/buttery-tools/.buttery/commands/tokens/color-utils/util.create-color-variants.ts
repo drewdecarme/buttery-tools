@@ -1,4 +1,5 @@
 import chroma from "chroma-js";
+import { match } from "ts-pattern";
 import { exhaustiveMatchGuard } from "../../../../utils/ts";
 import type { ButteryTokensColorBrandVariants } from "../../_buttery-config";
 import {
@@ -15,9 +16,11 @@ export type ColorModels = {
   hsl: ReturnType<typeof hsbToHsl>;
 };
 
-export const createColorBrandModelVariants = (
+export const createColorModelVariants = (
   baseColorModel: ColorModels,
-  options: ButteryTokensColorBrandVariants
+  options: ButteryTokensColorBrandVariants & {
+    strategy: "min-hex" | "min-hex-max" | "hex-max";
+  }
 ): ColorModels[] => {
   switch (options.mode) {
     case "auto": {
@@ -27,13 +30,27 @@ export const createColorBrandModelVariants = (
       const numOfVariants = options.numOfVariants ?? 10;
 
       // get the lightest and darkest from the base
-      const lightest = chroma(baseColorModel.hex).brighten(min);
-      const darkest = chroma(baseColorModel.hex).darken(max);
-      const scaleArr = [lightest, baseColorModel.hex, darkest];
-      const hexVariants = chroma
-        .scale(scaleArr)
-        .mode("lab")
-        .colors(numOfVariants);
+      const hexVariants = match(options.strategy)
+        .with("min-hex-max", () => {
+          const lightest = chroma(baseColorModel.hex).brighten(min);
+          const darkest = chroma(baseColorModel.hex).darken(max);
+          const scaleArr = [lightest, baseColorModel.hex, darkest];
+
+          return chroma.scale(scaleArr).mode("lab").colors(numOfVariants);
+        })
+        .with("min-hex", () => {
+          const lightest = chroma(baseColorModel.hex).brighten(min);
+          const scaleArr = [lightest, baseColorModel.hex];
+
+          return chroma.scale(scaleArr).mode("lab").colors(numOfVariants);
+        })
+        .with("hex-max", () => {
+          const darkest = chroma(baseColorModel.hex).darken(max);
+          const scaleArr = [baseColorModel.hex, darkest];
+
+          return chroma.scale(scaleArr).mode("lab").colors(numOfVariants);
+        })
+        .exhaustive();
 
       // map through all of the hex variants and create models
       return hexVariants.map<ColorModels>((hex, i) => {

@@ -17,6 +17,7 @@ import type { ButteryTokensDirectories } from "./tokens.getButteryTokensDirector
 import { exec } from "node:child_process";
 import { writeFile } from "node:fs/promises";
 import { LOG } from "../_logger/util.ts.logger";
+import { MakeTemplateColorShade } from "./make-templates/template.makeColorShade";
 import tsconfigJson from "./tsconfig.json" with { type: "json" };
 
 const execAsync = promisify(exec);
@@ -46,6 +47,7 @@ export async function buildMakeUtilsFromTemplates(
   Templates.register(MakeTemplateRem);
   Templates.register(MakeTemplateResponsive);
   Templates.register(MakeTemplateColorBrand);
+  Templates.register(MakeTemplateColorShade);
   if (config.tokens.color.static) {
     Templates.register(MakeTemplateColorStatic);
   }

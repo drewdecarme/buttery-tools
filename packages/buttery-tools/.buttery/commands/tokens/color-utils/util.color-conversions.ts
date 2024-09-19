@@ -41,11 +41,12 @@ export function hslToHex(h: number, s: number, l: number) {
     r = g = b = lightness;
   } else {
     const hueToRgb = (p: number, q: number, t: number): number => {
-      if (t < 0) t += 1;
-      if (t > 1) t -= 1;
-      if (t < 1 / 6) return p + (q - p) * 6 * t;
-      if (t < 1 / 2) return q;
-      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      let tt = t;
+      if (tt < 0) tt = tt + 1;
+      if (tt > 1) tt = tt - 1;
+      if (tt < 1 / 6) return p + (q - p) * 6 * tt;
+      if (tt < 1 / 2) return q;
+      if (tt < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
       return p;
     };
 
@@ -90,13 +91,13 @@ export function hexToRgb(h: string) {
 
 // Convert RGB to HSB
 function rgbToHsb(r: number, g: number, b: number) {
-  const red = (r /= 255);
-  g /= 255;
-  b /= 255;
+  const red = r / 255;
+  const green = g / 255;
+  const blue = b / 255;
 
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  let h: number;
+  const max = Math.max(red, green, blue);
+  const min = Math.min(red, green, blue);
+  let h = 0;
   let s: number;
   let v = max;
 
@@ -107,17 +108,17 @@ function rgbToHsb(r: number, g: number, b: number) {
     h = 0; // achromatic
   } else {
     switch (max) {
-      case r:
+      case red:
         h = (g - b) / d + (g < b ? 6 : 0);
         break;
-      case g:
+      case green:
         h = (b - r) / d + 2;
         break;
-      case b:
+      case blue:
         h = (r - g) / d + 4;
         break;
     }
-    h /= 6;
+    h = h / 6;
   }
 
   h = Math.round(h * 360);

@@ -54,7 +54,9 @@ export const butteryConfigDefaultTokens: ButteryConfigTokens = {
       }
     },
     shade: {
-      base: "#000000",
+      values: {
+        neutral: "#000000"
+      },
       variants: {
         mode: "auto",
         numOfVariants: 10

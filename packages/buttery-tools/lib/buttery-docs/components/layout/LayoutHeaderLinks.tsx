@@ -1,6 +1,7 @@
 import { IconComponent } from "@buttery/icons";
 import {
-  makeColor,
+  makeColorBrand,
+  makeColorShade,
   makeFontWeight,
   makeRem,
   makeReset,
@@ -28,7 +29,8 @@ const ulStyles = css`
   & + * {
     padding-left: ${makeRem(16)};
     margin-left: ${makeRem(16)};
-    border-left: ${makeRem(1)} solid ${makeColor("neutral", { variant: "50" })};
+    border-left: ${makeRem(1)} solid
+      ${makeColorShade("neutral", { variant: "50" })};
   }
 `;
 
@@ -39,7 +41,7 @@ const anchorSocialStyles = css`
   transition: all 0.15s ease-in-out;
 
   &:hover {
-    color: ${makeColor("primary")};
+    color: ${makeColorBrand("primary")};
   }
 `;
 
@@ -51,12 +53,12 @@ const internalCss = css`
   font-size: ${makeRem(16)};
 
   &:hover {
-    color: ${makeColor("primary")};
+    color: ${makeColorBrand("primary")};
     text-decoration: underline;
   }
 
   &.active {
-    color: ${makeColor("primary")};
+    color: ${makeColorBrand("primary")};
     font-weight: ${makeFontWeight("bold")};
   }
 `;

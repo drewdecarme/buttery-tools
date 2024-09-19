@@ -1,6 +1,7 @@
 import { IconComponent } from "@buttery/icons";
 import {
-  makeColor,
+  makeColorBrand,
+  makeColorShade,
   makeFontFamily,
   makeFontWeight,
   makeRem,
@@ -8,8 +9,8 @@ import {
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";
+import type { ButteryConfigDocsHeaderLinkTypeDropdown } from "../../../../.buttery/commands/_buttery-config";
 import { DropdownNav, useDropdownNav } from "../../../buttery-components";
-import type { ButteryConfigDocsHeaderLinkTypeDropdown } from ".buttery/commands/_buttery-config";
 
 const buttonStyles = css`
   ${makeReset("button")};
@@ -22,11 +23,11 @@ const buttonStyles = css`
   align-items: center;
 
   &:hover {
-    color: ${makeColor("primary")};
+    color: ${makeColorBrand("primary")};
   }
 
   &.active {
-    color: ${makeColor("primary")};
+    color: ${makeColorBrand("primary")};
     font-weight: ${makeFontWeight("bold")};
   }
 `;
@@ -101,7 +102,7 @@ const dropdownStyles = css`
 
       .sub-title {
         font-size: ${makeRem(14)};
-        color: ${makeColor("neutral", { variant: "500" })};
+        color: ${makeColorShade("neutral", { variant: "500" })};
         /* font-style: italic; */
       }
 
@@ -109,7 +110,7 @@ const dropdownStyles = css`
       &:hover {
         .title,
         .sub-title {
-          color: ${makeColor("primary")};
+          color: ${makeColorBrand("primary")};
         }
       }
     }

@@ -1,5 +1,5 @@
 import {
-  makeColor,
+  makeColorShade,
   makeColorStatic,
   makeCustom,
   makeRem,
@@ -12,7 +12,7 @@ const footerStyles = css`
   & > div {
     max-width: ${makeCustom("layout-max-width")};
     border-top: ${makeRem(1)} solid
-      ${makeColor("neutral", { variant: "100", opacity: 0.3 })};
+      ${makeColorShade("neutral", { variant: "100", opacity: 0.3 })};
     height: ${makeRem(80)};
     display: flex;
     justify-content: space-between;
