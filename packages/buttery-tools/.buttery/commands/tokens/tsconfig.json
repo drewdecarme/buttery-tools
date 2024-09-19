@@ -1,5 +1,4 @@
 {
-  "extends": "./tsconfig.library.json",
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
@@ -17,10 +16,7 @@
     "noFallthroughCasesInSwitch": true,
     "declaration": true,
     "declarationMap": true,
-    "jsx": "react-jsx",
-    "declarationDir": "./dist",
-    "outDir": "./dist",
     "noEmit": false
   },
-  "include": ["./lib/*"]
+  "exclude": ["node_modules"]
 }

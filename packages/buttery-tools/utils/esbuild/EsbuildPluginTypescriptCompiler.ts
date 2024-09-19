@@ -41,16 +41,21 @@ export class EsbuildPluginTypescriptCompiler {
               (accum, [key, value]) => accum.concat(`--${key} ${value} `),
               ""
             );
-            execSync(
-              `tsc ${options.filePathToTranspile} ${compilerOptions} ${extraArgs}`
-            );
+            try {
+              execSync(
+                `tsc ${options.filePathToTranspile} ${compilerOptions} ${extraArgs}`
+              );
+            } catch (error) {
+              throw new Error(error as string);
+            }
+
             return;
           }
 
           try {
             execSync(`tsc --project ${tsconfigPath} `);
           } catch (error) {
-            console.log(error);
+            throw new Error(error as string);
           }
         });
       }

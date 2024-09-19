@@ -138,3 +138,57 @@ export function getHueFromHex(hex: string) {
   const { h } = rgbToHsb(r, g, b);
   return h;
 }
+
+export function hexToHsl(hex: string): { h: number; s: number; l: number } {
+  // Remove the hash if it's there
+  let newHex = hex.replace(/^#/, "");
+
+  // Convert 3-digit hex to 6-digit hex
+  if (newHex.length === 3) {
+    newHex = hex
+      .split("")
+      .map((char) => char + char)
+      .join("");
+  }
+
+  // Parse the r, g, b values
+  const bigint = Number.parseInt(newHex, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+
+  // Convert r, g, b to a range of 0 to 1
+  const rNorm = r / 255;
+  const gNorm = g / 255;
+  const bNorm = b / 255;
+
+  const max = Math.max(rNorm, gNorm, bNorm);
+  const min = Math.min(rNorm, gNorm, bNorm);
+  let h = 0;
+  let s = 0;
+  let l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case rNorm:
+        h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0);
+        break;
+      case gNorm:
+        h = (bNorm - rNorm) / d + 2;
+        break;
+      case bNorm:
+        h = (rNorm - gNorm) / d + 4;
+        break;
+    }
+    h /= 6;
+  }
+
+  // Convert to degrees
+  h = Math.round(h * 360);
+  s = Math.round(s * 100);
+  l = Math.round(l * 100);
+
+  return { h, s, l };
+}

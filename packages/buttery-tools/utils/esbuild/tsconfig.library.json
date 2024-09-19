@@ -14,11 +14,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "noEmit": true,
     "declaration": true,
     "declarationMap": true,
-    "declarationDir": "./dist",
-    "outDir": "./dist",
-    "noEmit": false,
-    "emitDeclarationOnly": true
+    "jsx": "react-jsx"
   }
 }

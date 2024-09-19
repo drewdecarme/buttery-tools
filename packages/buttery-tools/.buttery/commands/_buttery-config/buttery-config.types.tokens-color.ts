@@ -78,27 +78,26 @@ export type ButteryTokensColorBrandCategories =
   | ButteryTokensColorBrandCategoryNeutral
   | ButteryTokensColorBrandCategoryFluorescent;
 
-export type ButteryTokensColorBrandCategory =
-  ButteryTokensColorBrandCategories & {
-    mode: "category";
-    /**
-     * The hues or the visible colors that you want.
-     * Max is 360 since hues are placed on the color wheel
-     * and there's only 360° on a circle.
-     */
-    hues: { [hueName: string]: number };
-  };
+export type ButteryTokensColorBrandCategory = {
+  mode: "category";
+  /**
+   * The hues or the visible colors that you want.
+   * Max is 360 since hues are placed on the color wheel
+   * and there's only 360° on a circle.
+   */
+  hues: { [hueName: string]: number };
+  variants: ButteryTokensColorBrandVariants;
+} & ButteryTokensColorBrandCategories;
 
 export type ButteryTokensColorBrandManual = {
   mode: "manual";
-} & { [brandColorName: string]: HEX };
-
-export type ButteryTokensColorBrand = (
-  | ButteryTokensColorBrandCategory
-  | ButteryTokensColorBrandManual
-) & {
   variants: ButteryTokensColorBrandVariants;
+  values: { [brandColorName: string]: HEX };
 };
+
+export type ButteryTokensColorBrand =
+  | ButteryTokensColorBrandCategory
+  | ButteryTokensColorBrandManual;
 
 // ------------ SHADE ------------
 export type ButteryTokensColorShadeVariantAuto = {

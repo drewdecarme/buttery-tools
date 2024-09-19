@@ -1,5 +1,8 @@
-import { hexToHsb, hsbToHsl } from "../color-utils/util.color-conversions";
-import { createColorTokens } from "../color-utils/util.create-color-variants";
+import { hexToHsl, hexToRgb } from "../color-utils/util.color-conversions";
+import {
+  type ColorModels,
+  createColorTokensFromColorModels
+} from "../color-utils/util.create-color-variants";
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 
 const template: CompileFunction = ({
@@ -49,23 +52,22 @@ export const ${functionName}: MakeColorStatic = (color, options) => {
 `;
 };
 
-const css: CompileFunction = ({ config, cssVarPrefix }) => {
-  const colorAndVariantTokens = Object.entries(
-    config.color.static ?? {}
-  ).reduce((accum, [staticName, staticHex]) => {
-    const { h, s, b } = hexToHsb(staticHex);
-    const colorBaseHsl = hsbToHsl(h, s, b);
+const css: CompileFunction = ({ config: { color }, cssVarPrefix }) => {
+  const colorModels = Object.entries(color.static ?? {}).reduce<ColorModels[]>(
+    (accum, [hexName, hexValue]) =>
+      accum.concat({
+        name: hexName,
+        hex: hexValue,
+        hsl: hexToHsl(hexValue),
+        rgb: hexToRgb(hexValue)
+      }),
+    []
+  );
 
-    // create the color tokens - base
-    const colorTokensBase = createColorTokens(colorBaseHsl, {
-      cssPrefix: cssVarPrefix,
-      name: staticName
-    });
-
-    return accum.concat(colorTokensBase);
-  }, "");
-
-  return colorAndVariantTokens;
+  const colorStaticTokens = createColorTokensFromColorModels(colorModels, {
+    prefix: cssVarPrefix
+  });
+  return colorStaticTokens;
 };
 
 export const MakeTemplateColorStatic = new MakeTemplate({

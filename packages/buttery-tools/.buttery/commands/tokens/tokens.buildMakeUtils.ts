@@ -11,7 +11,7 @@ export async function buildMakeUtils({
   // convert the tokens to an array
   const tokensConfig = Array.isArray(tokens) ? tokens : [tokens];
 
-  await Promise.all(
+  await Promise.allSettled(
     tokensConfig.map(async (t) => {
       const iConfig = { ...restConfig, tokens: t };
       const dirs = await getButteryTokensDirectories(iConfig);
@@ -19,9 +19,6 @@ export async function buildMakeUtils({
       LOG.debug(`Building "${iConfig.tokens.namespace ?? "index"}"`);
 
       // build the make functions from the registered te      // // Create the make functions output directory
-      // await buildMakeUtilsEnrichDir(dirs, {
-      //   isLocal: options.isLocal
-      // });mplates.
       await buildMakeUtilsFromTemplates(iConfig, dirs);
     })
   );
