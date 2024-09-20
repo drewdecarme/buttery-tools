@@ -61,7 +61,7 @@ export class MakeTemplates {
 
         // add the function to a barrel file
         indexFileContent = indexFileContent.concat(
-          `export * from "./${fileName}";\n`
+          `export * from "./${fileName}.js";\n`
         );
         // add the css to the root css
         tokensCSSFileContent = tokensCSSFileContent.concat(compiledCSSVars);
@@ -82,7 +82,9 @@ export class MakeTemplates {
         `export const config = ${JSON.stringify(this.config)}`,
         { encoding: "utf8" }
       );
-      indexFileContent = indexFileContent.concat(`export * from "./config";\n`);
+      indexFileContent = indexFileContent.concat(
+        `export * from "./config.js";\n`
+      );
       LOG.debug("Creating config file... done");
       LOG.debug("Creating entry point...");
       await writeFile(this.entryFile, indexFileContent, { encoding: "utf8" });
