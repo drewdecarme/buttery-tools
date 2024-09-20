@@ -1,5 +1,6 @@
 import path from "node:path";
 import { LOG } from "../_logger/util.ts.logger.js";
+import { butteryConfigDefaults } from "./buttery-config.defaults.js";
 import type {
   ButteryConfig,
   ButteryConfigPaths,
@@ -42,6 +43,7 @@ export const getButteryConfig = async <T extends keyof ButteryConfig>(
   const optionWatch = options?.watch ?? false;
   const optionDefaultConfig = options?.defaultConfig;
   const optionStartingDirectory = options?.startingDirectory;
+  const optionRequireConfig = options?.requireConfig ?? true;
 
   // search for the config file starting with a directory or the current working directory
   const searchDirectory = optionStartingDirectory ?? process.cwd();
@@ -73,14 +75,18 @@ export const getButteryConfig = async <T extends keyof ButteryConfig>(
   };
 
   try {
-    const nestedConfig = butteryConfig.config[nestedConfigKey];
+    let nestedConfig = butteryConfig.config[nestedConfigKey];
 
-    if (!nestedConfig) {
-      throw `Cannot find the "buttery.config.${nestedConfigKey}" configuration object. Please ensure that the "${nestedConfigKey}" exists in your "buttery.config".`;
-    }
+    if (optionRequireConfig) {
+      if (!nestedConfig) {
+        throw `Cannot find the "buttery.config.${nestedConfigKey}" configuration object. Please ensure that the "${nestedConfigKey}" exists in your "buttery.config".`;
+      }
 
-    if (Object.keys(nestedConfig).length === 0) {
-      throw `"buttery.config.${nestedConfigKey}" configuration object is empty. Please ensure that the "${nestedConfigKey}" has values in your "buttery.config".`;
+      if (Object.keys(nestedConfig).length === 0) {
+        throw `"buttery.config.${nestedConfigKey}" configuration object is empty. Please ensure that the "${nestedConfigKey}" has values in your "buttery.config".`;
+      }
+    } else {
+      nestedConfig = butteryConfigDefaults[nestedConfigKey];
     }
 
     const { config, ...restConfig } = butteryConfig;

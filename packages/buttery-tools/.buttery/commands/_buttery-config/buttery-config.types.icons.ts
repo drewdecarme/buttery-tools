@@ -1,5 +1,17 @@
 export type ButteryConfigIcons = {
   /**
+   * An optional namespace where the generated icons
+   * are stored. This is helpful when dealing with monorepos
+   * and you have multiple icon sets that need to be generated
+   * and then subsequently imported differently.
+   * @default undefined
+   * @example `base`
+   * ```tsx
+   * import { IconComponent } from "@buttery/icons/base"
+   * ```
+   */
+  namespace?: string;
+  /**
    * The directory where the raw SVGs are stored.
    * @default `.buttery/icons`
    */
@@ -13,16 +25,4 @@ export type ButteryConfigIcons = {
    * @default `node_modules/@buttery/icons`
    */
   outDir?: string;
-  /**
-   * An optional namespace where the generated icons
-   * are stored. This is helpful when dealing with monorepos
-   * and you have multiple icon sets that need to be generated
-   * and then subsequently imported differently.
-   * @default undefined
-   * @example `base`
-   * ```tsx
-   * import { IconComponent } from "@buttery/icons/base"
-   * ```
-   */
-  namespace?: string;
 };

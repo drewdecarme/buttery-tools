@@ -42,4 +42,10 @@ export type GetButteryConfigOptions = {
    * @default undefined
    */
   defaultConfig?: keyof ButteryConfig;
+  /**
+   * A boolean that tells the application if you need a config
+   * key inside of the .buttery/config file.
+   * @default true
+   */
+  requireConfig?: boolean;
 };
