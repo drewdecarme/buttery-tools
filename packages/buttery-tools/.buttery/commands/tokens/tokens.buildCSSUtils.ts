@@ -1,7 +1,7 @@
 import path from "node:path";
 import type { ResolvedButteryConfig } from "../_buttery-config";
 import { LOG } from "../_logger/util.ts.logger";
-import { buildCSSUtilsEnrichPackageJSON } from "./tokens.buildCSSUtilsEnrichPackageJSON";
+import { writeDynamicDirectoryPackageJSON } from "../_utils/util.writeDynamicDirectoryPackageJSON";
 import { buildCSSUtilsTypeScript } from "./tokens.buildCSSUtilsTypeScript";
 import type { ButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";
 
@@ -27,7 +27,10 @@ export async function buildCSSUtils(
         );
 
         // enrich the package.json
-        await buildCSSUtilsEnrichPackageJSON(dirs, namespace);
+        await writeDynamicDirectoryPackageJSON(
+          dirs.output.packageJson,
+          namespace
+        );
 
         // build the utilities
         await buildCSSUtilsTypeScript(tokenConfig, namespacedOutDir);

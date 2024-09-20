@@ -9,7 +9,7 @@ import type { ButteryIconsDirectories } from "./icons.getButteryIconsDirectories
 export async function copyArtifacts(dirs: ButteryIconsDirectories) {
   try {
     LOG.debug("Copying artifacts...");
-    cp(dirs.lib.root, dirs.output.root, { recursive: true });
+    cp(dirs.artifacts.root, dirs.output.root, { recursive: true });
     LOG.debug("Copying artifacts... done.");
   } catch (error) {
     LOG.error(`Error when copying artifacts: ${error}`);

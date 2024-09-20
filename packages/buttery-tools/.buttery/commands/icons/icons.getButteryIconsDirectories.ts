@@ -3,6 +3,10 @@ import { ensureDir } from "fs-extra";
 import { findDirectoryUpwards } from "../../../utils/node";
 import type { ResolvedButteryConfig } from "../_buttery-config";
 import { LOG } from "../_logger";
+import {
+  getButteryArtifactsDir,
+  getNodeModulesButteryOutputDir
+} from "../_utils";
 
 export type ButteryIconsDirectories = Awaited<
   ReturnType<typeof getButteryIconsDirectories>
@@ -51,31 +55,31 @@ async function getIconsOutputDir(config: ResolvedButteryConfig<"icons">) {
 export async function getButteryIconsDirectories(
   config: ResolvedButteryConfig<"icons">
 ) {
-  const iconsOutDir = await getIconsOutputDir(config);
-
-  // the playground sits in the root of this repo
-  const iconsLib = findDirectoryUpwards("lib", "buttery-icons", {
-    startingDirectory: import.meta.dirname
-  });
-  if (!iconsLib) {
-    throw "Cannot locate the icons library to generate icons or component template. This should not have happened. Please raise a Github issue.";
-  }
+  const outputDirs = await getNodeModulesButteryOutputDir(
+    config.paths,
+    "icons"
+  );
+  const artifactsDir = await getButteryArtifactsDir(
+    import.meta.dirname,
+    "buttery-icons"
+  );
 
   return {
     entry: {
       svgDir:
         config.icons.svgDir ?? path.resolve(config.paths.butteryDir, "./icons")
     },
-    lib: {
-      root: iconsLib
+    artifacts: {
+      root: artifactsDir
     },
     output: {
-      root: iconsOutDir,
-      tsConfig: path.resolve(iconsOutDir, "./tsconfig.json"),
+      root: outputDirs.target,
+      packageJson: path.resolve(outputDirs.target, "./package.json"),
+      tsConfig: path.resolve(outputDirs.target, "./tsconfig.json"),
       /**
        * The path where all of the generated React components will be stored
        */
-      generated: path.resolve(iconsOutDir, "./generated")
+      generated: path.resolve(outputDirs.target, "./generated")
     }
   };
 }

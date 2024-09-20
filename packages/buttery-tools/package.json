@@ -29,21 +29,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/drewdecarme/starter-ts-cli.git"
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
   },
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/drewdecarme/starter-ts-cli/issues"
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
-  "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "scripts": {
     "build": "yarn tokens:build && yarn cli:build && yarn lib:build",
     "dev": "yarn cli:dev",
     "cli:dev": "tsx ./scripts/local.commands.dev",
     "cli:build": "tsx ./scripts/local.commands.build.ts",
-    "tokens:build": "tsx ./scripts/local.tokens.build.ts",
-    "tokens:dev": "tsx ./scripts/local.tokens.dev.ts",
     "lib:build": "yarn tsc --project tsconfig.library.json",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
