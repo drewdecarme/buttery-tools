@@ -1,8 +1,13 @@
+import { exec } from "node:child_process";
+import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
 
+import type { ButteryConfigTokens } from "../_buttery-config";
+import { LOG } from "../_logger/util.ts.logger";
 import { MakeTemplates } from "./make-templates/MakeTemplates";
 import { MakeTemplateColorBrand } from "./make-templates/template.makeColorBrand";
+import { MakeTemplateColorShade } from "./make-templates/template.makeColorShade";
 import { MakeTemplateColorStatic } from "./make-templates/template.makeColorStatic";
 import { MakeTemplateCustom } from "./make-templates/template.makeCustom";
 import { MakeTemplateFontFamily } from "./make-templates/template.makeFontFamily";
@@ -10,14 +15,6 @@ import { MakeTemplateFontWeight } from "./make-templates/template.makeFontWeight
 import { MakeTemplateRem } from "./make-templates/template.makeRem";
 import { MakeTemplateReset } from "./make-templates/template.makeReset";
 import { MakeTemplateResponsive } from "./make-templates/template.makeResponsive";
-
-import type { ButteryTokensConfig } from "./tokens.getButteryTokensConfig";
-import type { ButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";
-
-import { exec } from "node:child_process";
-import { writeFile } from "node:fs/promises";
-import { LOG } from "../_logger/util.ts.logger";
-import { MakeTemplateColorShade } from "./make-templates/template.makeColorShade";
 import tsconfigJson from "./tsconfig.json" with { type: "json" };
 
 const execAsync = promisify(exec);
@@ -32,13 +29,13 @@ const execAsync = promisify(exec);
  * are then transpiled using esbuild. After the transpilation a plugin is also run
  * to create the TS types for each of the functions using a esbuild plugin.
  */
-export async function buildMakeUtilsFromTemplates(
-  config: ButteryTokensConfig,
-  dirs: ButteryTokensDirectories
+export async function buildCSSUtilsTypeScript(
+  tokensConfig: ButteryConfigTokens,
+  namespacedOutDir: string
 ) {
   const Templates = new MakeTemplates({
-    config: config,
-    outDir: dirs.output.path
+    config: tokensConfig,
+    outDir: namespacedOutDir
   });
 
   // Register the templates that should be generated
@@ -48,11 +45,11 @@ export async function buildMakeUtilsFromTemplates(
   Templates.register(MakeTemplateResponsive);
   Templates.register(MakeTemplateColorBrand);
   Templates.register(MakeTemplateColorShade);
-  if (config.tokens.color.static) {
+  if (tokensConfig.color.static) {
     Templates.register(MakeTemplateColorStatic);
   }
   Templates.register(MakeTemplateReset);
-  if (config.tokens.custom) {
+  if (tokensConfig.custom) {
     Templates.register(MakeTemplateCustom);
   }
 
@@ -62,7 +59,7 @@ export async function buildMakeUtilsFromTemplates(
   LOG.debug("Generating make functions.. done.");
 
   // create a tsconfig.json in the output directory
-  const tsconfigJsonPath = path.resolve(dirs.output.path, "./tsconfig.json");
+  const tsconfigJsonPath = path.resolve(namespacedOutDir, "./tsconfig.json");
   const tsconfigJsonContent = JSON.stringify(
     // { include: [Templates.entryFile], ...tsconfigJson },
     tsconfigJson,
@@ -81,7 +78,7 @@ export async function buildMakeUtilsFromTemplates(
   LOG.debug("Building & transpiling...");
   try {
     const { stderr } = await execAsync(
-      `tsc --project ${tsconfigJsonPath} --outDir ${dirs.output.path}`
+      `tsc --project ${tsconfigJsonPath} --outDir ${namespacedOutDir}`
     );
     if (stderr) {
       throw stderr;

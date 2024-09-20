@@ -1,4 +1,3 @@
-import path from "node:path";
 import mdx from "@mdx-js/rollup";
 import { vitePlugin as remix } from "@remix-run/dev";
 import { cloudflareDevProxyVitePlugin as remixCloudflareDevProxy } from "@remix-run/dev";
@@ -29,14 +28,6 @@ export async function getButteryDocsDefineConfig() {
     server: {
       port: 1400,
       open: true
-    },
-    resolve: {
-      alias: {
-        "@buttery/tokens/docs": path.resolve(
-          butteryDocsDirs.lib.root,
-          "../buttery-tokens/.buttery-tokens/docs"
-        )
-      }
     },
     plugins: [
       wyw({

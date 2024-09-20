@@ -3,10 +3,10 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration,
 } from "@remix-run/react";
 
-import "@buttery/tokens/docs/index.css";
+import "@buttery/tokens/docs/css";
 
 import { Layout as LayoutRoot } from "../../../components/layout/Layout";
 import { LayoutHeader } from "../../../components/layout/LayoutHeader";

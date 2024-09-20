@@ -1,3 +1,4 @@
+import { exit } from "node:process";
 import type {
   CommandAction,
   CommandMeta,
@@ -30,6 +31,8 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
       prompt: options.prompt,
       isLocal: false
     });
+    LOG.success("Successfully built buttery tokens!");
+    exit();
   } catch (error) {
     throw LOG.fatal(new Error(error as string));
   }

@@ -1,5 +1,5 @@
 {
-  "name": "@buttery/cli",
+  "name": "@buttery/tools",
   "version": "0.0.1",
   "description": "A file based CLI designed to making writing a CLI as easy as exporting a few functions in a file",
   "sideEffects": false,
@@ -12,17 +12,7 @@
     "templates"
   ],
   "type": "module",
-  "scripts": {
-    "build": "yarn tokens:build && yarn cli:build && yarn lib:build",
-    "dev": "yarn cli:dev",
-    "cli:dev": "tsx ./scripts/local.commands.dev",
-    "cli:build": "tsx ./scripts/local.commands.build.ts",
-    "tokens:build": "tsx ./scripts/local.tokens.build.ts",
-    "tokens:dev": "tsx ./scripts/local.tokens.dev.ts",
-    "lib:build": "yarn tsc --project tsconfig.library.json",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -47,6 +37,17 @@
     "url": "https://github.com/drewdecarme/starter-ts-cli/issues"
   },
   "homepage": "https://github.com/drewdecarme/starter-ts-cli#readme",
+  "scripts": {
+    "build": "yarn tokens:build && yarn cli:build && yarn lib:build",
+    "dev": "yarn cli:dev",
+    "cli:dev": "tsx ./scripts/local.commands.dev",
+    "cli:build": "tsx ./scripts/local.commands.build.ts",
+    "tokens:build": "tsx ./scripts/local.tokens.build.ts",
+    "tokens:dev": "tsx ./scripts/local.tokens.dev.ts",
+    "lib:build": "yarn tsc --project tsconfig.library.json",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
   "devDependencies": {
     "@babel/core": "7.25.2",
     "@babel/preset-react": "7.24.7",
@@ -83,6 +84,7 @@
     "@mdx-js/react": "3.0.1",
     "@mdx-js/rollup": "3.0.1",
     "@remix-run/cloudflare": "2.12.0",
+    "@remix-run/dev": "^2.12.1",
     "@remix-run/react": "2.12.0",
     "@shikijs/rehype": "1.17.0",
     "@svgr/cli": "^8.1.0",
@@ -101,6 +103,7 @@
     "gray-matter": "4.0.3",
     "handlebars": "4.7.8",
     "install": "0.13.0",
+    "isbot": "^5.1.17",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "rehype-autolink-headings": "7.1.0",
@@ -121,9 +124,9 @@
     "unist-util-visit": "5.0.0",
     "vite": "5.4.4",
     "vite-bundle-visualizer": "^1.2.1",
-    "vite-plugin-inspect": "^0.8.7"
+    "vite-plugin-inspect": "^0.8.7",
+    "wrangler": "^3.78.7"
   },
-  "types": "./dist/index.d.ts",
   "bin": {
     "buttery": "./bin/index.js"
   }

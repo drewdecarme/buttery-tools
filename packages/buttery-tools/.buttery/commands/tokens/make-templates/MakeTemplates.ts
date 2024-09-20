@@ -1,13 +1,13 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type { ButteryConfigTokens } from "../../_buttery-config";
 import { LOG } from "../../_logger/util.ts.logger";
-import type { ButteryTokensConfig } from "../tokens.getButteryTokensConfig";
 import type { MakeTemplate } from "./MakeTemplate";
 
 export class MakeTemplates {
   private templates: MakeTemplate[];
-  private config: ButteryTokensConfig;
+  private config: ButteryConfigTokens;
   outDir: string;
   /**
    * The path of the barrel file that will include
@@ -22,7 +22,7 @@ export class MakeTemplates {
   private configOutFilePath: string;
   tokensCSSFile: string;
 
-  constructor(options: { config: ButteryTokensConfig; outDir: string }) {
+  constructor(options: { config: ButteryConfigTokens; outDir: string }) {
     this.config = options.config;
     this.outDir = options.outDir;
     this.entryFile = path.resolve(this.outDir, "./index.ts");
@@ -47,7 +47,7 @@ export class MakeTemplates {
     //
     for (const template of this.templates) {
       const { compiledFunctionContent, compiledCSSVars } = template.compile(
-        this.config.tokens
+        this.config
       );
       const fileName = template.functionName;
       const filePath = path.resolve(this.outDir, `./${fileName}.ts`);
