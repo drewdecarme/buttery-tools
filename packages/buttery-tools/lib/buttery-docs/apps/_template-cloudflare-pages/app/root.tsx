@@ -6,7 +6,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import "@buttery/tokens/docs/css";
+import "@buttery/tokens/docs/index.css";
 
 import { Layout as LayoutRoot } from "../../../components/layout/Layout";
 import { LayoutHeader } from "../../../components/layout/LayoutHeader";

@@ -20,22 +20,16 @@ export async function buildCSSUtilsEnrichPackageJSON(
       encoding: "utf8"
     });
     const packageJsonJSON = JSON.parse(packageJsonContents);
-    const importPath = namespace === "index" ? "." : `./${namespace}`;
+    const importPath = namespace === "index" ? "./*" : `./${namespace}/*`;
     const updatedPackageJsonContents = {
       ...packageJsonJSON,
       [`${importPath}`]: {
-        default: `./${namespace}/index.js`,
-        import: `./${namespace}/index.js`,
-        node: `./${namespace}/index.js`,
-        require: `./${namespace}/index.js`,
-        types: `./${namespace}/index.d.ts`
-      },
-      [`${importPath}/css`]: {
-        default: `./${namespace}/index.css`,
-        import: `./${namespace}/index.css`,
-        node: `./${namespace}/index.css`,
-        require: `./${namespace}/index.css`,
-        types: `./${namespace}/index.d.ts`
+        default: `./${namespace}/*.js`,
+        import: `./${namespace}/*.js`,
+        node: `./${namespace}/*.js`,
+        require: `./${namespace}/*.js`,
+        types: `./${namespace}/*.d.ts`
+        // css: `./${namespace}/*.css`
       }
     };
     await writeFile(
