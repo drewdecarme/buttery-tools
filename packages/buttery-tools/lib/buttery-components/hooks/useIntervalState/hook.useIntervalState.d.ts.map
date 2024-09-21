@@ -1,1 +1,0 @@
-{"version":3,"file":"hook.useIntervalState.d.ts","sourceRoot":"","sources":["hook.useIntervalState.ts"],"names":[],"mappings":"AAEA,wBAAgB,gBAAgB,CAAC,CAAC,EAChC,IAAI,EAAE,KAAK,CAAC,CAAC,CAAC,EACd,OAAO,CAAC,EAAE;IACR,OAAO,CAAC,EAAE,OAAO,CAAC;IAClB,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,YAAY,CAAC,EAAE,MAAM,CAAC;IACtB;;;OAGG;IACH,kBAAkB,CAAC,EAAE,MAAM,CAAC;CAC7B;;;;EAiCF"}
