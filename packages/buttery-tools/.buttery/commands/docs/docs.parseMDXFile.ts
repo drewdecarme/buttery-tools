@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
+import { LOG } from "../_logger";
 import { parseMDXFileContent } from "./docs.parseMDXFileContent";
 import { parseMDXFileFrontmatter } from "./docs.parseMDXFileFrontmatter";
 import { parseMDXFileName } from "./docs.parseMDXFilename";
@@ -9,8 +10,9 @@ import type { ButteryDocsGraphFrontmatter, FileObj } from "./docs.types";
 export const parseMdxFile = async ({
   filename,
   fsPath,
-  routePath,
+  routePath
 }: FileObj) => {
+  LOG.debug("Parsing MDX file...", { filename });
   try {
     // parse the frontmatter away from the markdown content
     const rawMdxContent = await readFile(fsPath, { encoding: "utf8" });
@@ -25,6 +27,7 @@ export const parseMdxFile = async ({
 
     // parse the name of the file
     const { segments, section } = parseMDXFileName(filename);
+    LOG.debug("Parsing MDX file... done.", { filename });
 
     return {
       fsPath,
@@ -34,9 +37,10 @@ export const parseMdxFile = async ({
       meta,
       section,
       routeAbs: routePath,
-      segments,
+      segments
     };
   } catch (error) {
-    throw error as Error;
+    LOG.error("Error when trying to parse the MDX file.");
+    throw LOG.fatal(new Error(error as string));
   }
 };

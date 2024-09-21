@@ -99,7 +99,12 @@ export async function getButteryDocsFiles(
             return accum.concat(readDirContents([dirent], { routePrefix }));
           }
 
-          if (dirent.isDirectory() && dirent.name !== "public") {
+          LOG.debug(`Reading "${dirent.name}". Skipping "/public" & "/dist"`);
+          if (
+            dirent.isDirectory() &&
+            dirent.name !== "public" &&
+            dirent.name !== "dist"
+          ) {
             const sectionDir = path.resolve(dirent.parentPath, dirent.name);
             const sectionDirContents = readdirSync(sectionDir, {
               recursive: true,

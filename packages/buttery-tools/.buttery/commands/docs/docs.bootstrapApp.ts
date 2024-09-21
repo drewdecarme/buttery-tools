@@ -16,21 +16,25 @@ import { orderButteryDocFiles } from "./docs.orderButteryDocFiles";
  * https://vitejs.dev/guide/features#dynamic-import
  */
 export const bootstrapApp = async (config: ButteryDocsConfig) => {
-  try {
-    const files = await getButteryDocsFiles(config);
-    const orderedFiles = orderButteryDocFiles(config, files);
-    const graph = await getButteryDocsGraph(config, orderedFiles);
-    const butteryDirs = await getButteryDocsDirectories(config);
+  const files = await getButteryDocsFiles(config);
+  const orderedFiles = orderButteryDocFiles(config, files);
+  const graph = await getButteryDocsGraph(config, orderedFiles);
+  const butteryDirs = await getButteryDocsDirectories(config);
 
-    // delete the existing app
+  // delete the existing app
+  try {
     LOG.debug("Removing existing routes...");
     await rm(butteryDirs.lib.apps.generated.app.routes, {
       recursive: true,
       force: true
     });
     LOG.debug("Removing existing routes... done.");
+  } catch (error) {
+    throw LOG.fatal(new Error(error as string));
+  }
 
-    // Create the hashed build directory by copying the template to that directory recursively
+  // Create the hashed build directory by copying the template to that directory recursively
+  try {
     await cp(
       butteryDirs.lib.apps.template.root,
       butteryDirs.lib.apps.generated.root,
@@ -49,58 +53,17 @@ export const bootstrapApp = async (config: ButteryDocsConfig) => {
       );
       return copyFile(file.fsPath, routeFilePath);
     }, []);
-    await Promise.all(newRouteFiles);
+    await Promise.allSettled(newRouteFiles);
     LOG.debug("Populating routes directory with docs... done.");
+  } catch (error) {
+    throw LOG.fatal(new Error(error as string));
+  }
 
-    // switch (config.docs.build.target) {
-    //   case "cloudflare-pages": {
-    //     // Delete the entire output directory in the users .buttery/docs directory
-    //     await rm(butteryDirs.output.root, { recursive: true, force: true });
+  // create the data file
+  await bootstrapAppDataFile({ config, graph });
 
-    //     // copy over new routes
-    //     LOG.debug("Populating routes directory with docs...");
-
-    //     const filesAndDirs = await readdir(butteryDirs.userDocs.root, {
-    //       withFileTypes: true
-    //     });
-    //     const docsWithRemixFileConventions = filesAndDirs.reduce<
-    //       Promise<void>[]
-    //     >((accum, dirent) => {
-    //       if (!dirent.isFile()) return accum;
-
-    //       // ignore mac specific meta files
-    //       if (dirent.name === ".DS_Store") {
-    //         return accum;
-    //       }
-    //       const filePathSource = `${dirent.parentPath}/${dirent.name}`;
-    //       const fileNameDest =
-    //         dirent.name === "_index.md" || dirent.name === "_index.mdx"
-    //           ? dirent.name
-    //           : dirent.name
-    //               .split(".")
-    //               .reduce<string>((accum, segment, index, origArr) => {
-    //                 if (index === 0) {
-    //                   return butteryDirs.lib.apps.generated.app.routePrefix.concat(
-    //                     segment
-    //                   );
-    //                 }
-    //                 if (index < origArr.length - 1) {
-    //                   return accum.concat("_.".concat(segment));
-    //                 }
-    //                 return accum.concat(".".concat(segment));
-    //               }, "");
-
-    //       const filePathDest = path.resolve(routesDir, fileNameDest);
-    //       return accum.concat(copyFile(filePathSource, filePathDest));
-    //     }, []);
-    //     await Promise.all(docsWithRemixFileConventions);
-    //     LOG.debug("Populating routes directory with docs... done.");
-
-    // write the data file that creates the order, table of contents,
-    // and headers
-    await bootstrapAppDataFile({ config, graph });
-
-    // write a temp package.json
+  // write a temp package.json
+  try {
     const packageJsonPath = path.resolve(
       butteryDirs.lib.apps.generated.root,
       "./package.json"
@@ -116,6 +79,8 @@ export const bootstrapApp = async (config: ButteryDocsConfig) => {
     const packageJsonString = JSON.stringify(packageJsonContent, null, 2);
     await writeFile(packageJsonPath, packageJsonString);
   } catch (error) {
-    throw `Failed to copy necessary files to dev directory for development: ${error}`;
+    throw LOG.fatal(new Error(error as string));
   }
+
+  LOG.debug("Bootstrapping app... done.");
 };
