@@ -9,7 +9,7 @@ export async function createIconComponents(dirs: ButteryIconsDirectories) {
   const createComponents = () =>
     new Promise<void>((resolve, reject) => {
       exec(
-        `svgr --out-dir ${dirs.output.generated} --filename-case kebab --jsx-runtime automatic --no-index --title-prop -- ${dirs.entry.svgDir}`,
+        `svgr --out-dir ${dirs.output.generated} --filename-case kebab --typescript --jsx-runtime automatic --no-index --title-prop -- ${dirs.entry.svgDir}`,
         (error, stdout) => {
           if (error) {
             reject(stdout);
