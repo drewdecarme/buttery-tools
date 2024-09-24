@@ -1,12 +1,10 @@
 import path from "node:path";
 import { exhaustiveMatchGuard } from "../../../utils/ts";
 
-import { cp, readdir } from "node:fs/promises";
+import { readdir } from "node:fs/promises";
 import { exit } from "node:process";
 import { viteBuild } from "@remix-run/dev/dist/cli/commands.js";
 import { ensureDir } from "fs-extra";
-import { build } from "vite";
-import { runCommand } from "../../../utils/node/util.node.run-command";
 import { LOG } from "../_logger/util.ts.logger";
 import type { ButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectories";
