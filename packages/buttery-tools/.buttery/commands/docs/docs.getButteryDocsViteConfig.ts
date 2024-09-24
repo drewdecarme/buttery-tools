@@ -30,9 +30,6 @@ export async function getButteryDocsViteConfig() {
   const baseConfig: UserConfig = {
     root: dirs.artifacts.apps.template.root,
     publicDir: dirs.srcDocs.public,
-    build: {
-      outDir: dirs.output.root
-    },
     resolve: {
       alias: [
         // change the import path to the .buttery/.store
@@ -57,7 +54,6 @@ export async function getButteryDocsViteConfig() {
       mdxTransformImports({
         rootPath: config.paths.rootDir
       }),
-      // TODO: Fix this
       mdxTransformCodeExamples({
         rootPath: config.paths.rootDir
       }),

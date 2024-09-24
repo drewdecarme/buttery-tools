@@ -3,6 +3,7 @@ import { exhaustiveMatchGuard } from "../../../utils/ts";
 
 import { cp, readdir } from "node:fs/promises";
 import { exit } from "node:process";
+import { ensureDir } from "fs-extra";
 import { runCommand } from "../../../utils/node/util.node.run-command";
 import { LOG } from "../_logger/util.ts.logger";
 import type { ButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
@@ -12,13 +13,15 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
   const dirs = await getButteryDocsDirectories(config);
   LOG.debug("Building distribution files...");
 
+  await ensureDir(dirs.output.root);
+
   try {
     switch (config.docs.buildTarget) {
       case "cloudflare-pages": {
         process.env.REMIX_ROOT = dirs.artifacts.apps.template.root;
 
         await runCommand(
-          `npx remix vite:build --config ${dirs.output.root} --emptyOutDir --logLevel=error`
+          `npx remix vite:build --config ${dirs.artifacts.apps.template.viteConfig} --emptyOutDir --logLevel=error`
         );
 
         // Move the build to the local dist
