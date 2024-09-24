@@ -41,7 +41,7 @@
     "build": "yarn tokens:build && yarn cli:build && yarn lib:build",
     "dev": "yarn cli:dev",
     "cli:dev": "tsx ./scripts/local.commands.dev",
-    "cli:build": "tsx ./scripts/local.commands.build.ts",
+    "docs:deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools",
     "lib:build": "yarn tsc --project tsconfig.library.json",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
