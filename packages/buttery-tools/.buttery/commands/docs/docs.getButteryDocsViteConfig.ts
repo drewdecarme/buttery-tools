@@ -15,9 +15,9 @@ import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
 import { getButteryDocsGraph } from "./docs.getButteryDocsGraph";
 import { orderButteryDocFiles } from "./docs.orderButteryDocFiles";
 import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
-// import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
 import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports";
 import { transformMarkdownAssetPath } from "./docs.vite-plugin-transform-markdown-asset-path";
+import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
 // import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
 
 export async function getButteryDocsViteConfig() {
@@ -28,7 +28,6 @@ export async function getButteryDocsViteConfig() {
   const graph = await getButteryDocsGraph(config, orderedFiles);
 
   const baseConfig: UserConfig = {
-    root: dirs.artifacts.apps.template.root,
     publicDir: dirs.srcDocs.public,
     build: {
       manifest: true,
@@ -62,7 +61,6 @@ export async function getButteryDocsViteConfig() {
         rootPath: config.paths.rootDir
       }),
       mdx({
-        include: "/**/*.(md|mdx)",
         remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
         rehypePlugins: [
           rehypeSlug,
@@ -84,12 +82,28 @@ export async function getButteryDocsViteConfig() {
           ]
         ]
       }),
+      {
+        enforce: "pre",
+        name: "rewrite-manifest-entries",
+        apply: "build",
+        generateBundle(_options, bundle) {
+          // Ensure there's a manifest file in the output
+          const manifestFile = Object.keys(bundle).find((file) =>
+            file.endsWith("manifest.json")
+          );
+
+          if (!manifestFile) {
+            console.error("No manifest.json found in the bundle.");
+          }
+
+          console.log(manifestFile);
+        }
+      },
       remixCloudflareDevProxy(),
       remix({
-        manifest: true,
         buildDirectory: dirs.output.root,
+        manifest: true,
         future: {
-          unstable_lazyRouteDiscovery: true,
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true,
           v3_throwAbortReason: true
@@ -98,7 +112,10 @@ export async function getButteryDocsViteConfig() {
           return defineRoutes((route) => {
             // register the index route
             const { _index: indexRoute } = graph;
-            route(indexRoute.routeAbs, indexRoute.filepath, { index: true });
+
+            route(indexRoute.routeAbs, indexRoute.filepath, {
+              index: true
+            });
 
             // register the docs layout route
             const docsLayoutPath = path.resolve(
@@ -117,8 +134,8 @@ export async function getButteryDocsViteConfig() {
             });
           });
         }
-      })
-      // watchDocsPlugin(config, dirs)
+      }),
+      watchDocsPlugin(config, dirs),
       // {
       //   name: "watch-buttery-config",
       //   configureServer(server) {
@@ -167,9 +184,11 @@ export async function getButteryDocsViteConfig() {
     fn: (params: {
       config: typeof config;
       dirs: typeof dirs;
+      orderedFiles: typeof orderedFiles;
+      graph: typeof graph;
     }) => T
   ) {
-    const userConfig = fn({ config, dirs });
+    const userConfig = fn({ config, dirs, orderedFiles, graph });
     return mergeConfig<UserConfig, UserConfig>(baseConfig, userConfig);
   };
 }

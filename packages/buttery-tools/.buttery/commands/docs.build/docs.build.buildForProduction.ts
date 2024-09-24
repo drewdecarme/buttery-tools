@@ -23,9 +23,12 @@ export const buildForProduction = async (config: ButteryDocsConfig) => {
         process.env.REMIX_ROOT = dirs.artifacts.apps.template.root;
 
         await viteBuild(dirs.artifacts.apps.template.root, {
+          emptyOutDir: true,
+          clearScreen: false,
+          // force: true,
           config: dirs.artifacts.apps.template.viteConfig,
           mode: "production",
-          logLevel: "error"
+          logLevel: "info"
         });
 
         // await runCommand(

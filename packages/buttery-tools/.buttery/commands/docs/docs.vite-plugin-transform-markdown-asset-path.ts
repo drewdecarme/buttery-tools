@@ -20,10 +20,6 @@ export function transformMarkdownAssetPath(): Plugin {
           map: null
         };
       }
-      return {
-        code,
-        map: null
-      };
     }
   };
 }
