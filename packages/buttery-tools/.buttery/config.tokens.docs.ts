@@ -53,7 +53,8 @@ export const ConfigTokensDocs: ButteryConfigTokens = {
       },
       variants: {
         mode: "auto",
-        numOfVariants: 10
+        numOfVariants: 10,
+        scaleMin: 5
       }
     },
     static: {

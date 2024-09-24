@@ -16,7 +16,7 @@ const template: CompileFunction = ({
   const staticColorUnion = methods.createTypeUnion(staticColorNames);
 
   return `export type ColorStatic = ${staticColorUnion};
-export type MakeColorStatic = (color: ColorStatic, options?: { opacity?: number }) => string;
+export type MakeColorStatic = (tokenName: ColorStatic, options?: { opacity?: number }) => string;
 
 /**
  * ## Description
@@ -45,9 +45,9 @@ export type MakeColorStatic = (color: ColorStatic, options?: { opacity?: number 
  * \`
  * \`\`\`
  */
-export const ${functionName}: MakeColorStatic = (color, options) => {
+export const ${functionName}: MakeColorStatic = (tokenName, options) => {
   const opacity = options?.opacity ?? 1;
-  return \`hsla(var(${cssVarPrefix}-\${color}-h), var(${cssVarPrefix}-\${color}-s), var(${cssVarPrefix}-\${color}-l), \${opacity})\`;
+  return \`rgba(var(${cssVarPrefix}-\${tokenName}-rgb), \${opacity})\`;
 };
 `;
 };

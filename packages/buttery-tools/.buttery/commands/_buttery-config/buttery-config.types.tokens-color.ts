@@ -113,6 +113,12 @@ export type ButteryTokensColorShadeVariantAuto = {
    * with your base color being the first variant.
    */
   numOfVariants: number;
+  /**
+   * The lightness factor of the derived scale. A higher value
+   * creates a lighter variant floor
+   * @default 5
+   */
+  scaleMin?: number;
 };
 export type ButteryTokensColorShadeVariantManual = {
   /**

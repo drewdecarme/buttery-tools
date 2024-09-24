@@ -58,8 +58,8 @@ export type MakeColorShade = (tokenName: ColorShade, options?: { variant?: Color
  */
 export const ${functionName}: MakeColorShade = (tokenName, options) => {
   const opacity = options?.opacity ?? 1;
-  const variant = options?.variant ? \`\${options.variant}\` : "";
-  return \`hsla(var(${cssVarPrefix}-\${tokenName}-\${variant}-hsl), \${opacity})\`;
+  const variant = options?.variant ? \`\${options.variant}-\` : "";
+  return \`rgba(var(${cssVarPrefix}-\${tokenName}-\${variant}rgb), \${opacity})\`;
 };
 `;
 };

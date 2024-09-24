@@ -75,8 +75,8 @@ export type MakeColorBrand = (tokenName: ColorBrand, options?: { variant?: Color
  */
 export const ${functionName}: MakeColorBrand = (tokenName, options) => {
   const opacity = options?.opacity ?? 1;
-  const variant = options?.variant ? \`\${options.variant}\` : "";
-  return \`rgba(var(${cssVarPrefix}-\${tokenName}-\${variant}-rgb), \${opacity})\`;
+  const variant = options?.variant ? \`\${options.variant}-\` : "";
+  return \`rgba(var(${cssVarPrefix}-\${tokenName}-\${variant}rgb), \${opacity})\`;
 };
 `;
 };
