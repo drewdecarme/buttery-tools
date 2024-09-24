@@ -15,7 +15,7 @@ export function watchDocsPlugin(
   return {
     name: "vite-plugin-watch-docs",
     configureServer(server) {
-      const watcher = chokidar.watch(butteryDirs.userDocs.root);
+      const watcher = chokidar.watch(butteryDirs.srcDocs.root, {});
 
       watcher.on("change", async (file) => {
         if (file.endsWith(".md") || file.endsWith(".mdx")) {
@@ -24,9 +24,11 @@ export function watchDocsPlugin(
           const outFileName =
             filename === "_index"
               ? filename
-              : butteryDirs.lib.apps.generated.app.routePrefix.concat(filename);
+              : butteryDirs.artifacts.apps.template.app.routePrefix.concat(
+                  filename
+                );
           const outFile = path.resolve(
-            butteryDirs.lib.apps.generated.app.routes,
+            butteryDirs.artifacts.apps.template.app.routes,
             outFileName
           );
 

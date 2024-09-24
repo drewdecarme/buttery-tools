@@ -26,7 +26,7 @@ export function mdxTransformCodeExamples(
         const transformedPath = path.join(options.rootPath, p1);
         const previewBlockPath = path.join(
           options.rootPath,
-          "/src/docs/PreviewBlock.tsx"
+          "/lib/buttery-components/docs/PreviewBlock.tsx"
         );
         const codeBlock = readFileSync(transformedPath, { encoding: "utf8" });
         const newCode = `
@@ -65,8 +65,8 @@ import { default as Component${matchNum} } from "${transformedPath}";
 
       return {
         code: transformedFence,
-        map: null, // Provide source map if necessary
+        map: null // Provide source map if necessary
       };
-    },
+    }
   };
 }

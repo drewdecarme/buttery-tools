@@ -1,6 +1,5 @@
 import type { CommandAction, CommandMeta } from "../../../lib/buttery-commands";
 import { LOG } from "../_logger/util.ts.logger";
-import { bootstrapApp } from "../docs/docs.bootstrapApp";
 import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
 import { buildForProduction } from "./docs.build.buildForProduction";
 
@@ -13,8 +12,6 @@ export const meta: CommandMeta = {
 export const action: CommandAction = async () => {
   try {
     const butteryDocsConfig = await getButteryDocsConfig();
-
-    await bootstrapApp(butteryDocsConfig);
 
     await buildForProduction(butteryDocsConfig);
   } catch (error) {

@@ -4,9 +4,9 @@ import { LayoutBodyMain } from "../../../../components/layout/LayoutBodyMain";
 import { LayoutBodyNav } from "../../../../components/layout/LayoutBodyNav";
 import { LayoutBodyTOC } from "../../../../components/layout/LayoutBodyTOC";
 
+import { graph } from "@buttery/docs/data";
 import type { HeadersFunction, MetaFunction } from "@remix-run/cloudflare";
 import { getGraphValueThatMatchesPathname } from "../../../../utils";
-import { graph } from "../data";
 
 export async function loader() {
   return json({

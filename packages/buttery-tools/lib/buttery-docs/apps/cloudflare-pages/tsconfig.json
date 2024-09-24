@@ -21,7 +21,10 @@
     "allowJs": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-
+    "baseUrl": ".",
+    "paths": {
+      "@buttery/docs/data": ["./app/data.ts"]
+    },
     // Vite takes care of building everything, not tsc.
     "noEmit": true
   }

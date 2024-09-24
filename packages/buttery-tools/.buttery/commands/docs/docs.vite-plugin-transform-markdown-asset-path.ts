@@ -1,9 +1,12 @@
+import type { Plugin } from "vite";
+
 /**
  * This plugin scans .md files and transforms the
  * asset paths from ./public/... to /... during the build process.
  */
-export function transformMarkdownAssetPath() {
+export function transformMarkdownAssetPath(): Plugin {
   return {
+    enforce: "pre",
     name: "markdown-image-path-transform",
     transform(code: string, id: string) {
       if (id.endsWith(".md")) {
@@ -14,9 +17,13 @@ export function transformMarkdownAssetPath() {
         );
         return {
           code: transformedCode,
-          map: null,
+          map: null
         };
       }
-    },
+      return {
+        code,
+        map: null
+      };
+    }
   };
 }

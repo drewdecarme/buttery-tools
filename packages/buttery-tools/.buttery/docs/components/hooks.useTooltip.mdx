@@ -12,7 +12,7 @@ A fully accessible, semantically correct, and SSR enabled hook
 for creating a bubble near a focusable target to provide clarifying
 or auxialry information to the user surrounding the use of that target.
 
-{/* fence:"src/hooks/useTooltip/examples/UseTooltip.code.tsx" */}
+{/* fence:"lib/buttery-components/hooks/useTooltip/examples/UseTooltip.code.tsx" */}
 
 The `useTooltip` hook is an extension of the [useDropdown](./hooks.useDropdown.mdx) hook that internally uses the [usePopover](./hooks.usePopover.mdx)
 hook to turn the `tooltip` target into a [Popover](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API). The `useDropdown` hook enables us to easily position the tooltip around the target
@@ -40,7 +40,7 @@ Eaxmples of this include but aren't limited to:
 
 You can easily enable this functionality by changing the `dxType="tooltip"` in the `useTooltip` hook.
 
-{/* example:"src/hooks/useTooltip/examples/UseTooltip.example.tsx" */}
+{/* example:"lib/buttery-components/hooks/useTooltip/examples/UseTooltip.example.tsx" */}
 
 ### Toggletip
 
@@ -58,7 +58,7 @@ Examples of this include but aren't limited to:
 
 You can easily enable this functionality by changing the `dxType="toggletip"` in the `useTooltip` hook.
 
-{/* example:"src/hooks/useTooltip/examples/UseTooltipToggletip.example.tsx" */}
+{/* example:"lib/buttery-components/hooks/useTooltip/examples/UseTooltipToggletip.example.tsx" */}
 
 ## Styling
 
@@ -71,7 +71,7 @@ You can easily enable this functionality by changing the `dxType="toggletip"` in
 Naturally, as with any application, there are instances where actions are going to be ambiguous
 which thus makes a target ambiguous. Let's take a "like" button for instance shown in the example below.
 
-{/* example:"src/hooks/useTooltip/examples/UseTooltipWithCount.example.tsx" */}
+{/* example:"lib/buttery-components/hooks/useTooltip/examples/UseTooltipWithCount.example.tsx" */}
 
 There is a primary action which associated with _**smashing that like button**_, but to screen readers it's not
 ultimately clear unless we add some more content.

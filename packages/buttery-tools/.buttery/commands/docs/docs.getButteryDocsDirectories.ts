@@ -1,6 +1,5 @@
 import path from "node:path";
 import { findDirectoryUpwards } from "../../../utils/node";
-import { hashString } from "../../../utils/ts/util.ts.hash-string";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 
 export type ButteryDocsDirectories = Awaited<
@@ -23,20 +22,15 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
   }
 
   // lib directories
-  const libRootDir = path.resolve(lib, "./buttery-docs");
-  const libAppsDir = path.resolve(libRootDir, "./apps");
-  const libComponentsDir = path.resolve(libRootDir, "./components");
-  const libLibDir = path.resolve(libRootDir, "./lib");
+  const artifactsRootDir = path.resolve(lib, "./buttery-docs");
+  const libAppsDir = path.resolve(artifactsRootDir, "./apps");
+  const libComponentsDir = path.resolve(artifactsRootDir, "./components");
+  const libLibDir = path.resolve(artifactsRootDir, "./lib");
 
   // apps directories
-  const templateName = `./_template-${config.docs.buildTarget}`;
-  const appName = "app.".concat(hashString(config.paths.rootDir));
+  const templateName = `./${config.docs.buildTarget}`;
 
   const appTemplateRootDir = path.resolve(libAppsDir, templateName);
-
-  const appGenRootDir = path.resolve(libAppsDir, appName);
-  const appGenAppRootDir = path.resolve(appGenRootDir, "./app");
-  const appGenAppRoutesDir = path.resolve(appGenAppRootDir, "./routes");
 
   // output dirs
   const outputRootDir = path.resolve(userCreatedDocsDir, "./dist");
@@ -48,28 +42,18 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
      * they create their markdown|mdx files to then be created into
      * the app
      */
-    userDocs: {
+    srcDocs: {
       root: userCreatedDocsDir,
       public: path.resolve(userCreatedDocsDir, "./public")
     },
-    lib: {
-      root: libRootDir,
+    artifacts: {
+      root: artifactsRootDir,
       apps: {
         root: libAppsDir,
         template: {
-          root: appTemplateRootDir
-        },
-        generated: {
-          root: appGenRootDir,
-          app: {
-            root: appGenAppRootDir,
-            /**
-             * The prefix that is added to the docs to ensure that the docs layout
-             * is only applied to the docs and not to the root index page
-             */
-            routePrefix: "_docs.",
-            routes: appGenAppRoutesDir
-          }
+          root: appTemplateRootDir,
+          viteConfig: path.resolve(appTemplateRootDir, "./vite.config.ts"),
+          dataFile: path.resolve(config.paths.storeDir, "./docs/data.js")
         }
       },
       components: libComponentsDir,

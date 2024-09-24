@@ -76,7 +76,7 @@ export async function getButteryDocsFiles(
 
   // get the files inside of the docs directory
   // and enrich them with some of the data
-  const docsDirContents = await readdir(docsDirectories.userDocs.root, {
+  const docsDirContents = await readdir(docsDirectories.srcDocs.root, {
     recursive: false,
     withFileTypes: true
   });
@@ -84,7 +84,7 @@ export async function getButteryDocsFiles(
   LOG.info(`Detected routeStrategy: ${config.docs.routeStrategy}`);
 
   const routeStrategy = config.docs.routeStrategy ?? "section-folders";
-  const routePrefix = docsDirectories.lib.apps.generated.app.routePrefix;
+  const routePrefix = "_docs.";
   switch (routeStrategy) {
     case "flat":
       return readDirContents(docsDirContents, { routePrefix });
