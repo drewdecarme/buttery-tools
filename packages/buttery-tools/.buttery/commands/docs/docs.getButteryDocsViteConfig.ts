@@ -28,7 +28,9 @@ export async function getButteryDocsViteConfig() {
   const graph = await getButteryDocsGraph(config, orderedFiles);
 
   const baseConfig: UserConfig = {
+    root: dirs.artifacts.apps.working.root,
     publicDir: dirs.srcDocs.public,
+    clearScreen: false,
     build: {
       manifest: true,
       emptyOutDir: true
@@ -37,8 +39,16 @@ export async function getButteryDocsViteConfig() {
       alias: [
         // change the import path to the .buttery/.store
         {
-          find: "@buttery/docs/data",
-          replacement: dirs.artifacts.apps.template.dataFile
+          find: "~/buttery/docs/data",
+          replacement: dirs.artifacts.apps.working.dataFile
+        },
+        {
+          find: "~/buttery/docs/components",
+          replacement: dirs.artifacts.components
+        },
+        {
+          find: "~/buttery/docs/utils",
+          replacement: dirs.artifacts.utils
         }
       ]
     },
@@ -57,9 +67,9 @@ export async function getButteryDocsViteConfig() {
       mdxTransformImports({
         rootPath: config.paths.rootDir
       }),
-      mdxTransformCodeExamples({
-        rootPath: config.paths.rootDir
-      }),
+      // mdxTransformCodeExamples({
+      //   rootPath: config.paths.rootDir
+      // }),
       mdx({
         remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
         rehypePlugins: [
@@ -82,60 +92,43 @@ export async function getButteryDocsViteConfig() {
           ]
         ]
       }),
-      {
-        enforce: "pre",
-        name: "rewrite-manifest-entries",
-        apply: "build",
-        generateBundle(_options, bundle) {
-          // Ensure there's a manifest file in the output
-          const manifestFile = Object.keys(bundle).find((file) =>
-            file.endsWith("manifest.json")
-          );
-
-          if (!manifestFile) {
-            console.error("No manifest.json found in the bundle.");
-          }
-
-          console.log(manifestFile);
-        }
-      },
       remixCloudflareDevProxy(),
       remix({
-        buildDirectory: dirs.output.root,
         manifest: true,
+        buildDirectory: dirs.output.root,
         future: {
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true,
           v3_throwAbortReason: true
-        },
-        routes(defineRoutes) {
-          return defineRoutes((route) => {
-            // register the index route
-            const { _index: indexRoute } = graph;
-
-            route(indexRoute.routeAbs, indexRoute.filepath, {
-              index: true
-            });
-
-            // register the docs layout route
-            const docsLayoutPath = path.resolve(
-              dirs.artifacts.apps.template.root,
-              "./app/routes/_docs.tsx"
-            );
-            route("", docsLayoutPath, () => {
-              // register all of the child routes
-              for (const file of orderedFiles) {
-                if (file.filename === "_index") continue;
-
-                route(file.routePath, file.fsPath, {
-                  index: file.filename.includes("_index")
-                });
-              }
-            });
-          });
         }
-      }),
-      watchDocsPlugin(config, dirs),
+        // routes(defineRoutes) {
+        //   return defineRoutes((route) => {
+        //     // register the index route
+        //     const { _index: indexRoute } = graph;
+
+        //     route(indexRoute.routeAbs, indexRoute.filepath, {
+        //       index: true
+        //     });
+
+        //     // register the docs layout route
+        //     const docsLayoutPath = path.resolve(
+        //       dirs.artifacts.apps.template.root,
+        //       "./app/routes/_docs.tsx"
+        //     );
+        //     route("", docsLayoutPath, () => {
+        //       // register all of the child routes
+        //       for (const file of orderedFiles) {
+        //         if (file.filename === "_index") continue;
+
+        //         route(file.routePath, file.fsPath, {
+        //           index: file.filename.includes("_index")
+        //         });
+        //       }
+        //     });
+        //   });
+        // }
+      })
+      // watchDocsPlugin(config, dirs)
       // {
       //   name: "watch-buttery-config",
       //   configureServer(server) {

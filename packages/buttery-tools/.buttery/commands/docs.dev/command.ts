@@ -29,15 +29,15 @@ export const options: CommandOptions<{
 export const action: CommandAction<typeof options> = async ({ options }) => {
   const prompt = !options?.["no-prompt"];
 
-  await bootstrapButteryDocsApp({ prompt });
-
   const config = await getButteryDocsConfig({ prompt });
   const dirs = await getButteryDocsDirectories(config);
+
+  await bootstrapButteryDocsApp(config, dirs);
 
   try {
     // Create the server
     const viteServer = await createServer({
-      configFile: dirs.artifacts.apps.template.viteConfig,
+      configFile: dirs.artifacts.apps.working.viteConfig,
       server: {
         port: 1600,
         open: true

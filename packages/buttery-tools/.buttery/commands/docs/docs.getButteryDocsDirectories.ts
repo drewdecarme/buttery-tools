@@ -1,5 +1,6 @@
 import path from "node:path";
 import { findDirectoryUpwards } from "../../../utils/node";
+import { hashString } from "../../../utils/ts/util.ts.hash-string";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 
 export type ButteryDocsDirectories = Awaited<
@@ -25,12 +26,19 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
   const artifactsRootDir = path.resolve(lib, "./buttery-docs");
   const libAppsDir = path.resolve(artifactsRootDir, "./apps");
   const libComponentsDir = path.resolve(artifactsRootDir, "./components");
-  const libLibDir = path.resolve(artifactsRootDir, "./lib");
+  const libUtilsDir = path.resolve(artifactsRootDir, "./utils");
 
   // apps directories
-  const templateName = `./${config.docs.buildTarget}`;
+  const templateAppRootDir = path.resolve(
+    libAppsDir,
+    `./${config.docs.buildTarget}`
+  );
 
-  const appTemplateRootDir = path.resolve(libAppsDir, templateName);
+  const workingAppDirHash = hashString(config.docs.buildTarget);
+  const workingAppRootDir = path.resolve(
+    config.paths.storeDir,
+    `./docs/${workingAppDirHash}`
+  );
 
   // output dirs
   const outputRootDir = path.resolve(userCreatedDocsDir, "./dist");
@@ -51,13 +59,17 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
       apps: {
         root: libAppsDir,
         template: {
-          root: appTemplateRootDir,
-          viteConfig: path.resolve(appTemplateRootDir, "./vite.config.ts"),
-          dataFile: path.resolve(config.paths.storeDir, "./docs/data.js")
+          root: templateAppRootDir
+        },
+        working: {
+          root: workingAppRootDir,
+          routes: path.resolve(workingAppRootDir, "./app/routes"),
+          dataFile: path.resolve(workingAppRootDir, "./app/data.ts"),
+          viteConfig: path.resolve(workingAppRootDir, "./vite.config.ts")
         }
       },
       components: libComponentsDir,
-      lib: libLibDir
+      utils: libUtilsDir
     },
     output: {
       root: outputRootDir,
