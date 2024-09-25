@@ -2140,6 +2140,7 @@ __metadata:
     "@wyw-in-js/babel-preset": "npm:0.5.4"
     "@wyw-in-js/vite": "npm:0.5.4"
     body-parser: "npm:1.20.3"
+    changesets: "npm:^1.0.2"
     chokidar: "npm:4.0.1"
     chroma-js: "npm:^3.1.1"
     clsx: "npm:2.1.1"
@@ -6736,6 +6737,13 @@ __metadata:
     ansi-styles: "npm:^4.1.0"
     supports-color: "npm:^7.1.0"
   checksum: 10c0/4a3fef5cc34975c898ffe77141450f679721df9dde00f6c304353fa9c8b571929123b26a0e4617bde5018977eb655b31970c297b91b63ee83bb82aeb04666880
+  languageName: node
+  linkType: hard
+
+"changesets@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "changesets@npm:1.0.2"
+  checksum: 10c0/fd72972b7ef59a2c8ba7a5fd0d483e9893921171358027203b9335ede5cb5541b68f2c42f4651f89b151c2936a909fe85b36ea79a3dad22b33e1e912b5aa5931
   languageName: node
   linkType: hard
 
