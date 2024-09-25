@@ -1,4 +1,4 @@
-import { readdir } from "node:fs/promises";
+import { cp, readdir } from "node:fs/promises";
 import path from "node:path";
 import { exit } from "node:process";
 import { viteBuild } from "@remix-run/dev/dist/cli/commands.js";
@@ -28,6 +28,23 @@ export const action: CommandAction = async () => {
       config: dirs.artifacts.apps.working.viteConfig,
       logLevel: "info"
     });
+
+    switch (config.docs.buildTarget) {
+      case "cloudflare-pages": {
+        // move functions to local dist
+        const functionsDir = path.resolve(
+          dirs.artifacts.apps.working.root,
+          "./functions"
+        );
+        await cp(functionsDir, path.resolve(dirs.output.root, "./functions"), {
+          recursive: true
+        });
+        break;
+      }
+
+      default:
+        break;
+    }
 
     // Report the success
     const filesAndDirs = await readdir(dirs.output.root, {

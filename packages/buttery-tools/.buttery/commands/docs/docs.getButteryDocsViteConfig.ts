@@ -8,7 +8,10 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
+import { defineConfig } from "rollup";
 import { type UserConfig, mergeConfig } from "vite";
+import butteryIcons from "../../../lib/buttery-icons/vite-plugin-buttery-icons";
+// import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
 import { getButteryDocsFiles } from "./docs.getButteryDocFiles";
 import { getButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
@@ -18,7 +21,6 @@ import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
 import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports";
 import { transformMarkdownAssetPath } from "./docs.vite-plugin-transform-markdown-asset-path";
 import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
-// import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
 
 export async function getButteryDocsViteConfig() {
   const config = await getButteryDocsConfig();
@@ -67,9 +69,9 @@ export async function getButteryDocsViteConfig() {
       mdxTransformImports({
         rootPath: config.paths.rootDir
       }),
-      // mdxTransformCodeExamples({
-      //   rootPath: config.paths.rootDir
-      // }),
+      mdxTransformCodeExamples({
+        rootPath: config.paths.rootDir
+      }),
       mdx({
         remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
         rehypePlugins: [
@@ -95,39 +97,15 @@ export async function getButteryDocsViteConfig() {
       remixCloudflareDevProxy(),
       remix({
         manifest: true,
-        buildDirectory: dirs.output.root,
+        buildDirectory: dirs.output.bundleDir,
         future: {
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true,
           v3_throwAbortReason: true
         }
-        // routes(defineRoutes) {
-        //   return defineRoutes((route) => {
-        //     // register the index route
-        //     const { _index: indexRoute } = graph;
+      }),
+      await butteryIcons()
 
-        //     route(indexRoute.routeAbs, indexRoute.filepath, {
-        //       index: true
-        //     });
-
-        //     // register the docs layout route
-        //     const docsLayoutPath = path.resolve(
-        //       dirs.artifacts.apps.template.root,
-        //       "./app/routes/_docs.tsx"
-        //     );
-        //     route("", docsLayoutPath, () => {
-        //       // register all of the child routes
-        //       for (const file of orderedFiles) {
-        //         if (file.filename === "_index") continue;
-
-        //         route(file.routePath, file.fsPath, {
-        //           index: file.filename.includes("_index")
-        //         });
-        //       }
-        //     });
-        //   });
-        // }
-      })
       // watchDocsPlugin(config, dirs)
       // {
       //   name: "watch-buttery-config",
@@ -185,3 +163,30 @@ export async function getButteryDocsViteConfig() {
     return mergeConfig<UserConfig, UserConfig>(baseConfig, userConfig);
   };
 }
+
+// routes(defineRoutes) {
+//   return defineRoutes((route) => {
+//     // register the index route
+//     const { _index: indexRoute } = graph;
+
+//     route(indexRoute.routeAbs, indexRoute.filepath, {
+//       index: true
+//     });
+
+//     // register the docs layout route
+//     const docsLayoutPath = path.resolve(
+//       dirs.artifacts.apps.template.root,
+//       "./app/routes/_docs.tsx"
+//     );
+//     route("", docsLayoutPath, () => {
+//       // register all of the child routes
+//       for (const file of orderedFiles) {
+//         if (file.filename === "_index") continue;
+
+//         route(file.routePath, file.fsPath, {
+//           index: file.filename.includes("_index")
+//         });
+//       }
+//     });
+//   });
+// }

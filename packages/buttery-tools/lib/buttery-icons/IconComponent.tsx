@@ -17,7 +17,7 @@ export const IconComponent = forwardRef<HTMLDivElement, IconComponent>(
     { children, className, icon, ddSize = "inherit", ...restProps },
     ref
   ) {
-    const Icon = lazy(() => import(`./generated/${icon}.js`));
+    const Icon = lazy(() => import(`./generated/${icon}.tsx`));
 
     return (
       <div

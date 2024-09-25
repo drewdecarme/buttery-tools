@@ -61,6 +61,7 @@
     "@storybook/react": "8.3.2",
     "@storybook/react-vite": "8.3.2",
     "@storybook/test": "8.3.2",
+    "@svgr/rollup": "^8.1.0",
     "@types/babel__core": "7.20.5",
     "@types/body-parser": "1.19.5",
     "@types/chroma-js": "^2.4.4",
@@ -87,6 +88,7 @@
     "@remix-run/react": "2.12.1",
     "@shikijs/rehype": "1.18.0",
     "@svgr/cli": "^8.1.0",
+    "@svgr/core": "^8.1.0",
     "@types/mdx": "2.0.13",
     "@vitejs/plugin-react": "^4.3.1",
     "@wyw-in-js/babel-preset": "0.5.4",
@@ -124,6 +126,7 @@
     "vite": "5.4.7",
     "vite-bundle-visualizer": "^1.2.1",
     "vite-plugin-inspect": "^0.8.7",
+    "vite-plugin-svgr": "^4.2.0",
     "wrangler": "^3.78.8"
   },
   "bin": {

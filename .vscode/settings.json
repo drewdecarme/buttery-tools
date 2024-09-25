@@ -6,7 +6,8 @@
     "fooded",
     "frontmatter",
     "invoicer",
-    "Jsonify"
+    "Jsonify",
+    "svgs"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.formatOnSave": true
