@@ -2,11 +2,11 @@
 "@buttery/tools": minor
 ---
 
-Bootstraps all of the tools together; initial baseline
+## v0.0.1 - Bootstraps all of the tools together; initial baseline
 
 ### Overview
 
-This release is focused on providing a baseline for stability of all of the tools. The changes in this release are focused mainly on convention and establishing a working mental model for how all of the tools are written and then dogfood-ed using each other.
+This release is focused on providing a baseline for stability of all of the tools. The changes in this release are focused mainly on convention, repository architecture and establishing a working mental model for how all of the tools are written and then dogfood-ed using each other.
 
 ### What's Changed
 
