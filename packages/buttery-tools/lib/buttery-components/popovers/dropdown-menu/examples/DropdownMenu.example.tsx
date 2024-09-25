@@ -78,7 +78,6 @@ const menuClassName = css`
 
 export default () => {
   const { targetProps, dropdownProps } = useDropdownMenu({
-    id: "base",
     dxPosition: "right-middle",
   });
   return (

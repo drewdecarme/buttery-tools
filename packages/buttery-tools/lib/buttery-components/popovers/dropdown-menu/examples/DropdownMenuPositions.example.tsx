@@ -98,7 +98,6 @@ export default () => {
     []
   );
   const { targetProps, dropdownProps } = useDropdownMenu({
-    id: position,
     dxPosition: position,
     dxArrow: {
       size: 16,

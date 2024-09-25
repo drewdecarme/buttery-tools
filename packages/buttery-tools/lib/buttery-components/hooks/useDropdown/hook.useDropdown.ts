@@ -13,7 +13,7 @@ import {
 
 export type DropdownRefHandleOpen = (
   e?: React.MouseEvent,
-  options?: DropdownOptions
+  options?: UseDropdownOptions
 ) => void;
 
 export type DropdownRef = {
@@ -22,8 +22,10 @@ export type DropdownRef = {
   handleToggle: DropdownRefHandleOpen;
 };
 
+export type UseDropdownOptions = DropdownOptions & { id: string };
+
 export const useDropdown = <T extends HTMLElement>(
-  options: DropdownOptions
+  options: UseDropdownOptions
 ) => {
   const {
     popoverRef,

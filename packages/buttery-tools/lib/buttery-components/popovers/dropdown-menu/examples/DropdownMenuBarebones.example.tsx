@@ -2,9 +2,7 @@ import { DropdownMenu } from "../DropdownMenu";
 import { useDropdownMenu } from "../dropdown-menu.useDropdownMenu";
 
 export default () => {
-  const { targetProps, dropdownProps } = useDropdownMenu({
-    id: "barebones",
-  });
+  const { targetProps, dropdownProps } = useDropdownMenu();
 
   return (
     <>

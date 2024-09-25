@@ -9,24 +9,9 @@
   "files": [
     "bin",
     "dist",
-    "templates"
+    "lib"
   ],
   "type": "module",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "node": "./dist/index.js",
-      "require": "./dist/index.js"
-    },
-    "./invoke": {
-      "types": "./dist/invoke.d.ts",
-      "import": "./dist/invoke.js",
-      "node": "./dist/invoke.js",
-      "require": "./dist/invoke.js"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
@@ -38,10 +23,11 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "scripts": {
-    "build": "yarn tokens:build && yarn cli:build && yarn lib:build",
+    "build": "yarn cli:build && yarn buttery tokens build && yarn buttery icons build && yarn docs:release",
     "dev": "yarn cli:dev",
     "cli:dev": "tsx ./scripts/local.commands.dev",
-    "docs:deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools",
+    "cli:build": "tsx ./scripts/local.commands.build",
+    "docs:release": "yarn buttery docs build && cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools",
     "lib:build": "yarn tsc --project tsconfig.library.json",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -132,5 +118,6 @@
   },
   "bin": {
     "buttery": "./bin/index.js"
-  }
+  },
+  "types": "./dist/index.d.ts"
 }

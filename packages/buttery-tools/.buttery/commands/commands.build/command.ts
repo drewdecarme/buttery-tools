@@ -34,9 +34,5 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     LOG.level = "error";
   }
 
-  try {
-    await buildCommands({ watch: false, local: false });
-  } catch (error) {
-    throw new Error(error as string);
-  }
+  buildCommands({ watch: false, local: false });
 };

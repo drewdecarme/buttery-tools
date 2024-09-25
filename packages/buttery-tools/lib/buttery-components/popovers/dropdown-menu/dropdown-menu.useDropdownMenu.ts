@@ -1,20 +1,21 @@
-import { useCallback, useMemo, useRef } from "react";
-import type { DropdownOptions, DropdownRef } from "../../hooks";
+import { useCallback, useId, useMemo, useRef } from "react";
+import type { DropdownOptions, DropdownRef } from "../../hooks/useDropdown";
 
-export const useDropdownMenu = (options: DropdownOptions) => {
+export const useDropdownMenu = (options?: Omit<DropdownOptions, "id">) => {
+  const id = useId();
   const dropdownMenuRef = useRef<DropdownRef | null>(null);
 
   const openMenu = useCallback(() => {
-    dropdownMenuRef.current?.handleOpen(undefined, options);
-  }, [options]);
+    dropdownMenuRef.current?.handleOpen(undefined, { id, ...options });
+  }, [options, id]);
 
   const closeMenu = useCallback(() => {
     dropdownMenuRef.current?.handleClose();
   }, []);
 
   const toggleMenu = useCallback(() => {
-    dropdownMenuRef.current?.handleToggle(undefined, options);
-  }, [options]);
+    dropdownMenuRef.current?.handleToggle(undefined, { id, ...options });
+  }, [options, id]);
 
   const handleTargetKeyDown = useCallback<
     Required<JSX.IntrinsicElements["button"]>["onKeyDown"]
@@ -38,21 +39,21 @@ export const useDropdownMenu = (options: DropdownOptions) => {
     return {
       type: "button",
       "aria-expanded": false,
-      "aria-controls": options.id,
+      "aria-controls": id,
       onKeyDown: handleTargetKeyDown,
-      onClick: toggleMenu,
+      onClick: toggleMenu
     };
-  }, [handleTargetKeyDown, options.id, toggleMenu]);
+  }, [handleTargetKeyDown, id, toggleMenu]);
 
   const dropdownProps = useMemo<{
     options: DropdownOptions;
     ref: typeof dropdownMenuRef;
   }>(
     () => ({
-      options,
-      ref: dropdownMenuRef,
+      options: { id, ...options },
+      ref: dropdownMenuRef
     }),
-    [options]
+    [options, id]
   );
 
   return useMemo(
@@ -61,7 +62,7 @@ export const useDropdownMenu = (options: DropdownOptions) => {
       dropdownProps,
       openMenu,
       closeMenu,
-      toggleMenu,
+      toggleMenu
     }),
     [openMenu, closeMenu, toggleMenu, targetProps, dropdownProps]
   );

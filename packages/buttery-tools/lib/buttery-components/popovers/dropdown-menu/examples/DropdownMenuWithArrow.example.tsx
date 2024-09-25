@@ -78,7 +78,6 @@ const menuClassName = css`
 
 export default () => {
   const { targetProps, dropdownProps } = useDropdownMenu({
-    id: "with-arrow",
     dxArrow: {
       size: 16,
       color: "#fff",
