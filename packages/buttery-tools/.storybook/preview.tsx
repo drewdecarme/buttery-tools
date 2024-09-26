@@ -1,7 +1,6 @@
 import type { Preview } from "@storybook/react";
-import "../artifacts/tokens/.buttery-tokens/docs/index.css";
-import "../artifacts/tokens/.buttery-tokens/playground/index.css";
-import "@buttery/components/css";
+import "@buttery/tokens/docs/index.css";
+import "@buttery/tokens/playground/index.css";
 
 import React from "react";
 

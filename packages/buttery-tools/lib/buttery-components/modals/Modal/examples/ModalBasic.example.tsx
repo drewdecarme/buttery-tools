@@ -121,7 +121,7 @@ const styles = css`
   }
 `;
 
-export default function ModalBasic() {
+export default () => {
   const { modalRef, openModal, closeModal } = useModal();
 
   const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>((e) => {
@@ -170,4 +170,4 @@ export default function ModalBasic() {
       </Modal>
     </>
   );
-}
+};

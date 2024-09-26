@@ -6,9 +6,8 @@ import {
   useImperativeHandle,
   useMemo,
   useRef,
-  useState,
+  useState
 } from "react";
-import { usePortal } from "./usePortal/hook.usePortal";
 
 export type ModalDefaultState = Record<string, unknown>;
 
@@ -27,9 +26,19 @@ export type UseModalOptions = {
   /**
    * Option to determine if the dialog should be closed
    * by clicking on the ::backdrop element
-   * @default true
+   * @default false
    */
   closeOnBackdropClick?: boolean;
+  /**
+   * The default functionality of a dialog is to close on the
+   * press of the escape key. There are instances where we don't want to close
+   * the dialog either due to other escape key listeners for popovers or for
+   * other reasons such as desctructive actions during wizards in dialogs.
+   * Adding this pop will disable the functionality of closing the dialog
+   * with the escape key
+   * @default false
+   */
+  disableCloseOnEscapePress?: boolean;
   /**
    * A general handler to do something after the dialog
    * full closes
@@ -69,11 +78,9 @@ export const useModalDialog = <T extends ModalDefaultState = ModalDefaultState>(
 ) => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
   const [dialogState, setModalState] = useState<ModalState<T>>();
-  const { Portal, openPortal, closePortal } = usePortal();
-  const dialogEventClickRef = useRef<((e: MouseEvent) => void) | null>(null);
-  const dialogEventCancelRef = useRef<((e: Event) => void) | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const closeModal = useCallback(async () => {
+  const handleCloseModal = useCallback(async () => {
     if (!modalRef.current) return;
     const dialogNode = modalRef.current;
 
@@ -91,12 +98,9 @@ export const useModalDialog = <T extends ModalDefaultState = ModalDefaultState>(
     // Run any custom onClose function
     onClose();
 
-    dialogEventClickRef.current = null;
-    dialogEventCancelRef.current = null;
-
     // Close and destroy the portal
-    closePortal();
-  }, [closePortal, params?.onClose]);
+    setIsOpen(false);
+  }, [params?.onClose]);
 
   /**
    * This callbackRef is supplied to the dialog node in the dom.
@@ -110,31 +114,44 @@ export const useModalDialog = <T extends ModalDefaultState = ModalDefaultState>(
       modalRef.current = dialogNode;
 
       // Reconcile some params
-      const enableBackdropClose = params.closeOnBackdropClick ?? true;
+      const closeOnBackdropClick = params.closeOnBackdropClick ?? false;
+      const disableCloseOnEscapePress =
+        params.disableCloseOnEscapePress ?? false;
 
+      // show the dialog as a modal dialog
       dialogNode.showModal();
 
       // Add some event listeners
-      dialogEventCancelRef.current = (e) => {
+      dialogNode.addEventListener("cancel", (e) => {
         // prevent the close event from firing.
         e.preventDefault();
-        closeModal();
-      };
-      dialogNode.addEventListener("cancel", dialogEventCancelRef.current);
+        if (disableCloseOnEscapePress) return;
+        handleCloseModal();
+      });
+
+      dialogNode.addEventListener("close", (e) => {
+        // prevent the close event from firing.
+        e.preventDefault();
+        if (disableCloseOnEscapePress) return;
+        handleCloseModal();
+      });
 
       // short circuit
-      if (!enableBackdropClose) return;
+      if (!closeOnBackdropClick) return;
 
       // Close the dialog if the dialog::backdrop is clicked
-      dialogEventClickRef.current = ({ target }) => {
+      dialogNode.addEventListener("click", ({ target }) => {
         const { nodeName } = target as HTMLDialogElement;
         if (nodeName === "DIALOG") {
-          closeModal();
+          handleCloseModal();
         }
-      };
-      dialogNode.addEventListener("click", dialogEventClickRef.current);
+      });
     },
-    [closeModal, params.closeOnBackdropClick]
+    [
+      handleCloseModal,
+      params.closeOnBackdropClick,
+      params.disableCloseOnEscapePress
+    ]
   );
 
   /**
@@ -145,20 +162,20 @@ export const useModalDialog = <T extends ModalDefaultState = ModalDefaultState>(
     return {
       handleOpen(_, initState = {} as T) {
         setModalState(initState);
-        openPortal();
+        setIsOpen(true);
       },
-      handleClose: closeModal,
-      nodeRef: modalRef,
+      handleClose: handleCloseModal,
+      nodeRef: modalRef
     };
   });
 
   return useMemo(
     () => ({
+      isOpen,
       dialogRef,
       dialogState,
-      Portal,
-      closeModal,
+      closeModal: handleCloseModal
     }),
-    [Portal, closeModal, dialogRef, dialogState]
+    [handleCloseModal, dialogRef, dialogState, isOpen]
   );
 };

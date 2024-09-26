@@ -78,7 +78,7 @@ const styles = css`
   }
 `;
 
-export default function ModalBase() {
+export default () => {
   const { modalRef, openModal } = useModal();
 
   return (
@@ -91,4 +91,4 @@ export default function ModalBase() {
       </Modal>
     </>
   );
-}
+};

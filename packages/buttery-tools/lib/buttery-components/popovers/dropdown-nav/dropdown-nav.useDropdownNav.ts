@@ -1,5 +1,5 @@
 import { useCallback, useId, useMemo, useRef } from "react";
-import type { DropdownOptions, DropdownRef } from "../../hooks";
+import type { DropdownOptions, DropdownRef } from "../../hooks/useDropdown";
 
 export type UseDropdownOptions = Partial<DropdownOptions>;
 export const useDropdownNav = (options: UseDropdownOptions) => {

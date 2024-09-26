@@ -94,7 +94,7 @@ export const useDropdown = <T extends HTMLElement>(
 
   return {
     dropdownRef: popoverRef,
-    setDropdownRef: setDropdownRef,
+    setDropdownRef,
     targetRef,
     setTargetRef,
     closeDropdown,

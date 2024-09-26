@@ -18,7 +18,7 @@ export function useModal<T extends ModalDefaultState>() {
     () => ({
       modalRef: modalRef as unknown as MutableRefObject<ModalRef>,
       openModal,
-      closeModal,
+      closeModal
     }),
     [closeModal, openModal]
   );

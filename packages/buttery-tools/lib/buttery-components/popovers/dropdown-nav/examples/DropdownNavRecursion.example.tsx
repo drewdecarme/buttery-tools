@@ -41,7 +41,6 @@ const menuObjectTreeFetchedFromAnAPI: MenuTree = {
 
 function MenuTree({ menu, root }: { menu: MenuTree; root?: string }) {
   const { targetProps, dropdownProps } = useDropdownNav({
-    id: menu.name,
     dxPosition: "right-middle",
   });
 

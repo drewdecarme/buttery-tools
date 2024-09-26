@@ -25,7 +25,6 @@ export type DropdownOptionArrow = {
 };
 export type DropdownOptionOffset = number;
 export type DropdownOptions = {
-  id: string;
   /**
    * Where the menu should display when open relative
    * to the clicked target. The way that this can be

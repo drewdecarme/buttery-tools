@@ -12,7 +12,6 @@ const products = [...new Array(4)].map(() => {
 
 export default () => {
   const { targetProps, dropdownProps } = useDropdownNav({
-    id: "products-dropdown",
     dxOffset: 16,
     dxPosition: "bottom-center",
   });

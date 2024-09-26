@@ -20,6 +20,8 @@ export function ensureTarget<T extends HTMLElement>(node: T | null): node is T {
   return node !== null;
 }
 
+export type FocusableElement = HTMLButtonElement | HTMLInputElement;
+
 export type PopoverOptions = {
   /**
    * The ID of the popover. This ID is used for accessibility purposes to ensure
@@ -29,13 +31,12 @@ export type PopoverOptions = {
 };
 export const usePopover = <T extends HTMLElement>({ id }: PopoverOptions) => {
   const popoverRef = useRef<T | null>(null);
-  const targetRef = useRef<HTMLButtonElement | null>(null);
+  const targetRef = useRef<FocusableElement | null>(null);
 
-  const setTargetRef = useCallback<RefCallback<HTMLButtonElement>>(
+  const setTargetRef = useCallback<RefCallback<FocusableElement>>(
     (node) => {
       if (!node) return;
       targetRef.current = node;
-      targetRef.current.type = "button";
       targetRef.current.setAttribute("aria-controls", id);
       targetRef.current.setAttribute("aria-expanded", "false");
     },
@@ -66,7 +67,7 @@ export const usePopover = <T extends HTMLElement>({ id }: PopoverOptions) => {
           `Cannot locate the target element that launches the popover. Please ensure you have added the 'aria-controls=${popoverId}' attribute to the button that controls the popover.`
         );
       }
-      setTargetRef(targetElement as HTMLButtonElement);
+      setTargetRef(targetElement as FocusableElement);
     },
     [id, setTargetRef]
   );
@@ -75,6 +76,7 @@ export const usePopover = <T extends HTMLElement>({ id }: PopoverOptions) => {
     if (!ensurePopover(popoverRef.current)) return;
 
     popoverRef.current.showPopover();
+
     popoverRef.current.ariaExpanded = "true";
     if (popoverRef.current.classList.contains("close")) {
       popoverRef.current.classList.replace("close", "open");

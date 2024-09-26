@@ -2,6 +2,7 @@ import {
   type RefCallback,
   forwardRef,
   useCallback,
+  useId,
   useImperativeHandle,
   useRef,
 } from "react";
@@ -9,9 +10,9 @@ import {
   type DropdownOptions,
   type DropdownRef,
   useDropdown,
-  usePortal,
-} from "../../hooks";
+} from "../../hooks/useDropdown";
 import { getIsDropdownOpen } from "../../hooks/useDropdown/hook.useDropdown.utils";
+import { usePortal } from "../../hooks/usePortal";
 import { classes } from "../../utils";
 
 export type DropdownMenuPropsNative = JSX.IntrinsicElements["div"] & {
@@ -25,13 +26,14 @@ type EventMouse = ((e: MouseEvent) => void) | null;
 export const DropdownMenu = forwardRef<DropdownRef, DropdownMenuProps>(
   function DropdownMenu({ children, options, className, ...restProps }, ref) {
     const { Portal, openPortal, closePortal } = usePortal();
+    const id = useId();
     const {
       setDropdownRef,
       dropdownRef,
       targetRef,
       closeDropdown,
       openDropdown,
-    } = useDropdown<HTMLElement>(options);
+    } = useDropdown<HTMLElement>({ id, ...options });
 
     const windowListenerKey = useRef<EventKeyboard>(null);
     const windowListenerMouse = useRef<EventMouse>(null);

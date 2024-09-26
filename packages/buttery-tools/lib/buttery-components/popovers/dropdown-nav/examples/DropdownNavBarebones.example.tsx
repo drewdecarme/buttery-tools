@@ -3,7 +3,6 @@ import { useDropdownNav } from "../dropdown-nav.useDropdownNav";
 
 export default () => {
   const { targetProps, dropdownProps } = useDropdownNav({
-    id: "barebones",
     dxPosition: "right-middle",
   });
 

@@ -4,7 +4,6 @@ import DropdownMenuBarebonesExample from "./DropdownMenuBarebones.example";
 import DropdownMenuGroupsExample from "./DropdownMenuGroups.example";
 import DropdownMenuPositionsExample from "./DropdownMenuPositions.example";
 import DropdownMenuWithArrowExample from "./DropdownMenuWithArrow.example";
-import DropdownMenuWithNestedFormsExample from "./DropdownMenuWithNestedForms.example";
 import DropdownMenuWithOffsetExample from "./DropdownMenuWithOffset.example";
 
 const meta: Meta = {
@@ -22,4 +21,3 @@ export const WithOffset = DropdownMenuWithOffsetExample;
 export const WithArrow = DropdownMenuWithArrowExample;
 export const Positions = DropdownMenuPositionsExample;
 export const Groups = DropdownMenuGroupsExample;
-export const WithNestedForms = DropdownMenuWithNestedFormsExample;

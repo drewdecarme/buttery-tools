@@ -10,10 +10,7 @@ import { classes } from "../../utils";
 import { ModalProvider } from "../Modal.context";
 
 export type ModalPropsNative = Omit<JSX.IntrinsicElements["dialog"], "ref">;
-export type ModalPropsCustom = Pick<
-  UseModalOptions,
-  "onClose" | "closeOnBackdropClick"
-> & {
+export type ModalPropsCustom = UseModalOptions & {
   children: ReactNode;
   dxSize?: "sm" | "md" | "lg" | "xl" | "full-screen";
 };
@@ -23,18 +20,22 @@ export const Modal = forwardRef(function Modal<T extends ModalDefaultState>(
   { children, className, dxSize = "md", ...restProps }: ModalProps,
   ref: ForwardedRef<ModalRef<T>>
 ) {
-  const { Portal, dialogRef, dialogState, closeModal } = useModalDialog<T>({
+  const { isOpen, dialogRef, dialogState, closeModal } = useModalDialog<T>({
     ref,
     ...restProps,
   });
 
+  if (!isOpen) return;
+
   return (
-    <Portal>
+    <dialog
+      id={restProps.id}
+      ref={dialogRef}
+      className={classes("modal", dxSize, className)}
+    >
       <ModalProvider initialState={dialogState} closeModal={closeModal}>
-        <dialog ref={dialogRef} className={classes("modal", dxSize, className)}>
-          {children}
-        </dialog>
+        {children}
       </ModalProvider>
-    </Portal>
+    </dialog>
   );
 });

@@ -9,7 +9,7 @@ import {
   type DropdownRef,
   type DropdownRefHandleOpen,
   useDropdown,
-} from "../../hooks";
+} from "../../hooks/useDropdown";
 import { getIsDropdownOpen } from "../../hooks/useDropdown/hook.useDropdown.utils";
 import { classes } from "../../utils";
 

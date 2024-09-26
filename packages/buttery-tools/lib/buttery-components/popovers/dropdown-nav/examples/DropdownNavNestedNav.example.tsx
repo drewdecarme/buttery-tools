@@ -3,7 +3,6 @@ import { useDropdownNav } from "../dropdown-nav.useDropdownNav";
 
 function NavMenuNested() {
   const { targetProps, dropdownProps } = useDropdownNav({
-    id: "widget",
     dxPosition: "right-middle",
   });
 
@@ -29,7 +28,6 @@ function NavMenuNested() {
 
 export default () => {
   const { targetProps, dropdownProps } = useDropdownNav({
-    id: "nested",
     dxPosition: "right-middle",
   });
 
