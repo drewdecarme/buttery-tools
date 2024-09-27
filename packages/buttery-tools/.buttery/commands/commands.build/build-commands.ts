@@ -1,9 +1,10 @@
+import { exit } from "node:process";
 import { getButteryConfig } from "../_buttery-config";
 import { LOG } from "../_logger/util.ts.logger";
 
-import { buildCommandsCleanDistributionDirs } from "./build-commands.clean-distribution-dirs";
-import { buildCommandsCreateBinary } from "./build-commands.create-binary";
-import { buildCommandsEnrichPackageJson } from "./build-commands.enrich-package-json";
+import { buildCommandsCleanDistributionDirs } from "./build-commands.clean-distribution-dirs.js";
+import { buildCommandsCreateBinary } from "./build-commands.create-binary.js";
+import { buildCommandsEnrichPackageJson } from "./build-commands.enrich-package-json.js";
 
 import type {
   CommandsBuildFunctionArgs,
@@ -32,4 +33,6 @@ export async function buildCommands(options: CommandsBuildOptions) {
     buildCommandsEnrichPackageJson(args),
     buildCommandsCreateBinary(args)
   ]);
+
+  exit();
 }
