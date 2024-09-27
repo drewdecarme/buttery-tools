@@ -1,5 +1,6 @@
 ---
-"@buttery/tools": minor
+"eslint-config-buttery": patch
+"@buttery/tools": patch
 ---
 
 ## v0.0.1 - Bootstraps all of the tools together; initial baseline
