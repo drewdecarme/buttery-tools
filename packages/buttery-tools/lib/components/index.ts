@@ -1,5 +1,3 @@
-import "../../artifacts/buttery-components/global";
-
 // Forms
 export * from "../../artifacts/buttery-components/forms/InputTextDropdown";
 

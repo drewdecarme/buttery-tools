@@ -1,4 +1,4 @@
-import { getButteryDocsViteConfig } from "../../../../.buttery/commands/docs/docs.getButteryDocsViteConfig";
+import { getButteryDocsViteConfig } from "@buttery/tools/docs/getViteConfig";
 
 const defineConfig = await getButteryDocsViteConfig();
 export default defineConfig(() => ({}));

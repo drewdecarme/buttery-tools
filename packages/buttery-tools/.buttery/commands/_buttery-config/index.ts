@@ -1,4 +1,4 @@
-export * from "./getButteryConfig";
+export * from "./getButteryConfig.js";
 
 export * from "./buttery-config.types.commands";
 export * from "./buttery-config.types.docs";

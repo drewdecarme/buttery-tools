@@ -28,6 +28,11 @@
       "types": "./dist/lib/commands/index.d.ts",
       "import": "./dist/lib/commands/index.js",
       "require": "./dist/lib/commands/index.js"
+    },
+    "./docs/getViteConfig": {
+      "types": "./dist/lib/docs/getViteConfig.d.ts",
+      "node": "./dist/lib/docs/getViteConfig.js",
+      "import": "./dist/lib/docs/getViteConfig.js"
     }
   },
   "files": [
@@ -43,13 +48,13 @@
     "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
   "scripts": {
-    "build": "yarn cli:build && yarn buttery tokens build && yarn buttery icons build && yarn docs:build & yarn lib:build",
+    "build": "yarn lib:build && yarn cli:build && yarn buttery tokens build && yarn buttery icons build && yarn docs:build",
     "dev": "yarn cli:dev",
     "cli:dev": "tsx ./scripts/local.commands.dev",
     "cli:build": "tsx ./scripts/local.commands.build",
     "docs:build": "yarn buttery docs build",
     "docs:release": "yarn docs:build && cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools",
-    "lib:build": "yarn tsc --project tsconfig.library.json",
+    "lib:build": "rollup -c && tsc --project ",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -61,6 +66,9 @@
     "@chromatic-com/storybook": "2.0.2",
     "@cloudflare/workers-types": "4.20240919.0",
     "@ngneat/falso": "7.2.0",
+    "@rollup/plugin-commonjs": "^28.0.0",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-typescript": "^12.1.0",
     "@storybook/addon-essentials": "8.3.2",
     "@storybook/addon-interactions": "8.3.2",
     "@storybook/addon-links": "8.3.2",
@@ -70,6 +78,8 @@
     "@storybook/react-vite": "8.3.2",
     "@storybook/test": "8.3.2",
     "@svgr/rollup": "^8.1.0",
+    "@swc/cli": "^0.4.1-nightly.20240914",
+    "@swc/core": "1.7.26",
     "@types/babel__core": "7.20.5",
     "@types/body-parser": "1.19.5",
     "@types/chroma-js": "^2.4.4",

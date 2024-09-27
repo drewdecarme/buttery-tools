@@ -1,10 +1,11 @@
 {
   "extends": "@buttery/tsconfig/library",
-  "include": ["lib"],
+  "include": ["lib", "artifacts/buttery-components/global.d.ts"],
   "compilerOptions": {
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "noEmit": false,
     "jsx": "react-jsx",
+    "emitDeclarationOnly": true,
     "declarationDir": "./dist",
     "outDir": "./dist"
   }

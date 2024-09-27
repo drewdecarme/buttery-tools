@@ -4,6 +4,7 @@
   "description": "A playground to test out the distribution of the @buttery/tools without publishing it",
   "private": true,
   "sideEffects": false,
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
@@ -14,7 +15,6 @@
     "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
-  "type": "module",
   "scripts": {
     "build": "remix vite:build",
     "deploy": "wrangler pages deploy ./build/client",

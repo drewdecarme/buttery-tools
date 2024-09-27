@@ -2,7 +2,7 @@
  * The program index template. This is the entry file
  * to the CLI program itself.
  */
-export const templateIndex = `#! /usr/bin/env node
+export const templateIndex = `#! /usr/bin/env node --experimental-specifier-resolution=node
 import { program } from "commander";
 import path from "path";
 import { existsSync } from 'node:fs';

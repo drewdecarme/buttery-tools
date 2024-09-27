@@ -3,7 +3,8 @@
     "**/*.ts",
     "**/*.tsx",
     "./.buttery/**/*.ts",
-    "./.buttery/**/*.tsx"
+    "./.buttery/**/*.tsx",
+    "rollup.config.ts"
   ],
   "compilerOptions": {
     "strictNullChecks": true,

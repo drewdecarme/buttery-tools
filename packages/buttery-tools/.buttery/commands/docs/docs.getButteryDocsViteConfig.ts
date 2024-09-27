@@ -9,16 +9,16 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 // import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
 import { type UserConfig, mergeConfig } from "vite";
-import butteryIcons from "../../../artifacts/buttery-icons/vite-plugin-buttery-icons";
+import butteryIcons from "../../../artifacts/buttery-icons/vite-plugin-buttery-icons.js";
 // import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
-import { getButteryDocsFiles } from "./docs.getButteryDocFiles";
-import { getButteryDocsConfig } from "./docs.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
-import { getButteryDocsGraph } from "./docs.getButteryDocsGraph";
-import { orderButteryDocFiles } from "./docs.orderButteryDocFiles";
-import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
-import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports";
-import { transformMarkdownAssetPath } from "./docs.vite-plugin-transform-markdown-asset-path";
+import { getButteryDocsFiles } from "./docs.getButteryDocFiles.js";
+import { getButteryDocsConfig } from "./docs.getButteryDocsConfig.js";
+import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories.js";
+import { getButteryDocsGraph } from "./docs.getButteryDocsGraph.js";
+import { orderButteryDocFiles } from "./docs.orderButteryDocFiles.js";
+import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples.js";
+import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports.js";
+import { transformMarkdownAssetPath } from "./docs.vite-plugin-transform-markdown-asset-path.js";
 
 export async function getButteryDocsViteConfig() {
   const config = await getButteryDocsConfig();
@@ -33,42 +33,42 @@ export async function getButteryDocsViteConfig() {
     clearScreen: false,
     build: {
       manifest: true,
-      emptyOutDir: true,
+      emptyOutDir: true
     },
     resolve: {
       alias: [
         // change the import path to the .buttery/.store
         {
           find: "~/buttery/docs/data",
-          replacement: dirs.artifacts.apps.working.dataFile,
+          replacement: dirs.artifacts.apps.working.dataFile
         },
         {
           find: "~/buttery/docs/components",
-          replacement: dirs.artifacts.components,
+          replacement: dirs.artifacts.components
         },
         {
           find: "~/buttery/docs/utils",
-          replacement: dirs.artifacts.utils,
-        },
-      ],
+          replacement: dirs.artifacts.utils
+        }
+      ]
     },
     optimizeDeps: {
-      exclude: ["@buttery/tokens/docs"],
+      exclude: ["@buttery/tokens/docs"]
     },
     plugins: [
       wyw({
         include: "/**/*.(ts|tsx)",
         babelOptions: {
           compact: false,
-          presets: ["@babel/preset-typescript", "@babel/preset-react"],
-        },
+          presets: ["@babel/preset-typescript", "@babel/preset-react"]
+        }
       }),
       transformMarkdownAssetPath(),
       mdxTransformImports({
-        rootPath: config.paths.rootDir,
+        rootPath: config.paths.rootDir
       }),
       mdxTransformCodeExamples({
-        rootPath: config.paths.rootDir,
+        rootPath: config.paths.rootDir
       }),
       mdx({
         remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
@@ -79,18 +79,18 @@ export async function getButteryDocsViteConfig() {
             {
               behavior: "wrap",
               headingProperties: {
-                className: "heading",
-              },
-            },
+                className: "heading"
+              }
+            }
           ],
           [
             // @ts-expect-error This is a mismatch from the type-system
             rehypeShiki,
             {
-              theme: "dark-plus",
-            },
-          ],
-        ],
+              theme: "dark-plus"
+            }
+          ]
+        ]
       }),
       remixCloudflareDevProxy(),
       remix({
@@ -99,10 +99,10 @@ export async function getButteryDocsViteConfig() {
         future: {
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true,
-          v3_throwAbortReason: true,
-        },
+          v3_throwAbortReason: true
+        }
       }),
-      await butteryIcons(),
+      await butteryIcons()
 
       // watchDocsPlugin(config, dirs)
       // {
@@ -146,7 +146,7 @@ export async function getButteryDocsViteConfig() {
       //     });
       //   }
       // },
-    ],
+    ]
   };
 
   return function defineConfig<T extends UserConfig = UserConfig>(
@@ -155,7 +155,7 @@ export async function getButteryDocsViteConfig() {
       dirs: typeof dirs;
       orderedFiles: typeof orderedFiles;
       graph: typeof graph;
-    }) => T,
+    }) => T
   ) {
     const userConfig = fn({ config, dirs, orderedFiles, graph });
     return mergeConfig<UserConfig, UserConfig>(baseConfig, userConfig);
