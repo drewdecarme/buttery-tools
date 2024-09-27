@@ -1,8 +1,0 @@
-{
-  "extends": "@buttery/tsconfig/library",
-  "compilerOptions": {
-    "declarationDir": "./dist/javascript",
-    "outDir": "./dist/javascript"
-  },
-  "include": ["./.tokens/javascript/index.ts"]
-}

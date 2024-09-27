@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "sideEffects": false,
+  "private": true,
+  "dependencies": {
+    "@remix-run/cloudflare": "latest",
+    "isbot": "4.4.0"
+  }
+}

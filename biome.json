@@ -4,17 +4,13 @@
     "enabled": true
   },
   "files": {
-    "ignore": ["dist/**", "bin/**"]
+    "ignore": ["dist/**", "bin/**", "generated/**/*.tsx"]
   },
   "formatter": {
     "indentStyle": "space",
     "indentWidth": 2
   },
-  "javascript": {
-    "formatter": {
-      "trailingComma": "none"
-    }
-  },
+  "javascript": {},
   "linter": {
     "enabled": true,
     "rules": {

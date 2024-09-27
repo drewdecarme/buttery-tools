@@ -1,0 +1,26 @@
+{
+  "name": "@buttery/client",
+  "version": "1.0.0",
+  "description": "A TS API client with 0 dependencies",
+  "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "yarn tsc",
+    "dev": "yarn build --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "5.6.2"
+  },
+  "dependencies": {
+    "@buttery/tsconfig": "workspace:^",
+    "@buttery/utils": "workspace:^"
+  }
+}

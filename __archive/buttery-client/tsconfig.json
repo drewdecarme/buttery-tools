@@ -1,0 +1,9 @@
+{
+  "extends": "@buttery/tsconfig/library",
+  "compilerOptions": {
+    "declarationDir": "./dist",
+    "outDir": "./dist",
+    "emitDeclarationOnly": false
+  },
+  "include": ["src"]
+}

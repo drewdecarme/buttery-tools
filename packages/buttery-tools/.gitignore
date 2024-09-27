@@ -1,0 +1,10 @@
+
+.buttery-docs/.dev/*
+!.buttery-docs/.dev/_template*/
+!.buttery-docs/.dev/_template**/**
+
+.buttery-docs/.build/*
+!.buttery-docs/.build/_template*/
+!.buttery-docs/.build/_template*/**
+
+.buttery-tokens

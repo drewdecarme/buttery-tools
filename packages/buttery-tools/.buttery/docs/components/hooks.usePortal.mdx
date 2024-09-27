@@ -1,0 +1,81 @@
+---
+title: usePortal
+meta:
+  - title: usePortal | Buttery Components
+  - name: description
+    content: A React hook that makes it easy to create and imperatively control React Portals.
+---
+
+# `usePortal`
+
+A hook that makes it easy to create and imperatively control [React Portals](https://react.dev/reference/react-dom/createPortal).
+
+{/* fence:"lib/buttery-components/hooks/usePortal/examples/UsePortalBarebones.example.tsx" */}
+
+The example below gives you an understanding of how to manage the portal as well as position the portal relative
+to the target that instantiated it.
+
+## Usages
+
+This hook utilizes the [useDynamicNode](./hooks.useDynamicNode.mdx) hook to create a node at the root of the document
+in which to attach a React portal to. Imperative functions are also exported along with the component to easily manage
+when the portal should render it's children and when not to.
+
+{/* example:"lib/buttery-components/hooks/usePortal/examples/UsePortal.example.tsx" */}
+
+By default, this component hides the content of the portal from the DOM until it reaches an `isOpen` state. Once `isOpen=true`
+then the portal will create a dynamic node, attach it to the root of the DOM and then render the children of the portal into that
+dynamic node.
+
+> **NOTE** It's important to note that since the DOM node is being placed outside of the current tree, any relatively or inherited
+> styling will not apply. It's up to the developer to position the content of the portal where it should go.
+
+## Installation
+
+```bash
+# yarn
+yarn add @buttery/components
+
+# npm
+npm install @buttery/components
+```
+
+## Styling
+
+### CSS-in-JS
+
+### Style Objects
+
+## Examples
+
+### Barebones
+
+This is the most basic implementation you can get before styling and dynamic positioning.
+
+> Note that the style on the `div` in the example is only to make sure the portal can be
+> seen on the page. You can apply whatever node you want to this portal.
+
+The example uses the imperative controls to close and open the portal.
+
+{/* example:"lib/buttery-components/hooks/usePortal/examples/UsePortalBarebones.example.tsx" */}
+
+### Positioning the portal
+
+Since the portal is going to render as a child element of the `body`, we need to do something
+in order to style it to make sure it appears where we want it to.
+
+> **NOTE:** This is a completly manual way of posiitoning the portal. If you're looking for similar
+> funcitonality without having to manually roll your own positioning rules, see the [useDropdown](./hooks.useDropdown.mdx)
+> hook and the [DropdownMenu](./components.popovers.dropdown-menu.mdx) component which incorporates
+> dynamic positioning along with portals.
+
+In the below example, you'll see a contrived example where we're going to position
+the portal next to the button that launched it. The `buttonRef` is set only when
+the `button` is clicked. Once the portal opens, the `setContentRef` callback ref is fired
+where the style of the content is then positioned near the `boundingClientRect`
+
+{/* example:"lib/buttery-components/hooks/usePortal/examples/UsePortalPositioning.example.tsx" */}
+
+## APIs
+
+### `usePortal`
