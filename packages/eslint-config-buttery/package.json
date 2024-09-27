@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-buttery",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Standard eslint config start point",
   "main": "index.js",
   "type": "module",
