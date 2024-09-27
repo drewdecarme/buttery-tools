@@ -1,4 +1,4 @@
-import { IconComponent } from "@buttery/icons";
+// import { IconComponent } from "@buttery/icons";
 import {
   makeColorBrand,
   makeColorShade,
@@ -132,7 +132,7 @@ export function LayoutHeaderLinksTypeDropdown(
     <>
       <button type="button" {...targetProps} className={buttonStyles}>
         {props.text}
-        <IconComponent icon="arrow-down-stroke-rounded" ddSize={24} />
+        {/* <IconComponent icon="arrow-down-stroke-rounded" ddSize={24} /> */}
       </button>
       <DropdownNav {...dropdownProps} className={dropdownStyles}>
         <ul>

@@ -9,16 +9,16 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 // import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
 import { type UserConfig, mergeConfig } from "vite";
-import butteryIcons from "../../../artifacts/buttery-icons/vite-plugin-buttery-icons.js";
+// import butteryIcons from "../../../artifacts/buttery-icons/vite-plugin-buttery-icons";
 // import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
-import { getButteryDocsFiles } from "./docs.getButteryDocFiles.js";
-import { getButteryDocsConfig } from "./docs.getButteryDocsConfig.js";
-import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories.js";
-import { getButteryDocsGraph } from "./docs.getButteryDocsGraph.js";
-import { orderButteryDocFiles } from "./docs.orderButteryDocFiles.js";
-import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples.js";
-import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports.js";
-import { transformMarkdownAssetPath } from "./docs.vite-plugin-transform-markdown-asset-path.js";
+import { getButteryDocsFiles } from "./docs.getButteryDocFiles";
+import { getButteryDocsConfig } from "./docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
+import { getButteryDocsGraph } from "./docs.getButteryDocsGraph";
+import { orderButteryDocFiles } from "./docs.orderButteryDocFiles";
+import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
+import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports";
+import { transformMarkdownAssetPath } from "./docs.vite-plugin-transform-markdown-asset-path";
 
 export async function getButteryDocsViteConfig() {
   const config = await getButteryDocsConfig();
@@ -101,8 +101,8 @@ export async function getButteryDocsViteConfig() {
           v3_relativeSplatPath: true,
           v3_throwAbortReason: true
         }
-      }),
-      await butteryIcons()
+      })
+      // await butteryIcons()
 
       // watchDocsPlugin(config, dirs)
       // {

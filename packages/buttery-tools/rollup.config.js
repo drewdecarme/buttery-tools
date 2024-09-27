@@ -9,10 +9,12 @@ import path from "node:path";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
+import wyw from "@wyw-in-js/rollup";
+import css from "rollup-plugin-css-only";
 
 export default {
   input: [
-    "./lib/docs/getViteConfig.ts",
+    "./lib/docs/index.ts",
     "./lib/config/index.ts",
     "./lib/components/index.ts",
     "./lib/commands/index.ts",
@@ -33,5 +35,15 @@ export default {
     }),
     commonjs(),
     typescript({ tsconfig: "./tsconfig.library.json" }), // Adjust based on your tsconfig
+    wyw({
+      include: "/**/*.(ts|tsx)",
+      babelOptions: {
+        compact: false,
+        presets: ["@babel/preset-typescript", "@babel/preset-react"],
+      },
+    }),
+    css({
+      output: "buttery-docs.css",
+    }),
   ],
 };

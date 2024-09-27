@@ -1,4 +1,4 @@
-import { IconComponent } from "@buttery/icons";
+// import { IconComponent } from "@buttery/icons";
 import {
   makeColorBrand,
   makeColorShade,
@@ -89,10 +89,10 @@ export const LayoutHeaderLinks: FC<{
                           rel="noreferrer"
                           aria-label={socialLink.label}
                         >
-                          <IconComponent
+                          {/* <IconComponent
                             icon="github-circle-solid-rounded"
                             ddSize={makeRem(28)}
-                          />
+                          /> */}
                         </a>
                       );
                     })

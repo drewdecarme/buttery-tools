@@ -6,6 +6,9 @@ import { getButteryIconsDirectories } from "../../.buttery/commands/icons/icons.
 
 export default async function vitePluginButteryIcons(): Promise<PluginOption> {
   const config = await getButteryIconsConfig();
+  if (!config.icons) return false;
+  console.log(config.icons);
+
   const dirs = await getButteryIconsDirectories(config);
 
   return {
