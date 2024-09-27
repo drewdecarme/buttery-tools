@@ -34,5 +34,5 @@
       "@buttery/icons": ["./.buttery/.store/icons"]
     }
   },
-  "exclude": ["./lib/buttery-docs/apps"]
+  "exclude": ["artifacts/buttery-docs/apps"]
 }

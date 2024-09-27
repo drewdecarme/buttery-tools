@@ -1,17 +1,17 @@
 import { match } from "ts-pattern";
 
-import { exhaustiveMatchGuard } from "../../../../lib/buttery-components";
+import { exhaustiveMatchGuard } from "../../../../artifacts/buttery-components";
 import { LOG } from "../../_logger";
 import {
   hexToHsl,
   hexToRgb,
   hsbToHex,
-  hsbToHsl
+  hsbToHsl,
 } from "../color-utils/util.color-conversions";
 import {
   type ColorModels,
   createColorModelVariants,
-  createColorTokensFromColorModels
+  createColorTokensFromColorModels,
 } from "../color-utils/util.create-color-variants";
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 
@@ -20,7 +20,7 @@ const template: CompileFunction = ({
   methods,
   docs,
   functionName,
-  cssVarPrefix
+  cssVarPrefix,
 }) => {
   const hueNames = match(config.color.brand)
     .with({ mode: "category" }, (catConfig) => {
@@ -35,7 +35,7 @@ const template: CompileFunction = ({
   const hueUnion = methods.createTypeUnion(hueNames);
 
   const hueVariants = [
-    ...new Array(config.color.brand.variants.numOfVariants)
+    ...new Array(config.color.brand.variants.numOfVariants),
   ].map((_v, i) => {
     if (i === 0) return "50";
     return (i * 100).toString();
@@ -83,9 +83,9 @@ export const ${functionName}: MakeColorBrand = (tokenName, options) => {
 
 const css: CompileFunction = ({
   config: {
-    color: { brand }
+    color: { brand },
   },
-  cssVarPrefix
+  cssVarPrefix,
 }) => {
   let colorModels: ColorModels[] = [];
 
@@ -99,15 +99,15 @@ const css: CompileFunction = ({
             name: hueName,
             hex,
             hsl: hsbToHsl(hueValue, brand.saturation, brand.brightness),
-            rgb: hexToRgb(hex)
+            rgb: hexToRgb(hex),
           };
           const variantColorModels = createColorModelVariants(baseColorModel, {
             strategy: "min-hex-max",
-            ...brand.variants
+            ...brand.variants,
           });
           return accum.concat([baseColorModel, ...variantColorModels]);
         },
-        []
+        [],
       );
       break;
     }
@@ -119,15 +119,15 @@ const css: CompileFunction = ({
             name: hexName,
             hex: hexValue,
             hsl: hexToHsl(hexValue),
-            rgb: hexToRgb(hexValue)
+            rgb: hexToRgb(hexValue),
           };
           const variantColorModels = createColorModelVariants(baseColorModel, {
             strategy: "min-hex-max",
-            ...brand.variants
+            ...brand.variants,
           });
           return accum.concat([baseColorModel, ...variantColorModels]);
         },
-        []
+        [],
       );
       break;
     }
@@ -137,7 +137,7 @@ const css: CompileFunction = ({
   }
 
   const colorBrandTokens = createColorTokensFromColorModels(colorModels, {
-    prefix: cssVarPrefix
+    prefix: cssVarPrefix,
   });
 
   LOG.debug(colorBrandTokens);
@@ -151,5 +151,5 @@ export const MakeTemplateColorBrand = new MakeTemplate({
     "A utility that allows you to safely incorporate brand color into your apps by easily adding the design token along with optional adjustments & variants.",
   variableBody: "color-brand",
   template,
-  css
+  css,
 });

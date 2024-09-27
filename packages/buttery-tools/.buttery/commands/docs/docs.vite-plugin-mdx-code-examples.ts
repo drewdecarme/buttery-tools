@@ -26,7 +26,7 @@ export function mdxTransformCodeExamples(
         const transformedPath = path.join(options.rootPath, p1);
         const previewBlockPath = path.join(
           options.rootPath,
-          "/lib/buttery-components/docs/PreviewBlock.tsx"
+          "/artifacts/buttery-components/docs/PreviewBlock.tsx"
         );
         const codeBlock = readFileSync(transformedPath, { encoding: "utf8" });
         const newCode = `

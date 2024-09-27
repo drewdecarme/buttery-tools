@@ -3,20 +3,20 @@ import { LOG } from "../_logger";
 
 export async function getButteryArtifactsDir(
   startingDirectory: string,
-  findDirectoryName: string
+  findDirectoryName: string,
 ) {
   try {
     LOG.debug(
-      `Searching for "${findDirectoryName}" artifacts in order to build the program...`
+      `Searching for "${findDirectoryName}" artifacts in order to build the program...`,
     );
-    const tokensLib = findDirectoryUpwards("lib", findDirectoryName, {
-      startingDirectory
+    const tokensLib = findDirectoryUpwards("artifacts", findDirectoryName, {
+      startingDirectory,
     });
     if (!tokensLib) {
-      throw `Cannot locate the "${findDirectoryName}" library assets. This should not have happened. Please log a Github issue.`;
+      throw `Cannot locate the "${findDirectoryName}" library artifacts. This should not have happened. Please log a Github issue.`;
     }
     LOG.debug(
-      `Searching for "${findDirectoryName}" artifacts in order to build the program.... done.`
+      `Searching for "${findDirectoryName}" artifacts in order to build the program.... done.`,
     );
     return tokensLib;
   } catch (error) {

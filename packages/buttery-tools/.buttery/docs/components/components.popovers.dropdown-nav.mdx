@@ -14,7 +14,7 @@ add accessible, keyboard and mouse aware, SSR enabled navigation dropdowns.
 These dropdowns can be as simple as a an unordered list with some links or as complex
 as one of those super dropdowns you see on really fancy technical websites.
 
-{/* example:"lib/buttery-components/popovers/dropdown-nav/examples/DropdownNav.example.tsx" */}
+{/* example:"artifacts/buttery-components/popovers/dropdown-nav/examples/DropdownNav.example.tsx" */}
 
 This specific abstraction provides support when you would like to send the user to another page.
 
@@ -30,7 +30,7 @@ would need for a navbar or a side nav bar.
 
 The below implementation is the `useDropdownNav` at it's most basic.
 
-{/* example:"lib/buttery-components/popovers/dropdown-nav/examples/DropdownNavBarebones.example.tsx" */}
+{/* example:"artifacts/buttery-components/popovers/dropdown-nav/examples/DropdownNavBarebones.example.tsx" */}
 
 The `useDropdownNav` hook has the exact same API as the `useDropdown` hook except that it
 requires an ID in order to link the `<button />` to the `<DropdownNav />` componnet.
@@ -82,13 +82,13 @@ can parse and read the information that it needs to give _everybody_ the same ex
 ### Barebones
 
 This is the most basic instance you can get (that is without any styling)
-{/* example:"lib/buttery-components/popovers/dropdown-nav/examples/DropdownNavBarebones.example.tsx" */}
+{/* example:"artifacts/buttery-components/popovers/dropdown-nav/examples/DropdownNavBarebones.example.tsx" */}
 
 ### Nested Menus
 
 Creating accessible menus is incredibly simple. Create another component that uses both the `<DropdownNav />` component and the hook to spread
 the controls over the target and dropdown. The Popover API handles the `topLevel` instance for you.
-{/* example:"lib/buttery-components/popovers/dropdown-nav/examples/DropdownNavNestedNav.example.tsx" */}
+{/* example:"artifacts/buttery-components/popovers/dropdown-nav/examples/DropdownNavNestedNav.example.tsx" */}
 
 ### Recursive Menus from Trees
 
@@ -108,4 +108,4 @@ type MenuTree = {
 
 This type references itself when there is a `menu` option in the links. We can write a component that
 can process this type effectively while using the `<DropdownNav />` component and associated hook.
-{/* example:"lib/buttery-components/popovers/dropdown-nav/examples/DropdownNavRecursion.example.tsx" */}
+{/* example:"artifacts/buttery-components/popovers/dropdown-nav/examples/DropdownNavRecursion.example.tsx" */}

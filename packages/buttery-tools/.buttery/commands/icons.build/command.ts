@@ -1,11 +1,14 @@
 import { exit } from "node:process";
-import type { CommandAction, CommandMeta } from "../../../lib/buttery-commands";
+import type {
+  CommandAction,
+  CommandMeta,
+} from "../../../artifacts/buttery-commands";
 import { buildButteryIcons } from "../icons/icons.buildButteryIcons";
 
 export const meta: CommandMeta = {
   name: "build",
   // TODO: Fix this description
-  description: "Create buttery icons"
+  description: "Create buttery icons",
 };
 
 /**

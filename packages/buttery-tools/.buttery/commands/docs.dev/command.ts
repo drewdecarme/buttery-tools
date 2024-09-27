@@ -2,8 +2,8 @@ import { createServer } from "vite";
 import type {
   CommandAction,
   CommandMeta,
-  CommandOptions
-} from "../../../lib/buttery-commands/index.js";
+  CommandOptions,
+} from "../../../artifacts/buttery-commands/index.js";
 import { LOG } from "../_logger/util.ts.logger.js";
 import { bootstrapButteryDocsApp } from "../docs/docs.bootstrapButteryDocsApp.js";
 import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig.js";
@@ -11,7 +11,7 @@ import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectorie
 
 export const meta: CommandMeta = {
   name: "dev",
-  description: "Run the development instance"
+  description: "Run the development instance",
 };
 
 export const options: CommandOptions<{
@@ -22,8 +22,8 @@ export const options: CommandOptions<{
     alias: "np",
     description:
       "Disables CLI prompts if any configuration values are not expected / well formed.",
-    defaultValue: false
-  }
+    defaultValue: false,
+  },
 };
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
@@ -40,8 +40,8 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
       configFile: dirs.artifacts.apps.working.viteConfig,
       server: {
         port: 1600,
-        open: true
-      }
+        open: true,
+      },
     });
 
     await viteServer.listen();

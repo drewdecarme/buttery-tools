@@ -1,6 +1,6 @@
 import path from "node:path";
-import { findDirectoryUpwards } from "../../../utils/node";
 import { hashString } from "../../../utils/ts/util.ts.hash-string";
+import { getButteryArtifactsDir } from "../_utils";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 
 export type ButteryDocsDirectories = Awaited<
@@ -14,19 +14,15 @@ export type ButteryDocsDirectories = Awaited<
 export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
   const userCreatedDocsDir = path.resolve(config.paths.butteryDir, "./docs");
 
-  const lib = findDirectoryUpwards("lib", undefined, {
-    startingDirectory: import.meta.dirname
-  });
-
-  if (!lib) {
-    throw "Cannot locate lib directory to build documentation site. This should not have happened. Please log a Github issue.";
-  }
+  const artifactsDir = await getButteryArtifactsDir(
+    import.meta.dirname,
+    "buttery-docs"
+  );
 
   // lib directories
-  const artifactsRootDir = path.resolve(lib, "./buttery-docs");
-  const libAppsDir = path.resolve(artifactsRootDir, "./apps");
-  const libComponentsDir = path.resolve(artifactsRootDir, "./components");
-  const libUtilsDir = path.resolve(artifactsRootDir, "./utils");
+  const libAppsDir = path.resolve(artifactsDir, "./apps");
+  const libComponentsDir = path.resolve(artifactsDir, "./components");
+  const libUtilsDir = path.resolve(artifactsDir, "./utils");
 
   // apps directories
   const templateAppRootDir = path.resolve(
@@ -55,7 +51,7 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
       public: path.resolve(userCreatedDocsDir, "./public")
     },
     artifacts: {
-      root: artifactsRootDir,
+      root: artifactsDir,
       apps: {
         root: libAppsDir,
         template: {

@@ -3,7 +3,7 @@ import type {
   CommandAction,
   CommandMeta,
   CommandOptions
-} from "../../../lib/buttery-commands";
+} from "../../../artifacts/buttery-commands";
 import { LOG } from "../_logger/util.ts.logger";
 import { buildButteryTokens } from "../tokens/tokens.buildButteryTokens";
 

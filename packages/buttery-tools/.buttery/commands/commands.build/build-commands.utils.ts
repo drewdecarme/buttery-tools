@@ -4,8 +4,8 @@ import type {
   CommandAction,
   CommandArgs,
   CommandMeta,
-  CommandOptions
-} from "../../../lib/buttery-commands";
+  CommandOptions,
+} from "../../../artifacts/buttery-commands";
 import type { ResolvedButteryConfig } from "../_buttery-config";
 
 export type CommandsBuildOptions = {
@@ -20,7 +20,7 @@ export type CommandsBuildFunctionArgs = {
 };
 
 export type CommandsBuildFunction = (
-  args: CommandsBuildFunctionArgs
+  args: CommandsBuildFunctionArgs,
 ) => Promise<void>;
 
 export type ButteryCLIDirectories = {
@@ -29,13 +29,13 @@ export type ButteryCLIDirectories = {
 };
 
 export const getButteryCommandsDirectories = (
-  config: ResolvedButteryConfig<"commands">
+  config: ResolvedButteryConfig<"commands">,
 ): ButteryCLIDirectories => {
   const commandsDirName = config.commands.commandsDir ?? "commands";
 
   return {
     commandsDir: path.resolve(config.paths.butteryDir, `./${commandsDirName}`),
-    binDir: path.resolve(config.paths.rootDir, "./bin")
+    binDir: path.resolve(config.paths.rootDir, "./bin"),
   };
 };
 

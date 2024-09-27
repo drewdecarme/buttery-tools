@@ -5,7 +5,7 @@ import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
 
-import type { CommandOptionType } from "../../../lib/buttery-commands";
+import type { CommandOptionType } from "../../../artifacts/buttery-commands";
 import { createEsbuildOptions } from "../../../utils/esbuild";
 import { dynamicImport } from "../../../utils/node/util.node.dynamic-import";
 import { exhaustiveMatchGuard, kebabToCamel } from "../../../utils/ts";
@@ -14,12 +14,12 @@ import { LOG } from "../_logger/util.ts.logger";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import {
   // templateCommandParent,
-  templateIndex
+  templateIndex,
 } from "./build-commands.templates";
 import type {
   CommandFile,
   CommandGraph,
-  CommandGraphProperties
+  CommandGraphProperties,
 } from "./build-commands.utils";
 
 export type EntryTemplateData = {
@@ -137,12 +137,12 @@ export class ESBuildPluginCommands {
             segment_name: name,
             action: commandFileContent?.action,
             args: commandFileContent?.args,
-            options: commandFileContent?.options
+            options: commandFileContent?.options,
           };
           if (!currentCommandGraph[commandSegment]) {
             currentCommandGraph[commandSegment] = {
               properties,
-              commands: {}
+              commands: {},
             };
           }
           currentCommandGraph = currentCommandGraph[commandSegment].commands;
@@ -168,7 +168,7 @@ export class ESBuildPluginCommands {
       const cmdVariableName = kebabToCamel(`${parentCmd}-${cmdName}`);
       const hasSubCommands = Object.values(commands).length > 0;
       this.appendToProgramString(
-        `const ${cmdVariableName} = ${parentCmd}.command("${cmdName}")`
+        `const ${cmdVariableName} = ${parentCmd}.command("${cmdName}")`,
       );
 
       const props = properties as Partial<CommandGraphProperties>;
@@ -176,7 +176,7 @@ export class ESBuildPluginCommands {
       // meta
       if (!props.meta) {
         throw new Error(
-          `No "meta" export from command "${cmdName}". Please ensure you export a "meta" constant from the file.`
+          `No "meta" export from command "${cmdName}". Please ensure you export a "meta" constant from the file.`,
         );
       }
       this.appendToProgramString(`.description("${props.meta.description}")`);
@@ -186,7 +186,7 @@ export class ESBuildPluginCommands {
       for (const arg of commandArgs) {
         const argName = arg.required ? `<${arg.name}>` : `[${arg.name}]`;
         this.appendToProgramString(
-          `.argument(${argName}, ${arg.description}, ${arg.defaultValue})`
+          `.argument(${argName}, ${arg.description}, ${arg.defaultValue})`,
         );
       }
 
@@ -220,14 +220,14 @@ export class ESBuildPluginCommands {
 
       if (!hasSubCommands) {
         this.appendToProgramString(
-          `.action(withParsedAction("${props.segment_name}"))`
+          `.action(withParsedAction("${props.segment_name}"))`,
         );
       }
 
       if (!hasSubCommands && !props.action) {
         // no sub commands on this command... an action should exist.
         LOG.warning(
-          `"${props.segment_name}" missing an action export. Please export an action.`
+          `"${props.segment_name}" missing an action export. Please export an action.`,
         );
       }
 
@@ -301,7 +301,7 @@ export class ESBuildPluginCommands {
             cli_name: this.config.commands.name,
             cli_description: this.config.commands.description,
             cli_version: this.config.commands.version,
-            cli_commands: this.programString
+            cli_commands: this.programString,
           };
 
           // // Reset some internally tracked values
@@ -317,17 +317,20 @@ export class ESBuildPluginCommands {
             ...createEsbuildOptions({
               stdin: {
                 contents: templateResult,
-                loader: "ts"
+                loader: "ts",
               },
-              outfile: path.resolve(this.config.paths.rootDir, "./bin/index.js")
+              outfile: path.resolve(
+                this.config.paths.rootDir,
+                "./bin/index.js",
+              ),
             }),
             bundle: true,
             minify: true,
-            external: ["commander"] // externalize commander
+            external: ["commander"], // externalize commander
           });
           this.logBuildComplete();
         });
-      }
+      },
     };
   }
 }

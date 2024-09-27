@@ -1,7 +1,7 @@
 import path from "node:path";
 import { build, context } from "esbuild";
 import { glob } from "glob";
-import type { ButteryLogger } from "../../lib/buttery-logger/index.js";
+import type { ButteryLogger } from "../../artifacts/buttery-logger/index.js";
 import { EsbuildPluginTypescriptCompiler } from "./EsbuildPluginTypescriptCompiler.js";
 import { createEsbuildOptions } from "./createEsbuildOptions.js";
 
@@ -29,18 +29,18 @@ export const buildTSLibrary = async (options: {
   try {
     const srcFilesGlob = path.resolve(options.srcDir, "./*.ts");
     const srcFiles = glob.sync(srcFilesGlob, {
-      follow: false
+      follow: false,
     });
     // Create the TS compiler plugin
     const ESBuildTypescriptCompiler = new EsbuildPluginTypescriptCompiler({
-      tsConfigPath: options.tsconfigPath
+      tsConfigPath: options.tsconfigPath,
     });
     const plugins = [ESBuildTypescriptCompiler.getPlugin()];
     // Create the build options
     const esbuildOptions = createEsbuildOptions({
       entryPoints: srcFiles,
       outdir: options.outDir,
-      plugins
+      plugins,
     });
 
     if (!options.watch) {
@@ -52,13 +52,13 @@ export const buildTSLibrary = async (options: {
     // files on change
     const esbuildContext = await context({
       ...esbuildOptions,
-      minify: false
+      minify: false,
     });
 
     return await esbuildContext.watch();
   } catch (error) {
     throw options.logger.fatal(
-      new Error("Error when building ts library: ".concat(error as string))
+      new Error("Error when building ts library: ".concat(error as string)),
     );
   }
 };
