@@ -1,2 +1,2 @@
 export * from "./InputTextDropdown";
-export * from "./hook.useInputDropdown";
+export * from "./input-text-dropdown.useInputTextDropdown";

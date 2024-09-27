@@ -18,6 +18,7 @@ import {
   useDropdown,
 } from "../../hooks/useDropdown";
 import { useWindowEventListener } from "../../hooks/useWindowEventListener";
+import { LOG_ITD } from "./input-text-dropdown.utils";
 
 export type InputTextDropdownRef = {
   setValue: (value: string) => void;
@@ -71,14 +72,17 @@ export const InputTextDropdown = forwardRef<
   // A central handler for removing the event listener
   // and then also closing the dropdown
   const handleClose = useCallback(async () => {
-    console.log("handle close");
-    console.log("remove window listener");
+    LOG_ITD.debug("Removing the keydown window event listener...");
     removeWindowEventListener("keydown");
-    console.log("closing dropdown...");
-    await closeDropdown();
-    console.log("closing dropdown... done.");
+    LOG_ITD.debug("Removing the keydown window event listener... done.");
 
-    console.log("Setting open to false");
+    LOG_ITD.debug("Closing the dropdown...");
+    await closeDropdown();
+    LOG_ITD.debug("Closing the dropdown... done.");
+
+    LOG_ITD.debug(
+      "Setting open to false to remove the popover content from the DOM."
+    );
     setIsOpen(false);
   }, [removeWindowEventListener, closeDropdown]);
 
@@ -88,19 +92,23 @@ export const InputTextDropdown = forwardRef<
   const setDivRef = useCallback<RefCallback<HTMLDivElement>>(
     (divNode) => {
       if (!divNode) return;
+      LOG_ITD.debug(
+        "Dropdown content has mounted... setting dropdown and opening."
+      );
       // set the dropdown ref to the node once the isOpen state is true
       setDropdownRef(divNode);
 
       // open the dropdown
       openDropdown();
 
-      console.log("Adding window keydown event listener...");
+      LOG_ITD.debug("Adding window keydown event listener...");
       addWindowEventListener("keydown", (e) => {
         // don't propagate this to other window listeners declared.
         e.stopImmediatePropagation();
 
         switch (e.key) {
           case "Escape":
+            LOG_ITD.debug("Escape key pressed. Closing the dropdown.");
             handleClose();
             break;
 
@@ -115,7 +123,7 @@ export const InputTextDropdown = forwardRef<
   const handleDropdownBlur = useCallback<FocusEventHandler<HTMLInputElement>>(
     ({ currentTarget, relatedTarget }) => {
       if (!currentTarget.contains(relatedTarget)) {
-        console.log("Blurred out of the dropdown... closing dropdown.");
+        LOG_ITD.debug("Blurred out of the dropdown DIV. Closing dropdown.");
         handleClose();
       }
     },
@@ -124,22 +132,22 @@ export const InputTextDropdown = forwardRef<
 
   // Opens the dropdown and add some listeners
   const handleFocus = useCallback<FocusEventHandler<HTMLInputElement>>(() => {
-    console.log("focusing...");
+    LOG_ITD.debug("Focused into input. Setting to open.");
     setIsOpen(true);
   }, []);
 
   const handleBlur = useCallback(() => {
     setTimeout(() => {
       const focusedElement = document.activeElement;
-      console.log("Input blurred...");
+      LOG_ITD.debug("Input blurred...");
 
       if (!dropdownRef.current?.contains(focusedElement)) {
-        console.log(
+        LOG_ITD.debug(
           "INput was blurred... active element isn't a part of the dropdown. Closing dropdown."
         );
         handleClose();
       } else {
-        console.log(
+        LOG_ITD.debug(
           "Input was blurred... but next active element was part of the dropdown"
         );
       }
@@ -153,18 +161,20 @@ export const InputTextDropdown = forwardRef<
       handleClose,
       setValue: (value) => {
         if (!inputRef.current) return;
+        LOG_ITD.debug(
+          "Input value has been set outside of the context of the dropdown. Setting value.",
+          { value }
+        );
         inputRef.current.value = value;
       },
       inputRef,
     };
   });
 
-  console.log({ isOpen });
-
   return (
     <div>
       <input
-        // {...restProps}
+        {...restProps}
         className={clsx(className)}
         ref={setInputRef}
         onFocus={handleFocus}

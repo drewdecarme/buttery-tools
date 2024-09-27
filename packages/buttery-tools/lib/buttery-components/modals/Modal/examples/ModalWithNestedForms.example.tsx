@@ -137,7 +137,7 @@ const favorite_color = [...new Array(10)].map(() => randColor());
 
 export default () => {
   const { modalRef, openModal } = useModal();
-  const { ref, closeDropdown, setValue } = useInputTextDropdown();
+  const { ref, setValue } = useInputTextDropdown();
   const id = useId();
   const submitButtonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -176,12 +176,6 @@ export default () => {
     [setValue]
   );
 
-  // const handleCloseDropdown = useCallback(() => {
-  //   closeDropdown();
-  //   debugger;
-  //   submitButtonRef.current?.focus();
-  // }, [closeDropdown]);
-
   return (
     <>
       <button type="button" onClick={openModal}>
@@ -198,10 +192,12 @@ export default () => {
             <div>First Name</div>
             <input type="text" name="first_name" required />
           </label>
-          <label>
-            <div>Age</div>
-            <input type="number" name="age" required />
-          </label>
+          <div>
+            <label>
+              <div>Age</div>
+              <input type="number" name="age" required />
+            </label>
+          </div>
           <label>
             <div>Favorite color</div>
             <InputTextDropdown
@@ -222,7 +218,7 @@ export default () => {
                       <label key={favorite_color}>
                         <input
                           type="radio"
-                          name="favorite_color"
+                          name="color-option"
                           value={favorite_color}
                           onChange={handleSelectColor}
                         />
