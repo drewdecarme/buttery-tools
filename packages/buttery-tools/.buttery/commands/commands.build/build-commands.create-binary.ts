@@ -39,7 +39,6 @@ export const buildCommandsCreateBinary: CommandsBuildFunction = async ({
 
     // Run the build
     await esbuild.build(esbuildOptions);
-    console.log("here");
   } catch (error) {
     throw new Error("Error when building 'entry': ".concat(error as string));
   }

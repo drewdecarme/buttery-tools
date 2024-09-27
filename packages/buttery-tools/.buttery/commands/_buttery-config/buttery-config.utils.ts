@@ -104,7 +104,7 @@ title: Home
         }),
       {}
     );
-    const butteryConfigContent = `import type { ButteryConfig } from "@buttery/cli"
+    const butteryConfigContent = `import type { ButteryConfig } from "@buttery/tools/config"
 const config: ButteryConfig = ${JSON.stringify(configJson, null, 2)};
 export default config\n`;
 
@@ -112,6 +112,6 @@ export default config\n`;
       encoding: "utf8"
     });
   } catch (error) {
-    throw `Error when trying to create a default .buttery/config file: ${error}`;
+    throw `Error when trying to create a default ".buttery/config" file: ${error}`;
   }
 }

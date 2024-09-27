@@ -15,14 +15,19 @@
   },
   "exports": {
     "./config": {
+      "types": "./dist/lib/config/index.d.ts",
       "import": "./dist/lib/config/index.js",
-      "require": "./dist/lib/config/index.js",
-      "types": "./dist/lib/config/index.d.ts"
+      "require": "./dist/lib/config/index.js"
     },
     "./components": {
+      "types": "./dist/lib/components/index.d.ts",
       "import": "./dist/lib/components/index.js",
-      "require": "./dist/lib/components/index.js",
-      "types": "./dist/lib/components/index.d.ts"
+      "require": "./dist/lib/components/index.js"
+    },
+    "./commands": {
+      "types": "./dist/lib/commands/index.d.ts",
+      "import": "./dist/lib/commands/index.js",
+      "require": "./dist/lib/commands/index.js"
     }
   },
   "files": [
@@ -132,5 +137,6 @@
     "vite-plugin-inspect": "^0.8.7",
     "vite-plugin-svgr": "^4.2.0",
     "wrangler": "^3.78.8"
-  }
+  },
+  "types": "./dist/index.d.ts"
 }

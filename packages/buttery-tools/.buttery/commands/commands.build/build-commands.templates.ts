@@ -62,7 +62,7 @@ try {
  * This is the command parent template where if parent command
  * doesn't exist, this template is used as a creation point.
  */
-export const templateCommandParent = `import { CommandMeta } from "@buttery/cli";
+export const templateCommandParent = `import { CommandMeta } from "@buttery/tools/commands";
 
 export const meta: CommandMeta = {
   name: "{{{command_name}}}",
