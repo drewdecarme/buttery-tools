@@ -10,7 +10,10 @@ import {
 import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";
 import type { ButteryConfigDocsHeaderLinkTypeDropdown } from "../../../../.buttery/commands/_buttery-config";
-import { DropdownNav, useDropdownNav } from "../../../buttery-components";
+import {
+  DropdownNav,
+  useDropdownNav,
+} from "../../../buttery-components/popovers/DropdownNav";
 
 const buttonStyles = css`
   ${makeReset("button")};

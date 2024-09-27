@@ -5,9 +5,9 @@ import {
   type ModalRef,
   type UseModalOptions,
   useModalDialog,
-} from "../../hooks";
+} from "../../hooks/useModalDialog";
 import { classes } from "../../utils";
-import { ModalProvider } from "../Modal.context";
+import { ModalProvider } from "./Modal.provider";
 
 export type ModalPropsNative = Omit<JSX.IntrinsicElements["dialog"], "ref">;
 export type ModalPropsCustom = UseModalOptions & {

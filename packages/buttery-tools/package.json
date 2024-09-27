@@ -3,27 +3,42 @@
   "version": "0.0.2",
   "description": "A file based CLI designed to making writing a CLI as easy as exporting a few functions in a file",
   "sideEffects": false,
+  "type": "module",
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "bin": {
+    "buttery": "./bin/index.js"
+  },
+  "exports": {
+    "./config": {
+      "import": "./dist/lib/config/index.js",
+      "require": "./dist/lib/config/index.js",
+      "types": "./dist/lib/config/index.d.ts"
+    },
+    "./components": {
+      "import": "./dist/lib/components/index.js",
+      "require": "./dist/lib/components/index.js",
+      "types": "./dist/lib/components/index.d.ts"
+    }
   },
   "files": [
     "bin",
     "dist",
     "artifacts"
   ],
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
   },
-  "author": "Drew DeCarme (drewdecarme@gmail.com)",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
-  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "scripts": {
-    "build": "yarn cli:build && yarn buttery tokens build && yarn buttery icons build && yarn docs:build",
+    "build": "yarn cli:build && yarn buttery tokens build && yarn buttery icons build && yarn docs:build & yarn lib:build",
     "dev": "yarn cli:dev",
     "cli:dev": "tsx ./scripts/local.commands.dev",
     "cli:build": "tsx ./scripts/local.commands.build",
@@ -37,6 +52,7 @@
     "@babel/core": "7.25.2",
     "@babel/preset-react": "7.24.7",
     "@babel/preset-typescript": "7.24.7",
+    "@buttery/tsconfig": "workspace:^",
     "@chromatic-com/storybook": "2.0.2",
     "@cloudflare/workers-types": "4.20240919.0",
     "@ngneat/falso": "7.2.0",
@@ -116,9 +132,5 @@
     "vite-plugin-inspect": "^0.8.7",
     "vite-plugin-svgr": "^4.2.0",
     "wrangler": "^3.78.8"
-  },
-  "bin": {
-    "buttery": "./bin/index.js"
-  },
-  "types": "./dist/index.d.ts"
+  }
 }

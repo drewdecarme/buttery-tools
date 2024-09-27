@@ -8,7 +8,7 @@ import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";
 import type { FC } from "react";
 import type { ButteryDocsGraph } from "../../../../.buttery/commands/docs/docs.types";
-import { classes } from "../../../buttery-components";
+import { classes } from "../../../buttery-components/utils";
 
 const ulStyles = css`
   list-style-type: none;

@@ -1,5 +1,8 @@
 import type { FC, ReactNode } from "react";
-import { type BreakpointFromTo, useBreakpoint } from "../hooks";
+import {
+  type BreakpointFromTo,
+  useBreakpoint,
+} from "../hooks/__archive/hook.useBreakpoint";
 
 export const Responsive: FC<{ children: ReactNode } & BreakpointFromTo> = ({
   children,

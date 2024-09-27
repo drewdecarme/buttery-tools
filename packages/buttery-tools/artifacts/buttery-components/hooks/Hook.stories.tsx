@@ -1,15 +1,15 @@
 import { randFullName, randIceHockeyTeam, randJobTitle } from "@ngneat/falso";
 import type { Meta } from "@storybook/react";
 import { useRef } from "react";
-import { breakpointMap, useBreakpoint } from "./hook.useBreakpoint";
-import { useCarousel } from "./hook.useCarousel";
-import { useToggle } from "./hook.useToggle";
+import { breakpointMap, useBreakpoint } from "./__archive/hook.useBreakpoint";
+import { useCarousel } from "./useCarousel/hook.useCarousel";
+import { useToggle } from "./useToggle/hook.useToggle";
 
 const meta: Meta = {
   title: "Utils / Hooks",
   parameters: {
-    layout: "centered"
-  }
+    layout: "centered",
+  },
 } satisfies Meta<typeof meta>;
 
 export default meta;
@@ -29,7 +29,7 @@ export const UseCarousel = () => {
     [...new Array(5)].map(() => ({
       name: randFullName(),
       job: randJobTitle(),
-      favIceHockeyTeam: randIceHockeyTeam()
+      favIceHockeyTeam: randIceHockeyTeam(),
     }))
   );
   const { currentItem, next, prev } = useCarousel(itemsRef.current);
@@ -42,7 +42,7 @@ export const UseCarousel = () => {
           justifyContent: "space-around",
           gap: "1rem",
           width: "min-content",
-          margin: "0 auto"
+          margin: "0 auto",
         }}
       >
         <button type="button" onClick={prev}>
@@ -57,7 +57,7 @@ export const UseCarousel = () => {
           padding: " 1rem",
           fontSize: "1rem",
           background: "#ccc",
-          borderRadius: ".5rem"
+          borderRadius: ".5rem",
         }}
       >
         {JSON.stringify(currentItem, null, 2)}
@@ -75,7 +75,7 @@ export const UseBreakpoint = () => {
   return (
     <div
       style={{
-        maxWidth: "50ch"
+        maxWidth: "50ch",
       }}
     >
       <div>
@@ -91,7 +91,7 @@ export const UseBreakpoint = () => {
       <span
         style={{
           color: "blue",
-          fontWeight: "bold"
+          fontWeight: "bold",
         }}
       >
         BLUE
@@ -110,7 +110,7 @@ export const UseBreakpoint = () => {
         style={{
           height: "2rem",
           width: "100%",
-          background: shouldRender ? "blue" : "#ccc"
+          background: shouldRender ? "blue" : "#ccc",
         }}
       />
       <br />
@@ -120,7 +120,7 @@ export const UseBreakpoint = () => {
         <span
           style={{
             color: "green",
-            fontWeight: "bold"
+            fontWeight: "bold",
           }}
         >
           GREEN
@@ -144,7 +144,7 @@ export const UseBreakpoint = () => {
           style={{
             height: "2rem",
             width: "100%",
-            background: shouldRenderBetween ? "green" : "#ccc"
+            background: shouldRenderBetween ? "green" : "#ccc",
           }}
         />
       </div>
@@ -155,7 +155,7 @@ export const UseBreakpoint = () => {
         <span
           style={{
             color: "red",
-            fontWeight: "bold"
+            fontWeight: "bold",
           }}
         >
           RED
@@ -175,7 +175,7 @@ export const UseBreakpoint = () => {
         style={{
           height: "2rem",
           width: "100%",
-          background: shouldRenderMax ? "red" : "#ccc"
+          background: shouldRenderMax ? "red" : "#ccc",
         }}
       />
     </div>

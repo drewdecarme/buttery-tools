@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 import { Toast } from "./Toast";
 import {
   type ToastComponent,
@@ -82,7 +82,7 @@ export function Toaster<
         ref={toasterRef}
       />
       {Object.values(toasts).length > 0 &&
-        ReactDOM.createPortal(
+        createPortal(
           Object.entries(toasts).map(([id, toastProps]) => {
             return (
               <Toast key={id} id={id}>

@@ -1,6 +1,9 @@
 import { type ForwardedRef, forwardRef } from "react";
 
-import type { ModalDefaultState, ModalRef } from "../../hooks";
+import type {
+  ModalDefaultState,
+  ModalRef,
+} from "../../hooks/useModalDialog/hook.useModalDialog";
 import { classes } from "../../utils";
 import { Modal, type ModalPropsCustom, type ModalPropsNative } from "../Modal";
 

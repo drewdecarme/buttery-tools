@@ -1,8 +1,8 @@
 import { useCallback, useId, useMemo, useRef } from "react";
 import type { DropdownOptions, DropdownRef } from "../../hooks/useDropdown";
 
-export type UseDropdownOptions = Partial<DropdownOptions>;
-export const useDropdownNav = (options: UseDropdownOptions) => {
+export type UseDropdownNavOptions = Partial<DropdownOptions>;
+export const useDropdownNav = (options: UseDropdownNavOptions) => {
   const id = useId();
   const dropdownNavRef = useRef<DropdownRef | null>(null);
 

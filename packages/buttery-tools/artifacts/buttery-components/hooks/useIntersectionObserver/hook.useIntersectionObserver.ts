@@ -62,7 +62,7 @@ export const useIntersectionObserver = <T extends HTMLElement>(
       {
         root,
         rootMargin,
-        threshold,
+        threshold
       }
     );
 

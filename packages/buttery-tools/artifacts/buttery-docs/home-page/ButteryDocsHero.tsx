@@ -5,7 +5,8 @@ import {
   makeReset,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
-import { classes, useIntervalState } from "../../buttery-components";
+import { useIntervalState } from "../../buttery-components/hooks/useIntervalState";
+import { classes } from "../../buttery-components/utils";
 
 const containerStyles = css`
   width: 100%;
