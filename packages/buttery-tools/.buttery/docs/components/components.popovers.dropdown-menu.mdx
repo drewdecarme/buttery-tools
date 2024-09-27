@@ -104,24 +104,6 @@ up to how it's styled.
 
 {/* example:"lib/buttery-components/popovers/dropdown-menu/examples/DropdownMenuGroups.example.tsx" */}
 
-### Nested Forms
-
-It's not uncommon to open a modal where it's pupose is to collect information. In the case that the dialog
-is a form, we need to ensure that any other nested forms are taken out of the context of the parent form. In
-this case, surfacing a popover that adds another layer on the `topLevel` of the DOM is the best practice.
-
-In doing so, we don't have to worry about `preventDefault` or `stopPropogation` since the forms work
-independently of other, regardless if they're nested in the markup that you write.
-
-#### Use case
-
-In this use case, we're going to open a modal dialog that is a form. We're also going to add another form
-in a typeahead to submit something that isn't associated with the parent form. You can think of this as
-being required to fill out some information in a modal, but then also having an a option to add
-an entry to something that you would then be able to select in the parent form.
-
-{/* example:"lib/buttery-components/popovers/dropdown-menu/examples/DropdownMenuWithNestedForms.example.tsx" */}
-
 ## API
 
 ### `useDropdownMenu`

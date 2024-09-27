@@ -49,7 +49,6 @@ const IconHeart: FC = () => (
 
 export default () => {
   const { targetProps, tooltipProps } = useTooltip({
-    id: "likes-label",
     dxType: "tooltip",
     dxKind: "label",
     dxLabeledBy: "likes-count likes-label",

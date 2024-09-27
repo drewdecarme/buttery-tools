@@ -22,7 +22,7 @@ export const meta: MetaFunction<typeof loader> = ({
   data,
 }) => {
   if (!data?.graph) return [];
-  // @ts-expect-error graph and Jsonify graph are the same but typed differently
+  // @ts-ignore graph and Jsonify graph are the same but typed differently
   const graphValue = getGraphValueThatMatchesPathname(pathname, data.graph);
   return graphValue.routeMeta;
 };
@@ -33,14 +33,14 @@ export default function DocsLayout() {
   return (
     <LayoutBody>
       <LayoutBodyNav
-        // @ts-expect-error mismatch
+        // @ts-ignore mismatch
         graph={loaderData?.graph ?? {}}
       />
       <LayoutBodyMain>
         <Outlet />
       </LayoutBodyMain>
       <LayoutBodyTOC
-        // @ts-expect-error mismatch
+        // @ts-ignore mismatch
         graph={loaderData?.graph ?? {}}
       />
     </LayoutBody>

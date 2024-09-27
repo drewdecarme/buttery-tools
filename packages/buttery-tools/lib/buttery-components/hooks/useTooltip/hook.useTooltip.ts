@@ -1,4 +1,4 @@
-import { type RefCallback, useCallback, useMemo } from "react";
+import { type RefCallback, useCallback, useId, useMemo } from "react";
 import { exhaustiveMatchGuard } from "../../utils";
 import { type DropdownOptions, useDropdown } from "../useDropdown";
 import { ensurePopover } from "../usePopover";
@@ -53,6 +53,7 @@ export type UseTooltipOptions =
 export const useTooltip = <T extends HTMLElement>(
   options: UseTooltipOptions
 ) => {
+  const id = useId();
   const {
     dropdownRef,
     setDropdownRef,
@@ -60,7 +61,7 @@ export const useTooltip = <T extends HTMLElement>(
     openDropdown,
     closeDropdown,
     toggleDropdown
-  } = useDropdown<T>(options);
+  } = useDropdown<T>({ id, ...options });
 
   const setTooltipRef = useCallback<RefCallback<T>>(
     (node) => {
@@ -99,7 +100,7 @@ export const useTooltip = <T extends HTMLElement>(
               ...props,
               ref: setTargetRef,
               type: "button",
-              "aria-labelledby": options.id
+              "aria-labelledby": id
             };
             break;
 
@@ -118,7 +119,7 @@ export const useTooltip = <T extends HTMLElement>(
       default:
         return exhaustiveMatchGuard(options);
     }
-  }, [options, openDropdown, closeDropdown, toggleDropdown, setTargetRef]);
+  }, [options, openDropdown, closeDropdown, toggleDropdown, setTargetRef, id]);
 
   const tooltipProps = useMemo(
     () => ({

@@ -1,4 +1,3 @@
-import path from "node:path";
 import mdx from "@mdx-js/rollup";
 import { vitePlugin as remix } from "@remix-run/dev";
 import { cloudflareDevProxyVitePlugin as remixCloudflareDevProxy } from "@remix-run/dev";
@@ -8,7 +7,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
-import { defineConfig } from "rollup";
+// import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
 import { type UserConfig, mergeConfig } from "vite";
 import butteryIcons from "../../../lib/buttery-icons/vite-plugin-buttery-icons";
 // import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
@@ -20,7 +19,6 @@ import { orderButteryDocFiles } from "./docs.orderButteryDocFiles";
 import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
 import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports";
 import { transformMarkdownAssetPath } from "./docs.vite-plugin-transform-markdown-asset-path";
-import { watchDocsPlugin } from "./docs.vite-plugin-watch-docs";
 
 export async function getButteryDocsViteConfig() {
   const config = await getButteryDocsConfig();

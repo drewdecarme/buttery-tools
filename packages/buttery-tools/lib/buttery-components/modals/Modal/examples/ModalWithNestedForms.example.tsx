@@ -136,7 +136,7 @@ const styles = css`
 const favorite_color = [...new Array(10)].map(() => randColor());
 
 export default () => {
-  const { modalRef, openModal } = useModal();
+  const { modalRef, openModal, closeModal } = useModal();
   const { ref, setValue } = useInputTextDropdown();
   const id = useId();
   const submitButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -150,12 +150,17 @@ export default () => {
         string,
         string
       >;
-      // close the dropdown if add-color input exists
+      // check to see if add-color is a part of the form. If it is, we
       if (Object.keys(formDataObj).includes("add-color")) {
         setValue(formDataObj["select-color"]);
-      } else {
-        alert(JSON.stringify(Object.fromEntries(formData.entries()), null, 2));
+        // Send a separate FETCH request to an API / Server Action, etc...
+        return;
       }
+
+      // `add-color` isn't in our form which means our dropdown is closed.
+      // we can go ahead and just submit the main form sans the dropdown
+      // form.
+      alert(JSON.stringify(Object.fromEntries(formData.entries()), null, 2));
     },
     [setValue]
   );
@@ -231,15 +236,22 @@ export default () => {
                 <input type="text" name="select-color" />
                 <input type="hidden" name="add-color" value="add-color" />
                 <button type="submit">Add</button>
-                {/* <button type="button" onClick={closeDropdown}>
-                  done
-                </button> */}
               </div>
             </InputTextDropdown>
           </label>
-          <button type="submit" ref={submitButtonRef}>
-            Submit
-          </button>
+          <div
+            style={{
+              display: "flex",
+              gap: "1rem",
+            }}
+          >
+            <button type="submit" ref={submitButtonRef}>
+              Submit
+            </button>
+            <button type="button" onClick={closeModal}>
+              Cancel
+            </button>
+          </div>
         </form>
       </Modal>
     </>

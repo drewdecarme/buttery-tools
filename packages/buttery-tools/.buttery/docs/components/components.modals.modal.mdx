@@ -80,6 +80,111 @@ Instead, it's up to the user to style those internal components in the modal how
 
 ### Setting internal state before opening
 
+### Nested Forms
+
+It's not uncommon to open a modal and see a wizard, form, or some other method of collecting information. In the case that the dialog
+is a form, we need to ensure that if there is another way of collecting informatio in the form, we handle it correctly.
+
+#### Use case: Adding another value to select while filling out a form
+
+{/* example:"lib/buttery-components/modals/Modal/examples/ModalWithNestedForms.example.tsx" */}
+
+In this use case, were opening a modal to collect some information about ourselves. We're collecting 3 things:
+
+1. Name
+2. Age
+3. Favorite color
+
+Name and age are pretty straight forward where we're just adding a string and a number.
+
+```tsx
+<label>
+  <div>First Name</div>
+  <input type="text" name="first_name" required />
+</label>
+<div>
+  <label>
+    <div>Age</div>
+    <input type="number" name="age" required />
+  </label>
+</div>
+```
+
+However, when we get to `favorite_color` we encounter a typeahead treatment where a few options are presented to
+us in a popover. From there we can either select a few of the options or we have the opportunity to add a new one. It's here
+where we encounter the trouble.
+
+```tsx
+<label>
+  <div>Favorite color</div>
+  <InputTextDropdown
+    dxOffset={4}
+    dxPosition="bottom-left"
+    onChange={handleSearch}
+    name="favorite_color"
+    ref={ref}
+  >
+    <ul>
+      {favorite_color
+        .filter((g) => g.toLowerCase().includes(searchTerm.toLowerCase()))
+        .slice(0, 5)
+        .map((favorite_color) => (
+          <li key={favorite_color}>
+            <label key={favorite_color}>
+              <input
+                type="radio"
+                name="color-option"
+                value={favorite_color}
+                onChange={handleSelectColor}
+              />
+              {favorite_color}
+            </label>
+          </li>
+        ))}
+    </ul>
+    <div>
+      <input type="text" name="select-color" />
+      <input type="hidden" name="add-color" value="add-color" />
+      <button type="submit">Add</button>
+    </div>
+  </InputTextDropdown>
+</label>
+```
+
+The above form snippt is simple, however it's in another form that has a different submit button. A first reaction would be
+to wrap the above in another `form` and then add separate submit handler, but that is invalid HTML and you're not going to get
+the results that you want.
+
+Instead we can add a hidden field `<input type="hidden" name="add-color" />` with a `name` and a `value`.
+Since this is a popover and we're using a specical `<InputTextDropdown />` that adds / removes the content of the popover
+from the DOM when it's open / close respectively, we can check for that hidden input in our main or parent submit handler
+and "do something" with the values that we're collecting in the dropdown.
+
+```tsx
+const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
+  (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formDataObj = Object.fromEntries(formData.entries()) as Record<
+      string,
+      string
+    >;
+    // check to see if add-color is a part of the form. If it is, we
+    if (Object.keys(formDataObj).includes("add-color")) {
+      setValue(formDataObj["select-color"]);
+      // Send a separate FETCH request to an API / Server Action, etc...
+      return;
+    }
+
+    // `add-color` isn't in our form which means our dropdown is closed.
+    // we can go ahead and just submit the main form sans the dropdown
+    // form.
+    alert(JSON.stringify(Object.fromEntries(formData.entries()), null, 2));
+  },
+  [setValue]
+);
+```
+
 ## Technical Details
 
 A lot of the beef of the functionality lies within the `<Modal />` component. The `useModal` hook exposes a few controls as

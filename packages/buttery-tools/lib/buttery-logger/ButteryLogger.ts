@@ -184,6 +184,7 @@ export class ButteryLogger {
       message: string;
       method: string;
     },
+    // @ts-expect-error this wil be here for a bit TODO:
     ...extraSerializableData: Record<string, unknown>[]
   ) {
     if (!this.shouldLog(level)) return;
@@ -195,9 +196,9 @@ export class ButteryLogger {
     const logFn = this.getLoggerFn(this.logLevel);
 
     if (!this.isBrowser) {
-      const logMessage = [timestamp, logLevel, prefix[0], method, msg].filter(
-        (val) => !!val
-      );
+      const logMessage = [timestamp, logLevel, prefix[0], method, msg]
+        .filter((val) => !!val)
+        .join(" ");
       return logFn(logMessage);
     }
 
@@ -221,10 +222,10 @@ export class ButteryLogger {
     // );
   }
 
-  private formatLogData(data?: Record<string, unknown>) {
-    if (!data) return "";
-    return JSON.stringify(data);
-  }
+  // private formatLogData(data?: Record<string, unknown>) {
+  //   if (!data) return "";
+  //   return JSON.stringify(data);
+  // }
 
   public trace(message: string, ...data: Record<string, unknown>[]) {
     const method = chalk.blue(`● ${chalk.underline("trace")}`);

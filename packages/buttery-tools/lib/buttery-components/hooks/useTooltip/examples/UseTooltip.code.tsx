@@ -2,7 +2,6 @@ import { useTooltip } from "../hook.useTooltip";
 
 export default () => {
   const { targetProps, tooltipProps } = useTooltip({
-    id: "save",
     dxType: "tooltip",
     dxKind: "label",
     dxLabeledBy: "save",
