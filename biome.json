@@ -10,11 +10,7 @@
     "indentStyle": "space",
     "indentWidth": 2
   },
-  "javascript": {
-    "formatter": {
-      "trailingComma": "none"
-    }
-  },
+  "javascript": {},
   "linter": {
     "enabled": true,
     "rules": {

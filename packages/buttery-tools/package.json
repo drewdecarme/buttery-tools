@@ -23,11 +23,12 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "scripts": {
-    "build": "yarn cli:build && yarn buttery tokens build && yarn buttery icons build && yarn docs:release",
+    "build": "yarn cli:build && yarn buttery tokens build && yarn buttery icons build && yarn docs:build",
     "dev": "yarn cli:dev",
     "cli:dev": "tsx ./scripts/local.commands.dev",
     "cli:build": "tsx ./scripts/local.commands.build",
-    "docs:release": "yarn buttery docs build && cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools",
+    "docs:build": "yarn buttery docs build",
+    "docs:release": "yarn docs:build && cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools",
     "lib:build": "yarn tsc --project tsconfig.library.json",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
