@@ -8233,6 +8233,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-config-buttery@workspace:packages/eslint-config-buttery":
+  version: 0.0.0-use.local
+  resolution: "eslint-config-buttery@workspace:packages/eslint-config-buttery"
+  languageName: unknown
+  linkType: soft
+
 "esprima@npm:^4.0.0, esprima@npm:^4.0.1, esprima@npm:~4.0.0":
   version: 4.0.1
   resolution: "esprima@npm:4.0.1"
