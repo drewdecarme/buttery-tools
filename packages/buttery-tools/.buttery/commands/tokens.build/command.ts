@@ -1,11 +1,11 @@
 import { exit } from "node:process";
 
-import { LOG_CLI } from "../../../dist/logger";
 import type {
   CommandAction,
   CommandMeta,
   CommandOptions
 } from "../../../lib/commands";
+import { LOG_CLI } from "../../../lib/logger";
 import { buildButteryTokens } from "../tokens/tokens.buildButteryTokens";
 
 export const meta: CommandMeta = {
