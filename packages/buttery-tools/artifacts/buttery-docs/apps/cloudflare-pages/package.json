@@ -1,10 +1,26 @@
 {
-  "type": "module",
-  "sideEffects": false,
+  "name": "cloudflare-pages",
   "private": true,
+  "sideEffects": false,
+  "type": "module",
   "dependencies": {
-    "@buttery/tools": "latest",
-    "@remix-run/cloudflare": "latest",
-    "isbot": "4.4.0"
+    "@remix-run/cloudflare": "^2.12.1",
+    "@remix-run/cloudflare-pages": "^2.12.1",
+    "@remix-run/react": "^2.12.1",
+    "isbot": "^4.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240512.0",
+    "@remix-run/dev": "^2.12.1",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "autoprefixer": "^10.4.19",
+    "typescript": "^5.1.6",
+    "vite": "^5.1.0",
+    "wrangler": "3.57.1"
   }
 }

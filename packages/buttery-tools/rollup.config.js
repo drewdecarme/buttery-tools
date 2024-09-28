@@ -56,7 +56,8 @@ export default {
     }),
     commonjs(),
     wyw({
-      include: "/**/*.(ts|tsx)",
+      include: "**/*.(ts|tsx)",
+      exclude: "**/*.dynamic-import.ts",
       babelOptions: {
         compact: false,
         presets: ["@babel/preset-typescript", "@babel/preset-react"],

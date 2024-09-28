@@ -1,5 +1,6 @@
 import path from "node:path";
 import { getButteryArtifactsDir } from "../../commands";
+import { LOG_CLI } from "../../logger";
 import { hashString } from "../../utils/node";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 
@@ -12,6 +13,7 @@ export type ButteryDocsDirectories = Awaited<
  * that we should be pulling files from or serving content.
  */
 export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
+  LOG_CLI.checkpointStart("resolve docs dir");
   const userCreatedDocsDir = path.resolve(config.paths.butteryDir, "./docs");
 
   const artifactsDir = await getButteryArtifactsDir(
@@ -39,6 +41,8 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
   // output dirs
   const outputRootDir = path.resolve(userCreatedDocsDir, "./dist");
   const outputBundleDir = path.resolve(outputRootDir, "./build");
+
+  LOG_CLI.checkpointEnd("resolve docs dir");
 
   return {
     /**

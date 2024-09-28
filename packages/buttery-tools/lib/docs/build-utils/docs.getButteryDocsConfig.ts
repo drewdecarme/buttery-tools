@@ -1,4 +1,5 @@
 import { type GetButteryConfigOptions, getButteryConfig } from "../../config";
+import { LOG_CLI } from "../../logger";
 
 export type ButteryDocsConfig = Awaited<
   ReturnType<typeof getButteryDocsConfig>
@@ -9,8 +10,11 @@ export type ButteryDocsConfig = Awaited<
  * `buttery.config.ts` file
  */
 export async function getButteryDocsConfig(options?: GetButteryConfigOptions) {
-  return await getButteryConfig("docs", {
+  LOG_CLI.checkpointStart("config");
+  const config = await getButteryConfig("docs", {
     ...options,
     defaultConfig: "docs"
   });
+  LOG_CLI.checkpointEnd("config");
+  return config;
 }

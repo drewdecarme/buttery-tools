@@ -13,6 +13,7 @@ import { orderButteryDocFiles } from "./docs.orderButteryDocFiles";
  * with Vite.
  */
 export async function bootstrapButteryDocsApp() {
+  LOG_CLI.checkpointStart("bootstrap");
   const config = await getButteryDocsConfig();
   const dirs = await getButteryDocsDirectories(config);
   const files = await getButteryDocsFiles(config);
@@ -66,4 +67,6 @@ export async function bootstrapButteryDocsApp() {
   } catch (error) {
     throw LOG_CLI.fatal(new Error(error as string));
   }
+
+  LOG_CLI.checkpointEnd("bootstrap");
 }

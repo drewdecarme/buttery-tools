@@ -1,6 +1,6 @@
 import { exit } from "node:process";
-import type { CommandAction, CommandMeta } from "../../../../lib/commands";
-import { buildButteryIcons } from "../../../../lib/icons/icons.buildButteryIcons";
+import type { CommandAction, CommandMeta } from "../../../lib/commands";
+import { buildButteryIcons } from "../../../lib/icons/icons.buildButteryIcons";
 
 export const meta: CommandMeta = {
   name: "build",

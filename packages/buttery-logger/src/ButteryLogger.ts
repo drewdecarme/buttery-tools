@@ -237,6 +237,21 @@ export class ButteryLogger {
     this.log({ level: "debug", method, message }, ...data);
   }
 
+  public checkpointStart(checkpointName: string) {
+    this.checkpoint(checkpointName, "start");
+  }
+
+  public checkpointEnd(checkpointName: string) {
+    this.checkpoint(checkpointName, "end");
+  }
+
+  private checkpoint(checkpointName: string, startOrEnd: "start" | "end") {
+    const method = chalk.hex("#FFA500")(
+      `${chalk.underline(`● checkpoint: ${checkpointName}`)}`
+    );
+    this.log({ level: "debug", method, message: `--- ${startOrEnd}` });
+  }
+
   public success(message: string, ...data: Record<string, unknown>[]) {
     const method = chalk.green(`✓ ${chalk.underline("success")}`);
     this.log({ level: "info", method, message }, ...data);

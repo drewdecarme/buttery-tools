@@ -41,9 +41,9 @@
       "css": "./dist/buttery-docs.css"
     },
     "./docs/vite": {
-      "types": "./dist/docs/getViteConfig.d.ts",
-      "node": "./dist/docs/getViteConfig.js",
-      "import": "./dist/docs/getViteConfig.js"
+      "types": "./dist/docs/build-utils/vite-plugin/index.d.ts",
+      "node": "./dist/docs/build-utils/vite-plugin/index.js",
+      "import": "./dist/docs/build-utils/vite-plugin/index.js"
     }
   },
   "files": [
@@ -66,6 +66,7 @@
     "docs:build": "yarn buttery docs build",
     "docs:release": "yarn docs:build && cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools",
     "lib:build": "rollup -c",
+    "lib:dev": "yarn lib:build --watch",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

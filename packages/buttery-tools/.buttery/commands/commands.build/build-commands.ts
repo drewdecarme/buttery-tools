@@ -1,5 +1,3 @@
-import { exit } from "node:process";
-
 import { getButteryConfig } from "../../../lib/config";
 import { LOG_CLI } from "../../../lib/logger";
 import { buildCommandsCleanDistributionDirs } from "./build-commands.clean-distribution-dirs.js";
@@ -15,7 +13,6 @@ import type {
  * is also used locally to build the commands that build the commands.
  */
 export async function buildCommands(options: CommandsBuildOptions) {
-  LOG_CLI.level = "info";
   const config = await getButteryConfig("commands");
   LOG_CLI.debug(`Using config: ${config.paths.config}`);
 
@@ -32,6 +29,4 @@ export async function buildCommands(options: CommandsBuildOptions) {
     buildCommandsEnrichPackageJson(args),
     buildCommandsCreateBinary(args)
   ]);
-
-  exit();
 }

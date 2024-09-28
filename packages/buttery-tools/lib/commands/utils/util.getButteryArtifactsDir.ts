@@ -18,6 +18,7 @@ export async function getButteryArtifactsDir(
     LOG_CLI.debug(
       `Searching for "${findDirectoryName}" artifacts in order to build the program.... done.`
     );
+    LOG_CLI.debug(`Artifacts library: ${tokensLib}`);
     return tokensLib;
   } catch (error) {
     throw LOG_CLI.fatal(new Error(error as string));

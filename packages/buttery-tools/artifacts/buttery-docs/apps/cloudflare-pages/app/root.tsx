@@ -5,16 +5,14 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-
 import "@buttery/tokens/docs/css";
 import "@buttery/tools/docs/css";
-
-import { header } from "~/buttery/docs/data";
 import {
   LayoutHeader,
   Layout as LayoutRoot,
   RootLinks,
-} from "../../../../../dist/lib/docs/index.public";
+} from "@buttery/tools/docs";
+import { header } from "~/buttery/docs/data";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
