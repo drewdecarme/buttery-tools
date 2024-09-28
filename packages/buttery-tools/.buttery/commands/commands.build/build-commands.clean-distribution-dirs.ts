@@ -1,6 +1,6 @@
 import { rm } from "node:fs/promises";
 import path from "node:path";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
+import { LOG_CLI } from "../../../lib/logger";
 import type { CommandsBuildFunction } from "./build-commands.utils";
 
 /**
@@ -9,7 +9,7 @@ import type { CommandsBuildFunction } from "./build-commands.utils";
 export const buildCommandsCleanDistributionDirs: CommandsBuildFunction =
   async ({ config }) => {
     try {
-      LOG.debug("Cleaning distribution directories...");
+      LOG_CLI.debug("Cleaning distribution directories...");
       const foldersToDelete = ["./bin"].map((folder) =>
         rm(path.resolve(config.paths.rootDir, folder), {
           recursive: true,
@@ -17,8 +17,8 @@ export const buildCommandsCleanDistributionDirs: CommandsBuildFunction =
         })
       );
       await Promise.all(foldersToDelete);
-      LOG.debug("Cleaning distribution directories... done.");
+      LOG_CLI.debug("Cleaning distribution directories... done.");
     } catch (error) {
-      throw LOG.fatal(new Error(error as string));
+      throw LOG_CLI.fatal(new Error(error as string));
     }
   };

@@ -1,8 +1,7 @@
 import type { PluginOption } from "vite";
-
-import { buildButteryIcons } from "../../.buttery/commands/icons/icons.buildButteryIcons";
-import { getButteryIconsConfig } from "../../.buttery/commands/icons/icons.getButteryIconsConfig";
-import { getButteryIconsDirectories } from "../../.buttery/commands/icons/icons.getButteryIconsDirectories";
+import { buildButteryIcons } from "./icons.buildButteryIcons";
+import { getButteryIconsConfig } from "./icons.getButteryIconsConfig";
+import { getButteryIconsDirectories } from "./icons.getButteryIconsDirectories";
 
 export default async function vitePluginButteryIcons(): Promise<PluginOption> {
   const config = await getButteryIconsConfig();

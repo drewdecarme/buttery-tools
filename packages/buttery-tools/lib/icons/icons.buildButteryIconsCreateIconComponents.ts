@@ -1,5 +1,5 @@
 import { exec } from "node:child_process";
-import { LOG } from "../../../lib/logger/LOG_CLI";
+import { LOG_CLI } from "../logger";
 import type { ButteryIconsDirectories } from "./icons.getButteryIconsDirectories";
 
 /**
@@ -21,11 +21,11 @@ export async function createIconComponents(dirs: ButteryIconsDirectories) {
     });
 
   try {
-    LOG.debug("Creating icon components...");
+    LOG_CLI.debug("Creating icon components...");
     await createComponents();
-    LOG.debug("Creating icon components... done.");
+    LOG_CLI.debug("Creating icon components... done.");
   } catch (error) {
-    LOG.error(`Error when creating icon components: ${error}`);
-    throw LOG.fatal(new Error(error as string));
+    LOG_CLI.error(`Error when creating icon components: ${error}`);
+    throw LOG_CLI.fatal(new Error(error as string));
   }
 }

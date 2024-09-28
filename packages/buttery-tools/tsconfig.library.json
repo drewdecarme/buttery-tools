@@ -1,6 +1,6 @@
 {
   "extends": "@buttery/tsconfig/library",
-  "include": ["lib", "artifacts/buttery-components/global.d.ts"],
+  "include": ["lib"],
   "compilerOptions": {
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "noEmit": false,

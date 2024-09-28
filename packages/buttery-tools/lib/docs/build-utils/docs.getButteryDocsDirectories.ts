@@ -1,6 +1,6 @@
 import path from "node:path";
 import { getButteryArtifactsDir } from "../../commands";
-import { hashString } from "../../utils/node/util.ts.hash-string";
+import { hashString } from "../../utils/node";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 
 export type ButteryDocsDirectories = Awaited<

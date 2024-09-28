@@ -12,14 +12,16 @@ import typescript from "@rollup/plugin-typescript";
 import wyw from "@wyw-in-js/rollup";
 import css from "rollup-plugin-css-only";
 
+const entryFiles = [
+  // "./lib/docs/index.public.ts",
+  // "./lib/config/index.public.ts",
+  // "./lib/components/index.public.ts",
+  "./lib/logger/index.public.ts",
+  "./lib/commands/index.public.ts",
+].map((relPath) => path.resolve(import.meta.dirname, relPath));
+
 export default {
-  input: [
-    "./lib/docs/index.public.ts",
-    "./lib/config/index.public.ts",
-    "./lib/components/index.public.ts",
-    "./lib/logger/index.public.ts",
-    "./lib/commands/index.public.ts",
-  ].map((relPath) => path.resolve(import.meta.dirname, relPath)),
+  input: entryFiles,
   output: [
     {
       dir: "dist",
@@ -29,22 +31,46 @@ export default {
       sourcemap: true,
     },
   ],
-  external: (id) => !id.startsWith(".") && !id.startsWith("/"), // Exclude node_modules
+  external: (id) => {
+    const isExternal = !id.startsWith(".") && !id.startsWith("/");
+    if (isExternal) {
+      console.log("Excluding external module:", id);
+    }
+    return isExternal;
+  },
   plugins: [
     resolve({
-      preferBuiltins: true, // Prefer native Node.js modules
+      preferBuiltins: true, // Prefer native Node.js modules,
     }),
+    typescript({
+      // project: "./tsconfig.library.json",
+      // project: path.resolve(import.meta.dirname, "./tsconfig.library.json"),
+      project: path.resolve(import.meta.dirname, "./tsconfig.library.json"),
+    }), // Adjust based on your tsconfig
     commonjs(),
-    typescript({ tsconfig: "./tsconfig.library.json" }), // Adjust based on your tsconfig
-    wyw({
-      include: "/**/*.(ts|tsx)",
-      babelOptions: {
-        compact: false,
-        presets: ["@babel/preset-typescript", "@babel/preset-react"],
+    {
+      name: "rollup-debugger",
+      buildStart() {
+        console.log("Rollup build started");
       },
-    }),
-    css({
-      output: "buttery-docs.css",
-    }),
+      transform(code, id) {
+        console.log("Transforming file:", id);
+        return code;
+      },
+      buildEnd() {
+        console.log("Rollup build ended");
+      },
+    },
+
+    // wyw({
+    //   include: "/**/*.(ts|tsx)",
+    //   babelOptions: {
+    //     compact: false,
+    //     presets: ["@babel/preset-typescript", "@babel/preset-react"],
+    //   },
+    // }),
+    // css({
+    //   output: "buttery-docs.css",
+    // }),
   ],
 };

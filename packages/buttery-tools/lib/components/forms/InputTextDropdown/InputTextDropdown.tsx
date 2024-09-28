@@ -1,4 +1,3 @@
-import { clsx } from "clsx";
 import {
   type FocusEventHandler,
   type MutableRefObject,
@@ -18,6 +17,7 @@ import {
   useDropdown,
 } from "../../hooks/useDropdown";
 import { useWindowEventListener } from "../../hooks/useWindowEventListener";
+import { classes } from "../../utils";
 import { LOG_ITD } from "./input-text-dropdown.utils";
 
 export type InputTextDropdownRef = {
@@ -175,7 +175,7 @@ export const InputTextDropdown = forwardRef<
     <div>
       <input
         {...restProps}
-        className={clsx(className)}
+        className={classes(className)}
         ref={setInputRef}
         onFocus={handleFocus}
         onBlur={handleBlur}

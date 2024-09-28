@@ -1,13 +1,10 @@
-import type {
-  CommandAction,
-  CommandMeta,
-} from "../../../artifacts/buttery-commands";
+import type { CommandAction, CommandMeta } from "../../../lib/commands";
 import { getButteryConfigCommands } from "../commands/commands.getButteryConfigCommands";
 
 export const meta: CommandMeta = {
   name: "add",
   description:
-    "Bootstraps a new buttery command by asking the user a few questions.",
+    "Bootstraps a new buttery command by asking the user a few questions."
 };
 
 export const action: CommandAction = async () => {
