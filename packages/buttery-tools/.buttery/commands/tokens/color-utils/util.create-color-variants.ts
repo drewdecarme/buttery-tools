@@ -1,6 +1,6 @@
 import chroma from "chroma-js";
 import { match } from "ts-pattern";
-import { exhaustiveMatchGuard } from "../../../../utils/ts";
+import { exhaustiveMatchGuard } from "../../../../lib/utils/ts";
 import type { ButteryTokensColorBrandVariants } from "../../_buttery-config";
 import {
   hexToHsl,

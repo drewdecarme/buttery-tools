@@ -7,12 +7,14 @@ import {
 } from "@remix-run/react";
 
 import "@buttery/tokens/docs/css";
+import "@buttery/tools/docs/css";
+
+import { header } from "~/buttery/docs/data";
 import {
   LayoutHeader,
   Layout as LayoutRoot,
   RootLinks,
-} from "~/buttery/docs/components";
-import { header } from "~/buttery/docs/data";
+} from "../../../../../dist/lib/docs/index.public";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

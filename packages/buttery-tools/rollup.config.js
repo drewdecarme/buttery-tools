@@ -14,10 +14,11 @@ import css from "rollup-plugin-css-only";
 
 export default {
   input: [
-    "./lib/docs/index.ts",
-    "./lib/config/index.ts",
-    "./lib/components/index.ts",
-    "./lib/commands/index.ts",
+    "./lib/docs/index.public.ts",
+    "./lib/config/index.public.ts",
+    "./lib/components/index.public.ts",
+    "./lib/logger/index.public.ts",
+    "./lib/commands/index.public.ts",
   ].map((relPath) => path.resolve(import.meta.dirname, relPath)),
   output: [
     {

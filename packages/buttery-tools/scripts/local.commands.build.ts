@@ -1,5 +1,5 @@
-import { LOG } from "../.buttery/commands/_logger/util.ts.logger.js";
 import { buildCommands } from "../.buttery/commands/commands.build/build-commands.js";
+import { LOG } from "../lib/logger/LOG_CLI/LOG.CLI.js";
 
 try {
   await Promise.all([

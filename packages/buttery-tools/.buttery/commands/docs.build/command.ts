@@ -2,19 +2,15 @@ import { cp, readdir } from "node:fs/promises";
 import path from "node:path";
 import { exit } from "node:process";
 import { viteBuild } from "@remix-run/dev/dist/cli/commands.js";
-import type {
-  CommandAction,
-  CommandMeta,
-} from "../../../artifacts/buttery-commands";
-import { LOG } from "../_logger/util.ts.logger";
-import { bootstrapButteryDocsApp } from "../docs/docs.bootstrapButteryDocsApp";
+import type { CommandAction, CommandMeta } from "../../../lib/commands";
+import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
 import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectories";
 
 export const meta: CommandMeta = {
   name: "build",
   description:
-    "Build the necessary assets required to create actions, fetchers, and components to render the Buttery Docs template.",
+    "Build the necessary assets required to create actions, fetchers, and components to render the Buttery Docs template."
 };
 
 export const action: CommandAction = async () => {
@@ -22,14 +18,12 @@ export const action: CommandAction = async () => {
     const config = await getButteryDocsConfig();
     const dirs = await getButteryDocsDirectories(config);
 
-    await bootstrapButteryDocsApp(config, dirs);
-
     await viteBuild(dirs.artifacts.apps.working.root, {
+      config: dirs.artifacts.apps.working.viteConfig,
       emptyOutDir: true,
       clearScreen: false,
       force: true,
-      config: dirs.artifacts.apps.working.viteConfig,
-      logLevel: "info",
+      logLevel: "info"
     });
 
     switch (config.docs.buildTarget) {
@@ -37,10 +31,10 @@ export const action: CommandAction = async () => {
         // move functions to local dist
         const functionsDir = path.resolve(
           dirs.artifacts.apps.working.root,
-          "./functions",
+          "./functions"
         );
         await cp(functionsDir, path.resolve(dirs.output.root, "./functions"), {
-          recursive: true,
+          recursive: true
         });
         break;
       }
@@ -52,7 +46,7 @@ export const action: CommandAction = async () => {
     // Report the success
     const filesAndDirs = await readdir(dirs.output.root, {
       recursive: true,
-      withFileTypes: true,
+      withFileTypes: true
     });
 
     const files = filesAndDirs.filter((dirent) => dirent.isFile());

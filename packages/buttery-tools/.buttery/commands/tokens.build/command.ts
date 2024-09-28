@@ -4,7 +4,7 @@ import type {
   CommandMeta,
   CommandOptions
 } from "../../../artifacts/buttery-commands";
-import { LOG } from "../_logger/util.ts.logger";
+import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
 import { buildButteryTokens } from "../tokens/tokens.buildButteryTokens";
 
 export const meta: CommandMeta = {

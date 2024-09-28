@@ -3,8 +3,8 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
 
+import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
 import type { ButteryConfigTokens } from "../_buttery-config";
-import { LOG } from "../_logger/util.ts.logger";
 import { MakeTemplates } from "./make-templates/MakeTemplates";
 import { MakeTemplateColorBrand } from "./make-templates/template.makeColorBrand";
 import { MakeTemplateColorShade } from "./make-templates/template.makeColorShade";

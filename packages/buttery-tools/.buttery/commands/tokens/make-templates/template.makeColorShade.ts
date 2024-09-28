@@ -1,4 +1,4 @@
-import { LOG } from "../../_logger";
+import { LOG } from "../../../../lib/logger/LOG_CLI";
 import { hexToHsl, hexToRgb } from "../color-utils/util.color-conversions";
 import {
   type ColorModels,

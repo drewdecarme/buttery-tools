@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
 
-import { LOG } from "../../_logger";
+import { LOG } from "../../../../lib/logger/LOG_CLI";
 import { exhaustiveMatchGuard } from "../../_utils";
 import {
   hexToHsl,

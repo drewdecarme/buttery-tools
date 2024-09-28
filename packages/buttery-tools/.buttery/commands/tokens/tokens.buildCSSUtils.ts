@@ -1,6 +1,6 @@
 import path from "node:path";
+import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
 import type { ResolvedButteryConfig } from "../_buttery-config";
-import { LOG } from "../_logger/util.ts.logger";
 import { writeDynamicDirectoryPackageJSON } from "../_utils/util.writeDynamicDirectoryPackageJSON";
 import { buildCSSUtilsTypeScript } from "./tokens.buildCSSUtilsTypeScript";
 import type { ButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";

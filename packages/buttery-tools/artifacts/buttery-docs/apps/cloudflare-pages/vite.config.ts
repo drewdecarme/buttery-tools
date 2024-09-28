@@ -1,4 +1,6 @@
-import { getButteryDocsViteConfig } from "@buttery/tools/docs/getViteConfig";
+import { vitePlugin as butteryDocs } from "@buttery/tools/docs/vite";
+import { defineConfig } from "vite";
 
-const defineConfig = await getButteryDocsViteConfig();
-export default defineConfig(() => ({}));
+export default defineConfig({
+  plugins: [butteryDocs()]
+});

@@ -3,6 +3,7 @@
   "sideEffects": false,
   "private": true,
   "dependencies": {
+    "@buttery/tools": "latest",
     "@remix-run/cloudflare": "latest",
     "isbot": "4.4.0"
   }

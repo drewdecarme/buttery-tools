@@ -29,6 +29,17 @@
       "import": "./dist/lib/commands/index.js",
       "require": "./dist/lib/commands/index.js"
     },
+    "./docs": {
+      "types": "./dist/lib/docs/index.d.ts",
+      "node": "./dist/lib/docs/index.js",
+      "import": "./dist/lib/docs/index.js"
+    },
+    "./docs/css": {
+      "types": "./dist/buttery-docs.d.ts",
+      "node": "./dist/buttery-docs.css",
+      "import": "./dist/buttery-docs.css",
+      "css": "./dist/buttery-docs.css"
+    },
     "./docs/getViteConfig": {
       "types": "./dist/lib/docs/getViteConfig.d.ts",
       "node": "./dist/lib/docs/getViteConfig.js",

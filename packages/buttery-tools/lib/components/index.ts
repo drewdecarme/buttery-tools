@@ -1,30 +1,30 @@
 // Forms
-export * from "../../artifacts/buttery-components/forms/InputTextDropdown";
+export * from "./forms/InputTextDropdown";
 
 // Modals
-export * from "../../artifacts/buttery-components/modals/Modal";
-export * from "../../artifacts/buttery-components/modals/Drawer";
+export * from "./modals/Modal";
+export * from "./modals/Drawer";
 
 // Popovers
-export * from "../../artifacts/buttery-components/popovers/DropdownMenu";
-export * from "../../artifacts/buttery-components/popovers/DropdownNav";
-export * from "../../artifacts/buttery-components/popovers/Toast";
+export * from "./popovers/DropdownMenu";
+export * from "./popovers/DropdownNav";
+export * from "./popovers/Toast";
 
 // Hooks
-export * from "../../artifacts/buttery-components/hooks/useCarousel";
-export * from "../../artifacts/buttery-components/hooks/useDropdown";
-export * from "../../artifacts/buttery-components/hooks/useDynamicNode";
-export * from "../../artifacts/buttery-components/hooks/useForwardedRef";
-export * from "../../artifacts/buttery-components/hooks/useIntersectionObserver";
-export * from "../../artifacts/buttery-components/hooks/useIntervalState";
-export * from "../../artifacts/buttery-components/hooks/useModalDialog";
-export * from "../../artifacts/buttery-components/hooks/usePopover";
-export * from "../../artifacts/buttery-components/hooks/usePortal";
-export * from "../../artifacts/buttery-components/hooks/useToggle";
-export * from "../../artifacts/buttery-components/hooks/useTooltip";
-export * from "../../artifacts/buttery-components/hooks/useWindowEventListener";
+export * from "./hooks/useCarousel";
+export * from "./hooks/useDropdown";
+export * from "./hooks/useDynamicNode";
+export * from "./hooks/useForwardedRef";
+export * from "./hooks/useIntersectionObserver";
+export * from "./hooks/useIntervalState";
+export * from "./hooks/useModalDialog";
+export * from "./hooks/usePopover";
+export * from "./hooks/usePortal";
+export * from "./hooks/useToggle";
+export * from "./hooks/useTooltip";
+export * from "./hooks/useWindowEventListener";
 
 // Utils
-export * from "../../artifacts/buttery-components/utils/classes";
-export * from "../../artifacts/buttery-components/utils/nodeHasAttributesInChildren";
-export * from "../../artifacts/buttery-components/utils/exhaustiveMatchGuard";
+export * from "./utils/classes";
+export * from "./utils/nodeHasAttributesInChildren";
+export * from "./utils/exhaustiveMatchGuard";

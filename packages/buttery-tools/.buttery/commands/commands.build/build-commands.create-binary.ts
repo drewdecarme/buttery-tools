@@ -1,6 +1,6 @@
 import * as esbuild from "esbuild";
-import { createEsbuildOptions } from "../../../utils/esbuild";
-import { LOG } from "../_logger/util.ts.logger";
+import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
+import { createEsbuildOptions } from "../../../lib/utils/esbuild";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import { ESBuildPluginCommands } from "./build-commands.util.esbuild-plugin-commands";
 import {

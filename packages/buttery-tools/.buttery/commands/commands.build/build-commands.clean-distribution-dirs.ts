@@ -1,6 +1,6 @@
 import { rm } from "node:fs/promises";
 import path from "node:path";
-import { LOG } from "../_logger/util.ts.logger";
+import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
 import type { CommandsBuildFunction } from "./build-commands.utils";
 
 /**

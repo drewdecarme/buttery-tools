@@ -1,13 +1,13 @@
 import type { HeadersFunction, MetaFunction } from "@remix-run/cloudflare";
 import { Outlet, json, useLoaderData } from "@remix-run/react";
+import { graph } from "~/buttery/docs/data";
 import {
   LayoutBody,
   LayoutBodyMain,
   LayoutBodyNav,
   LayoutBodyTOC,
-} from "~/buttery/docs/components";
-import { graph } from "~/buttery/docs/data";
-import { getGraphValueThatMatchesPathname } from "~/buttery/docs/utils";
+  getGraphValueThatMatchesPathname,
+} from "../../../../../../dist/lib/docs/index.public";
 
 export async function loader() {
   return json({

@@ -6,7 +6,7 @@ import type {
   CommandMeta,
   CommandOptions
 } from "../../../artifacts/buttery-commands";
-import { LOG } from "../_logger/util.ts.logger";
+import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
 
 export const meta: CommandMeta = {
   name: "init",

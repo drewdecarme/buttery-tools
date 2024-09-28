@@ -27,13 +27,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-
-    /* Importing */
-    "baseUrl": ".",
-    "paths": {
-      "@buttery/icons": ["./.buttery/.store/icons"]
-    }
+    "noFallthroughCasesInSwitch": true
   },
   "exclude": ["artifacts/buttery-docs/apps"]
 }

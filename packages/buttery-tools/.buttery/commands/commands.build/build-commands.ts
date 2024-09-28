@@ -1,6 +1,6 @@
 import { exit } from "node:process";
+import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI.js";
 import { getButteryConfig } from "../_buttery-config";
-import { LOG } from "../_logger/util.ts.logger";
 
 import { buildCommandsCleanDistributionDirs } from "./build-commands.clean-distribution-dirs.js";
 import { buildCommandsCreateBinary } from "./build-commands.create-binary.js";

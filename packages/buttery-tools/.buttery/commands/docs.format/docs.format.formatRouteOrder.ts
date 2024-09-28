@@ -1,4 +1,4 @@
-import { LOG } from "../_logger/util.ts.logger";
+import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
 import { autoOrderButteryDocFiles } from "../docs/docs.autoOrderButteryDocFiles";
 import { getButteryDocsFiles } from "../docs/docs.getButteryDocFiles";
 import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
