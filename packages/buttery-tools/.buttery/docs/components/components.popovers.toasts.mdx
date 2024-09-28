@@ -12,7 +12,7 @@ A semantically correct, accessible and SSR ready hook and component
 for creating completely custom toast messages to incicate the status
 of some user initiated action.
 
-{/* example:"artifacts/buttery-components/popovers/toast/examples/Toast.example.tsx" */}
+{/* example:"lib/components/popovers/toast/examples/Toast.example.tsx" */}
 
 ## Usage
 
@@ -24,7 +24,7 @@ same props as the options that you pass the `create` function returned from
 the `useToast` hook. This gives you complete control over the options that
 you pass the toast component that you create yourself.
 
-{/* example:"artifacts/buttery-components/popovers/toast/examples/ToastBestPractice.example.tsx" */}
+{/* example:"lib/components/popovers/toast/examples/ToastBestPractice.example.tsx" */}
 
 The `<Toaster />` component can be defined anywhere in the app that it doesn't use
 conventional "react" means for passing data back and fourth to the toast itself. The
@@ -43,7 +43,7 @@ documentation](#toaster-)
 ### Barebones
 
 This is the most basic instance you can get (that is without any styling)
-{/* example:"artifacts/buttery-components/popovers/dropdown-menu/examples/DropdownMenuBarebones.example.tsx" */}
+{/* example:"lib/components/popovers/DropdownMenu/examples/DropdownMenuBarebones.example.tsx" */}
 
 ### Centerally re-declaring `useToast`
 
@@ -59,7 +59,7 @@ For this use case, you can create multiple `<Toaster />` components and add `id`
 the toaster and the `useToast` hook. The result will be transparent to the user but
 this might provide some more isolated DX for certain pieces of the app.
 
-{/* example:"artifacts/buttery-components/popovers/toast/examples/ToastMultipleToasters.example.tsx" */}
+{/* example:"lib/components/popovers/toast/examples/ToastMultipleToasters.example.tsx" */}
 
 This example consolidates the `ToastComponent` for each toaster inline into the `ToastComponent`
 prop of the toaster. To ensure that the types matchup, the `<Toaster />` is a generic functional

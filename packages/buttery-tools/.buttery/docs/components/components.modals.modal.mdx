@@ -11,7 +11,7 @@ meta:
 A controlled, semantically correct and accessible modal dialog that interupts the user's flow to focus on itself.
 The HTML element that appears is a dialog that is enhanced with the `modal` attribute.
 
-{/* fence:"/artifacts/buttery-components/modals/Modal/examples/ModalUsage.example.tsx" */}
+{/* fence:"/lib/components/modals/Modal/examples/ModalUsage.example.tsx" */}
 
 The semantics of a dialog specifically state that a `<dialog />` can either be a **modal** or **non-modal** dialog.
 In order to reduce confusion on what to use when, the `<Modal />` component should be used when you want to explicitly stop
@@ -34,7 +34,7 @@ logic of the modal interal to the `<Modal />` component and doesn't muddy the im
 To launch a modal, simply import the `useModal` hook, pass the `<Modal />` the `modalRef` vairable that can be destructed
 from the `useModal` hook, and then use the `openModal` function to launch it.
 
-{/* example:"/artifacts/buttery-components/modals/Modal/examples/ModalBase.example.tsx" */}
+{/* example:"/lib/components/modals/Modal/examples/ModalBase.example.tsx" */}
 
 ## Installation
 
@@ -51,7 +51,7 @@ npm install @buttery/components
 The below example is what you would most likely see in the wild. It includes a modal header, scrollable body, and a footer that
 contains a close and action button. It has minimal styles but attempts to show you what you can do with those styles.
 
-{/* example:"/artifacts/buttery-components/modals/Modal/examples/ModalBasic.example.tsx" */}
+{/* example:"/lib/components/modals/Modal/examples/ModalBasic.example.tsx" */}
 
 Unlike other Headless UI libraries, Buttery Components only exports hooks and basic components you need to use relatively complex
 functionality. You might think that there would be a `<ModalHeader /> `, `<ModalBody />`, and `<ModalFooter />` components but
@@ -87,7 +87,7 @@ is a form, we need to ensure that if there is another way of collecting informat
 
 #### Use case: Adding another value to select while filling out a form
 
-{/* example:"artifacts/buttery-components/modals/Modal/examples/ModalWithNestedForms.example.tsx" */}
+{/* example:"lib/components/modals/Modal/examples/ModalWithNestedForms.example.tsx" */}
 
 In this use case, were opening a modal to collect some information about ourselves. We're collecting 3 things:
 
@@ -218,7 +218,7 @@ The above is kind of yucky and doesn't provide a good API. The below code
 is the source of the `useModal` hook which makes the interface
 for managing the modal itself.
 
-{/* fence:"artifacts/buttery-components/modals/Modal/modal.useModal.ts" */}
+{/* fence:"lib/components/modals/Modal/modal.useModal.ts" */}
 
 ### Re-using modal dialog functionality
 

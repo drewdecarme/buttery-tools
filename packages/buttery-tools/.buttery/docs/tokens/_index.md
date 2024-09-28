@@ -2,4 +2,4 @@
 title: buttery.tokens
 ---
 
-# buttery.tokens
+# Buttery Tokens

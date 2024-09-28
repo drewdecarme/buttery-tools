@@ -10,7 +10,7 @@ meta:
 
 A hook that makes it easy to create and imperatively control [React Portals](https://react.dev/reference/react-dom/createPortal).
 
-{/* fence:"artifacts/buttery-components/hooks/usePortal/examples/UsePortalBarebones.example.tsx" */}
+{/* fence:"lib/components/hooks/usePortal/examples/UsePortalBarebones.example.tsx" */}
 
 The example below gives you an understanding of how to manage the portal as well as position the portal relative
 to the target that instantiated it.
@@ -21,7 +21,7 @@ This hook utilizes the [useDynamicNode](./hooks.useDynamicNode.mdx) hook to crea
 in which to attach a React portal to. Imperative functions are also exported along with the component to easily manage
 when the portal should render it's children and when not to.
 
-{/* example:"artifacts/buttery-components/hooks/usePortal/examples/UsePortal.example.tsx" */}
+{/* example:"lib/components/hooks/usePortal/examples/UsePortal.example.tsx" */}
 
 By default, this component hides the content of the portal from the DOM until it reaches an `isOpen` state. Once `isOpen=true`
 then the portal will create a dynamic node, attach it to the root of the DOM and then render the children of the portal into that
@@ -57,7 +57,7 @@ This is the most basic implementation you can get before styling and dynamic pos
 
 The example uses the imperative controls to close and open the portal.
 
-{/* example:"artifacts/buttery-components/hooks/usePortal/examples/UsePortalBarebones.example.tsx" */}
+{/* example:"lib/components/hooks/usePortal/examples/UsePortalBarebones.example.tsx" */}
 
 ### Positioning the portal
 
@@ -66,7 +66,7 @@ in order to style it to make sure it appears where we want it to.
 
 > **NOTE:** This is a completly manual way of posiitoning the portal. If you're looking for similar
 > funcitonality without having to manually roll your own positioning rules, see the [useDropdown](./hooks.useDropdown.mdx)
-> hook and the [DropdownMenu](./components.popovers.dropdown-menu.mdx) component which incorporates
+> hook and the [DropdownMenu](./components.popovers.DropdownMenu.mdx) component which incorporates
 > dynamic positioning along with portals.
 
 In the below example, you'll see a contrived example where we're going to position
@@ -74,7 +74,7 @@ the portal next to the button that launched it. The `buttonRef` is set only when
 the `button` is clicked. Once the portal opens, the `setContentRef` callback ref is fired
 where the style of the content is then positioned near the `boundingClientRect`
 
-{/* example:"artifacts/buttery-components/hooks/usePortal/examples/UsePortalPositioning.example.tsx" */}
+{/* example:"lib/components/hooks/usePortal/examples/UsePortalPositioning.example.tsx" */}
 
 ## APIs
 

@@ -2,4 +2,4 @@
 title: buttery.docs
 ---
 
-# buttery.docs
+# Buttery Docs
