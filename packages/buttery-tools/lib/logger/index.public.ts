@@ -1,1 +1,1 @@
-export * from "./ButteryLogger";
+export * from "@buttery/logger";

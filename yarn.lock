@@ -2103,6 +2103,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@buttery/logger@workspace:^, @buttery/logger@workspace:packages/buttery-logger":
+  version: 0.0.0-use.local
+  resolution: "@buttery/logger@workspace:packages/buttery-logger"
+  dependencies:
+    "@buttery/tsconfig": "workspace:^"
+    chalk: "npm:^5.3.0"
+    typescript: "npm:^5.6.2"
+  languageName: unknown
+  linkType: soft
+
 "@buttery/playground@workspace:packages/buttery-playground":
   version: 0.0.0-use.local
   resolution: "@buttery/playground@workspace:packages/buttery-playground"
@@ -2144,6 +2154,7 @@ __metadata:
     "@babel/core": "npm:7.25.2"
     "@babel/preset-react": "npm:7.24.7"
     "@babel/preset-typescript": "npm:7.24.7"
+    "@buttery/logger": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
     "@chromatic-com/storybook": "npm:2.0.2"
     "@cloudflare/workers-types": "npm:4.20240919.0"
@@ -7698,6 +7709,13 @@ __metadata:
     ansi-styles: "npm:^4.1.0"
     supports-color: "npm:^7.1.0"
   checksum: 10c0/4a3fef5cc34975c898ffe77141450f679721df9dde00f6c304353fa9c8b571929123b26a0e4617bde5018977eb655b31970c297b91b63ee83bb82aeb04666880
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "chalk@npm:5.3.0"
+  checksum: 10c0/8297d436b2c0f95801103ff2ef67268d362021b8210daf8ddbe349695333eb3610a71122172ff3b0272f1ef2cf7cc2c41fdaa4715f52e49ffe04c56340feed09
   languageName: node
   linkType: hard
 

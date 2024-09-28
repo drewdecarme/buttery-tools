@@ -6,16 +6,26 @@
  */
 
 import path from "node:path";
+import { ButteryLogger } from "@buttery/logger";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import wyw from "@wyw-in-js/rollup";
 import css from "rollup-plugin-css-only";
 
+const externalSet = new Set();
+
+const LOG_BUILD = new ButteryLogger({
+  id: "build",
+  prefix: "buttery-lib",
+  prefixBgColor: "#0594bc",
+  logLevel: "debug",
+});
+
 const entryFiles = [
-  // "./lib/docs/index.public.ts",
-  // "./lib/config/index.public.ts",
-  // "./lib/components/index.public.ts",
+  "./lib/docs/index.public.ts",
+  "./lib/config/index.public.ts",
+  "./lib/components/index.public.ts",
   "./lib/logger/index.public.ts",
   "./lib/commands/index.public.ts",
 ].map((relPath) => path.resolve(import.meta.dirname, relPath));
@@ -33,9 +43,7 @@ export default {
   ],
   external: (id) => {
     const isExternal = !id.startsWith(".") && !id.startsWith("/");
-    if (isExternal) {
-      console.log("Excluding external module:", id);
-    }
+    if (isExternal && !externalSet.has(id)) externalSet.add(id);
     return isExternal;
   },
   plugins: [
@@ -43,34 +51,36 @@ export default {
       preferBuiltins: true, // Prefer native Node.js modules,
     }),
     typescript({
-      // project: "./tsconfig.library.json",
-      // project: path.resolve(import.meta.dirname, "./tsconfig.library.json"),
-      project: path.resolve(import.meta.dirname, "./tsconfig.library.json"),
-    }), // Adjust based on your tsconfig
+      tsconfig: "./tsconfig.library.json",
+    }),
     commonjs(),
+    wyw({
+      include: "/**/*.(ts|tsx)",
+      babelOptions: {
+        compact: false,
+        presets: ["@babel/preset-typescript", "@babel/preset-react"],
+      },
+    }),
+    css({
+      output: "buttery-docs.css",
+    }),
     {
       name: "rollup-debugger",
       buildStart() {
-        console.log("Rollup build started");
+        LOG_BUILD.debug("Building the `@buttery/tools` distribution...");
       },
       transform(code, id) {
-        console.log("Transforming file:", id);
+        LOG_BUILD.debug(`Transforming file: ${id}`);
         return code;
       },
       buildEnd() {
-        console.log("Rollup build ended");
+        LOG_BUILD.debug("Building the `@buttery/tools` distribution... done.");
+        LOG_BUILD.success(
+          "Successfully built the distribution for @butter/tools"
+        );
+        LOG_BUILD.debug(`Externalized the following dependencies:
+${[...externalSet.values()].map((dep) => `- ${dep}`).join("\n")}`);
       },
     },
-
-    // wyw({
-    //   include: "/**/*.(ts|tsx)",
-    //   babelOptions: {
-    //     compact: false,
-    //     presets: ["@babel/preset-typescript", "@babel/preset-react"],
-    //   },
-    // }),
-    // css({
-    //   output: "buttery-docs.css",
-    // }),
   ],
 };

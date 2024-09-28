@@ -1,4 +1,4 @@
-import chalk, { type Chalk } from "chalk";
+import chalk, { type ChalkInstance } from "chalk";
 
 export type ButteryLogLevel =
   | "trace"
@@ -56,7 +56,7 @@ export class ButteryLogger {
     fatal: 5
   };
 
-  private logLevelColor: { [key in ButteryLogLevel]: Chalk } = {
+  private logLevelColor: { [key in ButteryLogLevel]: ChalkInstance } = {
     trace: chalk.bold.magenta,
     info: chalk.bold.blue,
     debug: chalk.bold.magenta,
