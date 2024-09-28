@@ -5,8 +5,8 @@ import type {
   CommandAction,
   CommandMeta,
   CommandOptions
-} from "../../../artifacts/buttery-commands";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
+} from "../../../lib/commands";
+import { LOG_CLI } from "../../../lib/logger";
 
 export const meta: CommandMeta = {
   name: "init",
@@ -26,7 +26,7 @@ export const options: CommandOptions<{ auto: boolean }> = {
 const systemFont = `system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`;
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
-  LOG.debug("Initializing buttery-tokens...");
+  LOG_CLI.debug("Initializing buttery-tokens...");
 
   const defaultWorkingDir = path.resolve(process.cwd());
 
@@ -46,7 +46,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
       });
 
   // prefix
-  LOG.info(
+  LOG_CLI.info(
     "In order to ensure that your tokens don't conflict with any other variables from any other third party libraries, it's a best practice to prefix (or namespace) your variables with a prefix. This ensures that they aren't any variables that will overwrite each other which would provide unexpected results."
   );
   const prefix = options.auto
@@ -57,7 +57,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
       });
 
   // grid system
-  LOG.info(
+  LOG_CLI.info(
     "In order to preserve harmonious layout, you'll need to pick a grid system scalar. This ensures that all aspects of sizing in your application are in alignment."
   );
   const gridSystem = options.auto
@@ -114,14 +114,14 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
 };
 export default tokensConfig;  
 `;
-    LOG.debug("Creating `tokens.config.ts`...");
+    LOG_CLI.debug("Creating `tokens.config.ts`...");
     await writeFile(outFile, outContent, { encoding: "utf-8" });
-    LOG.debug("Creating `tokens.config.ts`... complete.");
+    LOG_CLI.debug("Creating `tokens.config.ts`... complete.");
 
-    LOG.success("Buttery tokens successfully initialized!");
+    LOG_CLI.success("Buttery tokens successfully initialized!");
   } catch (error) {
     const err = new Error(error as string);
-    LOG.fatal(err);
+    LOG_CLI.fatal(err);
     throw err;
   }
 };

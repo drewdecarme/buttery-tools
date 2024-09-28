@@ -2,8 +2,8 @@ import type {
   CommandAction,
   CommandMeta,
   CommandOptions
-} from "../../../artifacts/buttery-commands";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
+} from "../../../lib/commands";
+import { LOG_CLI } from "../../../lib/logger";
 import { buildButteryTokens } from "../tokens/tokens.buildButteryTokens";
 
 export const meta: CommandMeta = {
@@ -45,7 +45,7 @@ export const options: CommandOptions<{
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
   try {
-    LOG.debug("Running `tokens.dev` command");
+    LOG_CLI.debug("Running `tokens.dev` command");
 
     // TODO: Create a central function to reconcile options from defaultOptions
 
@@ -57,6 +57,6 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
       isLocal: false
     });
   } catch (error) {
-    throw LOG.fatal(new Error(error as string));
+    throw LOG_CLI.fatal(new Error(error as string));
   }
 };

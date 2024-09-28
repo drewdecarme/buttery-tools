@@ -5,12 +5,10 @@
  * bearing on how things are resolved.
  */
 
-import fs from "node:fs";
 import path from "node:path";
 import { ButteryLogger } from "@buttery/logger";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
-import sucrase from "@rollup/plugin-sucrase";
 import typescript from "@rollup/plugin-typescript";
 import wyw from "@wyw-in-js/rollup";
 import css from "rollup-plugin-css-only";

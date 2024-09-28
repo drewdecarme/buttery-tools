@@ -6,11 +6,11 @@ import * as esbuild from "esbuild";
 import handlebars from "handlebars";
 
 import type { CommandOptionType } from "../../../lib/commands";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
+import type { ResolvedButteryConfig } from "../../../lib/config";
+import { LOG_CLI } from "../../../lib/logger";
 import { createEsbuildOptions } from "../../../lib/utils/esbuild";
 import { dynamicImport } from "../../../lib/utils/node/util.node.dynamic-import";
 import { exhaustiveMatchGuard, kebabToCamel } from "../../../lib/utils/ts";
-import type { ResolvedButteryConfig } from "../_buttery-config";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import {
   // templateCommandParent,
@@ -78,8 +78,8 @@ export class ESBuildPluginCommands {
   //   try {
   //     await access(commandSegmentPathSrc, constants.F_OK);
   //   } catch (error) {
-  //     LOG.error(`Cannot locate command file for '${segmentCommandName}'`);
-  //     LOG.debug("Auto creating command file with default values...");
+  //     LOG_CLI.error(`Cannot locate command file for '${segmentCommandName}'`);
+  //     LOG_CLI.debug("Auto creating command file with default values...");
   //     // TODO: Put any prompting behind --autofix
   //     const template = handlebars.compile<{ command_name: string }>(
   //       templateCommandParent
@@ -89,8 +89,8 @@ export class ESBuildPluginCommands {
   //       template,
   //       { encoding: "utf-8" }
   //     );
-  //     LOG.debug("Auto creating command file with default values... done.");
-  //     LOG.warning(
+  //     LOG_CLI.debug("Auto creating command file with default values... done.");
+  //     LOG_CLI.warning(
   //       "A stub file has been created for you. You should ensure that you create the command in the commands dir. If you want to do this automatically then use --autofix"
   //     );
   //   }
@@ -123,7 +123,7 @@ export class ESBuildPluginCommands {
    * by processing the commands key.
    */
   private async buildCommandGraph(commandFiles: CommandFile[]) {
-    LOG.debug("Creating the command graph...");
+    LOG_CLI.debug("Creating the command graph...");
 
     for (const { commandSegments, name, outPath } of commandFiles) {
       let currentCommandGraph = this.commandGraph;
@@ -153,7 +153,7 @@ export class ESBuildPluginCommands {
         }
       }
     }
-    LOG.debug("Creating the command graph... done.");
+    LOG_CLI.debug("Creating the command graph... done.");
   }
 
   /**a
@@ -226,7 +226,7 @@ export class ESBuildPluginCommands {
 
       if (!hasSubCommands && !props.action) {
         // no sub commands on this command... an action should exist.
-        LOG.warning(
+        LOG_CLI.warning(
           `"${props.segment_name}" missing an action export. Please export an action.`
         );
       }
@@ -243,11 +243,11 @@ export class ESBuildPluginCommands {
 
   private logRebuild() {
     this.runNumber++;
-    LOG.debug(`Building program x${this.runNumber}...`);
+    LOG_CLI.debug(`Building program x${this.runNumber}...`);
   }
 
   private logBuildComplete() {
-    LOG.success(`Building program x${this.runNumber}... complete.`);
+    LOG_CLI.success(`Building program x${this.runNumber}... complete.`);
   }
 
   getPlugin(): Plugin {

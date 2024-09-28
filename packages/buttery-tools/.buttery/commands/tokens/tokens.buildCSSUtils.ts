@@ -1,7 +1,7 @@
 import path from "node:path";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
-import type { ResolvedButteryConfig } from "../_buttery-config";
-import { writeDynamicDirectoryPackageJSON } from "../_utils/util.writeDynamicDirectoryPackageJSON";
+import { writeDynamicDirectoryPackageJSON } from "../../../lib/commands";
+import type { ResolvedButteryConfig } from "../../../lib/config";
+import { LOG_CLI } from "../../../lib/logger";
 import { buildCSSUtilsTypeScript } from "./tokens.buildCSSUtilsTypeScript";
 import type { ButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";
 
@@ -9,7 +9,7 @@ export async function buildCSSUtils(
   config: ResolvedButteryConfig<"tokens">,
   dirs: ButteryTokensDirectories
 ) {
-  LOG.debug("Building CSS utils...");
+  LOG_CLI.debug("Building CSS utils...");
 
   // convert the tokens to an array
   const allButteryTokensConfigs = Array.isArray(config.tokens)
@@ -42,5 +42,5 @@ export async function buildCSSUtils(
     await createUtilPromise();
   }
 
-  LOG.debug("Building CSS utils... done.");
+  LOG_CLI.debug("Building CSS utils... done.");
 }

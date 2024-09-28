@@ -1,10 +1,9 @@
 import path from "node:path";
-
-import type { ResolvedButteryConfig } from "../_buttery-config";
 import {
   getButteryArtifactsDir,
   getNodeModulesButteryOutputDir
-} from "../_utils";
+} from "../../../lib/commands";
+import type { ResolvedButteryConfig } from "../../../lib/config";
 
 export type ButteryTokensDirectories = Awaited<
   ReturnType<typeof getButteryTokensDirectories>

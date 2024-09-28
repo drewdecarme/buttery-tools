@@ -3,8 +3,8 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
 
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
-import type { ButteryConfigTokens } from "../_buttery-config";
+import type { ButteryConfigTokens } from "../../../lib/config";
+import { LOG_CLI } from "../../../lib/logger";
 import { MakeTemplates } from "./make-templates/MakeTemplates";
 import { MakeTemplateColorBrand } from "./make-templates/template.makeColorBrand";
 import { MakeTemplateColorShade } from "./make-templates/template.makeColorShade";
@@ -54,9 +54,9 @@ export async function buildCSSUtilsTypeScript(
   }
 
   // Generate all of the registered templates
-  LOG.debug("Generating make functions...");
+  LOG_CLI.debug("Generating make functions...");
   await Templates.generate();
-  LOG.debug("Generating make functions.. done.");
+  LOG_CLI.debug("Generating make functions.. done.");
 
   // create a tsconfig.json in the output directory
   const tsconfigJsonPath = path.resolve(namespacedOutDir, "./tsconfig.json");
@@ -67,15 +67,15 @@ export async function buildCSSUtilsTypeScript(
     2
   );
   try {
-    LOG.debug("Creating tsconfig...");
+    LOG_CLI.debug("Creating tsconfig...");
     await writeFile(tsconfigJsonPath, tsconfigJsonContent);
-    LOG.debug("Creating tsconfig... done.");
+    LOG_CLI.debug("Creating tsconfig... done.");
   } catch (error) {
-    throw LOG.fatal(new Error(error as string));
+    throw LOG_CLI.fatal(new Error(error as string));
   }
 
   // transpile the typescript files
-  LOG.debug("Building & transpiling...");
+  LOG_CLI.debug("Building & transpiling...");
   try {
     const { stderr } = await execAsync(
       `tsc --project ${tsconfigJsonPath} --outDir ${namespacedOutDir}`
@@ -84,14 +84,14 @@ export async function buildCSSUtilsTypeScript(
       throw stderr;
     }
   } catch (error) {
-    throw LOG.fatal(new Error(error as string));
+    throw LOG_CLI.fatal(new Error(error as string));
   }
 
-  LOG.debug("Building & transpiling... done.");
+  LOG_CLI.debug("Building & transpiling... done.");
 
   // build the ts files into the output directory
   // try {
-  //   LOG.debug("Building library...");
+  //   LOG_CLI.debug("Building library...");
   //   await build({
   //     // esbuild: {
   //     //   target: "esnext"
@@ -115,17 +115,17 @@ export async function buildCSSUtilsTypeScript(
   //       {
   //         name: "vite-plugin-tsc",
   //         buildEnd() {
-  //           LOG.debug("Building library... done.");
+  //           LOG_CLI.debug("Building library... done.");
   //           return new Promise((resolve, reject) => {
   //             // Use the tsconfig path to transpile the files
-  //             LOG.debug("Creating distribution types...");
+  //             LOG_CLI.debug("Creating distribution types...");
   //           });
   //         }
   //       }
   //     ]
   //   });
   // } catch (error) {
-  //   throw LOG.fatal(new Error(error as string));
+  //   throw LOG_CLI.fatal(new Error(error as string));
   // }
 
   // Create a plugin to eventually transpile the .tokens directory
@@ -146,7 +146,7 @@ export async function buildCSSUtilsTypeScript(
   // });
 
   // // Transpile the templates
-  // LOG.debug("Transpiling generated files...");
+  // LOG_CLI.debug("Transpiling generated files...");
   // await build(buildOptions);
-  // LOG.debug("Transpiling generated files... done.");
+  // LOG_CLI.debug("Transpiling generated files... done.");
 }

@@ -1,7 +1,7 @@
 import { match } from "ts-pattern";
 
-import { LOG } from "../../../../lib/logger/LOG_CLI";
-import { exhaustiveMatchGuard } from "../../_utils";
+import { LOG_CLI } from "../../../../lib/logger";
+import { exhaustiveMatchGuard } from "../../../../lib/utils/ts";
 import {
   hexToHsl,
   hexToRgb,
@@ -140,7 +140,7 @@ const css: CompileFunction = ({
     prefix: cssVarPrefix
   });
 
-  LOG.debug(colorBrandTokens);
+  LOG_CLI.debug(colorBrandTokens);
 
   return colorBrandTokens;
 };

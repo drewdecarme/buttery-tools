@@ -2,9 +2,9 @@ import type {
   CommandAction,
   CommandMeta,
   CommandOptions
-} from "../../../artifacts/buttery-commands/index.js";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI.js";
-import { buildCommands } from "./build-commands.js";
+} from "../../../lib/commands";
+import { LOG_CLI } from "../../../lib/logger";
+import { buildCommands } from "./build-commands";
 
 export const meta: CommandMeta = {
   name: "build",
@@ -29,9 +29,9 @@ export const options: CommandOptions<{ autofix: boolean; debug: boolean }> = {
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
   if (options.debug) {
-    LOG.level = "info";
+    LOG_CLI.level = "info";
   } else {
-    LOG.level = "error";
+    LOG_CLI.level = "error";
   }
 
   await buildCommands({ watch: false, local: false });

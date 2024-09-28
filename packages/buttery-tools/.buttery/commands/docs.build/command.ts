@@ -2,10 +2,13 @@ import { cp, readdir } from "node:fs/promises";
 import path from "node:path";
 import { exit } from "node:process";
 import { viteBuild } from "@remix-run/dev/dist/cli/commands.js";
+
 import type { CommandAction, CommandMeta } from "../../../lib/commands";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
-import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectories";
+import {
+  getButteryDocsConfig,
+  getButteryDocsDirectories
+} from "../../../lib/docs/build-utils";
+import { LOG_CLI } from "../../../lib/logger";
 
 export const meta: CommandMeta = {
   name: "build",
@@ -50,7 +53,7 @@ export const action: CommandAction = async () => {
     });
 
     const files = filesAndDirs.filter((dirent) => dirent.isFile());
-    LOG.success(`Successfully built documentation app!
+    LOG_CLI.success(`Successfully built documentation app!
 
   Location: ${dirs.output.root}
   Total Files: ${files.length}
@@ -60,6 +63,6 @@ ${files.reduce((accum, file) => accum.concat(`    - ${path.relative(dirs.output.
 
     exit();
   } catch (error) {
-    throw LOG.fatal(new Error(error as string));
+    throw LOG_CLI.fatal(new Error(error as string));
   }
 };

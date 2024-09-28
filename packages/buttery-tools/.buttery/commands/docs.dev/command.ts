@@ -3,10 +3,12 @@ import type {
   CommandAction,
   CommandMeta,
   CommandOptions
-} from "../../../lib/commands/index.js";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI.js";
-import { getButteryDocsConfig } from "../docs/docs.getButteryDocsConfig.js";
-import { getButteryDocsDirectories } from "../docs/docs.getButteryDocsDirectories.js";
+} from "../../../lib/commands";
+import {
+  getButteryDocsConfig,
+  getButteryDocsDirectories
+} from "../../../lib/docs/build-utils";
+import { LOG_CLI } from "../../../lib/logger";
 
 export const meta: CommandMeta = {
   name: "dev",
@@ -45,6 +47,6 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     viteServer.printUrls();
     viteServer.bindCLIShortcuts({ print: true });
   } catch (error) {
-    throw LOG.fatal(new Error(error as string));
+    throw LOG_CLI.fatal(new Error(error as string));
   }
 };

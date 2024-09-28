@@ -1,6 +1,7 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import type { ResolvedButteryConfig } from "../_buttery-config";
+
+import type { ResolvedButteryConfig } from "../../../lib/config";
 import {
   type CommandFile,
   getButteryCommandsDirectories

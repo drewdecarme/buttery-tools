@@ -1,5 +1,5 @@
 import * as esbuild from "esbuild";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
+import { LOG_CLI } from "../../../lib/logger";
 import { createEsbuildOptions } from "../../../lib/utils/esbuild";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import { ESBuildPluginCommands } from "./build-commands.util.esbuild-plugin-commands";
@@ -29,7 +29,7 @@ export const buildCommandsCreateBinary: CommandsBuildFunction = async ({
 
     // // Run the build in 'watch' mode
     if (options.watch) {
-      LOG.watch(`Listening for changes in "${cliDirs.commandsDir}"...`);
+      LOG_CLI.watch(`Listening for changes in "${cliDirs.commandsDir}"...`);
       const context = await esbuild.context({
         ...esbuildOptions,
         minify: false

@@ -1,6 +1,7 @@
 import { select } from "@inquirer/prompts";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
-import type { ResolvedButteryConfig } from "../_buttery-config";
+
+import type { ResolvedButteryConfig } from "../../../lib/config";
+import { LOG_CLI } from "../../../lib/logger";
 import type { ButteryTokensConfig } from "./tokens.getButteryTokensConfig";
 
 /**
@@ -17,7 +18,7 @@ export async function launchPlaygroundGetConfig(
       // If the tokens configuration is an array, then make the
       // user select which configuration they want to launch in the
       // interactive UI playground
-      LOG.info("Detected more than one tokens configuration.");
+      LOG_CLI.info("Detected more than one tokens configuration.");
       const choice = await select({
         message:
           "Please select which configuration you would like to load into the interactive token config UI",
@@ -37,7 +38,7 @@ export async function launchPlaygroundGetConfig(
       tokens
     };
   } catch (error) {
-    throw LOG.fatal(
+    throw LOG_CLI.fatal(
       new Error(
         `Fatal error when trying to resolve a single tokens configuration from the '.buttery/tokens' config: ${(error as Error).message}`
       )

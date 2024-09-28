@@ -6,7 +6,7 @@ import type {
   CommandMeta,
   CommandOptions
 } from "../../../lib/commands";
-import type { ResolvedButteryConfig } from "../_buttery-config";
+import type { ResolvedButteryConfig } from "../../../lib/config";
 
 export type CommandsBuildOptions = {
   watch: boolean;

@@ -1,6 +1,6 @@
 import { writeFile } from "node:fs/promises";
 import chokidar from "chokidar";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
+import { LOG_CLI } from "../../../lib/logger";
 import { buildCSSUtils } from "./tokens.buildCSSUtils";
 import { getButteryTokensConfig } from "./tokens.getButteryTokensConfig";
 import { getButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";
@@ -42,17 +42,17 @@ export async function buildButteryTokens(options: BuildButteryTokensParams) {
   }
 
   const watcher = chokidar.watch(config.paths.config);
-  LOG.watch(config.paths.config.concat(" for changes..."));
+  LOG_CLI.watch(config.paths.config.concat(" for changes..."));
 
   watcher.on("change", async (file) => {
-    LOG.watch(`"${file}" changed.`);
-    LOG.watch("Rebuilding tokens...");
+    LOG_CLI.watch(`"${file}" changed.`);
+    LOG_CLI.watch("Rebuilding tokens...");
     const config = await getButteryTokensConfig(options);
     const dirs = await getButteryTokensDirectories(config);
 
     await buildCSSUtils(config, dirs);
 
-    LOG.watch("Rebuilding tokens... done.");
+    LOG_CLI.watch("Rebuilding tokens... done.");
   });
 
   // watch and launch the interactive UI

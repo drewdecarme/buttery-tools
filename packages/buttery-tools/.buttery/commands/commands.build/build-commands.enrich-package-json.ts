@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
+import { LOG_CLI } from "../../../lib/logger";
 import type { CommandsBuildFunctionArgs } from "./build-commands.utils";
 
 // TODO: Update this description
@@ -34,7 +34,7 @@ export async function buildCommandsEnrichPackageJson({
     );
     for (const [key, value] of packageJsonPropertiesEntries) {
       if (!(key in packageJson)) {
-        LOG.debug(`Adding '${key}' to package.json file.`);
+        LOG_CLI.debug(`Adding '${key}' to package.json file.`);
         packageJson[key] = value;
       }
     }

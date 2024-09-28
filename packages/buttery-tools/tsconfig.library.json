@@ -9,5 +9,5 @@
     "outDir": "./dist",
     "rootDir": "./lib"
   },
-  "include": ["lib/**/*"]
+  "include": ["lib/**/index.public.ts", "lib/**/*.d.ts"]
 }

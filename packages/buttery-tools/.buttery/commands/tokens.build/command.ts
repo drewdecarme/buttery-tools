@@ -1,10 +1,11 @@
 import { exit } from "node:process";
+
+import { LOG_CLI } from "../../../dist/logger";
 import type {
   CommandAction,
   CommandMeta,
   CommandOptions
-} from "../../../artifacts/buttery-commands";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
+} from "../../../lib/commands";
 import { buildButteryTokens } from "../tokens/tokens.buildButteryTokens";
 
 export const meta: CommandMeta = {
@@ -31,9 +32,9 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
       prompt: options.prompt,
       isLocal: false
     });
-    LOG.success("Successfully built buttery tokens!");
+    LOG_CLI.success("Successfully built buttery tokens!");
     exit();
   } catch (error) {
-    throw LOG.fatal(new Error(error as string));
+    throw LOG_CLI.fatal(new Error(error as string));
   }
 };

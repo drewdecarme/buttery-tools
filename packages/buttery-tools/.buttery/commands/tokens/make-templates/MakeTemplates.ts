@@ -1,8 +1,9 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { LOG } from "../../../../lib/logger/LOG_CLI/LOG.CLI";
-import type { ButteryConfigTokens } from "../../_buttery-config";
+import type { ButteryConfigTokens } from "../../../../lib/config";
+
+import { LOG_CLI } from "../../../../lib/logger";
 import type { MakeTemplate } from "./MakeTemplate";
 
 export class MakeTemplates {
@@ -53,11 +54,13 @@ export class MakeTemplates {
       const filePath = path.resolve(this.outDir, `./${fileName}.ts`);
 
       try {
-        LOG.debug(`Generating function "${fileName}" from template...`);
+        LOG_CLI.debug(`Generating function "${fileName}" from template...`);
         await writeFile(filePath, compiledFunctionContent, {
           encoding: "utf8"
         });
-        LOG.debug(`Generating function "${fileName}" from template... done.`);
+        LOG_CLI.debug(
+          `Generating function "${fileName}" from template... done.`
+        );
 
         // add the function to a barrel file
         indexFileContent = indexFileContent.concat(
@@ -69,14 +72,14 @@ export class MakeTemplates {
         const err = new Error(
           `Error when generating "${fileName}" at "${filePath}": ${error}`
         );
-        LOG.fatal(err);
+        LOG_CLI.fatal(err);
         throw err;
       }
     }
 
     // create the entry point barrel file
     try {
-      LOG.debug("Creating config file...");
+      LOG_CLI.debug("Creating config file...");
       await writeFile(
         this.configOutFilePath,
         `export const config = ${JSON.stringify(this.config)}`,
@@ -85,21 +88,21 @@ export class MakeTemplates {
       indexFileContent = indexFileContent.concat(
         `export * from "./config.js";\n`
       );
-      LOG.debug("Creating config file... done");
-      LOG.debug("Creating entry point...");
+      LOG_CLI.debug("Creating config file... done");
+      LOG_CLI.debug("Creating entry point...");
       await writeFile(this.entryFile, indexFileContent, { encoding: "utf8" });
-      LOG.debug("Creating entry point... done.");
+      LOG_CLI.debug("Creating entry point... done.");
     } catch (error) {
       const err = new Error(
         `Error when generating the barrel file for consumption: ${error}`
       );
-      LOG.fatal(err);
+      LOG_CLI.fatal(err);
       throw err;
     }
 
     // create the root css file
     try {
-      LOG.debug("Creating root css...");
+      LOG_CLI.debug("Creating root css...");
       // wrap the tokens in the root
       tokensCSSFileContent = `:root {
 ${tokensCSSFileContent}}`;
@@ -108,7 +111,7 @@ ${tokensCSSFileContent}}`;
       });
     } catch (error) {
       const err = new Error(`Error when generating tokens CSS file: ${error}`);
-      LOG.fatal(err);
+      LOG_CLI.fatal(err);
       throw err;
     }
   }

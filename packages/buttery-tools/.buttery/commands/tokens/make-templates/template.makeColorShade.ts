@@ -1,4 +1,4 @@
-import { LOG } from "../../../../lib/logger/LOG_CLI";
+import { LOG_CLI } from "../../../../lib/logger";
 import { hexToHsl, hexToRgb } from "../color-utils/util.color-conversions";
 import {
   type ColorModels,
@@ -92,7 +92,7 @@ const css: CompileFunction = ({
     prefix: cssVarPrefix
   });
 
-  LOG.debug(colorShadeTokens);
+  LOG_CLI.debug(colorShadeTokens);
 
   return colorShadeTokens;
 };

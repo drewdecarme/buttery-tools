@@ -1,9 +1,7 @@
 import { select } from "@inquirer/prompts";
-import type {
-  CommandAction,
-  CommandMeta
-} from "../../../artifacts/buttery-commands";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
+
+import type { CommandAction, CommandMeta } from "../../../lib/commands";
+import { LOG_CLI } from "../../../lib/logger";
 import { exhaustiveMatchGuard } from "../../../lib/utils/ts";
 import { formatRouteOrder } from "./docs.format.formatRouteOrder";
 
@@ -14,7 +12,7 @@ export const meta: CommandMeta = {
 };
 
 export const action: CommandAction = async () => {
-  LOG.watch("Formatting...");
+  LOG_CLI.watch("Formatting...");
 
   const decision = await select<"navigation">({
     message: "What would you like to format?",

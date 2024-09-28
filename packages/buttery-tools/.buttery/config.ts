@@ -1,4 +1,4 @@
-import type { ButteryConfig } from "../.buttery/commands/_buttery-config";
+import type { ButteryConfig } from "../lib/config";
 import { ConfigTokensDocs } from "./config.tokens.docs";
 import { ConfigTokensPlayground } from "./config.tokens.playground";
 

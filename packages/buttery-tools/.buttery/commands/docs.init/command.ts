@@ -2,8 +2,8 @@ import path from "node:path";
 import { input, select } from "@inquirer/prompts";
 
 import type { CommandAction, CommandMeta } from "../../../lib/commands";
-import { LOG } from "../../../lib/logger/LOG_CLI/LOG.CLI";
-import { getButteryConfig } from "../_buttery-config";
+import { getButteryDocsConfig } from "../../../lib/docs/build-utils";
+import { LOG_CLI } from "../../../lib/logger";
 
 export const meta: CommandMeta = {
   name: "init",
@@ -13,7 +13,7 @@ export const meta: CommandMeta = {
 
 export const action: CommandAction = async () => {
   try {
-    const config = await getButteryConfig("docs");
+    const config = await getButteryDocsConfig();
 
     // ask some questions
     const relativeDocsFolder = await input({
@@ -37,6 +37,6 @@ export const action: CommandAction = async () => {
 
     console.log({ docsFolder, framework });
   } catch (error) {
-    throw LOG.fatal(new Error(error as string));
+    throw LOG_CLI.fatal(new Error(error as string));
   }
 };
