@@ -15,24 +15,24 @@
   },
   "exports": {
     "./config": {
-      "types": "./dist/lib/config/index.d.ts",
-      "import": "./dist/lib/config/index.js",
-      "require": "./dist/lib/config/index.js"
+      "types": "./dist/config/index.d.ts",
+      "import": "./dist/config/index.js",
+      "require": "./dist/config/index.js"
     },
     "./components": {
-      "types": "./dist/lib/components/index.d.ts",
-      "import": "./dist/lib/components/index.js",
-      "require": "./dist/lib/components/index.js"
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js",
+      "require": "./dist/components/index.js"
     },
     "./commands": {
-      "types": "./dist/lib/commands/index.d.ts",
-      "import": "./dist/lib/commands/index.js",
-      "require": "./dist/lib/commands/index.js"
+      "types": "./dist/commands/index.d.ts",
+      "import": "./dist/commands/index.js",
+      "require": "./dist/commands/index.js"
     },
     "./docs": {
-      "types": "./dist/lib/docs/index.d.ts",
-      "node": "./dist/lib/docs/index.js",
-      "import": "./dist/lib/docs/index.js"
+      "types": "./dist/docs/index.d.ts",
+      "node": "./dist/docs/index.js",
+      "import": "./dist/docs/index.js"
     },
     "./docs/css": {
       "types": "./dist/buttery-docs.d.ts",
@@ -41,9 +41,9 @@
       "css": "./dist/buttery-docs.css"
     },
     "./docs/getViteConfig": {
-      "types": "./dist/lib/docs/getViteConfig.d.ts",
-      "node": "./dist/lib/docs/getViteConfig.js",
-      "import": "./dist/lib/docs/getViteConfig.js"
+      "types": "./dist/docs/getViteConfig.d.ts",
+      "node": "./dist/docs/getViteConfig.js",
+      "import": "./dist/docs/getViteConfig.js"
     }
   },
   "files": [
@@ -80,6 +80,7 @@
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^28.0.0",
     "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-sucrase": "^5.0.2",
     "@rollup/plugin-typescript": "^12.1.0",
     "@storybook/addon-essentials": "8.3.2",
     "@storybook/addon-interactions": "8.3.2",

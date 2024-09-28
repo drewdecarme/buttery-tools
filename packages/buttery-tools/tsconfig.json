@@ -7,5 +7,8 @@
     "./.buttery/**/*.tsx",
     "rollup.config.ts"
   ],
-  "exclude": ["artifacts/buttery-docs/apps"]
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "exclude": ["artifacts/buttery-docs/apps/**/*"]
 }
