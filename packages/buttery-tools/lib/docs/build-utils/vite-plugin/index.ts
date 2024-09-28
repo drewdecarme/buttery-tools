@@ -1,3 +1,4 @@
+import mdx from "@mdx-js/rollup";
 import { cloudflareDevProxyVitePlugin as remixCloudflareDevProxy } from "@remix-run/dev";
 import { vitePlugin as remix } from "@remix-run/dev";
 import wyw from "@wyw-in-js/vite";
@@ -8,11 +9,11 @@ import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import type { Plugin } from "vite";
 
 import { bootstrapButteryDocsApp } from "../docs.bootstrapButteryDocsApp";
+import { getButteryDocsConfig } from "../docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../docs.getButteryDocsDirectories";
 import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
 import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports";
 import { transformMarkdownAssetPath } from "./docs.vite-plugin-transform-markdown-asset-path";
-import { getButteryDocsConfig } from ".buttery/commands/docs/docs.getButteryDocsConfig";
-import { getButteryDocsDirectories } from ".buttery/commands/docs/docs.getButteryDocsDirectories";
 
 export function vitePluginButteryDocs(): Plugin {
   return {
@@ -20,7 +21,7 @@ export function vitePluginButteryDocs(): Plugin {
     async buildStart() {
       await bootstrapButteryDocsApp();
     },
-    async config(viteConfig, env) {
+    async config() {
       const config = await getButteryDocsConfig();
       const dirs = await getButteryDocsDirectories(config);
 

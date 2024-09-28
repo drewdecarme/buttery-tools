@@ -1,5 +1,5 @@
 import path from "node:path";
-import { LOG } from "../_logger/util.ts.logger.js";
+import { LOG_CLI } from "../logger/loggers.js";
 import { butteryConfigDefaults } from "./buttery-config.defaults.js";
 import type {
   ButteryConfig,
@@ -97,7 +97,7 @@ export const getButteryConfig = async <T extends keyof ButteryConfig>(
     } as Omit<GetButteryConfig<T>, "config">;
   } catch (error) {
     const err = new Error(error as string);
-    LOG.fatal(err);
+    LOG_CLI.fatal(err);
     throw err;
   }
 };

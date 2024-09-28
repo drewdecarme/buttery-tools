@@ -1,7 +1,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
-import { LOG } from "../_logger";
+
+import { LOG_CLI } from "../../logger";
 import { parseMDXFileContent } from "./docs.parseMDXFileContent";
 import { parseMDXFileFrontmatter } from "./docs.parseMDXFileFrontmatter";
 import { parseMDXFileName } from "./docs.parseMDXFilename";
@@ -12,7 +13,7 @@ export const parseMdxFile = async ({
   fsPath,
   routePath
 }: FileObj) => {
-  LOG.debug("Parsing MDX file...", { filename });
+  LOG_CLI.debug("Parsing MDX file...", { filename });
   try {
     // parse the frontmatter away from the markdown content
     const rawMdxContent = await readFile(fsPath, { encoding: "utf8" });
@@ -27,7 +28,7 @@ export const parseMdxFile = async ({
 
     // parse the name of the file
     const { segments, section } = parseMDXFileName(filename);
-    LOG.debug("Parsing MDX file... done.", { filename });
+    LOG_CLI.debug("Parsing MDX file... done.", { filename });
 
     return {
       fsPath,
@@ -40,7 +41,7 @@ export const parseMdxFile = async ({
       segments
     };
   } catch (error) {
-    LOG.error("Error when trying to parse the MDX file.");
-    throw LOG.fatal(new Error(error as string));
+    LOG_CLI.error("Error when trying to parse the MDX file.");
+    throw LOG_CLI.fatal(new Error(error as string));
   }
 };

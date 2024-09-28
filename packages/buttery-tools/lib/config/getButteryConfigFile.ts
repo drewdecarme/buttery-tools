@@ -1,7 +1,7 @@
 import { existsSync, lstatSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { LOG } from "../_logger/util.ts.logger.js";
+import { LOG_CLI } from "../logger/loggers.js";
 import type { GetButteryConfigOptions } from "./buttery-config.types.js";
 import {
   createDefaultButteryConfigAndDirs,
@@ -31,7 +31,7 @@ export async function getButteryConfigFile(
 
   // Create a config directory and file based upon the answers that the user is prompted for
   if (!butteryDir && prompt) {
-    LOG.warning(
+    LOG_CLI.warning(
       "Cannot locate the `.buttery/config` file in your file structure. Let's create one."
     );
     const userButteryDir =
@@ -60,7 +60,7 @@ export async function getButteryConfigFile(
 
   // Create a config file based upon the answers that the user is prompted for
   if (!doesConfigFileExist && prompt) {
-    LOG.warning(
+    LOG_CLI.warning(
       `Found the .buttery directory at '${butteryDir}'. However, no \`config.ts\` file is present. Let's create one.`
     );
     const userDefinedConfigDefaults = await promptUserForButteryConfigDefaults({
@@ -83,7 +83,7 @@ export async function getButteryConfigFile(
 
   // Create a config file if the config file is empty
   if (isFileEmpty && prompt) {
-    LOG.warning(
+    LOG_CLI.warning(
       `Found "config.ts" file at: '${configFilePath}'. However, this file is empty. Let's populate it.`
     );
     const userDefinedConfigDefaults = await promptUserForButteryConfigDefaults({

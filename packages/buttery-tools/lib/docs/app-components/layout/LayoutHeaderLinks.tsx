@@ -10,7 +10,7 @@ import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import type { ButteryConfigDocsHeaderLink } from "../../../../.buttery/commands/_buttery-config";
+import type { ButteryConfigDocsHeaderLink } from "../../../config";
 import { LayoutHeaderLinksTypeDropdown } from "./LayoutHeaderLinksTypeDropdown";
 
 const divStyles = css`

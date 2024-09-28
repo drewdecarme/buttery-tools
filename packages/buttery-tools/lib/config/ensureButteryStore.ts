@@ -1,6 +1,6 @@
 import path from "node:path";
 import { ensureDir } from "fs-extra";
-import { LOG } from "../_logger/util.ts.logger";
+import { LOG_CLI } from "../logger";
 import { ensureGitIgnoreEntry } from "./ensureGitignoreEntry";
 
 /**
@@ -21,7 +21,7 @@ export async function ensureButteryStore(options: { butteryDir: string }) {
     await ensureDir(butteryStoreDir);
     return butteryStoreDir;
   } catch (error) {
-    throw LOG.fatal(
+    throw LOG_CLI.fatal(
       new Error(`Fatal error when resolving the .buttery/.store: ${error}`)
     );
   }

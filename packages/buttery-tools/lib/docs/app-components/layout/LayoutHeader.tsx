@@ -8,7 +8,7 @@ import {
 import { css } from "@linaria/core";
 import { NavLink } from "@remix-run/react";
 import type { FC } from "react";
-import type { ButteryConfigDocs } from "../../../../.buttery/commands/_buttery-config";
+import type { ButteryConfigDocs } from "../../../config";
 import { LayoutHeaderLinks } from "./LayoutHeaderLinks";
 
 const layoutHeaderStyles = css`

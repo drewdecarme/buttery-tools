@@ -64,10 +64,10 @@ export async function getButteryDocsViteConfig() {
             }
           ]
         ]
-      }),
+      })
+      // TODO: Fix these
       // await butteryIcons()
-
-      watchDocsPlugin(config, dirs)
+      // watchDocsPlugin(config, dirs)
     ]
   };
 

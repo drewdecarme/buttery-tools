@@ -1,20 +1,20 @@
 import path from "node:path";
 import esbuild from "esbuild";
-import { dynamicImport } from "../../../utils/node/util.node.dynamic-import";
-import { hashString } from "../../../utils/ts/util.ts.hash-string";
-import { LOG } from "../_logger/util.ts.logger";
+
+import { LOG_CLI } from "../logger";
+import { dynamicImport, hashString } from "../utils/node";
 import type { ButteryConfig } from "./buttery-config.types";
 
 async function importButteryConfigModule(
   butteryConfigPath: string
 ): Promise<ButteryConfig> {
   try {
-    LOG.debug("Importing transpiled '.buttery/config' file...");
+    LOG_CLI.debug("Importing transpiled '.buttery/config' file...");
     const module = await dynamicImport(butteryConfigPath);
-    LOG.debug("Importing transpiled '.buttery/config' file... done.");
+    LOG_CLI.debug("Importing transpiled '.buttery/config' file... done.");
     return module.default;
   } catch (error) {
-    throw LOG.fatal(
+    throw LOG_CLI.fatal(
       new Error(
         `Fatal error when trying to import the transpiled '.buttery/config': ${error}`
       )
@@ -56,13 +56,13 @@ export async function getButteryConfigModule(options: {
         extends: "@buttery/tsconfig/library"
       })
     });
-    LOG.debug("Transpiling the '.buttery/config' file...");
+    LOG_CLI.debug("Transpiling the '.buttery/config' file...");
     await context.rebuild();
-    LOG.debug("Transpiling the '.buttery/config' file... done.");
+    LOG_CLI.debug("Transpiling the '.buttery/config' file... done.");
     const config = await importButteryConfigModule(builtConfigOutFile);
     return config;
   } catch (error) {
-    throw LOG.fatal(
+    throw LOG_CLI.fatal(
       new Error(
         `Fatal error when trying to transpile and build the '.buttery/config' file: ${error}`
       )

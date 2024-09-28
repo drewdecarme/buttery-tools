@@ -1,5 +1,5 @@
-import type { ButteryConfigDocsOrder } from "../_buttery-config";
-import { LOG } from "../_logger/util.ts.logger";
+import type { ButteryConfigDocsOrder } from "../../config";
+import { LOG_CLI } from "../../logger";
 import { autoOrderButteryDocFiles } from "./docs.autoOrderButteryDocFiles";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import type { FileObj } from "./docs.types";
@@ -11,7 +11,7 @@ export function orderButteryDocFiles(
   let reconciledOrder: ButteryConfigDocsOrder;
 
   if (!docsConfig.docs.order) {
-    LOG.warning("No custom order defined... auto ordering");
+    LOG_CLI.warning("No custom order defined... auto ordering");
     reconciledOrder = autoOrderButteryDocFiles(files);
   } else {
     reconciledOrder = docsConfig.docs.order;
@@ -49,7 +49,7 @@ export function orderButteryDocFiles(
       oFiles.unshift(file);
     } else if (!fileAlreadyOrdered) {
       // add the un ordered files to the end of the order
-      LOG.warning(
+      LOG_CLI.warning(
         `No order defined for "${file.filename}". Ordering arbitrarily.`
       );
       oFiles.push(file);

@@ -1,4 +1,4 @@
-import { LOG } from "../_logger/util.ts.logger";
+import { LOG_CLI } from "../../logger";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 
 import { parseMdxFile } from "./docs.parseMDXFile";
@@ -16,7 +16,7 @@ export async function getButteryDocsGraph(
   config: ButteryDocsConfig,
   orderedFiles: FileObj[]
 ): Promise<ButteryDocsGraph> {
-  LOG.debug("Generating graph representation of docs...");
+  LOG_CLI.debug("Generating graph representation of docs...");
   const graph: ButteryDocsGraph = {};
 
   async function insertNode(file: FileObj) {
@@ -93,6 +93,6 @@ export async function getButteryDocsGraph(
     await insertNode(file);
   }
 
-  LOG.debug("Generating graph representation of docs... done.");
+  LOG_CLI.debug("Generating graph representation of docs... done.");
   return graph;
 }

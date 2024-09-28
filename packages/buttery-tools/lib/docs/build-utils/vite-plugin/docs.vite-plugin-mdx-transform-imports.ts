@@ -1,6 +1,6 @@
 import path from "node:path";
 import type { Plugin } from "vite";
-import { LOG } from "../../../logger/LOG_CLI";
+import { LOG_CLI } from "../../../logger";
 
 type MdxTransformImportsOptions = {
   rootPath: string;
@@ -24,7 +24,7 @@ export function mdxTransformImports(
         (_match, p1) => {
           const relPath = p1.split("~")[1];
           const transformedPath = path.join(options.rootPath, relPath);
-          LOG.debug("Transforming mdx import path", {
+          LOG_CLI.debug("Transforming mdx import path", {
             originalPath: p1,
             transformedPath
           });

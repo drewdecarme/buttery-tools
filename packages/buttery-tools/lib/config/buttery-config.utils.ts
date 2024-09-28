@@ -1,9 +1,9 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { checkbox, input } from "@inquirer/prompts";
-import { exhaustiveMatchGuard } from "../../../utils/ts/index.js";
-import { butteryConfigDefaults } from "./buttery-config.defaults.js";
-import type { ButteryConfig } from "./buttery-config.types.js";
+import { exhaustiveMatchGuard } from "../utils/ts";
+import { butteryConfigDefaults } from "./buttery-config.defaults";
+import type { ButteryConfig } from "./buttery-config.types";
 
 /**
  * Asks the user to select which keys in the buttery config

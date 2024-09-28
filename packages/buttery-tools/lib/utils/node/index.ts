@@ -1,3 +1,4 @@
-export * from "./util.node.find-directory-upwards.js";
-export * from "./util.node.dynamic-import.js";
-export * from "./util.node.run-command.js";
+export * from "./util.node.find-directory-upwards";
+export * from "./util.node.dynamic-import";
+export * from "./util.node.run-command";
+export * from "./util.ts.hash-string";

@@ -1,5 +1,5 @@
-import { buildCommands } from "../.buttery/commands/commands.build/build-commands.js";
-import { LOG } from "../lib/logger/LOG_CLI/LOG.CLI.js";
+import { buildCommands } from "../.buttery/commands/commands.build/build-commands";
+import { LOG_CLI } from "../lib/logger/loggers";
 
 try {
   await Promise.all([
@@ -9,5 +9,5 @@ try {
     })
   ]);
 } catch (error) {
-  throw LOG.fatal(new Error(error as string));
+  throw LOG_CLI.fatal(new Error(error as string));
 }

@@ -1,7 +1,7 @@
 import { appendFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { ensureFile } from "fs-extra";
-import { LOG } from "../_logger/util.ts.logger";
+import { LOG_CLI } from "../logger";
 
 /**
  * Adds an entry to the .gitignore file in the .buttery directory if
@@ -22,11 +22,11 @@ export async function ensureGitIgnoreEntry(
   );
 
   try {
-    LOG.debug("Ensuring .buttery/.gitignore file exists...");
+    LOG_CLI.debug("Ensuring .buttery/.gitignore file exists...");
     await ensureFile(resolvedGitIgnoreFile);
-    LOG.debug("Ensuring .buttery/.gitignore file exists... done");
+    LOG_CLI.debug("Ensuring .buttery/.gitignore file exists... done");
   } catch (error) {
-    throw LOG.fatal(
+    throw LOG_CLI.fatal(
       new Error(
         `Fatal error when trying to ensure the existence of the \`.buttery/.gitignore\` file: ${error}`
       )
@@ -34,26 +34,28 @@ export async function ensureGitIgnoreEntry(
   }
 
   try {
-    LOG.debug("Checking .buttery/.gitignore for entry", { entry });
+    LOG_CLI.debug("Checking .buttery/.gitignore for entry", { entry });
     const gitIgnoreContents = await readFile(resolvedGitIgnoreFile, {
       encoding: "utf8"
     });
     if (gitIgnoreContents.includes(entry)) {
-      LOG.debug("Entry already exists in ./buttery/.gitignore... moving on.");
+      LOG_CLI.debug(
+        "Entry already exists in ./buttery/.gitignore... moving on."
+      );
       return;
     }
     const newEntry = `\n${entry}\n`;
     // appends the entry on a new line of the .gitignore
-    LOG.debug(
+    LOG_CLI.debug(
       "Entry does not exist in ./buttery/.gitignore. Appending file..."
     );
     await appendFile(resolvedGitIgnoreFile, newEntry, { encoding: "utf8" });
-    LOG.debug(
+    LOG_CLI.debug(
       "Entry does not exist in ./buttery/.gitignore. Appending file..."
     );
     return;
   } catch (error) {
-    throw LOG.fatal(
+    throw LOG_CLI.fatal(
       new Error(
         `Fatal error when trying to read and append the \`.buttery/.gitignorae\` file: ${error}`
       )
