@@ -1,5 +1,5 @@
 import { exec } from "node:child_process";
-import { LOG_CLI } from "../logger";
+import { LOG_CLI } from "../logger/loggers";
 import type { ButteryIconsDirectories } from "./icons.getButteryIconsDirectories";
 
 /**

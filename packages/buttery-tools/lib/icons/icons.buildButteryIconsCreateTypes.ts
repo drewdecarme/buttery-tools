@@ -1,6 +1,6 @@
 import { readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { LOG_CLI } from "../logger";
+import { LOG_CLI } from "../logger/loggers";
 import type { ButteryIconsDirectories } from "./icons.getButteryIconsDirectories";
 
 /**

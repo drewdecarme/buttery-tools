@@ -9,7 +9,7 @@ import {
 import { css } from "@linaria/core";
 import { NavLink, useLocation } from "@remix-run/react";
 import type { FC } from "react";
-import type { ButteryDocsGraph } from "../../build-utils";
+import type { ButteryDocsGraph } from "../build-utils/docs.types";
 import { LayoutBodyNavItem } from "./LayoutBodyNavItem";
 import { LayoutTextOverline } from "./LayoutTextOverline";
 

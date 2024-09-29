@@ -1,6 +1,6 @@
 import path from "node:path";
 import type { Plugin } from "vite";
-import { LOG_CLI } from "../../../logger";
+import { LOG_CLI } from "../../../logger/loggers";
 
 type MdxTransformImportsOptions = {
   rootPath: string;

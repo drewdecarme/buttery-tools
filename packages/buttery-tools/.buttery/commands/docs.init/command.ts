@@ -1,9 +1,12 @@
 import path from "node:path";
 import { input, select } from "@inquirer/prompts";
 
-import type { CommandAction, CommandMeta } from "../../../lib/commands";
-import { getButteryDocsConfig } from "../../../lib/docs/build-utils";
-import { LOG_CLI } from "../../../lib/logger";
+import type {
+  CommandAction,
+  CommandMeta
+} from "../../../lib/commands/butter-commands.types";
+import { getButteryDocsConfig } from "../../../lib/docs/build-utils/docs.getButteryDocsConfig";
+import { LOG_CLI } from "../../../lib/logger/loggers";
 
 export const meta: CommandMeta = {
   name: "init",

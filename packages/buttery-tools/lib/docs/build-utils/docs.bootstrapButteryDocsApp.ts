@@ -1,7 +1,7 @@
 import { copyFile, cp, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { ensureFile } from "fs-extra";
-import { LOG_CLI } from "../../logger";
+import { LOG_CLI } from "../../logger/loggers";
 import { getButteryDocsFiles } from "./docs.getButteryDocFiles";
 import { getButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";

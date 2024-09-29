@@ -1,5 +1,5 @@
 import { buildCommands } from "../.buttery/commands/commands.build/build-commands";
-import { LOG_CLI } from "../lib/logger";
+import { LOG_CLI } from "../lib/logger/loggers";
 
 try {
   await buildCommands({

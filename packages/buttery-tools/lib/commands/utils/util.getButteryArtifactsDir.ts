@@ -1,4 +1,4 @@
-import { LOG_CLI } from "../../logger";
+import { LOG_CLI } from "../../logger/loggers";
 import { findDirectoryUpwards } from "../../utils/node";
 
 export async function getButteryArtifactsDir(

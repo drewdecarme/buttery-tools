@@ -1,7 +1,7 @@
 import { select } from "@inquirer/prompts";
 
-import type { ResolvedButteryConfig } from "../../../lib/config";
-import { LOG_CLI } from "../../../lib/logger";
+import type { ResolvedButteryConfig } from "../../../lib/config/getButteryConfig";
+import { LOG_CLI } from "../../../lib/logger/loggers";
 import type { ButteryTokensConfig } from "./tokens.getButteryTokensConfig";
 
 /**

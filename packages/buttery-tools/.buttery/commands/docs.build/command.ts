@@ -3,12 +3,13 @@ import path from "node:path";
 import { exit } from "node:process";
 import { viteBuild } from "@remix-run/dev/dist/cli/commands.js";
 
-import type { CommandAction, CommandMeta } from "../../../lib/commands";
-import {
-  getButteryDocsConfig,
-  getButteryDocsDirectories
-} from "../../../lib/docs/build-utils";
-import { LOG_CLI } from "../../../lib/logger";
+import type {
+  CommandAction,
+  CommandMeta
+} from "../../../lib/commands/butter-commands.types";
+import { getButteryDocsConfig } from "../../../lib/docs/build-utils/docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../../../lib/docs/build-utils/docs.getButteryDocsDirectories";
+import { LOG_CLI } from "../../../lib/logger/loggers";
 
 export const meta: CommandMeta = {
   name: "build",

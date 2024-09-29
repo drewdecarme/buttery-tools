@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { checkbox, input } from "@inquirer/prompts";
-import { exhaustiveMatchGuard } from "../utils/ts";
+import { exhaustiveMatchGuard } from "../utils/ts/util.ts.exhaustive-match-guard";
 import { butteryConfigDefaults } from "./buttery-config.defaults";
 import type { ButteryConfig } from "./buttery-config.types";
 

@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
 
-import { LOG_CLI } from "../../logger";
+import { LOG_CLI } from "../../logger/loggers";
 import { parseMDXFileContent } from "./docs.parseMDXFileContent";
 import { parseMDXFileFrontmatter } from "./docs.parseMDXFileFrontmatter";
 import { parseMDXFileName } from "./docs.parseMDXFilename";

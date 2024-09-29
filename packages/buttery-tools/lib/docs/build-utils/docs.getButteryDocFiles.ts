@@ -1,8 +1,8 @@
 import { type Dirent, readdirSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import { LOG_CLI } from "../../logger";
-import { exhaustiveMatchGuard } from "../../utils/ts";
+import { LOG_CLI } from "../../logger/loggers";
+import { exhaustiveMatchGuard } from "../../utils/ts/util.ts.exhaustive-match-guard";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
 import type { FileObj } from "./docs.types";

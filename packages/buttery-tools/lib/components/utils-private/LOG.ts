@@ -1,4 +1,4 @@
-import { type ButteryLogLevel, ButteryLogger } from "../../logger";
+import { type ButteryLogLevel, ButteryLogger } from "@buttery/logger";
 
 class ButteryComponentLoggers {
   InputTextDropdown: ButteryLogger;

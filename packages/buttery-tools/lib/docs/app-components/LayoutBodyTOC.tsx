@@ -12,13 +12,13 @@ import { css } from "@linaria/core";
 import { useLocation } from "@remix-run/react";
 import { type FC, type MouseEventHandler, useCallback } from "react";
 
-import { getGraphValueThatMatchesPathname } from "../../app-utils";
 import type {
   ButteryDocsGraph,
   ButteryDocsGraphTOC,
-} from "../../build-utils/docs.types";
+} from "../build-utils/docs.types";
 import { LayoutTextOverline } from "./LayoutTextOverline";
 import { useDetermineActiveSection } from "./layout.useDetermineActiveSection";
+import { getGraphValueThatMatchesPathname } from "./util.getGraphValueThatMatchesURLPathname";
 
 const layoutBodyStyles = css`
   grid-area: layout-toc;

@@ -1,5 +1,5 @@
 import path from "node:path";
-import { LOG_CLI } from "../logger";
+import { LOG_CLI } from "../logger/loggers";
 import { butteryConfigDefaults } from "./buttery-config.defaults";
 import type {
   ButteryConfig,

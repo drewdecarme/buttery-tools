@@ -1,7 +1,7 @@
 import esbuild from "esbuild";
 
 import { Script, createContext } from "node:vm";
-import { LOG_CLI } from "../logger";
+import { LOG_CLI } from "../logger/loggers";
 import type { ButteryConfig } from "./buttery-config.types";
 
 /**
@@ -39,7 +39,7 @@ async function convertEsbuildResultIntoConfig(
     if (!sandbox.module.exports.default) {
       throw "Cannot parse the default export off of the .buttery/config. Check that your .buttery/config has the property syntax and there aren't any errors.";
     }
-    console.log(JSON.stringify(sandbox.module.exports.default, null, 2));
+    LOG_CLI.trace(JSON.stringify(sandbox.module.exports.default, null, 2));
     return sandbox.module.exports.default;
   } catch (error) {
     throw LOG_CLI.fatal(

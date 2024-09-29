@@ -2,7 +2,7 @@ import path from "node:path";
 import { vitePlugin as remix } from "@remix-run/dev";
 import wyw from "@wyw-in-js/vite";
 import { createServer } from "vite";
-import type { ResolvedButteryConfig } from "../../../lib/config";
+import type { ResolvedButteryConfig } from "../../../lib/config/getButteryConfig";
 import { getButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";
 import { launchPlaygroundGetConfig } from "./tokens.launchPlaygroundGetConfig";
 

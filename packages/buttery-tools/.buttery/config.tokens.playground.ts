@@ -1,4 +1,4 @@
-import type { ButteryConfigTokens } from "../lib/config";
+import type { ButteryConfigTokens } from "../lib/config/buttery-config.types.tokens";
 
 export const ConfigTokensPlayground: ButteryConfigTokens = {
   namespace: "playground",

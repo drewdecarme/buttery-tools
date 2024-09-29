@@ -1,6 +1,6 @@
 import path from "node:path";
-import { getButteryArtifactsDir } from "../../commands";
-import { LOG_CLI } from "../../logger";
+import { getButteryArtifactsDir } from "../../commands//utils/util.getButteryArtifactsDir";
+import { LOG_CLI } from "../../logger/loggers";
 import { hashString } from "../../utils/node";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 

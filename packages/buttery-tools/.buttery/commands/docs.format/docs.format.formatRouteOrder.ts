@@ -1,9 +1,7 @@
-import {
-  autoOrderButteryDocFiles,
-  getButteryDocsConfig,
-  getButteryDocsFiles
-} from "../../../lib/docs/build-utils";
-import { LOG_CLI } from "../../../lib/logger";
+import { autoOrderButteryDocFiles } from "../../../lib/docs/build-utils/docs.autoOrderButteryDocFiles";
+import { getButteryDocsFiles } from "../../../lib/docs/build-utils/docs.getButteryDocFiles";
+import { getButteryDocsConfig } from "../../../lib/docs/build-utils/docs.getButteryDocsConfig";
+import { LOG_CLI } from "../../../lib/logger/loggers";
 
 export async function formatRouteOrder() {
   try {

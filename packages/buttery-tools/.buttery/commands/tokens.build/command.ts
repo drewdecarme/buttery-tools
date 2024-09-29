@@ -4,8 +4,8 @@ import type {
   CommandAction,
   CommandMeta,
   CommandOptions
-} from "../../../lib/commands";
-import { LOG_CLI } from "../../../lib/logger";
+} from "../../../lib/commands/butter-commands.types";
+import { LOG_CLI } from "../../../lib/logger/loggers";
 import { buildButteryTokens } from "../tokens/tokens.buildButteryTokens";
 
 export const meta: CommandMeta = {

@@ -1,4 +1,4 @@
-import { LOG_CLI } from "../../logger";
+import { LOG_CLI } from "../../logger/loggers";
 import { parseFilename } from "./docs.parseFilename";
 import type { ButteryDocsGraphFrontmatter } from "./docs.types";
 

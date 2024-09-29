@@ -1,7 +1,7 @@
 import path from "node:path";
-import { writeDynamicDirectoryPackageJSON } from "../../../lib/commands";
-import type { ResolvedButteryConfig } from "../../../lib/config";
-import { LOG_CLI } from "../../../lib/logger";
+import { writeDynamicDirectoryPackageJSON } from "../../../lib/commands/utils/util.writeDynamicDirectoryPackageJSON";
+import type { ResolvedButteryConfig } from "../../../lib/config/getButteryConfig";
+import { LOG_CLI } from "../../../lib/logger/loggers";
 import { buildCSSUtilsTypeScript } from "./tokens.buildCSSUtilsTypeScript";
 import type { ButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";
 

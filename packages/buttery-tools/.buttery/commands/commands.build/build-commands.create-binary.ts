@@ -1,5 +1,5 @@
 import * as esbuild from "esbuild";
-import { LOG_CLI } from "../../../lib/logger";
+import { LOG_CLI } from "../../../lib/logger/loggers";
 import { createEsbuildOptions } from "../../../lib/utils/esbuild";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import { ESBuildPluginCommands } from "./build-commands.util.esbuild-plugin-commands";

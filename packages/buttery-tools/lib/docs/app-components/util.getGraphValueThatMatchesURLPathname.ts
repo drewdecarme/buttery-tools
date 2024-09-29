@@ -1,4 +1,7 @@
-import type { ButteryDocsGraph, ButteryDocsGraphValue } from "../build-utils";
+import type {
+  ButteryDocsGraph,
+  ButteryDocsGraphValue
+} from "../build-utils/docs.types";
 
 /**
  * Provided a url string and a docs graph, this function will

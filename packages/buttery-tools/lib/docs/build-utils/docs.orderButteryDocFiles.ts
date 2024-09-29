@@ -1,5 +1,5 @@
-import type { ButteryConfigDocsOrder } from "../../config";
-import { LOG_CLI } from "../../logger";
+import type { ButteryConfigDocsOrder } from "../../config/buttery-config.types.docs";
+import { LOG_CLI } from "../../logger/loggers";
 import { autoOrderButteryDocFiles } from "./docs.autoOrderButteryDocFiles";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import type { FileObj } from "./docs.types";

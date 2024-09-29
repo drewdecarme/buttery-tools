@@ -2,8 +2,8 @@ import type {
   CommandAction,
   CommandMeta,
   CommandOptions
-} from "../../../lib/commands";
-import { LOG_CLI } from "../../../lib/logger";
+} from "../../../lib/commands/butter-commands.types";
+import { LOG_CLI } from "../../../lib/logger/loggers";
 import { buildCommands } from "./build-commands";
 
 export const meta: CommandMeta = {

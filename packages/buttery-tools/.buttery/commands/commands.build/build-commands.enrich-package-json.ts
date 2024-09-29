@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { LOG_CLI } from "../../../lib/logger";
+import { LOG_CLI } from "../../../lib/logger/loggers";
 import type { CommandsBuildFunctionArgs } from "./build-commands.utils";
 
 // TODO: Update this description

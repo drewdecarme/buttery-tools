@@ -1,5 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { LOG_CLI } from "../../logger";
+import { LOG_CLI } from "../../logger/loggers";
 
 /**
  * Adds the necessary exports to the package.json in order

@@ -1,7 +1,7 @@
 import path from "node:path";
 import { ensureDir } from "fs-extra";
-import type { ButteryConfigPaths } from "../../config";
-import { LOG_CLI } from "../../logger";
+import type { ButteryConfigPaths } from "../../config/buttery-config.types";
+import { LOG_CLI } from "../../logger/loggers";
 import { findDirectoryUpwards } from "../../utils/node";
 
 // search up the directory structure until

@@ -1,4 +1,4 @@
-import type { CommandMeta } from "../../../lib/commands";
+import type { CommandMeta } from "../../../lib/commands/butter-commands.types";
 
 export const meta: CommandMeta = {
   name: "tokens",

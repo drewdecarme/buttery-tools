@@ -1,4 +1,4 @@
-import { LOG_CLI } from "../../logger";
+import { LOG_CLI } from "../../logger/loggers";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 
 import { parseMdxFile } from "./docs.parseMDXFile";

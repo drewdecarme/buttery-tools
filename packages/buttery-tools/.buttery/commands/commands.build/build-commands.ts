@@ -1,5 +1,5 @@
-import { getButteryConfig } from "../../../lib/config";
-import { LOG_CLI } from "../../../lib/logger";
+import { getButteryConfig } from "../../../lib/config/getButteryConfig.js";
+import { LOG_CLI } from "../../../lib/logger/loggers.js";
 import { buildCommandsCleanDistributionDirs } from "./build-commands.clean-distribution-dirs.js";
 import { buildCommandsCreateBinary } from "./build-commands.create-binary.js";
 import { buildCommandsEnrichPackageJson } from "./build-commands.enrich-package-json.js";

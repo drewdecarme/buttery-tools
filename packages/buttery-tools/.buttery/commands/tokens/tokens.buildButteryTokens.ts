@@ -1,6 +1,6 @@
 import { writeFile } from "node:fs/promises";
 import chokidar from "chokidar";
-import { LOG_CLI } from "../../../lib/logger";
+import { LOG_CLI } from "../../../lib/logger/loggers";
 import { buildCSSUtils } from "./tokens.buildCSSUtils";
 import { getButteryTokensConfig } from "./tokens.getButteryTokensConfig";
 import { getButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";

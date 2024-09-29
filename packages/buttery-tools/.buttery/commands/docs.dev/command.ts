@@ -3,13 +3,11 @@ import type {
   CommandAction,
   CommandMeta,
   CommandOptions
-} from "../../../lib/commands";
-import {
-  bootstrapButteryDocsApp,
-  getButteryDocsConfig,
-  getButteryDocsDirectories
-} from "../../../lib/docs/build-utils";
-import { LOG_CLI } from "../../../lib/logger";
+} from "../../../lib/commands/butter-commands.types";
+import { bootstrapButteryDocsApp } from "../../../lib/docs/build-utils/docs.bootstrapButteryDocsApp";
+import { getButteryDocsConfig } from "../../../lib/docs/build-utils/docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../../../lib/docs/build-utils/docs.getButteryDocsDirectories";
+import { LOG_CLI } from "../../../lib/logger/loggers";
 
 export const meta: CommandMeta = {
   name: "dev",

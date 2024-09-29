@@ -5,11 +5,12 @@ import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
 
-import type { CommandOptionType } from "../../../lib/commands";
-import type { ResolvedButteryConfig } from "../../../lib/config";
-import { LOG_CLI } from "../../../lib/logger";
+import type { CommandOptionType } from "../../../lib/commands/butter-commands.types";
+import type { ResolvedButteryConfig } from "../../../lib/config/getButteryConfig";
+import { LOG_CLI } from "../../../lib/logger/loggers";
 import { createEsbuildOptions } from "../../../lib/utils/esbuild";
-import { exhaustiveMatchGuard, kebabToCamel } from "../../../lib/utils/ts";
+import { exhaustiveMatchGuard } from "../../../lib/utils/ts/util.ts.exhaustive-match-guard";
+import { kebabToCamel } from "../../../lib/utils/ts/util.ts.kebab-to-camel";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import {
   // templateCommandParent,

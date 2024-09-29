@@ -1,7 +1,7 @@
 import type {
   ButteryDocsGraph,
   ButteryDocsGraphValue
-} from "../../build-utils";
+} from "../build-utils/docs.types";
 
 export const graph: ButteryDocsGraph = {
   _index: {

@@ -1,4 +1,7 @@
-import type { CommandAction, CommandMeta } from "../../../lib/commands";
+import type {
+  CommandAction,
+  CommandMeta
+} from "../../../lib/commands/butter-commands.types";
 import { buildCommands } from "../commands.build/build-commands";
 
 export const meta: CommandMeta = {

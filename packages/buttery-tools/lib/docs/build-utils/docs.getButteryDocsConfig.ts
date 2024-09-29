@@ -1,5 +1,6 @@
-import { type GetButteryConfigOptions, getButteryConfig } from "../../config";
-import { LOG_CLI } from "../../logger";
+import type { GetButteryConfigOptions } from "../../config/buttery-config.types";
+import { getButteryConfig } from "../../config/getButteryConfig";
+import { LOG_CLI } from "../../logger/loggers";
 
 export type ButteryDocsConfig = Awaited<
   ReturnType<typeof getButteryDocsConfig>

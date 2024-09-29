@@ -1,5 +1,5 @@
 import { cp } from "node:fs/promises";
-import { LOG_CLI } from "../logger";
+import { LOG_CLI } from "../logger/loggers";
 import type { ButteryIconsDirectories } from "./icons.getButteryIconsDirectories";
 
 /**

@@ -1,7 +1,7 @@
 import { match } from "ts-pattern";
 
-import { LOG_CLI } from "../../../../lib/logger";
-import { exhaustiveMatchGuard } from "../../../../lib/utils/ts";
+import { LOG_CLI } from "../../../../lib/logger/loggers";
+import { exhaustiveMatchGuard } from "../../../../lib/utils/ts/util.ts.exhaustive-match-guard";
 import {
   hexToHsl,
   hexToRgb,
