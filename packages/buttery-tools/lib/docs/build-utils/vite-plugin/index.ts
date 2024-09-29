@@ -17,14 +17,15 @@ import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { getButteryDocsConfig } from "../docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../docs.getButteryDocsDirectories";
 import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
 import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports";
 
-export async function vitePlugin(_options: {
+export async function vitePlugin(options: {
   root: string;
 }): Promise<PluginOption[]> {
   const config = await getButteryDocsConfig();
-  // const dirs = await getButteryDocsDirectories(config);
+  const dirs = await getButteryDocsDirectories(config);
 
   console.log(JSON.stringify(config));
 
@@ -34,8 +35,13 @@ export async function vitePlugin(_options: {
       name: "buttery-tools",
       config() {
         return {
-          optimizeDeps: { exclude: ["fsevents"] },
-          clearScreen: false
+          root: options.root,
+          publicDir: dirs.srcDocs.public,
+          optimizeDeps: { exclude: ["fsevents", "@buttery/tokens/docs"] },
+          clearScreen: false,
+          server: {
+            open: true
+          }
         };
       },
       async resolveId(source, importer, options) {
