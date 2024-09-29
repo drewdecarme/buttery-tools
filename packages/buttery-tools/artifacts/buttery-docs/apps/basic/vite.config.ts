@@ -15,6 +15,7 @@ export default defineConfig({
   plugins: [
     // Inspect(),
     butteryTools({ root: import.meta.dirname }),
+    // for some reason the mdx plugin needs to go here???
     // @ts-expect-error I dunno something strange TODO: check into this
     {
       enforce: "pre",

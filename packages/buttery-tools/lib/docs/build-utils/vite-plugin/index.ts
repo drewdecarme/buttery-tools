@@ -37,10 +37,25 @@ export async function vitePlugin(options: {
         return {
           root: options.root,
           publicDir: dirs.srcDocs.public,
-          optimizeDeps: { exclude: ["fsevents", "@buttery/tokens/docs"] },
+          cacheDir: path.resolve(
+            dirs.artifacts.apps.working.root,
+            "./node_modules/.vite"
+          ),
+          optimizeDeps: {
+            exclude: ["fsevents", "@buttery/tokens/docs"],
+            include: ["@remix-run/react"]
+          },
+          // build: {
+          //   rollupOptions: {
+          //     cache: false // Disable caching to test if it resolves the issue
+          //   }
+          // },
           clearScreen: false,
           server: {
             open: true
+            // watch: {
+            //   usePolling: true // Try enabling polling if the issue is related to file watching
+            // }
           }
         };
       },
@@ -86,7 +101,7 @@ export async function vitePlugin(options: {
     }),
     // @ts-expect-error I dunno something strange TODO: check into this
     // mdx({
-    //   // include: "**/*.(md|mdx)",
+    //   include: path.join(options.root, "**/*.(md|mdx)"),
     //   remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
     //   rehypePlugins: [
     //     rehypeSlug,

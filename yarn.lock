@@ -7781,6 +7781,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"custom@workspace:packages/butter-test-app":
+  version: 0.0.0-use.local
+  resolution: "custom@workspace:packages/butter-test-app"
+  dependencies:
+    "@cloudflare/workers-types": "npm:^4.20240925.0"
+    esbuild: "npm:^0.24.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    react-router-dom: "npm:^6.26.2"
+    vite: "npm:^5.4.8"
+  languageName: unknown
+  linkType: soft
+
 "dashify@npm:^2.0.0":
   version: 2.0.0
   resolution: "dashify@npm:2.0.0"
@@ -13904,7 +13917,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6.26.2":
+"react-router-dom@npm:6.26.2, react-router-dom@npm:^6.26.2":
   version: 6.26.2
   resolution: "react-router-dom@npm:6.26.2"
   dependencies:
