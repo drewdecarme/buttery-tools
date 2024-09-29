@@ -6550,7 +6550,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wyw-in-js/shared@npm:0.5.4":
+"@wyw-in-js/shared@npm:0.5.3":
+  version: 0.5.3
+  resolution: "@wyw-in-js/shared@npm:0.5.3"
+  dependencies:
+    debug: "npm:^4.3.4"
+    find-up: "npm:^5.0.0"
+    minimatch: "npm:^9.0.3"
+  checksum: 10c0/0e02195f113793231953f8a2b0a65e8641f851d2627d961949fa925c60a72ce35a20dd477b12f5ac3f0cfedc30c8507a4540d0f5acf7983fd5c636acba50d293
+  languageName: node
+  linkType: hard
+
+"@wyw-in-js/shared@npm:0.5.4, @wyw-in-js/shared@npm:^0.5.4":
   version: 0.5.4
   resolution: "@wyw-in-js/shared@npm:0.5.4"
   dependencies:
@@ -14478,7 +14489,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.3.1, react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0, react-dom@npm:^18.3.1":
+"react-dom@npm:18.3.1":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
   dependencies:
@@ -14556,7 +14567,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.3.1, react@npm:^16.8.0 || ^17.0.0 || ^18.0.0, react@npm:^18.3.1":
+"react@npm:18.3.1":
   version: 18.3.1
   resolution: "react@npm:18.3.1"
   dependencies:

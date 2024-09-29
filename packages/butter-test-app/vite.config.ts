@@ -1,16 +1,13 @@
 import path from "node:path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 export default defineConfig({
+  cacheDir: path.resolve(import.meta.dirname, "./node_modules/.vite"),
+  root: import.meta.dirname,
   plugins: [
     react({
       jsxRuntime: "automatic"
-    }),
-    nodePolyfills({
-      //   globals: { process: true }, // Polyfill process globally
-      include: ["stream"]
     })
   ],
   publicDir: path.resolve(import.meta.dirname, "./public"),
@@ -18,19 +15,13 @@ export default defineConfig({
     open: true
   },
   resolve: {
-    preserveSymlinks: true, // Preserve symbolic links when resolving modules
-    dedupe: ["react", "react-dom"], // Prevent multiple React instances,
+    dedupe: ["react", "react-dom", "react/jsx-runtime"],
+    preserveSymlinks: true,
     alias: {
-      //   "react-dom/client": path.resolve("../../node_modules/react-dom/client"),
-      //   "react-dom/server": path.resolve("../../node_modules/react-dom/server"),
-      "react/jsx-runtime": path.resolve("../../node_modules/react/jsx-runtime"),
-      "react/jsx-dev-runtime": path.resolve(
-        "../../node_modules/react/jsx-dev-runtime"
-      )
+      react: path.resolve("../../node_modules/react"),
+      //   "react-dom": path.resolve("../../node_modules/react-dom"),
+      "react/jsx-runtime": path.resolve("../../node_modules/react/jsx-runtime")
     }
-  },
-  define: {
-    "process.env.NODE_ENV": JSON.stringify("production") // Define only NODE_ENV
   },
   build: {
     ssr: true,
@@ -39,21 +30,18 @@ export default defineConfig({
         client: path.resolve(import.meta.dirname, "./src/entry-client.tsx"),
         server: path.resolve(import.meta.dirname, "./src/entry-server.tsx")
       },
+      external: ["react", "react-dom", "react/jsx-runtime"],
       output: {
         dir: "dist",
-        format: "esm",
-        manualChunks: {
-          react: ["react", "react-dom", "react/jsx-runtime"] // Group common chunks
-        }
+        format: "esm"
       }
     }
   },
+  ssr: {
+    noExternal: ["react-router-dom"] // Do not include `react` or `react/jsx-runtime`
+  },
   optimizeDeps: {
     include: ["react", "react-dom", "react/jsx-runtime"],
-    exclude: ["util", "stream", "path"] // Exclude Node.js-specific modules
-  },
-  ssr: {
-    target: "webworker",
-    noExternal: ["react", "react-dom", "react/jsx-runtime", "react-router-dom"]
+    exclude: ["util", "stream", "path"] // Exclude problematic Node.js modules
   }
 });

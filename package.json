@@ -26,7 +26,9 @@
     "clean": "npx rimraf ./**/node_modules && npx rimraf ./**/dist"
   },
   "resolutions": {
-    "@wyw-in-js/shared": "0.5.4"
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react/jsx-runtime": "18.3.1"
   },
   "dependencies": {
     "@changesets/cli": "2.27.8"

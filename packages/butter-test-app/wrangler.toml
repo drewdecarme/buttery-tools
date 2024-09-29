@@ -1,3 +1,4 @@
 compatibility_date = "2024-09-29"
 name = "ssr-test"
 pages_build_output_dir = "./dist"
+compatibility_flags = ["nodejs_compat_v2"]
