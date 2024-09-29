@@ -23,15 +23,7 @@ export default defineConfig({
       "react-router",
       "react-router-dom",
       "scheduler"
-    ],
-    preserveSymlinks: true,
-    alias: {
-      // react: path.resolve("../../node_modules/react")
-      // "react-dom/server": path.resolve(
-      //   "../../node_modules/react-dom/server.browser.js"
-      // )
-      // "react/jsx-runtime": path.resolve("../../node_modules/react/jsx-runtime")
-    }
+    ]
   },
   define: {
     "process.env.NODE_ENV": JSON.stringify("development")
