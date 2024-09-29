@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  //   cacheDir: path.resolve(import.meta.dirname, "./node_modules/.vite"),
+  cacheDir: path.resolve(import.meta.dirname, "./node_modules/.vite"),
   root: import.meta.dirname,
   plugins: [
     react({
@@ -34,7 +34,7 @@ export default defineConfig({
     }
   },
   define: {
-    "process.env.NODE_ENV": JSON.stringify("production")
+    "process.env.NODE_ENV": JSON.stringify("development")
   },
   build: {
     ssr: true,
