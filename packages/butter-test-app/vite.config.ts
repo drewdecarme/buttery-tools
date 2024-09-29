@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  cacheDir: path.resolve(import.meta.dirname, "./node_modules/.vite"),
+  //   cacheDir: path.resolve(import.meta.dirname, "./node_modules/.vite"),
   root: import.meta.dirname,
   plugins: [
     react({
@@ -15,13 +15,26 @@ export default defineConfig({
     open: true
   },
   resolve: {
-    dedupe: ["react", "react-dom", "react/jsx-runtime"],
+    dedupe: [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "@remix-run/router",
+      "react-router",
+      "react-router-dom",
+      "scheduler"
+    ],
     preserveSymlinks: true,
     alias: {
       react: path.resolve("../../node_modules/react"),
-      //   "react-dom": path.resolve("../../node_modules/react-dom"),
+      "react-dom/server": path.resolve(
+        "../../node_modules/react-dom/server.browser.js"
+      ),
       "react/jsx-runtime": path.resolve("../../node_modules/react/jsx-runtime")
     }
+  },
+  define: {
+    "process.env.NODE_ENV": JSON.stringify("production")
   },
   build: {
     ssr: true,
@@ -30,7 +43,6 @@ export default defineConfig({
         client: path.resolve(import.meta.dirname, "./src/entry-client.tsx"),
         server: path.resolve(import.meta.dirname, "./src/entry-server.tsx")
       },
-      external: ["react", "react-dom", "react/jsx-runtime"],
       output: {
         dir: "dist",
         format: "esm"
@@ -38,10 +50,17 @@ export default defineConfig({
     }
   },
   ssr: {
-    noExternal: ["react-router-dom"] // Do not include `react` or `react/jsx-runtime`
+    noExternal: [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-router-dom",
+      "scheduler",
+      "react-router",
+      "@remix-run/router"
+    ] // Include these in SSR
   },
   optimizeDeps: {
-    include: ["react", "react-dom", "react/jsx-runtime"],
-    exclude: ["util", "stream", "path"] // Exclude problematic Node.js modules
+    include: ["react", "react-dom", "react/jsx-runtime", "react-router-dom"]
   }
 });

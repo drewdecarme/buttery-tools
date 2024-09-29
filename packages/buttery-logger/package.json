@@ -25,10 +25,10 @@
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "description": "",
   "devDependencies": {
-    "@buttery/tsconfig": "workspace:^",
-    "typescript": "^5.6.2"
+    "@buttery/tsconfig": "workspace:",
+    "typescript": "5.6.2"
   },
   "dependencies": {
-    "chalk": "^5.3.0"
+    "chalk": "5.3.0"
   }
 }
