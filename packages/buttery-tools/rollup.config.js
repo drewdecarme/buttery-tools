@@ -7,10 +7,9 @@
 
 import path from "node:path";
 import { ButteryLogger } from "@buttery/logger";
-import resolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import wyw from "@wyw-in-js/rollup";
-import analyze from "rollup-plugin-analyzer";
+// import analyze from "rollup-plugin-analyzer";
 import css from "rollup-plugin-css-only";
 
 const externalSet = new Set();
@@ -46,27 +45,16 @@ export default {
       (!id.startsWith(".") && !id.startsWith("/")) ||
       id.includes("fsevents") ||
       id.startsWith("node:");
-    console.log({ id });
     if (isExternal && !externalSet.has(id)) {
       externalSet.add(id);
     }
     return isExternal || id.includes("fsevents"); // Ensure `fsevents` is treated as external
   },
   plugins: [
-    resolve({
-      preferBuiltins: true, // Prefer native Node.js modules,
-      extensions: [".ts", ".tsx"],
-    }),
-    {
-      name: "build-debugger",
-      transform(code, id) {
-        if (id.includes("fsevents")) {
-          console.log(`Encountered fsevents in file: ${id}`);
-          console.log(code);
-        }
-        return code;
-      },
-    },
+    // resolve({
+    //   preferBuiltins: true, // Prefer native Node.js modules,
+    //   extensions: [".ts", ".tsx"],
+    // }),
     typescript({
       tsconfig: path.resolve("./tsconfig.library.json"),
     }),
@@ -81,24 +69,24 @@ export default {
     css({
       output: "buttery-docs.css",
     }),
-    analyze({ summaryOnly: true }),
-    //     {
-    //       name: "build-debugger",
-    //       buildStart() {
-    //         LOG_BUILD.debug("Building the `@buttery/tools` distribution...");
-    //       },
-    //       transform(code, id) {
-    //         LOG_BUILD.debug(`Transforming file: ${id}`);
-    //         return code;
-    //       },
-    //       buildEnd() {
-    //         LOG_BUILD.debug("Building the `@buttery/tools` distribution... done.");
-    //         LOG_BUILD.success(
-    //           "Successfully built the distribution for @butter/tools"
-    //         );
-    //         LOG_BUILD.debug(`Externalized the following dependencies:
-    // ${[...externalSet.values()].map((dep) => `- ${dep}`).join("\n")}`);
-    //       },
-    //     },
+    // analyze({ summaryOnly: true }),
+    {
+      name: "build-debugger",
+      buildStart() {
+        LOG_BUILD.debug("Building the `@buttery/tools` distribution...");
+      },
+      transform(code, id) {
+        LOG_BUILD.debug(`Transforming file: ${id}`);
+        return code;
+      },
+      buildEnd() {
+        LOG_BUILD.debug("Building the `@buttery/tools` distribution... done.");
+        LOG_BUILD.success(
+          "Successfully built the distribution for @butter/tools"
+        );
+        LOG_BUILD.debug(`Externalized the following dependencies:
+    ${[...externalSet.values()].map((dep) => `- ${dep}`).join("\n")}`);
+      },
+    },
   ],
 };

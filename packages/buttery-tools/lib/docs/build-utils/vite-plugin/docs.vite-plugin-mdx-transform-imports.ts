@@ -15,7 +15,7 @@ export function mdxTransformImports(
 ): Plugin {
   return {
     enforce: "pre",
-    name: "vite-plugin-mdx-transform-imports",
+    name: "buttery-tools-mdx-transform-imports",
     transform(code: string, id: string) {
       if (!id.endsWith(".mdx")) return;
       // // Transform strings with paths starting with tilde (~)
@@ -24,7 +24,7 @@ export function mdxTransformImports(
         (_match, p1) => {
           const relPath = p1.split("~")[1];
           const transformedPath = path.join(options.rootPath, relPath);
-          LOG_CLI.debug("Transforming mdx import path", {
+          LOG_CLI.debug(`Transforming mdx import path: ${transformedPath}`, {
             originalPath: p1,
             transformedPath
           });

@@ -1,14 +1,3 @@
-// import mdx from "@mdx-js/rollup";
-// import rehypeShiki from "@shikijs/rehype";
-// import wyw from "@wyw-in-js/vite";
-// import { cloudflareDevProxyVitePlugin as remixCloudflareDevProxy } from "@remix-run/dev";
-// import rehypeAutolinkHeadings from "rehype-autolink-headings";
-// import rehypeSlug from "rehype-slug";
-// import remarkFrontmatter from "remark-frontmatter";
-// import remarkMdxFrontmatter from "remark-mdx-frontmatter";
-
-// import { writeFile } from "node:fs/promises";
-// import path from "node:path";
 import type { PluginOption } from "vite";
 // import { getButteryDocsConfig } from "../docs.getButteryDocsConfig";
 // import { getButteryDocsDirectories } from "../docs.getButteryDocsDirectories";
@@ -16,52 +5,115 @@ import type { PluginOption } from "vite";
 // import { getButteryDocsDirectories } from "../docs.getButteryDocsDirectories";
 // import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
 // import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports";
-// import { transformMarkdownAssetPath } from "./docs.vite-plugin-transform-markdown-asset-path";
 
+import { writeFile } from "node:fs/promises";
+import path from "node:path";
 import mdx from "@mdx-js/rollup";
 import { vitePlugin as remix } from "@remix-run/dev";
 import rehypeShiki from "@shikijs/rehype";
+import wyw from "@wyw-in-js/vite";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
+import { getButteryDocsConfig } from "../docs.getButteryDocsConfig";
+import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
+import { mdxTransformImports } from "./docs.vite-plugin-mdx-transform-imports";
 
 export async function vitePlugin(_options: {
   root: string;
 }): Promise<PluginOption[]> {
-  // const config = await getButteryDocsConfig();
+  const config = await getButteryDocsConfig();
   // const dirs = await getButteryDocsDirectories(config);
 
+  console.log(JSON.stringify(config));
+
   return [
-    // @ts-expect-error I dunno something strange TODO: check into this
-    mdx({
-      include: "**/*.(md|mdx)",
-      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
-      rehypePlugins: [
-        rehypeSlug,
-        [
-          rehypeAutolinkHeadings,
-          {
-            behavior: "wrap",
-            headingProperties: {
-              className: "heading"
-            }
-          }
-        ],
-        [
-          // @ts-expect-error This is a mismatch from the type-system
-          rehypeShiki,
-          {
-            theme: "dark-plus"
-          }
-        ]
-      ]
+    {
+      enforce: "pre",
+      name: "buttery-tools",
+      config() {
+        return {
+          optimizeDeps: { exclude: ["fsevents"] },
+          clearScreen: false
+        };
+      },
+      async resolveId(source, importer, options) {
+        console.log(source);
+      },
+      async configResolved(userConfig) {
+        // await optimizeDeps(userConfig, true);
+
+        try {
+          await writeFile(
+            path.resolve(
+              config.paths.storeDir,
+              "./docs/resolved-vite-config.json"
+            ),
+            JSON.stringify(userConfig, null, 2),
+            { encoding: "utf8" }
+          );
+        } catch (error) {}
+      }
+    },
+    {
+      name: "buttery-tools-image-path-transform",
+      transform(code: string, id: string) {
+        if (id.endsWith(".md")) {
+          // Replace the ./public with /public URL
+          const transformedCode = code.replace(
+            /!\[([^\]]*)\]\(\.\/public\/([^)]*)\)/g,
+            "![$1](/$2)"
+          );
+          return {
+            code: transformedCode,
+            map: null
+          };
+        }
+      }
+    },
+    mdxTransformImports({
+      rootPath: config.paths.rootDir
     }),
+    mdxTransformCodeExamples({
+      rootPath: config.paths.rootDir
+    }),
+    // @ts-expect-error I dunno something strange TODO: check into this
+    // mdx({
+    //   // include: "**/*.(md|mdx)",
+    //   remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+    //   rehypePlugins: [
+    //     rehypeSlug,
+    //     [
+    //       rehypeAutolinkHeadings,
+    //       {
+    //         behavior: "wrap",
+    //         headingProperties: {
+    //           className: "heading"
+    //         }
+    //       }
+    //     ],
+    //     [
+    //       // @ts-expect-error This is a mismatch from the type-system
+    //       rehypeShiki,
+    //       {
+    //         theme: "dark-plus"
+    //       }
+    //     ]
+    //   ]
+    // }),
     remix({
       future: {
         v3_fetcherPersist: true,
         v3_relativeSplatPath: true,
         v3_throwAbortReason: true
+      }
+    }),
+    wyw({
+      include: "/**/*.(ts|tsx)",
+      babelOptions: {
+        compact: false,
+        presets: ["@babel/preset-typescript", "@babel/preset-react"]
       }
     })
     // {
@@ -140,20 +192,7 @@ export async function vitePlugin(_options: {
   //         force: true // Ensure dependencies are optimized in the temp directory
   //       };
   //     },
-  //     async configResolved(userConfig) {
-  //       // await optimizeDeps(userConfig, true);
 
-  //       try {
-  //         await writeFile(
-  //           path.resolve(
-  //             config.paths.storeDir,
-  //             "./docs/resolved-vite-config.json"
-  //           ),
-  //           JSON.stringify(userConfig, null, 2),
-  //           { encoding: "utf8" }
-  //         );
-  //       } catch (error) {}
-  //     }
   //   },
   //   // TODO: PUtting these here now until a vitePlugins config option
   //   // is put into the ./.buttery/config

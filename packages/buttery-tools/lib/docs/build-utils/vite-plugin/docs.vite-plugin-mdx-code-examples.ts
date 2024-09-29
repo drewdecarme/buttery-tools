@@ -11,7 +11,7 @@ export function mdxTransformCodeExamples(
 ): Plugin {
   return {
     enforce: "pre",
-    name: "vite-plugin-mdx-transform-code",
+    name: "buttery-tools-mdx-transform-code",
     transform(code: string, id: string) {
       if (!id.endsWith(".mdx")) return;
 

@@ -10,7 +10,7 @@ const config: ButteryConfig = {
     version: "0.0.1"
   },
   docs: {
-    buildTarget: "cloudflare-pages",
+    buildTarget: "basic",
     routeStrategy: "section-folders",
     header: {
       title: "buttery.tools",
