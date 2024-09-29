@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   console.log("hello");
@@ -6,6 +7,7 @@ const Home = () => {
     <div>
       <h1>Home Page</h1>
       <p>Welcome to the Home Page.</p>
+      <Link to="home"> go about</Link>
     </div>
   );
 };
