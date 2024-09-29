@@ -73,7 +73,7 @@ export type ButteryConfigDocsHeader = {
 };
 
 export type ButteryConfigDocs = {
-  buildTarget: "cloudflare-pages";
+  buildTarget: "cloudflare-pages" | "basic";
   /**
    * Indicates the way that your .buttery/docs folder is organized.
    * @default 'section-folders'

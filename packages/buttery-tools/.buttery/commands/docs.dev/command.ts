@@ -1,12 +1,10 @@
-import { vitePlugin as butteryDocs } from "@buttery/tools/docs/vite";
-
-import { createServer, defineConfig } from "vite";
+import { viteDev } from "@remix-run/dev/dist/cli/commands.js";
+import { createServer } from "vite";
 import type {
   CommandAction,
   CommandMeta,
   CommandOptions
 } from "../../../lib/commands";
-// import { bootstrapButteryDocsApp } from "../../../lib/docs/build-utils";
 import {
   bootstrapButteryDocsApp,
   getButteryDocsConfig,
@@ -44,20 +42,21 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
 
   try {
     // Create the server
-    const viteServer = await createServer({
-      configFile: dirs.artifacts.apps.working.viteConfig,
-      ...defineConfig({
-        plugins: [butteryDocs()],
-        server: {
-          port: 1600,
-          open: true
-        }
-      })
+    await viteDev(dirs.artifacts.apps.working.root, {
+      clearScreen: false,
+      port: 1600,
+      force: true,
+      open: true,
+      logLevel: "error"
     });
 
-    await viteServer.listen();
-    viteServer.printUrls();
-    viteServer.bindCLIShortcuts({ print: true });
+    // const viteServer = await createServer({
+    //   root: dirs.artifacts.apps.working.root,
+    //   configFile: dirs.artifacts.apps.working.viteConfig
+    // });
+    // await viteServer.listen();
+    // viteServer.printUrls();
+    // viteServer.bindCLIShortcuts({ print: true });
   } catch (error) {
     throw LOG_CLI.fatal(new Error(error as string));
   }

@@ -57,7 +57,7 @@ export default {
     commonjs(),
     wyw({
       include: "**/*.(ts|tsx)",
-      exclude: "**/*.dynamic-import.ts",
+      exclude: path.resolve(import.meta.dirname, "./lib/config/**/*.ts"),
       babelOptions: {
         compact: false,
         presets: ["@babel/preset-typescript", "@babel/preset-react"],

@@ -23,8 +23,6 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
 
   // lib directories
   const libAppsDir = path.resolve(artifactsDir, "./apps");
-  const libComponentsDir = path.resolve(artifactsDir, "./components");
-  const libUtilsDir = path.resolve(artifactsDir, "./utils");
 
   // apps directories
   const templateAppRootDir = path.resolve(
@@ -67,9 +65,7 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
           dataFile: path.resolve(workingAppRootDir, "./app/data.ts"),
           viteConfig: path.resolve(workingAppRootDir, "./vite.config.ts")
         }
-      },
-      components: libComponentsDir,
-      utils: libUtilsDir
+      }
     },
     output: {
       root: outputRootDir,

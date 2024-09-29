@@ -184,7 +184,6 @@ export class ButteryLogger {
       message: string;
       method: string;
     },
-    // @ts-expect-error this wil be here for a bit TODO:
     ...extraSerializableData: Record<string, unknown>[]
   ) {
     if (!this.shouldLog(level)) return;
@@ -209,7 +208,8 @@ export class ButteryLogger {
       `${timestamp} ${prefix[0]} %c[${level.toUpperCase()}]`,
       prefix[1],
       levelCss,
-      msg
+      msg,
+      extraSerializableData
     );
 
     // if (extraSerializableData.length === 0) {
@@ -247,9 +247,9 @@ export class ButteryLogger {
 
   private checkpoint(checkpointName: string, startOrEnd: "start" | "end") {
     const method = chalk.hex("#FFA500")(
-      `${chalk.underline(`● checkpoint: ${checkpointName}`)}`
+      `${chalk.underline(`● checkpoint: ${checkpointName}:${startOrEnd}`)}`
     );
-    this.log({ level: "debug", method, message: `--- ${startOrEnd}` });
+    this.log({ level: "debug", method, message: "-------" });
   }
 
   public success(message: string, ...data: Record<string, unknown>[]) {

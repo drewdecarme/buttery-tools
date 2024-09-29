@@ -1,5 +1,6 @@
 import { copyFile, cp, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { ensureFile } from "fs-extra";
 import { LOG_CLI } from "../../logger";
 import { getButteryDocsFiles } from "./docs.getButteryDocFiles";
 import { getButteryDocsConfig } from "./docs.getButteryDocsConfig";
@@ -62,6 +63,7 @@ export async function bootstrapButteryDocsApp() {
     const dataContent = `export const graph = ${JSON.stringify(graph, null, 2)};
   export const header = ${JSON.stringify(config.docs.header)};
   `;
+    await ensureFile(dirs.artifacts.apps.working.dataFile);
     await writeFile(dirs.artifacts.apps.working.dataFile, dataContent);
     LOG_CLI.debug("Writing docs data... done.");
   } catch (error) {

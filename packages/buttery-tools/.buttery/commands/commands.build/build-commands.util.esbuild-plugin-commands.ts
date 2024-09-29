@@ -9,7 +9,6 @@ import type { CommandOptionType } from "../../../lib/commands";
 import type { ResolvedButteryConfig } from "../../../lib/config";
 import { LOG_CLI } from "../../../lib/logger";
 import { createEsbuildOptions } from "../../../lib/utils/esbuild";
-import { dynamicImport } from "../../../lib/utils/node/util.node.dynamic-import";
 import { exhaustiveMatchGuard, kebabToCamel } from "../../../lib/utils/ts";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import {
@@ -28,6 +27,20 @@ export type EntryTemplateData = {
   cli_version?: string;
   cli_commands: string;
 };
+
+/**
+ * Dynamically import a file by cache busting the import
+ * cache by adding a number representation of now. This forces
+ * import to go out and fetch a new instance.
+ */
+export async function dynamicImport(modulePath: string) {
+  // Construct a new import specifier with a unique URL timestamp query parameter
+  const timestamp = new Date().getTime();
+  const importSpecifier = `${modulePath}?t=${timestamp}`;
+
+  // Import the module fresh
+  return await import(importSpecifier);
+}
 
 /**
  * TODO: Update this description

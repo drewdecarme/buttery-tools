@@ -1,8 +1,8 @@
-import type { ButteryConfig } from "@buttery/tools/config"
+import type { ButteryConfig } from "@buttery/tools/config";
 const config: ButteryConfig = {
-  "docs": {
-    "buildTarget": "cloudflare-pages",
-    "routeStrategy": "section-folders"
+  docs: {
+    buildTarget: "basic",
+    routeStrategy: "section-folders"
   }
 };
-export default config
+export default config;
