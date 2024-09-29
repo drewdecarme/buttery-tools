@@ -7,7 +7,7 @@ const Home = () => {
     <div>
       <h1>Home Page</h1>
       <p>Welcome to the Home Page.</p>
-      <Link to="home"> go about</Link>
+      <Link to="/about"> go about</Link>
     </div>
   );
 };

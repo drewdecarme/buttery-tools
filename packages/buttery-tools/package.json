@@ -118,7 +118,7 @@
     "@remix-run/cloudflare-pages": "^2.12.1",
     "@remix-run/dev": "^2.12.1",
     "@remix-run/react": "2.12.1",
-    "@shikijs/rehype": "1.20.0",
+    "@shikijs/rehype": "1.21.0",
     "@svgr/cli": "^8.1.0",
     "@svgr/core": "^8.1.0",
     "@svgr/rollup": "^8.1.0",
