@@ -5,7 +5,11 @@ export async function onRequest(context) {
   const { pathname } = new URL(request.url);
 
   // Check for static assets
-  if (pathname.startsWith("/assets") || pathname.startsWith("/client")) {
+  if (
+    pathname.startsWith("/assets") ||
+    pathname.startsWith("/client") ||
+    pathname.includes(".ico")
+  ) {
     try {
       return await context.env.ASSETS.fetch(request);
     } catch (error) {
@@ -24,6 +28,12 @@ export async function onRequest(context) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite SSR App</title>
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/favicon.ico"
+      />
   </head>
   <body>
     <div id="root">${appHtml}</div>

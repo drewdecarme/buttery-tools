@@ -26,11 +26,11 @@ export default defineConfig({
     ],
     preserveSymlinks: true,
     alias: {
-      react: path.resolve("../../node_modules/react"),
-      "react-dom/server": path.resolve(
-        "../../node_modules/react-dom/server.browser.js"
-      ),
-      "react/jsx-runtime": path.resolve("../../node_modules/react/jsx-runtime")
+      // react: path.resolve("../../node_modules/react")
+      // "react-dom/server": path.resolve(
+      //   "../../node_modules/react-dom/server.browser.js"
+      // )
+      // "react/jsx-runtime": path.resolve("../../node_modules/react/jsx-runtime")
     }
   },
   define: {
