@@ -15,7 +15,7 @@ export const createEsbuildOptions = (
   minify: true,
   format: "esm",
   platform: "node",
-  target: ["node22.11.1"],
+  target: ["node22.1.0"],
   packages: "external",
-  ...options,
+  ...options
 });

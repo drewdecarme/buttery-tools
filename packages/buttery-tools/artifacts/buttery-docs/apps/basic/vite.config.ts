@@ -9,10 +9,12 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   optimizeDeps: { exclude: ["fsevents"] },
+  // define: {
+  //   process: {}
+  // },
   plugins: [
     // @ts-expect-error I dunno something strange TODO: check into this
     mdx({
-      include: "**/*.(md|mdx)",
       remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
       rehypePlugins: [
         rehypeSlug,

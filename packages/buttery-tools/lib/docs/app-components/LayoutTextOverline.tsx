@@ -5,8 +5,8 @@ import {
   makeReset,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
-import { clsx } from "clsx";
 import { forwardRef } from "react";
+import { classes } from "../../components/utils";
 
 export type LayoutTextOverlinePropsNative = JSX.IntrinsicElements["div"];
 export type LayoutTextOverlineProps = LayoutTextOverlinePropsNative;
@@ -26,7 +26,7 @@ export const LayoutTextOverline = forwardRef<
   return (
     <div
       {...restProps}
-      className={clsx(layoutNavOverlineCSS, className)}
+      className={classes(layoutNavOverlineCSS, className)}
       ref={ref}
     >
       {children}

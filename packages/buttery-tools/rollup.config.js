@@ -7,7 +7,6 @@
 
 import path from "node:path";
 import { ButteryLogger } from "@buttery/logger";
-import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import wyw from "@wyw-in-js/rollup";
@@ -38,7 +37,7 @@ export default {
       dir: "dist",
       format: "esm",
       preserveModules: true, // Preserves the module directory structure
-      exports: "named",
+      exports: "auto",
       sourcemap: true,
     },
   ],
@@ -71,7 +70,6 @@ export default {
     typescript({
       tsconfig: path.resolve("./tsconfig.library.json"),
     }),
-    commonjs(),
     wyw({
       include: "**/*.(ts|tsx)",
       exclude: path.resolve(import.meta.dirname, "./lib/config/**/*.ts"),
@@ -84,23 +82,23 @@ export default {
       output: "buttery-docs.css",
     }),
     analyze({ summaryOnly: true }),
-    {
-      name: "build-debugger",
-      buildStart() {
-        LOG_BUILD.debug("Building the `@buttery/tools` distribution...");
-      },
-      transform(code, id) {
-        LOG_BUILD.debug(`Transforming file: ${id}`);
-        return code;
-      },
-      buildEnd() {
-        LOG_BUILD.debug("Building the `@buttery/tools` distribution... done.");
-        LOG_BUILD.success(
-          "Successfully built the distribution for @butter/tools"
-        );
-        LOG_BUILD.debug(`Externalized the following dependencies:
-${[...externalSet.values()].map((dep) => `- ${dep}`).join("\n")}`);
-      },
-    },
+    //     {
+    //       name: "build-debugger",
+    //       buildStart() {
+    //         LOG_BUILD.debug("Building the `@buttery/tools` distribution...");
+    //       },
+    //       transform(code, id) {
+    //         LOG_BUILD.debug(`Transforming file: ${id}`);
+    //         return code;
+    //       },
+    //       buildEnd() {
+    //         LOG_BUILD.debug("Building the `@buttery/tools` distribution... done.");
+    //         LOG_BUILD.success(
+    //           "Successfully built the distribution for @butter/tools"
+    //         );
+    //         LOG_BUILD.debug(`Externalized the following dependencies:
+    // ${[...externalSet.values()].map((dep) => `- ${dep}`).join("\n")}`);
+    //       },
+    //     },
   ],
 };

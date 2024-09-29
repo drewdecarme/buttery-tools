@@ -1,4 +1,5 @@
 import { viteDev } from "@remix-run/dev/dist/cli/commands.js";
+import { createServer } from "vite";
 import type {
   CommandAction,
   CommandMeta,
@@ -39,21 +40,21 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
 
   try {
     // Create the server
-    await viteDev(dirs.artifacts.apps.working.root, {
-      clearScreen: false,
-      port: 1600,
-      force: true,
-      open: true,
-      logLevel: "error"
-    });
-
-    // const viteServer = await createServer({
-    //   root: dirs.artifacts.apps.working.root,
-    //   configFile: dirs.artifacts.apps.working.viteConfig
+    // await viteDev(dirs.artifacts.apps.working.root, {
+    //   clearScreen: false,
+    //   port: 1600,
+    //   force: true,
+    //   open: true,
+    //   logLevel: "error"
     // });
-    // await viteServer.listen();
-    // viteServer.printUrls();
-    // viteServer.bindCLIShortcuts({ print: true });
+
+    const viteServer = await createServer({
+      root: dirs.artifacts.apps.working.root,
+      configFile: dirs.artifacts.apps.working.viteConfig
+    });
+    await viteServer.listen();
+    viteServer.printUrls();
+    viteServer.bindCLIShortcuts({ print: true });
   } catch (error) {
     throw LOG_CLI.fatal(new Error(error as string));
   }
