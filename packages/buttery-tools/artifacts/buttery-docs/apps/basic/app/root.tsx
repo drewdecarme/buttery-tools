@@ -10,7 +10,7 @@ import "@buttery/tools/docs/css";
 import {
   LayoutHeader,
   Layout as LayoutRoot,
-  RootLinks,
+  // RootLinks,
 } from "@buttery/tools/docs";
 import { header } from "./data";
 
@@ -18,7 +18,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <RootLinks />
+        {/* <RootLinks /> */}
         <Meta />
         <Links />
       </head>

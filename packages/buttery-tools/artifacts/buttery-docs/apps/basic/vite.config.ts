@@ -7,41 +7,39 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { defineConfig } from "vite";
 
-import { vitePlugin as butteryDocs } from "@buttery/tools/docs/vite";
-
 export default defineConfig({
+  optimizeDeps: { exclude: ["fsevents"] },
   plugins: [
-    butteryDocs({ root: import.meta.dirname })
     // @ts-expect-error I dunno something strange TODO: check into this
-    // mdx({
-    //   include: "**/*.(md|mdx)",
-    //   remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
-    //   rehypePlugins: [
-    //     rehypeSlug,
-    //     [
-    //       rehypeAutolinkHeadings,
-    //       {
-    //         behavior: "wrap",
-    //         headingProperties: {
-    //           className: "heading"
-    //         }
-    //       }
-    //     ],
-    //     [
-    //       // @ts-expect-error This is a mismatch from the type-system
-    //       rehypeShiki,
-    //       {
-    //         theme: "dark-plus"
-    //       }
-    //     ]
-    //   ]
-    // }),
-    // remix({
-    //   future: {
-    //     v3_fetcherPersist: true,
-    //     v3_relativeSplatPath: true,
-    //     v3_throwAbortReason: true
-    //   }
-    // })
+    mdx({
+      include: "**/*.(md|mdx)",
+      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+      rehypePlugins: [
+        rehypeSlug,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: "wrap",
+            headingProperties: {
+              className: "heading"
+            }
+          }
+        ],
+        [
+          // @ts-expect-error This is a mismatch from the type-system
+          rehypeShiki,
+          {
+            theme: "dark-plus"
+          }
+        ]
+      ]
+    }),
+    remix({
+      future: {
+        v3_fetcherPersist: true,
+        v3_relativeSplatPath: true,
+        v3_throwAbortReason: true
+      }
+    })
   ]
 });

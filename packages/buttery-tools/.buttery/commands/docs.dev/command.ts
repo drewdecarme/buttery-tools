@@ -1,5 +1,4 @@
 import { viteDev } from "@remix-run/dev/dist/cli/commands.js";
-import { createServer } from "vite";
 import type {
   CommandAction,
   CommandMeta,

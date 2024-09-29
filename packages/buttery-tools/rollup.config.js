@@ -11,6 +11,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import wyw from "@wyw-in-js/rollup";
+import analyze from "rollup-plugin-analyzer";
 import css from "rollup-plugin-css-only";
 
 const externalSet = new Set();
@@ -42,15 +43,31 @@ export default {
     },
   ],
   external: (id) => {
-    const isExternal = !id.startsWith(".") && !id.startsWith("/");
-    if (isExternal && !externalSet.has(id)) externalSet.add(id);
-    return isExternal;
+    const isExternal =
+      (!id.startsWith(".") && !id.startsWith("/")) ||
+      id.includes("fsevents") ||
+      id.startsWith("node:");
+    console.log({ id });
+    if (isExternal && !externalSet.has(id)) {
+      externalSet.add(id);
+    }
+    return isExternal || id.includes("fsevents"); // Ensure `fsevents` is treated as external
   },
   plugins: [
     resolve({
       preferBuiltins: true, // Prefer native Node.js modules,
       extensions: [".ts", ".tsx"],
     }),
+    {
+      name: "build-debugger",
+      transform(code, id) {
+        if (id.includes("fsevents")) {
+          console.log(`Encountered fsevents in file: ${id}`);
+          console.log(code);
+        }
+        return code;
+      },
+    },
     typescript({
       tsconfig: path.resolve("./tsconfig.library.json"),
     }),
@@ -66,6 +83,7 @@ export default {
     css({
       output: "buttery-docs.css",
     }),
+    analyze({ summaryOnly: true }),
     {
       name: "build-debugger",
       buildStart() {
