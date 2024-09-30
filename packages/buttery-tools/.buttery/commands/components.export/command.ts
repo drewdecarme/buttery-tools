@@ -1,11 +1,12 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { exit } from "node:process";
+import { printAsBullets } from "@buttery/logger";
 import { select } from "@inquirer/prompts";
-import graphlib from "graphlib";
 import type {
   CommandAction,
-  CommandMeta
+  CommandMeta,
+  CommandOptions
 } from "../../../lib/commands/butter-commands.types";
 import { getButteryConfig } from "../../../lib/config/getButteryConfig";
 import { LOG_CLI } from "../../../lib/logger/loggers";
@@ -16,34 +17,14 @@ export const meta: CommandMeta = {
   description: "Export any buttery-components via wizard or by args"
 };
 
-// Recursively traverse through a directory
-/**
- * Recursively traverse through a directory and execute a callback for each file.
- * @param dir The directory to traverse.
- * @param callback A function to execute for each file.
- */
-// const traverseDirectory = (
-//   dir: string,
-//   callback: (filePath: string) => void
-// ) => {
-//   const files = readdirSync(dir, { withFileTypes: true });
-//   for (const fileOrDirectory of files) {
-//     if (fileOrDirectory.isFile()) {
-//       const mainFilePath =
-//     }
-
-//     if (fileOrDirectory.isDirectory() && !file.includes("example")) {
-//       traverseDirectory(fullPath, callback);
-//     } else if (
-//       fullPath.endsWith(".ts") ||
-//       fullPath.endsWith(".tsx") ||
-//       fullPath.endsWith(".js") ||
-//       fullPath.endsWith(".jsx")
-//     ) {
-//       callback(fullPath);
-//     }
-//   }
-// };
+export const options: CommandOptions<{ outDir: string }> = {
+  outDir: {
+    type: "value",
+    alias: "o",
+    description: "The directory the selected component should be exported to",
+    required: true
+  }
+};
 
 export const action: CommandAction = async () => {
   LOG_CLI.debug("Running `buttery.components.export` command");
@@ -90,7 +71,6 @@ export const action: CommandAction = async () => {
   // Initialize a graph
   LOG_CLI.debug("Creating component dependency graph...");
   LOG_CLI.debug(componentForExport.path);
-  const dependencyGraph = new graphlib.Graph({ directed: true });
   const dependencies = new Set<string>();
 
   getAllDependenciesOfFile(
@@ -99,14 +79,14 @@ export const action: CommandAction = async () => {
     componentForExport.name
   );
 
-  console.log({ dependencies: dependencies.values() });
+  const dependenciesArr = [...dependencies.values()];
+  if (dependenciesArr.length === 0) {
+    LOG_CLI.debug("No interdependencies.");
+  } else {
+    LOG_CLI.debug(
+      `Dependencies that will be copied: ${printAsBullets(dependenciesArr, { bulletType: "numbers" })}`
+    );
+  }
 
-  // traverseDirectory(componentForExport.path, (filePath: string) => {
-
-  //   const depndencies: string[] = [];
-  //   console.log(filePath);
-
-  //   console.log({ dependencies });
-  // });
   exit(0);
 };

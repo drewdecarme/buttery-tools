@@ -1,8 +1,8 @@
 import { readFileSync, statSync } from "node:fs";
-import { glob } from "node:fs/promises";
 import path from "node:path";
 import { traverse } from "@babel/core";
 import { parse } from "@babel/parser";
+import { printAsBullets } from "@buttery/logger";
 import { LOG_CLI } from "../../../lib/logger/loggers";
 
 /**
@@ -21,9 +21,6 @@ const parseFile = (filePath: string) => {
   });
 };
 
-const logBullets = (strArr: string[]) =>
-  `${strArr.map((path) => `\n\t- ${path}`)}`;
-
 const getComponentPath = (possiblePaths: string[], componentName: string) => {
   try {
     const componentPath = possiblePaths.reduce<string | undefined>(
@@ -38,7 +35,7 @@ const getComponentPath = (possiblePaths: string[], componentName: string) => {
 
     if (!componentPath) {
       LOG_CLI.error(
-        `Cannot get component path: Checked the following files:${logBullets(possiblePaths)}`
+        `Cannot get component path: Checked the following files:${printAsBullets(possiblePaths)}`
       );
       throw `Cannot get the "${componentName}" component path when building the dependency graph. This should not have happened. Please log a Github Issue`;
     }
@@ -48,6 +45,11 @@ const getComponentPath = (possiblePaths: string[], componentName: string) => {
   }
 };
 
+/**
+ * Based upon the directory name and file name, assemble a path and
+ * recursively sort through all of the dependencies of each file that it comes
+ * into contact with.
+ */
 export async function getAllDependenciesOfFile(
   dependencies: Set<string>,
   componentDir: string,
@@ -55,7 +57,7 @@ export async function getAllDependenciesOfFile(
 ) {
   const rootPath = path.join(componentDir, componentName);
   const pathsToCheck = [".tsx", ".ts"].map((ext) => rootPath.concat(ext));
-  LOG_CLI.debug(`Checking paths:${logBullets(pathsToCheck)}`);
+  LOG_CLI.debug(`Checking paths:${printAsBullets(pathsToCheck)}`);
   const mainComponentPath = getComponentPath(pathsToCheck, componentName);
 
   LOG_CLI.debug(`Resolving dependencies for: ${componentName}`);
