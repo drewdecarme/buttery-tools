@@ -6,7 +6,7 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import { classes } from "../../utils";
+import { classes } from "../utils";
 
 export type ToastProps = {
   id: string;

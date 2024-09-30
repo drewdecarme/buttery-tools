@@ -1,5 +1,5 @@
 import { type MutableRefObject, useCallback, useMemo, useRef } from "react";
-import type { ModalDefaultState, ModalRef } from "../../hooks/useModalDialog";
+import type { ModalDefaultState, ModalRef } from "../useModalDialog";
 
 export function useDrawer<T extends ModalDefaultState>() {
   const drawerRef = useRef<ModalRef<T>>(null);

@@ -1,7 +1,7 @@
 import { type RefCallback, useCallback, useId, useMemo } from "react";
-import { exhaustiveMatchGuard } from "../../utils";
 import { type DropdownOptions, useDropdown } from "../useDropdown";
 import { ensurePopover } from "../usePopover";
+import { exhaustiveMatchGuard } from "../utils";
 
 export type UseTooltipOptionsTooltip = DropdownOptions & {
   dxType: "tooltip";

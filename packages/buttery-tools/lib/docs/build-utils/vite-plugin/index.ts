@@ -8,14 +8,14 @@ import type { PluginOption } from "vite";
 
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
-import mdx from "@mdx-js/rollup";
+// import mdx from "@mdx-js/rollup";
 import { vitePlugin as remix } from "@remix-run/dev";
-import rehypeShiki from "@shikijs/rehype";
+// import rehypeShiki from "@shikijs/rehype";
 import wyw from "@wyw-in-js/vite";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeSlug from "rehype-slug";
-import remarkFrontmatter from "remark-frontmatter";
-import remarkMdxFrontmatter from "remark-mdx-frontmatter";
+// import rehypeAutolinkHeadings from "rehype-autolink-headings";
+// import rehypeSlug from "rehype-slug";
+// import remarkFrontmatter from "remark-frontmatter";
+// import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { getButteryDocsConfig } from "../docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../docs.getButteryDocsDirectories";
 import { mdxTransformCodeExamples } from "./docs.vite-plugin-mdx-code-examples";
@@ -59,7 +59,7 @@ export async function vitePlugin(options: {
           }
         };
       },
-      async resolveId(source, importer, options) {
+      async resolveId(source) {
         console.log(source);
       },
       async configResolved(userConfig) {
@@ -99,7 +99,7 @@ export async function vitePlugin(options: {
     mdxTransformCodeExamples({
       rootPath: config.paths.rootDir
     }),
-    // @ts-expect-error I dunno something strange TODO: check into this
+    // I dunno something strange TODO: check into this
     // mdx({
     //   include: path.join(options.root, "**/*.(md|mdx)"),
     //   remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],

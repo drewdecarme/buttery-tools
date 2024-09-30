@@ -9,8 +9,8 @@ import {
   type DropdownRef,
   type DropdownRefHandleOpen,
   useDropdown,
-} from "../hooks/useDropdown";
-import { getIsDropdownOpen } from "../hooks/useDropdown/hook.useDropdown.utils";
+} from "../useDropdown";
+import { getIsDropdownOpen } from "../useDropdown";
 import { classes } from "../utils";
 
 export type DropdownNavPropsNative = JSX.IntrinsicElements["div"] & {

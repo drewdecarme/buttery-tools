@@ -1,7 +1,7 @@
 import { css } from "@linaria/core";
 import { randBoolean, randSentence } from "@ngneat/falso";
 import { type FC, useCallback } from "react";
-import { classes } from "../../../utils";
+import { classes } from "../../utils";
 import { Toaster } from "../Toaster";
 import { useToast } from "../toast.useToast";
 

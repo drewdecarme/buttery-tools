@@ -5,7 +5,7 @@ import {
   randSentence,
 } from "@ngneat/falso";
 import type { FC } from "react";
-import { classes } from "../../../utils";
+import { classes } from "../../utils";
 import { Toaster } from "../Toaster";
 import { useToast } from "../toast.useToast";
 

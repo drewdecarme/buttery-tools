@@ -11,7 +11,7 @@ import {
 import {
   InputTextDropdown,
   useInputTextDropdown,
-} from "../../../forms/InputTextDropdown";
+} from "../../InputTextDropdown";
 import { Modal } from "../Modal";
 import { useModal } from "../modal.useModal";
 
