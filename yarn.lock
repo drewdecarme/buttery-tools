@@ -6458,13 +6458,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"buttery-starter-vite-ssr-cloudflare-pages@workspace:packages/buttery-starter-vite-ssr-cloudflare-pages":
+  version: 0.0.0-use.local
+  resolution: "buttery-starter-vite-ssr-cloudflare-pages@workspace:packages/buttery-starter-vite-ssr-cloudflare-pages"
+  dependencies:
+    "@cloudflare/workers-types": "npm:4.20240925.0"
+    esbuild: "npm:0.24.0"
+    react: "npm:18.3.1"
+    react-dom: "npm:18.3.1"
+    react-router-dom: "npm:6.26.2"
+    vite: "npm:5.4.8"
+    vite-plugin-node-polyfills: "npm:0.22.0"
+    wrangler: "npm:^3.78.12"
+  languageName: unknown
+  linkType: soft
+
 "buttery@workspace:.":
   version: 0.0.0-use.local
   resolution: "buttery@workspace:."
   dependencies:
     "@biomejs/biome": "npm:1.9.2"
     "@changesets/cli": "npm:2.27.8"
-    "@remix-run/dev": "npm:2.12.1"
     turbo: "npm:2.1.2"
   languageName: unknown
   linkType: soft
@@ -7185,20 +7199,6 @@ __metadata:
   checksum: 10c0/80c089d6f7e0c5b2bd83cf0539ab41474198579584fa10d86d0cafe0642202343cbc119e076a0b1aece191989477081415d66c9fefbf3c957fc2fc4b7009f248
   languageName: node
   linkType: hard
-
-"custom@workspace:packages/butter-test-app":
-  version: 0.0.0-use.local
-  resolution: "custom@workspace:packages/butter-test-app"
-  dependencies:
-    "@cloudflare/workers-types": "npm:4.20240925.0"
-    esbuild: "npm:0.24.0"
-    react: "npm:18.3.1"
-    react-dom: "npm:18.3.1"
-    react-router-dom: "npm:6.26.2"
-    vite: "npm:5.4.8"
-    vite-plugin-node-polyfills: "npm:0.22.0"
-  languageName: unknown
-  linkType: soft
 
 "dashify@npm:^2.0.0":
   version: 2.0.0
@@ -16009,7 +16009,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:3.78.12":
+"wrangler@npm:3.78.12, wrangler@npm:^3.78.12":
   version: 3.78.12
   resolution: "wrangler@npm:3.78.12"
   dependencies:

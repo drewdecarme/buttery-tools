@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  cacheDir: path.resolve(import.meta.dirname, "./node_modules/.vite"),
   root: import.meta.dirname,
   plugins: [
     react({
@@ -26,7 +25,7 @@ export default defineConfig({
     ]
   },
   define: {
-    "process.env.NODE_ENV": JSON.stringify("development")
+    "process.env.NODE_ENV": JSON.stringify("production")
   },
   build: {
     ssr: true,
@@ -50,7 +49,7 @@ export default defineConfig({
       "scheduler",
       "react-router",
       "@remix-run/router"
-    ] // Include these in SSR
+    ]
   },
   optimizeDeps: {
     include: ["react", "react-dom", "react/jsx-runtime", "react-router-dom"]

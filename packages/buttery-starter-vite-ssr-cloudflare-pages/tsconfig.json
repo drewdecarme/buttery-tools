@@ -1,4 +1,12 @@
 {
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "./**/.server/**/*.ts",
+    "./**/.server/**/*.tsx",
+    "./**/.client/**/*.ts",
+    "./**/.client/**/*.tsx"
+  ],
   "compilerOptions": {
     "lib": ["DOM", "ESNext"],
     "module": "ESNext",
@@ -10,6 +18,5 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "types": ["@cloudflare/workers-types"]
-  },
-  "include": ["src", "functions"]
+  }
 }

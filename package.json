@@ -34,7 +34,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.2",
-    "@remix-run/dev": "2.12.1",
     "turbo": "2.1.2"
   }
 }
