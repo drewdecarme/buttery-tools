@@ -1,4 +1,4 @@
-import { usePopover } from "../hook.usePopover";
+import { usePopover } from "../usePopover";
 
 export default () => {
   const { setPopoverRef, setTargetRef, showPopover, hidePopover } = usePopover({

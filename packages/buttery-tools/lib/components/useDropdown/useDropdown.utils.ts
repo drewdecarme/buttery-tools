@@ -2,8 +2,8 @@ import { css } from "@linaria/core";
 import type {
   DropdownOptionArrow,
   DropdownOptionPosition,
-  DropdownOptions,
-} from "./hook.useDropdown.types";
+  DropdownOptions
+} from "./useDropdown.types";
 
 const arrowBaseClassName = css`
   overflow: visible;
@@ -65,7 +65,7 @@ const arrowClassNames: { [key in DropdownOptionPosition]: string } = {
   "left-bottom": arrowRight,
   "right-top": arrowLeft,
   "right-middle": arrowLeft,
-  "right-bottom": arrowLeft,
+  "right-bottom": arrowLeft
 };
 
 export const processDropdownOptions = (
@@ -74,21 +74,21 @@ export const processDropdownOptions = (
   dxPosition: options?.dxPosition || "bottom-left",
   dxArrow: {
     size: options?.dxArrow?.size ?? 0,
-    color: options?.dxArrow?.color ?? "transparent",
+    color: options?.dxArrow?.color ?? "transparent"
   },
-  dxOffset: options?.dxOffset ?? 0,
+  dxOffset: options?.dxOffset ?? 0
 });
 
 export function setDropdownPositionStyles<
   TargetElement extends HTMLElement = HTMLElement,
-  DropdownElement extends HTMLElement = HTMLElement,
+  DropdownElement extends HTMLElement = HTMLElement
 >(
   position: DropdownOptionPosition,
   {
     offset,
     arrow,
     dropdownNode,
-    targetNode,
+    targetNode
   }: {
     arrow: DropdownOptionArrow;
     offset: number;
@@ -112,8 +112,8 @@ export function setDropdownPositionStyles<
         // using offsets here to ignore any scaling while also
         // factoring in padding, margin, border and possible scroll bars
         height: dropdownNode.offsetHeight,
-        width: dropdownNode.offsetWidth,
-      },
+        width: dropdownNode.offsetWidth
+      }
     });
 
   dropdownNode.style.setProperty("top", `${popoverTop}px`);
@@ -125,7 +125,7 @@ export function setDropdownPositionStyles<
     targetBox,
     arrow: arrow.size,
     popoverLeft,
-    popoverTop,
+    popoverTop
   });
 
   dropdownNode.classList.add(arrowBaseClassName);
@@ -141,7 +141,7 @@ function calculateDropdownPosition(
   {
     offset,
     targetBox,
-    popover,
+    popover
   }: {
     offset: number;
     targetBox: DOMRect;
@@ -243,7 +243,7 @@ function calculateArrowPosition(
     targetBox,
     arrow,
     popoverLeft,
-    popoverTop,
+    popoverTop
   }: {
     targetBox: DOMRect;
     arrow: number;

@@ -11,7 +11,7 @@ import {
   type DropdownRef,
   useDropdown,
 } from "../useDropdown";
-import { getIsDropdownOpen } from "../useDropdown/hook.useDropdown.utils";
+import { getIsDropdownOpen } from "../useDropdown";
 import { usePortal } from "../usePortal";
 import { classes } from "../utils";
 

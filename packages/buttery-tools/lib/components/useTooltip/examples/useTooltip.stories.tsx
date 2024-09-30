@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import UseTooltipExample from "./examples/UseTooltip.example";
+import UseTooltipExample from "./UseTooltip.example";
 
 const meta: Meta = {
   title: "Hooks / useTooltip",

@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
-import ExampleUsePortal from "./examples/UsePortal.example";
-import ExampleUsePortalPositioning from "./examples/UsePortalPositioning.example";
+import ExampleUsePortal from "./UsePortal.example";
+import ExampleUsePortalPositioning from "./UsePortalPositioning.example";
 
 const meta: Meta = {
   title: "Hooks / usePortal",

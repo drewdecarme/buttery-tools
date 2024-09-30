@@ -21,12 +21,19 @@ export const options: CommandOptions<{ outDir: string }> = {
   outDir: {
     type: "value",
     alias: "o",
-    description: "The directory the selected component should be exported to",
-    required: true
+    description:
+      "The absolute path of the directory the selected component should be exported to",
+    required: false
   }
 };
 
-export const action: CommandAction = async () => {
+export const action: CommandAction<typeof options> = async ({ options }) => {
+  // TODO: Define a configuration in the buttery config to reconcile this.
+  if (!options.outDir) {
+    LOG_CLI.error("The option --outDir,-o is missing.");
+    throw LOG_CLI.fatal(new Error("An '--outDir,-o' option is required."));
+  }
+
   LOG_CLI.debug("Running `buttery.components.export` command");
 
   const config = await getButteryConfig("docs");

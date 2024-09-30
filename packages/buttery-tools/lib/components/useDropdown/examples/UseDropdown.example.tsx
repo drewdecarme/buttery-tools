@@ -1,4 +1,4 @@
-import { useDropdown } from "../hook.useDropdown";
+import { useDropdown } from "../useDropdown";
 
 export default () => {
   const { openDropdown, closeDropdown, setDropdownRef, setTargetRef } =

@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import { default as ExampleUseDynamicNode } from "./examples/UseDynamicNode.example";
+import { default as ExampleUseDynamicNode } from "./UseDynamicNode.example";
 
 const meta: Meta = {
   title: "Hooks / useDynamicNode",
