@@ -49,6 +49,7 @@ const getComponentPath = (possiblePaths: string[], componentName: string) => {
 };
 
 export async function getAllDependenciesOfFile(
+  dependencies: Set<string>,
   componentDir: string,
   componentName: string
 ) {
@@ -59,21 +60,27 @@ export async function getAllDependenciesOfFile(
 
   LOG_CLI.debug(`Resolving dependencies for: ${componentName}`);
 
-  const dependencies = new Set();
   const ast = parseFile(mainComponentPath);
   traverse(ast, {
     ImportDeclaration: ({ node }) => {
       const importPath = node.source.value;
-      if (importPath.startsWith("../") && !dependencies.has(importPath)) {
+      if (
+        importPath.startsWith("../") &&
+        !dependencies.has(importPath) &&
+        !importPath.includes("../utils")
+      ) {
         LOG_CLI.debug(
           `Resolving dependencies for: ${componentName}: ${importPath}`
         );
         const innerDependencyDir = path.resolve(componentDir, importPath);
         const innerDependencyFileName = importPath.split("../")[1];
-        dependencies.add(importPath);
-        getAllDependenciesOfFile(innerDependencyDir, innerDependencyFileName);
+        dependencies.add(innerDependencyFileName);
+        getAllDependenciesOfFile(
+          dependencies,
+          innerDependencyDir,
+          innerDependencyFileName
+        );
       }
     }
   });
-  console.log({ dependencies: dependencies.values() });
 }

@@ -1,3 +1,3 @@
-export * from "./hook.useDropdown.types";
-export * from "./hook.useDropdown";
-export { getIsDropdownOpen } from "./hook.useDropdown.utils";
+export * from "./useDropdown.types";
+export * from "./useDropdown";
+export { getIsDropdownOpen } from "./useDropdown.utils";

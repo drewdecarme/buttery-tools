@@ -1,1 +1,1 @@
-export * from "./hook.usePopover";
+export * from "./usePopover";

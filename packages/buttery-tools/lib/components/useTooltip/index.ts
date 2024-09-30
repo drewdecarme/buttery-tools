@@ -1,1 +1,1 @@
-export * from "./hook.useTooltip";
+export * from "./useTooltip";

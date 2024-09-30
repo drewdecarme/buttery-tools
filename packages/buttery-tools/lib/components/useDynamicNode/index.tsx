@@ -1,1 +1,1 @@
-export * from "./hook.useDynamicNode";
+export * from "./useDynamicNode";

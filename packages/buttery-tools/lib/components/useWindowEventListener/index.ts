@@ -1,1 +1,1 @@
-export * from "./hook.useWindowEventListener";
+export * from "./useWindowEventListener";

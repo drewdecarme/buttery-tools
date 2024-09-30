@@ -1,11 +1,11 @@
 import { type RefCallback, useCallback } from "react";
 import { ensurePopover, ensureTarget, usePopover } from "../usePopover";
-import type { DropdownOptions } from "./hook.useDropdown.types";
+import type { DropdownOptions } from "./useDropdown.types";
 import {
   getIsDropdownOpen,
   processDropdownOptions,
   setDropdownPositionStyles
-} from "./hook.useDropdown.utils";
+} from "./useDropdown.utils";
 
 export type DropdownRefHandleOpen = (
   e?: React.MouseEvent,

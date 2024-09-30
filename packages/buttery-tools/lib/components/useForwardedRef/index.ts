@@ -1,1 +1,1 @@
-export * from "./hook.useForwardedRef";
+export * from "./useForwardedRef";

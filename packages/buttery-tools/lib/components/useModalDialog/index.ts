@@ -1,1 +1,1 @@
-export * from "./hook.useModalDialog";
+export * from "./useModalDialog";

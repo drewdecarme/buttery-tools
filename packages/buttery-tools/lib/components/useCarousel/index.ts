@@ -1,1 +1,1 @@
-export * from "./hook.useCarousel";
+export * from "./useCarousel";

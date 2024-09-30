@@ -1,4 +1,4 @@
-import { usePortal } from "../hook.usePortal";
+import { usePortal } from "../usePortal";
 
 export default () => {
   const { closePortal, togglePortal, Portal } = usePortal();

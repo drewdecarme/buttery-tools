@@ -1,1 +1,1 @@
-export * from "./hook.useIntervalState";
+export * from "./useIntervalState";

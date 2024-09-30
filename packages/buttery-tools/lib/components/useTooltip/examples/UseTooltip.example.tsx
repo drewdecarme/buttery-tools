@@ -1,5 +1,5 @@
 import { css } from "@linaria/core";
-import { useTooltip } from "../hook.useTooltip";
+import { useTooltip } from "../useTooltip";
 
 const tooltipCss = css`
   padding: 0.5rem 1rem;

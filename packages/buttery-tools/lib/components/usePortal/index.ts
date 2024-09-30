@@ -1,1 +1,1 @@
-export * from "./hook.usePortal";
+export * from "./usePortal";

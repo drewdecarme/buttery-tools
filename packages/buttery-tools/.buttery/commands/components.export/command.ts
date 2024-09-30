@@ -1,10 +1,12 @@
-import { readFileSync, readdirSync, statSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
+import { exit } from "node:process";
 import { select } from "@inquirer/prompts";
 import graphlib from "graphlib";
-import type { CommandAction } from "../../../dist/commands/butter-commands.types";
-import type { CommandMeta } from "../../../lib/commands/butter-commands.types";
+import type {
+  CommandAction,
+  CommandMeta
+} from "../../../lib/commands/butter-commands.types";
 import { getButteryConfig } from "../../../lib/config/getButteryConfig";
 import { LOG_CLI } from "../../../lib/logger/loggers";
 import { getAllDependenciesOfFile } from "./components.export.getAllDependenciesOfFile";
@@ -89,8 +91,15 @@ export const action: CommandAction = async () => {
   LOG_CLI.debug("Creating component dependency graph...");
   LOG_CLI.debug(componentForExport.path);
   const dependencyGraph = new graphlib.Graph({ directed: true });
+  const dependencies = new Set<string>();
 
-  getAllDependenciesOfFile(componentForExport.path, componentForExport.name);
+  getAllDependenciesOfFile(
+    dependencies,
+    componentForExport.path,
+    componentForExport.name
+  );
+
+  console.log({ dependencies: dependencies.values() });
 
   // traverseDirectory(componentForExport.path, (filePath: string) => {
 
@@ -99,4 +108,5 @@ export const action: CommandAction = async () => {
 
   //   console.log({ dependencies });
   // });
+  exit(0);
 };

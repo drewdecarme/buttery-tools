@@ -1,1 +1,1 @@
-export * from "./hook.useToggle";
+export * from "./useToggle";

@@ -1,5 +1,5 @@
-import { Drawer } from "../Drawer";
-import { useDrawer } from "../drawer.useDrawer";
+import { Drawer } from "../ModalDrawer";
+import { useDrawer } from "../modal-drawer.useDrawer";
 
 export default () => {
   const { drawerRef, openDrawer } = useDrawer();

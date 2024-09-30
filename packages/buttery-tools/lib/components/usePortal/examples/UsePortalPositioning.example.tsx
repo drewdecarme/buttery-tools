@@ -4,7 +4,7 @@ import {
   useCallback,
   useRef,
 } from "react";
-import { usePortal } from "../hook.usePortal";
+import { usePortal } from "../usePortal";
 
 export default () => {
   const { openPortal, closePortal, Portal } = usePortal();

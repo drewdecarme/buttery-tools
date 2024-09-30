@@ -1,1 +1,1 @@
-export * from "./hook.useIntersectionObserver";
+export * from "./useIntersectionObserver";
