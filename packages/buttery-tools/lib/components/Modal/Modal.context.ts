@@ -1,5 +1,5 @@
 import React from "react";
-import type { ModalDefaultState } from "../../hooks/useModalDialog/hook.useModalDialog";
+import type { ModalDefaultState } from "../useModalDialog";
 
 export type ModalContextType<T extends ModalDefaultState = ModalDefaultState> =
   {

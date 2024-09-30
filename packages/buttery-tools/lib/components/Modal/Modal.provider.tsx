@@ -1,5 +1,5 @@
 import { type ReactNode, useMemo } from "react";
-import type { ModalDefaultState } from "../../hooks/useModalDialog/hook.useModalDialog";
+import type { ModalDefaultState } from "../useModalDialog";
 
 import { ModalContext, type ModalContextType } from "./Modal.context";
 

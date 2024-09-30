@@ -1,9 +1,9 @@
 import { randFullName, randIceHockeyTeam, randJobTitle } from "@ngneat/falso";
 import type { Meta } from "@storybook/react";
 import { useRef } from "react";
-import { breakpointMap, useBreakpoint } from "./__archive/hook.useBreakpoint";
-import { useCarousel } from "./useCarousel/hook.useCarousel";
-import { useToggle } from "./useToggle/hook.useToggle";
+import { useCarousel } from "../useCarousel";
+import { useToggle } from "../useToggle";
+import { breakpointMap, useBreakpoint } from "./hook.useBreakpoint";
 
 const meta: Meta = {
   title: "Utils / Hooks",

@@ -6,7 +6,7 @@ import {
   useCallback,
   useState,
 } from "react";
-import { classes } from "../../../lib/components/utils";
+import { classes } from "../../lib/components/utils";
 
 export type PreviewBlockPropsNative = JSX.IntrinsicElements["div"];
 export type PreviewBlockProps = PreviewBlockPropsNative;

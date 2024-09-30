@@ -12,7 +12,7 @@ import { NavLink } from "@remix-run/react";
 import {
   DropdownNav,
   useDropdownNav,
-} from "../../components/popovers/DropdownNav";
+} from "../../components/PopoverDropdownNav";
 import type { ButteryConfigDocsHeaderLinkTypeDropdown } from "../../config/buttery-config.types.docs";
 
 const buttonStyles = css`

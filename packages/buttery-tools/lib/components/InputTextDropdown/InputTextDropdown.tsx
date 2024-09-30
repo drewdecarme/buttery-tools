@@ -15,9 +15,9 @@ import {
   type DropdownOptions,
   type UseDropdownOptions,
   useDropdown,
-} from "../../hooks/useDropdown";
-import { useWindowEventListener } from "../../hooks/useWindowEventListener";
-import { classes } from "../../utils";
+} from "../useDropdown";
+import { useWindowEventListener } from "../useWindowEventListener";
+import { classes } from "../utils";
 import { LOG_ITD } from "./input-text-dropdown.utils";
 
 export type InputTextDropdownRef = {

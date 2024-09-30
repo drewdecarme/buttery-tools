@@ -1,44 +1,57 @@
-import mdx from "@mdx-js/rollup";
-import { vitePlugin as remix } from "@remix-run/dev";
-import rehypeShiki from "@shikijs/rehype";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeSlug from "rehype-slug";
-import remarkFrontmatter from "remark-frontmatter";
-import remarkMdxFrontmatter from "remark-mdx-frontmatter";
+import path from "node:path";
+import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+  root: import.meta.dirname,
   plugins: [
-    // @ts-expect-error I dunno something strange TODO: check into this
-    mdx({
-      include: "**/*.(md|mdx)",
-      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
-      rehypePlugins: [
-        rehypeSlug,
-        [
-          rehypeAutolinkHeadings,
-          {
-            behavior: "wrap",
-            headingProperties: {
-              className: "heading"
-            }
-          }
-        ],
-        [
-          // @ts-expect-error This is a mismatch from the type-system
-          rehypeShiki,
-          {
-            theme: "dark-plus"
-          }
-        ]
-      ]
-    }),
-    remix({
-      future: {
-        v3_fetcherPersist: true,
-        v3_relativeSplatPath: true,
-        v3_throwAbortReason: true
-      }
+    react({
+      jsxRuntime: "automatic"
     })
-  ]
+  ],
+  publicDir: path.resolve(import.meta.dirname, "./public"),
+  server: {
+    open: true
+  },
+  resolve: {
+    dedupe: [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "@remix-run/router",
+      "react-router",
+      "react-router-dom",
+      "scheduler"
+    ]
+  },
+  define: {
+    "process.env.NODE_ENV": JSON.stringify("production")
+  },
+  build: {
+    ssr: true,
+    rollupOptions: {
+      input: {
+        client: path.resolve(import.meta.dirname, "./src/entry-client.tsx"),
+        server: path.resolve(import.meta.dirname, "./src/entry-server.tsx")
+      },
+      output: {
+        dir: "dist",
+        format: "esm"
+      }
+    }
+  },
+  ssr: {
+    noExternal: [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react-router-dom",
+      "scheduler",
+      "react-router",
+      "@remix-run/router"
+    ]
+  },
+  optimizeDeps: {
+    include: ["react", "react-dom", "react/jsx-runtime", "react-router-dom"]
+  }
 });

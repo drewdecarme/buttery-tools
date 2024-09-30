@@ -10,10 +10,10 @@ import {
   type DropdownOptions,
   type DropdownRef,
   useDropdown,
-} from "../../hooks/useDropdown";
-import { getIsDropdownOpen } from "../../hooks/useDropdown/hook.useDropdown.utils";
-import { usePortal } from "../../hooks/usePortal";
-import { classes } from "../../utils";
+} from "../hooks/useDropdown";
+import { getIsDropdownOpen } from "../hooks/useDropdown/hook.useDropdown.utils";
+import { usePortal } from "../hooks/usePortal";
+import { classes } from "../utils";
 
 export type DropdownMenuPropsNative = JSX.IntrinsicElements["div"] & {
   options: DropdownOptions;
