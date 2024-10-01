@@ -1,5 +1,5 @@
-import { useCarousel } from "@@dependency/useCarousel";
-import { useToggle } from "@@dependency/useToggle";
+import { useCarousel } from "@BUTTERY_COMPONENT/useCarousel";
+import { useToggle } from "@BUTTERY_COMPONENT/useToggle";
 import { randFullName, randIceHockeyTeam, randJobTitle } from "@ngneat/falso";
 import type { Meta } from "@storybook/react";
 import { useRef } from "react";

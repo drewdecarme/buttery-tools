@@ -1,4 +1,4 @@
-import { useDynamicNode } from "@@dependency/useDynamicNode";
+import { useDynamicNode } from "@BUTTERY_COMPONENT/useDynamicNode";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 

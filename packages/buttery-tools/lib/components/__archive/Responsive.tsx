@@ -1,7 +1,7 @@
 import {
   type BreakpointFromTo,
   useBreakpoint,
-} from "@@dependency/__archive/hook.useBreakpoint";
+} from "@BUTTERY_COMPONENT/__archive/hook.useBreakpoint";
 import type { FC, ReactNode } from "react";
 
 export const Responsive: FC<{ children: ReactNode } & BreakpointFromTo> = ({

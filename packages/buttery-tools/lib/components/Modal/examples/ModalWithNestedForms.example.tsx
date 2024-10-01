@@ -1,7 +1,7 @@
 import {
   InputTextDropdown,
   useInputTextDropdown,
-} from "@@dependency/InputTextDropdown";
+} from "@BUTTERY_COMPONENT/InputTextDropdown";
 import { css } from "@linaria/core";
 import { randColor } from "@ngneat/falso";
 import {

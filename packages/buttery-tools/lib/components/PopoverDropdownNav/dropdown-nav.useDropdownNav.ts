@@ -1,4 +1,7 @@
-import type { DropdownOptions, DropdownRef } from "@@dependency/useDropdown";
+import type {
+  DropdownOptions,
+  DropdownRef
+} from "@BUTTERY_COMPONENT/useDropdown";
 import { useCallback, useId, useMemo, useRef } from "react";
 
 export type UseDropdownNavOptions = Partial<DropdownOptions>;

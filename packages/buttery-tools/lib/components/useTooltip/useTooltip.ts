@@ -1,6 +1,9 @@
-import { type DropdownOptions, useDropdown } from "@@dependency/useDropdown";
-import { ensurePopover } from "@@dependency/usePopover";
-import { exhaustiveMatchGuard } from "@@dependency/utils";
+import {
+  type DropdownOptions,
+  useDropdown
+} from "@BUTTERY_COMPONENT/useDropdown";
+import { ensurePopover } from "@BUTTERY_COMPONENT/usePopover";
+import { exhaustiveMatchGuard } from "@BUTTERY_COMPONENT/utils";
 import { type RefCallback, useCallback, useId, useMemo } from "react";
 
 export type UseTooltipOptionsTooltip = DropdownOptions & {

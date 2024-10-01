@@ -1,4 +1,4 @@
-import { useDynamicNode } from "@@dependency/useDynamicNode";
+import { useDynamicNode } from "@BUTTERY_COMPONENT/useDynamicNode";
 import {
   type ReactNode,
   memo,

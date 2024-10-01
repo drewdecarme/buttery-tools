@@ -1,4 +1,4 @@
-import { classes } from "@@dependency/utils";
+import { classes } from "@BUTTERY_COMPONENT/utils";
 import { css } from "@linaria/core";
 import {
   type FC,

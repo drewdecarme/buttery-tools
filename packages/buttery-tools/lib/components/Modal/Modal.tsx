@@ -5,8 +5,8 @@ import {
   type ModalRef,
   type UseModalOptions,
   useModalDialog,
-} from "@@dependency/useModalDialog";
-import { classes } from "@@dependency/utils";
+} from "@BUTTERY_COMPONENT/useModalDialog";
+import { classes } from "@BUTTERY_COMPONENT/utils";
 import { ModalProvider } from "./Modal.provider";
 
 export type ModalPropsNative = Omit<JSX.IntrinsicElements["dialog"], "ref">;

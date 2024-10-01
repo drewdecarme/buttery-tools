@@ -1,4 +1,7 @@
-import type { ModalDefaultState, ModalRef } from "@@dependency/useModalDialog";
+import type {
+  ModalDefaultState,
+  ModalRef
+} from "@BUTTERY_COMPONENT/useModalDialog";
 import { type MutableRefObject, useCallback, useMemo, useRef } from "react";
 
 export function useModal<T extends ModalDefaultState>() {

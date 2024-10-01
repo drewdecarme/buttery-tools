@@ -11,7 +11,7 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "__COMPONENT__/*": ["./lib/components/*"]
+      "@BUTTERY_COMPONENT/*": ["./lib/components/*"]
     }
   },
   "exclude": ["artifacts/buttery-docs/apps/**/*"]

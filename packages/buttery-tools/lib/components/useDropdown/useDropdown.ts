@@ -2,7 +2,7 @@ import {
   ensurePopover,
   ensureTarget,
   usePopover
-} from "@@dependency/usePopover";
+} from "@BUTTERY_COMPONENT/usePopover";
 import { type RefCallback, useCallback } from "react";
 import type { DropdownOptions } from "./useDropdown.types";
 import {

@@ -1,4 +1,4 @@
-import type { ModalDefaultState } from "@@dependency/useModalDialog";
+import type { ModalDefaultState } from "@BUTTERY_COMPONENT/useModalDialog";
 import React from "react";
 
 export type ModalContextType<T extends ModalDefaultState = ModalDefaultState> =

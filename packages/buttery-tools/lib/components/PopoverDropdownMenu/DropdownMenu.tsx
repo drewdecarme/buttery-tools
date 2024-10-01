@@ -2,10 +2,10 @@ import {
   type DropdownOptions,
   type DropdownRef,
   useDropdown,
-} from "@@dependency/useDropdown";
-import { getIsDropdownOpen } from "@@dependency/useDropdown";
-import { usePortal } from "@@dependency/usePortal";
-import { classes } from "@@dependency/utils";
+} from "@BUTTERY_COMPONENT/useDropdown";
+import { getIsDropdownOpen } from "@BUTTERY_COMPONENT/useDropdown";
+import { usePortal } from "@BUTTERY_COMPONENT/usePortal";
+import { classes } from "@BUTTERY_COMPONENT/utils";
 import {
   type RefCallback,
   forwardRef,

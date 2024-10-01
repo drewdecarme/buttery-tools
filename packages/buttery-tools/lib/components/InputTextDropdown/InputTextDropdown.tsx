@@ -2,9 +2,9 @@ import {
   type DropdownOptions,
   type UseDropdownOptions,
   useDropdown,
-} from "@@dependency/useDropdown";
-import { useWindowEventListener } from "@@dependency/useWindowEventListener";
-import { classes } from "@@dependency/utils";
+} from "@BUTTERY_COMPONENT/useDropdown";
+import { useWindowEventListener } from "@BUTTERY_COMPONENT/useWindowEventListener";
+import { classes } from "@BUTTERY_COMPONENT/utils";
 import {
   type FocusEventHandler,
   type MutableRefObject,
