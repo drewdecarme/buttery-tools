@@ -82,10 +82,12 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
   LOG_CLI.debug(componentForExport.path);
   const dependencies = new Set<string>();
 
-  // An inline recursive function that will recursively search through all directories
-  // and look for any dependencies. All dependencies are identified with `@BUTTERY_COMPONENT`.
   const DEPENDENCY_ID = "@BUTTERY_COMPONENT/";
 
+  // An inline recursive function that will recursively search through all directories
+  // and look for any dependencies. All dependencies are identified with `@BUTTERY_COMPONENT`.
+  // if dependencies are found, then it will recursively look through all of those files as well
+  // which will output in a list of all of the components that need to be exported
   function registerComponentIntraDependencies(directoryPath: string) {
     const directoryContents = readdirSync(directoryPath, {
       withFileTypes: true
