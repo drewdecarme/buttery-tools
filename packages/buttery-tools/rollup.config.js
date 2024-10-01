@@ -7,9 +7,9 @@
 
 import path from "node:path";
 import { ButteryLogger } from "@buttery/logger";
+import alias from "@rollup/plugin-alias";
 import typescript from "@rollup/plugin-typescript";
 import wyw from "@wyw-in-js/rollup";
-// import analyze from "rollup-plugin-analyzer";
 import css from "rollup-plugin-css-only";
 
 const externalSet = new Set();
@@ -55,6 +55,14 @@ export default {
     //   preferBuiltins: true, // Prefer native Node.js modules,
     //   extensions: [".ts", ".tsx"],
     // }),
+    alias({
+      entries: [
+        {
+          find: "@BUTTERY_COMPONENT",
+          replacement: path.resolve(import.meta.dirname, "./lib/components/*"),
+        },
+      ],
+    }),
     typescript({
       tsconfig: path.resolve("./tsconfig.library.json"),
     }),

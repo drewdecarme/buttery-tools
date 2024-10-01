@@ -6,7 +6,11 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "./dist",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@BUTTERY_COMPONENT/*": ["./lib/components/*"]
+    }
   },
   "include": ["lib/**/index.public.ts", "lib/**/*.d.ts"]
 }
