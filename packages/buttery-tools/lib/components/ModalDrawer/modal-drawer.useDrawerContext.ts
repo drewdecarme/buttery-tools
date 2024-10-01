@@ -1,3 +1,3 @@
-import { useModalContext } from "../Modal/modal.useModalContext";
+import { useModalContext } from "@@dependency/Modal";
 
 export const useDrawerContext = useModalContext;

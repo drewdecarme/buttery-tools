@@ -1,5 +1,5 @@
+import type { DropdownOptions, DropdownRef } from "@@dependency/useDropdown";
 import { useCallback, useId, useMemo, useRef } from "react";
-import type { DropdownOptions, DropdownRef } from "../useDropdown";
 
 export const useDropdownMenu = (options?: Omit<DropdownOptions, "id">) => {
   const id = useId();

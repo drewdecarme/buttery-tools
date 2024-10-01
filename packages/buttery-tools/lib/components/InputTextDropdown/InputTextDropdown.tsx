@@ -1,4 +1,11 @@
 import {
+  type DropdownOptions,
+  type UseDropdownOptions,
+  useDropdown,
+} from "@@dependency/useDropdown";
+import { useWindowEventListener } from "@@dependency/useWindowEventListener";
+import { classes } from "@@dependency/utils";
+import {
   type FocusEventHandler,
   type MutableRefObject,
   type ReactNode,
@@ -11,13 +18,6 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  type DropdownOptions,
-  type UseDropdownOptions,
-  useDropdown,
-} from "../useDropdown";
-import { useWindowEventListener } from "../useWindowEventListener";
-import { classes } from "../utils";
 import { LOG_ITD } from "./input-text-dropdown.utils";
 
 export type InputTextDropdownRef = {

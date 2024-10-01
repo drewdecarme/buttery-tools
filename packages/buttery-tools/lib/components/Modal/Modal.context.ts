@@ -1,5 +1,5 @@
+import type { ModalDefaultState } from "@@dependency/useModalDialog";
 import React from "react";
-import type { ModalDefaultState } from "../useModalDialog";
 
 export type ModalContextType<T extends ModalDefaultState = ModalDefaultState> =
   {

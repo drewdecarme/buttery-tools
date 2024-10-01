@@ -1,7 +1,7 @@
+import { type DropdownOptions, useDropdown } from "@@dependency/useDropdown";
+import { ensurePopover } from "@@dependency/usePopover";
+import { exhaustiveMatchGuard } from "@@dependency/utils";
 import { type RefCallback, useCallback, useId, useMemo } from "react";
-import { type DropdownOptions, useDropdown } from "../useDropdown";
-import { ensurePopover } from "../usePopover";
-import { exhaustiveMatchGuard } from "../utils";
 
 export type UseTooltipOptionsTooltip = DropdownOptions & {
   dxType: "tooltip";

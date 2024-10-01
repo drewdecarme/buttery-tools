@@ -49,6 +49,8 @@ const getComponentPath = (possiblePaths: string[], componentName: string) => {
  * Based upon the directory name and file name, assemble a path and
  * recursively sort through all of the dependencies of each file that it comes
  * into contact with.
+ *
+ * TODO: Need to search for all files in the directory that might be pulling in dependencies
  */
 export async function getAllDependenciesOfFile(
   dependencies: Set<string>,
@@ -66,11 +68,11 @@ export async function getAllDependenciesOfFile(
   traverse(ast, {
     ImportDeclaration: ({ node }) => {
       const importPath = node.source.value;
-      if (
-        importPath.startsWith("../") &&
-        !dependencies.has(importPath) &&
-        !importPath.includes("../utils")
-      ) {
+      if (importPath.includes("../utils")) {
+        const innerDependencyFileName = importPath.split("../")[1];
+        return dependencies.add(innerDependencyFileName);
+      }
+      if (importPath.startsWith("../") && !dependencies.has(importPath)) {
         LOG_CLI.debug(
           `Resolving dependencies for: ${componentName}: ${importPath}`
         );

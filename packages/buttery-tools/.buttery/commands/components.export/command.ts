@@ -43,14 +43,16 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
   LOG_CLI.debug("Getting components directory... done", { componentsDir });
 
   LOG_CLI.debug("Fetching components to pick from...");
-  const componentDirs = await readdir(componentsDir, {
+  const componentFilesAndDirs = await readdir(componentsDir, {
     withFileTypes: true
   });
-  const componentsToPickFrom = componentDirs.filter(
+  const componentDirs = componentFilesAndDirs.filter((dirent) =>
+    dirent.isDirectory()
+  );
+  const componentDirsToPickFrom = componentDirs.filter(
     (dirent) =>
       dirent.isDirectory() &&
       !dirent.name.includes("__archive") &&
-      !dirent.name.includes("utils-private") &&
       !dirent.name.includes("utils")
   );
   LOG_CLI.debug("Fetching components to pick from... done.");
@@ -58,7 +60,7 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
   LOG_CLI.debug("Waiting for user to select a component to export...");
   const componentForExport = await select({
     message: "Please select a component to export",
-    choices: componentsToPickFrom.map((dirent) => ({
+    choices: componentDirsToPickFrom.map((dirent) => ({
       name: dirent.name,
       value: {
         name: dirent.name,

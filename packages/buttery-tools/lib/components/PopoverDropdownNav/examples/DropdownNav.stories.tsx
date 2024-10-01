@@ -1,8 +1,8 @@
 import type { Meta } from "@storybook/react";
-import DropdownNavExample from "./examples/DropdownNav.example";
-import DropdownNavBarebonesExample from "./examples/DropdownNavBarebones.example";
-import DropdownNavNestedNavExample from "./examples/DropdownNavNestedNav.example";
-import DropdownNavRecursionExample from "./examples/DropdownNavRecursion.example";
+import DropdownNavExample from "./DropdownNav.example";
+import DropdownNavBarebonesExample from "./DropdownNavBarebones.example";
+import DropdownNavNestedNavExample from "./DropdownNavNestedNav.example";
+import DropdownNavRecursionExample from "./DropdownNavRecursion.example";
 
 const meta: Meta = {
   title: "Popovers / Dropdown Nav",

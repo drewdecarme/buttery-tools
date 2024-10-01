@@ -1,8 +1,8 @@
+import { useCarousel } from "@@dependency/useCarousel";
+import { useToggle } from "@@dependency/useToggle";
 import { randFullName, randIceHockeyTeam, randJobTitle } from "@ngneat/falso";
 import type { Meta } from "@storybook/react";
 import { useRef } from "react";
-import { useCarousel } from "../useCarousel";
-import { useToggle } from "../useToggle";
 import { breakpointMap, useBreakpoint } from "./hook.useBreakpoint";
 
 const meta: Meta = {

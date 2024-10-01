@@ -1,3 +1,4 @@
+import { classes } from "@@dependency/utils";
 import { css } from "@linaria/core";
 import {
   randBoolean,
@@ -5,7 +6,6 @@ import {
   randSentence,
 } from "@ngneat/falso";
 import type { FC } from "react";
-import { classes } from "../../utils";
 import { Toaster } from "../Toaster";
 import { useToast } from "../toast.useToast";
 

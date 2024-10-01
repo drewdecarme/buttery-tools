@@ -1,17 +1,17 @@
 import {
+  type DropdownRef,
+  type DropdownRefHandleOpen,
+  useDropdown,
+} from "@@dependency/useDropdown";
+import { getIsDropdownOpen } from "@@dependency/useDropdown";
+import { classes } from "@@dependency/utils";
+import {
   type RefCallback,
   forwardRef,
   useCallback,
   useImperativeHandle,
   useRef,
 } from "react";
-import {
-  type DropdownRef,
-  type DropdownRefHandleOpen,
-  useDropdown,
-} from "../useDropdown";
-import { getIsDropdownOpen } from "../useDropdown";
-import { classes } from "../utils";
 
 export type DropdownNavPropsNative = JSX.IntrinsicElements["div"] & {
   id: string;

@@ -1,6 +1,6 @@
+import { useDynamicNode } from "@@dependency/useDynamicNode";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useDynamicNode } from "../useDynamicNode";
 
 export default () => {
   const { getDynamicNode, destroyNode } = useDynamicNode();

@@ -1,4 +1,4 @@
-import { InputTextDropdown } from "../InputTextDropdown";
+import { InputTextDropdown } from "../";
 
 export default () => {
   return (

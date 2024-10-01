@@ -1,5 +1,9 @@
+import {
+  ensurePopover,
+  ensureTarget,
+  usePopover
+} from "@@dependency/usePopover";
 import { type RefCallback, useCallback } from "react";
-import { ensurePopover, ensureTarget, usePopover } from "../usePopover";
 import type { DropdownOptions } from "./useDropdown.types";
 import {
   getIsDropdownOpen,

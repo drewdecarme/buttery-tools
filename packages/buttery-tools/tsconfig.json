@@ -8,7 +8,11 @@
     "rollup.config.ts"
   ],
   "compilerOptions": {
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "__COMPONENT__/*": ["./lib/components/*"]
+    }
   },
   "exclude": ["artifacts/buttery-docs/apps/**/*"]
 }

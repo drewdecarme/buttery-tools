@@ -1,3 +1,7 @@
+import {
+  InputTextDropdown,
+  useInputTextDropdown,
+} from "@@dependency/InputTextDropdown";
 import { css } from "@linaria/core";
 import { randColor } from "@ngneat/falso";
 import {
@@ -8,10 +12,6 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  InputTextDropdown,
-  useInputTextDropdown,
-} from "../../InputTextDropdown";
 import { Modal } from "../Modal";
 import { useModal } from "../modal.useModal";
 

@@ -1,3 +1,4 @@
+import { classes } from "@@dependency/utils";
 import { css } from "@linaria/core";
 import {
   type FC,
@@ -6,7 +7,6 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import { classes } from "../utils";
 
 export type ToastProps = {
   id: string;
