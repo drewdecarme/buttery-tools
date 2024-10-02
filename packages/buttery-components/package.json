@@ -1,0 +1,44 @@
+{
+  "name": "@buttery/components",
+  "version": "0.0.1",
+  "description": "TODO",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "yarn tsc && vite build && yarn tsc --project tsconfig.types.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
+  },
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "exports": {
+    ".": {
+      "types": "./dist/index.public.d.ts",
+      "import": "./dist/index.public.es.js",
+      "require": "./dist/index.public.cjs.js"
+    }
+  },
+  "devDependencies": {
+    "@buttery/tsconfig": "workspace:^",
+    "@types/node": "^22.7.4",
+    "@vitejs/plugin-react-swc": "^3.7.1",
+    "@wyw-in-js/vite": "^0.5.4",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8"
+  },
+  "dependencies": {
+    "@buttery/logger": "workspace:^",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

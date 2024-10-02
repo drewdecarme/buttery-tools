@@ -113,24 +113,5 @@ export type ButteryConfigDocs = {
    * ```
    */
   order?: ButteryConfigDocsOrder;
-  header?: {
-    /**
-     * Adds a title in the upper left hand of the application
-     */
-    title?: string;
-    /**
-     * Adds a logo that is at a particular URL to be displayed in the top
-     * left hand corner of the docs app
-     */
-    logo?: {
-      src: string;
-      alt: string;
-    };
-    /**
-     * Links that will appear in order from left to right that link
-     * out to different external pages or to places inside of the
-     * documents app
-     */
-    links?: ButteryConfigDocsHeaderLink[][];
-  };
+  header?: ButteryConfigDocsHeader;
 };

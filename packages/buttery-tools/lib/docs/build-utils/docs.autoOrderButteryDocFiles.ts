@@ -1,9 +1,9 @@
 import type { ButteryConfigDocsOrder } from "../../config/buttery-config.types.docs";
 import { kebabToPascalCase } from "../../utils/ts/util.ts.kebab-to-pascal-case";
 import { parseFilename } from "./docs.parseFilename";
-import type { FileObj } from "./docs.types";
+import type { ButteryDocsRoute } from "./docs.types";
 
-export function autoOrderButteryDocFiles(files: FileObj[]) {
+export function autoOrderButteryDocFiles(files: ButteryDocsRoute[]) {
   // try to create the file order automatically
   return files.reduce<ButteryConfigDocsOrder>((accum, file) => {
     const { section, route } = parseFilename(file.filename);

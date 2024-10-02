@@ -5,7 +5,7 @@ import { LOG_CLI } from "../../logger/loggers";
 import { exhaustiveMatchGuard } from "../../utils/ts/util.ts.exhaustive-match-guard";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
-import type { FileObj } from "./docs.types";
+import type { ButteryDocsRoute } from "./docs.types";
 
 function getRoutePath(filename: string, options?: { staticBaseName?: string }) {
   let basePath = "/";
@@ -23,7 +23,7 @@ function readDirContents(
   dirents: Dirent[],
   options: { routePrefix: string; staticBaseName?: string }
 ) {
-  return dirents.reduce<FileObj[]>((accum, dirent) => {
+  return dirents.reduce<ButteryDocsRoute[]>((accum, dirent) => {
     const isFile = dirent.isFile();
     if (!isFile) return accum;
     const fsPath = dirent.parentPath.concat("/").concat(dirent.name);
@@ -71,7 +71,7 @@ function readDirContents(
  */
 export async function getButteryDocsFiles(
   config: ButteryDocsConfig
-): Promise<FileObj[]> {
+): Promise<ButteryDocsRoute[]> {
   const docsDirectories = await getButteryDocsDirectories(config);
 
   // get the files inside of the docs directory

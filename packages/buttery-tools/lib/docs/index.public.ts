@@ -8,3 +8,4 @@ export * from "./app-components/RootLinks";
 export * from "./app-components/util.getGraphValueThatMatchesURLPathname";
 
 export * from "./build-utils/vite-plugin/index";
+export * from "./build-utils/docs.types";

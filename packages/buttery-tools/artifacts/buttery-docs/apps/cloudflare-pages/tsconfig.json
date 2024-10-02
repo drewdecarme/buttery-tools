@@ -14,9 +14,15 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["@cloudflare/workers-types"]
+    "types": ["@cloudflare/workers-types"],
+    "baseUrl": ".",
+    "paths": {
+      "__ROUTE_MANIFEST__": [
+        "../../../../.buttery/.store/docs/route-manifest.ts"
+      ]
+    }
   }
 }

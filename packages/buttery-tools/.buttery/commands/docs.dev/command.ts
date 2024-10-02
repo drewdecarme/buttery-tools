@@ -1,16 +1,20 @@
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import react from "@vitejs/plugin-react-swc";
+import wyw from "@wyw-in-js/vite";
 import express from "express";
+import { ensureFile } from "fs-extra";
 import { createServer } from "vite";
-import commonjs from "vite-plugin-commonjs";
 import type {
   CommandAction,
   CommandMeta,
   CommandOptions
 } from "../../../lib/commands/butter-commands.types";
+import { getButteryDocsFiles } from "../../../lib/docs/build-utils/docs.getButteryDocFiles";
 import { getButteryDocsConfig } from "../../../lib/docs/build-utils/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../../../lib/docs/build-utils/docs.getButteryDocsDirectories";
+import { getButteryDocsGraph } from "../../../lib/docs/build-utils/docs.getButteryDocsGraph";
+import { orderButteryDocFiles } from "../../../lib/docs/build-utils/docs.orderButteryDocFiles";
 import { LOG_CLI } from "../../../lib/logger/loggers";
 
 export const meta: CommandMeta = {
@@ -35,9 +39,13 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
   const prompt = !options?.["no-prompt"];
 
   // Reconcile some variables
-  const config = await getButteryDocsConfig({ prompt });
+  const config = await getButteryDocsConfig();
   const dirs = await getButteryDocsDirectories(config);
+  const files = await getButteryDocsFiles(config);
+  const orderedFiles = orderButteryDocFiles(config, files);
+  const graph = await getButteryDocsGraph(config, orderedFiles);
 
+  const cacheDir = path.resolve(config.paths.storeDir, "./docs/.vite-cache");
   const serverEntryPath = path.resolve(
     dirs.artifacts.apps.template.root,
     "./src/entry-server.tsx"
@@ -46,7 +54,23 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
     dirs.artifacts.apps.template.root,
     "./index.html"
   );
-  const cacheDir = path.resolve(config.paths.storeDir, "./docs/.vite-cache");
+
+  const [indexRoute, ...docRoutes] = orderedFiles;
+  const graphOutputPath = path.resolve(
+    config.paths.storeDir,
+    "./docs/route-manifest.ts"
+  );
+  const graphOutputContent = `import type { ButteryDocsGraph, ButteryDocsRoute } from "@buttery/tools/docs";
+import type { ButteryConfigDocsHeader } from "@buttery/tools/config";
+
+export const indexRoute: ButteryDocsRoute = ${JSON.stringify(indexRoute, null, 2)};
+export const docRoutes: ButteryDocsRoute[] = ${JSON.stringify(docRoutes, null, 2)};
+export const allRoutes: ButteryDocsRoute[] = ${JSON.stringify(orderedFiles, null, 2)};
+export const routeGraph: ButteryDocsGraph = ${JSON.stringify(graph, null, 2)};
+export const dataHeader: ButteryConfigDocsHeader = ${JSON.stringify(config.docs.header, null, 2)};
+`;
+  await ensureFile(graphOutputPath);
+  await writeFile(graphOutputPath, graphOutputContent);
 
   // create an express app
   const app = express();
@@ -62,7 +86,25 @@ export const action: CommandAction<typeof options> = async ({ options }) => {
         port: 3005
       }
     },
-    plugins: [react()]
+    resolve: {
+      alias: {
+        __ROUTE_MANIFEST__: graphOutputPath,
+        "@BUTTERY_COMPONENT": path.resolve(
+          config.paths.rootDir,
+          "lib/components"
+        )
+      }
+    },
+    plugins: [
+      react()
+      // wyw({
+      //   include: "/**/*.(ts|tsx)",
+      //   babelOptions: {
+      //     compact: false,
+      //     presets: ["@babel/preset-typescript", "@babel/preset-react"]
+      //   }
+      // })
+    ]
   });
 
   // Add the vite middleware

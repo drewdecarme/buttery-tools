@@ -6,13 +6,16 @@ import { LOG_CLI } from "../../logger/loggers";
 import { parseMDXFileContent } from "./docs.parseMDXFileContent";
 import { parseMDXFileFrontmatter } from "./docs.parseMDXFileFrontmatter";
 import { parseMDXFileName } from "./docs.parseMDXFilename";
-import type { ButteryDocsGraphFrontmatter, FileObj } from "./docs.types";
+import type {
+  ButteryDocsGraphFrontmatter,
+  ButteryDocsRoute
+} from "./docs.types";
 
 export const parseMdxFile = async ({
   filename,
   fsPath,
   routePath
-}: FileObj) => {
+}: ButteryDocsRoute) => {
   LOG_CLI.debug("Parsing MDX file...", { filename });
   try {
     // parse the frontmatter away from the markdown content

@@ -2,12 +2,12 @@ import type { ButteryConfigDocsOrder } from "../../config/buttery-config.types.d
 import { LOG_CLI } from "../../logger/loggers";
 import { autoOrderButteryDocFiles } from "./docs.autoOrderButteryDocFiles";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
-import type { FileObj } from "./docs.types";
+import type { ButteryDocsRoute } from "./docs.types";
 
 export function orderButteryDocFiles(
   docsConfig: ButteryDocsConfig,
-  files: FileObj[]
-): FileObj[] {
+  files: ButteryDocsRoute[]
+): ButteryDocsRoute[] {
   let reconciledOrder: ButteryConfigDocsOrder;
 
   if (!docsConfig.docs.order) {
@@ -17,7 +17,7 @@ export function orderButteryDocFiles(
     reconciledOrder = docsConfig.docs.order;
   }
 
-  const oFiles: FileObj[] = [];
+  const oFiles: ButteryDocsRoute[] = [];
 
   // loop through through the docs.order configuration property
   for (const section in reconciledOrder) {

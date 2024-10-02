@@ -260,13 +260,13 @@ export async function vitePlugin(options: {
   //       unstable_optimizeDeps: true
   //     }
   //   }),
-  //   wyw({
-  //     include: "/**/*.(ts|tsx)",
-  //     babelOptions: {
-  //       compact: false,
-  //       presets: ["@babel/preset-typescript", "@babel/preset-react"]
-  //     }
-  //   }),
+  // wyw({
+  //   include: "/**/*.(ts|tsx)",
+  //   babelOptions: {
+  //     compact: false,
+  //     presets: ["@babel/preset-typescript", "@babel/preset-react"]
+  //   }
+  // }),
   //   {
   //     name: "dependency-resolver-logger",
   //     configResolved(config) {

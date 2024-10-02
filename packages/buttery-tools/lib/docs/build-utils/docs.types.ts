@@ -2,7 +2,7 @@ export type CompileArgs = {
   docsDir: string;
 };
 
-export type FileObj = {
+export type ButteryDocsRoute = {
   fsPath: string;
   filename: string;
   routeFileName: string;

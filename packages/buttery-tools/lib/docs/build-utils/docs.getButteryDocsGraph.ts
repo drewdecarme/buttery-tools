@@ -2,7 +2,7 @@ import { LOG_CLI } from "../../logger/loggers";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 
 import { parseMdxFile } from "./docs.parseMDXFile";
-import type { ButteryDocsGraph, FileObj } from "./docs.types";
+import type { ButteryDocsGraph, ButteryDocsRoute } from "./docs.types";
 
 /**
  * Creates a graph/object representation of the the files
@@ -14,12 +14,12 @@ import type { ButteryDocsGraph, FileObj } from "./docs.types";
  */
 export async function getButteryDocsGraph(
   config: ButteryDocsConfig,
-  orderedFiles: FileObj[]
+  orderedFiles: ButteryDocsRoute[]
 ): Promise<ButteryDocsGraph> {
   LOG_CLI.debug("Generating graph representation of docs...");
   const graph: ButteryDocsGraph = {};
 
-  async function insertNode(file: FileObj) {
+  async function insertNode(file: ButteryDocsRoute) {
     const parsedFile = await parseMdxFile(file);
     if (!parsedFile) return;
     const {
