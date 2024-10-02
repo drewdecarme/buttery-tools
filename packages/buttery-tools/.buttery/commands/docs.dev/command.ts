@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import react from "@vitejs/plugin-react-swc";
-import wyw from "@wyw-in-js/vite";
+// import wyw from "@wyw-in-js/vite";
 import express from "express";
 import { ensureFile } from "fs-extra";
 import { createServer } from "vite";
@@ -10,11 +10,11 @@ import type {
   CommandMeta,
   CommandOptions
 } from "../../../lib/commands/butter-commands.types";
-import { getButteryDocsFiles } from "../../../lib/docs/build-utils/docs.getButteryDocFiles";
-import { getButteryDocsConfig } from "../../../lib/docs/build-utils/docs.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../../../lib/docs/build-utils/docs.getButteryDocsDirectories";
-import { getButteryDocsGraph } from "../../../lib/docs/build-utils/docs.getButteryDocsGraph";
-import { orderButteryDocFiles } from "../../../lib/docs/build-utils/docs.orderButteryDocFiles";
+import { getButteryDocsFiles } from "../../../lib/docs/docs.getButteryDocFiles";
+import { getButteryDocsConfig } from "../../../lib/docs/docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../../../lib/docs/docs.getButteryDocsDirectories";
+import { getButteryDocsGraph } from "../../../lib/docs/docs.getButteryDocsGraph";
+import { orderButteryDocFiles } from "../../../lib/docs/docs.orderButteryDocFiles";
 import { LOG_CLI } from "../../../lib/logger/loggers";
 
 export const meta: CommandMeta = {
@@ -34,9 +34,9 @@ export const options: CommandOptions<{
   }
 };
 
-export const action: CommandAction<typeof options> = async ({ options }) => {
+export const action: CommandAction<typeof options> = async () => {
   LOG_CLI.info("Running `buttery.docs.dev` CLI command.");
-  const prompt = !options?.["no-prompt"];
+  // const prompt = !options?.["no-prompt"];
 
   // Reconcile some variables
   const config = await getButteryDocsConfig();

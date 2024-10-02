@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "TODO",
   "type": "module",
+  "sideEffects": false,
   "scripts": {
     "dev": "vite",
     "build": "yarn tsc && vite build && yarn tsc --project tsconfig.types.json"

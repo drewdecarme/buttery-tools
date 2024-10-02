@@ -29,7 +29,7 @@ export const options: CommandOptions<{ outDir: string }> = {
   }
 };
 
-export const action: CommandAction<typeof options> = async ({ options }) => {
+export const action: CommandAction<typeof options> = async () => {
   // TODO: Define a configuration in the buttery config to reconcile this.
   // if (!options.outDir) {
   //   LOG_CLI.error("The option --outDir,-o is missing.");

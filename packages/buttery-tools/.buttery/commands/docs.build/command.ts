@@ -7,8 +7,8 @@ import type {
   CommandAction,
   CommandMeta
 } from "../../../lib/commands/butter-commands.types";
-import { getButteryDocsConfig } from "../../../lib/docs/build-utils/docs.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../../../lib/docs/build-utils/docs.getButteryDocsDirectories";
+import { getButteryDocsConfig } from "../../../lib/docs/docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "../../../lib/docs/docs.getButteryDocsDirectories";
 import { LOG_CLI } from "../../../lib/logger/loggers";
 
 export const meta: CommandMeta = {

@@ -24,7 +24,6 @@ const LOG_BUILD = new ButteryLogger({
 const entryFiles = [
   "./lib/docs/index.public.ts",
   "./lib/config/index.public.ts",
-  "./lib/components/index.public.ts",
   "./lib/logger/index.public.ts",
   "./lib/commands/index.public.ts",
 ].map((relPath) => path.resolve(import.meta.dirname, relPath));

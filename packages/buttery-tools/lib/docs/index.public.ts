@@ -1,11 +1,1 @@
-export * from "./app-components/Layout";
-export * from "./app-components/LayoutBody";
-export * from "./app-components/LayoutBodyMain";
-export * from "./app-components/LayoutBodyNav";
-export * from "./app-components/LayoutBodyTOC";
-export * from "./app-components/LayoutHeader";
-export * from "./app-components/RootLinks";
-export * from "./app-components/util.getGraphValueThatMatchesURLPathname";
-
-export * from "./build-utils/vite-plugin/index";
-export * from "./build-utils/docs.types";
+export * from ".//docs.types";
