@@ -1599,6 +1599,7 @@ __metadata:
   dependencies:
     "@buttery/logger": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
+    "@linaria/core": "npm:^6.2.0"
     "@types/node": "npm:^22.7.4"
     "@vitejs/plugin-react-swc": "npm:^3.7.1"
     "@wyw-in-js/vite": "npm:^0.5.4"
@@ -3331,7 +3332,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@linaria/core@npm:6.2.0":
+"@linaria/core@npm:6.2.0, @linaria/core@npm:^6.2.0":
   version: 6.2.0
   resolution: "@linaria/core@npm:6.2.0"
   dependencies:

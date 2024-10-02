@@ -1,21 +1,25 @@
 import path from "node:path";
 import react from "@vitejs/plugin-react-swc";
+import wyw from "@wyw-in-js/vite";
 import { defineConfig } from "vite";
+import packageJson from "./package.json";
 
 export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(import.meta.dirname, "./lib/index.public.ts"),
-      fileName(format, entryName) {
-        return `${entryName}.${format}.js`;
+      fileName(_format, entryName) {
+        return `${entryName}.js`;
       },
-      formats: ["cjs", "es"]
+      formats: ["es"]
     },
     rollupOptions: {
       output: {
         preserveModules: true
       },
-      external: [/node_modules/, "@buttery/logger"]
+      external: Object.keys(packageJson.dependencies).concat(
+        "react/jsx-runtime"
+      )
     }
   },
   resolve: {
@@ -24,14 +28,13 @@ export default defineConfig({
     }
   },
   plugins: [
-    react()
-    // TODO: Remove this when all styles are removed
-    // wyw({
-    //   include: "/**/*.(ts|tsx)",
-    //   babelOptions: {
-    //     compact: false,
-    //     presets: ["@babel/preset-typescript", "@babel/preset-react"]
-    //   }
-    // })
+    react(),
+    wyw({
+      include: "/**/*.(ts|tsx)",
+      babelOptions: {
+        compact: false,
+        presets: ["@babel/preset-typescript", "@babel/preset-react"]
+      }
+    })
   ]
 });

@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import react from "@vitejs/plugin-react-swc";
-// import wyw from "@wyw-in-js/vite";
+import wyw from "@wyw-in-js/vite";
 import express from "express";
 import { ensureFile } from "fs-extra";
 import { createServer } from "vite";
@@ -88,22 +88,18 @@ export const dataHeader: ButteryConfigDocsHeader = ${JSON.stringify(config.docs.
     },
     resolve: {
       alias: {
-        __ROUTE_MANIFEST__: graphOutputPath,
-        "@BUTTERY_COMPONENT": path.resolve(
-          config.paths.rootDir,
-          "lib/components"
-        )
+        __ROUTE_MANIFEST__: graphOutputPath
       }
     },
     plugins: [
-      react()
-      // wyw({
-      //   include: "/**/*.(ts|tsx)",
-      //   babelOptions: {
-      //     compact: false,
-      //     presets: ["@babel/preset-typescript", "@babel/preset-react"]
-      //   }
-      // })
+      react(),
+      wyw({
+        include: "/**/*.(ts|tsx)",
+        babelOptions: {
+          compact: false,
+          presets: ["@babel/preset-typescript", "@babel/preset-react"]
+        }
+      })
     ]
   });
 

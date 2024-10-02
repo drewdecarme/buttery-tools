@@ -25,8 +25,10 @@
   "exports": {
     ".": {
       "types": "./dist/index.public.d.ts",
-      "import": "./dist/index.public.es.js",
-      "require": "./dist/index.public.cjs.js"
+      "import": "./dist/index.public.js",
+      "require": "./dist/index.public.js",
+      "node": "./dist/index.public.js",
+      "default": "./dist/index.public.js"
     }
   },
   "devDependencies": {
@@ -39,6 +41,7 @@
   },
   "dependencies": {
     "@buttery/logger": "workspace:^",
+    "@linaria/core": "^6.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   }
