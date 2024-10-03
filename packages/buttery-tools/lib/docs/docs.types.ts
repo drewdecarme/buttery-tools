@@ -4,6 +4,7 @@ export type CompileArgs = {
 
 export type ButteryDocsRoute = {
   fsPath: string;
+  fsPathRelToDocs: string;
   filename: string;
   routeFileName: string;
   routePath: string;
@@ -35,4 +36,13 @@ export type ButteryDocsGraphValue = {
 };
 export type ButteryDocsGraph = {
   [key: string]: ButteryDocsGraphValue;
+};
+
+export type ButteryDocsRouteManifestEntry = {
+  routePath: string;
+  aliasPath: string;
+  root: boolean;
+};
+export type ButteryDocsRouteManifest = {
+  [routeId: string]: ButteryDocsRouteManifestEntry;
 };

@@ -1,10 +1,10 @@
+import { classes, useIntervalState } from "@buttery/components";
 import {
   makeColorBrand,
   makeCustom,
   makeRem,
   makeReset,
 } from "@buttery/tokens/docs";
-import { classes, useIntervalState } from "@buttery/tools/components";
 import { css } from "@linaria/core";
 
 const containerStyles = css`

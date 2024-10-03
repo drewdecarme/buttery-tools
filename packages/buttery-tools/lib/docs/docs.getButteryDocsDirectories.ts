@@ -50,7 +50,7 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
      */
     srcDocs: {
       root: userCreatedDocsDir,
-      public: path.resolve(userCreatedDocsDir, "./public")
+      public: path.resolve(userCreatedDocsDir, "./_public")
     },
     artifacts: {
       root: artifactsDir,

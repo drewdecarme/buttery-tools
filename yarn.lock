@@ -1659,6 +1659,7 @@ __metadata:
     "@cloudflare/workers-types": "npm:4.20240925.0"
     "@inquirer/prompts": "npm:6.0.1"
     "@linaria/core": "npm:6.2.0"
+    "@mdx-js/esbuild": "npm:^3.0.1"
     "@mdx-js/react": "npm:3.0.1"
     "@mdx-js/rollup": "npm:3.0.1"
     "@ngneat/falso": "npm:7.2.0"
@@ -1715,6 +1716,7 @@ __metadata:
     graphlib: "npm:^2.1.8"
     gray-matter: "npm:4.0.3"
     handlebars: "npm:4.7.8"
+    immer: "npm:^10.1.1"
     install: "npm:0.13.0"
     isbot: "npm:5.1.17"
     react: "npm:18.3.1"
@@ -1745,6 +1747,7 @@ __metadata:
     vite-plugin-commonjs: "npm:^0.10.3"
     vite-plugin-inspect: "npm:0.8.7"
     vite-plugin-svgr: "npm:4.2.0"
+    vite-plugin-virtual: "npm:^0.3.0"
     wrangler: "npm:3.78.12"
   bin:
     buttery: ./bin/index.js
@@ -3364,6 +3367,20 @@ __metadata:
     globby: "npm:^11.0.0"
     read-yaml-file: "npm:^1.1.0"
   checksum: 10c0/f05907d1174ae28861eaa06d0efdc144f773d9a4b8b65e1e7cdc01eb93361d335351b4a336e05c6aac02661be39e8809a3f7ad28bc67b6b338071434ab442130
+  languageName: node
+  linkType: hard
+
+"@mdx-js/esbuild@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@mdx-js/esbuild@npm:3.0.1"
+  dependencies:
+    "@mdx-js/mdx": "npm:^3.0.0"
+    "@types/unist": "npm:^3.0.0"
+    vfile: "npm:^6.0.0"
+    vfile-message: "npm:^4.0.0"
+  peerDependencies:
+    esbuild: ">=0.14.0"
+  checksum: 10c0/9b2eb8f9808d3fcba949c2d1cd059b2abd61716bed7f60c416bd4bc456ef9fc182d86eea2e16ee4ddadeb33d9b090029027833ea2411d430d7e4f2423dcb3e16
   languageName: node
   linkType: hard
 
@@ -9672,6 +9689,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immer@npm:^10.1.1":
+  version: 10.1.1
+  resolution: "immer@npm:10.1.1"
+  checksum: 10c0/b749e10d137ccae91788f41bd57e9387f32ea6d6ea8fd7eb47b23fd7766681575efc7f86ceef7fe24c3bc9d61e38ff5d2f49c2663b2b0c056e280a4510923653
+  languageName: node
+  linkType: hard
+
 "import-fresh@npm:^3.3.0":
   version: 3.3.0
   resolution: "import-fresh@npm:3.3.0"
@@ -15868,6 +15892,15 @@ __metadata:
   peerDependencies:
     vite: ^2.6.0 || 3 || 4 || 5
   checksum: 10c0/0a6400f20905f53d08f1ce7d1f22d9a57db403e110e790f80c2e0411a0064a071a36b781f56f6823654f98052219171003f9ea023d4a31d930b4a4fc01776d1f
+  languageName: node
+  linkType: hard
+
+"vite-plugin-virtual@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "vite-plugin-virtual@npm:0.3.0"
+  peerDependencies:
+    vite: ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
+  checksum: 10c0/a9edbbefbca15878f69086d50ac45a05bcbd295f2e7f21eb03248ddec9df1516602dd700c3442f8fd9778598950383b0ef448ee6086465ade38e06d1005ad55b
   languageName: node
   linkType: hard
 

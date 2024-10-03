@@ -1,20 +1,22 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
+import mdx from "@mdx-js/rollup";
 import react from "@vitejs/plugin-react-swc";
 import wyw from "@wyw-in-js/vite";
 import express from "express";
-import { ensureFile } from "fs-extra";
+import { getButteryDocsVirtualModules } from "lib/docs/docs.getButteryDocsVIrtualModules";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { createServer } from "vite";
+import virtual from "vite-plugin-virtual";
 import type {
   CommandAction,
   CommandMeta,
   CommandOptions
 } from "../../../lib/commands/butter-commands.types";
-import { getButteryDocsFiles } from "../../../lib/docs/docs.getButteryDocFiles";
 import { getButteryDocsConfig } from "../../../lib/docs/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../../../lib/docs/docs.getButteryDocsDirectories";
-import { getButteryDocsGraph } from "../../../lib/docs/docs.getButteryDocsGraph";
-import { orderButteryDocFiles } from "../../../lib/docs/docs.orderButteryDocFiles";
+import { getButteryDocsRouteManifest } from "../../../lib/docs/docs.getButteryDocsRouteManifest";
 import { LOG_CLI } from "../../../lib/logger/loggers";
 
 export const meta: CommandMeta = {
@@ -41,9 +43,8 @@ export const action: CommandAction<typeof options> = async () => {
   // Reconcile some variables
   const config = await getButteryDocsConfig();
   const dirs = await getButteryDocsDirectories(config);
-  const files = await getButteryDocsFiles(config);
-  const orderedFiles = orderButteryDocFiles(config, files);
-  const graph = await getButteryDocsGraph(config, orderedFiles);
+  const routeManifest = getButteryDocsRouteManifest(dirs);
+  const virtualModules = getButteryDocsVirtualModules(config, routeManifest);
 
   const cacheDir = path.resolve(config.paths.storeDir, "./docs/.vite-cache");
   const serverEntryPath = path.resolve(
@@ -55,23 +56,6 @@ export const action: CommandAction<typeof options> = async () => {
     "./index.html"
   );
 
-  const [indexRoute, ...docRoutes] = orderedFiles;
-  const graphOutputPath = path.resolve(
-    config.paths.storeDir,
-    "./docs/route-manifest.ts"
-  );
-  const graphOutputContent = `import type { ButteryDocsGraph, ButteryDocsRoute } from "@buttery/tools/docs";
-import type { ButteryConfigDocsHeader } from "@buttery/tools/config";
-
-export const indexRoute: ButteryDocsRoute = ${JSON.stringify(indexRoute, null, 2)};
-export const docRoutes: ButteryDocsRoute[] = ${JSON.stringify(docRoutes, null, 2)};
-export const allRoutes: ButteryDocsRoute[] = ${JSON.stringify(orderedFiles, null, 2)};
-export const routeGraph: ButteryDocsGraph = ${JSON.stringify(graph, null, 2)};
-export const dataHeader: ButteryConfigDocsHeader = ${JSON.stringify(config.docs.header, null, 2)};
-`;
-  await ensureFile(graphOutputPath);
-  await writeFile(graphOutputPath, graphOutputContent);
-
   // create an express app
   const app = express();
 
@@ -79,6 +63,7 @@ export const dataHeader: ButteryConfigDocsHeader = ${JSON.stringify(config.docs.
   const vite = await createServer({
     cacheDir,
     root: dirs.artifacts.apps.template.root, // Root directory for the Vite project
+    publicDir: dirs.srcDocs.public,
     appType: "custom", // Avoid Vite's default HTML handling,
     server: {
       middlewareMode: true, // Enable SSR middleware mode
@@ -87,12 +72,20 @@ export const dataHeader: ButteryConfigDocsHeader = ${JSON.stringify(config.docs.
       }
     },
     resolve: {
+      extensions: [".js", ".jsx", ".ts", ".tsx", ".mdx"],
       alias: {
-        __ROUTE_MANIFEST__: graphOutputPath
+        "@docs": dirs.srcDocs.root
       }
     },
     plugins: [
+      mdx({
+        remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter]
+      }),
       react(),
+      virtual({
+        "virtual:data": virtualModules.data,
+        "virtual:routes": virtualModules.routes
+      }),
       wyw({
         include: "/**/*.(ts|tsx)",
         babelOptions: {

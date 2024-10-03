@@ -1,43 +1,71 @@
-import type { ButteryDocsRoute } from "@buttery/tools/docs";
-import { dataHeader, indexRoute } from "__ROUTE_MANIFEST__";
+import type { ButteryDocsRouteManifestEntry } from "@buttery/tools/docs";
+import { dataHeader } from "__ROUTE_MANIFEST__";
 import { Suspense, lazy } from "react";
-import { Outlet, Route, type RouteObject, Routes } from "react-router-dom";
-import About from "./pages/About";
-import Home from "./pages/Home";
-import "@buttery/tools/docs/css";
+import {
+  type IndexRouteObject,
+  Outlet,
+  Route,
+  type RouteObject,
+  Routes,
+} from "react-router-dom";
 import { Layout } from "./components/Layout";
+// import { graph } from "./components/Layout.stories.data";
+import { LayoutBody } from "./components/LayoutBody";
+import { LayoutBodyMain } from "./components/LayoutBodyMain";
+// import { LayoutBodyNav } from "./components/LayoutBodyNav";
+// import { LayoutBodyTOC } from "./components/LayoutBodyTOC";
+import { LayoutHeader } from "./components/LayoutHeader";
 
-// function createRoute(route: ButteryDocsRoute): RouteObject {
-//   const Component = lazy(() => import(/* @vite-ignore */ route.fsPath));
+import { header } from "virtual:data";
+import { routeDocs, routeIndex } from "virtual:routes";
 
-//   return {
-//     path: route.routePath,
-//     element: (
-//       <Suspense fallback={<div>Loading...</div>}>
-//         <Component />
-//       </Suspense>
-//     ),
-//   };
-// }
+console.log(routeDocs);
 
-// const indexRouteObject = createRoute(indexRoute);
+function createRoute(route: ButteryDocsRouteManifestEntry): IndexRouteObject {
+  const Component = lazy(async () => {
+    // Import the MDX file as a component
+    // const { default: DocumentComponent } = await import(`@docs/_index.mdx`);
+    const { default: DocumentComponent } = await route.importComponent();
+    // Return it as a default export in an object
+    return { default: DocumentComponent };
+  });
+
+  return {
+    path: route.routePath,
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Component />
+      </Suspense>
+    ),
+  };
+}
 
 const App = () => (
   <Routes>
     <Route
       element={
-        // <div style={{ background: "red" }}>
-        //   {/* <LayoutHeader header={dataHeader} /> */}
-        //   <Outlet />
-        // </div>
-        <Layout style={{ background: "red" }}>
-          {/* <LayoutHeader header={dataHeader} /> */}
+        <Layout>
+          <LayoutHeader header={header} />
           <Outlet />
         </Layout>
       }
     >
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
+      <Route index {...createRoute(routeIndex)} />
+      <Route
+        element={
+          <LayoutBody>
+            {/* <LayoutBodyNav graph={routeGraph} /> */}
+            <LayoutBodyMain>
+              <Outlet />
+            </LayoutBodyMain>
+            {/* <LayoutBodyTOC graph={graph} /> */}
+          </LayoutBody>
+        }
+      >
+        {routeDocs.map((route, i) => {
+          return <Route key={route.routePath} index {...createRoute(route)} />;
+        })}
+      </Route>
     </Route>
   </Routes>
 );

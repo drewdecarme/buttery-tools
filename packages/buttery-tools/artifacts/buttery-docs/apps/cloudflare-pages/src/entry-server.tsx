@@ -1,13 +1,17 @@
-import { renderToString } from "react-dom/server.browser";
+import { renderToReadableStream } from "react-dom/server.browser";
 import { StaticRouter } from "react-router-dom/server";
 import App from "./App";
 
-export function render(url: string) {
-  // Render the app to a string using React's server renderer
-  const html = renderToString(
+export async function render(url: string) {
+  // Render the app to a ReadableStream using React's server renderer
+  const stream = await renderToReadableStream(
     <StaticRouter location={url}>
       <App />
     </StaticRouter>
   );
-  return html;
+
+  // Wait until the stream is ready before returning it
+  await stream.allReady;
+
+  return stream;
 }

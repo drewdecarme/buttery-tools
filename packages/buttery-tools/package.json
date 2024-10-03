@@ -119,6 +119,7 @@
     "@buttery/tsconfig": "workspace:",
     "@inquirer/prompts": "6.0.1",
     "@linaria/core": "6.2.0",
+    "@mdx-js/esbuild": "^3.0.1",
     "@mdx-js/react": "3.0.1",
     "@mdx-js/rollup": "3.0.1",
     "@remix-run/cloudflare": "2.12.1",
@@ -148,6 +149,7 @@
     "graphlib": "^2.1.8",
     "gray-matter": "4.0.3",
     "handlebars": "4.7.8",
+    "immer": "^10.1.1",
     "install": "0.13.0",
     "isbot": "5.1.17",
     "react": "18.3.1",
@@ -173,6 +175,7 @@
     "vite-plugin-commonjs": "^0.10.3",
     "vite-plugin-inspect": "0.8.7",
     "vite-plugin-svgr": "4.2.0",
+    "vite-plugin-virtual": "^0.3.0",
     "wrangler": "3.78.12"
   },
   "types": "./dist/index.d.ts"

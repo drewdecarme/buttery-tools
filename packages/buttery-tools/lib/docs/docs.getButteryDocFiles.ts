@@ -4,7 +4,10 @@ import path from "node:path";
 import { LOG_CLI } from "../logger/loggers";
 import { exhaustiveMatchGuard } from "../utils/ts/util.ts.exhaustive-match-guard";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
+import {
+  type ButteryDocsDirectories,
+  getButteryDocsDirectories
+} from "./docs.getButteryDocsDirectories";
 import type { ButteryDocsRoute } from "./docs.types";
 
 function getRoutePath(filename: string, options?: { staticBaseName?: string }) {
@@ -21,12 +24,20 @@ function getRoutePath(filename: string, options?: { staticBaseName?: string }) {
 
 function readDirContents(
   dirents: Dirent[],
-  options: { routePrefix: string; staticBaseName?: string }
+  options: {
+    routePrefix: string;
+    staticBaseName?: string;
+    dirs: ButteryDocsDirectories;
+  }
 ) {
   return dirents.reduce<ButteryDocsRoute[]>((accum, dirent) => {
     const isFile = dirent.isFile();
     if (!isFile) return accum;
     const fsPath = dirent.parentPath.concat("/").concat(dirent.name);
+    const fsPathRelToDocs = fsPath.split("docs/")[1];
+
+    console.log({ fsPath, fsPathRelToDocs });
+
     const baseFilename = path.parse(dirent.name).name;
 
     if (baseFilename === ".DS_Store") {
@@ -58,6 +69,7 @@ function readDirContents(
     return accum.concat({
       fsPath,
       filename,
+      fsPathRelToDocs,
       routeFileName,
       routePath
     });
@@ -72,49 +84,63 @@ function readDirContents(
 export async function getButteryDocsFiles(
   config: ButteryDocsConfig
 ): Promise<ButteryDocsRoute[]> {
-  const docsDirectories = await getButteryDocsDirectories(config);
+  // resolve some directories from the config
+  const dirs = await getButteryDocsDirectories(config);
 
-  // get the files inside of the docs directory
-  // and enrich them with some of the data
-  const docsDirContents = await readdir(docsDirectories.srcDocs.root, {
+  // Recursively read all of the files in `./.buttery/docs` directory
+  const docDirents = await readdir(dirs.srcDocs.root, {
     recursive: false,
     withFileTypes: true
   });
 
+  // filename is the routeManifest ID
+  // need isIndex: boolean
+  // need routePath: "/"
+  // need aliasPath: "@docs/_index.mdx"
+
+  // create the componentManifest
+
+  // then createRoute based upon the component manifest
+  // virtual modules needed
+
+  // - virtual:routes-manifest
+  // - virtual:root-data (for the header)
+
   LOG_CLI.info(`Detected routeStrategy: ${config.docs.routeStrategy}`);
 
   const routeStrategy = config.docs.routeStrategy ?? "section-folders";
-  const routePrefix = "_docs.";
+
   switch (routeStrategy) {
     case "flat":
-      return readDirContents(docsDirContents, { routePrefix });
+      return readDirContents(docDirents, { routePrefix, dirs });
 
     case "section-folders": {
-      const files = docsDirContents.reduce<ReturnType<typeof readDirContents>>(
+      const files = docDirents.reduce<ReturnType<typeof readDirContents>>(
         (accum, dirent) => {
-          if (
-            dirent.isFile() &&
-            (dirent.name === "_index.md" || dirent.name === "_index.mdx")
-          ) {
-            return accum.concat(readDirContents([dirent], { routePrefix }));
+          const isIndexFile = dirent.isFile() && dirent.name.includes("_index");
+
+          if (isIndexFile) {
+            return accum.concat(
+              readDirContents([dirent], { routePrefix, dirs })
+            );
           }
 
-          LOG_CLI.debug(
-            `Reading "${dirent.name}". Skipping "/public" & "/dist"`
-          );
-          if (
-            dirent.isDirectory() &&
-            dirent.name !== "public" &&
-            dirent.name !== "dist"
-          ) {
+          const denylist =
+            dirent.name.startsWith("_") || dirent.name === "dist";
+          const isPageDir = dirent.isDirectory() && !denylist;
+
+          LOG_CLI.debug(`Reading "${dirent.name}"...`);
+          if (isPageDir) {
             const sectionDir = path.resolve(dirent.parentPath, dirent.name);
             const sectionDirContents = readdirSync(sectionDir, {
               recursive: true,
               withFileTypes: true
             });
+
             return accum.concat(
               readDirContents(sectionDirContents, {
                 routePrefix,
+                dirs,
                 staticBaseName:
                   dirent.name !== "_index" ? dirent.name : undefined
               })
@@ -124,6 +150,7 @@ export async function getButteryDocsFiles(
         },
         []
       );
+      console.log(files);
       return files;
     }
 
