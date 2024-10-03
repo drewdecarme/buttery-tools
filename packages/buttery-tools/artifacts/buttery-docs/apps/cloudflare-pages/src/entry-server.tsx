@@ -1,17 +1,23 @@
-import { renderToReadableStream } from "react-dom/server.browser";
+import { StrictMode } from "react";
+import {
+  type RenderToPipeableStreamOptions,
+  renderToPipeableStream,
+} from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
-import App from "./App";
+import App from "./AppRoutes";
 
-export async function render(url: string) {
+export async function render(
+  url: string,
+  _ssrManifest?: string,
+  options?: RenderToPipeableStreamOptions
+) {
   // Render the app to a ReadableStream using React's server renderer
-  const stream = await renderToReadableStream(
-    <StaticRouter location={url}>
-      <App />
-    </StaticRouter>
+  return renderToPipeableStream(
+    <StrictMode>
+      <StaticRouter location={url}>
+        <App />
+      </StaticRouter>
+    </StrictMode>,
+    options
   );
-
-  // Wait until the stream is ready before returning it
-  await stream.allReady;
-
-  return stream;
 }

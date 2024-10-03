@@ -1,12 +1,13 @@
+import { StrictMode } from "react";
 import ReactDOMClient from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import App from "./App";
-import "@buttery/tokens/docs/css";
+import App from "./AppRoutes";
 
 ReactDOMClient.hydrateRoot(
-  // biome-ignore lint/style/noNonNullAssertion: <explanation>
-  document.getElementById("root")!,
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  document.getElementById("root") as HTMLElement,
+  <StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>
 );

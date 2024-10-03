@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { Transform } from "node:stream";
 import mdx from "@mdx-js/rollup";
 import react from "@vitejs/plugin-react-swc";
 import wyw from "@wyw-in-js/vite";
@@ -58,6 +59,7 @@ export const action: CommandAction<typeof options> = async () => {
 
   // create an express app
   const app = express();
+  const ABORT_DELAY = 10_000;
 
   // create the vite middleware
   const vite = await createServer({
@@ -106,12 +108,47 @@ export const action: CommandAction<typeof options> = async () => {
 
       const templateFs = await readFile(indexHtmlPath, "utf8");
       const template = await vite.transformIndexHtml(url, templateFs);
-      const ssrModule = await vite.ssrLoadModule(serverEntryPath);
-      const appHtml = await ssrModule.render(url);
+      const ssrEntryModule = await vite.ssrLoadModule(serverEntryPath);
 
-      const html = template.replace("<!--ssr-outlet-->", appHtml);
+      const ssrManifest = undefined;
+      let didError = false;
 
-      res.status(200).set({ "Content-Type": "text/html" }).send(html);
+      const { pipe, abort } = await ssrEntryModule.render(url, ssrManifest, {
+        onShellError() {
+          res.status(500);
+          res.set({ "Content-Type": "text/html" });
+          res.send("<h1>Something went wrong</h1>");
+        },
+        onShellReady() {
+          res.status(didError ? 500 : 200);
+          res.set({ "Content-Type": "text/html" });
+
+          const transformStream = new Transform({
+            transform(chunk, encoding, callback) {
+              res.write(chunk, encoding);
+              callback();
+            }
+          });
+
+          const [htmlStart, htmlEnd] = template.split("<!--ssr-outlet-->");
+
+          res.write(htmlStart);
+
+          transformStream.on("finish", () => {
+            res.end(htmlEnd);
+          });
+
+          pipe(transformStream);
+        },
+        onError(error: Error) {
+          didError = true;
+          console.error(error);
+        }
+      });
+
+      setTimeout(() => {
+        abort();
+      }, ABORT_DELAY); // 10 seconds
     } catch (e) {
       const error = e as Error;
       // Handle errors with Vite's SSR stack trace
