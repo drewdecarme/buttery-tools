@@ -2,47 +2,17 @@ export type CompileArgs = {
   docsDir: string;
 };
 
-export type ButteryDocsRoute = {
-  fsPath: string;
-  fsPathRelToDocs: string;
-  filename: string;
-  routeFileName: string;
-  routePath: string;
-};
-
-export type ButteryDocsGraphTOC = {
-  level: number;
-  title: string;
-  link: string;
-  children: ButteryDocsGraphTOC[];
-};
-
-export type ButteryDocsGraphFrontmatter = {
-  title?: string;
-  meta: ({ title: string } | { name: string; content: string })[];
-};
-
-export type ButteryDocsGraphValue = {
-  // content: string;
-  routeAbs: string;
-  routeRel: string;
-  routeTitle: ButteryDocsGraphFrontmatter["title"];
-  routeMeta: ButteryDocsGraphFrontmatter["meta"];
-  filepath: string;
-  filename: string;
-  fileExtension: string;
-  toc: ButteryDocsGraphTOC[];
-  pages: ButteryDocsGraph;
-};
-export type ButteryDocsGraph = {
-  [key: string]: ButteryDocsGraphValue;
-};
-
 export type ButteryDocsRouteManifestEntry = {
   routePath: string;
+  fileName: string;
   aliasPath: string;
   root: boolean;
 };
 export type ButteryDocsRouteManifest = {
   [routeId: string]: ButteryDocsRouteManifestEntry;
+};
+export type ButteryDocsRouteManifestGraphObject = {
+  [key: string]: ButteryDocsRouteManifestEntry & {
+    pages: ButteryDocsRouteManifestGraphObject;
+  };
 };

@@ -17,12 +17,6 @@
     "moduleResolution": "Bundler",
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["@cloudflare/workers-types"],
-    "baseUrl": ".",
-    "paths": {
-      "__ROUTE_MANIFEST__": [
-        "../../../../.buttery/.store/docs/route-manifest.ts"
-      ]
-    }
+    "types": ["@cloudflare/workers-types"]
   }
 }

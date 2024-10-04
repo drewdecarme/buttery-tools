@@ -123,6 +123,7 @@
     "@remix-run/react": "2.12.1",
     "@rollup/plugin-alias": "^5.1.1",
     "@shikijs/rehype": "1.21.0",
+    "@stefanprobst/rehype-extract-toc": "^2.2.0",
     "@svgr/cli": "8.1.0",
     "@svgr/core": "8.1.0",
     "@svgr/rollup": "8.1.0",

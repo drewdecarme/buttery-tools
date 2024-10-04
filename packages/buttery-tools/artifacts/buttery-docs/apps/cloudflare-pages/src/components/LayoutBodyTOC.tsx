@@ -7,16 +7,10 @@ import {
   makeRem,
   makeReset,
 } from "@buttery/tokens/docs";
-import type {
-  ButteryDocsGraph,
-  ButteryDocsGraphTOC,
-} from "@buttery/tools/docs";
 import { css } from "@linaria/core";
-import { type FC, type MouseEventHandler, useCallback } from "react";
-import { useLocation } from "react-router-dom";
+import type { Toc as TableOfContents } from "@stefanprobst/rehype-extract-toc";
+import { type FC, type MouseEventHandler, useCallback, useMemo } from "react";
 import { LayoutTextOverline } from "./LayoutTextOverline";
-import { useDetermineActiveSection } from "./layout.useDetermineActiveSection";
-import { getGraphValueThatMatchesPathname } from "./util.getGraphValueThatMatchesURLPathname";
 
 const layoutBodyStyles = css`
   grid-area: layout-toc;
@@ -80,7 +74,7 @@ const overlineStyles = css`
 export function ContentsNode({
   tableOfContents,
 }: {
-  tableOfContents: ButteryDocsGraphTOC[];
+  tableOfContents: TableOfContents;
 }) {
   const handleClick = useCallback<MouseEventHandler<HTMLAnchorElement>>((e) => {
     e.preventDefault();
@@ -101,12 +95,12 @@ export function ContentsNode({
   }, []);
 
   return tableOfContents.map((toc, i) => (
-    <li key={toc.link}>
-      <a href={toc.link} onClick={handleClick} className="contents-link">
-        {toc.title}
+    <li key={toc.id}>
+      <a href={`#${toc.id}`} onClick={handleClick} className="contents-link">
+        {toc.value}
       </a>
-      {toc.children.length > 0 && (
-        <ul key={`group-${toc.level}-${i}`}>
+      {toc.children?.length > 0 && (
+        <ul key={`group-${toc.depth}-${i}`}>
           <ContentsNode tableOfContents={toc.children} />
         </ul>
       )}
@@ -115,21 +109,23 @@ export function ContentsNode({
 }
 
 export type LayoutBodyTOCProps = {
-  graph: ButteryDocsGraph | null;
+  tableOfContents: TableOfContents | null;
 };
-export const LayoutBodyTOC: FC<LayoutBodyTOCProps> = ({ graph }) => {
-  const { pathname } = useLocation();
-  const currentGraph = getGraphValueThatMatchesPathname(pathname, graph ?? {});
-  useDetermineActiveSection(pathname);
 
+export const LayoutBodyTOC: FC<LayoutBodyTOCProps> = ({ tableOfContents }) => {
   return (
     <article className={layoutBodyStyles}>
       <div>
-        <LayoutTextOverline className={overlineStyles}>
-          on this page
-        </LayoutTextOverline>
+        {useMemo(
+          () => (
+            <LayoutTextOverline className={overlineStyles}>
+              on this page
+            </LayoutTextOverline>
+          ),
+          []
+        )}
         <ul className={ulStyles}>
-          <ContentsNode tableOfContents={currentGraph.toc} />
+          <ContentsNode tableOfContents={tableOfContents} />
         </ul>
       </div>
     </article>

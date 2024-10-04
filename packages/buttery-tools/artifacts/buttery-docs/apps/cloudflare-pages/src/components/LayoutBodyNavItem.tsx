@@ -5,7 +5,7 @@ import {
   makeFontWeight,
   makeRem,
 } from "@buttery/tokens/docs";
-import type { ButteryDocsGraph } from "@buttery/tools/docs";
+import type { ButteryDocsRouteManifestGraphObject } from "@buttery/tools/docs";
 import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router-dom";
@@ -75,7 +75,7 @@ const anchorCss = css`
  * nested pages.
  */
 export type NavItemProps = {
-  graph: ButteryDocsGraph;
+  graph: ButteryDocsRouteManifestGraphObject;
   isNested?: boolean;
 };
 export const LayoutBodyNavItem: FC<NavItemProps> = ({
@@ -87,8 +87,8 @@ export const LayoutBodyNavItem: FC<NavItemProps> = ({
       {Object.entries(graph).map(([graphKey, graphValue]) => {
         return (
           <li key={graphKey}>
-            <NavLink to={graphValue.routeAbs} className={anchorCss} end>
-              {graphValue.routeTitle}
+            <NavLink to={graphValue.routePath} className={anchorCss} end>
+              {graphValue.fileName}
             </NavLink>
             {Object.entries(graphValue.pages).length > 0 ? (
               <LayoutBodyNavItem graph={graphValue.pages} isNested />

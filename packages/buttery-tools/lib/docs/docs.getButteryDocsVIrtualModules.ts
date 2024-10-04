@@ -38,7 +38,8 @@ export function getButteryDocsVirtualModules(
   }
   LOG_CLI.debug("Validating index file exists... done.");
 
-  const routes = `export const routeIndex = {
+  const routes = `import { getButteryDocsRouteGraph } from "@buttery/tools/docs";
+export const routeIndex = {
   routePath: "/",
   aliasPath: "${routeIndex.aliasPath}",
   root: "${routeIndex.root}",
@@ -52,7 +53,8 @@ export const routeDocs = [${Object.values(routeDocs).map(
   importComponent: async () => await import("@docs${routeEntry.aliasPath}")
 \}`
   )}];
-`;
+export const routeGraph = getButteryDocsRouteGraph(${JSON.stringify(routeManifest, null, 2)});
+  `;
 
   const data = `export const header = ${JSON.stringify(config.docs.header)}`;
 

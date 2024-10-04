@@ -1,3 +1,4 @@
+import { routeGraph } from "virtual:routes";
 import {
   makeColorBrand,
   makeColorShade,
@@ -6,9 +7,12 @@ import {
   makeRem,
   makeReset,
 } from "@buttery/tokens/docs";
-import type { ButteryDocsGraph } from "@buttery/tools/docs";
+import type {
+  ButteryDocsRouteManifestGraph,
+  ButteryDocsRouteManifestGraphObject,
+} from "@buttery/tools/docs";
 import { css } from "@linaria/core";
-import type { FC } from "react";
+import { type FC, useMemo } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { LayoutBodyNavItem } from "./LayoutBodyNavItem";
 import { LayoutTextOverline } from "./LayoutTextOverline";
@@ -55,10 +59,15 @@ const anchorOverlineCSS = css`
   }
 `;
 
-export type LayoutBodyNavProps = { graph: ButteryDocsGraph | null };
-
-export const LayoutBodyNav: FC<LayoutBodyNavProps> = ({ graph }) => {
+export const LayoutBodyNav: FC = () => {
   const { pathname } = useLocation();
+  const graph = useMemo<ButteryDocsRouteManifestGraphObject>(
+    () =>
+      (
+        routeGraph as ButteryDocsRouteManifestGraph
+      ).getRouteGraphNodeByRoutePath(pathname[0]),
+    [pathname]
+  );
 
   return (
     <nav className={navStyles}>
@@ -76,11 +85,11 @@ export const LayoutBodyNav: FC<LayoutBodyNavProps> = ({ graph }) => {
               return (
                 <section key={sectionKey} className={sectionStyles}>
                   <NavLink
-                    to={sectionValues.routeAbs}
+                    to={sectionValues.routePath}
                     className={anchorOverlineCSS}
                   >
                     <LayoutTextOverline>
-                      {sectionValues.routeTitle}
+                      {sectionValues.fileName}
                     </LayoutTextOverline>
                   </NavLink>
                   <LayoutBodyNavItem graph={sectionValues.pages} />

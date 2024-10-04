@@ -2,10 +2,15 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { Transform } from "node:stream";
 import mdx from "@mdx-js/rollup";
+import rehypeShiki from "@shikijs/rehype";
+import rehypeTOC from "@stefanprobst/rehype-extract-toc";
+import rehypeTOCExport from "@stefanprobst/rehype-extract-toc/mdx";
 import react from "@vitejs/plugin-react-swc";
 import wyw from "@wyw-in-js/vite";
 import express from "express";
 import { getButteryDocsVirtualModules } from "lib/docs/docs.getButteryDocsVIrtualModules";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { createServer } from "vite";
@@ -17,6 +22,7 @@ import type {
 } from "../../../lib/commands/butter-commands.types";
 import { getButteryDocsConfig } from "../../../lib/docs/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../../../lib/docs/docs.getButteryDocsDirectories";
+import { getButteryDocsRouteGraph } from "../../../lib/docs/docs.getButteryDocsRouteGraph";
 import { getButteryDocsRouteManifest } from "../../../lib/docs/docs.getButteryDocsRouteManifest";
 import { LOG_CLI } from "../../../lib/logger/loggers";
 
@@ -45,7 +51,10 @@ export const action: CommandAction<typeof options> = async () => {
   const config = await getButteryDocsConfig();
   const dirs = await getButteryDocsDirectories(config);
   const routeManifest = getButteryDocsRouteManifest(dirs);
+  const routeGraph = getButteryDocsRouteGraph(routeManifest);
   const virtualModules = getButteryDocsVirtualModules(config, routeManifest);
+
+  console.log(routeGraph.getRouteGraphNodeByRoutePath("/commands"));
 
   const cacheDir = path.resolve(config.paths.storeDir, "./docs/.vite-cache");
   const serverEntryPath = path.resolve(
@@ -86,7 +95,27 @@ export const action: CommandAction<typeof options> = async () => {
     },
     plugins: [
       mdx({
-        remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter]
+        remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+        rehypePlugins: [
+          rehypeSlug,
+          rehypeTOC,
+          rehypeTOCExport,
+          [
+            rehypeAutolinkHeadings,
+            {
+              behavior: "wrap",
+              headingProperties: {
+                className: "heading"
+              }
+            }
+          ],
+          [
+            rehypeShiki,
+            {
+              theme: "dark-plus"
+            }
+          ]
+        ]
       }),
       react(),
       virtual({
@@ -163,7 +192,7 @@ export const action: CommandAction<typeof options> = async () => {
     }
   });
 
-  app.listen(3000, () => {
-    LOG_CLI.watch("Local SSR server running at http://localhost:3000");
+  app.listen(4000, () => {
+    LOG_CLI.watch("Local SSR server running at http://localhost:4000");
   });
 };

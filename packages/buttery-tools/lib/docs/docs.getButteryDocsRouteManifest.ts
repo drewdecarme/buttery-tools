@@ -1,5 +1,6 @@
 import { type Dirent, readdirSync } from "node:fs";
 import path from "node:path";
+import { printAsBullets } from "@buttery/logger";
 import { LOG_CLI } from "lib/logger/loggers";
 import type { ButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
 import type { ButteryDocsRouteManifest } from "./docs.types";
@@ -24,7 +25,9 @@ function getRouteSegmentsFromRouteId(routeId: string) {
   const routeSegments = routeFilepath
     .split("/")
     [routeFilepath.split("/").length - 1].split(".");
-  console.log({ routeFilepath, routeSegments });
+  LOG_CLI.debug(
+    `Getting route segments from route filepath: ${routeFilepath}${printAsBullets(routeSegments)}`
+  );
   return routeSegments;
 }
 
@@ -34,7 +37,7 @@ function getRoutePathFromRouteId(routeId: string): string {
   const segments = pageSegments
     .concat(routeSegments)
     .filter((segment) => segment !== "_index");
-  return segments.join("/");
+  return `/${segments.join("/")}`;
 }
 
 /**
@@ -66,7 +69,7 @@ export function getButteryDocsRouteManifest(
       // complex and I felt it better to adapt a recursive function than a simple reduction
       if (dirent.isDirectory() && shouldReadDirectory(dirent)) {
         LOG_CLI.debug(
-          `Detected page "${dirent.name}". Parsing page directory...`
+          `Detected page "${dirent.name}". Reading page directory...`
         );
         createRoutes(direntFullPath);
       }
@@ -75,13 +78,16 @@ export function getButteryDocsRouteManifest(
       // and create a manifest entry
       if (dirent.isFile()) {
         const routeId = direntFullPath.split(dirs.srcDocs.root)[1];
-        LOG_CLI.debug(`Parsing file route: ${routeId}`);
+        LOG_CLI.debug(`Creating manifest for route: ${routeId}`);
         const aliasPath = routeId;
         const routePath = getRoutePathFromRouteId(routeId);
+        const routeSegments = routePath.split("/");
+        const fileName = routeSegments[routeSegments.length - 1];
         const isRoot = routeId.startsWith("/_index");
 
         routeManifest[routeId] = {
           aliasPath,
+          fileName,
           routePath,
           root: isRoot
         };
