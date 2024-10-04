@@ -4,7 +4,7 @@ import {
   renderToPipeableStream,
 } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
-import App from "./AppRoutes";
+import AppRoutes from "./App";
 
 export async function render(
   url: string,
@@ -15,7 +15,7 @@ export async function render(
   return renderToPipeableStream(
     <StrictMode>
       <StaticRouter location={url}>
-        <App />
+        <AppRoutes />
       </StaticRouter>
     </StrictMode>,
     options

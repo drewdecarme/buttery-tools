@@ -21,7 +21,10 @@ function getPageSegmentsFromRouteId(routeId: string) {
 function getRouteSegmentsFromRouteId(routeId: string) {
   const routeExtension = path.extname(routeId);
   const routeFilepath = routeId.split(routeExtension)[0];
-  const routeSegments = path.parse(routeFilepath).name.split(".");
+  const routeSegments = routeFilepath
+    .split("/")
+    [routeFilepath.split("/").length - 1].split(".");
+  console.log({ routeFilepath, routeSegments });
   return routeSegments;
 }
 
@@ -31,7 +34,7 @@ function getRoutePathFromRouteId(routeId: string): string {
   const segments = pageSegments
     .concat(routeSegments)
     .filter((segment) => segment !== "_index");
-  return `/${segments.join("/")}`;
+  return segments.join("/");
 }
 
 /**

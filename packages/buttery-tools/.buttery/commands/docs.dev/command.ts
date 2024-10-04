@@ -73,11 +73,16 @@ export const action: CommandAction<typeof options> = async () => {
         port: 3005
       }
     },
+    clearScreen: false,
     resolve: {
+      preserveSymlinks: true,
       extensions: [".js", ".jsx", ".ts", ".tsx", ".mdx"],
       alias: {
         "@docs": dirs.srcDocs.root
       }
+    },
+    optimizeDeps: {
+      include: ["@buttery/components"]
     },
     plugins: [
       mdx({
@@ -106,9 +111,9 @@ export const action: CommandAction<typeof options> = async () => {
     try {
       const url = req.originalUrl;
 
+      const ssrEntryModule = await vite.ssrLoadModule(serverEntryPath);
       const templateFs = await readFile(indexHtmlPath, "utf8");
       const template = await vite.transformIndexHtml(url, templateFs);
-      const ssrEntryModule = await vite.ssrLoadModule(serverEntryPath);
 
       const ssrManifest = undefined;
       let didError = false;
@@ -123,16 +128,16 @@ export const action: CommandAction<typeof options> = async () => {
           res.status(didError ? 500 : 200);
           res.set({ "Content-Type": "text/html" });
 
+          const [htmlStart, htmlEnd] = template.split("<!--ssr-outlet-->");
+
+          res.write(htmlStart);
+
           const transformStream = new Transform({
             transform(chunk, encoding, callback) {
               res.write(chunk, encoding);
               callback();
             }
           });
-
-          const [htmlStart, htmlEnd] = template.split("<!--ssr-outlet-->");
-
-          res.write(htmlStart);
 
           transformStream.on("finish", () => {
             res.end(htmlEnd);

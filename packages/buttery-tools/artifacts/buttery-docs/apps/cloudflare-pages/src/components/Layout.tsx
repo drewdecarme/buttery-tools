@@ -35,16 +35,16 @@ export const bodyStyles = css`
   background: ${makeColorShade("neutral", { variant: "50", opacity: 0.12 })};
 `;
 
-export type LayoutPropsNative = JSX.IntrinsicElements["body"];
+export type LayoutPropsNative = JSX.IntrinsicElements["div"];
 export type LayoutProps = LayoutPropsNative;
 
-export const Layout = forwardRef<HTMLBodyElement, LayoutProps>(function Layout(
+export const Layout = forwardRef<HTMLDivElement, LayoutProps>(function Layout(
   { children, className, ...restProps },
   ref
 ) {
   return (
-    <body {...restProps} className={classes(bodyStyles, className)} ref={ref}>
+    <div {...restProps} className={classes(bodyStyles, className)} ref={ref}>
       {children}
-    </body>
+    </div>
   );
 });

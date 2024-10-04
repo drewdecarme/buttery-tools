@@ -6,5 +6,5 @@
     "declarationMap": true,
     "emitDeclarationOnly": true
   },
-  "include": ["lib/index.public.ts", "lib/global.d.ts"]
+  "include": ["lib/index.ts", "lib/global.d.ts"]
 }

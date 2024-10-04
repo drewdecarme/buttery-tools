@@ -19,11 +19,6 @@
       "import": "./dist/config/index.public.js",
       "require": "./dist/config/index.public.js"
     },
-    "./components": {
-      "types": "./dist/components/index.public.d.ts",
-      "import": "./dist/components/index.public.js",
-      "require": "./dist/components/index.public.js"
-    },
     "./commands": {
       "types": "./dist/commands/index.public.d.ts",
       "import": "./dist/commands/index.public.js",

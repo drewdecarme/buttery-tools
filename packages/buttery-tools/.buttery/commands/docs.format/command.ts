@@ -6,7 +6,7 @@ import type {
 } from "../../../lib/commands/butter-commands.types";
 import { LOG_CLI } from "../../../lib/logger/loggers";
 import { exhaustiveMatchGuard } from "../../../lib/utils/ts/util.ts.exhaustive-match-guard";
-import { formatRouteOrder } from "./docs.format.formatRouteOrder";
+// import { formatRouteOrder } from "./docs.format.formatRouteOrder";
 
 export const meta: CommandMeta = {
   name: "format",
@@ -31,7 +31,8 @@ export const action: CommandAction = async () => {
 
   switch (decision) {
     case "navigation":
-      return await formatRouteOrder();
+      console.log("hello!");
+      return;
 
     default:
       return exhaustiveMatchGuard(decision);

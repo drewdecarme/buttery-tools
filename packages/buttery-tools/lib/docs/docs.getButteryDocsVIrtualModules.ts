@@ -49,7 +49,7 @@ export const routeDocs = [${Object.values(routeDocs).map(
   routePath: "${routeEntry.routePath}",
   aliasPath: "${routeEntry.aliasPath}",
   root: "${routeEntry.root}",
-  importComponent: async () => await import("@docs${routeIndex.aliasPath}")
+  importComponent: async () => await import("@docs${routeEntry.aliasPath}")
 \}`
   )}];
 `;
