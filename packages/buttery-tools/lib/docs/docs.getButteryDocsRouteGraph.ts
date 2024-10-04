@@ -30,12 +30,12 @@ export function getButteryDocsRouteGraph(
     const manifestEntrySegments = manifestEntry.routePath
       .split("/")
       .filter(Boolean);
-    console.log({ manifestEntrySegments });
 
     let currentGraphObj = graphObj;
 
-    for (const segment of manifestEntrySegments) {
-      const index = manifestEntrySegments.findIndex((val) => val === segment);
+    for (const segmentIndex in manifestEntrySegments) {
+      const i = Number(segmentIndex);
+      const segment = manifestEntrySegments[segmentIndex];
       if (!currentGraphObj[segment]) {
         LOG_CLI.debug(
           `Segment "${segment}" doesn't exist. Creating nested graph.`
@@ -48,14 +48,16 @@ export function getButteryDocsRouteGraph(
           routePath: "",
           pages: {}
         };
-        // this ensures the contents of the segment are put
-        // in the correct place and not in the parent. There
-        if (index === manifestEntrySegments.length - 1) {
-          currentGraphObj[segment] = {
-            ...manifestEntry,
-            pages: {}
-          };
-        }
+      }
+
+      // this ensures the contents of the segment are put
+      // in the correct place and not in the parent. There
+      if (i === manifestEntrySegments.length - 1) {
+        console.log(currentGraphObj[segment]);
+        currentGraphObj[segment] = {
+          ...manifestEntry,
+          pages: currentGraphObj[segment].pages
+        };
       } else {
         currentGraphObj = currentGraphObj[segment].pages;
       }
@@ -113,6 +115,8 @@ export class ButteryDocsRouteManifestGraphUtils {
       },
       this.routeManifestGraph
     );
+
+    console.log(routeGraphNode);
 
     if (Object.values(routeGraphNode).length === 0) {
       throw LOG_CLI.fatal(

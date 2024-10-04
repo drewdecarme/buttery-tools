@@ -94,18 +94,21 @@ export function ContentsNode({
     });
   }, []);
 
-  return tableOfContents.map((toc, i) => (
-    <li key={toc.id}>
-      <a href={`#${toc.id}`} onClick={handleClick} className="contents-link">
-        {toc.value}
-      </a>
-      {toc.children?.length > 0 && (
-        <ul key={`group-${toc.depth}-${i}`}>
-          <ContentsNode tableOfContents={toc.children} />
-        </ul>
-      )}
-    </li>
-  ));
+  return tableOfContents.map((toc, i) => {
+    if (toc.depth > 3) return null;
+    return (
+      <li key={toc.id}>
+        <a href={`#${toc.id}`} onClick={handleClick} className="contents-link">
+          {toc.value}
+        </a>
+        {toc.children?.length > 0 && (
+          <ul key={`group-${toc.depth}-${i}`}>
+            <ContentsNode tableOfContents={toc.children} />
+          </ul>
+        )}
+      </li>
+    );
+  });
 }
 
 export type LayoutBodyTOCProps = {
@@ -113,7 +116,6 @@ export type LayoutBodyTOCProps = {
 };
 
 export const LayoutBodyTOC: FC<LayoutBodyTOCProps> = ({ tableOfContents }) => {
-  console.log({ tableOfContents });
   return (
     <article className={layoutBodyStyles}>
       <div>

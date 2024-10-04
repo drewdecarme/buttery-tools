@@ -58,29 +58,22 @@ const anchorOverlineCSS = css`
 
 export const LayoutBodyNav: FC = () => {
   const { pathname } = useLocation();
-  const graph = useMemo(
-    () =>
-      (
-        RouteGraph as ButteryDocsRouteManifestGraphUtils
-      ).getRouteGraphNodeByRoutePath(pathname[0]),
-    [pathname]
-  );
+  const graph = useMemo(() => {
+    const pageRoute = pathname.split("/").filter(Boolean)[0];
+    const graph = (
+      RouteGraph as ButteryDocsRouteManifestGraphUtils
+    ).getRouteGraphNodeByRoutePath(pageRoute);
+    return graph;
+  }, [pathname]);
 
-  console.log(JSON.stringify(graph["react-components"], null, 2));
+  console.log(graph);
 
   return (
     <nav className={navStyles}>
       <div className={navContentStyles}>
-        {Object.entries(graph ?? {}).map(([pageKey, pageValues]) => {
-          if (
-            pageKey === "_index" ||
-            !pathname.startsWith("/".concat(pageKey))
-          ) {
-            return null;
-          }
-          return Object.entries(pageValues.pages).map(
+        {Object.values(graph).map((graphValue) => {
+          return Object.entries(graphValue.pages).map(
             ([sectionKey, sectionValues]) => {
-              if (sectionKey === "_index") return null;
               return (
                 <section key={sectionKey} className={sectionStyles}>
                   <NavLink
