@@ -83,11 +83,13 @@ export function getButteryDocsRouteManifest(
         const routePath = getRoutePathFromRouteId(routeId);
         const routeSegments = routePath.split("/");
         const fileName = routeSegments[routeSegments.length - 1];
+        const fileNameFormatted = fileName.replace("-", " ");
         const isRoot = routeId.startsWith("/_index");
 
         routeManifest[routeId] = {
           aliasPath,
           fileName,
+          fileNameFormatted,
           routePath,
           root: isRoot
         };

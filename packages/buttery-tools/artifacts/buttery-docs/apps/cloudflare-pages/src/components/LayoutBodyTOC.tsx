@@ -113,6 +113,7 @@ export type LayoutBodyTOCProps = {
 };
 
 export const LayoutBodyTOC: FC<LayoutBodyTOCProps> = ({ tableOfContents }) => {
+  console.log({ tableOfContents });
   return (
     <article className={layoutBodyStyles}>
       <div>
@@ -125,7 +126,7 @@ export const LayoutBodyTOC: FC<LayoutBodyTOCProps> = ({ tableOfContents }) => {
           []
         )}
         <ul className={ulStyles}>
-          <ContentsNode tableOfContents={tableOfContents} />
+          <ContentsNode tableOfContents={tableOfContents[0].children ?? []} />
         </ul>
       </div>
     </article>

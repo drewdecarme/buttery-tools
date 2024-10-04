@@ -5,6 +5,7 @@ export type CompileArgs = {
 export type ButteryDocsRouteManifestEntry = {
   routePath: string;
   fileName: string;
+  fileNameFormatted: string;
   aliasPath: string;
   root: boolean;
 };

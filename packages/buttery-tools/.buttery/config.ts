@@ -28,7 +28,7 @@ const config: ButteryConfig = {
                 text: "Buttery Components",
                 subText:
                   "Headless, accessible & style method agnostic React components that you can import, re-export and/or copy & paste",
-                href: "/components",
+                href: "/react-components",
                 iconAlt: "components-logo",
                 iconSrc: "/images/buttery-logo-components.png"
               },

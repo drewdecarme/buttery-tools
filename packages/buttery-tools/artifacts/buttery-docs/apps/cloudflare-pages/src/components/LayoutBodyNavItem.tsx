@@ -88,7 +88,7 @@ export const LayoutBodyNavItem: FC<NavItemProps> = ({
         return (
           <li key={graphKey}>
             <NavLink to={graphValue.routePath} className={anchorCss} end>
-              {graphValue.fileName}
+              {graphValue.fileNameFormatted}
             </NavLink>
             {Object.entries(graphValue.pages).length > 0 ? (
               <LayoutBodyNavItem graph={graphValue.pages} isNested />

@@ -89,7 +89,7 @@ export const LayoutBodyNav: FC = () => {
                     className={anchorOverlineCSS}
                   >
                     <LayoutTextOverline>
-                      {sectionValues.fileName}
+                      {sectionValues.fileNameFormatted}
                     </LayoutTextOverline>
                   </NavLink>
                   <LayoutBodyNavItem graph={sectionValues.pages} />
