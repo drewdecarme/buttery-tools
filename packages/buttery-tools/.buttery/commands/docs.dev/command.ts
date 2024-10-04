@@ -51,10 +51,7 @@ export const action: CommandAction<typeof options> = async () => {
   const config = await getButteryDocsConfig();
   const dirs = await getButteryDocsDirectories(config);
   const routeManifest = getButteryDocsRouteManifest(dirs);
-  const routeGraph = getButteryDocsRouteGraph(routeManifest);
   const virtualModules = getButteryDocsVirtualModules(config, routeManifest);
-
-  console.log(routeGraph.getRouteGraphNodeByRoutePath("/commands"));
 
   const cacheDir = path.resolve(config.paths.storeDir, "./docs/.vite-cache");
   const serverEntryPath = path.resolve(

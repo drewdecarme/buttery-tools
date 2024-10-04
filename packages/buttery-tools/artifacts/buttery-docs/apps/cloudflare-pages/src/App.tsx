@@ -31,18 +31,14 @@ function createRoute(
       };
     }
     return {
-      default: () => {
-        const { pathname } = useLocation();
-        console.log(pathname);
-        return (
-          <>
-            <LayoutBodyMain>
-              <DocumentComponent />
-            </LayoutBodyMain>
-            <LayoutBodyTOC tableOfContents={tableOfContents} />
-          </>
-        );
-      },
+      default: () => (
+        <>
+          <LayoutBodyMain>
+            <DocumentComponent />
+          </LayoutBodyMain>
+          <LayoutBodyTOC tableOfContents={tableOfContents} />
+        </>
+      ),
     };
   });
 

@@ -1,4 +1,4 @@
-import { routeGraph } from "virtual:routes";
+import { RouteGraph } from "virtual:routes";
 import {
   makeColorBrand,
   makeColorShade,
@@ -7,10 +7,7 @@ import {
   makeRem,
   makeReset,
 } from "@buttery/tokens/docs";
-import type {
-  ButteryDocsRouteManifestGraph,
-  ButteryDocsRouteManifestGraphObject,
-} from "@buttery/tools/docs";
+import type { ButteryDocsRouteManifestGraphUtils } from "@buttery/tools/docs";
 import { css } from "@linaria/core";
 import { type FC, useMemo } from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -61,13 +58,15 @@ const anchorOverlineCSS = css`
 
 export const LayoutBodyNav: FC = () => {
   const { pathname } = useLocation();
-  const graph = useMemo<ButteryDocsRouteManifestGraphObject>(
+  const graph = useMemo(
     () =>
       (
-        routeGraph as ButteryDocsRouteManifestGraph
+        RouteGraph as ButteryDocsRouteManifestGraphUtils
       ).getRouteGraphNodeByRoutePath(pathname[0]),
     [pathname]
   );
+
+  console.log(JSON.stringify(graph["react-components"], null, 2));
 
   return (
     <nav className={navStyles}>

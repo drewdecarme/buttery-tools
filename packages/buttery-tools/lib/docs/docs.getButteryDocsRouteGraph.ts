@@ -35,14 +35,27 @@ export function getButteryDocsRouteGraph(
     let currentGraphObj = graphObj;
 
     for (const segment of manifestEntrySegments) {
+      const index = manifestEntrySegments.findIndex((val) => val === segment);
       if (!currentGraphObj[segment]) {
         LOG_CLI.debug(
           `Segment "${segment}" doesn't exist. Creating nested graph.`
         );
         currentGraphObj[segment] = {
-          ...manifestEntry,
+          aliasPath: "",
+          fileName: "",
+          fileNameFormatted: "",
+          root: false,
+          routePath: "",
           pages: {}
         };
+        // this ensures the contents of the segment are put
+        // in the correct place and not in the parent. There
+        if (index === manifestEntrySegments.length - 1) {
+          currentGraphObj[segment] = {
+            ...manifestEntry,
+            pages: {}
+          };
+        }
       } else {
         currentGraphObj = currentGraphObj[segment].pages;
       }
@@ -60,11 +73,30 @@ export function getButteryDocsRouteGraph(
     );
   }
 
-  function getFullRouteGraph() {
-    return graphObj;
+  return graphObj;
+}
+
+/**
+ * A collection of utilities to easily transact on the route manifest
+ * graph to display and work with recursive data.
+ */
+export class ButteryDocsRouteManifestGraphUtils {
+  private routeManifestGraph: ButteryDocsRouteManifestGraphObject;
+
+  constructor(routeManifestGraph: ButteryDocsRouteManifestGraphObject) {
+    this.routeManifestGraph = routeManifestGraph;
   }
 
-  function getRouteGraphNodeByRoutePath(
+  get graph() {
+    return this.routeManifestGraph;
+  }
+
+  /**
+   * Provided a route path (that is a slash delimited route that will)
+   * render on the front-end, this function will return the graph node
+   * that matches that browser route path
+   */
+  getRouteGraphNodeByRoutePath(
     routePath: string
   ): ButteryDocsRouteManifestGraphObject {
     const segments = routePath.split("/").filter(Boolean);
@@ -79,7 +111,7 @@ export function getButteryDocsRouteGraph(
         }
         return accum;
       },
-      graphObj
+      this.routeManifestGraph
     );
 
     if (Object.values(routeGraphNode).length === 0) {
@@ -92,9 +124,4 @@ export function getButteryDocsRouteGraph(
 
     return routeGraphNode;
   }
-
-  return {
-    getFullRouteGraph,
-    getRouteGraphNodeByRoutePath
-  };
 }
