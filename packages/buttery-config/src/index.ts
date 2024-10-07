@@ -10,3 +10,5 @@ export * from "./util.getButteryArtifactsDir";
 export * from "./util.getNodeModulesButteryDir";
 export * from "./util.writeDynamicDirectoryPackageJSON";
 export * from "./util.node.find-directory-upwards";
+
+export * from "./docs.types";

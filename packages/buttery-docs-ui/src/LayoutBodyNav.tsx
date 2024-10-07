@@ -1,4 +1,4 @@
-import { RouteGraph } from "virtual:routes";
+import type { ButteryDocsRouteManifestGraphObject } from "@buttery/config";
 import {
   makeColorBrand,
   makeColorShade,
@@ -7,10 +7,9 @@ import {
   makeRem,
   makeReset,
 } from "@buttery/tokens/docs";
-import type { ButteryDocsRouteManifestGraphUtils } from "@buttery/tools/docs";
 import { css } from "@linaria/core";
-import { type FC, useMemo } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import type { FC } from "react";
+import { NavLink } from "react-router-dom";
 import { LayoutBodyNavItem } from "./LayoutBodyNavItem";
 import { LayoutTextOverline } from "./LayoutTextOverline";
 
@@ -56,16 +55,9 @@ const anchorOverlineCSS = css`
   }
 `;
 
-export const LayoutBodyNav: FC = () => {
-  const { pathname } = useLocation();
-  const graph = useMemo(() => {
-    const pageRoute = pathname.split("/").filter(Boolean)[0];
-    const graph = (
-      RouteGraph as ButteryDocsRouteManifestGraphUtils
-    ).getRouteGraphNodeByRoutePath(pageRoute);
-    return graph;
-  }, [pathname]);
-
+export const LayoutBodyNav: FC<{
+  graph: ButteryDocsRouteManifestGraphObject;
+}> = ({ graph }) => {
   return (
     <nav className={navStyles}>
       <div className={navContentStyles}>

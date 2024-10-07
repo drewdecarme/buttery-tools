@@ -1,7 +1,10 @@
-import { routeDocs, routeIndex } from "virtual:routes";
-import type { ButteryDocsRouteManifestEntry } from "@buttery/tools/docs";
-import { Suspense, lazy } from "react";
-import { Outlet, Route, Routes } from "react-router-dom";
+import { RouteGraph, routeDocs, routeIndex } from "virtual:routes";
+import type {
+  ButteryDocsRouteManifestEntry,
+  ButteryDocsRouteManifestGraphUtils,
+} from "@buttery/tools/docs";
+import { Suspense, lazy, useMemo } from "react";
+import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { LayoutBody } from "./components/LayoutBody";
 import { LayoutBodyMain } from "./components/LayoutBodyMain";
 import { LayoutBodyTOC } from "./components/LayoutBodyTOC";
@@ -62,6 +65,24 @@ function createRoute(
   };
 }
 
+function DocsLayout() {
+  const { pathname } = useLocation();
+  const graph = useMemo(() => {
+    const pageRoute = pathname.split("/").filter(Boolean)[0];
+    const graph = (
+      RouteGraph as ButteryDocsRouteManifestGraphUtils
+    ).getRouteGraphNodeByRoutePath(pageRoute);
+    return graph;
+  }, [pathname]);
+
+  return (
+    <LayoutBody>
+      <LayoutBodyNav graph={graph} />
+      <Outlet />
+    </LayoutBody>
+  );
+}
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -70,14 +91,7 @@ export default function AppRoutes() {
           index
           element={createRoute(routeIndex, { isDocs: false }).element}
         />
-        <Route
-          element={
-            <LayoutBody>
-              <LayoutBodyNav />
-              <Outlet />
-            </LayoutBody>
-          }
-        >
+        <Route element={<DocsLayout />}>
           {routeDocs.map((route) => {
             return (
               <Route

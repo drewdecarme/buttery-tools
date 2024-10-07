@@ -96,14 +96,15 @@ export function ContentsNode({
 
   return tableOfContents.map((toc, i) => {
     if (toc.depth > 3) return null;
+    const tocChildren = toc.children ?? [];
     return (
       <li key={toc.id}>
         <a href={`#${toc.id}`} onClick={handleClick} className="contents-link">
           {toc.value}
         </a>
-        {toc.children?.length > 0 && (
+        {tocChildren.length > 0 && (
           <ul key={`group-${toc.depth}-${i}`}>
-            <ContentsNode tableOfContents={toc.children} />
+            <ContentsNode tableOfContents={tocChildren} />
           </ul>
         )}
       </li>
@@ -128,7 +129,7 @@ export const LayoutBodyTOC: FC<LayoutBodyTOCProps> = ({ tableOfContents }) => {
           []
         )}
         <ul className={ulStyles}>
-          <ContentsNode tableOfContents={tableOfContents[0].children ?? []} />
+          <ContentsNode tableOfContents={tableOfContents?.[0].children ?? []} />
         </ul>
       </div>
     </article>

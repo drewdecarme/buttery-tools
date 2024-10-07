@@ -37,12 +37,14 @@
       "require": "./dist/index.js",
       "node": "./dist/index.js",
       "default": "./dist/index.js"
-    }
+    },
+    "./css": "./dist/styles.css"
   },
   "devDependencies": {
     "@buttery/tsconfig": "workspace:^",
     "@chromatic-com/storybook": "^1.9.0",
     "@linaria/core": "^6.2.0",
+    "@stefanprobst/rehype-extract-toc": "^2.2.0",
     "@storybook/addon-essentials": "^8.3.5",
     "@storybook/addon-interactions": "^8.3.5",
     "@storybook/addon-links": "^8.3.5",
@@ -60,10 +62,13 @@
     "vite": "^5.4.8"
   },
   "dependencies": {
+    "@buttery/components": "workspace:^",
     "@buttery/config": "workspace:^",
     "@buttery/logger": "workspace:^",
     "@buttery/tokens": "workspace:^",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "ts-pattern": "^5.4.0"
   }
 }
