@@ -1593,9 +1593,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@buttery/components-docs@workspace:packages/buttery-docs-components":
+"@buttery/components-docs@workspace:packages/buttery-docs-ui":
   version: 0.0.0-use.local
-  resolution: "@buttery/components-docs@workspace:packages/buttery-docs-components"
+  resolution: "@buttery/components-docs@workspace:packages/buttery-docs-ui"
   dependencies:
     "@buttery/logger": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
@@ -1691,6 +1691,22 @@ __metadata:
 "@buttery/tokens@workspace:packages/buttery-tokens":
   version: 0.0.0-use.local
   resolution: "@buttery/tokens@workspace:packages/buttery-tokens"
+  dependencies:
+    "@buttery/config": "workspace:^"
+    "@buttery/logger": "workspace:^"
+    "@buttery/tsconfig": "workspace:^"
+    "@remix-run/dev": "npm:^2.12.1"
+    "@remix-run/node": "npm:^2.12.1"
+    "@remix-run/react": "npm:^2.12.1"
+    "@types/react": "npm:^18"
+    "@types/react-dom": "npm:^18"
+    "@wyw-in-js/vite": "npm:^0.5.4"
+    chroma-js: "npm:^3.1.1"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    ts-pattern: "npm:^5.4.0"
+    tsx: "npm:^4.19.1"
+    typescript: "npm:^5.6.2"
   languageName: unknown
   linkType: soft
 
@@ -3869,7 +3885,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/dev@npm:2.12.1":
+"@remix-run/dev@npm:2.12.1, @remix-run/dev@npm:^2.12.1":
   version: 2.12.1
   resolution: "@remix-run/dev@npm:2.12.1"
   dependencies:
@@ -3947,7 +3963,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/node@npm:2.12.1":
+"@remix-run/node@npm:2.12.1, @remix-run/node@npm:^2.12.1":
   version: 2.12.1
   resolution: "@remix-run/node@npm:2.12.1"
   dependencies:
@@ -3967,7 +3983,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/react@npm:2.12.1":
+"@remix-run/react@npm:2.12.1, @remix-run/react@npm:^2.12.1":
   version: 2.12.1
   resolution: "@remix-run/react@npm:2.12.1"
   dependencies:
@@ -5610,7 +5626,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.3.0":
+"@types/react-dom@npm:18.3.0, @types/react-dom@npm:^18":
   version: 18.3.0
   resolution: "@types/react-dom@npm:18.3.0"
   dependencies:
@@ -5626,6 +5642,16 @@ __metadata:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 10c0/f5be1de1b0331c1fdb33d577f4cf7f1b949d4bded5347b2351a537f03c51dade5be115e21b161dcf1b37061954d320f6a0bdf8d7b70e24eda51071fdd614383d
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18":
+  version: 18.3.11
+  resolution: "@types/react@npm:18.3.11"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: 10c0/ce80512246ca5bda69db85b9f4f1835189334acfb6b2c4f3eda8cabff1ff1a3ea9ce4f3b895bdbc18c94140aa45592331aa3fdeb557f525c1b048de7ce84fc0e
   languageName: node
   linkType: hard
 
@@ -6929,7 +6955,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chroma-js@npm:3.1.1":
+"chroma-js@npm:3.1.1, chroma-js@npm:^3.1.1":
   version: 3.1.1
   resolution: "chroma-js@npm:3.1.1"
   checksum: 10c0/fb5e3cd958a954b8cd44017f70aff42ae37bc561cdcea0ebeeb6d2df5989e7402e02c674274af2eefd1478ee172e05ce51ac353e3cbe1db139f599b338523339
@@ -15473,7 +15499,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-pattern@npm:5.4.0":
+"ts-pattern@npm:5.4.0, ts-pattern@npm:^5.4.0":
   version: 5.4.0
   resolution: "ts-pattern@npm:5.4.0"
   checksum: 10c0/8b7b785e51af736d110e181e8338fb74baafacf32f017b9df4f26bbefb295175f60d7cc22e23e77e9219930b2d3126aa1b0322bce210c9e18bede81cb4c2d2a5
@@ -15498,7 +15524,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsx@npm:4.19.1":
+"tsx@npm:4.19.1, tsx@npm:^4.19.1":
   version: 4.19.1
   resolution: "tsx@npm:4.19.1"
   dependencies:

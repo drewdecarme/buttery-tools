@@ -15,6 +15,11 @@ export async function getButteryTokensDirectories(
     config.paths,
     "tokens"
   );
+
+  const outputDir = path.resolve(
+    nodeModulesTokenDir.target,
+    "./.buttery/.store/tokens"
+  );
   const appDir = path.resolve(nodeModulesTokenDir.target, "./app");
 
   return {
@@ -33,8 +38,8 @@ export async function getButteryTokensDirectories(
      * created
      */
     output: {
-      root: nodeModulesTokenDir.target,
-      packageJson: path.resolve(nodeModulesTokenDir.target, "./package.json"),
+      root: outputDir,
+      // packageJson: path.resolve(nodeModulesTokenDir.target, "./package.json"),
     },
   };
 }

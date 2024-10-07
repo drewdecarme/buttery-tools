@@ -1,0 +1,11 @@
+{
+  "extends": "@buttery/tsconfig/library",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "declarationMap": true
+  },
+  "include": ["./scripts/index.ts"]
+}

@@ -1,4 +1,3 @@
-import { writeFile } from "node:fs/promises";
 import chokidar from "chokidar";
 import { LOG } from "./logger";
 import { buildCSSUtils } from "./tokens.buildCSSUtils";
@@ -21,17 +20,6 @@ export async function buildButteryTokens(options: BuildButteryTokensParams) {
   // Fetch the tokens config and resolve the paths
   const config = await getButteryTokensConfig(options);
   const dirs = await getButteryTokensDirectories(config);
-
-  // write the package.json file
-  const packageJsonContent = {
-    name: "@buttery/tokens",
-    type: "module",
-    version: "0.0.0",
-  };
-  await writeFile(
-    dirs.output.packageJson,
-    JSON.stringify(packageJsonContent, null, 2)
-  );
 
   // build the make functions
   await buildCSSUtils(config, dirs);

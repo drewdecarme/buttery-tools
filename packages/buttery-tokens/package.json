@@ -2,10 +2,26 @@
   "name": "@buttery/tokens",
   "version": "0.0.1",
   "description": "TBD",
+  "type": "module",
   "scripts": {
     "dev": "tsx ./scripts/tokens.local.dev.ts",
-    "build": "tsx ./scripts/tokens.local.build.ts"
+    "build": "tsc --project tsconfig.build.json"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./**": {
+      "types": "./dist/.buttery/.store/tokens/**",
+      "import": "./dist/.buttery/.store/tokens/**",
+      "require": "./dist/.buttery/.store/tokens/**"
+    }
+  },
+  "files": [
+    "app"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
@@ -18,10 +34,21 @@
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
     "@buttery/tsconfig": "workspace:^",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "tsx": "^4.19.1"
   },
   "dependencies": {
     "@buttery/config": "workspace:^",
-    "@buttery/logger": "workspace:^"
+    "@buttery/logger": "workspace:^",
+    "@remix-run/dev": "^2.12.1",
+    "@remix-run/node": "^2.12.1",
+    "@remix-run/react": "^2.12.1",
+    "@wyw-in-js/vite": "^0.5.4",
+    "chroma-js": "^3.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "ts-pattern": "^5.4.0",
+    "typescript": "^5.6.2"
   }
 }

@@ -66,6 +66,7 @@ export async function buildCSSUtilsTypeScript(
     null,
     2
   );
+
   try {
     LOG.debug("Creating tsconfig...");
     await writeFile(tsconfigJsonPath, tsconfigJsonContent);
