@@ -18,7 +18,7 @@ export type ButteryConfigTokens = {
    * tokens distro. All of the documentation will update with the import name so you can be sure that you're importing
    * the right thing
    */
-  namespace?: string;
+  namespace: string;
   /**
    * ## Description
    * The integer that will regulate the visual harmony of the application by enforcing strict spacing requirements

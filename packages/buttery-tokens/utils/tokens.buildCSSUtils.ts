@@ -1,3 +1,4 @@
+import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/config";
 import { LOG } from "./logger";
@@ -18,20 +19,25 @@ export async function buildCSSUtils(
   const createCSSUtils = allButteryTokensConfigs.map(
     (tokenConfig) =>
       async function createUtils() {
-        // reconcile the namespace
-        const namespace = tokenConfig.namespace ?? "index";
-        const namespacedOutDir = path.resolve(
+        // Write the import paths. These are files that will be created in the root
+        // of the node modules directory in order for someone to easily  their
+        // utilities based upon the namespace they provided
+        const exportPathRoot = path.resolve(
           dirs.output.root,
-          "./".concat(namespace)
+          `./${tokenConfig.namespace}`
         );
+        const exportPathContent = `export * from "./dist/${tokenConfig.namespace}/index.js";`;
+        const exportPromises = [".js", ".d.ts"].map((fileExt) =>
+          writeFile(exportPathRoot.concat(fileExt), exportPathContent)
+        );
+        await Promise.all(exportPromises);
 
-        // enrich the package.json
-        // await writeDynamicDirectoryPackageJSON(
-        //   dirs.output.packageJson,
-        //   namespace
-        // );
-
-        // build the utilities
+        // build the utilities to the dist directory
+        // inside of the output root directory
+        const namespacedOutDir = path.resolve(
+          dirs.output.dist,
+          "./".concat(tokenConfig.namespace)
+        );
         await buildCSSUtilsTypeScript(tokenConfig, namespacedOutDir);
       }
   );

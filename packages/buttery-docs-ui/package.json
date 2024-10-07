@@ -8,8 +8,11 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
+    "tokens:dev": "tsx ./scripts/tokens-dev.ts",
+    "tokens:build": "tsx ./scripts/tokens-build.ts",
     "dev": "vite",
-    "build": "yarn tsc && vite build && yarn tsc --project tsconfig.types.json"
+    "NEXT:build": "yarn tokens:build && vite build && yarn tsc --project tsconfig.types.json",
+    "build": "vite build && yarn tsc --project tsconfig.types.json"
   },
   "repository": {
     "type": "git",
@@ -40,11 +43,14 @@
     "@types/node": "^22.7.4",
     "@vitejs/plugin-react-swc": "^3.7.1",
     "@wyw-in-js/vite": "^0.5.4",
+    "tsx": "^4.19.1",
     "typescript": "^5.6.2",
     "vite": "^5.4.8"
   },
   "dependencies": {
+    "@buttery/config": "workspace:^",
     "@buttery/logger": "workspace:^",
+    "@buttery/tokens": "workspace:^",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   }

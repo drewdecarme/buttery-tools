@@ -3,25 +3,14 @@
   "version": "0.0.1",
   "description": "TBD",
   "type": "module",
+  "main": "./dist/scripts/index.js",
+  "module": "./dist/scripts/index.js",
+  "types": "./dist/scripts/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "dev": "tsx ./scripts/tokens.local.dev.ts",
     "build": "tsc --project tsconfig.build.json"
   },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
-    },
-    "./**": {
-      "types": "./dist/.buttery/.store/tokens/**",
-      "import": "./dist/.buttery/.store/tokens/**",
-      "require": "./dist/.buttery/.store/tokens/**"
-    }
-  },
-  "files": [
-    "app"
-  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"

@@ -7,7 +7,7 @@ import packageJson from "./package.json";
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(import.meta.dirname, "./lib/index.ts"),
+      entry: path.resolve(import.meta.dirname, "./src/index.ts"),
       fileName(_format, entryName) {
         return `${entryName}.js`;
       },
