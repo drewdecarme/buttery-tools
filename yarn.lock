@@ -1593,6 +1593,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@buttery/components-docs@workspace:packages/buttery-docs-components":
+  version: 0.0.0-use.local
+  resolution: "@buttery/components-docs@workspace:packages/buttery-docs-components"
+  dependencies:
+    "@buttery/logger": "workspace:^"
+    "@buttery/tsconfig": "workspace:^"
+    "@linaria/core": "npm:^6.2.0"
+    "@types/node": "npm:^22.7.4"
+    "@vitejs/plugin-react-swc": "npm:^3.7.1"
+    "@wyw-in-js/vite": "npm:^0.5.4"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    typescript: "npm:^5.6.2"
+    vite: "npm:^5.4.8"
+  languageName: unknown
+  linkType: soft
+
 "@buttery/components@workspace:^, @buttery/components@workspace:packages/buttery-components":
   version: 0.0.0-use.local
   resolution: "@buttery/components@workspace:packages/buttery-components"
@@ -1668,6 +1685,12 @@ __metadata:
     typescript: "npm:5.6.2"
     vite: "npm:5.4.8"
     wrangler: "npm:3.78.12"
+  languageName: unknown
+  linkType: soft
+
+"@buttery/tokens@workspace:packages/buttery-tokens":
+  version: 0.0.0-use.local
+  resolution: "@buttery/tokens@workspace:packages/buttery-tokens"
   languageName: unknown
   linkType: soft
 

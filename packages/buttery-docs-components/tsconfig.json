@@ -1,0 +1,8 @@
+{
+  "extends": "@buttery/tsconfig/library",
+  "compilerOptions": {
+    "noEmit": true,
+    "outDir": "./dist"
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}

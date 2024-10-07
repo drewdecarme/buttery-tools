@@ -16,7 +16,6 @@ import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { createServer } from "vite";
-import { createHtmlPlugin } from "vite-plugin-html";
 import virtual from "vite-plugin-virtual";
 import type {
   CommandAction,
@@ -68,8 +67,6 @@ export const action: CommandAction<typeof options> = async () => {
   // create an express app
   const app = express();
   const ABORT_DELAY = 10_000;
-
-  const globalCss: string[] = [];
 
   // create the vite middleware
   const vite = await createServer({
