@@ -2,7 +2,7 @@ import { LOG_CLI } from "../logger/loggers";
 import type {
   ButteryDocsRouteManifest,
   ButteryDocsRouteManifestEntry,
-  ButteryDocsRouteManifestGraphObject
+  ButteryDocsRouteManifestGraphObject,
 } from "./docs.types";
 
 /**
@@ -46,17 +46,16 @@ export function getButteryDocsRouteGraph(
           fileNameFormatted: "",
           root: false,
           routePath: "",
-          pages: {}
+          pages: {},
         };
       }
 
       // this ensures the contents of the segment are put
       // in the correct place and not in the parent. There
       if (i === manifestEntrySegments.length - 1) {
-        console.log(currentGraphObj[segment]);
         currentGraphObj[segment] = {
           ...manifestEntry,
-          pages: currentGraphObj[segment].pages
+          pages: currentGraphObj[segment].pages,
         };
       } else {
         currentGraphObj = currentGraphObj[segment].pages;
@@ -115,8 +114,6 @@ export class ButteryDocsRouteManifestGraphUtils {
       },
       this.routeManifestGraph
     );
-
-    console.log(routeGraphNode);
 
     if (Object.values(routeGraphNode).length === 0) {
       throw LOG_CLI.fatal(

@@ -1,14 +1,14 @@
 {
   "extends": "@buttery/tsconfig/library",
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
+    "./**/*.ts",
+    "./**/*.tsx",
+    "./**/*.d.ts",
     "./.buttery/**/*.ts",
     "./.buttery/**/*.tsx",
     "./.buttery/.store/**/*.ts",
     "./.buttery/.store/**/*.tsx",
-    "rollup.config.ts",
-    "../buttery-components/lib/__todo/Hero.tsx"
+    "rollup.config.ts"
   ],
   "compilerOptions": {
     "noEmit": true,
@@ -17,6 +17,6 @@
     "paths": {
       "@BUTTERY_COMPONENT/*": ["./lib/components/*"]
     }
-  },
-  "exclude": ["artifacts/buttery-docs/apps/**/*"]
+  }
+  // "exclude": ["artifacts/buttery-docs/apps/**/*"]
 }

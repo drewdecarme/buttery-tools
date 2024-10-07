@@ -1,7 +1,7 @@
 import { routeDocs, routeIndex } from "virtual:routes";
 import type { ButteryDocsRouteManifestEntry } from "@buttery/tools/docs";
 import { Suspense, lazy } from "react";
-import { Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router-dom";
 import { LayoutBody } from "./components/LayoutBody";
 import { LayoutBodyMain } from "./components/LayoutBodyMain";
 import { LayoutBodyTOC } from "./components/LayoutBodyTOC";
@@ -15,6 +15,7 @@ function createRoute(
     importComponent: () => Promise<{
       default: JSX.ElementType;
       tableOfContents: TableOfContents;
+      frontmatter: Record<string, unknown>;
     }>;
   },
   options: { isDocs: boolean }
@@ -22,8 +23,13 @@ function createRoute(
   const Component = lazy(async () => {
     // Import the .(md|mdx) file as a component and collect
     // the other information that was supplied to it
-    const { default: DocumentComponent, tableOfContents } =
-      await route.importComponent();
+    const {
+      default: DocumentComponent,
+      tableOfContents,
+      frontmatter,
+    } = await route.importComponent();
+
+    console.log(frontmatter);
 
     if (!options.isDocs) {
       return {
@@ -46,7 +52,10 @@ function createRoute(
     index: true,
     path: route.routePath,
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        // We want to wait to render anything until the component is ready
+        fallback={null}
+      >
         <Component />
       </Suspense>
     ),

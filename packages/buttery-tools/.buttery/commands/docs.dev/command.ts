@@ -9,26 +9,28 @@ import react from "@vitejs/plugin-react-swc";
 import wyw from "@wyw-in-js/vite";
 import express from "express";
 import { getButteryDocsVirtualModules } from "lib/docs/docs.getButteryDocsVIrtualModules";
+import { findDirectoryUpwards } from "lib/utils/node";
+import type { RenderToPipeableStreamOptions } from "react-dom/server";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { createServer } from "vite";
+import { createHtmlPlugin } from "vite-plugin-html";
 import virtual from "vite-plugin-virtual";
 import type {
   CommandAction,
   CommandMeta,
-  CommandOptions
+  CommandOptions,
 } from "../../../lib/commands/butter-commands.types";
 import { getButteryDocsConfig } from "../../../lib/docs/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../../../lib/docs/docs.getButteryDocsDirectories";
-import { getButteryDocsRouteGraph } from "../../../lib/docs/docs.getButteryDocsRouteGraph";
 import { getButteryDocsRouteManifest } from "../../../lib/docs/docs.getButteryDocsRouteManifest";
 import { LOG_CLI } from "../../../lib/logger/loggers";
 
 export const meta: CommandMeta = {
   name: "dev",
-  description: "Run the development instance"
+  description: "Run the development instance",
 };
 
 export const options: CommandOptions<{
@@ -39,8 +41,8 @@ export const options: CommandOptions<{
     alias: "np",
     description:
       "Disables CLI prompts if any configuration values are not expected / well formed.",
-    defaultValue: false
-  }
+    defaultValue: false,
+  },
 };
 
 export const action: CommandAction<typeof options> = async () => {
@@ -67,6 +69,8 @@ export const action: CommandAction<typeof options> = async () => {
   const app = express();
   const ABORT_DELAY = 10_000;
 
+  const globalCss: string[] = [];
+
   // create the vite middleware
   const vite = await createServer({
     cacheDir,
@@ -76,19 +80,19 @@ export const action: CommandAction<typeof options> = async () => {
     server: {
       middlewareMode: true, // Enable SSR middleware mode
       hmr: {
-        port: 3005
-      }
+        port: 3005,
+      },
     },
     clearScreen: false,
     resolve: {
       preserveSymlinks: true,
       extensions: [".js", ".jsx", ".ts", ".tsx", ".mdx"],
       alias: {
-        "@docs": dirs.srcDocs.root
-      }
+        "@docs": dirs.srcDocs.root,
+      },
     },
     optimizeDeps: {
-      include: ["@buttery/components"]
+      include: ["@buttery/components"],
     },
     plugins: [
       mdx({
@@ -102,31 +106,31 @@ export const action: CommandAction<typeof options> = async () => {
             {
               behavior: "wrap",
               headingProperties: {
-                className: "heading"
-              }
-            }
+                className: "heading",
+              },
+            },
           ],
           [
             rehypeShiki,
             {
-              theme: "dark-plus"
-            }
-          ]
-        ]
+              theme: "dark-plus",
+            },
+          ],
+        ],
       }),
       react(),
       virtual({
         "virtual:data": virtualModules.data,
-        "virtual:routes": virtualModules.routes
+        "virtual:routes": virtualModules.routes,
       }),
       wyw({
         include: "/**/*.(ts|tsx)",
         babelOptions: {
           compact: false,
-          presets: ["@babel/preset-typescript", "@babel/preset-react"]
-        }
-      })
-    ]
+          presets: ["@babel/preset-typescript", "@babel/preset-react"],
+        },
+      }),
+    ],
   });
 
   // Add the vite middleware
@@ -139,7 +143,14 @@ export const action: CommandAction<typeof options> = async () => {
 
       const ssrEntryModule = await vite.ssrLoadModule(serverEntryPath);
       const templateFs = await readFile(indexHtmlPath, "utf8");
-      const template = await vite.transformIndexHtml(url, templateFs);
+      let htmlTemplate = await vite.transformIndexHtml(url, templateFs);
+
+      const tokenCSSUrl = path.resolve(
+        findDirectoryUpwards("node_modules", "@buttery", {
+          startingDirectory: import.meta.dirname,
+        }) as string,
+        "./tokens/docs/index.css"
+      );
 
       const ssrManifest = undefined;
       let didError = false;
@@ -150,11 +161,16 @@ export const action: CommandAction<typeof options> = async () => {
           res.set({ "Content-Type": "text/html" });
           res.send("<h1>Something went wrong</h1>");
         },
-        onShellReady() {
+        onAllReady() {
           res.status(didError ? 500 : 200);
           res.set({ "Content-Type": "text/html" });
 
-          const [htmlStart, htmlEnd] = template.split("<!--ssr-outlet-->");
+          htmlTemplate = htmlTemplate.replace(
+            "<!--ssr-css-->",
+            `<link rel="stylesheet" href="${tokenCSSUrl}" />`
+          );
+
+          const [htmlStart, htmlEnd] = htmlTemplate.split("<!--ssr-outlet-->");
 
           res.write(htmlStart);
 
@@ -162,7 +178,7 @@ export const action: CommandAction<typeof options> = async () => {
             transform(chunk, encoding, callback) {
               res.write(chunk, encoding);
               callback();
-            }
+            },
           });
 
           transformStream.on("finish", () => {
@@ -174,8 +190,8 @@ export const action: CommandAction<typeof options> = async () => {
         onError(error: Error) {
           didError = true;
           console.error(error);
-        }
-      });
+        },
+      } as RenderToPipeableStreamOptions);
 
       setTimeout(() => {
         abort();

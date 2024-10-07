@@ -66,8 +66,6 @@ export const LayoutBodyNav: FC = () => {
     return graph;
   }, [pathname]);
 
-  console.log(graph);
-
   return (
     <nav className={navStyles}>
       <div className={navContentStyles}>

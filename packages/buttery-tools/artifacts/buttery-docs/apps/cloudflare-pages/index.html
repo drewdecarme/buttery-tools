@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <html>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite SSR App</title>
@@ -23,11 +23,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <!--ssr-css-->
   </head>
 
   <body>
     <div id="root"><!--ssr-outlet--></div>
     <!-- Reference the client-side bundle -->
-    <script type="module" src="/src/entry-client.tsx"></script>
+    <!-- <script type="module" src="/src/entry-client.tsx"></script> -->
   </body>
 </html>

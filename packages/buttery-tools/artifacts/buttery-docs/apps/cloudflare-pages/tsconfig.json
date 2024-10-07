@@ -5,10 +5,12 @@
     "./**/.server/**/*.ts",
     "./**/.server/**/*.tsx",
     "./**/.client/**/*.ts",
-    "./**/.client/**/*.tsx"
+    "./**/.client/**/*.tsx",
+    "./types/**/*.d.ts"
   ],
   "compilerOptions": {
     "lib": ["DOM", "ESNext"],
+    "noEmit": true,
     "module": "ESNext",
     "target": "ESNext",
     "jsx": "react-jsx",
