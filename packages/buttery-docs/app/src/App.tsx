@@ -14,6 +14,7 @@ import {
   LayoutBodyTOC,
   LayoutHeader,
 } from "@buttery/docs-ui";
+import { routeModuleGraph } from "../utils/RouteGraph";
 
 function createRoute(route: typeof routeIndex, options: { isDocs: boolean }) {
   const Component = lazy(async () => {
@@ -71,8 +72,7 @@ function DocsLayout() {
   const { pathname } = useLocation();
   const graph = useMemo(() => {
     const pageRoute = pathname.split("/").filter(Boolean)[0];
-    // const graph = RouteGraph.getRouteGraphNodeByRoutePath(pageRoute);
-    return {};
+    const graph = routeModuleGraph.getRouteGraphNodeByRoutePath(pageRoute);
     return graph;
   }, [pathname]);
 

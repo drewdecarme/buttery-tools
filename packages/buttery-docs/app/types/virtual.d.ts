@@ -1,7 +1,7 @@
 declare module "virtual:routes" {
-  import type { ButteryDocsRouteManifestGraph } from "@buttery/tools/docs";
+  import type { ButteryDocsRouteManifestGraphObject } from "@buttery/config/docs";
   // Adjust the types based on what your `virtual:routes` module exports
-  export const RouteGraph: ButteryDocsRouteManifestGraph;
+  export const routeGraph: ButteryDocsRouteManifestGraphObject;
   export const routeDocs: ButteryDocsRouteManifestEntry & {
     importComponent: () => Promise<{
       default: JSX.ElementType;

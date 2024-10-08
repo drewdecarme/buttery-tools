@@ -1,5 +1,6 @@
-import { LOG } from "./buttery-config.utils";
-import type { ButteryDocsRouteManifestGraphObject } from "./docs.types";
+import { routeGraph } from "virtual:routes";
+import type { ButteryDocsRouteManifestGraphObject } from "@buttery/config";
+import { LOG } from "../../utils/docs.utils";
 
 /**
  * A collection of utilities to easily transact on the route manifest
@@ -27,7 +28,6 @@ export class ButteryDocsRouteManifestGraphUtils {
     const segments = routePath.split("/").filter(Boolean);
     const routeGraphNode = segments.reduce<ButteryDocsRouteManifestGraphObject>(
       (accum, segment, i) => {
-        LOG.debug(`Searching for segment: ${segment}`);
         if (accum[segment] && i < segments.length - 1) {
           return accum[segment].pages;
         }
@@ -50,3 +50,7 @@ export class ButteryDocsRouteManifestGraphUtils {
     return routeGraphNode;
   }
 }
+
+export const routeModuleGraph = new ButteryDocsRouteManifestGraphUtils(
+  routeGraph
+);

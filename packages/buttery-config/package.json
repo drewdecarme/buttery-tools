@@ -21,7 +21,11 @@
   },
   "exports": {
     ".": "./dist/index.js",
-    "./docs": "./dist/docs.utils.js"
+    "./docs": {
+      "types": "./dist/docs.types.d.ts",
+      "import": "./dist/docs.types.js",
+      "require": "./dist/docs.types.js"
+    }
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
