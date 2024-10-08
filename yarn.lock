@@ -470,7 +470,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@buttery/commands@workspace:packages/buttery-commands":
+"@buttery/commands@workspace:^, @buttery/commands@workspace:packages/buttery-commands":
   version: 0.0.0-use.local
   resolution: "@buttery/commands@workspace:packages/buttery-commands"
   dependencies:
@@ -647,6 +647,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/tools@workspace:packages/buttery-tools"
   dependencies:
+    "@buttery/commands": "workspace:^"
     "@buttery/components": "workspace:^"
     "@buttery/config": "workspace:^"
     "@buttery/docs": "workspace:^"

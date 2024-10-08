@@ -2,7 +2,7 @@ import type {
   CommandAction,
   CommandMeta,
   CommandOptions,
-} from "../../../lib/commands/butter-commands.types";
+} from "@buttery/commands";
 
 export const meta: CommandMeta = {
   name: "dev",

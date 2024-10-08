@@ -1,14 +1,13 @@
 import type { CommandAction, CommandMeta } from "@buttery/commands";
-import { dev } from "@buttery/commands/dev";
+import { create } from "@buttery/commands/create";
 
 export const meta: CommandMeta = {
   name: "add",
-  description:
-    "Bootstraps a new buttery command by asking the user a few questions.",
+  description: "Easily bootstrap a new buttery command",
 };
 
 export const action: CommandAction = async () => {
   try {
-    dev();
+    create();
   } catch (error) {}
 };

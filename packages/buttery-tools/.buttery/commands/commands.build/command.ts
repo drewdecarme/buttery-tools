@@ -2,9 +2,8 @@ import type {
   CommandAction,
   CommandMeta,
   CommandOptions,
-} from "../../../lib/commands/butter-commands.types";
-import { LOG_COMMANDS } from "../commands/commands.log";
-import { buildCommands } from "./build-commands";
+} from "@buttery/commands";
+import { build } from "@buttery/commands/build";
 
 export const meta: CommandMeta = {
   name: "build",
@@ -27,12 +26,6 @@ export const options: CommandOptions<{ autofix: boolean; debug: boolean }> = {
   },
 };
 
-export const action: CommandAction<typeof options> = async ({ options }) => {
-  if (options.debug) {
-    LOG_COMMANDS.level = "info";
-  } else {
-    LOG_COMMANDS.level = "error";
-  }
-
-  await buildCommands({ watch: false, local: false });
+export const action: CommandAction<typeof options> = async () => {
+  build();
 };

@@ -1,6 +1,6 @@
 import path from "node:path";
 import { getNodeModulesButteryOutputDir } from "@buttery/config";
-import { findDirectoryUpwards } from "@buttery/utils";
+import { findDirectoryUpwards } from "@buttery/utils/node";
 import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { LOG } from "./docs.utils";
 

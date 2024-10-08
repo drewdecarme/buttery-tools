@@ -55,4 +55,8 @@
 // } catch (error) {
 //   throw LOG_CLI.fatal(new Error(error as string));
 // }
-export {};
+import { LOG } from "../utils/docs.utils";
+
+export async function build() {
+  LOG.debug("TODO: Create the build script");
+}

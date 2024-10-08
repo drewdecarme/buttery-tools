@@ -1,14 +1,12 @@
-import type {
-  CommandAction,
-  CommandMeta,
-} from "../../../lib/commands/butter-commands.types";
+import type { CommandAction, CommandMeta } from "@buttery/commands";
+import { build } from "@buttery/docs/build";
 
 export const meta: CommandMeta = {
   name: "build",
   description:
-    "Build the necessary assets required to create actions, fetchers, and components to render the Buttery Docs template.",
+    "Build's necessary production assets for the `@buttery/docs` application deployment",
 };
 
 export const action: CommandAction = async () => {
-  console.log("TODO!");
+  build();
 };

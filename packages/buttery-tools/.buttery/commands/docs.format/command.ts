@@ -1,7 +1,5 @@
-import type {
-  CommandAction,
-  CommandMeta,
-} from "../../../lib/commands/butter-commands.types";
+import type { CommandAction, CommandMeta } from "@buttery/commands";
+import { format } from "@buttery/docs/format";
 
 export const meta: CommandMeta = {
   name: "format",
@@ -10,5 +8,5 @@ export const meta: CommandMeta = {
 };
 
 export const action: CommandAction = async () => {
-  console.log("TODO!");
+  format();
 };

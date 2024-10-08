@@ -9,18 +9,15 @@
   "scripts": {
     "run:build": "",
     "run:dev": "",
+    "dev": "yarn build --watch",
     "build": "yarn tsc --project tsconfig.build.json",
     "spread": "yarn node ./bin/index.js"
   },
   "exports": {
-    "./dev": {
-      "types": "./dist/scripts/run.dev.ts",
-      "import": "./dist/run.dev.js"
-    },
-    "./build": {
-      "types": "./dist/scripts/run.build.ts",
-      "import": "./dist/run.build.js"
-    }
+    ".": "./dist/src/index.js",
+    "./dev": "./dist/scripts/run.dev.js",
+    "./build": "./dist/scripts/run.build.js",
+    "./create": "./dist/scripts/run.create.js"
   },
   "repository": {
     "type": "git",

@@ -20,4 +20,9 @@
 //   default:
 //     return exhaustiveMatchGuard(decision);
 // }
-export {};
+
+import { LOG } from "../utils/docs.utils";
+
+export async function format() {
+  LOG.debug("TODO: Add the docs formatter");
+}

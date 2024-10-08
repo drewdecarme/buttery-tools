@@ -73,6 +73,7 @@
     "typescript": "5.6.2"
   },
   "dependencies": {
+    "@buttery/commands": "workspace:^",
     "@buttery/components": "workspace:^",
     "@buttery/config": "workspace:^",
     "@buttery/docs": "workspace:^",

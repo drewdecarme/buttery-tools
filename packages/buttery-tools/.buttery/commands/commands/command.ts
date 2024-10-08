@@ -1,6 +1,6 @@
-import type { CommandMeta } from "../../../lib/commands/butter-commands.types";
+import type { CommandMeta } from "@buttery/commands";
 
 export const meta: CommandMeta = {
   name: "commands",
-  description: "A CLI for developing and building file-based CLIs"
+  description: "A CLI for developing and building file-based CLIs",
 };

@@ -1,15 +1,11 @@
-import { buildCommands } from "../src/build-commands";
 import { LOG } from "../src/utils";
 
 /**
  * Build's the @buttery/commands binary
  */
-export async function build() {
+export async function create() {
   try {
-    buildCommands({
-      watch: false,
-      local: true,
-    });
+    LOG.debug("TODO: Create a new buttery command");
   } catch (error) {
     throw LOG.fatal(new Error(error as string));
   }
