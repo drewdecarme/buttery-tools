@@ -1,7 +1,7 @@
-import type { CommandMeta } from "../../../lib/commands/butter-commands.types";
+import type { CommandMeta } from "@buttery/commands";
 
 export const meta: CommandMeta = {
   name: "tokens",
   // TODO: Fix this description
-  description: "Create buttery tokens"
+  description: "Create buttery tokens",
 };

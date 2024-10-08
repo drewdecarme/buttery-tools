@@ -589,6 +589,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@buttery/icons@workspace:^, @buttery/icons@workspace:packages/buttery-icons":
+  version: 0.0.0-use.local
+  resolution: "@buttery/icons@workspace:packages/buttery-icons"
+  dependencies:
+    "@buttery/logger": "workspace:^"
+    "@buttery/tsconfig": "workspace:^"
+    tsx: "npm:^4.19.1"
+    typescript: "npm:^5.6.2"
+  languageName: unknown
+  linkType: soft
+
 "@buttery/logger@workspace:, @buttery/logger@workspace:^, @buttery/logger@workspace:packages/buttery-logger":
   version: 0.0.0-use.local
   resolution: "@buttery/logger@workspace:packages/buttery-logger"
@@ -651,6 +662,7 @@ __metadata:
     "@buttery/components": "workspace:^"
     "@buttery/config": "workspace:^"
     "@buttery/docs": "workspace:^"
+    "@buttery/icons": "workspace:^"
     "@buttery/logger": "workspace:"
     "@buttery/tools": "npm:^0.0.2"
     "@buttery/tsconfig": "workspace:"

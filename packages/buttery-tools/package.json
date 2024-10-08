@@ -14,6 +14,19 @@
   "bin": {
     "buttery": "./bin/index.js"
   },
+  "scripts": {
+    "build": "yarn cli:build && yarn buttery tokens build && yarn lib:build && yarn docs:build",
+    "dev": "tsx ./scripts/dev.ts",
+    "cli:dev": "tsx ./scripts/local.commands.dev",
+    "cli:build": "tsx ./scripts/local.commands.build",
+    "docs:build": "yarn buttery docs build",
+    "docs:release": "yarn docs:build && cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools",
+    "lib:build": "rollup -c",
+    "lib:dev": "yarn lib:build --watch",
+    "lib:esbuild": "node ./scripts/buildForDistribution.js && yarn tsc --project ./tsconfig.library.json",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
   "exports": {
     "./config": {
       "types": "./dist/config/index.public.d.ts",
@@ -54,19 +67,6 @@
   "bugs": {
     "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
-  "scripts": {
-    "build": "yarn cli:build && yarn buttery tokens build && yarn lib:build && yarn docs:build",
-    "dev": "yarn cli:dev",
-    "cli:dev": "tsx ./scripts/local.commands.dev",
-    "cli:build": "tsx ./scripts/local.commands.build",
-    "docs:build": "yarn buttery docs build",
-    "docs:release": "yarn docs:build && cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools",
-    "lib:build": "rollup -c",
-    "lib:dev": "yarn lib:build --watch",
-    "lib:esbuild": "node ./scripts/buildForDistribution.js && yarn tsc --project ./tsconfig.library.json",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
   "devDependencies": {
     "@buttery/tsconfig": "workspace:",
     "tsx": "4.19.1",
@@ -77,6 +77,7 @@
     "@buttery/components": "workspace:^",
     "@buttery/config": "workspace:^",
     "@buttery/docs": "workspace:^",
+    "@buttery/icons": "workspace:^",
     "@buttery/logger": "workspace:",
     "@buttery/tools": "^0.0.2"
   }

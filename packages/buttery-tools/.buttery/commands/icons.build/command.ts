@@ -1,14 +1,9 @@
-import { exit } from "node:process";
-import type {
-  CommandAction,
-  CommandMeta
-} from "../../../lib/commands/butter-commands.types";
-import { buildButteryIcons } from "../../../lib/icons/icons.buildButteryIcons";
+import type { CommandAction, CommandMeta } from "@buttery/commands";
+import { build } from "@buttery/icons/build";
 
 export const meta: CommandMeta = {
   name: "build",
-  // TODO: Fix this description
-  description: "Create buttery icons"
+  description: "Create buttery icons",
 };
 
 /**
@@ -18,6 +13,5 @@ export const meta: CommandMeta = {
  * This provides intellisense and TS auto completion when importing an icon
  */
 export const action: CommandAction = async () => {
-  await buildButteryIcons();
-  exit();
+  build();
 };

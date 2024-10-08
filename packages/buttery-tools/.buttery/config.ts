@@ -1,10 +1,4 @@
-import path from "node:path";
 import type { ButteryConfig } from "@buttery/config";
-import "../../buttery-docs/.buttery/docs";
-
-const getDocDirectory = (relPath: string) => path.resolve(__dirname, relPath);
-
-const butteryDocsPath = getDocDirectory("../../buttery-docs/.buttery/docs");
 
 const config: ButteryConfig = {
   commands: {
@@ -15,14 +9,7 @@ const config: ButteryConfig = {
   },
   docs: {
     buildTarget: "cloudflare-pages",
-    routing: {
-      pageDirectories: [
-        {
-          routeName: "docs",
-          path: butteryDocsPath,
-        },
-      ],
-    },
+
     header: {
       title: "buttery.tools",
       logo: {

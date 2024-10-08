@@ -1,6 +1,6 @@
-import type { CommandMeta } from "../../../lib/commands/butter-commands.types";
+import type { CommandMeta } from "@buttery/commands";
 
 export const meta: CommandMeta = {
   name: "components",
-  description: "Interact with the buttery components"
+  description: "Interact with the buttery components",
 };

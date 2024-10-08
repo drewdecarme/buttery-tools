@@ -1,7 +1,7 @@
-import type { CommandMeta } from "../../../lib/commands/butter-commands.types";
+import type { CommandMeta } from "@buttery/commands";
 
 export const meta: CommandMeta = {
   name: "icons",
   description:
-    "Convert raw SVG files into react components to easily use in an IconComponent."
+    "Convert raw SVG files into react components to easily use in an IconComponent.",
 };
