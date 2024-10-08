@@ -15,6 +15,8 @@ import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { createServer } from "vite";
 import virtual from "vite-plugin-virtual";
 
+import path from "node:path";
+import { findDirectoryUpwards } from "@buttery/utils";
 import { getButteryDocsConfig } from "../utils/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../utils/docs.getButteryDocsDirectories";
 import { getButteryDocsRouteManifest } from "../utils/docs.getButteryDocsRouteManifest";
@@ -32,6 +34,14 @@ export async function dev() {
   const app = express();
   const ABORT_DELAY = 10_000;
 
+  const root = findDirectoryUpwards("node_modules", "react");
+
+  if (!root) {
+    throw LOG.fatal(new Error("Cannot locate root node_modules"));
+  }
+
+  console.log(root);
+
   // create the vite middleware
   const vite = await createServer({
     cacheDir: dirs.app.viteCacheDir,
@@ -43,7 +53,12 @@ export async function dev() {
       hmr: {
         port: 3005,
       },
+      fs: {
+        strict: false,
+        allow: [path.resolve(root, "../")],
+      },
     },
+
     clearScreen: false,
     resolve: {
       preserveSymlinks: true,
@@ -53,7 +68,15 @@ export async function dev() {
       },
     },
     optimizeDeps: {
-      include: ["@buttery/components"],
+      include: [
+        "@buttery/logger",
+        "react-router-dom",
+        "@buttery/components",
+        "@buttery/docs-ui",
+        "react",
+        "react-dom",
+        "react-dom/client",
+      ],
     },
     plugins: [
       mdx({

@@ -40,7 +40,29 @@ export function getButteryDocsVirtualModules(
   }
   LOG.debug("Validating index file exists... done.");
 
-  const routes = `import { ButteryDocsRouteManifestGraphUtils } from "@buttery/config";
+  //   const routes = `import { ButteryDocsRouteManifestGraphUtils } from "@buttery/config/docs";
+  // export const routeIndex = {
+  //   routePath: "/",
+  //   aliasPath: "${routeIndex.aliasPath}",
+  //   root: "${routeIndex.root}",
+  //   importComponent: async () => await import("@docs${routeIndex.aliasPath}")
+  // };
+  // export const routeDocs = [${Object.values(routeDocs).map(
+  //     (routeEntry) => `\{
+  //   routePath: "${routeEntry.routePath}",
+  //   aliasPath: "${routeEntry.aliasPath}",
+  //   root: "${routeEntry.root}",
+  //   importComponent: async () => await import("@docs${routeEntry.aliasPath}")
+  // \}`
+  //   )}];
+  // export const RouteGraph = new ButteryDocsRouteManifestGraphUtils(${JSON.stringify(
+  //     routeGraph,
+  //     null,
+  //     2
+  //   )});
+  //   `;
+
+  const routes = `;
 export const routeIndex = {
   routePath: "/",
   aliasPath: "${routeIndex.aliasPath}",
@@ -55,11 +77,6 @@ export const routeDocs = [${Object.values(routeDocs).map(
   importComponent: async () => await import("@docs${routeEntry.aliasPath}")
 \}`
   )}];
-export const RouteGraph = new ButteryDocsRouteManifestGraphUtils(${JSON.stringify(
-    routeGraph,
-    null,
-    2
-  )});
   `;
 
   const data = `export const header = ${JSON.stringify(config.docs.header)}`;

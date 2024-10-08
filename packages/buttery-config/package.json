@@ -20,7 +20,8 @@
     "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./docs": "./dist/docs.utils.js"
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {

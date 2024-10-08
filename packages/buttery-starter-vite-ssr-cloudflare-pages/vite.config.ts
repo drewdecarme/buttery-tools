@@ -6,12 +6,12 @@ export default defineConfig({
   root: import.meta.dirname,
   plugins: [
     react({
-      jsxRuntime: "automatic"
-    })
+      jsxRuntime: "automatic",
+    }),
   ],
   publicDir: path.resolve(import.meta.dirname, "./public"),
   server: {
-    open: true
+    open: true,
   },
   resolve: {
     dedupe: [
@@ -21,24 +21,24 @@ export default defineConfig({
       "@remix-run/router",
       "react-router",
       "react-router-dom",
-      "scheduler"
-    ]
+      "scheduler",
+    ],
   },
   define: {
-    "process.env.NODE_ENV": JSON.stringify("production")
+    "process.env.NODE_ENV": JSON.stringify("production"),
   },
   build: {
     ssr: true,
     rollupOptions: {
       input: {
         client: path.resolve(import.meta.dirname, "./src/entry-client.tsx"),
-        server: path.resolve(import.meta.dirname, "./src/entry-server.tsx")
+        server: path.resolve(import.meta.dirname, "./src/entry-server.tsx"),
       },
       output: {
         dir: "dist",
-        format: "esm"
-      }
-    }
+        format: "esm",
+      },
+    },
   },
   ssr: {
     noExternal: [
@@ -48,10 +48,10 @@ export default defineConfig({
       "react-router-dom",
       "scheduler",
       "react-router",
-      "@remix-run/router"
-    ]
+      "@remix-run/router",
+    ],
   },
   optimizeDeps: {
-    include: ["react", "react-dom", "react/jsx-runtime", "react-router-dom"]
-  }
+    include: ["react", "react-dom", "react/jsx-runtime", "react-router-dom"],
+  },
 });
