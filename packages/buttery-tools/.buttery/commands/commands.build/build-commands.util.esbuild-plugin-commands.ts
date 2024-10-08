@@ -5,21 +5,21 @@ import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
 
+import type { ResolvedButteryConfig } from "@buttery/config";
 import type { CommandOptionType } from "../../../lib/commands/butter-commands.types";
-import type { ResolvedButteryConfig } from "../../../lib/config/getButteryConfig";
-import { LOG_CLI } from "../../../lib/logger/loggers";
 import { createEsbuildOptions } from "../../../lib/utils/esbuild";
 import { exhaustiveMatchGuard } from "../../../lib/utils/ts/util.ts.exhaustive-match-guard";
 import { kebabToCamel } from "../../../lib/utils/ts/util.ts.kebab-to-camel";
+import { LOG_COMMANDS } from "../commands/commands.log";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import {
   // templateCommandParent,
-  templateIndex
+  templateIndex,
 } from "./build-commands.templates";
 import type {
   CommandFile,
   CommandGraph,
-  CommandGraphProperties
+  CommandGraphProperties,
 } from "./build-commands.utils";
 
 export type EntryTemplateData = {
@@ -92,8 +92,8 @@ export class ESBuildPluginCommands {
   //   try {
   //     await access(commandSegmentPathSrc, constants.F_OK);
   //   } catch (error) {
-  //     LOG_CLI.error(`Cannot locate command file for '${segmentCommandName}'`);
-  //     LOG_CLI.debug("Auto creating command file with default values...");
+  //     LOG_COMMANDS.error(`Cannot locate command file for '${segmentCommandName}'`);
+  //     LOG_COMMANDS.debug("Auto creating command file with default values...");
   //     // TODO: Put any prompting behind --autofix
   //     const template = handlebars.compile<{ command_name: string }>(
   //       templateCommandParent
@@ -103,8 +103,8 @@ export class ESBuildPluginCommands {
   //       template,
   //       { encoding: "utf-8" }
   //     );
-  //     LOG_CLI.debug("Auto creating command file with default values... done.");
-  //     LOG_CLI.warning(
+  //     LOG_COMMANDS.debug("Auto creating command file with default values... done.");
+  //     LOG_COMMANDS.warning(
   //       "A stub file has been created for you. You should ensure that you create the command in the commands dir. If you want to do this automatically then use --autofix"
   //     );
   //   }
@@ -137,7 +137,7 @@ export class ESBuildPluginCommands {
    * by processing the commands key.
    */
   private async buildCommandGraph(commandFiles: CommandFile[]) {
-    LOG_CLI.debug("Creating the command graph...");
+    LOG_COMMANDS.debug("Creating the command graph...");
 
     for (const { commandSegments, name, outPath } of commandFiles) {
       let currentCommandGraph = this.commandGraph;
@@ -151,12 +151,12 @@ export class ESBuildPluginCommands {
             segment_name: name,
             action: commandFileContent?.action,
             args: commandFileContent?.args,
-            options: commandFileContent?.options
+            options: commandFileContent?.options,
           };
           if (!currentCommandGraph[commandSegment]) {
             currentCommandGraph[commandSegment] = {
               properties,
-              commands: {}
+              commands: {},
             };
           }
           currentCommandGraph = currentCommandGraph[commandSegment].commands;
@@ -167,7 +167,7 @@ export class ESBuildPluginCommands {
         }
       }
     }
-    LOG_CLI.debug("Creating the command graph... done.");
+    LOG_COMMANDS.debug("Creating the command graph... done.");
   }
 
   /**a
@@ -240,7 +240,7 @@ export class ESBuildPluginCommands {
 
       if (!hasSubCommands && !props.action) {
         // no sub commands on this command... an action should exist.
-        LOG_CLI.warning(
+        LOG_COMMANDS.warning(
           `"${props.segment_name}" missing an action export. Please export an action.`
         );
       }
@@ -257,11 +257,11 @@ export class ESBuildPluginCommands {
 
   private logRebuild() {
     this.runNumber++;
-    LOG_CLI.debug(`Building program x${this.runNumber}...`);
+    LOG_COMMANDS.debug(`Building program x${this.runNumber}...`);
   }
 
   private logBuildComplete() {
-    LOG_CLI.success(`Building program x${this.runNumber}... complete.`);
+    LOG_COMMANDS.success(`Building program x${this.runNumber}... complete.`);
   }
 
   getPlugin(): Plugin {
@@ -315,7 +315,7 @@ export class ESBuildPluginCommands {
             cli_name: this.config.commands.name,
             cli_description: this.config.commands.description,
             cli_version: this.config.commands.version,
-            cli_commands: this.programString
+            cli_commands: this.programString,
           };
 
           // // Reset some internally tracked values
@@ -331,17 +331,20 @@ export class ESBuildPluginCommands {
             ...createEsbuildOptions({
               stdin: {
                 contents: templateResult,
-                loader: "ts"
+                loader: "ts",
               },
-              outfile: path.resolve(this.config.paths.rootDir, "./bin/index.js")
+              outfile: path.resolve(
+                this.config.paths.rootDir,
+                "./bin/index.js"
+              ),
             }),
             bundle: true,
             minify: true,
-            external: ["commander"] // externalize commander
+            external: ["commander"], // externalize commander
           });
           this.logBuildComplete();
         });
-      }
+      },
     };
   }
 }

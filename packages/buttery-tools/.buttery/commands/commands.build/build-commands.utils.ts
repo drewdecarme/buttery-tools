@@ -1,12 +1,12 @@
 import path from "node:path";
 
+import type { ResolvedButteryConfig } from "@buttery/config";
 import type {
   CommandAction,
   CommandArgs,
   CommandMeta,
-  CommandOptions
+  CommandOptions,
 } from "../../../lib/commands/butter-commands.types";
-import type { ResolvedButteryConfig } from "../../../lib/config/getButteryConfig";
 
 export type CommandsBuildOptions = {
   watch: boolean;
@@ -35,7 +35,7 @@ export const getButteryCommandsDirectories = (
 
   return {
     commandsDir: path.resolve(config.paths.butteryDir, `./${commandsDirName}`),
-    binDir: path.resolve(config.paths.rootDir, "./bin")
+    binDir: path.resolve(config.paths.rootDir, "./bin"),
   };
 };
 

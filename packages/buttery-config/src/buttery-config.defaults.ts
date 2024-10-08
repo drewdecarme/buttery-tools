@@ -16,27 +16,27 @@ export const butteryConfigDefaultTokens: ButteryConfigTokens = {
     size: 16,
     family: {
       heading: systemFont,
-      body: systemFont
+      body: systemFont,
     },
     weight: {
       bold: 700,
       "semi-bold": 600,
       medium: 500,
       regular: 400,
-      light: 300
+      light: 300,
     },
     typography: {
       heading1: {
         fontFamily: "heading",
         fontSize: 74,
-        lineHeight: 82
+        lineHeight: 82,
       },
       heading2: {
         fontFamily: "heading",
         fontSize: 64,
-        lineHeight: 74
-      }
-    }
+        lineHeight: 74,
+      },
+    },
   },
   color: {
     brand: {
@@ -46,48 +46,47 @@ export const butteryConfigDefaultTokens: ButteryConfigTokens = {
       saturation: 84,
       hues: {
         primary: 32,
-        secondary: 84
+        secondary: 84,
       },
       variants: {
         mode: "auto",
-        numOfVariants: 10
-      }
+        numOfVariants: 10,
+      },
     },
     shade: {
       values: {
-        neutral: "#000000"
+        neutral: "#000000",
       },
       variants: {
         mode: "auto",
-        numOfVariants: 10
-      }
-    }
+        numOfVariants: 10,
+      },
+    },
   },
   breakpoints: {
     phone: 375,
     tablet: 768,
-    desktop: 1280
-  }
+    desktop: 1280,
+  },
 };
 export const butteryConfigDefaultDocs: ButteryConfigDocs = {
   buildTarget: "cloudflare-pages",
-  routeStrategy: "section-folders"
 };
 export const butteryConfigDefaultCommands: ButteryConfigCommands = {
   name: "random",
   description: "A CLI that needs a description - CHANGE ME",
   commandsDir: "commands",
-  version: "0.0.1"
+  version: "0.0.1",
 };
 export const butteryConfigDefaultIcons: ButteryConfigIcons = {
   namespace: undefined,
   outDir: undefined,
-  svgDir: undefined
+  svgDir: undefined,
 };
 
 export const butteryConfigDefaults: Required<ButteryConfig> = {
   tokens: butteryConfigDefaultTokens,
   docs: butteryConfigDefaultDocs,
   commands: butteryConfigDefaultCommands,
-  icons: butteryConfigDefaultIcons
+  icons: butteryConfigDefaultIcons,
 };

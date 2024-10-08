@@ -1655,7 +1655,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/docs@workspace:packages/buttery-docs":
+"@buttery/docs@workspace:^, @buttery/docs@workspace:packages/buttery-docs":
   version: 0.0.0-use.local
   resolution: "@buttery/docs@workspace:packages/buttery-docs"
   dependencies:
@@ -1673,6 +1673,7 @@ __metadata:
     "@types/node": "npm:^22.7.4"
     "@vitejs/plugin-react-swc": "npm:^3.7.1"
     "@wyw-in-js/vite": "npm:^0.5.4"
+    esbuild: "npm:^0.24.0"
     express: "npm:^4.21.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
@@ -1742,7 +1743,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/tools@workspace:, @buttery/tools@workspace:packages/buttery-tools":
+"@buttery/tools@npm:^0.0.2, @buttery/tools@workspace:, @buttery/tools@workspace:packages/buttery-tools":
   version: 0.0.0-use.local
   resolution: "@buttery/tools@workspace:packages/buttery-tools"
   dependencies:
@@ -1754,7 +1755,10 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.24.7"
     "@babel/traverse": "npm:^7.25.6"
     "@buttery/components": "workspace:^"
+    "@buttery/config": "workspace:^"
+    "@buttery/docs": "workspace:^"
     "@buttery/logger": "workspace:"
+    "@buttery/tools": "npm:^0.0.2"
     "@buttery/tsconfig": "workspace:"
     "@cloudflare/workers-types": "npm:4.20240925.0"
     "@inquirer/prompts": "npm:6.0.1"
@@ -8866,7 +8870,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:0.24.0":
+"esbuild@npm:0.24.0, esbuild@npm:^0.24.0":
   version: 0.24.0
   resolution: "esbuild@npm:0.24.0"
   dependencies:

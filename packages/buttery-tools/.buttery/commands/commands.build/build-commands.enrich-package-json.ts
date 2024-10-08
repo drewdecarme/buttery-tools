@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { LOG_CLI } from "../../../lib/logger/loggers";
+import { LOG_COMMANDS } from "../commands/commands.log";
 import type { CommandsBuildFunctionArgs } from "./build-commands.utils";
 
 // TODO: Update this description
@@ -11,7 +11,7 @@ import type { CommandsBuildFunctionArgs } from "./build-commands.utils";
 // from the command line without having to worry about manually adding
 // those properties to their `package.json`
 export async function buildCommandsEnrichPackageJson({
-  config
+  config,
 }: CommandsBuildFunctionArgs) {
   try {
     const packageJsonPath = path.resolve(
@@ -19,22 +19,22 @@ export async function buildCommandsEnrichPackageJson({
       "./package.json"
     );
     const packageJsonString = await readFile(packageJsonPath, {
-      encoding: "utf8"
+      encoding: "utf8",
     });
     const packageJson = JSON.parse(packageJsonString);
     const packageJsonCLIProperties = {
       type: "module",
       types: "./dist/index.d.ts",
       bin: {
-        [config.commands.name]: "./bin/index.js"
-      }
+        [config.commands.name]: "./bin/index.js",
+      },
     };
     const packageJsonPropertiesEntries = Object.entries(
       packageJsonCLIProperties
     );
     for (const [key, value] of packageJsonPropertiesEntries) {
       if (!(key in packageJson)) {
-        LOG_CLI.debug(`Adding '${key}' to package.json file.`);
+        LOG_COMMANDS.debug(`Adding '${key}' to package.json file.`);
         packageJson[key] = value;
       }
     }

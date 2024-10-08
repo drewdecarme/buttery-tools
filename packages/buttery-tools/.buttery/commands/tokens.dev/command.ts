@@ -1,15 +1,13 @@
 import type {
   CommandAction,
   CommandMeta,
-  CommandOptions
+  CommandOptions,
 } from "../../../lib/commands/butter-commands.types";
-import { LOG_CLI } from "../../../lib/logger/loggers";
-import { buildButteryTokens } from "../tokens/tokens.buildButteryTokens";
 
 export const meta: CommandMeta = {
   name: "dev",
   description:
-    "Iteratively develop @buttery/tokens `make` functions based upon the `buttery/config.tokens`"
+    "Iteratively develop @buttery/tokens `make` functions based upon the `buttery/config.tokens`",
 };
 
 export const options: CommandOptions<{
@@ -23,7 +21,7 @@ export const options: CommandOptions<{
     description:
       "Runs the build in watch mode and opens up a local server to configure your tokens through a UI",
     type: "boolean",
-    required: false
+    required: false,
   },
   prompt: {
     type: "boolean",
@@ -31,7 +29,7 @@ export const options: CommandOptions<{
     alias: "p",
     description:
       "A boolean option to enabled command line prompts if the proper configurations aren't detected.",
-    required: false
+    required: false,
   },
   debug: {
     type: "boolean",
@@ -39,24 +37,10 @@ export const options: CommandOptions<{
     alias: "d",
     description:
       "Prints all of the logs to stdout to easily see all of the activity to create the tokens.",
-    required: false
-  }
+    required: false,
+  },
 };
 
-export const action: CommandAction<typeof options> = async ({ options }) => {
-  try {
-    LOG_CLI.debug("Running `tokens.dev` command");
-
-    // TODO: Create a central function to reconcile options from defaultOptions
-
-    await buildButteryTokens({
-      debug: options.debug,
-      interactive: options.interactive,
-      prompt: options.prompt,
-      watch: true,
-      isLocal: false
-    });
-  } catch (error) {
-    throw LOG_CLI.fatal(new Error(error as string));
-  }
+export const action: CommandAction<typeof options> = async () => {
+  console.log("TODO!");
 };

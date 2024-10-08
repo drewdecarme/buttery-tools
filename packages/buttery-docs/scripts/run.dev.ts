@@ -1,5 +1,7 @@
 import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { Transform } from "node:stream";
+import { findDirectoryUpwards } from "@buttery/utils";
 import mdx from "@mdx-js/rollup";
 import rehypeShiki from "@shikijs/rehype";
 import rehypeTOC from "@stefanprobst/rehype-extract-toc";
@@ -14,9 +16,6 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { createServer } from "vite";
 import virtual from "vite-plugin-virtual";
-
-import path from "node:path";
-import { findDirectoryUpwards } from "@buttery/utils";
 import { getButteryDocsConfig } from "../utils/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../utils/docs.getButteryDocsDirectories";
 import { getButteryDocsRouteManifest } from "../utils/docs.getButteryDocsRouteManifest";

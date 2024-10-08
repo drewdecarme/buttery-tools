@@ -1,11 +1,11 @@
-import { getButteryConfig } from "../../../lib/config/getButteryConfig.js";
-import { LOG_CLI } from "../../../lib/logger/loggers.js";
+import { getButteryConfig } from "@buttery/config";
+import { LOG_COMMANDS } from "../commands/commands.log.js";
 import { buildCommandsCleanDistributionDirs } from "./build-commands.clean-distribution-dirs.js";
 import { buildCommandsCreateBinary } from "./build-commands.create-binary.js";
 import { buildCommandsEnrichPackageJson } from "./build-commands.enrich-package-json.js";
 import type {
   CommandsBuildFunctionArgs,
-  CommandsBuildOptions
+  CommandsBuildOptions,
 } from "./build-commands.utils";
 /**
  * This function is the main build command that reads the .buttery/config
@@ -14,11 +14,11 @@ import type {
  */
 export async function buildCommands(options: CommandsBuildOptions) {
   const config = await getButteryConfig("commands");
-  LOG_CLI.debug(`Using config: ${config.paths.config}`);
+  LOG_COMMANDS.debug(`Using config: ${config.paths.config}`);
 
   const args: CommandsBuildFunctionArgs = {
     config,
-    options
+    options,
   };
 
   // clean the distribution dirs
@@ -27,6 +27,6 @@ export async function buildCommands(options: CommandsBuildOptions) {
   // enrich the local package.json and build the binary directory
   await Promise.all([
     buildCommandsEnrichPackageJson(args),
-    buildCommandsCreateBinary(args)
+    buildCommandsCreateBinary(args),
   ]);
 }

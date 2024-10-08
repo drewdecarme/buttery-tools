@@ -1,16 +1,12 @@
-import { exit } from "node:process";
-
 import type {
   CommandAction,
   CommandMeta,
-  CommandOptions
+  CommandOptions,
 } from "../../../lib/commands/butter-commands.types";
-import { LOG_CLI } from "../../../lib/logger/loggers";
-import { buildButteryTokens } from "../tokens/tokens.buildButteryTokens";
 
 export const meta: CommandMeta = {
   name: "build",
-  description: "Run the buttery-tokens CLI in watch mode."
+  description: "Run the buttery-tokens CLI in watch mode.",
 };
 
 export const options: CommandOptions<{ prompt: boolean }> = {
@@ -19,22 +15,10 @@ export const options: CommandOptions<{ prompt: boolean }> = {
     alias: "np",
     description:
       "A boolean option to disable command line prompts if the proper configurations aren't detected.",
-    required: false
-  }
+    required: false,
+  },
 };
 
-export const action: CommandAction<typeof options> = async ({ options }) => {
-  try {
-    await buildButteryTokens({
-      debug: false,
-      interactive: false,
-      watch: false,
-      prompt: options.prompt,
-      isLocal: false
-    });
-    LOG_CLI.success("Successfully built buttery tokens!");
-    exit();
-  } catch (error) {
-    throw LOG_CLI.fatal(new Error(error as string));
-  }
+export const action: CommandAction<typeof options> = async () => {
+  console.log("TODO!");
 };

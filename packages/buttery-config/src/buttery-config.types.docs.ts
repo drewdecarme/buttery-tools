@@ -75,10 +75,22 @@ export type ButteryConfigDocsHeader = {
 export type ButteryConfigDocs = {
   buildTarget: "cloudflare-pages" | "basic";
   /**
-   * Indicates the way that your .buttery/docs folder is organized.
-   * @default 'section-folders'
+   * An optional key to further configure the routing
+   * of your docs application.
    */
-  routeStrategy?: "section-folders" | "flat";
+  routing?: {
+    /**
+     * Optionally add extra absolute paths to create pages with directories
+     * that are outside the local .buttery/docs folder. This is helpful
+     * when you have a mono-repo of multiple packages and want to co-locate
+     * their docs in their package, but only want to publish one buttery-docs site.
+     *
+     * The directories that are defined here will create new pages entries.
+     * - `routeName` is the name of the route that you wish to create. This will be the route that others will access this directory of docs at.
+     * - `path` is the absolute path where the docs are. Most often, this is in another .buttery/docs folder but it can be elsewhere
+     */
+    pageDirectories?: { routeName: string; path: string }[];
+  };
   /**
    * A key that allows you to configure how the navigation
    * will display as well as how it should be organized. Order is a
