@@ -1,0 +1,28 @@
+{
+  "name": "@buttery/commands",
+  "version": "0.0.1",
+  "description": "Create CLIs using file system based routing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git",
+    "directory": "packages/buttery-commands"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  },
+  "dependencies": {
+    "@buttery/utils": "workspace:^",
+    "commander": "^12.1.0",
+    "handlebars": "^4.7.8"
+  }
+}

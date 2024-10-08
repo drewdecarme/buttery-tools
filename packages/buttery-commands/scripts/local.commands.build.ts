@@ -1,11 +1,11 @@
 import { exit } from "node:process";
-import { buildCommands } from "../.buttery/commands/commands.build/build-commands";
+import { buildCommands } from "../../buttery-tools/.buttery/commands/commands.build/build-commands";
 import { LOG_CLI } from "../lib/logger/loggers";
 
 try {
   await buildCommands({
     watch: false,
-    local: true
+    local: true,
   });
   exit();
 } catch (error) {

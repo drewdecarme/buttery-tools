@@ -1,12 +1,12 @@
 import path from "node:path";
-
 import type { ResolvedButteryConfig } from "@buttery/config";
+import type { BuildOptions } from "esbuild";
 import type {
   CommandAction,
   CommandArgs,
   CommandMeta,
   CommandOptions,
-} from "../../../lib/commands/butter-commands.types";
+} from "./types";
 
 export type CommandsBuildOptions = {
   watch: boolean;
@@ -76,4 +76,13 @@ export type CommandFile = {
    * The absolute path of the built command file
    */
   outPath: string;
+};
+
+export const defaultEsbuildOptions: BuildOptions = {
+  bundle: true,
+  minify: true,
+  format: "esm",
+  platform: "node",
+  target: ["node22.9.0"],
+  packages: "external",
 };

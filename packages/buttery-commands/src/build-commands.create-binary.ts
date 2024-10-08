@@ -1,12 +1,12 @@
 import * as esbuild from "esbuild";
-import { createEsbuildOptions } from "../../../lib/utils/esbuild";
-import { LOG_COMMANDS } from "../commands/commands.log";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import { ESBuildPluginCommands } from "./build-commands.util.esbuild-plugin-commands";
 import {
   type CommandsBuildFunction,
+  defaultEsbuildOptions,
   getButteryCommandsDirectories,
 } from "./build-commands.utils";
+import { LOG } from "./utils";
 
 // to the src directory so it can be transpiled and built again.
 export const buildCommandsCreateBinary: CommandsBuildFunction = async ({
@@ -21,17 +21,16 @@ export const buildCommandsCreateBinary: CommandsBuildFunction = async ({
     const ESBuildCommandsPlugin = new ESBuildPluginCommands(config);
 
     // // Create the build options
-    const esbuildOptions = createEsbuildOptions({
+    const esbuildOptions: esbuild.BuildOptions = {
+      ...defaultEsbuildOptions,
       entryPoints: commandFiles.map((commandFile) => commandFile.inPath),
       outdir: cliDirs.binDir,
       plugins: [ESBuildCommandsPlugin.getPlugin()],
-    });
+    };
 
     // // Run the build in 'watch' mode
     if (options.watch) {
-      LOG_COMMANDS.watch(
-        `Listening for changes in "${cliDirs.commandsDir}"...`
-      );
+      LOG.watch(`Listening for changes in "${cliDirs.commandsDir}"...`);
       const context = await esbuild.context({
         ...esbuildOptions,
         minify: false,

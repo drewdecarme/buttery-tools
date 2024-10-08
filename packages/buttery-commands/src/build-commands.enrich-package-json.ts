@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { LOG_COMMANDS } from "../commands/commands.log";
 import type { CommandsBuildFunctionArgs } from "./build-commands.utils";
+import { LOG } from "./utils";
 
 // TODO: Update this description
 // -- PACKAGE.JSON --
@@ -34,7 +34,7 @@ export async function buildCommandsEnrichPackageJson({
     );
     for (const [key, value] of packageJsonPropertiesEntries) {
       if (!(key in packageJson)) {
-        LOG_COMMANDS.debug(`Adding '${key}' to package.json file.`);
+        LOG.debug(`Adding '${key}' to package.json file.`);
         packageJson[key] = value;
       }
     }

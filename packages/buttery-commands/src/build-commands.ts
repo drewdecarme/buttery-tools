@@ -1,5 +1,4 @@
 import { getButteryConfig } from "@buttery/config";
-import { LOG_COMMANDS } from "../commands/commands.log.js";
 import { buildCommandsCleanDistributionDirs } from "./build-commands.clean-distribution-dirs.js";
 import { buildCommandsCreateBinary } from "./build-commands.create-binary.js";
 import { buildCommandsEnrichPackageJson } from "./build-commands.enrich-package-json.js";
@@ -7,6 +6,7 @@ import type {
   CommandsBuildFunctionArgs,
   CommandsBuildOptions,
 } from "./build-commands.utils";
+import { LOG } from "./utils.js";
 /**
  * This function is the main build command that reads the .buttery/config
  * parses the commands directory and then builds the binary. This command
@@ -14,7 +14,7 @@ import type {
  */
 export async function buildCommands(options: CommandsBuildOptions) {
   const config = await getButteryConfig("commands");
-  LOG_COMMANDS.debug(`Using config: ${config.paths.config}`);
+  LOG.debug(`Using config: ${config.paths.config}`);
 
   const args: CommandsBuildFunctionArgs = {
     config,

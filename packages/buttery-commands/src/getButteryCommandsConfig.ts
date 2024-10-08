@@ -1,6 +1,6 @@
 import { getButteryConfig } from "@buttery/config";
 
-export async function getButteryConfigCommands() {
+export async function getButteryCommandsConfig() {
   return getButteryConfig("commands", {
     defaultConfig: "commands",
   });

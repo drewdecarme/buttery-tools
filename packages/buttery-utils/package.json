@@ -1,7 +1,7 @@
 {
   "name": "@buttery/utils",
   "version": "0.0.1",
-  "description": "Common node utilties that are used throughout all packages",
+  "description": "A collection of commonly used utilities for different runtime's that are used throughout all @buttery packages. Intended to be used internally to the @buttery/tools monorepo as well as externally.",
   "type": "module",
   "sideEffects": false,
   "scripts": {
@@ -9,15 +9,26 @@
     "build": "yarn tsc --project tsconfig.build.json"
   },
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
+    "./node": {
+      "types": "./dist/node/index.d.ts",
+      "import": "./dist/node/index.js",
+      "require": "./dist/node/index.js"
+    },
+    "./isomorphic": {
+      "types": "./dist/isomorphic/index.d.ts",
+      "import": "./dist/isomorphic/index.js",
+      "require": "./dist/isomorphic/index.js"
+    },
+    "./browser": {
+      "types": "./dist/browser/index.d.ts",
+      "import": "./dist/browser/index.js",
+      "require": "./dist/browser/index.js"
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git",
+    "directory": "packages/buttery-tools"
   },
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
   "license": "MIT",

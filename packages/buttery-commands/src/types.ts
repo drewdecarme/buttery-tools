@@ -45,10 +45,10 @@ export type CommandOptionType =
 type InferOptionType<T extends boolean | number | string> = T extends boolean
   ? CommandOptionTypeBoolean
   : T extends number
-    ? CommandOptionTypeNumber
-    : T extends string
-      ? CommandOptionTypeValue
-      : never;
+  ? CommandOptionTypeNumber
+  : T extends string
+  ? CommandOptionTypeValue
+  : never;
 
 export type CommandOptions<
   T extends Record<string, boolean | number | string> = Record<string, string>
@@ -59,10 +59,10 @@ export type CommandOptions<
 type InferOptionValue<T> = T extends { type: "boolean" }
   ? boolean
   : T extends { type: "number" }
-    ? number
-    : T extends { type: "value" }
-      ? string
-      : never;
+  ? number
+  : T extends { type: "value" }
+  ? string
+  : never;
 
 export type CommandAction<T = unknown> = (params: {
   args: unknown;
