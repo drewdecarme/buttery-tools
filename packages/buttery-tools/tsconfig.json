@@ -8,9 +8,7 @@
     "./.buttery/**/*.tsx",
     "./.buttery/.store/**/*.ts",
     "./.buttery/.store/**/*.tsx",
-    "rollup.config.ts",
-    "../buttery-commands/scripts/local.commands.build.ts",
-    "../buttery-commands/scripts/local.commands.dev.ts"
+    "rollup.config.ts"
   ],
   "compilerOptions": {
     "noEmit": true,
@@ -20,5 +18,4 @@
       "@BUTTERY_COMPONENT/*": ["./lib/components/*"]
     }
   }
-  // "exclude": ["artifacts/buttery-docs/apps/**/*"]
 }

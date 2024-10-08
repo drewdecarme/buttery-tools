@@ -33,7 +33,7 @@ async function convertEsbuildResultIntoConfig(
     const script = new Script(moduleContent);
 
     // Run the script in the sandbox environment
-    const scriptContent = createContext(sandbox);
+    const scriptContent = createContext(sandbox, {});
     script.runInContext(scriptContent);
 
     if (!sandbox.module.exports.default) {

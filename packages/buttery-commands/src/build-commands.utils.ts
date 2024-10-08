@@ -1,4 +1,3 @@
-import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/config";
 import type { BuildOptions } from "esbuild";
 import type {
@@ -26,17 +25,6 @@ export type CommandsBuildFunction = (
 export type ButteryCLIDirectories = {
   commandsDir: string;
   binDir: string;
-};
-
-export const getButteryCommandsDirectories = (
-  config: ResolvedButteryConfig<"commands">
-): ButteryCLIDirectories => {
-  const commandsDirName = config.commands.commandsDir ?? "commands";
-
-  return {
-    commandsDir: path.resolve(config.paths.butteryDir, `./${commandsDirName}`),
-    binDir: path.resolve(config.paths.rootDir, "./bin"),
-  };
 };
 
 export type CommandGraphProperties = {

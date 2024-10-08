@@ -1,5 +1,6 @@
 // import { constants, access, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { exhaustiveMatchGuard, kebabToCamel } from "@buttery/utils/isomorphic";
 import type { Plugin } from "esbuild";
 import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
@@ -11,11 +12,13 @@ import {
   // templateCommandParent,
   templateIndex,
 } from "./build-commands.templates";
-import type {
-  CommandFile,
-  CommandGraph,
-  CommandGraphProperties,
+import {
+  type CommandFile,
+  type CommandGraph,
+  type CommandGraphProperties,
+  defaultEsbuildOptions,
 } from "./build-commands.utils";
+import type { CommandOptionType } from "./types";
 import { LOG } from "./utils";
 
 export type EntryTemplateData = {
@@ -324,16 +327,12 @@ export class ESBuildPluginCommands {
           // Build the template using the stdIn VModule for esbuild
           // https://esbuild.github.io/api/#stdin
           await esbuild.build({
-            ...createEsbuildOptions({
-              stdin: {
-                contents: templateResult,
-                loader: "ts",
-              },
-              outfile: path.resolve(
-                this.config.paths.rootDir,
-                "./bin/index.js"
-              ),
-            }),
+            ...defaultEsbuildOptions,
+            stdin: {
+              contents: templateResult,
+              loader: "ts",
+            },
+            outfile: path.resolve(this.config.paths.rootDir, "./bin/index.js"),
             bundle: true,
             minify: true,
             external: ["commander"], // externalize commander

@@ -4,8 +4,8 @@ import { ESBuildPluginCommands } from "./build-commands.util.esbuild-plugin-comm
 import {
   type CommandsBuildFunction,
   defaultEsbuildOptions,
-  getButteryCommandsDirectories,
 } from "./build-commands.utils";
+import { getButteryCommandsDirectories } from "./getButteryCommandsDirectories";
 import { LOG } from "./utils";
 
 // to the src directory so it can be transpiled and built again.
@@ -39,7 +39,7 @@ export const buildCommandsCreateBinary: CommandsBuildFunction = async ({
     }
 
     // Run the build
-    await esbuild.build(esbuildOptions);
+    esbuild.build(esbuildOptions);
   } catch (error) {
     throw new Error("Error when building 'entry': ".concat(error as string));
   }

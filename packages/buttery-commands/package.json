@@ -2,9 +2,25 @@
   "name": "@buttery/commands",
   "version": "0.0.1",
   "description": "Create CLIs using file system based routing",
-  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "spread": "./bin/index.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run:build": "",
+    "run:dev": "",
+    "build": "yarn tsc --project tsconfig.build.json",
+    "spread": "yarn node ./bin/index.js"
+  },
+  "exports": {
+    "./dev": {
+      "types": "./dist/scripts/run.dev.ts",
+      "import": "./dist/run.dev.js"
+    },
+    "./build": {
+      "types": "./dist/scripts/run.build.ts",
+      "import": "./dist/run.build.js"
+    }
   },
   "repository": {
     "type": "git",
@@ -18,11 +34,20 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
-    "esbuild": "^0.24.0"
+    "@buttery/tsconfig": "workspace:^",
+    "@types/fs-extra": "^11",
+    "@types/node": "^22.7.5",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
   },
   "dependencies": {
+    "@buttery/config": "workspace:^",
+    "@buttery/logger": "workspace:^",
     "@buttery/utils": "workspace:^",
+    "@inquirer/prompts": "^7.0.0",
     "commander": "^12.1.0",
+    "esbuild": "^0.24.0",
+    "fs-extra": "^11.2.0",
     "handlebars": "^4.7.8"
   }
 }

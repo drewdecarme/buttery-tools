@@ -25,7 +25,7 @@ export async function buildCommands(options: CommandsBuildOptions) {
   await buildCommandsCleanDistributionDirs(args);
 
   // enrich the local package.json and build the binary directory
-  await Promise.all([
+  Promise.all([
     buildCommandsEnrichPackageJson(args),
     buildCommandsCreateBinary(args),
   ]);
