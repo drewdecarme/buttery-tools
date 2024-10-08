@@ -1,11 +1,11 @@
 import { classes } from "@buttery/components";
+import type { ButteryDocsRouteManifestGraphObject } from "@buttery/config";
 import {
   makeColorBrand,
   makeColorShade,
   makeFontWeight,
   makeRem,
 } from "@buttery/tokens/docs";
-import type { ButteryDocsRouteManifestGraphObject } from "@buttery/tools/docs";
 import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router-dom";

@@ -38,7 +38,7 @@ export async function buildCSSUtils(
           dirs.output.dist,
           "./".concat(tokenConfig.namespace)
         );
-        await buildCSSUtilsTypeScript(tokenConfig, namespacedOutDir);
+        await buildCSSUtilsTypeScript(tokenConfig, namespacedOutDir, dirs);
       }
   );
 

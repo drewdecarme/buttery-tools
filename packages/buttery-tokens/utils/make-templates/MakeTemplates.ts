@@ -8,6 +8,10 @@ import type { MakeTemplate } from "./MakeTemplate";
 export class MakeTemplates {
   private templates: MakeTemplate[];
   private config: ButteryConfigTokens;
+  private css: {
+    outDir: string;
+    fileName: string;
+  };
   outDir: string;
   /**
    * The path of the barrel file that will include
@@ -22,12 +26,23 @@ export class MakeTemplates {
   private configOutFilePath: string;
   tokensCSSFile: string;
 
-  constructor(options: { config: ButteryConfigTokens; outDir: string }) {
+  constructor(options: {
+    config: ButteryConfigTokens;
+    outDir: string;
+    css: {
+      outDir: string;
+      fileName: string;
+    };
+  }) {
     this.config = options.config;
     this.outDir = options.outDir;
+    this.css = options.css;
     this.entryFile = path.resolve(this.outDir, "./index.ts");
     this.configOutFilePath = path.resolve(this.outDir, "./config.ts");
-    this.tokensCSSFile = path.resolve(this.outDir, "./index.css");
+    this.tokensCSSFile = path.resolve(
+      this.css.outDir,
+      `./${this.css.fileName}.css`
+    );
     this.templates = [];
   }
 

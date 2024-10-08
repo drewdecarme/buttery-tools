@@ -1,3 +1,4 @@
+import type { ButteryConfigDocs } from "@buttery/config";
 import {
   makeColorShade,
   makeColorStatic,
@@ -5,7 +6,6 @@ import {
   makeFontWeight,
   makeRem,
 } from "@buttery/tokens/docs";
-import type { ButteryConfigDocs } from "@buttery/tools/config";
 import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router-dom";
@@ -81,7 +81,6 @@ export const LayoutHeader: FC<LayoutHeaderProps> = ({ header }) => {
             {header?.title && <div className={divStyles}>{header.title}</div>}
           </NavLink>
         )}
-
         <LayoutHeaderLinks links={header?.links} />
       </div>
     </header>

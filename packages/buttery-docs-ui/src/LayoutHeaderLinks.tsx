@@ -1,3 +1,4 @@
+import type { ButteryConfigDocsHeaderLink } from "@buttery/config";
 // import { IconComponent } from "@buttery/icons";
 import {
   makeColorBrand,
@@ -6,7 +7,6 @@ import {
   makeRem,
   makeReset,
 } from "@buttery/tokens/docs";
-import type { ButteryConfigDocsHeaderLink } from "@buttery/tools/config";
 import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router-dom";

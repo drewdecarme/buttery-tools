@@ -1,4 +1,5 @@
 import { DropdownNav, useDropdownNav } from "@buttery/components";
+import type { ButteryConfigDocsHeaderLinkTypeDropdown } from "@buttery/config";
 import {
   makeColorBrand,
   makeColorShade,
@@ -7,7 +8,6 @@ import {
   makeRem,
   makeReset,
 } from "@buttery/tokens/docs";
-import type { ButteryConfigDocsHeaderLinkTypeDropdown } from "@buttery/tools/config";
 import { css } from "@linaria/core";
 import { NavLink } from "react-router-dom";
 

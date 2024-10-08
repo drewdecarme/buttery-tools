@@ -129,7 +129,9 @@ export const LayoutBodyTOC: FC<LayoutBodyTOCProps> = ({ tableOfContents }) => {
           []
         )}
         <ul className={ulStyles}>
-          <ContentsNode tableOfContents={tableOfContents?.[0].children ?? []} />
+          <ContentsNode
+            tableOfContents={tableOfContents?.[0]?.children ?? []}
+          />
         </ul>
       </div>
     </article>

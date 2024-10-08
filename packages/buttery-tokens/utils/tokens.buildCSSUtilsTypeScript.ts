@@ -15,6 +15,7 @@ import { MakeTemplateFontWeight } from "./make-templates/template.makeFontWeight
 import { MakeTemplateRem } from "./make-templates/template.makeRem";
 import { MakeTemplateReset } from "./make-templates/template.makeReset";
 import { MakeTemplateResponsive } from "./make-templates/template.makeResponsive";
+import type { ButteryTokensDirectories } from "./tokens.getButteryTokensDirectories";
 import tsconfigJson from "./tsconfig.json" with { type: "json" };
 
 const execAsync = promisify(exec);
@@ -31,11 +32,16 @@ const execAsync = promisify(exec);
  */
 export async function buildCSSUtilsTypeScript(
   tokensConfig: ButteryConfigTokens,
-  namespacedOutDir: string
+  namespacedOutDir: string,
+  dirs: ButteryTokensDirectories
 ) {
   const Templates = new MakeTemplates({
     config: tokensConfig,
-    outDir: namespacedOutDir
+    outDir: namespacedOutDir,
+    css: {
+      outDir: dirs.output.root,
+      fileName: tokensConfig.namespace
+    }
   });
 
   // Register the templates that should be generated
@@ -87,6 +93,9 @@ export async function buildCSSUtilsTypeScript(
   } catch (error) {
     throw LOG.fatal(new Error(error as string));
   }
+
+  // move the styles over to the root directory
+
 
   LOG.debug("Building & transpiling... done.");
 

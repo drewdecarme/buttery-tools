@@ -1,0 +1,32 @@
+{
+  "name": "@buttery/utils",
+  "version": "0.0.1",
+  "description": "Common node utilties that are used throughout all packages",
+  "type": "module",
+  "sideEffects": false,
+  "scripts": {
+    "dev": "yarn build --watch",
+    "build": "yarn tsc --project tsconfig.build.json"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "dependencies": {
+    "@buttery/tsconfig": "workspace:^",
+    "typescript": "^5.6.2"
+  }
+}

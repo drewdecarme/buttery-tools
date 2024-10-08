@@ -1,4 +1,5 @@
-import type { ButteryConfig } from "@buttery/tools/config";
+import type { ButteryConfig } from "@buttery/config";
+
 const config: ButteryConfig = {
   tokens: {
     namespace: "playground",

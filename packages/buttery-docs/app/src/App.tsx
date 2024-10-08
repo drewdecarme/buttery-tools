@@ -1,17 +1,22 @@
+import { header } from "virtual:data";
 import { RouteGraph, routeDocs, routeIndex } from "virtual:routes";
-import type {
-  ButteryDocsRouteManifestEntry,
-  ButteryDocsRouteManifestGraphUtils,
-} from "@buttery/tools/docs";
+import type { ButteryDocsRouteManifestEntry } from "@buttery/config";
 import { Suspense, lazy, useMemo } from "react";
 import { Outlet, Route, Routes, useLocation } from "react-router-dom";
-import { LayoutBody } from "./components/LayoutBody";
-import { LayoutBodyMain } from "./components/LayoutBodyMain";
-import { LayoutBodyTOC } from "./components/LayoutBodyTOC";
-import "@buttery/tokens/docs/css";
+
 import type { Toc as TableOfContents } from "@stefanprobst/rehype-extract-toc";
-import AppLayout from "./App.layout";
-import { LayoutBodyNav } from "./components/LayoutBodyNav";
+
+import "@buttery/tokens/docs.css";
+import "@buttery/docs-ui/css";
+
+import {
+  Layout,
+  LayoutBody,
+  LayoutBodyMain,
+  LayoutBodyNav,
+  LayoutBodyTOC,
+  LayoutHeader,
+} from "@buttery/docs-ui";
 
 function createRoute(
   route: ButteryDocsRouteManifestEntry & {
@@ -63,6 +68,15 @@ function createRoute(
       </Suspense>
     ),
   };
+}
+
+function AppLayout() {
+  return (
+    <Layout>
+      <LayoutHeader header={header} />
+      <Outlet />
+    </Layout>
+  );
 }
 
 function DocsLayout() {
