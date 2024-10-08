@@ -1,6 +1,9 @@
 import { header } from "virtual:data";
 import { RouteGraph, routeDocs, routeIndex } from "virtual:routes";
-import type { ButteryDocsRouteManifestEntry } from "@buttery/config";
+import type {
+  ButteryDocsRouteManifestEntry,
+  ButteryDocsRouteManifestGraphUtils,
+} from "@buttery/config";
 import { Suspense, lazy, useMemo } from "react";
 import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 

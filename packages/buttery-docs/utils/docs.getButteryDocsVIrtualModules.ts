@@ -40,7 +40,7 @@ export function getButteryDocsVirtualModules(
   }
   LOG.debug("Validating index file exists... done.");
 
-  const routes = `import { ButteryDocsRouteManifestGraphUtils } from "@buttery/tools/docs";
+  const routes = `import { ButteryDocsRouteManifestGraphUtils } from "@buttery/config";
 export const routeIndex = {
   routePath: "/",
   aliasPath: "${routeIndex.aliasPath}",
