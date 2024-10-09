@@ -40,8 +40,6 @@ export async function dev() {
     throw LOG.fatal(new Error("Cannot locate root node_modules"));
   }
 
-  console.log(root);
-
   // create the vite middleware
   const vite = await createServer({
     cacheDir: dirs.app.viteCacheDir,
@@ -72,6 +70,7 @@ export async function dev() {
         "@buttery/logger",
         "react-router-dom",
         "@buttery/components",
+        "@buttery/tokens/docs",
         "@buttery/docs-ui",
         "react",
         "react-dom",

@@ -4,7 +4,7 @@
   "description": "A collection of types that are used across all buttery packages / tools",
   "type": "module",
   "scripts": {
-    "build": "yarn tsc --project tsconfig.build.json",
+    "build": "tsx ./scripts/build.ts && tsc --project tsconfig.build.json",
     "dev": "yarn build --watch"
   },
   "repository": {
@@ -23,9 +23,11 @@
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
     "@buttery/tsconfig": "workspace:^",
+    "tsx": "^4.19.1",
     "typescript": "^5.6.2"
   },
   "dependencies": {
+    "@buttery/builder": "workspace:^",
     "@buttery/logger": "workspace:^"
   }
 }
