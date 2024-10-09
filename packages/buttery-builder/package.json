@@ -1,31 +1,32 @@
 {
-  "name": "@buttery/config",
+  "name": "@buttery/builder",
   "version": "0.0.1",
-  "description": "A collection of types that are used across all buttery packages / tools",
+  "description": "A simple CLI that builds the buttery packages that will be used in the @buttery/tools binary",
   "type": "module",
   "scripts": {
-    "build": "yarn tsc --project tsconfig.build.json",
+    "build": "tsc",
     "dev": "yarn build --watch"
+  },
+  "exports": {
+    ".": "./dist/index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
   },
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/drewdecarme/buttery-tools/issues"
-  },
-  "exports": {
-    ".": "./dist/index.js",
-    "./docs": "./dist/docs.types.js"
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
     "@buttery/tsconfig": "workspace:^",
-    "typescript": "^5.6.2"
+    "@types/node": "^22.7.5",
+    "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@buttery/logger": "workspace:^"
+    "@buttery/logger": "workspace:^",
+    "esbuild": "^0.24.0"
   }
 }

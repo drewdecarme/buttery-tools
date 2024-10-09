@@ -4,9 +4,8 @@
     "noEmit": false,
     "outDir": "dist",
     "declaration": true,
-    "declarationMap": true,
     "declarationDir": "dist",
-    "emitDeclarationOnly": true
+    "declarationMap": true
   },
-  "include": ["scripts/run*.ts"]
+  "include": ["src/**/*.ts"]
 }

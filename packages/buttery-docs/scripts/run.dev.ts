@@ -6,7 +6,7 @@ import mdx from "@mdx-js/rollup";
 import rehypeShiki from "@shikijs/rehype";
 import rehypeTOC from "@stefanprobst/rehype-extract-toc";
 import rehypeTOCExport from "@stefanprobst/rehype-extract-toc/mdx";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import wyw from "@wyw-in-js/vite";
 import express from "express";
 import type { RenderToPipeableStreamOptions } from "react-dom/server";

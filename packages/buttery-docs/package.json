@@ -6,7 +6,7 @@
   "sideEffects": false,
   "scripts": {
     "dev": "yarn build --watch",
-    "build": "tsc --project tsconfig.build.json",
+    "build": "tsx ./scripts/scripts.build.ts && tsc --project tsconfig.build.json",
     "run:dev": "tsx ./scripts/dev.local.ts"
   },
   "repository": {
@@ -25,11 +25,21 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "exports": {
-    "./dev": "./dist/scripts/run.dev.js",
-    "./build": "./dist/scripts/run.build.js",
-    "./format": "./dist/scripts/run.format.js"
+    "./dev": {
+      "types": "./dist/scripts/run.dev.ts",
+      "import": "./dist/run.dev.js"
+    },
+    "./build": {
+      "types": "./dist/scripts/run.build.ts",
+      "import": "./dist/run.build.js"
+    },
+    "./format": {
+      "types": "./dist/scripts/run.format.ts",
+      "import": "./dist/run.format.js"
+    }
   },
   "devDependencies": {
+    "@buttery/builder": "workspace:^",
     "@buttery/tsconfig": "workspace:^",
     "@linaria/core": "^6.2.0",
     "@types/express": "5.0.0",
@@ -49,7 +59,7 @@
     "@mdx-js/rollup": "^3.0.1",
     "@shikijs/rehype": "^1.22.0",
     "@stefanprobst/rehype-extract-toc": "^2.2.0",
-    "@vitejs/plugin-react-swc": "^3.7.1",
+    "@vitejs/plugin-react": "^4.3.2",
     "express": "^4.21.0",
     "immer": "^10.1.1",
     "react": "^18.3.1",
