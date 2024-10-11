@@ -1,27 +1,27 @@
+import type { ButteryMeta } from "@buttery/meta";
+import { ButteryMetaProvider } from "@buttery/meta/react";
 import { StrictMode } from "react";
 import {
   type RenderToPipeableStreamOptions,
   renderToPipeableStream,
 } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
-import type { DocumentMeta } from "../../utils/DocumentMeta";
-import { DocumentMetaProvider } from "../../utils/DocumentMeta.context";
 import AppRoutes from "./App";
 
 export async function render(
   url: string,
-  DocumentMeta: DocumentMeta,
+  ButteryMeta: ButteryMeta,
   _ssrManifest?: string,
   options?: RenderToPipeableStreamOptions
 ) {
   // Render the app to a ReadableStream using React's server renderer
   return renderToPipeableStream(
     <StrictMode>
-      <DocumentMetaProvider Meta={DocumentMeta}>
+      <ButteryMetaProvider ButteryMeta={ButteryMeta}>
         <StaticRouter location={url}>
           <AppRoutes />
         </StaticRouter>
-      </DocumentMetaProvider>
+      </ButteryMetaProvider>
     </StrictMode>,
     options
   );

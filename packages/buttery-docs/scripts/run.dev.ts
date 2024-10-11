@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { Transform } from "node:stream";
+import { ButteryMeta } from "@buttery/meta";
 import { findDirectoryUpwards } from "@buttery/utils/node";
 import mdx from "@mdx-js/rollup";
 import rehypeShiki from "@shikijs/rehype";
@@ -16,8 +17,6 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { createServer } from "vite";
 import virtual from "vite-plugin-virtual";
-
-import { DocumentMeta } from "../utils/DocumentMeta";
 import { getButteryDocsConfig } from "../utils/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../utils/docs.getButteryDocsDirectories";
 import { getButteryDocsRouteManifest } from "../utils/docs.getButteryDocsRouteManifest";
@@ -122,7 +121,7 @@ export async function dev() {
 
   // Serve the HTML
   app.use("*", async (req, res) => {
-    const Meta = new DocumentMeta();
+    const Meta = new ButteryMeta();
 
     try {
       const url = req.originalUrl;
@@ -153,7 +152,7 @@ export async function dev() {
               "<!--ssr-css-->",
               `<link rel="stylesheet" href="${dirs.app.css.tokens}" />
 <link rel="stylesheet" href="${dirs.app.css.docsUI}" />
-${Meta.renderNodes()}
+${Meta.renderNodesToString()}
 `
             );
 

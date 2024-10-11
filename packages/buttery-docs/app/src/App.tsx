@@ -1,9 +1,8 @@
 import { header } from "virtual:data";
 import { routeDocs, routeIndex } from "virtual:routes";
+import { Meta } from "@buttery/meta/react";
 import { Suspense, lazy, useMemo } from "react";
 import { Outlet, Route, Routes, useLocation } from "react-router-dom";
-import { DocumentMetaProvider, Meta } from "../../utils/DocumentMeta.context";
-
 import "@buttery/tokens/docs.css";
 import "@buttery/docs-ui/css";
 
@@ -26,6 +25,8 @@ function createRoute(route: typeof routeIndex, options: { isDocs: boolean }) {
       tableOfContents,
       frontmatter,
     } = await route.importComponent();
+
+    console.log(frontmatter);
 
     const MetaTags = () => (
       <Meta>

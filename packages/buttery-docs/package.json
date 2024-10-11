@@ -58,6 +58,7 @@
     "@buttery/config": "workspace:^",
     "@buttery/docs-ui": "workspace:^",
     "@buttery/logger": "workspace:^",
+    "@buttery/meta": "workspace:^",
     "@buttery/utils": "workspace:^",
     "@mdx-js/rollup": "^3.0.1",
     "@shikijs/rehype": "^1.22.0",
