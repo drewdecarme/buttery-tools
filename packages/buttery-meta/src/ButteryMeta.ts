@@ -4,7 +4,7 @@ import ReactDOMServer from "react-dom/server";
 import {
   type ButteryMetaDescriptor,
   ButteryMetaSchema,
-} from "./buttery-meta.utils";
+} from "./buttery-meta.utils.js";
 
 export class ButteryMeta {
   private headNodes: ReactElement[] = [];

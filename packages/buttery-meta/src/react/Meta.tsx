@@ -1,5 +1,5 @@
 import type { FC, ReactElement } from "react";
-import { useButteryMetaContext } from "./ButteryMeta.context";
+import { useButteryMetaContext } from "./ButteryMeta.context.js";
 
 export type MetaProps = {
   children?: ReactElement[];

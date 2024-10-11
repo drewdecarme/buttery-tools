@@ -26,8 +26,6 @@ function createRoute(route: typeof routeIndex, options: { isDocs: boolean }) {
       frontmatter,
     } = await route.importComponent();
 
-    console.log(frontmatter);
-
     if (!options.isDocs) {
       return {
         default: () => (

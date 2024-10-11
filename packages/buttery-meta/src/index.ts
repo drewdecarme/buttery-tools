@@ -1,2 +1,2 @@
-export * from "./ButteryMeta";
-export * from "./buttery-meta.utils";
+export * from "./ButteryMeta.js";
+export * from "./buttery-meta.utils.js";

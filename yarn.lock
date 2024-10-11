@@ -1003,6 +1003,7 @@ __metadata:
     "@buttery/docs": "workspace:^"
     "@buttery/icons": "workspace:^"
     "@buttery/logger": "workspace:"
+    "@buttery/meta": "workspace:^"
     "@buttery/tools": "npm:^0.0.2"
     "@buttery/tsconfig": "workspace:"
     tsx: "npm:4.19.1"

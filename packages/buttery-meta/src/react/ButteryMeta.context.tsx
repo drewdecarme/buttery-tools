@@ -1,6 +1,6 @@
 import React, { type ReactElement } from "react";
 import { type FC, useContext } from "react";
-import type { ButteryMeta } from "../ButteryMeta";
+import type { ButteryMeta } from "../ButteryMeta.js";
 
 type ButteryMetaContextType = {
   ButteryMeta?: ButteryMeta;

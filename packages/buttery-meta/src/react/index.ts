@@ -1,2 +1,2 @@
-export * from "./ButteryMeta.context";
-export * from "./Meta";
+export * from "./ButteryMeta.context.js";
+export * from "./Meta.js";
