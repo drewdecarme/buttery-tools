@@ -28,17 +28,11 @@ function createRoute(route: typeof routeIndex, options: { isDocs: boolean }) {
 
     console.log(frontmatter);
 
-    const MetaTags = () => (
-      <Meta>
-        <title>{frontmatter.title}</title>
-      </Meta>
-    );
-
     if (!options.isDocs) {
       return {
         default: () => (
           <>
-            <MetaTags />
+            <Meta metaJSON={frontmatter} />
             <DocumentComponent />
           </>
         ),
@@ -47,7 +41,7 @@ function createRoute(route: typeof routeIndex, options: { isDocs: boolean }) {
     return {
       default: () => (
         <>
-          <MetaTags />
+          <Meta metaJSON={frontmatter} />
           <LayoutBodyMain>
             <DocumentComponent />
           </LayoutBodyMain>

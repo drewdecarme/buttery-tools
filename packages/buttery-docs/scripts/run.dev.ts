@@ -144,7 +144,7 @@ export async function dev() {
             res.send("<h1>Something went wrong</h1>");
           },
           onAllReady() {
-            LOG.debug("Shell is ready. Streaming SSR...");
+            LOG.debug("App is ready. Streaming SSR...");
             res.status(didError ? 500 : 200);
             res.set({ "Content-Type": "text/html" });
 

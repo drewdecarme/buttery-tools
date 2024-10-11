@@ -15,36 +15,44 @@ const jsonLdSchemaRecord: z.ZodTypeAny = z.lazy(() =>
   )
 );
 
-const ButteryMetaSchemaJsonLd = z.record(
-  z.literal("script:ld+json"),
-  z
+const ButteryMetaSchemaJsonLd = z.object({
+  type: z.literal("script:ld+json"),
+  json: z
     .object({
       "@context": z.string().default("https://schema.org"),
     })
-    .and(jsonLdSchemaRecord)
-);
+    .and(jsonLdSchemaRecord),
+});
 
-const ButteryMetaSchemaTitle = z.object({ title: z.string() });
+const ButteryMetaSchemaTitle = z.object({
+  type: z.literal("title"),
+  title: z.string(),
+});
 
-const ButteryMetaSchemaNameAndContent = z.object({
+const ButteryMetaSchemaName = z.object({
+  type: z.literal("name"),
   name: z.string(),
   content: z.string(),
 });
 
-const ButteryMetaSchemaPropertyAndContent = z.object({
+const ButteryMetaSchemaProperty = z.object({
+  type: z.literal("property"),
   property: z.string(),
   content: z.string(),
 });
 
-const ButteryMetaSchemaMetaAndLink = z
-  .object({ tagName: z.union([z.literal("meta"), z.literal("link")]) })
-  .and(z.record(z.string(), z.string()));
+const ButteryMetaSchemaLink = z.object({
+  type: z.literal("link"),
+  keyValues: z.record(z.string(), z.string()),
+});
 
-export const ButteryMetaSchema = z.union([
-  ButteryMetaSchemaTitle,
-  ButteryMetaSchemaNameAndContent,
-  ButteryMetaSchemaPropertyAndContent,
-  ButteryMetaSchemaJsonLd,
-  ButteryMetaSchemaMetaAndLink,
-]);
+export const ButteryMetaSchema = z
+  .discriminatedUnion("type", [
+    ButteryMetaSchemaTitle,
+    ButteryMetaSchemaName,
+    ButteryMetaSchemaProperty,
+    ButteryMetaSchemaJsonLd,
+    ButteryMetaSchemaLink,
+  ])
+  .array();
 export type ButteryMetaDescriptor = z.infer<typeof ButteryMetaSchema>;
