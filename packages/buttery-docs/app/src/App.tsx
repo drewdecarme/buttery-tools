@@ -2,6 +2,7 @@ import { header } from "virtual:data";
 import { routeDocs, routeIndex } from "virtual:routes";
 import { Suspense, lazy, useMemo } from "react";
 import { Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { DocumentMetaProvider, Meta } from "../../utils/DocumentMeta.context";
 
 import "@buttery/tokens/docs.css";
 import "@buttery/docs-ui/css";
@@ -26,16 +27,26 @@ function createRoute(route: typeof routeIndex, options: { isDocs: boolean }) {
       frontmatter,
     } = await route.importComponent();
 
-    console.log(frontmatter);
+    const MetaTags = () => (
+      <Meta>
+        <title>{frontmatter.title}</title>
+      </Meta>
+    );
 
     if (!options.isDocs) {
       return {
-        default: () => <DocumentComponent />,
+        default: () => (
+          <>
+            <MetaTags />
+            <DocumentComponent />
+          </>
+        ),
       };
     }
     return {
       default: () => (
         <>
+          <MetaTags />
           <LayoutBodyMain>
             <DocumentComponent />
           </LayoutBodyMain>

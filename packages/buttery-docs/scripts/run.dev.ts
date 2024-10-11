@@ -17,6 +17,7 @@ import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { createServer } from "vite";
 import virtual from "vite-plugin-virtual";
 
+import { DocumentMeta } from "../utils/DocumentMeta";
 import { getButteryDocsConfig } from "../utils/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../utils/docs.getButteryDocsDirectories";
 import { getButteryDocsRouteManifest } from "../utils/docs.getButteryDocsRouteManifest";
@@ -121,6 +122,8 @@ export async function dev() {
 
   // Serve the HTML
   app.use("*", async (req, res) => {
+    const Meta = new DocumentMeta();
+
     try {
       const url = req.originalUrl;
 
@@ -131,45 +134,53 @@ export async function dev() {
       const ssrManifest = undefined;
       let didError = false;
 
-      const { pipe, abort } = await ssrEntryModule.render(url, ssrManifest, {
-        onShellError() {
-          res.status(500);
-          res.set({ "Content-Type": "text/html" });
-          res.send("<h1>Something went wrong</h1>");
-        },
-        onAllReady() {
-          res.status(didError ? 500 : 200);
-          res.set({ "Content-Type": "text/html" });
+      const { pipe, abort } = await ssrEntryModule.render(
+        url,
+        Meta,
+        ssrManifest,
+        {
+          onShellError() {
+            res.status(500);
+            res.set({ "Content-Type": "text/html" });
+            res.send("<h1>Something went wrong</h1>");
+          },
+          onAllReady() {
+            LOG.debug("Shell is ready. Streaming SSR...");
+            res.status(didError ? 500 : 200);
+            res.set({ "Content-Type": "text/html" });
 
-          htmlTemplate = htmlTemplate.replace(
-            "<!--ssr-css-->",
-            `<link rel="stylesheet" href="${dirs.app.css.tokens}" />
+            htmlTemplate = htmlTemplate.replace(
+              "<!--ssr-css-->",
+              `<link rel="stylesheet" href="${dirs.app.css.tokens}" />
 <link rel="stylesheet" href="${dirs.app.css.docsUI}" />
+${Meta.renderNodes()}
 `
-          );
+            );
 
-          const [htmlStart, htmlEnd] = htmlTemplate.split("<!--ssr-outlet-->");
+            const [htmlStart, htmlEnd] =
+              htmlTemplate.split("<!--ssr-outlet-->");
 
-          res.write(htmlStart);
+            res.write(htmlStart);
 
-          const transformStream = new Transform({
-            transform(chunk, encoding, callback) {
-              res.write(chunk, encoding);
-              callback();
-            },
-          });
+            const transformStream = new Transform({
+              transform(chunk, encoding, callback) {
+                res.write(chunk, encoding);
+                callback();
+              },
+            });
 
-          transformStream.on("finish", () => {
-            res.end(htmlEnd);
-          });
+            transformStream.on("finish", () => {
+              res.end(htmlEnd);
+            });
 
-          pipe(transformStream);
-        },
-        onError(error: Error) {
-          didError = true;
-          console.error(error);
-        },
-      } as RenderToPipeableStreamOptions);
+            pipe(transformStream);
+          },
+          onError(error: Error) {
+            didError = true;
+            console.error(error);
+          },
+        } as RenderToPipeableStreamOptions
+      );
 
       setTimeout(() => {
         abort();

@@ -1,8 +1,12 @@
-import type { ButteryConfig } from "@buttery/tools/config";
+import type { ButteryConfig } from "@buttery/tools";
+
 const config: ButteryConfig = {
   docs: {
     buildTarget: "basic",
-    routeStrategy: "section-folders"
-  }
+    header: {
+      title: "Playground",
+      links: [[{ type: "internal", href: "/test", text: "Test" }]],
+    },
+  },
 };
 export default config;

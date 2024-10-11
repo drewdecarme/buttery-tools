@@ -53,7 +53,7 @@ export class ButteryLogger {
     info: 2,
     warn: 3,
     error: 4,
-    fatal: 5
+    fatal: 5,
   };
 
   private logLevelColor: { [key in ButteryLogLevel]: ChalkInstance } = {
@@ -62,7 +62,7 @@ export class ButteryLogger {
     debug: chalk.bold.magenta,
     warn: chalk.bold.yellow,
     error: chalk.bold.red,
-    fatal: chalk.bold.redBright
+    fatal: chalk.bold.redBright,
   };
   isBrowser: boolean;
   prefixBgColor: string;
@@ -124,9 +124,7 @@ export class ButteryLogger {
       return [chalk.bgBlack(`[${this.prefix}]`)];
     }
     const prefixTextColor = this.getTextColor(this.prefixBgColor);
-    const prefixLogCSS = `background-color: ${
-      this.prefixBgColor
-    }; font-weight: bold; font-size:8px; line-height: 16px; padding-right: 4px; padding-left: 8px; border-radius: 8px; border-bottom-left-radius: 8px; color: ${prefixTextColor};`;
+    const prefixLogCSS = `background-color: ${this.prefixBgColor}; font-weight: bold; font-size:8px; line-height: 16px; padding-right: 4px; padding-left: 8px; border-radius: 8px; border-bottom-left-radius: 8px; color: ${prefixTextColor};`;
     return [`%c${this.prefix}`, prefixLogCSS];
   }
 
@@ -144,7 +142,7 @@ export class ButteryLogger {
   private printTimestamp() {
     const now = new Date();
     const dateTimeFormat = new Intl.DateTimeFormat("en", {
-      timeStyle: "medium"
+      timeStyle: "medium",
     });
     const timestampString = chalk.gray(`[${dateTimeFormat.format(now)}]`);
 
@@ -178,7 +176,7 @@ export class ButteryLogger {
     {
       level,
       message,
-      method
+      method,
     }: {
       level: ButteryLogLevel;
       message: string;

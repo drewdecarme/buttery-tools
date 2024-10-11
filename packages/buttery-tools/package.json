@@ -15,19 +15,16 @@
     "buttery": "./bin/index.js"
   },
   "scripts": {
-    "build": "yarn cli:build && yarn buttery tokens build && yarn lib:build && yarn docs:build",
-    "dev": "tsx ./scripts/dev.ts",
-    "cli:dev": "tsx ./scripts/local.commands.dev",
-    "cli:build": "tsx ./scripts/local.commands.build",
+    "build": "yarn cli:build && lib:build && yarn docs:build",
+    "cli:dev": "tsx ./scripts/dev.ts",
+    "cli:build": "tsx ./scripts/build.ts",
     "docs:build": "yarn buttery docs build",
     "docs:release": "yarn docs:build && cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools",
-    "lib:build": "rollup -c",
-    "lib:dev": "yarn lib:build --watch",
-    "lib:esbuild": "node ./scripts/buildForDistribution.js && yarn tsc --project ./tsconfig.library.json",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "lib:build": "tsc --project tsconfig.library.json",
+    "lib:dev": "yarn lib:build --watch"
   },
   "exports": {
+    ".": "./dist/index.js",
     "./config": {
       "types": "./dist/config/index.public.d.ts",
       "import": "./dist/config/index.public.js",
