@@ -24,11 +24,6 @@ const ButteryMetaSchemaJsonLd = z.object({
     .and(jsonLdSchemaRecord),
 });
 
-const ButteryMetaSchemaTitle = z.object({
-  type: z.literal("title"),
-  title: z.string(),
-});
-
 const ButteryMetaSchemaName = z.object({
   type: z.literal("name"),
   name: z.string(),
@@ -50,7 +45,6 @@ export const ButteryMetaSchema = z.object({
   title: z.string().optional(),
   meta: z
     .discriminatedUnion("type", [
-      ButteryMetaSchemaTitle,
       ButteryMetaSchemaName,
       ButteryMetaSchemaProperty,
       ButteryMetaSchemaJsonLd,

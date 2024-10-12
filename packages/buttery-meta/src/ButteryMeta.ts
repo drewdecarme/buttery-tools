@@ -52,9 +52,6 @@ export class ButteryMeta {
     this.LOG.debug("Converting JSON to map to node strings...");
     let nodeString = (parsedJson.meta ?? []).reduce<string>((accum, meta) => {
       switch (meta.type) {
-        case "title":
-          return accum.concat(`<title>${meta.title}</title>`);
-
         case "name":
           return accum.concat(
             `<meta name="${meta.name}"  content="${meta.content}"></meta>`

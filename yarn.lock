@@ -942,9 +942,11 @@ __metadata:
     "@types/node": "npm:^22.7.5"
     "@types/react": "npm:^18.3.11"
     "@types/react-dom": "npm:^18.3.0"
+    "@vitejs/plugin-react": "npm:^4.3.2"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     typescript: "npm:^5.6.3"
+    vite: "npm:^5.4.8"
     zod: "npm:^3.23.8"
   languageName: unknown
   linkType: soft

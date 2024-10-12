@@ -2,7 +2,13 @@ import { header } from "virtual:data";
 import { routeDocs, routeIndex } from "virtual:routes";
 import { Meta } from "@buttery/meta/react";
 import { Suspense, lazy, useMemo } from "react";
-import { Outlet, Route, Routes, useLocation } from "react-router-dom";
+import {
+  Outlet,
+  Route,
+  type RouteObject,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import "@buttery/tokens/docs.css";
 import "@buttery/docs-ui/css";
 
@@ -37,15 +43,17 @@ function createRoute(route: typeof routeIndex, options: { isDocs: boolean }) {
       };
     }
     return {
-      default: () => (
-        <>
-          <Meta metaJSON={frontmatter} />
-          <LayoutBodyMain>
-            <DocumentComponent />
-          </LayoutBodyMain>
-          <LayoutBodyTOC tableOfContents={tableOfContents} />
-        </>
-      ),
+      default: () => {
+        return (
+          <>
+            <Meta metaJSON={frontmatter} />
+            <LayoutBodyMain>
+              <DocumentComponent />
+            </LayoutBodyMain>
+            <LayoutBodyTOC tableOfContents={tableOfContents} />
+          </>
+        );
+      },
     };
   });
 
