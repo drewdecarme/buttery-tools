@@ -46,13 +46,18 @@ const ButteryMetaSchemaLink = z.object({
   keyValues: z.record(z.string(), z.string()),
 });
 
-export const ButteryMetaSchema = z
-  .discriminatedUnion("type", [
-    ButteryMetaSchemaTitle,
-    ButteryMetaSchemaName,
-    ButteryMetaSchemaProperty,
-    ButteryMetaSchemaJsonLd,
-    ButteryMetaSchemaLink,
-  ])
-  .array();
+export const ButteryMetaSchema = z.object({
+  title: z.string().optional(),
+  meta: z
+    .discriminatedUnion("type", [
+      ButteryMetaSchemaTitle,
+      ButteryMetaSchemaName,
+      ButteryMetaSchemaProperty,
+      ButteryMetaSchemaJsonLd,
+      ButteryMetaSchemaLink,
+    ])
+    .array()
+    .optional(),
+  headers: z.record(z.string(), z.string()).optional(),
+});
 export type ButteryMetaDescriptor = z.infer<typeof ButteryMetaSchema>;

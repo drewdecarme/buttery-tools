@@ -1,8 +1,8 @@
 ---
-title: Popovers
+title: Popovers | Components | Buttery Tools
 meta:
-  - title: Popovers | Buttery Components
-  - name: description
+  - type: name
+    name: description
     content: A collection of components that make it easy to manage Popovers using the Popover API.
 ---
 

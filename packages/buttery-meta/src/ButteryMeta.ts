@@ -42,7 +42,7 @@ export class ButteryMeta {
         "Error when trying to parse JSON meta data... Cannot convert metaJson to meta or link nodes."
       );
       this.LOG.error(result.error.toString());
-      return [];
+      return {};
     }
     this.LOG.debug("Parsing JSON... done.");
     return result.data;
@@ -50,7 +50,7 @@ export class ButteryMeta {
 
   private convertJsonIntoNodes(parsedJson: ButteryMetaDescriptor): string {
     this.LOG.debug("Converting JSON to map to node strings...");
-    const nodeString = parsedJson.reduce<string>((accum, meta) => {
+    let nodeString = (parsedJson.meta ?? []).reduce<string>((accum, meta) => {
       switch (meta.type) {
         case "title":
           return accum.concat(`<title>${meta.title}</title>`);
@@ -85,6 +85,9 @@ export class ButteryMeta {
           exhaustiveMatchGuard(meta);
       }
     }, "");
+    if (parsedJson.title) {
+      nodeString = nodeString.concat(`<title>${parsedJson.title}</title>`);
+    }
     this.LOG.debug("Converting JSON to map to node strings... done.");
     return nodeString;
   }

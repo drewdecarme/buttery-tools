@@ -1,8 +1,8 @@
 ---
-title: Getting Started
+title: Getting Started | Components | Buttery Tools
 meta:
-  - title: Getting Started | Buttery Components
-  - name: description
+  - type: name
+    name: description
     content: Starting out with Buttery Components is incredibly straight forward.
 ---
 
