@@ -1,132 +1,58 @@
 import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { Transform } from "node:stream";
 import { ButteryMeta } from "@buttery/meta";
-import { findDirectoryUpwards } from "@buttery/utils/node";
-import mdx from "@mdx-js/rollup";
-import rehypeShiki from "@shikijs/rehype";
-import rehypeTOC from "@stefanprobst/rehype-extract-toc";
-import rehypeTOCExport from "@stefanprobst/rehype-extract-toc/mdx";
-import react from "@vitejs/plugin-react";
-import wyw from "@wyw-in-js/vite";
 import express from "express";
 import type { RenderToPipeableStreamOptions } from "react-dom/server";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeSlug from "rehype-slug";
-import remarkFrontmatter from "remark-frontmatter";
-import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { createServer } from "vite";
-import virtual from "vite-plugin-virtual";
 import { getButteryDocsConfig } from "../utils/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../utils/docs.getButteryDocsDirectories";
-import { getButteryDocsRouteManifest } from "../utils/docs.getButteryDocsRouteManifest";
-import { getButteryDocsVirtualModules } from "../utils/docs.getButteryDocsVIrtualModules";
+import { getButteryDocsViteConfig } from "../utils/docs.getButteryDocsViteConfig";
 import { LOG } from "../utils/docs.utils";
 
 export async function dev() {
-  // Reconcile some variables
+  // Process and store configurations
   const config = await getButteryDocsConfig();
   const dirs = await getButteryDocsDirectories(config);
-  const routeManifest = getButteryDocsRouteManifest(dirs);
-  const virtualModules = getButteryDocsVirtualModules(config, routeManifest);
+  const viteConfig = getButteryDocsViteConfig(config, dirs);
+
+  // Set some constants
+  const ABORT_DELAY = 10_000;
+  const PORT = 4000;
 
   // create an express app
   const app = express();
-  const ABORT_DELAY = 10_000;
-
-  const root = findDirectoryUpwards("node_modules", "react");
-
-  if (!root) {
-    throw LOG.fatal(new Error("Cannot locate root node_modules"));
-  }
 
   // create the vite middleware
   const vite = await createServer({
-    cacheDir: dirs.app.viteCacheDir,
+    ...viteConfig,
     root: dirs.app.root, // Root directory for the Vite project
-    publicDir: dirs.srcDocs.public,
     appType: "custom", // Avoid Vite's default HTML handling,
+    clearScreen: false,
     server: {
       middlewareMode: true, // Enable SSR middleware mode
       hmr: {
         port: 3005,
       },
-      fs: {
-        strict: false,
-        allow: [path.resolve(root, "../")],
-      },
     },
-
-    clearScreen: false,
-    resolve: {
-      preserveSymlinks: true,
-      extensions: [".js", ".jsx", ".ts", ".tsx", ".mdx"],
-      alias: {
-        "@docs": dirs.srcDocs.root,
-      },
-    },
-    optimizeDeps: {
-      include: [
-        "@buttery/logger",
-        "react-router-dom",
-        "@buttery/components",
-        "@buttery/tokens/docs",
-        "@buttery/docs-ui",
-        "react",
-        "react-dom",
-        "react-dom/client",
-      ],
-    },
-    plugins: [
-      mdx({
-        remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
-        rehypePlugins: [
-          rehypeSlug,
-          rehypeTOC,
-          rehypeTOCExport,
-          [
-            rehypeAutolinkHeadings,
-            {
-              behavior: "wrap",
-              headingProperties: {
-                className: "heading",
-              },
-            },
-          ],
-          [
-            rehypeShiki,
-            {
-              theme: "dark-plus",
-            },
-          ],
-        ],
-      }),
-      react(),
-      virtual({
-        "virtual:data": virtualModules.data,
-        "virtual:routes": virtualModules.routes,
-      }),
-      wyw({
-        include: "/**/*.(ts|tsx)",
-        babelOptions: {
-          compact: false,
-          presets: ["@babel/preset-typescript", "@babel/preset-react"],
-        },
-      }),
-    ],
   });
 
-  // Add the vite middleware
+  // Add vite as middleware
   app.use(vite.middlewares);
 
-  // Serve the HTML
+  // Serve the HTML upon every request
   app.use("*", async (req, res) => {
+    // instantiate a new instances of Meta
+    // which will track any meta tags or json used in the
+    // doc files for SEO
     const Meta = new ButteryMeta();
 
     try {
       const url = req.originalUrl;
 
+      // Load the server-entry file as a module
       const ssrEntryModule = await vite.ssrLoadModule(dirs.app.appEntryServer);
+
+      // Get the templates and add the vite scripts automatically
       const templateFs = await readFile(dirs.app.htmlTemplate, "utf8");
       let htmlTemplate = await vite.transformIndexHtml(url, templateFs);
 
@@ -155,11 +81,14 @@ ${Meta.renderNodesToString()}
 `
             );
 
+            // Split the HTML into two parts
             const [htmlStart, htmlEnd] =
               htmlTemplate.split("<!--ssr-outlet-->");
 
+            // Start writing the first part with the headers
             res.write(htmlStart);
 
+            // Stream the chunks in one at a time
             const transformStream = new Transform({
               transform(chunk, encoding, callback) {
                 res.write(chunk, encoding);
@@ -167,10 +96,13 @@ ${Meta.renderNodesToString()}
               },
             });
 
+            // When the stream is complete, tack on the end of
+            // the HTML
             transformStream.on("finish", () => {
               res.end(htmlEnd);
             });
 
+            // pipe the stream back into the response
             pipe(transformStream);
           },
           onError(error: Error) {
@@ -192,7 +124,7 @@ ${Meta.renderNodesToString()}
     }
   });
 
-  app.listen(4000, () => {
-    LOG.watch("Local SSR server running at http://localhost:4000");
+  app.listen(PORT, () => {
+    LOG.watch(`Local SSR server running at http://localhost:${PORT}`);
   });
 }
