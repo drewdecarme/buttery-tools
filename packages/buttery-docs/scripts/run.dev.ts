@@ -39,7 +39,10 @@ export async function dev() {
   // Add vite as middleware
   app.use(vite.middlewares);
 
-  // Serve the HTML upon every request
+  // Serve the HTML upon every request for a full page reload
+  // This will only happen on full refresh and then the client
+  // will be hydrated and any subsequent applications will be managed
+  // by the react router
   app.use("*", async (req, res) => {
     // instantiate a new instances of Meta
     // which will track any meta tags or json used in the
