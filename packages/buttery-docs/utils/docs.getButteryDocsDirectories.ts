@@ -57,7 +57,8 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
     app: {
       root: appRootDir,
       viteCacheDir: path.resolve(config.paths.storeDir, "./docs/.vite-cache"),
-      appEntryServer: path.resolve(appRootDir, "./src/entry-server.tsx"),
+      appEntryServer: path.resolve(appRootDir, "./src/entry.server.tsx"),
+      appEntryClient: path.resolve(appRootDir, "./src/entry.client.tsx"),
       htmlTemplate: path.resolve(appRootDir, "./index.html"),
       css: {
         tokens: tokensCss,

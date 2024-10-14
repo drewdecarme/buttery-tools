@@ -96,7 +96,7 @@ function DocsLayout() {
   );
 }
 
-export default function AppRoutes() {
+export function App() {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>

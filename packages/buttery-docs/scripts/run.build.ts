@@ -22,6 +22,9 @@ export async function build() {
         emptyOutDir: true,
         manifest: true,
         outDir: path.resolve(dirs.output.bundleDir, "./client"),
+        rollupOptions: {
+          input: dirs.app.appEntryClient,
+        },
       },
     });
     LOG.debug("Building client bundle for production... done");

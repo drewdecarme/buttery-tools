@@ -1,4 +1,3 @@
-import { readFile } from "node:fs/promises";
 import { Transform } from "node:stream";
 import { ButteryMeta } from "@buttery/meta";
 import express from "express";
@@ -8,6 +7,32 @@ import { getButteryDocsConfig } from "../utils/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../utils/docs.getButteryDocsDirectories";
 import { getButteryDocsViteConfig } from "../utils/docs.getButteryDocsViteConfig";
 import { LOG } from "../utils/docs.utils";
+
+const html = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charSet="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html, body {
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+    <!--ssr-links-->
+    <!--ssr-css-->
+  </head>
+  <body>
+    <!--ssr-outlet-->
+  </body>
+</html>
+`;
 
 export async function dev() {
   // Process and store configurations
@@ -54,10 +79,7 @@ export async function dev() {
 
       // Load the server-entry file as a module
       const ssrEntryModule = await vite.ssrLoadModule(dirs.app.appEntryServer);
-
-      // Get the templates and add the vite scripts automatically
-      const templateFs = await readFile(dirs.app.htmlTemplate, "utf8");
-      let htmlTemplate = await vite.transformIndexHtml(url, templateFs);
+      let htmlTemplate = await vite.transformIndexHtml(url, html);
 
       const ssrManifest = undefined;
       let didError = false;

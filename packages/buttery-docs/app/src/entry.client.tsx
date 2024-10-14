@@ -2,14 +2,14 @@ import { ButteryMetaProvider } from "@buttery/meta/react";
 import { StrictMode } from "react";
 import ReactDOMClient from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import AppRoutes from "./App";
+import { App } from "./App";
 
 ReactDOMClient.hydrateRoot(
-  document.getElementById("root") as HTMLElement,
+  document.body,
   <StrictMode>
     <ButteryMetaProvider>
       <BrowserRouter>
-        <AppRoutes />
+        <App />
       </BrowserRouter>
     </ButteryMetaProvider>
   </StrictMode>
