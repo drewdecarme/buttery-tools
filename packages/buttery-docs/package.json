@@ -9,7 +9,8 @@
     "build": "tsx ./scripts/dist.build-package-for-distribution.ts && yarn types",
     "types": "tsc --project tsconfig.types.json",
     "local:dev": "tsx ./scripts/local.run-docs-dev-server.ts",
-    "local:build": "tsx ./scripts/local.build-docs-for-production.ts"
+    "local:build": "tsx ./scripts/local.build-docs-for-production.ts",
+    "deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-docs-cf"
   },
   "repository": {
     "type": "git",

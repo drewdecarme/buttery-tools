@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
 
 ReactDOMClient.hydrateRoot(
-  document.body,
+  document.getElementById("root") as HTMLElement,
   <StrictMode>
     <ButteryMetaProvider>
       <BrowserRouter>

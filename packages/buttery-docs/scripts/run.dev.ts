@@ -7,32 +7,7 @@ import { getButteryDocsConfig } from "../utils/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../utils/docs.getButteryDocsDirectories";
 import { getButteryDocsViteConfig } from "../utils/docs.getButteryDocsViteConfig";
 import { LOG } from "../utils/docs.utils";
-
-const html = `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charSet="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      html, body {
-        padding: 0;
-        margin: 0;
-      }
-    </style>
-    <!--ssr-links-->
-    <!--ssr-css-->
-  </head>
-  <body>
-    <!--ssr-outlet-->
-  </body>
-</html>
-`;
+import { generateHTMLTemplate } from "../utils/generateHTMLTemplate";
 
 export async function dev() {
   // Process and store configurations
@@ -50,9 +25,15 @@ export async function dev() {
   // create the vite middleware
   const vite = await createServer({
     ...viteConfig,
+    // build: {
+    //   rollupOptions: {
+    //     input: dirs.app.appEntryServer,
+    //   },
+    // },
     root: dirs.app.root, // Root directory for the Vite project
     appType: "custom", // Avoid Vite's default HTML handling,
     clearScreen: false,
+
     server: {
       middlewareMode: true, // Enable SSR middleware mode
       hmr: {
@@ -79,7 +60,21 @@ export async function dev() {
 
       // Load the server-entry file as a module
       const ssrEntryModule = await vite.ssrLoadModule(dirs.app.appEntryServer);
-      let htmlTemplate = await vite.transformIndexHtml(url, html);
+
+      // create the HTML template
+      let html = generateHTMLTemplate({
+        cssLinks: [dirs.app.css.tokens, dirs.app.css.docsUI],
+        jsScripts: [],
+        metaTags: Meta.renderNodesToString(),
+      });
+
+      html = html.replace(
+        "<!--ssr-entry-->",
+        `<script type="module" src="${dirs.app.appEntryClient}"></script>`
+      );
+
+      // allow vite to inject the necessary scripts
+      const htmlTemplate = await vite.transformIndexHtml(url, html);
 
       const ssrManifest = undefined;
       let didError = false;
@@ -97,14 +92,6 @@ export async function dev() {
           onAllReady() {
             res.status(didError ? 500 : 200);
             res.set({ "Content-Type": "text/html" });
-
-            htmlTemplate = htmlTemplate.replace(
-              "<!--ssr-css-->",
-              `<link rel="stylesheet" href="${dirs.app.css.tokens}" />
-<link rel="stylesheet" href="${dirs.app.css.docsUI}" />
-${Meta.renderNodesToString()}
-`
-            );
 
             // Split the HTML into two parts
             const [htmlStart, htmlEnd] =

@@ -1,3 +1,6 @@
+// add the beginning of your app entry
+import "vite/modulepreload-polyfill";
+
 import type { ButteryMeta } from "@buttery/meta";
 import { ButteryMetaProvider } from "@buttery/meta/react";
 import { StrictMode } from "react";

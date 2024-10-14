@@ -1,4 +1,4 @@
-import { render } from "../build/server/entry-server.js";
+import { render } from "../build/server/entry.server.js";
 
 export async function onRequest(context) {
   const { request } = context;
