@@ -6,10 +6,10 @@
   "sideEffects": false,
   "scripts": {
     "dev": "yarn local:dev",
-    "lib:build": "tsx ./scripts/local.build.ts && tsc --project tsconfig.build.json",
-    "local:dev": "tsx ./scripts/local.dev.ts",
-    "local:build": "tsx ./scripts/local.build.ts",
-    "local:create": "tsx ./scripts/local.create.ts"
+    "build": "tsx ./scripts/dist.build-package-for-distribution.ts && yarn types",
+    "types": "tsc --project tsconfig.types.json",
+    "local:dev": "tsx ./scripts/local.run-docs-dev-server.ts",
+    "local:build": "tsx ./scripts/local.build-docs-for-production.ts"
   },
   "repository": {
     "type": "git",

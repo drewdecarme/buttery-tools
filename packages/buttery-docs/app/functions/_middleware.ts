@@ -1,4 +1,4 @@
-import { render } from "../dist/server.js";
+import { render } from "../build/server/entry-server.js";
 
 export async function onRequest(context) {
   const { request } = context;
@@ -43,7 +43,7 @@ export async function onRequest(context) {
 </html>`;
 
     return new Response(htmlTemplate, {
-      headers: { "Content-Type": "text/html" }
+      headers: { "Content-Type": "text/html" },
     });
   } catch (error) {
     console.error("Error during SSR:", error);
