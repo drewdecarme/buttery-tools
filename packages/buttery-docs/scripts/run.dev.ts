@@ -25,15 +25,9 @@ export async function dev() {
   // create the vite middleware
   const vite = await createServer({
     ...viteConfig,
-    // build: {
-    //   rollupOptions: {
-    //     input: dirs.app.appEntryServer,
-    //   },
-    // },
     root: dirs.app.root, // Root directory for the Vite project
     appType: "custom", // Avoid Vite's default HTML handling,
     clearScreen: false,
-
     server: {
       middlewareMode: true, // Enable SSR middleware mode
       hmr: {
@@ -62,16 +56,11 @@ export async function dev() {
       const ssrEntryModule = await vite.ssrLoadModule(dirs.app.appEntryServer);
 
       // create the HTML template
-      let html = generateHTMLTemplate({
+      const html = generateHTMLTemplate({
         cssLinks: [dirs.app.css.tokens, dirs.app.css.docsUI],
-        jsScripts: [],
+        jsScripts: [dirs.app.appEntryClient], // during
         metaTags: Meta.renderNodesToString(),
       });
-
-      html = html.replace(
-        "<!--ssr-entry-->",
-        `<script type="module" src="${dirs.app.appEntryClient}"></script>`
-      );
 
       // allow vite to inject the necessary scripts
       const htmlTemplate = await vite.transformIndexHtml(url, html);
