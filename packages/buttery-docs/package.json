@@ -6,10 +6,12 @@
   "sideEffects": false,
   "scripts": {
     "dev": "yarn local:dev",
-    "build": "tsx ./scripts/dist.build-package-for-distribution.ts && yarn types",
+    "build": "tsx ./scripts/dist.build-package-for-distribution.ts && yarn types && yarn lib:build",
     "types": "tsc --project tsconfig.types.json",
     "local:dev": "tsx ./scripts/local.run-docs-dev-server.ts",
     "local:build": "tsx ./scripts/local.build-docs-for-production.ts",
+    "lib:build": "tsc --project tsconfig.library.json",
+    "lib:dev": "yarn lib:build --watch",
     "deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-docs-cf",
     "pages:dev": "cd ./.buttery/docs/dist && wrangler pages dev ./build/client"
   },
@@ -40,11 +42,13 @@
     "./format": {
       "types": "./dist/scripts/run.format.ts",
       "import": "./dist/run.format.js"
-    }
+    },
+    "./server": "./dist/server/index.js"
   },
   "devDependencies": {
     "@buttery/builder": "workspace:^",
     "@buttery/tsconfig": "workspace:^",
+    "@cloudflare/workers-types": "^4.20241011.0",
     "@linaria/core": "^6.2.0",
     "@types/express": "5.0.0",
     "@types/node": "^22.7.4",

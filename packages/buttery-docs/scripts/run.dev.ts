@@ -3,11 +3,11 @@ import { ButteryMeta } from "@buttery/meta";
 import express from "express";
 import type { RenderToPipeableStreamOptions } from "react-dom/server";
 import { createServer } from "vite";
+import { generateHTMLTemplate } from "../lib/server/generateHTMLTemplate";
 import { getButteryDocsConfig } from "../utils/docs.getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../utils/docs.getButteryDocsDirectories";
 import { getButteryDocsViteConfig } from "../utils/docs.getButteryDocsViteConfig";
 import { LOG } from "../utils/docs.utils";
-import { generateHTMLTemplate } from "../utils/generateHTMLTemplate";
 
 export async function dev() {
   // Process and store configurations
@@ -56,14 +56,14 @@ export async function dev() {
       const ssrEntryModule = await vite.ssrLoadModule(dirs.app.appEntryServer);
 
       // create the HTML template
-      const html = generateHTMLTemplate({
+      const { htmlDev } = generateHTMLTemplate({
         cssLinks: [dirs.app.css.tokens, dirs.app.css.docsUI],
         jsScripts: [dirs.app.appEntryClient], // during
-        metaTags: Meta.renderNodesToString(),
+        Meta,
       });
 
       // allow vite to inject the necessary scripts
-      const htmlTemplate = await vite.transformIndexHtml(url, html);
+      const htmlTemplate = await vite.transformIndexHtml(url, htmlDev);
 
       const ssrManifest = undefined;
       let didError = false;
