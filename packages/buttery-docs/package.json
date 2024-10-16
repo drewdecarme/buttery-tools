@@ -10,7 +10,8 @@
     "types": "tsc --project tsconfig.types.json",
     "local:dev": "tsx ./scripts/local.run-docs-dev-server.ts",
     "local:build": "tsx ./scripts/local.build-docs-for-production.ts",
-    "deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-docs-cf"
+    "deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-docs-cf",
+    "pages:dev": "cd ./.buttery/docs/dist && wrangler pages dev ./build/client"
   },
   "repository": {
     "type": "git",

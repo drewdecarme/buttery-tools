@@ -23,6 +23,11 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
   const userCreatedDocsDir = path.resolve(config.paths.butteryDir, "./docs");
 
   const appRootDir = path.resolve(nodeModulesDocsDir.target, "./app");
+  const serverEntryFileName =
+    process.env.NODE_ENV === "production"
+      ? `entry.server.${config.docs.buildTarget}.tsx`
+      : "entry.server.tsx";
+  const appEntryServer = path.join(appRootDir, "src", serverEntryFileName);
 
   // output dirs
   const outputRootDir = path.resolve(userCreatedDocsDir, "./dist");
@@ -57,7 +62,7 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
     app: {
       root: appRootDir,
       viteCacheDir: path.resolve(config.paths.storeDir, "./docs/.vite-cache"),
-      appEntryServer: path.resolve(appRootDir, "./src/entry.server.tsx"),
+      appEntryServer,
       appEntryClient: path.resolve(appRootDir, "./src/entry.client.tsx"),
       htmlTemplate: path.resolve(appRootDir, "./index.html"),
       css: {

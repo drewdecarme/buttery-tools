@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "dev:cf": "yarn build && npx wrangler pages dev ./dist",
+    "dev:cf": "yarn build && npx wrangler pages ./dist/build/client dev",
     "build": "vite build",
     "deploy": "npx wrangler pages publish ./dist"
   },

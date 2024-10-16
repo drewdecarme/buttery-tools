@@ -1,3 +1,9 @@
+function ensureLeadingSlash(entries: string[]): string[] {
+  return entries.map((entry) =>
+    entry.startsWith("/") ? entry : "/".concat(entry)
+  );
+}
+
 export function generateHTMLTemplate({
   cssLinks,
   jsScripts,
@@ -12,7 +18,7 @@ export function generateHTMLTemplate({
   <head>
     <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    ${cssLinks.reduce<string>(
+    ${ensureLeadingSlash(cssLinks).reduce<string>(
       (accum, href) =>
         accum.concat(`<link rel="stylesheet" href="${href}" />\n`),
       ""
@@ -36,7 +42,7 @@ export function generateHTMLTemplate({
     
   </body>
    
-  ${jsScripts.reduce<string>(
+  ${ensureLeadingSlash(jsScripts).reduce<string>(
     (accum, src) =>
       accum.concat(`<script type="module" src="${src}"></script>`),
     ""
