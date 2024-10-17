@@ -14,6 +14,7 @@ const config: ButteryConfig = {
         ],
       ],
     },
+    order: {},
   },
 };
 export default config;

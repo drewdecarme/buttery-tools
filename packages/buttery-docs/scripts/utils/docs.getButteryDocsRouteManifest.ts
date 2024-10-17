@@ -4,6 +4,7 @@ import type { ButteryDocsRouteManifest } from "@buttery/config";
 import { printAsBullets } from "@buttery/logger";
 import type { ButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
 import { LOG } from "./docs.utils";
+import { getDocumentConfigFromFrontmatter } from "./getDocumentConfigFromFrontmatter";
 
 const shouldReadDirectory = (dirent: Dirent): boolean => {
   // TODO: Figure out what level the dirent is in relation to the root directory
@@ -63,9 +64,11 @@ export function getButteryDocsRouteManifest(
 
       // Recursively read the nested directories in the .buttery/docs folder.
       // that aren't pre-determined to be ignored.
+      //
       // Note that since we're only specifying one level deep so we need
       // to track to make sure that we don't include any folders that
       // the user nested below 1 level in the docs.
+      //
       // The rationale for making this recursive is that at some-point in the future
       // there might be a need to expand the routing conventions into something more
       // complex and I felt it better to adapt a recursive function than a simple reduction
@@ -81,9 +84,15 @@ export function getButteryDocsRouteManifest(
         LOG.debug(`Creating manifest for route: ${routeId}`);
         const aliasPath = routeId;
         const routePath = getRoutePathFromRouteId(routeId);
+        const docConfig = getDocumentConfigFromFrontmatter(
+          routeId,
+          direntFullPath
+        );
+        console.log(docConfig);
         const routeSegments = routePath.split("/");
         const fileName = routeSegments[routeSegments.length - 1];
-        const fileNameFormatted = fileName.replace("-", " ");
+        const fileNameFormatted =
+          docConfig.config.navBarDisplay || fileName.replaceAll("-", " ");
         const isRoot = routeId.startsWith("/_index");
 
         routeManifest[routeId] = {

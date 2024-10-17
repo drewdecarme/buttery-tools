@@ -1,5 +1,7 @@
 ---
 title: Deployment
+config:
+  navBarDisplay: Deploying your application
 ---
 
 # Deployment
