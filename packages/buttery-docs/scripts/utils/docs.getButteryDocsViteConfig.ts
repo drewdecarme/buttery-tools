@@ -23,7 +23,7 @@ export function getButteryDocsViteConfig(
   // the virtual modules that will tell vite exactly where
   // the dynamic imports are. This allows us to get around the issue
   // where you can't supply the async import a dynamic path
-  const routeManifest = getButteryDocsRouteManifest(dirs);
+  const routeManifest = getButteryDocsRouteManifest(config, dirs);
   const virtualModules = getButteryDocsVirtualModules(config, routeManifest);
 
   const viteConfig = defineConfig({

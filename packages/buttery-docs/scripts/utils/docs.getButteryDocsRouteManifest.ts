@@ -2,7 +2,9 @@ import { type Dirent, readdirSync } from "node:fs";
 import path from "node:path";
 import type { ButteryDocsRouteManifest } from "@buttery/config";
 import { printAsBullets } from "@buttery/logger";
+import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import type { ButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
+import { orderButteryDocsRouteManifest } from "./docs.orderButteryDocsRouteManifest";
 import { LOG } from "./docs.utils";
 import { getDocumentConfigFromFrontmatter } from "./getDocumentConfigFromFrontmatter";
 
@@ -49,6 +51,7 @@ function getRoutePathFromRouteId(routeId: string): string {
  * dynamically imported.
  */
 export function getButteryDocsRouteManifest(
+  config: ButteryDocsConfig,
   dirs: ButteryDocsDirectories
 ): ButteryDocsRouteManifest {
   const routeManifest: ButteryDocsRouteManifest = {};
@@ -107,5 +110,8 @@ export function getButteryDocsRouteManifest(
 
   createRoutes(dirs.srcDocs.root);
 
-  return routeManifest;
+  if (!config.docs.order) return routeManifest;
+  LOG.debug("Detected an order to the docs... ordering the manifest.");
+
+  return orderButteryDocsRouteManifest(config, routeManifest);
 }

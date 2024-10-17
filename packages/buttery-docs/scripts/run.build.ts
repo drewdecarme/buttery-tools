@@ -16,7 +16,7 @@ export async function build() {
   const config = await getButteryDocsConfig();
   const dirs = await getButteryDocsDirectories(config);
   const viteConfig = getButteryDocsViteConfig(config, dirs);
-  const butteryManifest = getButteryDocsRouteManifest(dirs);
+  const butteryManifest = getButteryDocsRouteManifest(config, dirs);
 
   try {
     LOG.debug("Building client bundle for production...");
