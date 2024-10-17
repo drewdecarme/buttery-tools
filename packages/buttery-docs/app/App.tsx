@@ -2,13 +2,15 @@ import { header } from "virtual:data";
 import { routeDocs, routeIndex } from "virtual:routes";
 import { Meta } from "@buttery/meta/react";
 import { Suspense, lazy, useMemo } from "react";
-import { Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import "@buttery/tokens/docs.css";
 import "@buttery/docs-ui/css";
 
 import {
   Layout,
   LayoutBody,
+  LayoutBodyBreadcrumb,
+  LayoutBodyBreadcrumbText,
   LayoutBodyMain,
   LayoutBodyNav,
   LayoutBodyTOC,
@@ -76,15 +78,42 @@ function AppLayout() {
 
 function DocsLayout() {
   const { pathname } = useLocation();
+
   const graph = useMemo(() => {
     const pageRoute = pathname.split("/").filter(Boolean)[0];
     const graph = routeModuleGraph.getRouteGraphNodeByRoutePath(pageRoute);
     return graph;
   }, [pathname]);
 
+  const breadcrumbLinks = routeModuleGraph.constructBreadcrumbs(pathname);
+
   return (
     <LayoutBody>
       <LayoutBodyNav graph={graph} />
+      <LayoutBodyBreadcrumb>
+        <ul>
+          {breadcrumbLinks.map((link, i, origArr) => {
+            if (i !== origArr.length - 1) {
+              return (
+                <li key={link.href}>
+                  <Link to={link.href}>
+                    <LayoutBodyBreadcrumbText>
+                      {link.display}
+                    </LayoutBodyBreadcrumbText>
+                  </Link>
+                </li>
+              );
+            }
+            return (
+              <li key={link.href}>
+                <LayoutBodyBreadcrumbText dxIsActive>
+                  {link.display}
+                </LayoutBodyBreadcrumbText>
+              </li>
+            );
+          })}
+        </ul>
+      </LayoutBodyBreadcrumb>
       <Outlet />
     </LayoutBody>
   );

@@ -1,6 +1,7 @@
 {
   "extends": "@buttery/tsconfig/library",
   "compilerOptions": {
+    "lib": ["DOM.Iterable"],
     "noEmit": true,
     "types": ["@cloudflare/workers-types"]
   },

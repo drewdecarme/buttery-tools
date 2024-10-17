@@ -1,5 +1,6 @@
 import { routeGraph } from "virtual:routes";
 import type { ButteryDocsRouteManifestGraphObject } from "@buttery/config";
+import type { ReactNode } from "react";
 import { LOG } from "./LOG";
 
 /**
@@ -8,9 +9,11 @@ import { LOG } from "./LOG";
  */
 export class ButteryDocsRouteManifestGraphUtils {
   private routeManifestGraph: ButteryDocsRouteManifestGraphObject;
+  breadcrumbLinks: string[];
 
   constructor(routeManifestGraph: ButteryDocsRouteManifestGraphObject) {
     this.routeManifestGraph = routeManifestGraph;
+    this.breadcrumbLinks = [];
   }
 
   get graph() {
@@ -48,6 +51,24 @@ export class ButteryDocsRouteManifestGraphUtils {
     }
 
     return routeGraphNode;
+  }
+
+  constructBreadcrumbs(pathname: string) {
+    const segments = pathname.split("/").filter(Boolean);
+    const links: { href: string; display: string }[] = [];
+
+    let currentGraph = this.routeManifestGraph;
+
+    for (const segment of segments) {
+      const graphEntry = currentGraph[segment];
+      links.push({
+        href: graphEntry.routePath,
+        display: graphEntry.fileNameFormatted,
+      });
+      currentGraph = graphEntry.pages;
+    }
+
+    return links;
   }
 }
 
