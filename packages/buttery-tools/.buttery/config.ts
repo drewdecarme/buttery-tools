@@ -9,7 +9,6 @@ const config: ButteryConfig = {
   },
   docs: {
     buildTarget: "cloudflare-pages",
-
     header: {
       title: "buttery.tools",
       logo: {
