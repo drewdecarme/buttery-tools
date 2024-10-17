@@ -21,7 +21,7 @@
 //     return exhaustiveMatchGuard(decision);
 // }
 
-import { LOG } from "../utils/docs.utils";
+import { LOG } from "./utils/docs.utils";
 
 export async function format() {
   LOG.debug("TODO: Add the docs formatter");

@@ -3,11 +3,11 @@ import { build as viteBuild } from "vite";
 
 import { cp, writeFile } from "node:fs/promises";
 import { ensureFile } from "fs-extra";
-import { getButteryDocsConfig } from "../utils/docs.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../utils/docs.getButteryDocsDirectories";
-import { getButteryDocsRouteManifest } from "../utils/docs.getButteryDocsRouteManifest";
-import { getButteryDocsViteConfig } from "../utils/docs.getButteryDocsViteConfig";
-import { LOG } from "../utils/docs.utils";
+import { getButteryDocsConfig } from "./utils/docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "./utils/docs.getButteryDocsDirectories";
+import { getButteryDocsRouteManifest } from "./utils/docs.getButteryDocsRouteManifest";
+import { getButteryDocsViteConfig } from "./utils/docs.getButteryDocsViteConfig";
+import { LOG } from "./utils/docs.utils";
 
 export async function build() {
   process.env.NODE_ENV = "production";

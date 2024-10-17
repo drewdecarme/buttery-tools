@@ -2,16 +2,11 @@ import type { ButteryDocsRouteManifest } from "@buttery/config";
 import { ButteryMeta } from "@buttery/meta";
 import type { EventPluginContext } from "@cloudflare/workers-types";
 import type { Manifest as ViteManifest } from "vite";
+import type { ButteryDocsContext } from "./ButteryDocsServer";
 import { generateHTMLTemplate } from "./generateHTMLTemplate";
 import { getButteryRouteIdFromRequest } from "./getButteryRouteFromRequest";
 import { getRouteAssets } from "./getRouteAssets";
-
-export type SSRRender = (
-  route: string,
-  responseStatusCode: number,
-  ButteryMeta: ButteryMeta
-  // biome-ignore lint/suspicious/noExplicitAny: This is going to be a stream, but it doesn't really matter all that much
-) => Promise<any>;
+import type { HandleRequestCloudflarePagesRenderFunction } from "./server.types";
 
 export type CFContext = EventPluginContext<
   unknown,
@@ -22,7 +17,7 @@ export type CFContext = EventPluginContext<
 >;
 
 export async function handleRequestCloudflarePages(
-  render: SSRRender,
+  render: HandleRequestCloudflarePagesRenderFunction,
   {
     context,
     vManifest,
@@ -68,7 +63,8 @@ export async function handleRequestCloudflarePages(
     const encoder = new TextEncoder();
 
     // Generate the stream using the `render` function from the server bundle
-    const streamBody = await render(pathname, responseStatusCode, Meta);
+    const context: ButteryDocsContext = { route: pathname, Meta };
+    const streamBody = await render(context, responseStatusCode);
 
     // Insert the app body into the HTML shell
     const stream = new ReadableStream({

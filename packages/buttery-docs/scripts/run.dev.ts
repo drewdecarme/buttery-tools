@@ -4,10 +4,10 @@ import express from "express";
 import type { RenderToPipeableStreamOptions } from "react-dom/server";
 import { createServer } from "vite";
 import { generateHTMLTemplate } from "../lib/server/generateHTMLTemplate";
-import { getButteryDocsConfig } from "../utils/docs.getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../utils/docs.getButteryDocsDirectories";
-import { getButteryDocsViteConfig } from "../utils/docs.getButteryDocsViteConfig";
-import { LOG } from "../utils/docs.utils";
+import { getButteryDocsConfig } from "./utils/docs.getButteryDocsConfig";
+import { getButteryDocsDirectories } from "./utils/docs.getButteryDocsDirectories";
+import { getButteryDocsViteConfig } from "./utils/docs.getButteryDocsViteConfig";
+import { LOG } from "./utils/docs.utils";
 
 export async function dev() {
   // Process and store configurations

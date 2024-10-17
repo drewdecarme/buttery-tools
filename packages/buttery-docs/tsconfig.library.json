@@ -7,5 +7,5 @@
     "declarationMap": true,
     "declarationDir": "dist"
   },
-  "include": ["lib/server/index.ts", "lib/client/index.ts"]
+  "include": ["lib/server/index.ts", "lib/client/index.ts", "**/*.d.ts"]
 }
