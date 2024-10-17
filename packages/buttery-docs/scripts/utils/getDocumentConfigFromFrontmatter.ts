@@ -17,7 +17,6 @@ export function getDocumentConfigFromFrontmatter(
     LOG.debug(`Parsing file frontmatter: "${filepath}"`);
     const fileContent = readFileSync(filepath, { encoding: "utf8" });
     const { data } = matter(fileContent) as { data: ButterDocsDocumentConfig };
-    console.log(data);
     return {
       title: data.title ?? "",
       config: {

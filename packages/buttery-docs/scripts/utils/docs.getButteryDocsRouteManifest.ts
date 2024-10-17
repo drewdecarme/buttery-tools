@@ -88,7 +88,6 @@ export function getButteryDocsRouteManifest(
           routeId,
           direntFullPath
         );
-        console.log(docConfig);
         const routeSegments = routePath.split("/");
         const fileName = routeSegments[routeSegments.length - 1];
         const fileNameFormatted =
