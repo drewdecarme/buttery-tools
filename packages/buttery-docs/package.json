@@ -12,7 +12,7 @@
     "local:build": "tsx ./scripts/local.build-docs-for-production.ts",
     "lib:build": "tsc --project tsconfig.library.json",
     "lib:dev": "yarn lib:build --watch",
-    "deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-docs-cf",
+    "pages:deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-docs-cf",
     "pages:dev": "cd ./.buttery/docs/dist && wrangler pages dev ./build/client"
   },
   "repository": {
