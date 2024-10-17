@@ -6,7 +6,7 @@ import {
   type HandleRequestCloudflarePagesRenderFunction,
 } from "@buttery/docs/server";
 import type { ReactDOMServerReadableStream } from "react-dom/server";
-import { renderToReadableStream } from "react-dom/server.browser";
+import { renderToReadableStream } from "react-dom/server";
 import { App } from "./App";
 
 const ABORT_DELAY = 5000;
