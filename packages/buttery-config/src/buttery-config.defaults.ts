@@ -79,9 +79,7 @@ export const butteryConfigDefaultCommands: ButteryConfigCommands = {
   version: "0.0.1",
 };
 export const butteryConfigDefaultIcons: ButteryConfigIcons = {
-  namespace: undefined,
-  outDir: undefined,
-  svgDir: undefined,
+  iconsDirectory: undefined,
 };
 
 export const butteryConfigDefaults: Required<ButteryConfig> = {

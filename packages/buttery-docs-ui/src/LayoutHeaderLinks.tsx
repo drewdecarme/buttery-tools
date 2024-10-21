@@ -12,6 +12,7 @@ import type { FC } from "react";
 import { NavLink } from "react-router-dom";
 import { match } from "ts-pattern";
 import { LayoutHeaderLinksTypeDropdown } from "./LayoutHeaderLinksTypeDropdown";
+import { IconComponent } from "./icons";
 
 const divStyles = css`
   display: flex;
@@ -89,10 +90,10 @@ export const LayoutHeaderLinks: FC<{
                           rel="noreferrer"
                           aria-label={socialLink.label}
                         >
-                          {/* <IconComponent
+                          <IconComponent
                             icon="github-circle-solid-rounded"
                             ddSize={makeRem(28)}
-                          /> */}
+                          />
                         </a>
                       );
                     })

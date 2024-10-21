@@ -1,8 +1,5 @@
-import { getButteryConfig } from "../config/getButteryConfig";
+import { getButteryConfig } from "@buttery/config";
 
 export async function getButteryIconsConfig() {
-  return getButteryConfig("icons", {
-    defaultConfig: "icons",
-    requireConfig: false
-  });
+  return getButteryConfig("icons");
 }

@@ -4,13 +4,24 @@
   "description": "TODO:",
   "type": "module",
   "sideEffects": false,
+  "files": [
+    "dist",
+    "static"
+  ],
   "scripts": {
-    "dev": "yarn build --watch",
-    "build": "tsc --project tsconfig.build.json"
+    "scripts:build": "tsx ./scripts/scripts.build.ts && yarn scripts:types",
+    "scripts:types": "tsc --project tsconfig.types.json",
+    "local:build": "tsx ./scripts/local.build.ts"
   },
   "exports": {
-    "./dev": "./dist/scripts/run.dev.js",
-    "./build": "./dist/scripts/run.build.js"
+    "./dev": {
+      "types": "./dist/scripts/run.dev.d.ts",
+      "import": "./dist/run.dev.js"
+    },
+    "./build": {
+      "types": "./dist/scripts/run.build.d.ts",
+      "import": "./dist/run.build.js"
+    }
   },
   "repository": {
     "type": "git",
@@ -24,11 +35,20 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
+    "@buttery/builder": "workspace:^",
     "@buttery/tsconfig": "workspace:^",
+    "@types/fs-extra": "^11",
     "tsx": "^4.19.1",
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@buttery/logger": "workspace:^"
+    "@buttery/config": "workspace:^",
+    "@buttery/logger": "workspace:^",
+    "@svgr/cli": "^8.1.0",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-prettier": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0",
+    "fs-extra": "^11.2.0"
   }
 }

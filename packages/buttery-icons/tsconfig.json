@@ -1,4 +1,7 @@
 {
   "extends": "@buttery/tsconfig/library",
-  "include": ["src", "scripts"]
+  "compilerOptions": {
+    "noEmit": false
+  },
+  "include": ["src", "scripts", "static"]
 }

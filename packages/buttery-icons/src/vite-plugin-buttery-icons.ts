@@ -1,12 +1,11 @@
 import type { PluginOption } from "vite";
-import { buildButteryIcons } from "./icons.buildButteryIcons";
+import { buildButteryIcons } from "./icons.build";
 import { getButteryIconsConfig } from "./icons.getButteryIconsConfig";
 import { getButteryIconsDirectories } from "./icons.getButteryIconsDirectories";
 
 export default async function vitePluginButteryIcons(): Promise<PluginOption> {
   const config = await getButteryIconsConfig();
   if (!config.icons) return false;
-  console.log(config.icons);
 
   const dirs = await getButteryIconsDirectories(config);
 
@@ -15,13 +14,13 @@ export default async function vitePluginButteryIcons(): Promise<PluginOption> {
     resolveId(source) {
       if (source.startsWith("@buttery/icons")) {
         return {
-          id: source.replace("@buttery/icons", dirs.output.barrelFile)
+          id: source.replace("@buttery/icons", dirs.output.barrelFile),
         };
       }
       return null;
     },
     async buildStart() {
       await buildButteryIcons();
-    }
+    },
   };
 }

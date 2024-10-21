@@ -10,6 +10,7 @@
   "scripts": {
     "tokens:dev": "tsx ./scripts/tokens-dev.ts",
     "tokens:build": "tsx ./scripts/tokens-build.ts",
+    "icons:build": "tsx ./scripts/icons-build.ts",
     "dev": "vite",
     "NEXT:build": "yarn tokens:build && vite build && yarn tsc --project tsconfig.types.json",
     "build": "vite build && yarn tsc --project tsconfig.types.json",
@@ -63,6 +64,7 @@
   "dependencies": {
     "@buttery/components": "workspace:^",
     "@buttery/config": "workspace:^",
+    "@buttery/icons": "workspace:^",
     "@buttery/logger": "workspace:^",
     "@buttery/tokens": "workspace:^",
     "react": "^18.3.1",

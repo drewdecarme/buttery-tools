@@ -1,6 +1,8 @@
 import path from "node:path";
-import { getButteryArtifactsDir } from "../commands/utils/util.getButteryArtifactsDir";
-import type { ResolvedButteryConfig } from "../config/getButteryConfig";
+import {
+  type ResolvedButteryConfig,
+  getNodeModulesButteryOutputDir,
+} from "@buttery/config";
 
 export type ButteryIconsDirectories = Awaited<
   ReturnType<typeof getButteryIconsDirectories>
@@ -9,28 +11,25 @@ export type ButteryIconsDirectories = Awaited<
 export async function getButteryIconsDirectories(
   config: ResolvedButteryConfig<"icons">
 ) {
-  const artifactsDir = await getButteryArtifactsDir(
-    import.meta.dirname,
-    "buttery-icons"
+  const nodeModulesIconsDir = await getNodeModulesButteryOutputDir(
+    config.paths,
+    "icons"
   );
 
-  const outputRootDir = path.resolve(config.paths.storeDir, "./icons");
+  const staticDir = path.resolve(nodeModulesIconsDir.target, "./static");
+
+  const iconsDir = config.icons.iconsDirectory
+    ? path.resolve(config.paths.butteryDir, config.icons.iconsDirectory)
+    : path.resolve(config.paths.rootDir, "./icons");
+
+  console.log({ iconsDir: config.icons.iconsDirectory });
 
   return {
-    entry: {
-      svgDir:
-        config.icons.svgDir ?? path.resolve(config.paths.butteryDir, "./icons")
+    static: staticDir,
+    io: {
+      root: iconsDir,
+      svg: path.resolve(iconsDir, "./svg"),
+      generated: path.resolve(iconsDir, "./generated"),
     },
-    artifacts: {
-      root: artifactsDir
-    },
-    output: {
-      root: outputRootDir,
-      barrelFile: path.resolve(outputRootDir, "./index.ts"),
-      /**
-       * The path where all of the generated React components will be stored
-       */
-      generated: path.resolve(outputRootDir, "./generated")
-    }
   };
 }
