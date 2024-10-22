@@ -958,7 +958,6 @@ __metadata:
     tsx: "npm:^4.19.1"
     typescript: "npm:^5.6.3"
     vite: "npm:^5.4.8"
-    vite-plugin-virtual: "npm:^0.3.0"
   languageName: unknown
   linkType: soft
 
@@ -13810,15 +13809,6 @@ __metadata:
   peerDependencies:
     vite: ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
   checksum: 10c0/f8ddc452eb6fba280977d037f8a6406aa522e69590641ce72ce5bb31c3498856a9f63ab3671bc6a822dcd1ff9ba5cac02cacef4a0e170fd8500cdeeb38c81675
-  languageName: node
-  linkType: hard
-
-"vite-plugin-virtual@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "vite-plugin-virtual@npm:0.3.0"
-  peerDependencies:
-    vite: ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
-  checksum: 10c0/a9edbbefbca15878f69086d50ac45a05bcbd295f2e7f21eb03248ddec9df1516602dd700c3442f8fd9778598950383b0ef448ee6086465ade38e06d1005ad55b
   languageName: node
   linkType: hard
 

@@ -9,11 +9,14 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
-import { defineConfig } from "vite";
-import virtual from "vite-plugin-virtual";
+import { type Plugin, defineConfig } from "vite";
 import type { ButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
 import { getButteryDocsRouteManifest } from "./docs.getButteryDocsRouteManifest";
-import { getButteryDocsVirtualModules } from "./docs.getButteryDocsVIrtualModules";
+import {
+  type ButteryDocsVirtualModules,
+  getButteryDocsVirtualModules,
+} from "./docs.getButteryDocsVIrtualModules";
+import { LOG } from "./docs.utils";
 
 export function getButteryDocsViteConfig(
   config: ResolvedButteryConfig<"docs">,
@@ -23,8 +26,8 @@ export function getButteryDocsViteConfig(
   // the virtual modules that will tell vite exactly where
   // the dynamic imports are. This allows us to get around the issue
   // where you can't supply the async import a dynamic path
-  const routeManifest = getButteryDocsRouteManifest(config, dirs);
-  const virtualModules = getButteryDocsVirtualModules(config, routeManifest);
+  // const routeManifest = getButteryDocsRouteManifest(config, dirs);
+  // const virtualModules = getButteryDocsVirtualModules(config, routeManifest);
 
   const viteConfig = defineConfig({
     cacheDir: dirs.app.viteCacheDir,
@@ -73,10 +76,7 @@ export function getButteryDocsViteConfig(
         ],
       }),
       react(),
-      virtual({
-        "virtual:data": virtualModules.data,
-        "virtual:routes": virtualModules.routes,
-      }),
+      // virtual(virtualModules),
       wyw({
         include: "/**/*.(ts|tsx)",
         babelOptions: {
@@ -84,8 +84,68 @@ export function getButteryDocsViteConfig(
           presets: ["@babel/preset-typescript", "@babel/preset-react"],
         },
       }),
+      vitePluginButteryDocsVirtual(config, dirs),
     ],
   });
 
   return viteConfig;
+}
+
+function vitePluginButteryDocsVirtual(
+  config: ResolvedButteryConfig<"docs">,
+  dirs: ButteryDocsDirectories
+): Plugin {
+  // Get some initial variables
+  let routeManifest = getButteryDocsRouteManifest(config, dirs);
+  let vModules = getButteryDocsVirtualModules(config, routeManifest);
+  const vModuleIds = Object.keys(vModules);
+  const resolvedVModulePrefix = "\0";
+
+  return {
+    name: "vite-plugin-buttery-docs-virtual",
+    configureServer(server) {
+      server.watcher.add(dirs.srcDocs.root);
+      server.watcher.on("all", (_event, path) => {
+        // Only process things inside docs directory
+        console.log({ path });
+        if (!path.startsWith(dirs.srcDocs.root)) return;
+        LOG.debug("A user doc has changed. Updating all application data...");
+
+        // Rebuild the static data
+        LOG.debug("Rebuilding virtual modules");
+        routeManifest = getButteryDocsRouteManifest(config, dirs);
+        vModules = getButteryDocsVirtualModules(config, routeManifest);
+
+        // Loop through the virtual modules and invalidate them
+        for (const vModuleId in vModuleIds) {
+          const vModule = server.moduleGraph.getModuleById(vModuleId);
+          if (!vModule) {
+            continue;
+          }
+          LOG.debug(`Invaliding vModule: ${vModuleId}`);
+          server.moduleGraph.invalidateModule(vModule);
+        }
+
+        // Trigger a hot update
+        server.ws.send({
+          type: "full-reload",
+        });
+      });
+    },
+    resolveId(id) {
+      const vModuleId = vModuleIds.find((vModuleId) => vModuleId === id);
+      if (vModuleId) return resolvedVModulePrefix.concat(vModuleId);
+      return null;
+    },
+    load(id) {
+      const vModuleId = vModuleIds.find(
+        (vModuleId) => resolvedVModulePrefix.concat(vModuleId) === id
+      );
+      if (vModuleId) {
+        const module = vModules[vModuleId as keyof ButteryDocsVirtualModules];
+        return module;
+      }
+      return null;
+    },
+  };
 }

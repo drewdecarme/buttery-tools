@@ -7,6 +7,10 @@ import type { ButteryDocsConfig } from "./docs.getButteryDocsConfig";
 import { getButteryDocsRouteGraph } from "./docs.getButteryDocsRouteGraph";
 import { LOG } from "./docs.utils";
 
+export type ButteryDocsVirtualModules = ReturnType<
+  typeof getButteryDocsVirtualModules
+>;
+
 export function getButteryDocsVirtualModules(
   config: ButteryDocsConfig,
   routeManifest: ButteryDocsRouteManifest
@@ -61,7 +65,7 @@ export const routeDocs = [${Object.values(routeDocs).map(
   const data = `export const header = ${JSON.stringify(config.docs.header)}`;
 
   return {
-    routes,
-    data,
+    "virtual:routes": routes,
+    "virtual:data": data,
   };
 }

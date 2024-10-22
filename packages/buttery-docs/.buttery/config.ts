@@ -12,6 +12,14 @@ const config: ButteryConfig = {
             href: "/docs",
           },
         ],
+        [
+          {
+            type: "social",
+            href: "https://github.com",
+            label: "Github",
+            provider: "github",
+          },
+        ],
       ],
     },
     order: {

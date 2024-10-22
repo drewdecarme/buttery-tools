@@ -4,9 +4,13 @@
   "description": "TODO",
   "type": "module",
   "sideEffects": false,
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/buttery-docs-ui/src/index.js"
+    },
+    "./css": "./dist/style.css"
+  },
   "scripts": {
     "tokens:dev": "tsx ./scripts/tokens-dev.ts",
     "tokens:build": "tsx ./scripts/tokens-build.ts",
@@ -31,14 +35,6 @@
     "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
-    },
-    "./css": "./dist/style.css"
-  },
   "devDependencies": {
     "@buttery/tsconfig": "workspace:^",
     "@chromatic-com/storybook": "^1.9.0",

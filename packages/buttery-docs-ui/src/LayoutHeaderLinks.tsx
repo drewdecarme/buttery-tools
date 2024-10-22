@@ -1,5 +1,4 @@
 import type { ButteryConfigDocsHeaderLink } from "@buttery/config";
-// import { IconComponent } from "@buttery/icons";
 import {
   makeColorBrand,
   makeColorShade,
