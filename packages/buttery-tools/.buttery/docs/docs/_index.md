@@ -1,5 +1,5 @@
 ---
-title: buttery.docs
+title: Buttery Docs
 ---
 
 # Buttery Docs
