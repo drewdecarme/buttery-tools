@@ -8,6 +8,7 @@ import wyw from "@wyw-in-js/vite";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
+import remarkGfm from "remark-gfm";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { type Plugin, defineConfig } from "vite";
 import type { ButteryDocsDirectories } from "./docs.getButteryDocsDirectories";
@@ -22,13 +23,6 @@ export function getButteryDocsViteConfig(
   config: ResolvedButteryConfig<"docs">,
   dirs: ButteryDocsDirectories
 ) {
-  // Assemble the route manifest along with
-  // the virtual modules that will tell vite exactly where
-  // the dynamic imports are. This allows us to get around the issue
-  // where you can't supply the async import a dynamic path
-  // const routeManifest = getButteryDocsRouteManifest(config, dirs);
-  // const virtualModules = getButteryDocsVirtualModules(config, routeManifest);
-
   const viteConfig = defineConfig({
     cacheDir: dirs.app.viteCacheDir,
     publicDir: dirs.srcDocs.public,
@@ -53,7 +47,7 @@ export function getButteryDocsViteConfig(
     },
     plugins: [
       mdx({
-        remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+        remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
         rehypePlugins: [
           rehypeSlug,
           rehypeTOC,
@@ -76,7 +70,6 @@ export function getButteryDocsViteConfig(
         ],
       }),
       react(),
-      // virtual(virtualModules),
       wyw({
         include: "/**/*.(ts|tsx)",
         babelOptions: {
@@ -95,7 +88,10 @@ function vitePluginButteryDocsVirtual(
   config: ResolvedButteryConfig<"docs">,
   dirs: ButteryDocsDirectories
 ): Plugin {
-  // Get some initial variables
+  // Assemble the route manifest along with
+  // the virtual modules that will tell vite exactly where
+  // the dynamic imports are. This allows us to get around the issue
+  // where you can't supply the async import a dynamic path
   let routeManifest = getButteryDocsRouteManifest(config, dirs);
   let vModules = getButteryDocsVirtualModules(config, routeManifest);
   const vModuleIds = Object.keys(vModules);
@@ -107,7 +103,6 @@ function vitePluginButteryDocsVirtual(
       server.watcher.add(dirs.srcDocs.root);
       server.watcher.on("all", (_event, path) => {
         // Only process things inside docs directory
-        console.log({ path });
         if (!path.startsWith(dirs.srcDocs.root)) return;
         LOG.debug("A user doc has changed. Updating all application data...");
 

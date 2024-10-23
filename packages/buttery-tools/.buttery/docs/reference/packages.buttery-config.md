@@ -1,5 +1,5 @@
 ---
-title: "Reference | @buttery/config"
+title: "@buttery/config | Reference"
 config:
   navBarDisplay: "@buttery/config"
 ---
@@ -13,6 +13,15 @@ values in the configuration file.
 ## Purpose
 
 Makes it easy to locate, evaluate and then read any values in the `.buttery/config` file.
+
+## Dependencies
+
+| Package                                               | Type          | Purpose                                                       |
+| ----------------------------------------------------- | ------------- | ------------------------------------------------------------- |
+| [`@buttery/tsconfig`](./packages.buttery-tsconfig.md) | devDependency | Shared TSConfig for library development                       |
+| [`@buttery/builder`](./packages.buttery-builder.md)   | devDependency | Transpile, build and bundle the library for use               |
+| [`@buttery/logger`](./packages.buttery-logger.md)     | dependency    | Logger to easily debug and trace library functionality        |
+| [`@buttery/utils`](./packages.buttery-utils.md)       | dependency    | Common utils to help traverse directories, type guard, etc... |
 
 ## Exports
 
