@@ -10,6 +10,12 @@ A core package that helps the buttery tools packages reconcile and load the `.bu
 a few helper utilities and their type definitions to make it easy to locate, use and reason about the keys and
 values in the configuration file.
 
+## Installation
+
+```bash
+yarn add @buttery/config
+```
+
 ## Purpose
 
 Makes it easy to locate, evaluate and then read any values in the `.buttery/config` file.
