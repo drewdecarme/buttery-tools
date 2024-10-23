@@ -61,6 +61,11 @@ const config: ButteryConfig = {
               },
             ],
           },
+          {
+            type: "internal",
+            href: "/reference",
+            text: "Reference",
+          },
         ],
         [
           {

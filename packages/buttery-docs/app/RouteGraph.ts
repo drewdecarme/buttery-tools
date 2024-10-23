@@ -1,6 +1,5 @@
 import { routeGraph } from "virtual:routes";
 import type { ButteryDocsRouteManifestGraphObject } from "@buttery/config";
-import type { ReactNode } from "react";
 import { LOG } from "./LOG";
 
 /**

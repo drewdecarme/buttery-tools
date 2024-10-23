@@ -26,13 +26,7 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "node": "./dist/index.js",
-      "default": "./dist/index.js"
-    }
+    ".": "./dist/index.js"
   },
   "devDependencies": {
     "@buttery/tsconfig": "workspace:^",

@@ -1,8 +1,8 @@
 ---
-title: CLI Reference
+title: CLI
 ---
 
-# ClI Reference
+# ClI
 
 ## `commands`
 

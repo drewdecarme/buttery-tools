@@ -4,12 +4,14 @@
   "description": "A collection of types that are used across all buttery packages / tools",
   "type": "module",
   "scripts": {
-    "build": "tsx ./scripts/build.ts && tsc --project tsconfig.build.json",
-    "dev": "yarn build --watch"
+    "build": "yarn lib:build && yarn lib:types",
+    "lib:build": "tsx ./scripts/lib.build.ts",
+    "lib:types": "tsc --project tsconfig.build.json"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git",
+    "directory": "packages/buttery-config"
   },
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
   "license": "MIT",
@@ -28,6 +30,7 @@
   },
   "dependencies": {
     "@buttery/builder": "workspace:^",
-    "@buttery/logger": "workspace:^"
+    "@buttery/logger": "workspace:^",
+    "@buttery/utils": "workspace:^"
   }
 }

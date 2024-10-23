@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { checkbox, input } from "@inquirer/prompts";
+import checkbox from "@inquirer/checkbox";
+import input from "@inquirer/input";
 import { butteryConfigDefaults } from "./buttery-config.defaults";
 import type { ButteryConfig } from "./buttery-config.types";
 

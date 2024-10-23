@@ -7,7 +7,8 @@
     "frontmatter",
     "invoicer",
     "Jsonify",
-    "svgs"
+    "svgs",
+    "Transpiles"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.formatOnSave": true,

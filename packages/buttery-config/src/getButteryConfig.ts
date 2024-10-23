@@ -28,10 +28,10 @@ export type ResolvedButteryConfig<T extends keyof ButteryConfig> = Omit<
 >;
 
 /**
- * Searches for the .buttery/config file either from the current working directory
+ * Searches for the `.buttery/config` file either from the current working directory
  * or from a provided directory. Attempts to resolve a few directories and
  * configurations based upon that search. Once found, it builds the configuration
- * using esbuild and then resolves the configuration as an ESModule to be used
+ * using Esbuild and then resolves the configuration as an ESModule to be used
  * in any of the commands in the CLI.
  */
 export const getButteryConfig = async <T extends keyof ButteryConfig>(
