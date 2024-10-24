@@ -4,8 +4,6 @@ import { Meta } from "@buttery/meta/react";
 import { Suspense, lazy, useMemo } from "react";
 import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import "@buttery/tokens/docs.css";
-import "@buttery/docs-ui/css";
-
 import {
   Layout,
   LayoutBody,
@@ -15,8 +13,8 @@ import {
   LayoutBodyNav,
   LayoutBodyTOC,
   LayoutHeader,
-} from "@buttery/docs-ui";
-import { routeModuleGraph } from "./RouteGraph";
+} from "./components";
+import { routeModuleGraph } from "./utils/RouteGraph";
 
 function createRoute(route: typeof routeIndex, options: { isDocs: boolean }) {
   const Component = lazy(async () => {
