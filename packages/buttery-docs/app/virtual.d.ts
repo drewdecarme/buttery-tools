@@ -2,7 +2,7 @@ declare module "virtual:routes" {
   import type {
     ButteryDocsRouteManifestGraphObject,
     ButteryDocsRouteManifestEntry,
-  } from "@buttery/config/docs";
+  } from "@buttery/core/config";
   // Adjust the types based on what your `virtual:routes` module exports
   export const routeGraph: ButteryDocsRouteManifestGraphObject;
   export const routeDocs: (ButteryDocsRouteManifestEntry & {
@@ -19,6 +19,6 @@ declare module "virtual:data" {
   import type {
     ButteryConfigDocs,
     ButteryDocsRouteManifest,
-  } from "@buttery/config";
+  } from "@buttery/core/config";
   export const header: ButteryConfigDocs["header"];
 }

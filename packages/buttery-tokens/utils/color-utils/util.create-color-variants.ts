@@ -1,4 +1,4 @@
-import type { ButteryTokensColorBrandVariants } from "@buttery/config";
+import type { ButteryTokensColorBrandVariants } from "@buttery/core";
 import { exhaustiveMatchGuard } from "@buttery/logger";
 import chroma from "chroma-js";
 import { match } from "ts-pattern";

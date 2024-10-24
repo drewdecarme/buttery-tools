@@ -1,1 +1,1 @@
-export * from "@buttery/config";
+export * from "@buttery/core";

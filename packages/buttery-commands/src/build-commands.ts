@@ -1,4 +1,4 @@
-import { getButteryConfig } from "@buttery/config";
+import { getButteryConfig } from "@buttery/core";
 import { buildCommandsCleanDistributionDirs } from "./build-commands.clean-distribution-dirs.js";
 import { buildCommandsCreateBinary } from "./build-commands.create-binary.js";
 import { buildCommandsEnrichPackageJson } from "./build-commands.enrich-package-json.js";

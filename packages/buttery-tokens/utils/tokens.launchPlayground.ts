@@ -1,5 +1,5 @@
 import path from "node:path";
-import type { ResolvedButteryConfig } from "@buttery/config";
+import type { ResolvedButteryConfig } from "@buttery/core";
 import { vitePlugin as remix } from "@remix-run/dev";
 import wyw from "@wyw-in-js/vite";
 import { createServer } from "vite";

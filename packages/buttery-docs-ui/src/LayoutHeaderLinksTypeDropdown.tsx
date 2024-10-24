@@ -1,5 +1,5 @@
 import { DropdownNav, useDropdownNav } from "@buttery/components";
-import type { ButteryConfigDocsHeaderLinkTypeDropdown } from "@buttery/config";
+import type { ButteryConfigDocsHeaderLinkTypeDropdown } from "@buttery/core";
 import {
   makeColorBrand,
   makeColorShade,

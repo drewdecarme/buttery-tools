@@ -1,4 +1,4 @@
-import type { ButteryConfig } from "@buttery/config";
+import type { ButteryConfig } from "@buttery/core";
 
 /**
  * This specific configuration is to locally test all of the

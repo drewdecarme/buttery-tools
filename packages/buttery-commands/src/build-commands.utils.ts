@@ -1,4 +1,4 @@
-import type { ResolvedButteryConfig } from "@buttery/config";
+import type { ResolvedButteryConfig } from "@buttery/core";
 import type { BuildOptions } from "esbuild";
 import type {
   CommandAction,

@@ -1,4 +1,4 @@
-import { getButteryConfig } from "@buttery/config";
+import { getButteryConfig } from "@buttery/core";
 
 export async function getButteryCommandsConfig() {
   return getButteryConfig("commands", {

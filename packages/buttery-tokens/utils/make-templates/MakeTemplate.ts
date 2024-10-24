@@ -1,4 +1,4 @@
-import type { ButteryConfigTokens } from "@buttery/config";
+import type { ButteryConfigTokens } from "@buttery/core";
 
 export type CompileFunctionParams = {
   config: ButteryConfigTokens;

@@ -1,4 +1,4 @@
-import type { ButteryConfigDocs } from "@buttery/config";
+import type { ButteryConfigDocs } from "@buttery/core";
 import {
   makeColorShade,
   makeColorStatic,

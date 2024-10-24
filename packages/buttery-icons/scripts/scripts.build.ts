@@ -1,4 +1,4 @@
-import { build } from "@buttery/builder";
+import { build } from "@buttery/core/builder";
 
 /**
  * Builds the scripts using esbuild so they can be used

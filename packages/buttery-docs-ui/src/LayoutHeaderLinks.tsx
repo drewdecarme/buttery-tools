@@ -1,4 +1,4 @@
-import type { ButteryConfigDocsHeaderLink } from "@buttery/config";
+import type { ButteryConfigDocsHeaderLink } from "@buttery/core";
 import {
   makeColorBrand,
   makeColorShade,

@@ -1,4 +1,4 @@
-import type { ButteryConfig } from "@buttery/config";
+import type { ButteryConfig } from "@buttery/core";
 import { version } from "../package.json";
 
 const config: ButteryConfig = {

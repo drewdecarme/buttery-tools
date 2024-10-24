@@ -1,4 +1,4 @@
-import type { ButteryDocsRouteManifest } from "@buttery/config";
+import type { ButteryDocsRouteManifest } from "@buttery/core/config";
 import {
   type CFContext,
   handleRequestCloudflarePages,

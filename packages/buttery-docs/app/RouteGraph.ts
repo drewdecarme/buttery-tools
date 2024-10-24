@@ -1,5 +1,5 @@
 import { routeGraph } from "virtual:routes";
-import type { ButteryDocsRouteManifestGraphObject } from "@buttery/config";
+import type { ButteryDocsRouteManifestGraphObject } from "@buttery/core/config";
 import { LOG } from "./LOG";
 
 /**

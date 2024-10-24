@@ -1,12 +1,15 @@
 // import { constants, access, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { exhaustiveMatchGuard, kebabToCamel } from "@buttery/utils/isomorphic";
+import {
+  exhaustiveMatchGuard,
+  kebabToCamel,
+} from "@buttery/core/utils/isomorphic";
 import type { Plugin } from "esbuild";
 import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
 
-import type { ResolvedButteryConfig } from "@buttery/config";
+import type { ResolvedButteryConfig } from "@buttery/core";
 import { getCommandFiles } from "./build-commands.get-command-files";
 import {
   // templateCommandParent,

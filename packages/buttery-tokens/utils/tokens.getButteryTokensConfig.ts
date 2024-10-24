@@ -3,7 +3,7 @@ import {
   type ButteryConfigTokens,
   type GetButteryConfigOptions,
   getButteryConfig,
-} from "@buttery/config";
+} from "@buttery/core";
 
 export type ButteryTokensConfig = {
   paths: ButteryConfigPaths;

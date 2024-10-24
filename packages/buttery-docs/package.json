@@ -5,15 +5,16 @@
   "type": "module",
   "sideEffects": false,
   "scripts": {
-    "dev": "yarn local:dev",
-    "build": "rm -rf dist && tsx ./scripts/dist.build-package-for-distribution.ts && yarn lib:build && yarn types",
-    "types": "tsc --project tsconfig.types.json",
-    "local:dev": "tsx ./scripts/local.run-docs-dev-server.ts",
-    "local:build": "tsx ./scripts/local.build-docs-for-production.ts",
+    "build": "yarn typechecks && yarn cli-scripts:build && yarn lib:build",
+    "typechecks": "tsc --project tsconfig.typechecks.json",
+    "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
+    "cli-scripts:types": "tsc --project tsconfig.cli-types.json",
     "lib:build": "tsc --project tsconfig.library.json",
     "lib:dev": "yarn lib:build --watch",
     "pages:deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-docs-cf",
-    "pages:dev": "cd ./.buttery/docs/dist && wrangler pages dev ./build/client"
+    "pages:dev": "cd ./.buttery/docs/dist && wrangler pages dev ./build/client",
+    "local:dev": "tsx ./scripts/local.dev.ts",
+    "local:build": "tsx ./scripts/local.build-docs-for-production.ts"
   },
   "repository": {
     "type": "git",
@@ -31,26 +32,29 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "exports": {
-    "./dev": {
-      "types": "./dist/scripts/run.dev.ts",
-      "import": "./dist/run.dev.js"
+    "./cli/dev": {
+      "types": "./dist/cli-scripts/dev.d.ts",
+      "import": "./dist/dev.js"
     },
-    "./build": {
-      "types": "./dist/scripts/run.build.ts",
-      "import": "./dist/run.build.js"
+    "./cli/build": {
+      "types": "./dist/cli-scripts/build.d.ts",
+      "import": "./dist/build.js"
     },
-    "./format": {
-      "types": "./dist/scripts/run.format.ts",
-      "import": "./dist/run.format.js"
+    "./cli/format": {
+      "types": "./dist/cli-scripts/format.d.ts",
+      "import": "./dist/format.js"
+    },
+    "./cli/order": {
+      "types": "./dist/cli-scripts/order.d.ts",
+      "import": "./dist/order.js"
     },
     "./server": "./dist/server/index.js",
     "./client": "./dist/client/index.js"
   },
   "devDependencies": {
-    "@buttery/builder": "workspace:^",
-    "@buttery/tsconfig": "workspace:^",
     "@cloudflare/workers-types": "^4.20241011.0",
     "@linaria/core": "^6.2.0",
+    "@types/babel__core": "^7",
     "@types/express": "5.0.0",
     "@types/node": "^22.7.4",
     "@types/react-dom": "^18.3.1",
@@ -61,11 +65,11 @@
     "vite": "^5.4.8"
   },
   "dependencies": {
+    "@babel/core": "^7.25.9",
     "@babel/preset-react": "^7.25.7",
     "@buttery/components": "workspace:^",
-    "@buttery/config": "workspace:^",
+    "@buttery/core": "workspace:^",
     "@buttery/docs-ui": "workspace:^",
-    "@buttery/logger": "workspace:^",
     "@buttery/meta": "workspace:^",
     "@mdx-js/rollup": "^3.0.1",
     "@shikijs/rehype": "^1.22.0",

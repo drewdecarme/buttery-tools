@@ -2,7 +2,7 @@ import path from "node:path";
 import {
   type ResolvedButteryConfig,
   getNodeModulesButteryOutputDir,
-} from "@buttery/config";
+} from "@buttery/core";
 
 export type ButteryIconsDirectories = Awaited<
   ReturnType<typeof getButteryIconsDirectories>
