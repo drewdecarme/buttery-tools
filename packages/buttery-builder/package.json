@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "description": "A simple CLI that builds the buttery packages that will be used in the @buttery/tools binary",
   "type": "module",
+  "sideEffects": false,
   "scripts": {
-    "build": "tsc",
-    "dev": "yarn build --watch"
+    "build": "yarn lib:build",
+    "lib:build": "tsc",
+    "lib:dev": "yarn build --watch"
   },
   "exports": {
     ".": "./dist/index.js"
@@ -27,7 +29,6 @@
   },
   "dependencies": {
     "@buttery/logger": "workspace:^",
-    "esbuild": "^0.24.0",
-    "esbuild-plugin-d.ts": "^1.3.0"
+    "esbuild": "^0.24.0"
   }
 }

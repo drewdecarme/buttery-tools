@@ -1,6 +1,6 @@
 import path from "node:path";
-import { findDirectoryUpwards } from "@buttery/utils/node";
 import { ensureDir } from "fs-extra";
+import { findDirectoryUpwards } from "../utils/node";
 import type { ButteryConfigPaths } from "./buttery-config.types";
 import { LOG } from "./buttery-config.utils";
 

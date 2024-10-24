@@ -4,9 +4,9 @@
     "noEmit": false,
     "declaration": true,
     "declarationDir": "dist",
+    "outDir": "dist",
     "declarationMap": true,
-    "emitDeclarationOnly": true,
-    "outDir": "dist"
+    "emitDeclarationOnly": true
   },
-  "include": ["./src/index.ts"]
+  "include": ["src/config/index.ts", "src/utils/**/*.index.ts"]
 }

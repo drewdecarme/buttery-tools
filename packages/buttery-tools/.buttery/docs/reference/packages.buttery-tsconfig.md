@@ -39,3 +39,7 @@ A common `tsconfig` that can be used as a baseline for creating TS libraries. Th
   "extends": "@buttery/tsconfig/library"
 }
 ```
+
+## Scripts
+
+No scripts needed for this library. This library exports pure JSON that is easily imported using this packages `exports` field in the `package.json`

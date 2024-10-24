@@ -40,7 +40,6 @@
   "dependencies": {
     "@buttery/config": "workspace:^",
     "@buttery/logger": "workspace:^",
-    "@buttery/utils": "workspace:^",
     "@inquirer/prompts": "^7.0.0",
     "commander": "^12.1.0",
     "esbuild": "^0.24.0",
