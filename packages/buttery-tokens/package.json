@@ -32,21 +32,21 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
-    "@types/react": "^18.3.11",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "tsx": "^4.19.1"
   },
   "dependencies": {
     "@buttery/core": "workspace:^",
-    "@remix-run/dev": "^2.12.1",
-    "@remix-run/node": "^2.12.1",
-    "@remix-run/react": "^2.12.1",
+    "@remix-run/dev": "^2.13.1",
+    "@remix-run/node": "^2.13.1",
+    "@remix-run/react": "^2.13.1",
     "@types/chroma-js": "^2.4.4",
     "@wyw-in-js/vite": "^0.5.4",
-    "chroma-js": "^3.1.1",
+    "chroma-js": "^3.1.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "ts-pattern": "^5.4.0",
+    "ts-pattern": "^5.5.0",
     "typescript": "^5.6.3",
     "vite": "^5.4.10"
   }

@@ -10,8 +10,8 @@ import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router-dom";
 import { match } from "ts-pattern";
+import { IconComponent } from "../icons";
 import { LayoutHeaderLinksTypeDropdown } from "./LayoutHeaderLinksTypeDropdown";
-import { IconComponent } from "./icons";
 
 const divStyles = css`
   display: flex;

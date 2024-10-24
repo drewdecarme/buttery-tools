@@ -3,10 +3,7 @@ import { routeDocs, routeIndex } from "virtual:routes";
 import { Meta } from "@buttery/meta/react";
 import { Suspense, lazy, useMemo } from "react";
 import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
-import "@buttery/tokens/docs/css";
-
 import {
-  Layout,
   LayoutBody,
   LayoutBodyBreadcrumb,
   LayoutBodyBreadcrumbText,
@@ -15,6 +12,9 @@ import {
   LayoutBodyTOC,
   LayoutHeader,
 } from "./components";
+import { Layout } from "./components/Layout";
+import "@buttery/tokens/docs/css";
+
 import { routeModuleGraph } from "./utils/RouteGraph";
 
 function createRoute(route: typeof routeIndex, options: { isDocs: boolean }) {
