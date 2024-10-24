@@ -9,19 +9,13 @@
     "static"
   ],
   "scripts": {
-    "scripts:build": "tsx ./scripts/scripts.build.ts && yarn scripts:types",
-    "scripts:types": "tsc --project tsconfig.types.json",
+    "build": "yarn tsc && yarn cli-scripts:build",
+    "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
+    "cli-scripts:types": "tsc --project tsconfig.cli-types.json",
     "local:build": "tsx ./scripts/local.build.ts"
   },
   "exports": {
-    "./dev": {
-      "types": "./dist/scripts/run.dev.d.ts",
-      "import": "./dist/run.dev.js"
-    },
-    "./build": {
-      "types": "./dist/scripts/run.build.d.ts",
-      "import": "./dist/run.build.js"
-    }
+    "./cli/*": "./dist/cli-scripts/*.js"
   },
   "repository": {
     "type": "git",

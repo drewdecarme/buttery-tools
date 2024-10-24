@@ -1,0 +1,12 @@
+{
+  "extends": "@buttery/core/tsconfig",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "declarationMap": true,
+    "emitDeclarationOnly": true
+  },
+  "include": ["src/cli-scripts"]
+}

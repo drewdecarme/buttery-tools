@@ -1,7 +1,3 @@
 {
-  "extends": "@buttery/tsconfig/library",
-  "compilerOptions": {
-    "noEmit": false
-  },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "extends": "@buttery/core/tsconfig"
 }

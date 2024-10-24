@@ -72,7 +72,6 @@
   "dependencies": {
     "@buttery/commands": "workspace:^",
     "@buttery/components": "workspace:^",
-    "@buttery/config": "workspace:^",
     "@buttery/docs": "workspace:^",
     "@buttery/icons": "workspace:^",
     "@buttery/logger": "workspace:",

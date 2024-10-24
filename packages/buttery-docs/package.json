@@ -5,16 +5,21 @@
   "type": "module",
   "sideEffects": false,
   "scripts": {
-    "build": "yarn typechecks && yarn cli-scripts:build && yarn lib:build",
+    "build": "yarn typechecks && yarn tsx ./scripts/build.ts && yarn lib:build",
     "typechecks": "tsc --project tsconfig.typechecks.json",
     "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
     "cli-scripts:types": "tsc --project tsconfig.cli-types.json",
     "lib:build": "tsc --project tsconfig.library.json",
     "lib:dev": "yarn lib:build --watch",
+    "local:dev": "tsx ./scripts/local.dev.ts",
+    "local:build": "tsx ./scripts/local.build.ts",
+    "tokens:dev": "tsx ./scripts/tokens.dev.ts",
+    "tokens:build": "tsx ./scripts/tokens.build.ts",
+    "icons:build": "tsx ./scripts/icons.build.ts",
     "pages:deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-docs-cf",
     "pages:dev": "cd ./.buttery/docs/dist && wrangler pages dev ./build/client",
-    "local:dev": "tsx ./scripts/local.dev.ts",
-    "local:build": "tsx ./scripts/local.build-docs-for-production.ts"
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "repository": {
     "type": "git",

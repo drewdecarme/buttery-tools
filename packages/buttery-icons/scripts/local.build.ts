@@ -1,2 +1,3 @@
-import { build } from "./run.build";
-build();
+import { buildIcons } from "../src/build-icons";
+
+buildIcons();

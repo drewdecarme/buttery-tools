@@ -1,4 +1,4 @@
-import type { ButteryConfig } from "@buttery/core";
+import type { ButteryConfig } from "@buttery/core/config";
 
 const config: ButteryConfig = {
   tokens: {

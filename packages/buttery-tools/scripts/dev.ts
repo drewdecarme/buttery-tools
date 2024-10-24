@@ -1,4 +1,4 @@
-import { dev } from "@buttery/commands/dev";
+import { dev } from "@buttery/commands/cli/dev";
 try {
   await dev();
 } catch (error) {

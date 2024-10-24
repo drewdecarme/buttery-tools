@@ -1,4 +1,4 @@
-import { build } from "@buttery/commands/build";
+import { build } from "@buttery/commands/cli/build";
 try {
   await build();
 } catch (error) {
