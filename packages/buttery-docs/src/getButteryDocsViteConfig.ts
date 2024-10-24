@@ -39,7 +39,6 @@ export function getButteryDocsViteConfig(
         "react-router-dom",
         "@buttery/components",
         "@buttery/tokens/docs",
-        "@buttery/docs-ui",
         "react",
         "react-dom",
         "react-dom/client",
@@ -71,7 +70,7 @@ export function getButteryDocsViteConfig(
       }),
       react(),
       wyw({
-        include: "/**/*.(ts|tsx)",
+        include: "**/*.(ts|tsx)",
         babelOptions: {
           compact: false,
           presets: ["@babel/preset-typescript", "@babel/preset-react"],

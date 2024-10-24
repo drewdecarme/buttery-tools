@@ -10,7 +10,14 @@
     "cli-scripts:types": "yarn tsc --project tsconfig.cli-types.json"
   },
   "exports": {
-    "./*.js": "./*.js",
+    "./*": {
+      "types": "./*.d.ts",
+      "import": "./*.js"
+    },
+    "./*/css": {
+      "types": "./*.d.ts",
+      "import": "./*.css"
+    },
     "./cli/*": "./dist/cli-scripts/*.js"
   },
   "repository": {
