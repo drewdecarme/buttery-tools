@@ -1,12 +1,13 @@
-import { getButteryConfig } from "@buttery/core";
-import { buildCommandsCleanDistributionDirs } from "./build-commands.clean-distribution-dirs.js";
-import { buildCommandsCreateBinary } from "./build-commands.create-binary.js";
-import { buildCommandsEnrichPackageJson } from "./build-commands.enrich-package-json.js";
-import type {
-  CommandsBuildFunctionArgs,
-  CommandsBuildOptions,
-} from "./build-commands.utils";
-import { LOG } from "./utils.js";
+import { getButteryConfig } from "@buttery/core/config";
+import { buildCommandsCleanDistributionDirs } from "./clean-distribution-dirs.js";
+import { buildCommandsCreateBinary } from "./create-binary.js";
+import { buildCommandsEnrichPackageJson } from "./enrich-package-json.js";
+import {
+  type CommandsBuildFunctionArgs,
+  type CommandsBuildOptions,
+  LOG,
+} from "./utils.js";
+
 /**
  * This function is the main build command that reads the .buttery/config
  * parses the commands directory and then builds the binary. This command

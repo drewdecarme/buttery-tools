@@ -9,20 +9,20 @@ import * as esbuild from "esbuild";
 // TODO: Remove dependency for native string literal interpolation
 import handlebars from "handlebars";
 
-import type { ResolvedButteryConfig } from "@buttery/core";
-import { getCommandFiles } from "./build-commands.get-command-files";
+import type { ResolvedButteryConfig } from "@buttery/core/config";
+import { getCommandFiles } from "./get-command-files";
 import {
   // templateCommandParent,
   templateIndex,
-} from "./build-commands.templates";
+} from "./templates";
+import type { CommandOptionType } from "./types";
 import {
   type CommandFile,
   type CommandGraph,
   type CommandGraphProperties,
+  LOG,
   defaultEsbuildOptions,
-} from "./build-commands.utils";
-import type { CommandOptionType } from "./types";
-import { LOG } from "./utils";
+} from "./utils";
 
 export type EntryTemplateData = {
   cli_name: string;

@@ -1,5 +1,5 @@
 import type { CommandAction, CommandMeta } from "@buttery/commands";
-import { dev } from "@buttery/commands/dev";
+import { dev } from "@buttery/commands/cli/dev";
 
 export const meta: CommandMeta = {
   name: "add",

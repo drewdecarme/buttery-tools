@@ -32,22 +32,7 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "exports": {
-    "./cli/dev": {
-      "types": "./dist/cli-scripts/dev.d.ts",
-      "import": "./dist/dev.js"
-    },
-    "./cli/build": {
-      "types": "./dist/cli-scripts/build.d.ts",
-      "import": "./dist/build.js"
-    },
-    "./cli/format": {
-      "types": "./dist/cli-scripts/format.d.ts",
-      "import": "./dist/format.js"
-    },
-    "./cli/order": {
-      "types": "./dist/cli-scripts/order.d.ts",
-      "import": "./dist/order.js"
-    },
+    "./cli/*": "./dist/cli-scripts/*.js",
     "./server": "./dist/server/index.js",
     "./client": "./dist/client/index.js"
   },

@@ -1,6 +1,6 @@
 import path from "node:path";
-import type { ResolvedButteryConfig } from "@buttery/core";
-import type { ButteryCLIDirectories } from "./build-commands.utils";
+import type { ResolvedButteryConfig } from "@buttery/core/config";
+import type { ButteryCLIDirectories } from "./utils";
 
 export const getButteryCommandsDirectories = (
   config: ResolvedButteryConfig<"commands">

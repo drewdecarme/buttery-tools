@@ -1013,7 +1013,6 @@ __metadata:
   resolution: "@buttery/commands@workspace:packages/buttery-commands"
   dependencies:
     "@buttery/core": "workspace:^"
-    "@buttery/logger": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
     "@inquirer/prompts": "npm:^7.0.0"
     "@types/fs-extra": "npm:^11"
@@ -1104,7 +1103,6 @@ __metadata:
     "@buttery/core": "workspace:^"
     "@buttery/docs-ui": "workspace:^"
     "@buttery/meta": "workspace:^"
-    "@buttery/tsconfig": "workspace:^"
     "@cloudflare/workers-types": "npm:^4.20241011.0"
     "@linaria/core": "npm:^6.2.0"
     "@mdx-js/rollup": "npm:^3.0.1"

@@ -7,17 +7,15 @@
     "spread": "./bin/index.js"
   },
   "scripts": {
-    "run:build": "",
-    "run:dev": "",
-    "dev": "yarn build --watch",
-    "build": "yarn tsc --project tsconfig.build.json",
-    "spread": "yarn node ./bin/index.js"
+    "build": "yarn cli-scripts:build && yarn lib:build",
+    "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
+    "cli-scripts:types": "yarn tsc --project tsconfig.cli-types.json",
+    "lib:build": "yarn tsc --project tsconfig.library.json",
+    "local:start": "yarn node ./bin/index.js"
   },
   "exports": {
-    ".": "./dist/src/index.js",
-    "./dev": "./dist/scripts/run.dev.js",
-    "./build": "./dist/scripts/run.build.js",
-    "./create": "./dist/scripts/run.create.js"
+    ".": "./dist/index.js",
+    "./cli/*": "./dist/cli-scripts/*.js"
   },
   "repository": {
     "type": "git",
@@ -39,7 +37,6 @@
   },
   "dependencies": {
     "@buttery/core": "workspace:^",
-    "@buttery/logger": "workspace:^",
     "@inquirer/prompts": "^7.0.0",
     "commander": "^12.1.0",
     "esbuild": "^0.24.0",

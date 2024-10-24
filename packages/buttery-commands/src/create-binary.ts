@@ -1,12 +1,12 @@
 import * as esbuild from "esbuild";
-import { getCommandFiles } from "./build-commands.get-command-files";
-import { ESBuildPluginCommands } from "./build-commands.util.esbuild-plugin-commands";
+import { ESBuildPluginCommands } from "./esbuild-plugin-commands";
+import { getCommandFiles } from "./get-command-files";
+import { getButteryCommandsDirectories } from "./getButteryCommandsDirectories";
 import {
   type CommandsBuildFunction,
+  LOG,
   defaultEsbuildOptions,
-} from "./build-commands.utils";
-import { getButteryCommandsDirectories } from "./getButteryCommandsDirectories";
-import { LOG } from "./utils";
+} from "./utils";
 
 // to the src directory so it can be transpiled and built again.
 export const buildCommandsCreateBinary: CommandsBuildFunction = async ({

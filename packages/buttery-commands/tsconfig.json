@@ -1,4 +1,3 @@
 {
-  "extends": "@buttery/tsconfig/library",
-  "include": ["src", "scripts", ".buttery/*"]
+  "extends": "@buttery/core/tsconfig"
 }

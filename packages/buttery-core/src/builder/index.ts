@@ -21,8 +21,9 @@ export async function build(
     outDir?: string;
   }
 ) {
-  const outDir = options?.outDir ?? path.resolve(process.cwd(), "./dist");
+  const outDirRoot = options?.outDir ?? path.resolve(process.cwd(), "./dist");
   let entryPoints: string[] = [];
+  let outdir = outDirRoot;
 
   switch (params.mode) {
     case "cli-scripts": {
@@ -44,6 +45,7 @@ export async function build(
         },
         []
       );
+      outdir = path.resolve(outDirRoot, "./cli-scripts");
       break;
     }
 
@@ -57,19 +59,20 @@ export async function build(
   }
 
   LOG.debug(
-    `Building the following entryPoints to "${outDir}" ${printAsBullets(
-      entryPoints
-    )}`
+    `Building ${
+      params.mode === "cli-scripts" ? "CLI scripts" : "entry points"
+    } to "${outdir}" ${printAsBullets(entryPoints)}`
   );
   try {
     await esbuild.build({
       bundle: true,
-      minify: false,
+      minify: true,
+      sourcemap: true,
       entryPoints,
       format: "esm",
       platform: "node",
       target: ["node22.9.0"],
-      outdir: outDir,
+      outdir,
       packages: "external",
     });
     LOG.success("Build complete!");

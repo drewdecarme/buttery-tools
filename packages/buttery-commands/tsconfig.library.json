@@ -7,5 +7,5 @@
     "declarationMap": true,
     "declaration": true
   },
-  "include": ["scripts/run.*.ts", "src/index.ts"]
+  "include": ["src/index.ts"]
 }

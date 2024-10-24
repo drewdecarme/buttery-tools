@@ -3,7 +3,7 @@ import type {
   CommandMeta,
   CommandOptions,
 } from "@buttery/commands";
-import { build } from "@buttery/commands/build";
+import { build } from "@buttery/commands/cli/build";
 
 export const meta: CommandMeta = {
   name: "build",

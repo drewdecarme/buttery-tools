@@ -1,7 +1,6 @@
 import { rm } from "node:fs/promises";
 import path from "node:path";
-import type { CommandsBuildFunction } from "./build-commands.utils";
-import { LOG } from "./utils";
+import { type CommandsBuildFunction, LOG } from "./utils";
 
 /**
  * Deletes the entire `bin` & `dist` folders

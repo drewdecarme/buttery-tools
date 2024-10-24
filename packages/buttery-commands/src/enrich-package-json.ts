@@ -1,7 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import type { CommandsBuildFunctionArgs } from "./build-commands.utils";
-import { LOG } from "./utils";
+import { type CommandsBuildFunctionArgs, LOG } from "./utils";
 
 // TODO: Update this description
 // -- PACKAGE.JSON --

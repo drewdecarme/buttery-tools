@@ -1,5 +1,5 @@
-import { buildCommands } from "../src/build-commands";
-import { LOG } from "../src/utils";
+import { buildCommands } from "../build-commands";
+import { LOG } from "../utils";
 
 /**
  * Build's the @buttery/commands binary

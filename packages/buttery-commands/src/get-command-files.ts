@@ -1,8 +1,8 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import type { ResolvedButteryConfig } from "@buttery/core";
-import type { CommandFile } from "./build-commands.utils";
+import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { getButteryCommandsDirectories } from "./getButteryCommandsDirectories";
+import type { CommandFile } from "./utils";
 
 // This is the name of the file that is a command
 // when there is a directory
