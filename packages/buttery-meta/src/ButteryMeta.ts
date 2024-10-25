@@ -1,10 +1,11 @@
-import { ButteryLogger, exhaustiveMatchGuard } from "@buttery/logger";
+import { ButteryLogger } from "@buttery/logger";
 import type { ReactElement } from "react";
 import ReactDOMServer from "react-dom/server";
 import {
   type ButteryMetaDescriptor,
   ButteryMetaSchema,
 } from "./buttery-meta.utils.js";
+import { exhaustiveMatchGuard } from "./exhaustive-match-guard.js";
 
 export class ButteryMeta {
   private headNodes: ReactElement[] = [];
@@ -79,9 +80,10 @@ export class ButteryMeta {
 
         default:
           this.LOG.error(`Unable to parse "${meta}"`);
-          exhaustiveMatchGuard(meta);
+          return exhaustiveMatchGuard(meta);
       }
     }, "");
+
     if (parsedJson.title) {
       nodeString = nodeString.concat(`<title>${parsedJson.title}</title>`);
     }

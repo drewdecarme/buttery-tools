@@ -5,8 +5,7 @@
     "declaration": true,
     "declarationDir": "dist",
     "declarationMap": true,
-    "outDir": "dist",
-    "emitDeclarationOnly": true
+    "outDir": "dist"
   },
-  "include": ["src"]
+  "include": ["src/index.ts", "src/react/index.ts"]
 }

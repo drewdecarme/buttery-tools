@@ -15,27 +15,19 @@ export function generateHTMLTemplate({
   cssLinks,
   jsScripts,
   Meta,
-  isDev,
 }: {
   cssLinks: string[];
   jsScripts: string[];
   Meta: ButteryMeta;
-  isDev: boolean;
 }) {
   const htmlStart = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style><!--ssr-critical--></style>
     ${ensureLeadingSlash(cssLinks).reduce<string>(
       (accum, href) =>
-        accum.concat(
-          `<link ${
-            // pre-load the styles in DEV
-            isDev ? `rel="preload" as="style"` : `rel="stylesheet"`
-          } href="${href}" />\n`
-        ),
+        accum.concat(`<link rel="stylesheet" href="${href}" />\n`),
       ""
     )}
     ${Meta.renderNodesToString()}

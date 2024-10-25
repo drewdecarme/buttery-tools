@@ -60,7 +60,6 @@ export async function dev() {
         cssLinks: [dirs.app.css.tokens, dirs.app.css.docsUI],
         jsScripts: [dirs.app.appEntryClient],
         Meta,
-        isDev: true,
       });
 
       // allow vite to inject the necessary scripts

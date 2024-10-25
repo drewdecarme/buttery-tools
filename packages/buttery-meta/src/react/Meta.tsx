@@ -1,6 +1,6 @@
-import { exhaustiveMatchGuard } from "@buttery/logger";
 import { type FC, type ReactElement, useEffect } from "react";
 import type { ButteryMetaDescriptor } from "../buttery-meta.utils.js";
+import { exhaustiveMatchGuard } from "../exhaustive-match-guard.js";
 import { useButteryMetaContext } from "./ButteryMeta.context.js";
 
 export type MetaProps = {
@@ -83,9 +83,9 @@ export const Meta: FC<MetaProps> = ({ children, metaJSON }) => {
               )
             );
             const linkTag = document.createElement("link");
-            Object.entries(metaItem.keyValues).forEach(([key, value]) =>
-              linkTag.setAttribute(key, value)
-            );
+            for (const [key, value] of Object.entries(metaItem.keyValues)) {
+              linkTag.setAttribute(key, value);
+            }
             document.head.appendChild(linkTag);
             break;
           }

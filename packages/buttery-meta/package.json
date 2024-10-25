@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Framework agnostic methodology for adding meta tags to your application document during SSR .Built in support for React SSR.",
   "scripts": {
-    "build": "vite build && yarn tsc --project tsconfig.types.json",
+    "build": "yarn tsc --project tsconfig.build.json",
     "dev": "vite build --watch"
   },
   "type": "module",
@@ -27,14 +27,12 @@
     "@buttery/tsconfig": "workspace:^",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "typescript": "^5.6.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^22.7.9",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react": "^4.3.3",
-    "vite": "^5.4.10"
+    "typescript": "^5.6.3"
   }
 }
