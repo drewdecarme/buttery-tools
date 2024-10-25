@@ -66,6 +66,9 @@ export class ButteryLogger {
   };
   isBrowser: boolean;
   prefixBgColor: string;
+  private loadingDots: string;
+  private loaderInterval: NodeJS.Timeout | null;
+  private loadingMessage: string;
 
   constructor(options: ButteryLoggerOptions) {
     this.id = options.id;
@@ -78,6 +81,9 @@ export class ButteryLogger {
       (accum, logLevel) => (logLevel.length > accum ? logLevel.length : accum),
       0
     );
+    this.loaderInterval = null;
+    this.loadingDots = "";
+    this.loadingMessage = "";
 
     this.isBrowser = typeof window !== "undefined";
 
@@ -170,7 +176,24 @@ export class ButteryLogger {
     }
   }
 
-  printMethod() {}
+  private formatNodeLogMessage({
+    level,
+    message,
+    method,
+  }: {
+    level: ButteryLogLevel;
+    message: string;
+    method: string;
+  }) {
+    const msg = chalk.gray(message);
+    const timestamp = this.printTimestamp();
+    const logLevel = this.printLevel(level);
+    const prefix = this.printPrefix();
+
+    return [timestamp, logLevel, prefix[0], method, msg]
+      .filter((val) => !!val)
+      .join(" ");
+  }
 
   private log(
     {
@@ -186,18 +209,20 @@ export class ButteryLogger {
   ) {
     if (!this.shouldLog(level)) return;
 
-    const msg = chalk.gray(message);
-    const timestamp = this.printTimestamp();
-    const logLevel = this.printLevel(level);
-    const prefix = this.printPrefix();
     const logFn = this.getLoggerFn(this.logLevel);
 
     if (!this.isBrowser) {
-      const logMessage = [timestamp, logLevel, prefix[0], method, msg]
-        .filter((val) => !!val)
-        .join(" ");
-      return logFn(logMessage);
+      const nodeLogMessage = this.formatNodeLogMessage({
+        level,
+        message,
+        method,
+      });
+      return logFn(nodeLogMessage);
     }
+
+    const msg = chalk.gray(message);
+    const timestamp = this.printTimestamp();
+    const prefix = this.printPrefix();
 
     const levelCss =
       "font-size:8px; line-height: 16px; padding-right: 8px; padding-left: 4px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; font-weight: bold;";
@@ -273,6 +298,65 @@ export class ButteryLogger {
   public info(message: string, ...data: Record<string, unknown>[]) {
     const method = chalk.blueBright(`ℹ︎ ${chalk.underline("info")}`);
     this.log({ level: "info", method, message }, ...data);
+  }
+
+  private formatLoadingText(dots: string) {
+    return chalk.gray(dots);
+  }
+
+  private logLoadingMessage(message: string) {
+    if (this.logLevelPriority[this.logLevel] >= this.logLevelPriority.info) {
+      process.stdout.write(`\r${message}`);
+    } else {
+      console.log(message);
+    }
+  }
+
+  public loadingStart(message: string) {
+    if (!this.shouldLog("info")) return;
+
+    this.loadingDots = "";
+
+    const method = chalk.magentaBright(`● ${chalk.underline("loading")}`);
+    this.loadingMessage = this.formatNodeLogMessage({
+      level: "info",
+      message,
+      method,
+    });
+    this.logLoadingMessage(`${this.loadingMessage}   `);
+
+    // prevent the interval from running if it's less than the current log level
+    if (this.logLevelPriority[this.logLevel] < this.logLevelPriority.info) {
+      return;
+    }
+
+    this.loaderInterval = setInterval(() => {
+      this.loadingDots =
+        this.loadingDots.length < 3 ? `${this.loadingDots}.` : "";
+      const formattedDots = this.formatLoadingText(
+        this.loadingDots.padEnd(3, " ")
+      );
+      const formattedIntervalMessage = `${this.loadingMessage}${formattedDots}`;
+      this.logLoadingMessage(formattedIntervalMessage);
+    }, 500);
+  }
+
+  public loadingEnd(message: string) {
+    if (!this.shouldLog("info")) return;
+
+    // format the message
+    const formattedDots = this.formatLoadingText("...");
+    const formattedFinalMessage = this.formatLoadingText(message);
+    const formattedMessage = `${this.loadingMessage}${formattedDots} ${formattedFinalMessage}`;
+
+    // replace the line
+    this.logLoadingMessage(formattedMessage.concat("\n"));
+
+    if (!this.loaderInterval) return;
+
+    // Stop the animation
+    clearInterval(this.loaderInterval);
+    this.loaderInterval = null;
   }
 
   public fatal(error: Error) {

@@ -1,5 +1,5 @@
 import type { ButteryTokensColorBrandVariants } from "@buttery/core/config";
-import { exhaustiveMatchGuard } from "@buttery/logger";
+import { exhaustiveMatchGuard } from "@buttery/core/utils/isomorphic";
 import chroma from "chroma-js";
 import { match } from "ts-pattern";
 import {

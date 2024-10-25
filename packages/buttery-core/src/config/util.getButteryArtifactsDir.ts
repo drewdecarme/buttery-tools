@@ -1,5 +1,5 @@
+import { LOG } from "../private";
 import { findDirectoryUpwards } from "../utils/node";
-import { LOG } from "./buttery-config.utils";
 
 export async function getButteryArtifactsDir(
   startingDirectory: string,

@@ -1,8 +1,8 @@
 import esbuild from "esbuild";
 
 import { Script, createContext } from "node:vm";
+import { LOG } from "../private";
 import type { ButteryConfig } from "./buttery-config.types";
-import { LOG } from "./buttery-config.utils";
 
 /**
  * Provided a result from esbuild, this function will parse the buffer

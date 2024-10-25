@@ -1,6 +1,6 @@
 import path from "node:path";
 import { ensureDir } from "fs-extra";
-import { LOG } from "./buttery-config.utils";
+import { LOG } from "../private";
 import { ensureGitIgnoreEntry } from "./ensureGitignoreEntry";
 
 /**

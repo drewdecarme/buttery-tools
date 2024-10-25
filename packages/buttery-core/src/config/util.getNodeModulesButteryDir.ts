@@ -1,8 +1,8 @@
 import path from "node:path";
 import { ensureDir } from "fs-extra";
+import { LOG } from "../private";
 import { findDirectoryUpwards } from "../utils/node";
 import type { ButteryConfigPaths } from "./buttery-config.types";
-import { LOG } from "./buttery-config.utils";
 
 /**
  * Searches up the directory structure starting at the package root

@@ -6,7 +6,7 @@ import { exhaustiveMatchGuard } from "../utils/isomorphic";
 
 const LOG = new ButteryLogger({
   id: "buttery-logger",
-  prefix: "buttery:logger",
+  prefix: "buttery:core",
   prefixBgColor: "#f8d334",
   logLevel: "debug",
 });
@@ -38,7 +38,9 @@ export async function build(
       });
       entryPoints = scriptsEntryPointsDirents.reduce<string[]>(
         (accum, dirent) => {
-          if (!dirent.isFile()) return accum;
+          // ignore anything that isn't a file or any directory or file that
+          // starts with an underscore
+          if (!dirent.isFile() || dirent.name.startsWith("_")) return accum;
 
           const direntPath = path.resolve(dirent.parentPath, dirent.name);
           return accum.concat(direntPath);

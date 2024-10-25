@@ -1,3 +1,4 @@
+import type { ButteryLogLevel } from "../logger";
 import type { ButteryConfigCommands } from "./buttery-config.types.commands";
 import type { ButteryConfigDocs } from "./buttery-config.types.docs";
 import type { ButteryConfigIcons } from "./buttery-config.types.icons";
@@ -48,4 +49,9 @@ export type GetButteryConfigOptions = {
    * @default true
    */
   requireConfig?: boolean;
+  /**
+   * The level of logs that should be displayed
+   * @default info
+   */
+  logLevel?: ButteryLogLevel;
 };

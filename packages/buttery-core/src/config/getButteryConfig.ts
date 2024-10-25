@@ -1,11 +1,11 @@
 import path from "node:path";
+import { LOG } from "../private";
 import { butteryConfigDefaults } from "./buttery-config.defaults";
 import type {
   ButteryConfig,
   ButteryConfigPaths,
   GetButteryConfigOptions,
 } from "./buttery-config.types";
-import { LOG } from "./buttery-config.utils";
 import { ensureButteryStore } from "./ensureButteryStore";
 import { getButteryConfigFile } from "./getButteryConfigFile";
 import { getButteryConfigModule } from "./getButteryConfigModule";
@@ -44,6 +44,9 @@ export const getButteryConfig = async <T extends keyof ButteryConfig>(
   const optionDefaultConfig = options?.defaultConfig;
   const optionStartingDirectory = options?.startingDirectory;
   const optionRequireConfig = options?.requireConfig ?? true;
+
+  // set the level
+  LOG.level = options?.logLevel ?? "info";
 
   // search for the config file starting with a directory or the current working directory
   const searchDirectory = optionStartingDirectory ?? process.cwd();

@@ -2,21 +2,9 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import checkbox from "@inquirer/checkbox";
 import input from "@inquirer/input";
+import { exhaustiveMatchGuard } from "../utils/isomorphic";
 import { butteryConfigDefaults } from "./buttery-config.defaults";
 import type { ButteryConfig } from "./buttery-config.types";
-
-import { ButteryLogger } from "@buttery/logger";
-
-export const LOG = new ButteryLogger({
-  id: "buttery:config",
-  prefix: "buttery:config",
-  prefixBgColor: "#4c84d5",
-  logLevel: "debug",
-});
-
-export const exhaustiveMatchGuard = (_: never): never => {
-  throw new Error(`Forgot to include an "${_}" in the switch statement`);
-};
 
 /**
  * Asks the user to select which keys in the buttery config
