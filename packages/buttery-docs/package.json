@@ -9,7 +9,8 @@
     "typechecks": "tsc --project tsconfig.typechecks.json",
     "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
     "cli-scripts:types": "tsc --project tsconfig.cli-types.json",
-    "lib:build": "tsc --project tsconfig.library.json",
+    "lib:build": "tsx ./scripts/lib.build.ts && yarn lib:types",
+    "lib:types": "tsc --project tsconfig.lib-types.json",
     "lib:dev": "yarn lib:build --watch",
     "local:dev": "tsx ./scripts/local.dev.ts",
     "local:build": "tsx ./scripts/local.build.ts",
@@ -39,16 +40,20 @@
   "exports": {
     "./cli/*": "./dist/cli-scripts/*.js",
     "./server": "./dist/server/index.js",
-    "./client": "./dist/client/index.js"
+    "./client": "./dist/client/index.js",
+    "./components": "./dist/components/index.js",
+    "./css": "./dist/style.css"
   },
   "devDependencies": {
     "@buttery/icons": "workspace:^",
     "@buttery/tokens": "workspace:^",
     "@cloudflare/workers-types": "^4.20241022.0",
+    "@storybook/react": "^8.3.6",
     "@types/babel__core": "^7.20.5",
     "@types/express": "5.0.0",
     "@types/node": "^22.7.9",
     "@types/react-dom": "^18.3.1",
+    "@wyw-in-js/vite": "^0.5.4",
     "esbuild": "^0.24.0",
     "tsx": "^4.19.1",
     "typescript": "^5.6.3",
@@ -67,7 +72,6 @@
     "@shikijs/rehype": "^1.22.1",
     "@stefanprobst/rehype-extract-toc": "^2.2.0",
     "@vitejs/plugin-react": "^4.3.3",
-    "@wyw-in-js/vite": "^0.5.4",
     "express": "^4.21.1",
     "gray-matter": "^4.0.3",
     "immer": "^10.1.1",
@@ -80,6 +84,7 @@
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.0",
     "remark-mdx-frontmatter": "^5.0.0",
-    "rollup": "^4.24.0"
+    "rollup": "^4.24.0",
+    "ts-pattern": "^5.5.0"
   }
 }

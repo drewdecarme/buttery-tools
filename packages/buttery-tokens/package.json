@@ -7,7 +7,9 @@
   "scripts": {
     "build": "yarn tsc && yarn cli-scripts:build",
     "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
-    "cli-scripts:types": "yarn tsc --project tsconfig.cli-types.json"
+    "cli-scripts:types": "yarn tsc --project tsconfig.cli-types.json",
+    "local:build": "tsx ./scripts/local.build.ts",
+    "local:dev": "tsx ./scripts/local.dev.ts"
   },
   "exports": {
     "./*": {

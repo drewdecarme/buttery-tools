@@ -1,8 +1,8 @@
 import { buildButteryTokens } from "../buildButteryTokens";
 
 // TODO: Add some public options
-export async function dev() {
-  await buildButteryTokens({
+export function dev() {
+  buildButteryTokens({
     debug: true,
     interactive: false,
     prompt: true,

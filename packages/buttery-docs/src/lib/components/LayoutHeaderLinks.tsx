@@ -1,4 +1,4 @@
-import type { ButteryConfigDocsHeaderLink } from "@buttery/core";
+import type { ButteryConfigDocsHeaderLink } from "@buttery/core/config";
 import {
   makeColorBrand,
   makeColorShade,
@@ -10,8 +10,8 @@ import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router-dom";
 import { match } from "ts-pattern";
-import { IconComponent } from "../icons";
 import { LayoutHeaderLinksTypeDropdown } from "./LayoutHeaderLinksTypeDropdown";
+import { IconComponent } from "./icons";
 
 const divStyles = css`
   display: flex;
@@ -39,6 +39,11 @@ const anchorSocialStyles = css`
   display: grid;
   place-content: center;
   transition: all 0.15s ease-in-out;
+
+  & > div {
+    height: ${makeRem(28)};
+    width: ${makeRem(28)};
+  }
 
   &:hover {
     color: ${makeColorBrand("primary")};
@@ -89,10 +94,7 @@ export const LayoutHeaderLinks: FC<{
                           rel="noreferrer"
                           aria-label={socialLink.label}
                         >
-                          <IconComponent
-                            icon="github-circle-solid-rounded"
-                            ddSize={makeRem(28)}
-                          />
+                          <IconComponent icon="github-circle-solid-rounded" />
                         </a>
                       );
                     })

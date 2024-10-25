@@ -1,5 +1,5 @@
 import { classes } from "@buttery/components";
-import type { ButteryDocsRouteManifestGraphObject } from "@buttery/core";
+import type { ButteryDocsRouteManifestGraphObject } from "@buttery/core/config";
 import {
   makeColorBrand,
   makeColorShade,

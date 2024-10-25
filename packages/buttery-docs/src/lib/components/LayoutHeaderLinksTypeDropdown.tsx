@@ -1,5 +1,5 @@
 import { DropdownNav, useDropdownNav } from "@buttery/components";
-import type { ButteryConfigDocsHeaderLinkTypeDropdown } from "@buttery/core";
+import type { ButteryConfigDocsHeaderLinkTypeDropdown } from "@buttery/core/config";
 import {
   makeColorBrand,
   makeColorShade,
@@ -10,7 +10,7 @@ import {
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import { NavLink } from "react-router-dom";
-import { IconComponent } from "../icons";
+import { IconComponent } from "./icons";
 
 const buttonStyles = css`
   ${makeReset("button")};

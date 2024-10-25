@@ -16,7 +16,6 @@ import { MakeTemplateFontWeight } from "./make-templates/template.makeFontWeight
 import { MakeTemplateRem } from "./make-templates/template.makeRem";
 import { MakeTemplateReset } from "./make-templates/template.makeReset";
 import { MakeTemplateResponsive } from "./make-templates/template.makeResponsive";
-import tsconfigJson from "./tsconfig.json" with { type: "json" };
 
 const execAsync = promisify(exec);
 
@@ -40,8 +39,8 @@ export async function buildCSSUtilsTypeScript(
     outDir: namespacedOutDir,
     css: {
       outDir: dirs.output.root,
-      fileName: tokensConfig.namespace
-    }
+      fileName: tokensConfig.namespace,
+    },
   });
 
   // Register the templates that should be generated
@@ -66,12 +65,13 @@ export async function buildCSSUtilsTypeScript(
 
   // create a tsconfig.json in the output directory
   const tsconfigJsonPath = path.resolve(namespacedOutDir, "./tsconfig.json");
-  const tsconfigJsonContent = JSON.stringify(
-    // { include: [Templates.entryFile], ...tsconfigJson },
-    tsconfigJson,
-    null,
-    2
-  );
+  const tsconfigJsonContent = JSON.stringify({
+    extends: "@buttery/core/tsconfig",
+    compilerOptions: {
+      noEmit: false,
+      declaration: true,
+    },
+  });
 
   try {
     LOG.debug("Creating tsconfig...");
@@ -84,9 +84,7 @@ export async function buildCSSUtilsTypeScript(
   // transpile the typescript files
   LOG.debug("Building & transpiling...");
   try {
-    const { stderr } = await execAsync(
-      `tsc --project ${tsconfigJsonPath} --outDir ${namespacedOutDir}`
-    );
+    const { stderr } = await execAsync(`tsc --project ${tsconfigJsonPath}`);
     if (stderr) {
       throw stderr;
     }
@@ -96,67 +94,5 @@ export async function buildCSSUtilsTypeScript(
 
   // move the styles over to the root directory
 
-
   LOG.debug("Building & transpiling... done.");
-
-  // build the ts files into the output directory
-  // try {
-  //   LOG.debug("Building library...");
-  //   await build({
-  //     // esbuild: {
-  //     //   target: "esnext"
-  //     // },
-  //     // clearScreen: false,
-  //     // build: {
-  //     //   emptyOutDir: true,
-  //     //   outDir: dirs.output.path,
-  //     //   lib: {
-  //     //     entry: Templates.entryFile,
-  //     //     formats: ["es"],
-  //     //     fileName: (entryName) => `${entryName}.js`
-  //     //   },
-  //     //   rollupOptions: {
-  //     //     output: {
-  //     //       preserveModules: true
-  //     //     }
-  //     //   }
-  //     // },
-  //     plugins: [
-  //       {
-  //         name: "vite-plugin-tsc",
-  //         buildEnd() {
-  //           LOG.debug("Building library... done.");
-  //           return new Promise((resolve, reject) => {
-  //             // Use the tsconfig path to transpile the files
-  //             LOG.debug("Creating distribution types...");
-  //           });
-  //         }
-  //       }
-  //     ]
-  //   });
-  // } catch (error) {
-  //   throw LOG.fatal(new Error(error as string));
-  // }
-
-  // Create a plugin to eventually transpile the .tokens directory
-  // and assemble the ESBuild options for that entry / barrel file.
-  // const tsPlugin = new EsbuildPluginTypescriptCompiler({
-  //   tsConfigPath: dirs.root.tsConfigPath
-  // });
-  // const buildOptions = createEsbuildOptions({
-  //   entryPoints: [Templates.entryFile],
-  //   outfile: path.resolve(dirs.output.path, "./index.js"),
-  //   plugins: [
-  //     // transpile and create files
-  //     tsPlugin.getPlugin({
-  //       filePathToTranspile: Templates.entryFile,
-  //       extraArgs: [`--outDir ${dirs.output.path}`]
-  //     })
-  //   ]
-  // });
-
-  // // Transpile the templates
-  // LOG.debug("Transpiling generated files...");
-  // await build(buildOptions);
-  // LOG.debug("Transpiling generated files... done.");
 }

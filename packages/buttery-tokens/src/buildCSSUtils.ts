@@ -43,9 +43,7 @@ export async function buildCSSUtils(
   );
 
   // Create all of the utilities at once.
-  for (const createUtilPromise of createCSSUtils) {
-    await createUtilPromise();
-  }
+  await Promise.all(createCSSUtils);
 
   LOG.debug("Building CSS utils... done.");
 }

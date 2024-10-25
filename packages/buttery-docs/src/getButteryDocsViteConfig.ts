@@ -1,4 +1,3 @@
-import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import mdx from "@mdx-js/rollup";
 import rehypeShiki from "@shikijs/rehype";
@@ -70,13 +69,14 @@ export function getButteryDocsViteConfig(
           ],
         ],
       }),
+
+      react(),
       wyw({
         include: ["**/*.{ts,tsx}"],
         babelOptions: {
           presets: ["@babel/preset-typescript", "@babel/preset-react"],
         },
       }),
-      react(),
       vitePluginButteryDocsVirtual(config, dirs),
     ],
   });

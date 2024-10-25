@@ -5,7 +5,8 @@
     "outDir": "dist",
     "declaration": true,
     "declarationMap": true,
-    "declarationDir": "dist"
+    "declarationDir": "dist",
+    "emitDeclarationOnly": true
   },
-  "include": ["src/lib/server/index.ts", "src/lib/client/index.ts"]
+  "include": ["src/lib/server", "src/lib/client", "src/lib/components"]
 }

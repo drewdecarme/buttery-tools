@@ -2,7 +2,7 @@ import type { ButteryConfig } from "@buttery/core/config";
 
 const config: ButteryConfig = {
   icons: {
-    iconsDirectory: "../app/icons",
+    iconsDirectory: "../src/lib/components/icons",
   },
   tokens: {
     namespace: "docs",
