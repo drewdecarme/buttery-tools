@@ -17,7 +17,8 @@
     "config-and-utils:build": "tsx ./scripts/build-config-and-utils.ts",
     "config-and-utils:types": "tsc --project tsconfig.types.json",
     "lib:build": "tsc --project tsconfig.library.json",
-    "lib:dev": "yarn lib:build --watch"
+    "lib:dev": "yarn lib:build --watch",
+    "config:test": "tsx ./scripts/config-test.ts"
   },
   "files": [
     "tsconfig",

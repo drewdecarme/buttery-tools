@@ -15,6 +15,7 @@ async function convertEsbuildResultIntoConfig(
   if (!esbuildResult) {
     throw "The result of the build process is invalid.";
   }
+  LOG.debug("Converting esbuild result into virtual module...");
   try {
     const outputFile = esbuildResult.outputFiles[0];
     const moduleContent = Buffer.from(outputFile.contents).toString("utf-8");
@@ -39,6 +40,7 @@ async function convertEsbuildResultIntoConfig(
     if (!sandbox.module.exports.default) {
       throw "Cannot parse the default export off of the .buttery/config. Check that your .buttery/config has the property syntax and there aren't any errors.";
     }
+    LOG.debug("Converting esbuild result into virtual module... done.");
     LOG.trace(JSON.stringify(sandbox.module.exports.default, null, 2));
     return sandbox.module.exports.default;
   } catch (error) {
@@ -59,9 +61,7 @@ async function convertEsbuildResultIntoConfig(
 async function transpileConfig(configFilePath: string) {
   try {
     LOG.debug("Transpiling the '.buttery/config' file...");
-    // use the rebuild API since a file watcher will be implemented
-    // to re-call this function when things change in the app
-    const context = await esbuild.context({
+    const result = await esbuild.build({
       entryPoints: [configFilePath],
       bundle: true,
       platform: "node",
@@ -74,7 +74,6 @@ async function transpileConfig(configFilePath: string) {
         extends: "@buttery/tsconfig/library",
       }),
     });
-    const result = await context.rebuild();
     LOG.debug("Transpiling the '.buttery/config' file... done.");
     return result;
   } catch (error) {
