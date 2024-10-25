@@ -6,7 +6,7 @@ import type { ButteryConfig } from "@buttery/core/config";
  */
 const config: ButteryConfig = {
   icons: {
-    iconsDirectory: "../src/test/icons",
+    iconsDirectory: "../example/icons",
   },
 };
 export default config;

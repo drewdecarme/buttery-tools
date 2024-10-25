@@ -6,7 +6,7 @@ import { getButteryTokensConfig } from "../getButteryTokensConfig";
 import { getButteryTokensDirectories } from "../getButteryTokensDirectories";
 import { launchPlayground } from "../launchPlayground";
 import { LOG } from "../logger";
-import { butteryTokensDevOptionsSchema } from "./_options-schema";
+import { butteryTokensDevOptionsSchema } from "./_options.schema";
 
 export type ButterTokensDevOptions = z.infer<
   typeof butteryTokensDevOptionsSchema
@@ -20,7 +20,7 @@ export type ButterTokensDevOptions = z.infer<
  * Depending upon the options that are passed you can also
  * view the interactive wizard to make changes live in a GUI.
  */
-export async function dev(options: ButterTokensDevOptions) {
+export async function dev(options?: ButterTokensDevOptions) {
   const parsedOptions = parseAndValidateOptions(
     butteryTokensDevOptionsSchema,
     options,

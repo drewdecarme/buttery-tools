@@ -1234,6 +1234,7 @@ __metadata:
     fs-extra: "npm:^11.2.0"
     tsx: "npm:^4.19.1"
     typescript: "npm:^5.6.3"
+    zod: "npm:^3.23.8"
   languageName: unknown
   linkType: soft
 

@@ -3,6 +3,7 @@ import {
   type ResolvedButteryConfig,
   getNodeModulesButteryOutputDir,
 } from "@buttery/core/config";
+import { LOG } from "./utils";
 
 export type ButteryIconsDirectories = Awaited<
   ReturnType<typeof getButteryIconsDirectories>
@@ -22,9 +23,7 @@ export async function getButteryIconsDirectories(
     ? path.resolve(config.paths.butteryDir, config.icons.iconsDirectory)
     : path.resolve(config.paths.rootDir, "./icons");
 
-  console.log({ iconsDir: config.icons.iconsDirectory });
-
-  return {
+  const dirs = {
     static: staticDir,
     io: {
       root: iconsDir,
@@ -32,4 +31,9 @@ export async function getButteryIconsDirectories(
       generated: path.resolve(iconsDir, "./generated"),
     },
   };
+
+  LOG.trace("Directories:");
+  LOG.trace(JSON.stringify(dirs, null, 2));
+
+  return dirs;
 }

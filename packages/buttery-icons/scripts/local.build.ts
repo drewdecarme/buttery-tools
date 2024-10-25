@@ -1,3 +1,3 @@
-import { buildIcons } from "../src/build-icons";
+import { build } from "../src/cli-scripts/build";
 
-buildIcons();
+build();
