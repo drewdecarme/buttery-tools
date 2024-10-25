@@ -16,9 +16,12 @@ import { LOG } from "../src/utils";
  * and ButteryDocsClient apps
  */
 async function buildLibrary() {
-  LOG.debug("Building the @buttery/docs library...");
+  LOG.debug(
+    "Building the @buttery/docs library for consumption in the SSR app..."
+  );
   try {
     const config = defineConfig({
+      logLevel: "silent",
       build: {
         lib: {
           formats: ["es"],
@@ -56,8 +59,9 @@ async function buildLibrary() {
       ],
     });
     await viteBuild(config);
-    LOG.debug("Building the @buttery/docs library... done.");
-    LOG.success("Library build successful!");
+    LOG.debug(
+      "Building the @buttery/docs library for consumption in the SSR app... done."
+    );
   } catch (error) {
     throw LOG.fatal(
       new Error(`Error when building the @buttery/docs library: ${error}`)

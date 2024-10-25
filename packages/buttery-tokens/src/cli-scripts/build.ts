@@ -32,8 +32,7 @@ export async function build(options?: ButteryTokensBuildOptions) {
     });
     const dirs = await getButteryTokensDirectories(config);
     await buildCSSUtils(config, dirs);
-    LOG.loadingEnd("Complete!");
-    LOG.success("Successfully built @buttery/tokens");
+    LOG.loadingEnd("complete.");
   } catch (error) {
     throw LOG.fatal(
       new Error(`Error when trying to build @buttery/tools: ${error}`)

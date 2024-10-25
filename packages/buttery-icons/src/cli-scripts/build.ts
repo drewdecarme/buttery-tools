@@ -51,7 +51,6 @@ export async function build(options?: ButteryIconsBuildOptions) {
     // create types
     await generateTypes(dirs);
     LOG.loadingEnd("complete!");
-    LOG.success("Successfully built @buttery/icons!");
   } catch (error) {
     throw LOG.fatal(
       new Error(`Error when trying to build @buttery/icons: ${error}`)

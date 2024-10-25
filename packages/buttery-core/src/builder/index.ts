@@ -60,11 +60,11 @@ export async function build(
       exhaustiveMatchGuard(params);
   }
 
-  LOG.debug(
-    `Building ${
-      params.mode === "cli-scripts" ? "CLI scripts" : "entry points"
-    } to "${outdir}" ${printAsBullets(entryPoints)}`
-  );
+  const logTerm = `Building ${
+    params.mode === "cli-scripts" ? "CLI scripts" : "entry points"
+  }`;
+  LOG.debug(`${logTerm}:${printAsBullets(entryPoints)}`);
+  LOG.trace(`Output Location: ${outdir}`);
   try {
     await esbuild.build({
       bundle: true,
@@ -77,7 +77,7 @@ export async function build(
       outdir,
       packages: "external",
     });
-    LOG.success("Build complete!");
+    LOG.debug(`${logTerm}... done.`);
   } catch (error) {
     throw LOG.fatal(
       new Error(
