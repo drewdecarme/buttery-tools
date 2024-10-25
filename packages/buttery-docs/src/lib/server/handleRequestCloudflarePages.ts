@@ -56,6 +56,7 @@ export async function handleRequestCloudflarePages(
       cssLinks: cssAssets,
       jsScripts: jsAssets,
       Meta,
+      isDev: false,
     });
 
     const responseStatusCode = 200;

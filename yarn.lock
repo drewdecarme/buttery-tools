@@ -1185,6 +1185,7 @@ __metadata:
     "@cloudflare/workers-types": "npm:^4.20241022.0"
     "@linaria/core": "npm:^6.2.0"
     "@linaria/react": "npm:^6.2.1"
+    "@linaria/server": "npm:^6.2.0"
     "@mdx-js/rollup": "npm:^3.1.0"
     "@shikijs/rehype": "npm:^1.22.1"
     "@stefanprobst/rehype-extract-toc": "npm:^2.2.0"
@@ -2924,6 +2925,15 @@ __metadata:
   peerDependencies:
     react: ">=16"
   checksum: 10c0/102480195bc6e5f41cf3da4c7181640cf617256fcdd48847238cdc7def30536f132f29f35530bd261cbf5580a87981f5a6f7717e791b73cc309552141a10d256
+  languageName: node
+  linkType: hard
+
+"@linaria/server@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@linaria/server@npm:6.2.0"
+  dependencies:
+    postcss: "npm:^8.4.31"
+  checksum: 10c0/247fb8a30c9647e4c6df0eee40ccd8d241b3659e5a0d15113e3887817b68739c2105bc5d5ce8459016faaaf8ad6d230dbdc780aa55ecd4f71884eb12861067e8
   languageName: node
   linkType: hard
 
@@ -10872,7 +10882,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.19, postcss@npm:^8.4.43":
+"postcss@npm:^8.4.19, postcss@npm:^8.4.31, postcss@npm:^8.4.43":
   version: 8.4.47
   resolution: "postcss@npm:8.4.47"
   dependencies:

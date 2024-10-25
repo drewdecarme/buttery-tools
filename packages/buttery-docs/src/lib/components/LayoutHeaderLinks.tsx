@@ -39,11 +39,8 @@ const anchorSocialStyles = css`
   display: grid;
   place-content: center;
   transition: all 0.15s ease-in-out;
-
-  & > div {
-    height: ${makeRem(28)};
-    width: ${makeRem(28)};
-  }
+  height: ${makeRem(28)};
+  width: ${makeRem(28)};
 
   &:hover {
     color: ${makeColorBrand("primary")};

@@ -1,7 +1,7 @@
 {
   "extends": "@buttery/core/tsconfig",
   "compilerOptions": {
-    "target": "ES2023",
+    "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ES2023"],
     "noEmit": true,
     "types": ["@cloudflare/workers-types"]

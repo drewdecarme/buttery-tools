@@ -58,8 +58,9 @@ export async function dev() {
       // create the HTML template
       const { htmlDev } = generateHTMLTemplate({
         cssLinks: [dirs.app.css.tokens, dirs.app.css.docsUI],
-        jsScripts: [dirs.app.appEntryClient], // during
+        jsScripts: [dirs.app.appEntryClient],
         Meta,
+        isDev: true,
       });
 
       // allow vite to inject the necessary scripts
@@ -85,6 +86,11 @@ export async function dev() {
             // Split the HTML into two parts
             const [htmlStart, htmlEnd] =
               htmlTemplate.split("<!--ssr-outlet-->");
+
+            // inject critical css (Hydration issues at the momement)
+            // const docsUiCssContent = readFileSync(dirs.app.css.docsUI, "utf8");
+            // const { critical } = collect(htmlTemplate, docsUiCssContent);
+            // htmlStart = htmlTemplate.replace("<!--ssr-critical-->", critical);
 
             // Start writing the first part with the headers
             res.write(htmlStart);
