@@ -4,7 +4,7 @@ import { buildCSSUtils } from "../buildCSSUtils";
 import { getButteryTokensConfig } from "../getButteryTokensConfig";
 import { getButteryTokensDirectories } from "../getButteryTokensDirectories";
 import { LOG } from "../logger";
-import { butteryTokensBuildOptionsSchema } from "./_options";
+import { butteryTokensBuildOptionsSchema } from "./_options-schema";
 
 export type ButteryTokensBuildOptions = z.infer<
   typeof butteryTokensBuildOptionsSchema

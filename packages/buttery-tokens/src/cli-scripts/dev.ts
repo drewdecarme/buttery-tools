@@ -6,7 +6,7 @@ import { getButteryTokensConfig } from "../getButteryTokensConfig";
 import { getButteryTokensDirectories } from "../getButteryTokensDirectories";
 import { launchPlayground } from "../launchPlayground";
 import { LOG } from "../logger";
-import { butteryTokensDevOptionsSchema } from "./_options";
+import { butteryTokensDevOptionsSchema } from "./_options-schema";
 
 export type ButterTokensDevOptions = z.infer<
   typeof butteryTokensDevOptionsSchema
