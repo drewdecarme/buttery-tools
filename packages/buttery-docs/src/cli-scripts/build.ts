@@ -1,18 +1,29 @@
-import { cp, writeFile } from "node:fs/promises";
+import { cp, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { ensureFile } from "fs-extra";
 import { build as viteBuild } from "vite";
+import type { z } from "zod";
 import { getButteryDocsConfig } from "../getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../getButteryDocsDirectories";
 import { getButteryDocsRouteManifest } from "../getButteryDocsRouteManifest";
 import { getButteryDocsViteConfig } from "../getButteryDocsViteConfig";
 import { LOG } from "../utils";
+import { buildSchema } from "./_options.schema";
 
-export async function build() {
-  process.env.NODE_ENV = "production";
+export type ButteryDocsBuildOptions = z.infer<typeof buildSchema>;
+
+process.env.NODE_ENV = "production";
+
+export async function build(options?: ButteryDocsBuildOptions) {
+  const parsedOptions = parseAndValidateOptions(buildSchema, options, LOG);
+  LOG.level = parsedOptions.logLevel;
 
   // Process and store configurations
-  const config = await getButteryDocsConfig();
+  LOG.loadingStart("Building @buttery/docs");
+  const config = await getButteryDocsConfig({
+    prompt: parsedOptions.prompt,
+  });
   const dirs = await getButteryDocsDirectories(config);
   const viteConfig = getButteryDocsViteConfig(config, dirs);
   const butteryManifest = getButteryDocsRouteManifest(config, dirs);
@@ -83,30 +94,31 @@ export async function build() {
       default:
         break;
     }
+    LOG.loadingEnd("complete!");
 
     // Report the success
-    //     const filesAndDirs = await readdir(dirs.output.root, {
-    //       recursive: true,
-    //       withFileTypes: true,
-    //     });
+    const filesAndDirs = await readdir(dirs.output.root, {
+      recursive: true,
+      withFileTypes: true,
+    });
 
-    //     const files = filesAndDirs.filter((dirent) => dirent.isFile());
-    //     LOG.success(`Successfully built documentation app!
+    const files = filesAndDirs.filter((dirent) => dirent.isFile());
+    LOG.success(`Successfully built documentation app!
 
-    //   Location: ${dirs.output.root}
-    //   Total Files: ${files.length}
+      Location: ${dirs.output.root}
+      Total Files: ${files.length}
 
-    // ${files.reduce(
-    //   (accum, file) =>
-    //     accum.concat(
-    //       `    - ${path.relative(
-    //         dirs.output.root,
-    //         `${file.parentPath}/${file.name}`
-    //       )}\n`
-    //     ),
-    //   ""
-    // )}
-    // `);
+    ${files.reduce(
+      (accum, file) =>
+        accum.concat(
+          `    - ${path.relative(
+            dirs.output.root,
+            `${file.parentPath}/${file.name}`
+          )}\n`
+        ),
+      ""
+    )}
+    `);
   } catch (error) {
     throw LOG.fatal(new Error(error as string));
   }

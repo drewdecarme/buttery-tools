@@ -1,28 +1,46 @@
 import { Transform } from "node:stream";
+import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { ButteryMeta } from "@buttery/meta";
 import express from "express";
+import open from "open";
 import type { RenderToPipeableStreamOptions } from "react-dom/server";
 import { createServer } from "vite";
+import type { z } from "zod";
 import { getButteryDocsConfig } from "../getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../getButteryDocsDirectories";
 import { getButteryDocsViteConfig } from "../getButteryDocsViteConfig";
 import { generateHTMLTemplate } from "../lib/server/generateHTMLTemplate";
 import { LOG } from "../utils";
+import { devSchema } from "./_options.schema";
 
-export async function dev() {
+export type ButteryDocsBuildOptions = Partial<z.infer<typeof devSchema>>;
+
+process.env.NODE_ENV = "development";
+
+export async function dev(options?: ButteryDocsBuildOptions) {
+  const parsedOptions = parseAndValidateOptions(devSchema, options, LOG);
+  LOG.level = parsedOptions.logLevel;
+
+  LOG.info("Starting @buttery/docs DevServer...");
+
   // Process and store configurations
-  const config = await getButteryDocsConfig();
+  const config = await getButteryDocsConfig({
+    prompt: parsedOptions.prompt,
+  });
   const dirs = await getButteryDocsDirectories(config);
   const viteConfig = getButteryDocsViteConfig(config, dirs);
 
   // Set some constants
   const ABORT_DELAY = 10_000;
-  const PORT = 4000;
+  const PORT = parsedOptions.port;
+  const HOSTNAME = "http://localhost";
+  const HOSTNAME_AND_PORT = `${HOSTNAME}:${PORT}`;
 
   // create an express app
   const app = express();
 
   // create the vite middleware
+  LOG.debug("Creating vite server & running in middleware mode.");
   const vite = await createServer({
     ...viteConfig,
     root: dirs.app.root, // Root directory for the Vite project
@@ -47,6 +65,9 @@ export async function dev() {
     // instantiate a new instances of Meta
     // which will track any meta tags or json used in the
     // doc files for SEO
+    LOG.debug(
+      "Instantiating ButteryMeta to SSR meta, title, description and og tags"
+    );
     const Meta = new ButteryMeta();
 
     try {
@@ -86,7 +107,7 @@ export async function dev() {
             const [htmlStart, htmlEnd] =
               htmlTemplate.split("<!--ssr-outlet-->");
 
-            // inject critical css (Hydration issues at the momement)
+            // inject critical css (Hydration issues at the moment)
             // const docsUiCssContent = readFileSync(dirs.app.css.docsUI, "utf8");
             // const { critical } = collect(htmlTemplate, docsUiCssContent);
             // htmlStart = htmlTemplate.replace("<!--ssr-critical-->", critical);
@@ -131,6 +152,10 @@ export async function dev() {
   });
 
   app.listen(PORT, () => {
-    LOG.watch(`Local SSR server running at http://localhost:${PORT}`);
+    LOG.watch(`@buttery/docs DevServer running on ${HOSTNAME_AND_PORT}`);
+
+    // Open the DevServer if it has been configured to do so
+    if (!parsedOptions.open) return;
+    open(HOSTNAME_AND_PORT);
   });
 }

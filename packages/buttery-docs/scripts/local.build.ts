@@ -5,4 +5,4 @@ import { build } from "../src/cli-scripts/build";
  * see if the build will work based upon the resolved
  * .buttery/config file
  */
-build();
+build({ logLevel: "debug", prompt: true });

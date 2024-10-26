@@ -5,4 +5,4 @@ import { dev } from "../src/cli-scripts/dev";
  * see if the dev scripts will work based upon
  * the resolved .buttery/config file
  */
-dev();
+dev({ logLevel: "info", prompt: true });

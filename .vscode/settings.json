@@ -8,6 +8,7 @@
     "invoicer",
     "Jsonify",
     "outdir",
+    "Pipeable",
     "svgs",
     "Transpiles"
   ],
