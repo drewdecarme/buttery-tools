@@ -1,4 +1,4 @@
-import type { ButteryConfig } from "@buttery/core";
+import type { ButteryConfig } from "@buttery/core/config";
 
 const config: ButteryConfig = {
   commands: {
@@ -58,6 +58,13 @@ const config: ButteryConfig = {
                 href: "/logs",
                 iconAlt: "logs-logo",
                 iconSrc: "/images/buttery-logo-logs.png",
+              },
+              {
+                text: "Buttery Meta",
+                subText: "SSR'd meta tags for your SSR'd React app",
+                href: "/meta",
+                iconAlt: "meta-logo",
+                iconSrc: "/images/buttery-logo-meta-transparent.png",
               },
             ],
           },
