@@ -31,6 +31,7 @@ export async function build(options?: ButteryDocsBuildOptions) {
   try {
     LOG.debug("Building client bundle for production...");
     await viteBuild({
+      logLevel: "silent",
       root: dirs.app.root,
       ...viteConfig,
       build: {
@@ -46,6 +47,7 @@ export async function build(options?: ButteryDocsBuildOptions) {
 
     LOG.debug("Building server bundle for production...");
     await viteBuild({
+      logLevel: "silent",
       root: dirs.app.root,
       ...viteConfig,
       build: {
