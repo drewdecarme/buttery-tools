@@ -4,6 +4,8 @@ meta:
   - type: name
     name: description
     content: A collection of modal dialog components designed to easily and imperatively control blocking UI dialogs.
+config:
+  navBarDisplay: Modals
 ---
 
 # Modals
