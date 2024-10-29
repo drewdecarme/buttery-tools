@@ -1,6 +1,6 @@
 {
   "name": "@buttery/tsconfig",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A collection of TypeScript configuration files for various types of buttery TS projects",
   "main": "./tsconfig.json",
   "repository": {

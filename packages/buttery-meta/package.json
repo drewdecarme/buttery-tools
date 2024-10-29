@@ -1,6 +1,6 @@
 {
   "name": "@buttery/meta",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Framework agnostic methodology for adding meta tags to your application document during SSR .Built in support for React SSR.",
   "scripts": {
     "build": "yarn tsc --project tsconfig.build.json",
