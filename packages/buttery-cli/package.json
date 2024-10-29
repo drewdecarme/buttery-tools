@@ -19,6 +19,7 @@
     "cli:dev": "tsx ./scripts/dev.ts",
     "cli:build": "tsx ./scripts/build.ts",
     "docs:build": "yarn buttery docs build",
+    "docs:dev": "cd ./.buttery/docs/dist && wrangler pages dev ./build/client",
     "docs:release": "yarn docs:build && cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools"
   },
   "files": [
