@@ -9,7 +9,7 @@
 //   CommandOptions,
 // } from "@buttery/commands";
 // import { getButteryConfig } from "@buttery/core";
-// import { printAsBullets } from "@buttery/logger";
+// import { printAsBullets } from "@buttery/logs";
 // import { select } from "@inquirer/prompts";
 // import { parseFile } from "./components.export.parseFile";
 

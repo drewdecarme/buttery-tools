@@ -30,7 +30,7 @@ Provider a central place to:
 | Package                                               | Type          | Purpose                                                                 |
 | ----------------------------------------------------- | ------------- | ----------------------------------------------------------------------- |
 | [`@buttery/tsconfig`](./packages.buttery-tsconfig.md) | devDependency | Shared TSConfig for `@buttery` library development                      |
-| [`@buttery/logger`](./packages.buttery-logger.md)     | dependency    | Isomorphic logging utiltity to easily debug and trace any functionality |
+| [`@buttery/logs`](./packages.buttery-logger.md)       | dependency    | Isomorphic logging utiltity to easily debug and trace any functionality |
 
 ## Subpath Exports
 
@@ -42,7 +42,7 @@ The below sections are the sub-path exports that allow consumers of `@buttery/co
 | [`/builder`](./packages.buttery-core.builder.md) | Exposes a `build` function that will create a consistent and minified build of any of the buttery packages so they could easily be used in the [`@buttery/cli`](./packages.buttery-cli.md) |
 | [`/utils`](./packages.buttery-core.builder.md)   | Exposes a smaller sub-paths to expose some utilities to assist with traversing directories, type guarding etc... to help build the `@buttery/tools`                                        |
 | [`/tsconfig`](./packages.buttery-core.config.md) | Re-exports the `@buttery/tsconfig` package                                                                                                                                                 |
-| [`/logger`](./packages.buttery-core.config.md)   | Re-exports the `@buttery/logger` package                                                                                                                                                   |
+| [`/logger`](./packages.buttery-core.config.md)   | Re-exports the `@buttery/logs` package                                                                                                                                                     |
 
 ## Scripts
 

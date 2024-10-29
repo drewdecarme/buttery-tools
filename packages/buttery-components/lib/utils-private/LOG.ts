@@ -1,4 +1,4 @@
-import { type ButteryLogLevel, ButteryLogger } from "@buttery/logger";
+import { type ButteryLogLevel, ButteryLogger } from "@buttery/logs";
 
 class ButteryComponentLoggers {
   InputTextDropdown: ButteryLogger;
@@ -8,7 +8,7 @@ class ButteryComponentLoggers {
       id: "INPUT_TEXT_DROPDOWN",
       prefix: "InputTextDropdown",
       prefixBgColor: "#c2d600",
-      logLevel: options.defaultLevel
+      logLevel: options.defaultLevel,
     });
 
     if (typeof window !== "undefined") {
@@ -27,5 +27,5 @@ const butteryLogLevel =
 export const LOG = new ButteryComponentLoggers({
   defaultLevel:
     butteryLogLevel ??
-    (process.env.NODE_ENV === "development" ? "debug" : "error")
+    (process.env.NODE_ENV === "development" ? "debug" : "error"),
 });

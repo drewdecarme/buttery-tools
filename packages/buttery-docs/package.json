@@ -87,6 +87,7 @@
     "remark-gfm": "^4.0.0",
     "remark-mdx-frontmatter": "^5.0.0",
     "rollup": "^4.24.0",
+    "storybook": "^8.3.6",
     "ts-pattern": "^5.5.0",
     "zod": "^3.23.8"
   }

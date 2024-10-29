@@ -6,7 +6,7 @@ config:
 
 # @buttery/core/logger
 
-A `@buttery/core` sub-path export that re-exports the `@buttery/logger` package.
+A `@buttery/core` sub-path export that re-exports the `@buttery/logs` package.
 
 ## Purpose
 
@@ -26,4 +26,4 @@ import { ... } from "@buttery/core/logger"
 
 ### API & Reference
 
-[See the `@buttery/logger` documentation](../logger/_index.md)
+[See the `@buttery/logs` documentation](../logger/_index.md)

@@ -1128,6 +1128,7 @@ __metadata:
     "@buttery/core": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
     "@inquirer/prompts": "npm:^7.0.0"
+    "@ngneat/falso": "npm:^7.2.0"
     "@types/fs-extra": "npm:^11.0.4"
     "@types/node": "npm:^22.7.9"
     commander: "npm:^12.1.0"
@@ -1145,7 +1146,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/components@workspace:packages/buttery-components"
   dependencies:
-    "@buttery/logger": "workspace:^"
+    "@buttery/logs": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
     "@linaria/core": "npm:^6.2.0"
     "@types/node": "npm:^22.7.9"
@@ -1162,6 +1163,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/core@workspace:packages/buttery-core"
   dependencies:
+    "@buttery/logs": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
     "@types/node": "npm:^22.7.9"
     esbuild: "npm:^0.24.0"
@@ -1212,6 +1214,7 @@ __metadata:
     remark-gfm: "npm:^4.0.0"
     remark-mdx-frontmatter: "npm:^5.0.0"
     rollup: "npm:^4.24.0"
+    storybook: "npm:^8.3.6"
     ts-pattern: "npm:^5.5.0"
     tsx: "npm:^4.19.1"
     typescript: "npm:^5.6.3"
@@ -1225,7 +1228,7 @@ __metadata:
   resolution: "@buttery/icons@workspace:packages/buttery-icons"
   dependencies:
     "@buttery/core": "workspace:^"
-    "@buttery/logger": "workspace:^"
+    "@buttery/logs": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
     "@svgr/cli": "npm:^8.1.0"
     "@svgr/core": "npm:^8.1.0"
@@ -1240,9 +1243,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/logger@workspace:, @buttery/logger@workspace:^, @buttery/logger@workspace:packages/buttery-logger":
+"@buttery/logs@workspace:, @buttery/logs@workspace:^, @buttery/logs@workspace:packages/buttery-logs":
   version: 0.0.0-use.local
-  resolution: "@buttery/logger@workspace:packages/buttery-logger"
+  resolution: "@buttery/logs@workspace:packages/buttery-logs"
   dependencies:
     "@buttery/tsconfig": "workspace:"
     chalk: "npm:5.3.0"
@@ -1255,7 +1258,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/meta@workspace:packages/buttery-meta"
   dependencies:
-    "@buttery/logger": "workspace:^"
+    "@buttery/logs": "workspace:^"
     "@buttery/tsconfig": "workspace:^"
     "@types/node": "npm:^22.7.9"
     "@types/react": "npm:^18.3.12"
@@ -1314,7 +1317,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/tools@npm:^0.0.2, @buttery/tools@workspace:, @buttery/tools@workspace:packages/buttery-tools":
+"@buttery/tools@workspace:, @buttery/tools@workspace:packages/buttery-tools":
   version: 0.0.0-use.local
   resolution: "@buttery/tools@workspace:packages/buttery-tools"
   dependencies:
@@ -1322,9 +1325,8 @@ __metadata:
     "@buttery/components": "workspace:^"
     "@buttery/docs": "workspace:^"
     "@buttery/icons": "workspace:^"
-    "@buttery/logger": "workspace:"
+    "@buttery/logs": "workspace:"
     "@buttery/meta": "workspace:^"
-    "@buttery/tools": "npm:^0.0.2"
     "@buttery/tsconfig": "workspace:"
     tsx: "npm:4.19.1"
     typescript: "npm:5.6.3"
@@ -3036,6 +3038,16 @@ __metadata:
   peerDependencies:
     rollup: ">=2"
   checksum: 10c0/43544953ba3995a3776a30ebdf0d9f7e54fc8dc77d1ecb64acbbb39af3a6d7e71dabf2a8cdc24f7f994f320f27b3d53c7683a0dc0177881939979b7ba44259fa
+  languageName: node
+  linkType: hard
+
+"@ngneat/falso@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "@ngneat/falso@npm:7.2.0"
+  dependencies:
+    seedrandom: "npm:3.0.5"
+    uuid: "npm:8.3.2"
+  checksum: 10c0/5a0a3bd3d76837ced616dba471319ebc267ef9da2a7526c4b8afd1685f340c0897f3db96cb60c415d48a3c5e9484067734df3ba89863ef967960bc91485c35d2
   languageName: node
   linkType: hard
 
@@ -12008,6 +12020,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"seedrandom@npm:3.0.5":
+  version: 3.0.5
+  resolution: "seedrandom@npm:3.0.5"
+  checksum: 10c0/929752ac098ff4990b3f8e0ac39136534916e72879d6eb625230141d20db26e2f44c4d03d153d457682e8cbaab0fb7d58a1e7267a157cf23fd8cf34e25044e88
+  languageName: node
+  linkType: hard
+
 "selfsigned@npm:^2.0.1":
   version: 2.4.1
   resolution: "selfsigned@npm:2.4.1"
@@ -13212,6 +13231,15 @@ __metadata:
   version: 1.0.1
   resolution: "utils-merge@npm:1.0.1"
   checksum: 10c0/02ba649de1b7ca8854bfe20a82f1dfbdda3fb57a22ab4a8972a63a34553cf7aa51bc9081cf7e001b035b88186d23689d69e71b510e610a09a4c66f68aa95b672
+  languageName: node
+  linkType: hard
+
+"uuid@npm:8.3.2":
+  version: 8.3.2
+  resolution: "uuid@npm:8.3.2"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 10c0/bcbb807a917d374a49f475fae2e87fdca7da5e5530820ef53f65ba1d12131bd81a92ecf259cc7ce317cbe0f289e7d79fdfebcef9bfa3087c8c8a2fa304c9be54
   languageName: node
   linkType: hard
 

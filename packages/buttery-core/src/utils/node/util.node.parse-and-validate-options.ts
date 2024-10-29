@@ -1,5 +1,5 @@
+import { type ButteryLogger, printAsBullets } from "@buttery/logs";
 import { type ZodSchema, z } from "zod";
-import { type ButteryLogger, printAsBullets } from "../../logger";
 
 /**
  * This function takes in a schema, some input data that should be validated
