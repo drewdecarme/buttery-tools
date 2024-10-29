@@ -1121,6 +1121,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@buttery/cli@workspace:, @buttery/cli@workspace:packages/buttery-cli":
+  version: 0.0.0-use.local
+  resolution: "@buttery/cli@workspace:packages/buttery-cli"
+  dependencies:
+    "@buttery/commands": "workspace:^"
+    "@buttery/components": "workspace:^"
+    "@buttery/docs": "workspace:^"
+    "@buttery/icons": "workspace:^"
+    "@buttery/logs": "workspace:"
+    "@buttery/meta": "workspace:^"
+    "@buttery/tsconfig": "workspace:"
+    tsx: "npm:4.19.1"
+    typescript: "npm:5.6.3"
+  bin:
+    buttery: ./bin/index.js
+  languageName: unknown
+  linkType: soft
+
 "@buttery/commands@workspace:^, @buttery/commands@workspace:packages/buttery-commands":
   version: 0.0.0-use.local
   resolution: "@buttery/commands@workspace:packages/buttery-commands"
@@ -1173,7 +1191,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/docs@workspace:^, @buttery/docs@workspace:packages/buttery-docs":
+"@buttery/docs@workspace:, @buttery/docs@workspace:^, @buttery/docs@workspace:packages/buttery-docs":
   version: 0.0.0-use.local
   resolution: "@buttery/docs@workspace:packages/buttery-docs"
   dependencies:
@@ -1274,7 +1292,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/playground@workspace:packages/buttery-playground"
   dependencies:
-    "@buttery/tools": "workspace:"
+    "@buttery/cli": "workspace:"
+    "@buttery/docs": "workspace:"
     "@buttery/tsconfig": "workspace:"
     "@cloudflare/workers-types": "npm:4.20241022.0"
     "@remix-run/cloudflare": "npm:2.13.1"
@@ -1314,24 +1333,6 @@ __metadata:
     typescript: "npm:^5.6.3"
     vite: "npm:^5.4.10"
     zod: "npm:^3.23.8"
-  languageName: unknown
-  linkType: soft
-
-"@buttery/tools@workspace:, @buttery/tools@workspace:packages/buttery-tools":
-  version: 0.0.0-use.local
-  resolution: "@buttery/tools@workspace:packages/buttery-tools"
-  dependencies:
-    "@buttery/commands": "workspace:^"
-    "@buttery/components": "workspace:^"
-    "@buttery/docs": "workspace:^"
-    "@buttery/icons": "workspace:^"
-    "@buttery/logs": "workspace:"
-    "@buttery/meta": "workspace:^"
-    "@buttery/tsconfig": "workspace:"
-    tsx: "npm:4.19.1"
-    typescript: "npm:5.6.3"
-  bin:
-    buttery: ./bin/index.js
   languageName: unknown
   linkType: soft
 

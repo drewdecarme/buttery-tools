@@ -1,4 +1,4 @@
-# @buttery/tools
+# @buttery/cli
 
 ## 0.0.2
 
