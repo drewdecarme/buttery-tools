@@ -31,7 +31,7 @@
   "devDependencies": {
     "@buttery/tsconfig": "workspace:",
     "@linaria/core": "6.2.0",
-    "@types/node": "22.7.9",
+    "@types/node": "22.8.2",
     "@vitejs/plugin-react-swc": "3.7.1",
     "@wyw-in-js/vite": "0.5.4",
     "typescript": "5.6.3",

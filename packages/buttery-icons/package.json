@@ -31,7 +31,7 @@
   "devDependencies": {
     "@buttery/tsconfig": "workspace:",
     "@types/fs-extra": "11.0.4",
-    "tsx": "4.19.1",
+    "tsx": "4.19.2",
     "typescript": "5.6.3"
   },
   "dependencies": {
