@@ -8,9 +8,7 @@
     "./builder": "./dist/builder/index.js",
     "./logger": "./dist/logger/index.js",
     "./tsconfig": "./tsconfig/tsconfig.json",
-    "./utils/node": "./dist/utils/node/index.js",
-    "./utils/isomorphic": "./dist/utils/isomorphic/index.js",
-    "./utils/browser": "./dist/utils/browser/index.js"
+    "./utils/*": "./dist/utils/*/index.js"
   },
   "scripts": {
     "build": "yarn tsc && yarn config-and-utils:build && yarn config-and-utils:types && yarn lib:build",

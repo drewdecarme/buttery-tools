@@ -1,14 +1,18 @@
 ---
-title: "@buttery/core/config | Reference"
+title: "/config | Reference"
 config:
-  navBarDisplay: "@buttery/core/config"
+  navBarDisplay: "/config"
 ---
 
-# @buttery/core
+# @buttery/core/config
 
-A core package that helps the buttery tools packages reconcile and load the `.buttery/config`. It exports
-a few helper utilities and their type definitions to make it easy to locate, use and reason about the keys and
+A `@buttery/core` sub-path export that helps the buttery tools packages reconcile and load the `.buttery/config`.
+It exposes a few helper utilities and their type definitions to make it easy to locate, use and reason about the keys and
 values in the configuration file.
+
+## Purpose
+
+Makes it easy to locate, evaluate and then read any values in the `.buttery/config` file.
 
 ## Installation
 
@@ -16,22 +20,15 @@ values in the configuration file.
 yarn add @buttery/core
 ```
 
-## Purpose
+### Usage
 
-Makes it easy to locate, evaluate and then read any values in the `.buttery/config` file.
+```ts
+import { ... } from "@buttery/core/config"
+```
 
-## Dependencies
+## API
 
-| Package                                                  | Type          | Purpose                                                       |
-| -------------------------------------------------------- | ------------- | ------------------------------------------------------------- |
-| [`@buttery/tsconfig`](./packages.buttery-tsconfig.md)    | devDependency | Shared TSConfig for library development                       |
-| [`@buttery/core/builder`](./packages.buttery-builder.md) | devDependency | Transpile, build and bundle the library for use               |
-| [`@buttery/logger`](./packages.buttery-logger.md)        | dependency    | Logger to easily debug and trace library functionality        |
-| [`@buttery/core/utils`](./packages.buttery-utils.md)     | dependency    | Common utils to help traverse directories, type guard, etc... |
-
-## Exports
-
-The below are the functions exported from the library to help with reconciling the config and any
+The below are the exports exposed from the library to help with reconciling the config and any
 static files, directories, etc... needed to run other packages from the CLI.
 
 ### `getButteryConfig`
@@ -112,7 +109,9 @@ package.
 > This function is crucial in locating the necessary static artifacts
 > required to copy files, run apps, etc... from the CLI.
 
-## Config Reconciliation Process
+## Reference
+
+### Config Reconciliation Process
 
 The [`getButteryConfig`](#getbutteryconfig) function does the following in order to return a completely transpiled and reconciled configuration:
 
@@ -121,24 +120,3 @@ The [`getButteryConfig`](#getbutteryconfig) function does the following in order
 3. Creates a `.buttery/.store` directory to cache and well, store stuff.
 4. Transpiles the configuration from TS into JS. Once transpiled a virtual module is created to parse and then read the transpiled file as an ESModule.
 5. The return values are constructed and the specifically requested key is located and returned.
-
-## Scripts
-
-The below commands are defined in the `package.json` to help develop, build and distribute the package.
-
-### `yarn build`
-
-A single script that is run during monorepo build that runs a series of other sub:build scripts. Each `sub:build` script
-is denoted by at `:` (colon).
-
-### `yarn lib:build`
-
-Runs the `scripts/lib.build.ts` file that executes the `@buttery/core/builder` to transpile and bundle the necessary files used to reconcile the configuration file at runtime.
-
-The `@buttery/core/builder` package is used here to bundle all of the files needed to run the utilities together to ensure that the utilities can be used in a TS package as well as a node binary for CLI use.
-
-> Typically, we wouldn't need to bundle but it's important that we do to ensure that we can run this code using a shebang in our CLI. When TypeScript builds the project, it can easily reason about the endings on a file so importing a file like the `import { someFunction } from "./some-function"` works fine, but when running the code using a shebang, node cannot reason about the line endings and it specifically needs the `.js` extension. Bundling the necessary files together ensures that the script can be run in both contexts.
-
-### `yarn lib:types`
-
-Runs the typescript compiler to export the types, declarations, and mapping files needed to import and run the utilities exported from the library.

@@ -6,9 +6,9 @@ config:
 
 # @buttery/core
 
-A core package that helps the buttery tools packages reconcile and load the `.buttery/config`. It exports
-a few helper utilities and their type definitions to make it easy to locate, use and reason about the keys and
-values in the configuration file.
+A core package that supplies a lot of the base and shared functionality needed to create any of the `@buttery/tools`. This package contains a very specific sub-path exports to supply that functionality and a modular way. Those sub-path exports export utilities, types, etc... to make it easy to develop, bundle, distribute and then subsequently consume any of the `@buttery` tools.
+
+> **NOTE**: It's worth noting that the sole purpose of this package is to simplify the mono-repo structure as well as provide 1 single package that is needed for any `@buttery` tool development. This package is **not individually usable** and is not considered a buttery tool.
 
 ## Installation
 
@@ -18,109 +18,31 @@ yarn add @buttery/core
 
 ## Purpose
 
-Makes it easy to locate, evaluate and then read any values in the `.buttery/config` file.
+Provider a central place to:
+
+- Makes it easy to locate, evaluate and then read any values in the `.buttery/config` file.
+- Utilize a shared `tsconfig.json` for all projects
+- Employ the use of a few common utilities for directory searching, asset management, static file serving, etc...
+- Build and bundle any scripts needed to supply the `@buttery/cli` its commands.
 
 ## Dependencies
 
-| Package                                                  | Type          | Purpose                                                       |
-| -------------------------------------------------------- | ------------- | ------------------------------------------------------------- |
-| [`@buttery/tsconfig`](./packages.buttery-tsconfig.md)    | devDependency | Shared TSConfig for library development                       |
-| [`@buttery/core/builder`](./packages.buttery-builder.md) | devDependency | Transpile, build and bundle the library for use               |
-| [`@buttery/logger`](./packages.buttery-logger.md)        | dependency    | Logger to easily debug and trace library functionality        |
-| [`@buttery/core/utils`](./packages.buttery-utils.md)     | dependency    | Common utils to help traverse directories, type guard, etc... |
+| Package                                               | Type          | Purpose                                                                 |
+| ----------------------------------------------------- | ------------- | ----------------------------------------------------------------------- |
+| [`@buttery/tsconfig`](./packages.buttery-tsconfig.md) | devDependency | Shared TSConfig for `@buttery` library development                      |
+| [`@buttery/logger`](./packages.buttery-logger.md)     | dependency    | Isomorphic logging utiltity to easily debug and trace any functionality |
 
-## Exports
+## Subpath Exports
 
-The below are the functions exported from the library to help with reconciling the config and any
-static files, directories, etc... needed to run other packages from the CLI.
+The below sections are the sub-path exports that allow consumers of `@buttery/core` to import and utilize it's modules.
 
-### `getButteryConfig`
-
-Searches for the `.buttery/config` file either from the current working directory
-or from a provided directory. Attempts to resolve a few directories and
-configurations based upon that search. Once found, it builds the configuration
-using Esbuild and then resolves the configuration as an ESModule to be used
-in any of the commands in the CLI.
-
-#### Fetching a specific key and values
-
-Since we're primarily fetching the config for one command at a time, you should include
-required parameter of the key that you wish to retrieve from the config.
-
-The below value will retrieve the docs
-
-```ts
-import { getButteryConfig } from "@buttery/core";
-
-const docsConfig = getButteryConfig("docs");
-```
-
-#### Return Values
-
-The function returns an object with 2 keys:
-
-1. The key of the desired key listed in the params
-2. A `paths` key that has a few paths that can be used to access the cache (`.store` as we call it).
-
-The type signatures are included below for your convenience.
-
-```ts
-// ReturnType<typeof getButteryConfig>
-
-type ButteryConfigWithPaths = {
-  config: ButteryConfig;
-  paths: ButteryConfigPaths;
-};
-
-type ButteryConfigPaths = {
-  config: string;
-  butteryDir: string;
-  storeDir: string;
-  rootDir: string;
-};
-
-type ButteryConfigPaths = {
-  config: string;
-  butteryDir: string;
-  storeDir: string;
-  rootDir: string;
-};
-```
-
-### `getNodeModulesButteryOutputDir`
-
-Searches up the directory structure starting at the package root
-which is one directory up from the `.buttery` directory. It will
-attempt to find the `node_modules` directory that has the scoped
-`@buttery` directory inside of it. If it doesn't find the scoped
-directory, it will continue searching up the directory structure
-until it finds it.
-
-```ts
-const config = getButteryConfig("tokens"); // as ResolvedButteryConfig<"tokens">
-
-const nodeModulesTokenDir = await getNodeModulesButteryOutputDir(
-  config.paths,
-  "tokens"
-);
-```
-
-The above fetches the config then the `config.paths` value can be used
-to search for the nearest `node_modules` directory that contains the `@buttery/tokens`
-package.
-
-> This function is crucial in locating the necessary static artifacts
-> required to copy files, run apps, etc... from the CLI.
-
-## Config Reconciliation Process
-
-The [`getButteryConfig`](#getbutteryconfig) function does the following in order to return a completely transpiled and reconciled configuration:
-
-1. Reconciles some options with defaults
-2. Searches for the `.buttery/config` file from a starting directory or `cwd`.
-3. Creates a `.buttery/.store` directory to cache and well, store stuff.
-4. Transpiles the configuration from TS into JS. Once transpiled a virtual module is created to parse and then read the transpiled file as an ESModule.
-5. The return values are constructed and the specifically requested key is located and returned.
+| Subpath                                          | Description                                                                                                                                                                                |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`/config`](./packages.buttery-core.config.md)   | Exports utilities & types that makes it easy to locate, evaluate and then read any values in the `.buttery/config` file.                                                                   |
+| [`/builder`](./packages.buttery-core.builder.md) | Exposes a `build` function that will create a consistent and minified build of any of the buttery packages so they could easily be used in the [`@buttery/cli`](./packages.buttery-cli.md) |
+| [`/utils`](./packages.buttery-core.builder.md)   | Exposes a smaller sub-paths to expose some utilities to assist with traversing directories, type guarding etc... to help build the `@buttery/tools`                                        |
+| [`/tsconfig`](./packages.buttery-core.config.md) | Re-exports the `@buttery/tsconfig` package                                                                                                                                                 |
+| [`/logger`](./packages.buttery-core.config.md)   | Re-exports the `@buttery/logger` package                                                                                                                                                   |
 
 ## Scripts
 

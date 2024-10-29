@@ -64,7 +64,7 @@ const config: ButteryConfig = {
                 subText: "SSR'd meta tags for your SSR'd React app",
                 href: "/meta",
                 iconAlt: "meta-logo",
-                iconSrc: "/images/buttery-logo-meta-transparent.png",
+                iconSrc: "/images/buttery-logo-seo-transparent.png",
               },
             ],
           },
