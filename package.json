@@ -2,7 +2,7 @@
   "name": "buttery",
   "version": "1.0.1",
   "description": "A much needed CLI that helps manage setup boilerplate for common projects and utility sets for TS development projects",
-  "main": "index.js",
+  "type": "module",
   "private": true,
   "workspaces": {
     "packages": [
