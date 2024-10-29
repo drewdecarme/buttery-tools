@@ -1,0 +1,60 @@
+---
+title: useDropdown | Components | Buttery Tools
+meta:
+  - type: name
+    name: description
+    content: A React hook that will turn any node into a custom, completely accessible dropdown component that includes custom positioning, gaps, arrows, and keyboard navigation.
+config:
+  navBarDisplay: useDropdown
+---
+
+# `useDropdown`
+
+Extends the `usePopover` hook to turn any node into a custom, accessible dropdown component inclusive of
+custom positioning, gaps, arrows, and keyboard navigation.
+
+This hook is great for easily turning any node into a context menu, navbar menu etc...
+
+{/* fence:"lib/components/hooks/useDropdown/examples/UseDropdown.example.tsx" */}
+
+## Usages
+
+The `useDropdown` extends the `usePopover` link to essentially add more functionality and keyboard interactiveity to a standard popover node.
+This abstraction enables us to create more complex popovers that can be easily integrated into component models (e.g. `<DropdownMenu />`, and `<DropdownNav />`).
+
+This hook is utilized in any `DropdownXXX` component, but also allows the user to easily integrate the dropdown functionality (arrows, positioning, viewport
+collision detection, etc...) into any other Component or HTML node that requires it.
+
+{/* example:"lib/components/hooks/useDropdown/examples/UseDropdown.example.tsx" */}
+
+### Why not use `usePopover`?
+
+[On top of all of the reasons for using the `usePopover` hook](./hooks.usePopover.mdx), there are additional reasons we would use this hook instead of just simply the `usePopover`.
+
+1. **Positioning** - Depending upon the options that are declared with the `useDropdown` hook, a set of styles and CSS variable tokens are created to easily position the `popover` close to it's target. This kind of automatic style calculation falls outside of the Popover API specification.
+2. **Arrows** - It's a common treatment to see arrows included with popovers to indicate where the target was that launched it. This hook calculates the poisitoin of the arrow based upon size and positioning.
+   {/* 4. **Keyboard Functionality** - By their nature, Popovers lack the typeof semantics that a dialog would. This hook adds some accessible and default listeners to make your dropdown behave as you would expect it would. */}
+
+## Installation
+
+```bash
+# yarn
+yarn add @buttery/components
+
+# npm
+npm install @buttery/components
+```
+
+## Styling
+
+### CSS-in-JS
+
+### Style Objects
+
+## Examples
+
+### Barebones
+
+## APIs
+
+### `useDropdown`

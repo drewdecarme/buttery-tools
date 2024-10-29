@@ -1,0 +1,35 @@
+{
+  "name": "@buttery/logs",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "yarn tsc --project tsconfig.build.json",
+    "dev": " yarn build --watch"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "description": "",
+  "devDependencies": {
+    "@buttery/tsconfig": "workspace:",
+    "tsx": "4.19.2",
+    "typescript": "5.6.3"
+  },
+  "dependencies": {
+    "chalk": "5.3.0"
+  }
+}

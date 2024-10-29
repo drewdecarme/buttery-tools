@@ -1,0 +1,27 @@
+{
+  "name": "@buttery/tsconfig",
+  "version": "0.0.1",
+  "description": "A collection of TypeScript configuration files for various types of buttery TS projects",
+  "main": "./tsconfig.json",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
+  },
+  "exports": {
+    "./library": {
+      "default": "./tsconfig.library.json",
+      "import": "./tsconfig.library.json",
+      "require": "./tsconfig.library.json",
+      "node": "./tsconfig.library.json"
+    }
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "devDependencies": {
+    "typescript": "5.6.3"
+  }
+}

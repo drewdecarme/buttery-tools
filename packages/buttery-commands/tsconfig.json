@@ -1,0 +1,3 @@
+{
+  "extends": "@buttery/core/tsconfig"
+}

@@ -1,0 +1,47 @@
+{
+  "name": "@buttery/core",
+  "version": "0.0.1",
+  "description": "A collection of types that are used across all buttery packages / tools",
+  "type": "module",
+  "exports": {
+    "./config": "./dist/config/index.js",
+    "./builder": "./dist/builder/index.js",
+    "./logger": "./dist/logger/index.js",
+    "./tsconfig": "./tsconfig/tsconfig.json",
+    "./utils/*": "./dist/utils/*/index.js"
+  },
+  "scripts": {
+    "build": "yarn tsc && yarn config-and-utils:build && yarn config-and-utils:types && yarn lib:build",
+    "config-and-utils:build": "tsx ./scripts/build-config-and-utils.ts",
+    "config-and-utils:types": "tsc --project tsconfig.types.json",
+    "lib:build": "tsc --project tsconfig.library.json",
+    "lib:dev": "yarn lib:build --watch",
+    "config:test": "tsx ./scripts/config-test.ts"
+  },
+  "files": [
+    "tsconfig",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git",
+    "directory": "packages/buttery-core"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "devDependencies": {
+    "@buttery/tsconfig": "workspace:",
+    "@types/node": "22.8.2",
+    "tsx": "4.19.2",
+    "typescript": "5.6.3"
+  },
+  "dependencies": {
+    "@buttery/logs": "workspace:",
+    "esbuild": "0.24.0",
+    "zod": "3.23.8"
+  }
+}

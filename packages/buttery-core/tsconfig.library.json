@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist",
+    "declarationDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "target": "ESNext"
+  },
+  // config is built separately using the builder so it is left out
+  // of this include
+  "include": ["src/builder/index.ts", "src/logger/index.ts"]
+}

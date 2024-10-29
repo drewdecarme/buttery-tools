@@ -1,0 +1,58 @@
+{
+  "name": "@buttery/tokens",
+  "version": "0.0.1",
+  "description": "TBD",
+  "type": "module",
+  "sideEffects": false,
+  "scripts": {
+    "build": "yarn tsc && yarn cli-scripts:build",
+    "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
+    "cli-scripts:types": "yarn tsc --project tsconfig.cli-types.json",
+    "local:build": "tsx  --trace-exit ./scripts/local.build.ts",
+    "local:dev": "tsx ./scripts/local.dev.ts"
+  },
+  "exports": {
+    "./*": {
+      "types": "./*.d.ts",
+      "import": "./*.js"
+    },
+    "./*/css": {
+      "types": "./*.d.ts",
+      "import": "./*.css"
+    },
+    "./cli/*": "./dist/cli-scripts/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git",
+    "directory": "packages/buttery-tokens"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "storybook": "8.3.6",
+    "tsx": "4.19.2"
+  },
+  "dependencies": {
+    "@buttery/core": "workspace:",
+    "@remix-run/dev": "2.13.1",
+    "@remix-run/node": "2.13.1",
+    "@remix-run/react": "2.13.1",
+    "@types/chroma-js": "2.4.4",
+    "@wyw-in-js/vite": "0.5.4",
+    "chokidar": "4.0.1",
+    "chroma-js": "3.1.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "ts-pattern": "5.5.0",
+    "typescript": "5.6.3",
+    "vite": "5.4.10",
+    "zod": "3.23.8"
+  }
+}

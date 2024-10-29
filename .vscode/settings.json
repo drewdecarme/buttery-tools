@@ -3,12 +3,19 @@
     "autofix",
     "brainer",
     "Dateify",
+    "discoverability",
     "fooded",
     "frontmatter",
     "invoicer",
     "Jsonify",
-    "svgs"
+    "outdir",
+    "Pipeable",
+    "svgs",
+    "Transpiles"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "*.d.ts": "typescript"
+  }
 }

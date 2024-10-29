@@ -1,0 +1,48 @@
+{
+  "name": "@buttery/icons",
+  "version": "0.0.1",
+  "description": "TODO:",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "static"
+  ],
+  "scripts": {
+    "build": "yarn tsc && yarn cli-scripts:build",
+    "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
+    "cli-scripts:types": "tsc --project tsconfig.cli-types.json",
+    "local:build": "tsx ./scripts/local.build.ts"
+  },
+  "exports": {
+    "./cli/*": "./dist/cli-scripts/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git",
+    "directory": "packages/buttery-icons"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "devDependencies": {
+    "@buttery/tsconfig": "workspace:",
+    "@types/fs-extra": "11.0.4",
+    "tsx": "4.19.2",
+    "typescript": "5.6.3"
+  },
+  "dependencies": {
+    "@buttery/core": "workspace:",
+    "@buttery/logs": "workspace:",
+    "@svgr/cli": "8.1.0",
+    "@svgr/core": "8.1.0",
+    "@svgr/plugin-jsx": "8.1.0",
+    "@svgr/plugin-prettier": "8.1.0",
+    "@svgr/plugin-svgo": "8.1.0",
+    "fs-extra": "11.2.0",
+    "zod": "3.23.8"
+  }
+}

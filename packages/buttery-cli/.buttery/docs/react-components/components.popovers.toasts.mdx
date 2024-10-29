@@ -1,0 +1,86 @@
+---
+title: Toasts | Components | Buttery Tools
+meta:
+  - type: name
+    name: description
+    content: A semantically correct, accessible and SSR ready hook and component for creating completely custom toast messages to incicate the status of some user initiated action.
+config:
+  navBarDisplay: Toasts
+---
+
+# Toasts
+
+A semantically correct, accessible and SSR ready hook and component
+for creating completely custom toast messages to incicate the status
+of some user initiated action.
+
+{/* example:"lib/components/popovers/toast/examples/Toast.example.tsx" */}
+
+## Usage
+
+At it's very basic, the `<Toast />` and the `useToast` component help you
+imperatively launch toast messages from anywhere in the app.
+
+The `<Toaster />` component takes in a custom defined component that shares the
+same props as the options that you pass the `create` function returned from
+the `useToast` hook. This gives you complete control over the options that
+you pass the toast component that you create yourself.
+
+{/* example:"lib/components/popovers/toast/examples/ToastBestPractice.example.tsx" */}
+
+The `<Toaster />` component can be defined anywhere in the app that it doesn't use
+conventional "react" means for passing data back and fourth to the toast itself. The
+`<Toaster />` uses a DOM API called the [Mutation Observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).
+You can [read more about the interal workings of the `Toaster` component in the `<Toaster />` API
+documentation](#toaster-)
+
+> **NOTE**: A best practice is to centerally define your `<Toaster />` and the `useToast`
+> hook in your app and then re-export another differntly named isntance of the `useToast` hook
+> that you can use anywhere with the options that you have already defined.
+
+## Styling
+
+## Examples
+
+### Barebones
+
+This is the most basic instance you can get (that is without any styling)
+{/* example:"lib/components/popovers/DropdownMenu/examples/DropdownMenuBarebones.example.tsx" */}
+
+### Centerally re-declaring `useToast`
+
+### Launching in promises
+
+### Multiple toasters
+
+There might be certain instances where you want to create multiple instances of
+the toaster to support more complex toasts and isolate them from the general toasts
+in your application.
+
+For this use case, you can create multiple `<Toaster />` components and add `id`s to
+the toaster and the `useToast` hook. The result will be transparent to the user but
+this might provide some more isolated DX for certain pieces of the app.
+
+{/* example:"lib/components/popovers/toast/examples/ToastMultipleToasters.example.tsx" */}
+
+This example consolidates the `ToastComponent` for each toaster inline into the `ToastComponent`
+prop of the toaster. To ensure that the types matchup, the `<Toaster />` is a generic functional
+component that can take the ToastComponentProps as a generic.
+
+> **Monorepo NOTE**: This method also allows you to use the Toast component across multiple
+> packages to support different use cases, but when used in one app, the user will not be able
+> to discerne any difference. (e.g. it will look like the same toast mechanism regardless
+> of where it's used)
+
+Each toaster can share the same styles since their references to props are maintained
+in a completely different mechanism
+
+### Positioning
+
+## API
+
+### `useToast`
+
+### `<Toaster />`
+
+#### Mutation Observer

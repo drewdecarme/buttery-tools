@@ -1,0 +1,113 @@
+---
+title: DropdownMenu | Components | Buttery Tools
+meta:
+  - type: name
+    name: description
+    content: A specific type of dropdown Popover component that makes it easy to add inline context menus that are 100% accessible and keyboard and mouse event aware.
+config:
+  navBarDisplay: DropdownMenu
+---
+
+# DropdownMenu
+
+An component abstraction that that extends the [useDropdown](./hooks.useDropdown.mdx) hook and
+incorpoates the [usePortal](./hooks.usePortal.mdx) hook to easily
+add accessible, keyboard and mouse aware, SSR ready, flyout & context menus.
+
+This component provides some easy tools for creating context menus, flyout menus,
+or any other menu that can be used to provide the user options for "doing more things"
+in context to the actions already provided.
+
+{/* example:"lib/components/popovers/DropdownMenu/examples/DropdownMenu.example.tsx" */}
+
+This specific abstraction provides support when you would like to offer the user a list of actions to do something; not
+to navigate somewhere
+
+> **NOTE:** It's important to note that this should be used when you want the user **to do something**; not to **go somewhere**.
+> If you're looking to provide some functionailty that isn't a navigation event, then you should consider using the
+> the [DropdownNav](./components.popovers.DropdownNav.mdx) component.
+
+The `useDropdownMenu` employs the use of [Portals](https://react.dev/reference/react-dom/createPortal),(as implemented in
+the [usePortal](./hooks.usePortal.mdx) hook) as well as Dynamic Node Creation (as implemented in the [useDynamicNode](./hooks.useDynamicNode.mdx)
+hook). The use of the mechanisms gives us the combined functaiontliy list below.\_createMdxContent
+
+The `<DropdownMenu />` component...
+
+1. Render's the menu outside the context of the HTML heirarchy
+2. Focuses the user's attention to the first actionable Node
+3. Enables the abilitilly to reduce the client bundle down by providing support code-splitting the content of the dropdown.
+
+## Usage
+
+The `<DropdownMenu />` and the `useDropdownMenu` component and hook attempt to provide
+an out of the box way to easily and simply add any type of context or inline menu to a
+focusable element on the page.
+
+The below implementation is the `useDropdownMenu` at it's most basic.
+
+{/* example:"lib/components/popovers/DropdownMenu/examples/DropdownMenuBarebones.example.tsx" */}
+
+The `useDropdownMenu` hook has the exact same API as the `useDropdown` hook except that it
+requires an ID in order to link the `<button />` to the `<DropdownMenu />` componnet.
+
+## Why not just `useDropdown`?
+
+The `useDropdownMenu` hook allows for all of the same options that the `useDropdown` hook allows for
+but the `useDropdownMenu` hook and the `<DropdownMenu />` component enahnce the existing functionality
+to make the nodes fully acessible as well as automatically add the keyboard events that users expect
+from any menu experience.
+
+The `useDropdownMenu` hook is just an extension of the `useDropdown` hook to make reptetive elemnets of
+a web experience just a little bit easier and faster to implement.
+
+And this is true of the other `useDropdownXXXX` hooks and components.
+
+## Why not just `useDropdownNav`?
+
+The `useDropdownNav` is used exlcusively for providing a dropdowndown mechanism that is used to take
+the user to a different part of the app instead of providing more actions to do in the context of the
+users current page.
+
+On top of the automatic event and listener support, the `<DropdownMenu />` also employs the use of the [usePortal](./hooks.usePortal.mdx)
+hook to render the menu content in the portal. Due to this, the content of the menu will not be able to be
+crawled.
+
+## Examples
+
+### With Offset
+
+You can add a space between the target and the dropdown by adding a `dxOffset` option to the
+`useDropdownMenu` hook.
+{/* example:"lib/components/popovers/DropdownMenu/examples/DropdownMenuWithOffset.example.tsx" */}
+
+### With Arrow
+
+You can add an arrow between the target and the dropdown by adding a `dxArrow` option to the
+`useDropdownMenu` hook.
+{/* example:"lib/components/popovers/DropdownMenu/examples/DropdownMenuWithArrow.example.tsx" */}
+
+### Positioning
+
+You can position the element anywhere surrounding the target
+{/* example:"lib/components/popovers/DropdownMenu/examples/DropdownMenuPositions.example.tsx" */}
+
+### Menu Groups
+
+It's a common pattern to see context menus or any flyout menu to contain different groupings
+based upon the semantic actions that are being provided.
+
+For instance, you could have a context menu that has email functionality. 1 group could be with
+replying, forwarding, etc... and another group could be with actions to take specific on the email
+like archive or delete.
+
+Since this component is completely headless, it's utlimatley up to you how you implement each of the
+groups but a best practice is to group each action group using an unordered list. After that, it's all
+up to how it's styled.
+
+{/* example:"lib/components/popovers/DropdownMenu/examples/DropdownMenuGroups.example.tsx" */}
+
+## API
+
+### `useDropdownMenu`
+
+### `<DropdownMenu />`

@@ -1,0 +1,9 @@
+{
+  "extends": "@buttery/tsconfig/library",
+  "compilerOptions": {
+    "lib": ["DOM", "ESNext", "DOM.Iterable", "DOM.AsyncIterable"],
+    "noEmit": true,
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext"
+  }
+}

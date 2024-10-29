@@ -1,0 +1,47 @@
+{
+  "name": "@buttery/commands",
+  "version": "0.0.1",
+  "description": "Create CLIs using file system based routing",
+  "type": "module",
+  "bin": {
+    "spread": "./bin/index.js"
+  },
+  "scripts": {
+    "build": "yarn tsc && yarn cli-scripts:build && yarn lib:build",
+    "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
+    "cli-scripts:types": "yarn tsc --project tsconfig.cli-types.json",
+    "lib:build": "yarn tsc --project tsconfig.library.json",
+    "local:start": "yarn node ./bin/index.js"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./cli/*": "./dist/cli-scripts/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git",
+    "directory": "packages/buttery-commands"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "devDependencies": {
+    "@buttery/tsconfig": "workspace:",
+    "@ngneat/falso": "7.2.0",
+    "@types/fs-extra": "11.0.4",
+    "@types/node": "22.8.2",
+    "tsx": "4.19.2",
+    "typescript": "5.6.3"
+  },
+  "dependencies": {
+    "@buttery/core": "workspace:",
+    "@inquirer/prompts": "7.0.1",
+    "commander": "12.1.0",
+    "esbuild": "0.24.0",
+    "fs-extra": "11.2.0",
+    "handlebars": "4.7.8"
+  }
+}
