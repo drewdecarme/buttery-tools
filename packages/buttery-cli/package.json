@@ -34,7 +34,8 @@
     "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
   "devDependencies": {
-    "@buttery/commands": "workspace:",
+    "@buttery/commands": "workspace:^",
+    "@buttery/docs": "workspace:^",
     "@buttery/tsconfig": "workspace:",
     "tsx": "4.19.2",
     "typescript": "5.6.3"
