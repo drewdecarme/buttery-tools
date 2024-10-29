@@ -1,5 +1,13 @@
 # @buttery/cli
 
+## 0.1.2
+
+### Patch Changes
+
+- 5952408: Adds development dependencies to complete build
+
+  The `@buttery/cli` needed the `@buttery/docs` dependency to correctly build the docs
+
 ## 0.1.1
 
 ### Patch Changes
