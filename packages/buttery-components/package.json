@@ -29,17 +29,17 @@
     ".": "./dist/index.js"
   },
   "devDependencies": {
-    "@buttery/tsconfig": "workspace:^",
-    "@linaria/core": "^6.2.0",
-    "@types/node": "^22.7.9",
-    "@vitejs/plugin-react-swc": "^3.7.1",
-    "@wyw-in-js/vite": "^0.5.4",
-    "typescript": "^5.6.3",
-    "vite": "^5.4.10"
+    "@buttery/tsconfig": "workspace:",
+    "@linaria/core": "6.2.0",
+    "@types/node": "22.7.9",
+    "@vitejs/plugin-react-swc": "3.7.1",
+    "@wyw-in-js/vite": "0.5.4",
+    "typescript": "5.6.3",
+    "vite": "5.4.10"
   },
   "dependencies": {
-    "@buttery/logs": "workspace:^",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "@buttery/logs": "workspace:",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   }
 }
