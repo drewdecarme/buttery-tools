@@ -1,6 +1,6 @@
 {
   "name": "@buttery/commands",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Create CLIs using file system based routing",
   "type": "module",
   "bin": {
