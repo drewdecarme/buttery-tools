@@ -5,7 +5,7 @@
   "type": "module",
   "sideEffects": false,
   "scripts": {
-    "build": "yarn typechecks && yarn tsx ./scripts/build-icons-and-tokens.ts && yarn lib:build && yarn cli-scripts:build",
+    "build": "yarn tsx ./scripts/build-icons-and-tokens.ts && yarn typechecks && yarn lib:build && yarn cli-scripts:build",
     "typechecks": "tsc --project tsconfig.typechecks.json",
     "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
     "cli-scripts:types": "tsc --project tsconfig.cli-types.json",
