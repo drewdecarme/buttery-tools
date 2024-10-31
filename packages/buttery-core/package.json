@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "A collection of types that are used across all buttery packages / tools",
   "type": "module",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     "./config": "./dist/config/index.js",
     "./builder": "./dist/builder/index.js",

@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "description": "A collection of TypeScript configuration files for various types of buttery TS projects",
   "main": "./tsconfig.json",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "exports": {
     "./library": {

@@ -27,6 +27,9 @@
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git",
     "directory": "packages/buttery-tokens"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Drew DeCarme (drewdecarme@gmail.com)",
   "license": "MIT",
   "bugs": {

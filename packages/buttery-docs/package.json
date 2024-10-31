@@ -4,6 +4,9 @@
   "description": "TODO",
   "type": "module",
   "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "yarn tsx ./scripts/build-icons-and-tokens.ts && yarn typechecks && yarn lib:build && yarn cli-scripts:build",
     "typechecks": "tsc --project tsconfig.typechecks.json",

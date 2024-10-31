@@ -3,8 +3,9 @@
   "version": "0.2.0",
   "description": "Create CLIs using file system based routing",
   "type": "module",
-  "bin": {
-    "spread": "./bin/index.js"
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "yarn tsc && yarn cli-scripts:build && yarn lib:build",
@@ -13,6 +14,9 @@
     "lib:build": "yarn tsc --project tsconfig.library.json",
     "local:start": "yarn node ./bin/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": "./dist/index.js",
     "./cli/*": "./dist/cli-scripts/*.js"

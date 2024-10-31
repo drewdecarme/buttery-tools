@@ -2,6 +2,7 @@
   "name": "@buttery/meta",
   "version": "0.1.0",
   "description": "Framework agnostic methodology for adding meta tags to your application document during SSR .Built in support for React SSR.",
+  "sideEffects": false,
   "scripts": {
     "build": "yarn tsc --project tsconfig.build.json",
     "dev": "vite build --watch"
@@ -10,6 +11,9 @@
   "exports": {
     ".": "./dist/index.js",
     "./react": "./dist/react/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",

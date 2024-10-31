@@ -17,6 +17,9 @@
   "exports": {
     "./cli/*": "./dist/cli-scripts/*.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git",

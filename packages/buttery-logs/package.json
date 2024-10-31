@@ -1,6 +1,7 @@
 {
   "name": "@buttery/logs",
   "version": "0.1.0",
+  "sideEffects": false,
   "scripts": {
     "build": "yarn tsc --project tsconfig.build.json",
     "dev": " yarn build --watch"
@@ -12,6 +13,9 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",
