@@ -9,8 +9,8 @@ import { LOG } from "../utils";
 export async function dev() {
   try {
     buildCommands({
-      watch: false,
-      local: true,
+      watch: true,
+      local: false,
     });
   } catch (error) {
     throw LOG.fatal(new Error(error as string));
