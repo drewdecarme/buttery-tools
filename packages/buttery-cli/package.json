@@ -35,7 +35,9 @@
   },
   "devDependencies": {
     "@buttery/commands": "workspace:^",
+    "@buttery/components": "workspace:^",
     "@buttery/docs": "workspace:^",
+    "@buttery/tokens": "workspace:^",
     "@buttery/tsconfig": "workspace:",
     "tsx": "4.19.2",
     "typescript": "5.6.3"
