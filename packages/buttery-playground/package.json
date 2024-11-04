@@ -25,8 +25,8 @@
     "typegen": "wrangler types"
   },
   "dependencies": {
-    "@buttery/cli": "workspace:",
-    "@buttery/docs": "workspace:",
+    "@buttery/cli": "workspace:*",
+    "@buttery/docs": "workspace:*",
     "@remix-run/cloudflare": "2.13.1",
     "@remix-run/cloudflare-pages": "2.13.1",
     "@remix-run/react": "2.13.1",
@@ -35,7 +35,7 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@buttery/tsconfig": "workspace:",
+    "@buttery/tsconfig": "workspace:*",
     "@cloudflare/workers-types": "4.20241022.0",
     "@remix-run/dev": "2.13.1",
     "@types/react": "18.3.12",

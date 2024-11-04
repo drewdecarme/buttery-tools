@@ -48,8 +48,8 @@
     "./css": "./dist/style.css"
   },
   "devDependencies": {
-    "@buttery/icons": "workspace:",
-    "@buttery/tokens": "workspace:",
+    "@buttery/icons": "workspace:*",
+    "@buttery/tokens": "workspace:*",
     "@cloudflare/workers-types": "4.20241022.0",
     "@storybook/react": "8.3.6",
     "@types/babel__core": "7.20.5",
@@ -66,9 +66,9 @@
     "@babel/core": "7.26.0",
     "@babel/preset-react": "7.25.9",
     "@babel/preset-typescript": "7.26.0",
-    "@buttery/components": "workspace:",
-    "@buttery/core": "workspace:",
-    "@buttery/meta": "workspace:",
+    "@buttery/components": "workspace:*",
+    "@buttery/core": "workspace:*",
+    "@buttery/meta": "workspace:*",
     "@linaria/core": "6.2.0",
     "@linaria/react": "6.2.1",
     "@linaria/server": "6.2.0",

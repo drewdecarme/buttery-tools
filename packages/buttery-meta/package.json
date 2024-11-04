@@ -27,8 +27,8 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "dependencies": {
-    "@buttery/logs": "workspace:",
-    "@buttery/tsconfig": "workspace:",
+    "@buttery/logs": "workspace:*",
+    "@buttery/tsconfig": "workspace:*",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "zod": "3.23.8"

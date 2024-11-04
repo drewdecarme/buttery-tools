@@ -32,7 +32,7 @@
     ".": "./dist/index.js"
   },
   "devDependencies": {
-    "@buttery/tsconfig": "workspace:",
+    "@buttery/tsconfig": "workspace:*",
     "@linaria/core": "6.2.0",
     "@types/node": "22.8.2",
     "@vitejs/plugin-react-swc": "3.7.1",
@@ -41,7 +41,7 @@
     "vite": "5.4.10"
   },
   "dependencies": {
-    "@buttery/logs": "workspace:",
+    "@buttery/logs": "workspace:*",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   }

@@ -38,13 +38,13 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
-    "@buttery/tsconfig": "workspace:",
+    "@buttery/tsconfig": "workspace:*",
     "@types/node": "22.8.2",
     "tsx": "4.19.2",
     "typescript": "5.6.3"
   },
   "dependencies": {
-    "@buttery/logs": "workspace:",
+    "@buttery/logs": "workspace:*",
     "esbuild": "0.24.0",
     "zod": "3.23.8"
   }
