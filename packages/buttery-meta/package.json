@@ -1,6 +1,6 @@
 {
   "name": "@buttery/meta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Framework agnostic methodology for adding meta tags to your application document during SSR .Built in support for React SSR.",
   "sideEffects": false,
   "scripts": {
