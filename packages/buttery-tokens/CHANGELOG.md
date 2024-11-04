@@ -1,5 +1,13 @@
 # @buttery/tokens
 
+## 0.1.1
+
+### Patch Changes
+
+- d8f4a0d: Changes all internal cross-references to exact references upon `npm publish`
+- Updated dependencies [d8f4a0d]
+  - @buttery/core@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes

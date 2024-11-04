@@ -1,5 +1,11 @@
 # @buttery/cli
 
+## 0.2.1
+
+### Patch Changes
+
+- d8f4a0d: Changes all internal cross-references to exact references upon `npm publish`
+
 ## 0.2.0
 
 ### Minor Changes

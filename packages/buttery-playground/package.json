@@ -1,6 +1,6 @@
 {
   "name": "@buttery/playground",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A playground to test out the distribution of the @buttery/tools without publishing it",
   "private": true,
   "sideEffects": false,
