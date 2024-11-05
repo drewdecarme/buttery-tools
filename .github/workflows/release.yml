@@ -14,8 +14,6 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    env:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -27,13 +25,9 @@ jobs:
 
       - name: Install Dependencies
         run: yarn
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build Monorepo
         run: yarn build
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Set Git Identity
         run: |
@@ -45,7 +39,5 @@ jobs:
         uses: monoweave/github-action-preview@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          monoweave-command: yarn release
+          monoweave-command: NPM_TOKEN=${{ secrets.NPM_TOKEN }} yarn release
           preview-comment-title: "chore: Version & release packages"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
