@@ -29,6 +29,11 @@ jobs:
       - name: Build Monorepo
         run: yarn build
 
+      - name: Set Git Identity
+        run: |
+          git config user.email "buttery-release-bot@butter.tools"
+          git config user.name "Buttery Release Bot"
+
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: monoweave/github-action-preview@main
@@ -36,5 +41,3 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           monoweave-command: yarn release
           preview-comment-title: "chore: Version & release packages"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
