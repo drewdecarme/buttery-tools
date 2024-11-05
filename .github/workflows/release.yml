@@ -27,9 +27,13 @@ jobs:
 
       - name: Install Dependencies
         run: yarn
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build Monorepo
         run: yarn build
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Set Git Identity
         run: |
@@ -43,3 +47,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           monoweave-command: yarn release
           preview-comment-title: "chore: Version & release packages"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
