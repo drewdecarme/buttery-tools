@@ -41,3 +41,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           monoweave-command: NPM_TOKEN=${{ secrets.NPM_TOKEN }} yarn release
           preview-comment-title: "chore: Version & release packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
