@@ -39,9 +39,7 @@ jobs:
         uses: monoweave/github-action-preview@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          monoweave-command: |
-            yarn monoweave --config-file monoweave.config.json --no-push --otp ${{secrets.NPM_TOKEN}} &&  
-            git push --tags
+          monoweave-command: ${{secrets.NPM_TOKEN}} yarn release
 
           preview-comment-title: "chore: Version & release packages"
         env:
