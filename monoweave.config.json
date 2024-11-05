@@ -2,5 +2,7 @@
   "preset": "monoweave/preset-manual",
   "plugins": [["@monoweave/plugin-github"]],
   "access": "infer",
+  "dryRun": false,
+  "autoCommit": true,
   "autoCommitMessage": "chore: Version & release packages"
 }

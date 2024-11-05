@@ -22,7 +22,7 @@
   "packageManager": "yarn@4.5.1",
   "scripts": {
     "build": "turbo build",
-    "release": "yarn monoweave --config-file monoweave.config.json --auto-commit",
+    "release": "yarn monoweave --config-file monoweave.config.json",
     "clean": "npx rimraf ./**/node_modules && npx rimraf ./**/dist"
   },
   "resolutions": {
