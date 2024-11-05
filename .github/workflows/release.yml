@@ -34,13 +34,19 @@ jobs:
           git config user.email "buttery-release-bot@butter.tools"
           git config user.name "Buttery Release Bot"
 
-      - name: Create Release Pull Request or Publish to npm
-        id: changesets
-        uses: monoweave/github-action-preview@main
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          monoweave-command: NPM_TOKEN=${{ secrets.NPM_TOKEN }} yarn monoweave --config-file monoweave.config.json
-          preview-comment-title: "chore: Version & release packages"
+      - name: Release to npm & Github
+        run: NPM_TOKEN=${{ secrets.NPM_TOKEN }} yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # - name: Create Release Pull Request or Publish to npm
+      #   id: changesets
+      #   uses: monoweave/github-action-preview@main
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     monoweave-command:
+      #     preview-comment-title: "chore: Version & release packages"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
