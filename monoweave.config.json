@@ -1,5 +1,6 @@
 {
   "preset": "monoweave/preset-manual",
   "plugins": [["@monoweave/plugin-github"]],
-  "access": "infer"
+  "access": "infer",
+  "autoCommitMessage": "chore: Version & release packages"
 }
