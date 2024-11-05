@@ -1,0 +1,5 @@
+{
+  "preset": "monoweave/preset-manual",
+  "plugins": [["@monoweave/plugin-github"]],
+  "access": "infer"
+}

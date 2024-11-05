@@ -1,5 +1,7 @@
 # @buttery/icons
 
+<!-- MONOWEAVE:BELOW -->
+
 ## 0.1.1
 
 ### Patch Changes
