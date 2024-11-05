@@ -1,5 +1,7 @@
 # @buttery/cli
 
+<!-- MONOWEAVE:BELOW -->
+
 ## 0.2.1
 
 ### Patch Changes

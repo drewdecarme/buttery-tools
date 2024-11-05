@@ -22,7 +22,7 @@
   "packageManager": "yarn@4.5.1",
   "scripts": {
     "build": "turbo build",
-    "release": "yarn build && changeset publish",
+    "release": "yarn monoweave --config-file monoweave.config.json --no-push && git push --tags",
     "clean": "npx rimraf ./**/node_modules && npx rimraf ./**/dist"
   },
   "resolutions": {
@@ -33,6 +33,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@monoweave/cli": "^1.10.0",
+    "@monoweave/plugin-github": "^2.7.0",
     "turbo": "2.2.3"
   }
 }
