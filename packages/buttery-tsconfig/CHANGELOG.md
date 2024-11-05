@@ -2,6 +2,14 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/tsconfig (v0.1.2) <a name="0.1.2"></a>
+
+Removes `changeset` and adds `monoweave` to be able to version, release and manage changelogs for the monorepo using yarn modern (yarn berry).
+
+This changeset also adds some comments to the changelogs so `monoweave` has the ability to understand where it needs to add the changesets to each of the packages' changelogs.
+
+
+
 ## 0.1.0
 
 ### Minor Changes

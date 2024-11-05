@@ -1,6 +1,6 @@
 {
   "name": "@buttery/core",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "A collection of types that are used across all buttery packages / tools",
   "type": "module",
   "sideEffects": false,
@@ -44,7 +44,7 @@
     "typescript": "5.6.3"
   },
   "dependencies": {
-    "@buttery/logs": "workspace:*",
+    "@buttery/logs": "workspace:^0.1.3",
     "esbuild": "0.24.0",
     "zod": "3.23.8"
   }
