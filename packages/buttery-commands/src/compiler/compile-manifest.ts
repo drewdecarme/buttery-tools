@@ -1,15 +1,12 @@
-import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import { build } from "esbuild";
-import type { ButteryCommandsDirectories } from "../getButteryCommandsDirectories.js";
 import type { ButteryCommandsBaseOptions } from "../options/index.js";
 import type {
   ButteryCommand,
   ButteryCommandsManifest,
   EnrichedButteryCommand,
 } from "../types.private.js";
-import { type CommandFile, LOG, defaultEsbuildOptions } from "../utils.js";
+import { type CommandFile, LOG } from "../utils.js";
 import { ensureCommand } from "./ensure-command.js";
 import { getCommandFiles } from "./get-command-files.js";
 

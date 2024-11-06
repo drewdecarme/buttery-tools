@@ -2,10 +2,9 @@ import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import chokidar from "chokidar";
 import { context } from "esbuild";
+import { build } from "esbuild";
 import { compileCommands } from "../compiler/compile-commands.js";
 import { getBuildConfig } from "../compiler/get-build-config.js";
-
-import { build } from "esbuild";
 import { getButteryCommandsConfig } from "../getButteryCommandsConfig.js";
 import { getButteryCommandsDirectories } from "../getButteryCommandsDirectories.js";
 import {
@@ -13,7 +12,8 @@ import {
   butteryCommandsDevOptionsSchema,
 } from "../options";
 import { prepareDistribution } from "../prepareDistribution.js";
-import { LOG } from "../utils";
+import { buildRuntime } from "../runtime/build-runtime.js";
+import { LOG } from "../utils.js";
 
 /**
  * Compiles and builds the buttery commands binary
@@ -42,7 +42,12 @@ export async function dev(options?: Partial<ButteryCommandsDevOptions>) {
     return LOG.fatal(prepareResult.error);
   }
 
-  // TODO: Build the runtime
+  // Build the runtime
+  const buildResult = await inlineTryCatch(buildRuntime)(dirs);
+  if (buildResult.hasError) {
+    LOG.error("Error when building the buttery commands runtime");
+    return LOG.fatal(buildResult.error);
+  }
 
   // Compile the commands
   const manifestModule = await inlineTryCatch(compileCommands)(
