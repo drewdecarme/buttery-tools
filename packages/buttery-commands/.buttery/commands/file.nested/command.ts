@@ -1,5 +1,5 @@
-import type { CommandAction, CommandMeta } from "../../src/types";
-import { LOG } from "../../src/utils";
+import type { CommandAction, CommandMeta } from "../../../src/types";
+import { LOG } from "../../../src/utils";
 
 export const meta: CommandMeta = {
   name: "nested",

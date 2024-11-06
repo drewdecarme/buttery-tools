@@ -1,4 +1,3 @@
-import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { ButteryLogger } from "@buttery/core/logger";
 import type { BuildOptions } from "esbuild";
 import type {
@@ -19,20 +18,6 @@ export type CommandsBuildOptions = {
   watch: boolean;
   local: boolean;
   autofix?: boolean;
-};
-
-export type CommandsBuildFunctionArgs = {
-  config: ResolvedButteryConfig<"commands">;
-  options: CommandsBuildOptions;
-};
-
-export type CommandsBuildFunction = (
-  args: CommandsBuildFunctionArgs
-) => Promise<void>;
-
-export type ButteryCLIDirectories = {
-  commandsDir: string;
-  binDir: string;
 };
 
 export type CommandGraphProperties = {

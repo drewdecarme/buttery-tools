@@ -300,6 +300,17 @@ export class ButteryLogger {
     this.log({ level: "info", method, message }, ...data);
   }
 
+  public table(
+    values:
+      | (string | number | boolean | null | undefined)[]
+      | Record<string, string | number | boolean | null | undefined>,
+    level?: ButteryLogLevel
+  ) {
+    // const method = chalk.blueBright(`ℹ︎ ${chalk.underline("info")}`);
+    if (!this.shouldLog(level ?? "info")) return;
+    console.table(values);
+  }
+
   private formatLoadingText(dots: string) {
     return chalk.gray(dots);
   }

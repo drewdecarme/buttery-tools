@@ -1,18 +1,82 @@
-import { buildCommands } from "../build-commands";
+import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
+import { parseAndValidateOptions } from "@buttery/core/utils/node";
+import chokidar from "chokidar";
+import { context } from "esbuild";
+import { compileCommands } from "../compiler/compile-commands.js";
+import { getBuildConfig } from "../compiler/get-build-config.js";
+
+import { build } from "esbuild";
+import { getButteryCommandsConfig } from "../getButteryCommandsConfig.js";
+import { getButteryCommandsDirectories } from "../getButteryCommandsDirectories.js";
+import {
+  type ButteryCommandsDevOptions,
+  butteryCommandsDevOptionsSchema,
+} from "../options";
+import { prepareDistribution } from "../prepareDistribution.js";
 import { LOG } from "../utils";
 
 /**
- * Build's the @buttery/commands binary and watches
- * for changes to the .buttery/config or the commands
- * directories
+ * Compiles and builds the buttery commands binary
+ * in watch mode
  */
-export async function dev() {
-  try {
-    buildCommands({
-      watch: true,
-      local: false,
-    });
-  } catch (error) {
-    throw LOG.fatal(new Error(error as string));
+export async function dev(options?: Partial<ButteryCommandsDevOptions>) {
+  LOG.info("Building command directories in watch mode");
+
+  const parsedOptions = parseAndValidateOptions(
+    butteryCommandsDevOptionsSchema,
+    options,
+    LOG
+  );
+  LOG.level = parsedOptions.logLevel;
+
+  const config = await getButteryCommandsConfig();
+  const dirs = getButteryCommandsDirectories(config);
+
+  // prepare the directories
+  const prepareResult = await inlineTryCatch(prepareDistribution)(
+    config,
+    options
+  );
+  if (prepareResult.hasError) {
+    LOG.error("Error when trying to prepare the distribution directories.");
+    return LOG.fatal(prepareResult.error);
   }
+
+  // TODO: Build the runtime
+
+  // Compile the commands
+  const manifestModule = await inlineTryCatch(compileCommands)(
+    config,
+    dirs,
+    parsedOptions
+  );
+  if (manifestModule.hasError) {
+    LOG.error("Error when compiling the commands");
+    return LOG.fatal(manifestModule.error);
+  }
+
+  // get the build config
+  const esbuildConfig = getBuildConfig(manifestModule.data, dirs);
+  await build(esbuildConfig);
+
+  // Watch the commands directory by staring a chokidar instance
+  LOG.watch(`Watching ${dirs.commandsDir} for changes...`);
+  chokidar
+    .watch([dirs.commandsDir, config.paths.config], { ignoreInitial: true })
+    .on("all", async (path) => {
+      LOG.watch(`${path} changed. Rebuilding...`);
+      try {
+        const manifestModule = await compileCommands(
+          config,
+          dirs,
+          parsedOptions
+        );
+        const esbuildConfig = getBuildConfig(manifestModule, dirs);
+        const esbuildContext = await context(esbuildConfig);
+        await esbuildContext.rebuild();
+        LOG.watch(`${path} changed. Rebuilding... done.`);
+      } catch (error) {
+        throw LOG.fatal(new Error(String(error)));
+      }
+    });
 }
