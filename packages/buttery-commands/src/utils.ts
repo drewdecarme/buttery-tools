@@ -1,11 +1,6 @@
 import { ButteryLogger } from "@buttery/core/logger";
 import type { BuildOptions } from "esbuild";
-import type {
-  CommandAction,
-  CommandArgs,
-  CommandMeta,
-  CommandOptions,
-} from "./types";
+// import type { CommandAction, CommandOptions } from "./types";
 
 export const LOG = new ButteryLogger({
   id: "buttery-commands",
@@ -20,20 +15,20 @@ export type CommandsBuildOptions = {
   autofix?: boolean;
 };
 
-export type CommandGraphProperties = {
-  segment_name: string;
-  meta: CommandMeta;
-  options?: CommandOptions;
-  args?: CommandArgs;
-  action?: CommandAction;
-};
+// export type CommandGraphProperties = {
+//   segment_name: string;
+//   meta: CommandMeta;
+//   options?: CommandOptions;
+//   args?: CommandArgs;
+//   action?: CommandAction;
+// };
 
-export type CommandGraph = {
-  [key: string]: {
-    properties: CommandGraphProperties;
-    commands: CommandGraph;
-  };
-};
+// export type CommandGraph = {
+//   [key: string]: {
+//     properties: CommandGraphProperties;
+//     commands: CommandGraph;
+//   };
+// };
 
 export type CommandFile = {
   /**

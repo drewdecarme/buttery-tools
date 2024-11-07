@@ -1379,6 +1379,7 @@ __metadata:
     chokidar: "npm:^4.0.1"
     esbuild: "npm:0.24.0"
     fs-extra: "npm:^11.2.0"
+    immer: "npm:^10.1.1"
     tsx: "npm:4.19.2"
     typescript: "npm:5.6.3"
     zod: "npm:^3.23.8"
@@ -9346,7 +9347,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immer@npm:10.1.1":
+"immer@npm:10.1.1, immer@npm:^10.1.1":
   version: 10.1.1
   resolution: "immer@npm:10.1.1"
   checksum: 10c0/b749e10d137ccae91788f41bd57e9387f32ea6d6ea8fd7eb47b23fd7766681575efc7f86ceef7fe24c3bc9d61e38ff5d2f49c2663b2b0c056e280a4510923653

@@ -5,7 +5,7 @@ import type {
   ButteryCommand,
   ButteryCommandsManifest,
   EnrichedButteryCommand,
-} from "../types.private.js";
+} from "../types.js";
 import { type CommandFile, LOG } from "../utils.js";
 import { ensureCommand } from "./ensure-command.js";
 import { getCommandFiles } from "./get-command-files.js";
@@ -122,7 +122,6 @@ export async function compileManifest<T extends ButteryCommandsBaseOptions>(
       const cmdSegment = cmd.commandSegments[i];
       if (!cmdManifest[cmdSegment]) {
         currentCmdManifest[cmdSegment] = {
-          commandPath: "",
           meta: {
             name: "",
             description: "",
@@ -137,7 +136,6 @@ export async function compileManifest<T extends ButteryCommandsBaseOptions>(
       if (i === cmd.commandSegments.length - 1) {
         // TODO: Validate the command module here.
         currentCmdManifest[cmdSegment] = {
-          commandPath: cmd.commandPath,
           meta: cmd.module.meta,
           options: cmd.module.options,
           args: cmd.module.args,
