@@ -1,8 +1,6 @@
 import { ButteryLogger } from "@buttery/core/logger";
 import type { BuildOptions } from "esbuild";
-import type { CommandArg, CommandMeta } from "../dist";
-import type { CommandOption } from "./command-utils";
-// import type { CommandAction, CommandOptions } from "./types";
+import type { CommandMeta, CommandOptions } from "./command-utils";
 
 export const LOG = new ButteryLogger({
   id: "buttery-commands",
@@ -52,8 +50,9 @@ export const defaultEsbuildOptions: BuildOptions = {
 
 export type ButteryCommand = {
   meta: CommandMeta;
-  options: CommandOption[];
-  args: CommandArg[];
+  options: CommandOptions;
+  // TODO: Add args
+  // args: CommandArgs;
   action?: () => void;
 };
 

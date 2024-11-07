@@ -1,12 +1,14 @@
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import type {
-  ButteryCommand,
-  ButteryCommandsManifest,
-  EnrichedButteryCommand,
-} from "../command-utils.js";
+
 import type { ButteryCommandsBaseOptions } from "../options/index.js";
-import { type CommandFile, LOG } from "../utils.js";
+import {
+  type ButteryCommand,
+  type ButteryCommandsManifest,
+  type CommandFile,
+  type EnrichedButteryCommand,
+  LOG,
+} from "../utils.js";
 import { ensureCommand } from "./ensure-command.js";
 import { getCommandFiles } from "./get-command-files.js";
 
@@ -49,8 +51,6 @@ export async function compileManifest<T extends ButteryCommandsBaseOptions>(
   }
 
   // Sort all of the command files based upon their naming
-  // TODO: Might need to update this since this also includes directory
-  // names as well. Should write a test for this
   const commandFiles = cmdFilesResult.data.sort((cmdFileA, cmdFileB) => {
     if (cmdFileB.name.startsWith(cmdFileA.name)) {
       return -1;
@@ -126,8 +126,8 @@ export async function compileManifest<T extends ButteryCommandsBaseOptions>(
             name: "",
             description: "",
           },
-          options: [],
-          args: [],
+          options: {},
+          // args: {},
           action: undefined,
           subCommands: {},
         };
@@ -138,7 +138,7 @@ export async function compileManifest<T extends ButteryCommandsBaseOptions>(
         currentCmdManifest[cmdSegment] = {
           meta: cmd.module.meta,
           options: cmd.module.options,
-          args: cmd.module.args,
+          // args: cmd.module.args,
           action: cmd.module.action,
           subCommands: {},
         };

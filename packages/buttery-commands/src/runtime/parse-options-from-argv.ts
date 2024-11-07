@@ -1,6 +1,6 @@
 import { exhaustiveMatchGuard } from "@buttery/core/utils/isomorphic";
 import { produce } from "immer";
-import type { CommandOption } from "../command-utils.js";
+import type { CommandOptions } from "../command-utils.js";
 import { LOG } from "../utils.js";
 
 /**
@@ -10,7 +10,7 @@ import { LOG } from "../utils.js";
  */
 export async function parseOptionsFromArgv(
   argv: string[],
-  cmdOptions: CommandOption[]
+  cmdOptions: CommandOptions
 ): Promise<Record<string, unknown>> {
   try {
     const argOptions = argv.reduce<Record<string, unknown>>((accum, arg) => {
@@ -34,13 +34,13 @@ export async function parseOptionsFromArgv(
       }
 
       // Find the matching option from the command to process the option value
-      const cmdOption = cmdOptions.find((o) => o.name === optionKey);
+      const cmdOption = cmdOptions[optionKey];
       if (!cmdOption) {
         throw `"${optionKey}" is not a valid option`;
       }
 
       // Process the option value based upon the declared type
-      LOG.debug(`Parsing option: ${cmdOption.name}`);
+      LOG.debug(`Parsing option: ${optionKey}`);
       switch (cmdOption.type) {
         case "boolean":
           return produce(accum, (draft) => {
@@ -51,22 +51,22 @@ export async function parseOptionsFromArgv(
 
             // value hasn't been reconciled from a default or logic yet so it's technically invalid
             if (typeof value !== "boolean") {
-              throw `Invalid value "${optionValue}" for boolean option "${cmdOption.name}". Value should either be "true", "false". Adding the option without a value will default to "true".`;
+              throw `Invalid value "${optionValue}" for boolean option "${optionKey}". Value should either be "true", "false". Adding the option without a value will default to "true".`;
             }
 
-            draft[cmdOption.name] = value;
+            draft[optionKey] = value;
           });
 
         case "string":
           return produce(accum, (draft) => {
             const value = optionValue ? String(optionValue) : cmdOption.default;
-            draft[cmdOption.name] = value;
+            draft[optionKey] = value;
           });
 
         case "number":
           return produce(accum, (draft) => {
             const value = optionValue ? Number(optionValue) : cmdOption.default;
-            draft[cmdOption.name] = value;
+            draft[optionKey] = value;
           });
 
         default:
@@ -76,9 +76,9 @@ export async function parseOptionsFromArgv(
 
     // Validate that all of the required options are present in the command
     const argOptionKeys = Object.keys(argOptions);
-    for (const cmdOption of cmdOptions) {
-      if (cmdOption.required && !argOptionKeys.includes(cmdOption.name)) {
-        throw `Missing required option "${cmdOption}"`;
+    for (const [cmdOptionKey, cmdOptionValue] of Object.entries(cmdOptions)) {
+      if (cmdOptionValue.required && !argOptionKeys.includes(cmdOptionKey)) {
+        throw `Missing required option "${cmdOptionKey}"`;
       }
     }
     return argOptions;

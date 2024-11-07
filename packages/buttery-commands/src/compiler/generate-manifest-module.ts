@@ -1,4 +1,4 @@
-import type { ButteryCommandsManifest } from "../command-utils.js";
+import type { ButteryCommandsManifest } from "../utils";
 
 export async function generateManifestModule(
   cmdManifest: ButteryCommandsManifest
@@ -13,7 +13,6 @@ export async function generateManifestModule(
         "${key}": {
           meta: ${JSON.stringify(entry.meta)},
           options: ${JSON.stringify(entry.options)},
-          args: ${JSON.stringify(entry.args)},
           action: ${actionCode},
           subCommands: ${subCommandsCode}
         }

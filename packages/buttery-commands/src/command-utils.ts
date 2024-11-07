@@ -16,18 +16,30 @@ type CommandOptionBoolean = CommandOptionShared & {
 type CommandOptionString = CommandOptionShared & {
   type: "string";
   default?: string;
-  validate?: (value: string) => boolean;
+  // TODO: Add validate back in
+  // validate?: (value: string) => boolean;
 };
 type CommandOptionNumber = CommandOptionShared & {
   type: "number";
   default?: number;
-  validate?: (value: number) => boolean;
+  // TODO: Add validate back in
+  // validate?: (value: number) => boolean;
 };
 export type CommandOption =
   | CommandOptionBoolean
   | CommandOptionString
   | CommandOptionNumber;
 export type CommandOptions = { [key: string]: CommandOption };
+
+type InferOptionValues<T extends CommandOptions> = {
+  [K in keyof T]: T[K] extends CommandOptionBoolean
+    ? boolean
+    : T[K] extends CommandOptionNumber
+    ? number
+    : T[K] extends CommandOptionString
+    ? string
+    : never;
+};
 
 /**
  * A helper function that let's you easily define options that should be
@@ -41,14 +53,5 @@ export type CommandOptions = { [key: string]: CommandOption };
  */
 export const defineOptions = <T extends CommandOptions>(options: T) => options;
 
-type InferOptionValue<T extends CommandOptions> = {
-  [K in keyof T]: T[K] extends CommandOptionBoolean
-    ? boolean
-    : T[K] extends CommandOptionNumber
-    ? number
-    : T[K] extends CommandOptionString
-    ? string
-    : never;
-};
 export type CommandAction<O extends { [key: string]: CommandOption }> =
-  (params: { options: InferOptionValue<O> }) => Promise<void> | void;
+  (params: { options: InferOptionValues<O> }) => Promise<void> | void;

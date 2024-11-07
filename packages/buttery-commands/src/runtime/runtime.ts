@@ -1,9 +1,9 @@
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import type {
-  ButteryCommandManifestEntry,
-  ButteryCommandsManifest,
-} from "../command-utils.js";
-import { LOG } from "../utils.js";
+import {
+  type ButteryCommandManifestEntry,
+  type ButteryCommandsManifest,
+  LOG,
+} from "../utils.js";
 import { parseOptionsFromArgv } from "./parse-options-from-argv.js";
 
 async function getCommandsManifest() {
