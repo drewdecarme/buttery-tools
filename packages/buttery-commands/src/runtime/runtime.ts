@@ -6,17 +6,6 @@ import {
 } from "../utils/utils.js";
 import { parseOptionsFromArgv } from "./parse-options-from-argv.js";
 
-async function getCommandsManifest() {
-  try {
-    // @ts-expect-error this is the output of the commands manifest. This will be
-    // here at runtime
-    const module = await import("./command-manifest.js");
-    return module.default as ButteryCommandsManifest;
-  } catch (error) {
-    throw new Error(String(error));
-  }
-}
-
 /**
  * Provided a manifest entry point, loop through all of the
  * manifest entries to find the one that matches the args
@@ -61,24 +50,19 @@ async function parseCommandFromArgs(
   //  }
 }
 
-try {
-  // get the commands manifest
-  const cmdsManifestResult = await inlineTryCatch(getCommandsManifest)();
-  if (cmdsManifestResult.hasError) {
-    LOG.error("Error when trying to fetch the commands manifest");
-    throw cmdsManifestResult.error;
+export default async (cmdsManifest: ButteryCommandsManifest) => {
+  try {
+    // find and parse the command
+    const cmdResult = await inlineTryCatch(parseCommandFromArgs)(
+      process.argv.slice(2),
+      {
+        subCommands: cmdsManifest,
+      } as ButteryCommandManifestEntry
+    );
+    if (cmdResult.hasError) {
+      throw cmdResult.error;
+    }
+  } catch (error) {
+    LOG.fatal(new Error(String(error)));
   }
-
-  // find and parse the command
-  const cmdResult = await inlineTryCatch(parseCommandFromArgs)(
-    process.argv.slice(2),
-    {
-      subCommands: cmdsManifestResult.data,
-    } as ButteryCommandManifestEntry
-  );
-  if (cmdResult.hasError) {
-    throw cmdResult.error;
-  }
-} catch (error) {
-  LOG.fatal(new Error(String(error)));
-}
+};

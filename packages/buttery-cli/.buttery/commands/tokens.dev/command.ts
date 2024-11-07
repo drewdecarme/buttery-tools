@@ -1,7 +1,7 @@
-import type {
-  CommandAction,
-  CommandMeta,
-  CommandOptions,
+import {
+  type CommandAction,
+  type CommandMeta,
+  defineOptions,
 } from "@buttery/commands";
 
 export const meta: CommandMeta = {
@@ -10,11 +10,7 @@ export const meta: CommandMeta = {
     "Iteratively develop @buttery/tokens `make` functions based upon the `buttery/config.tokens`",
 };
 
-export const options: CommandOptions<{
-  prompt: boolean;
-  interactive: boolean;
-  debug: boolean;
-}> = {
+export const options = defineOptions({
   interactive: {
     alias: "i",
     defaultValue: false,
@@ -39,7 +35,7 @@ export const options: CommandOptions<{
       "Prints all of the logs to stdout to easily see all of the activity to create the tokens.",
     required: false,
   },
-};
+});
 
 export const action: CommandAction<typeof options> = async () => {
   console.log("TODO!");

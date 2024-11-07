@@ -8,9 +8,10 @@
     "access": "public"
   },
   "scripts": {
-    "build": "yarn tsc && yarn cli-scripts:build && yarn lib:build",
+    "build": "yarn tsc && yarn cli-scripts:build && yarn runtime:build && yarn lib:build",
     "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
     "cli-scripts:types": "yarn tsc --project tsconfig.cli-types.json",
+    "runtime:build": "tsx ./scripts/runtime.build.ts",
     "lib:build": "yarn tsc --project tsconfig.library.json",
     "local:dev": "tsx ./scripts/local.dev.ts",
     "local:build": "tsx ./scripts/local.build.ts",
@@ -21,6 +22,7 @@
   ],
   "exports": {
     ".": "./dist/index.js",
+    "./runtime": "./dist/runtime.js",
     "./cli/*": "./dist/cli-scripts/*.js"
   },
   "repository": {

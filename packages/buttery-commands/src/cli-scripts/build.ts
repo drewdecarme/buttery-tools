@@ -1,9 +1,9 @@
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
+import { buildButteryCommands } from "../compiler/buildButteryCommands";
 import {
   type ButteryCommandsBuildOptions,
   butteryCommandsBuildOptionsSchema,
 } from "../options";
-import { buildButteryCommands } from "../utils/buildButteryCommands";
 import { getButteryCommandsConfig } from "../utils/getButteryCommandsConfig";
 import { getButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
 import { LOG } from "../utils/utils";

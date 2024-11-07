@@ -1,13 +1,12 @@
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { build } from "esbuild";
-import { compileCommands } from "../compiler/compile-commands";
-import { getBuildConfig } from "../compiler/get-build-config";
 import type { ButteryCommandsBaseOptions } from "../options";
-import { buildRuntime } from "../runtime/build-runtime";
-import type { ButteryCommandsDirectories } from "./getButteryCommandsDirectories";
+import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
+import { LOG } from "../utils/utils";
+import { compileCommands } from "./compile-commands";
+import { getBuildConfig } from "./get-build-config";
 import { prepareDistribution } from "./prepareDistribution";
-import { LOG } from "./utils";
 
 /**
  * A central NodeJS API to tap into building buttery commands.
@@ -25,18 +24,12 @@ export async function buildButteryCommands<
     // prepare the directories
     const prepareResult = await inlineTryCatch(prepareDistribution)(
       config,
+      dirs,
       options
     );
     if (prepareResult.hasError) {
       LOG.error("Error when trying to prepare the distribution directories.");
       throw prepareResult.error;
-    }
-
-    // Build the commands runtime
-    const buildRuntimeResult = await inlineTryCatch(buildRuntime)(dirs);
-    if (buildRuntimeResult.hasError) {
-      LOG.error("Error when building the buttery commands runtime");
-      throw buildRuntimeResult.error;
     }
 
     // Compile the commands manifest

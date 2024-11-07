@@ -2,7 +2,7 @@ import {
   type CommandAction,
   type CommandMeta,
   defineOptions,
-} from "../../../src/command-utils";
+} from "../../../src/lib/library";
 
 export const meta: CommandMeta = {
   name: "nested",

@@ -63,5 +63,5 @@ type InferOptionValues<T extends CommandOptions> = {
  */
 export const defineOptions = <T extends CommandOptions>(options: T) => options;
 
-export type CommandAction<O extends { [key: string]: CommandOption }> =
+export type CommandAction<O extends CommandOptions = CommandOptions> =
   (params: { options: InferOptionValues<O> }) => Promise<void> | void;
