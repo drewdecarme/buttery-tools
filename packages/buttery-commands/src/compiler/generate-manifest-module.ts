@@ -1,4 +1,4 @@
-import type { ButteryCommandsManifest } from "../types.js";
+import type { ButteryCommandsManifest } from "../command-utils.js";
 
 export async function generateManifestModule(
   cmdManifest: ButteryCommandsManifest

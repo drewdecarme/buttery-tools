@@ -2,7 +2,7 @@ import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import type {
   ButteryCommandManifestEntry,
   ButteryCommandsManifest,
-} from "../types.js";
+} from "../command-utils.js";
 import { LOG } from "../utils.js";
 import { parseOptionsFromArgv } from "./parse-options-from-argv.js";
 

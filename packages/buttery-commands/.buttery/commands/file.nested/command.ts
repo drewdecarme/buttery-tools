@@ -1,33 +1,30 @@
 import {
   type CommandAction,
-  defineAction,
-  defineMeta,
+  type CommandMeta,
   defineOptions,
-} from "../../../src/types";
+} from "../../../src/command-utils";
 
-export const meta = defineMeta({
+export const meta: CommandMeta = {
   name: "nested",
   description:
     "A command that tests out the nested flat-file sub-command convention",
-});
+};
 
-export const options = defineOptions([
-  {
+export const options = defineOptions({
+  test: {
     type: "boolean",
     name: "test",
+    alias: "t",
     description: "A test description",
   },
-  {
+  "favorite-color": {
     type: "string",
+    alias: "fc",
     name: "favorite-color",
     description: "Describe your favorite color",
   },
-] as const);
-
-// export const action = defineAction<typeof options>(async ({ options }) => {
-//   // options.
-// });
+});
 
 export const action: CommandAction<typeof options> = async ({ options }) => {
-  options;
+  console.log(options.test);
 };

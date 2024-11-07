@@ -1,6 +1,6 @@
 import { exhaustiveMatchGuard } from "@buttery/core/utils/isomorphic";
 import { produce } from "immer";
-import type { CommandOption } from "../types.js";
+import type { CommandOption } from "../command-utils.js";
 import { LOG } from "../utils.js";
 
 /**

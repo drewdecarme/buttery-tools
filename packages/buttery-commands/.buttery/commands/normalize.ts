@@ -1,4 +1,4 @@
-import type { CommandMeta } from "../../src/types";
+import type { CommandMeta } from "../../src/command-utils";
 
 export const meta: CommandMeta = {
   name: "dev",
