@@ -9,7 +9,7 @@ import {
 import { input, select } from "@inquirer/prompts";
 import { ensureFile } from "fs-extra";
 import type { ButteryCommandsBaseOptions } from "../options";
-import { type CommandFile, LOG } from "../utils";
+import { type CommandFile, LOG } from "../utils/utils";
 
 /**
  * This function will ensure that a command exists in order to make

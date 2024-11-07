@@ -10,6 +10,7 @@
     "Jsonify",
     "outdir",
     "Pipeable",
+    "staticly",
     "svgs",
     "Transpiles"
   ],

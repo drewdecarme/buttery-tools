@@ -8,7 +8,7 @@ import {
   type CommandFile,
   type EnrichedButteryCommand,
   LOG,
-} from "../utils.js";
+} from "../utils/utils.js";
 import { ensureCommand } from "./ensure-command.js";
 import { getCommandFiles } from "./get-command-files.js";
 

@@ -1,8 +1,8 @@
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import type { ButteryCommandsDirectories } from "../getButteryCommandsDirectories.js";
 import type { ButteryCommandsBaseOptions } from "../options/index.js";
-import { LOG } from "../utils.js";
+import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories.js";
+import { LOG } from "../utils/utils.js";
 import { compileManifest } from "./compile-manifest.js";
 import { buildCommandsEnrichPackageJson } from "./enrich-package-json.js";
 import { generateManifestModule } from "./generate-manifest-module.js";

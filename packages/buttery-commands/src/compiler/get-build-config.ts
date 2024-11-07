@@ -1,7 +1,7 @@
 import path from "node:path";
 import type { BuildOptions } from "esbuild";
-import type { ButteryCommandsDirectories } from "../getButteryCommandsDirectories";
-import { defaultEsbuildOptions } from "../utils.js";
+import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
+import { defaultEsbuildOptions } from "../utils/utils.js";
 
 export function getBuildConfig(
   manifestModule: string,

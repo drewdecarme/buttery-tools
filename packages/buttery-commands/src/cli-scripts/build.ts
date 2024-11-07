@@ -1,16 +1,19 @@
-import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
-import { compileCommands } from "../compiler/compile-commands";
 import {
   type ButteryCommandsBuildOptions,
   butteryCommandsBuildOptionsSchema,
 } from "../options";
-import { LOG } from "../utils";
+import { buildButteryCommands } from "../utils/buildButteryCommands";
+import { getButteryCommandsConfig } from "../utils/getButteryCommandsConfig";
+import { getButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
+import { LOG } from "../utils/utils";
 
 /**
  * Compiles and builds the buttery commands binary
  */
-export async function build(options: ButteryCommandsBuildOptions) {
+export async function build(options?: Partial<ButteryCommandsBuildOptions>) {
+  LOG.loadingStart("Building commands");
+
   const parsedOptions = parseAndValidateOptions(
     butteryCommandsBuildOptionsSchema,
     options,
@@ -18,12 +21,13 @@ export async function build(options: ButteryCommandsBuildOptions) {
   );
   LOG.level = parsedOptions.logLevel;
 
-  // compile the command directories
-  LOG.loadingStart("Building command directories");
-  const result = await inlineTryCatch(compileCommands)(parsedOptions);
-  if (result.hasError) {
-    throw LOG.fatal(result.error);
-  }
+  // Reconcile the buttery config & dirs
+  const config = await getButteryCommandsConfig();
+  const dirs = getButteryCommandsDirectories(config);
+
+  // build the commands
+  await buildButteryCommands(config, dirs, parsedOptions);
+
   LOG.loadingEnd("complete.");
   LOG.success("Successfully built @buttery/commands!");
 }

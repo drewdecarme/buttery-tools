@@ -9,10 +9,11 @@
   },
   "scripts": {
     "build": "yarn tsc && yarn cli-scripts:build && yarn lib:build",
-    "cli-scripts:build": "tsx ./scripts/cli-scripts/build.ts && yarn cli-scripts:types",
+    "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
     "cli-scripts:types": "yarn tsc --project tsconfig.cli-types.json",
     "lib:build": "yarn tsc --project tsconfig.library.json",
     "local:dev": "tsx ./scripts/local.dev.ts",
+    "local:build": "tsx ./scripts/local.build.ts",
     "local:start": "yarn node ./bin/index.js"
   },
   "files": [

@@ -2,6 +2,16 @@ export type CommandMeta = {
   name: string;
   description: string;
 };
+/**
+ * A helper function that let's you easily define the
+ * meta parameters of your Buttery Command file.
+ *
+ * **Note**: At this point,
+ * it's not necessary to use this since we're not going to
+ * use this constant to infer any types anywhere, but if you're
+ * into consistency, this can be used in place of staticly typing
+ * your `meta` export with `CommandMeta`
+ */
 export const defineMeta = (meta: CommandMeta) => meta;
 
 type CommandOptionShared = {

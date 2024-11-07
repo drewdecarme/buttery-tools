@@ -3,7 +3,7 @@ import {
   type ButteryCommandManifestEntry,
   type ButteryCommandsManifest,
   LOG,
-} from "../utils.js";
+} from "../utils/utils.js";
 import { parseOptionsFromArgv } from "./parse-options-from-argv.js";
 
 async function getCommandsManifest() {

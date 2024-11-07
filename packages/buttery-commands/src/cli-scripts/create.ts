@@ -1,4 +1,4 @@
-import { LOG } from "../utils";
+import { LOG } from "../utils/utils";
 
 /**
  * Build's the @buttery/commands binary
