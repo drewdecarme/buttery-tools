@@ -24,7 +24,7 @@ export type CommandFile = {
    * The relative path of the command file to the
    * commands input and also the commands output dir
    */
-  commandPath: string;
+  commandId: string;
   /**
    * The segments of the command path
    */
@@ -56,12 +56,19 @@ export type ButteryCommand = {
   action?: () => void;
 };
 
-export type ButteryCommandManifestEntry = ButteryCommand & {
-  subCommands: ButteryCommandsManifest;
-};
+// export type EnrichedButteryCommand = CommandFile &
+//   ButteryCommand & { commandPath: string };
+
+export type ButteryCommandManifestEntry = Omit<
+  ButteryCommand,
+  "action" | "meta"
+> &
+  CommandMeta &
+  Pick<CommandFile, "commandId" | "commandSegments"> & {
+    commandModulePath: string;
+    subCommands: ButteryCommandsManifest;
+  };
 
 export type ButteryCommandsManifest = {
   [key: string]: ButteryCommandManifestEntry;
 };
-
-export type EnrichedButteryCommand = CommandFile & { module: ButteryCommand };

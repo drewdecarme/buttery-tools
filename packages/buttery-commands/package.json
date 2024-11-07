@@ -14,7 +14,7 @@
     "runtime:build": "tsx ./scripts/runtime.build.ts",
     "lib:build": "yarn tsc --project tsconfig.library.json",
     "local:dev": "tsx ./scripts/local.dev.ts",
-    "local:build": "tsx ./scripts/local.build.ts",
+    "local:build": "yarn runtime:build && tsx ./scripts/local.build.ts",
     "local:start": "yarn node ./bin/index.js"
   },
   "files": [

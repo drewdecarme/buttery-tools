@@ -8,7 +8,7 @@ import { LOG } from "../utils/utils";
  * this function will add some properties to the package.json file
  * to ensure that it can be invoked using a shebang.
  */
-export async function buildCommandsEnrichPackageJson(
+export async function buildPkgJson(
   config: ResolvedButteryConfig<"commands">,
   dirs: ButteryCommandsDirectories
 ) {

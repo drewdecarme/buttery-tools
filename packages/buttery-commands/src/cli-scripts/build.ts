@@ -1,5 +1,9 @@
+import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
-import { buildButteryCommands } from "../compiler/buildButteryCommands";
+import { build as esbuild } from "esbuild";
+import { getBuildConfig } from "../compiler/get-build-config";
+import { getCommands } from "../compiler/get-commands";
+import { runPreBuild } from "../compiler/run-prebuild";
 import {
   type ButteryCommandsBuildOptions,
   butteryCommandsBuildOptionsSchema,
@@ -24,9 +28,27 @@ export async function build(options?: Partial<ButteryCommandsBuildOptions>) {
   // Reconcile the buttery config & dirs
   const config = await getButteryCommandsConfig();
   const dirs = getButteryCommandsDirectories(config);
+  const commands = await getCommands(config);
+  const esbuildConfig = await getBuildConfig(config, dirs, commands, {
+    ...parsedOptions,
+    isProd: true,
+  });
+
+  // run the prebuild
+  const preBuildResults = await inlineTryCatch(runPreBuild)(
+    config,
+    dirs,
+    parsedOptions
+  );
+  if (preBuildResults.hasError) {
+    return LOG.fatal(preBuildResults.error);
+  }
 
   // build the commands
-  await buildButteryCommands(config, dirs, parsedOptions);
+  const buildResults = await inlineTryCatch(esbuild)(esbuildConfig);
+  if (buildResults.hasError) {
+    return LOG.fatal(buildResults.error);
+  }
 
   LOG.loadingEnd("complete.");
   LOG.success("Successfully built @buttery/commands!");

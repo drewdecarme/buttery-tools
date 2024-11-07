@@ -50,13 +50,13 @@ async function parseCommandFromArgs(
   //  }
 }
 
-export default async (cmdsManifest: ButteryCommandsManifest) => {
+export default async (manifest: ButteryCommandsManifest) => {
   try {
     // find and parse the command
     const cmdResult = await inlineTryCatch(parseCommandFromArgs)(
       process.argv.slice(2),
       {
-        subCommands: cmdsManifest,
+        subCommands: manifest,
       } as ButteryCommandManifestEntry
     );
     if (cmdResult.hasError) {

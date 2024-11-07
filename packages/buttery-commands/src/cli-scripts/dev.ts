@@ -1,9 +1,10 @@
+import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import chokidar from "chokidar";
-import { context } from "esbuild";
-import { buildButteryCommands } from "../compiler/buildButteryCommands.js";
-import { compileCommands } from "../compiler/compile-commands.js";
+import { type BuildContext, type BuildOptions, context } from "esbuild";
 import { getBuildConfig } from "../compiler/get-build-config.js";
+import { getCommands } from "../compiler/get-commands.js";
+import { runPreBuild } from "../compiler/run-prebuild.js";
 import {
   type ButteryCommandsDevOptions,
   butteryCommandsDevOptionsSchema,
@@ -26,29 +27,75 @@ export async function dev(options?: Partial<ButteryCommandsDevOptions>) {
   );
   LOG.level = parsedOptions.logLevel;
 
-  // Reconcile the buttery config & dirs
   const config = await getButteryCommandsConfig();
   const dirs = getButteryCommandsDirectories(config);
 
-  // build the commands
-  await buildButteryCommands(config, dirs, parsedOptions);
+  // run the prebuild
+  const preBuildResults = await inlineTryCatch(runPreBuild)(
+    config,
+    dirs,
+    parsedOptions
+  );
+  if (preBuildResults.hasError) {
+    return LOG.fatal(preBuildResults.error);
+  }
+
+  let esbuildContext: BuildContext<BuildOptions> | undefined = undefined;
+
+  /**
+   * An inline function that will dispose of the current build context
+   * and then update the build config with new entry points when
+   * actions in the watcher require the entry points to be updated
+   */
+  async function rebuild() {
+    if (esbuildContext) {
+      await esbuildContext.dispose();
+    }
+    const newConfig = await getButteryCommandsConfig();
+    const newDirs = getButteryCommandsDirectories(config);
+    const newCommands = await getCommands(newConfig);
+    const esbuildConfig = await getBuildConfig(
+      newConfig,
+      newDirs,
+      newCommands,
+      {
+        ...parsedOptions,
+        isProd: false,
+      }
+    );
+    esbuildContext = await context(esbuildConfig);
+    await esbuildContext.watch();
+    LOG.watch(`Watching ${dirs.commandsDir} for changes...`);
+  }
+
+  // build one time and watch
+  await rebuild();
 
   // Watch the commands directory by staring a chokidar instance
-  LOG.watch(`Watching ${dirs.commandsDir} for changes...`);
   let changeNum = 1;
   chokidar
     .watch([dirs.commandsDir, config.paths.config], { ignoreInitial: true })
-    .on("all", async (_event, path) => {
-      LOG.watch(`${path} changed. Rebuilding x${changeNum}...`);
+    .on("all", async (event, path) => {
       try {
-        const manifestModule = await compileCommands(
-          config,
-          dirs,
-          parsedOptions
-        );
-        const esbuildConfig = getBuildConfig(manifestModule, dirs);
-        const esbuildContext = await context(esbuildConfig);
-        await esbuildContext.rebuild();
+        switch (event) {
+          case "add":
+            LOG.watch(`${path} added. Rebuilding x${changeNum}...`);
+            rebuild();
+            break;
+
+          case "unlink":
+            LOG.watch(`${path} removed. Rebuilding x${changeNum}...`);
+            rebuild();
+            break;
+
+          default:
+            LOG.watch(`${path} changed. Rebuilding x${changeNum}...`);
+            if (!esbuildContext) {
+              throw "Build context is undefined. This should not have happened.";
+            }
+            await esbuildContext.rebuild();
+            break;
+        }
         LOG.watch(`${path} changed. Rebuilding x${changeNum}... done.`);
         changeNum++;
       } catch (error) {

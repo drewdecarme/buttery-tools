@@ -18,7 +18,7 @@ const nestedDirCommandFileName = "command";
  * that is configured at runtime. This function will throw if it cannot find
  * the specifically named file in that directory.
  */
-export const getCommandFiles = async (
+export const getCommands = async (
   config: ResolvedButteryConfig<"commands">
 ): Promise<CommandFile[]> => {
   const dirs = getButteryCommandsDirectories(config);
@@ -31,7 +31,7 @@ export const getCommandFiles = async (
   for (const entry of commandDirEntries) {
     const commandDirEntryName = entry.name.replace(/\.(ts|js|mjs)$/, "");
     let commandDirEntryPath = path.join(entry.parentPath, entry.name);
-    let commandPath = commandDirEntryName;
+    let commandId = commandDirEntryName;
     const isDirectory = entry.isDirectory();
     const isUnderscore = entry.name.startsWith("_");
 
@@ -61,7 +61,7 @@ export const getCommandFiles = async (
         nestedDirCommandFile.parentPath,
         nestedDirCommandFile.name
       );
-      commandPath = commandPath.concat("/command");
+      commandId = commandId.concat("/command");
     }
 
     // console.log({ binDir: dirs.binDir, });
@@ -69,10 +69,10 @@ export const getCommandFiles = async (
     // push the files to the command files
     commandFiles.push({
       name: commandDirEntryName,
-      commandPath,
-      commandSegments: commandPath.split("/")[0].split("."),
+      commandId,
+      commandSegments: commandId.split("/")[0].split("."),
       inPath: commandDirEntryPath,
-      outPath: path.resolve(dirs.binDir, commandPath),
+      outPath: path.join(dirs.binDir, "commands", commandDirEntryName),
     });
   }
 

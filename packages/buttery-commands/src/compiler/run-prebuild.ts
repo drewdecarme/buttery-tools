@@ -41,10 +41,9 @@ export async function cleanOutputDirs(
 
 /**
  * A script that should be run once to prepare some directories
- * and files. Note that this should only be run once and not run
- * over and over again
+ * and files in order to build the runtime
  */
-export async function prepareDistribution<T extends ButteryCommandsBaseOptions>(
+export async function runPreBuild<T extends ButteryCommandsBaseOptions>(
   config: ResolvedButteryConfig<"commands">,
   dirs: ButteryCommandsDirectories,
   _options: Required<T>
@@ -69,8 +68,8 @@ export async function prepareDistribution<T extends ButteryCommandsBaseOptions>(
   LOG.debug("Re-initializing the binary directory... done.");
   const runtimeEntryPath = path.join(dirs.binDir, "./index.js");
   const runtimeEntryContent = `import run from "@buttery/commands/runtime";
-const manifestModule = await import("./command-manifest.js");
-run(manifestModule.default);
+import manifest from "./manifest.js";
+run(manifest);
 `;
   LOG.debug("Creating the entry path to the commands runtime...");
   const createRuntimeEntry = await inlineTryCatch(writeFile)(

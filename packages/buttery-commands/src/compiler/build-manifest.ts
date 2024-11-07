@@ -1,16 +1,18 @@
+import { writeFile } from "node:fs/promises";
+import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-
 import type { ButteryCommandsBaseOptions } from "../options/index.js";
+import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories.js";
 import {
   type ButteryCommand,
+  type ButteryCommandManifestEntry,
   type ButteryCommandsManifest,
   type CommandFile,
-  type EnrichedButteryCommand,
   LOG,
 } from "../utils/utils.js";
-import { ensureCommand } from "./ensure-command.js";
-import { getCommandFiles } from "./get-command-files.js";
+import { ensureCommand } from "./build-manifest-ensure-command.js";
+import { getCommands } from "./get-commands.js";
 
 /**
  * Dynamically import a file by cache busting the import
@@ -39,12 +41,13 @@ async function importButteryCommandFromPath(commandFilePath: string) {
   }
 }
 
-export async function compileManifest<T extends ButteryCommandsBaseOptions>(
+export async function createManifest<T extends ButteryCommandsBaseOptions>(
   config: ResolvedButteryConfig<"commands">,
+  dirs: ButteryCommandsDirectories,
   options: T
 ) {
   // Get the command files from the directory structure
-  const cmdFilesResult = await inlineTryCatch(getCommandFiles)(config);
+  const cmdFilesResult = await inlineTryCatch(getCommands)(config);
   if (cmdFilesResult.hasError) {
     LOG.error("Error when trying to get the command files");
     throw LOG.fatal(cmdFilesResult.error);
@@ -69,10 +72,10 @@ export async function compileManifest<T extends ButteryCommandsBaseOptions>(
   // - 2. Validate the contents of each of the commands
   // - 3. Ensure all of the commands are well formed before we go and create the commands manifest
   // that will be read and statically evaluated during runtime.
-  async function* enrichCommandFile(cmdFiles: CommandFile[]): AsyncGenerator<
+  async function* buildManifestEntries(cmdFiles: CommandFile[]): AsyncGenerator<
     | {
         hasError: false;
-        data: EnrichedButteryCommand;
+        data: ButteryCommandManifestEntry;
         error: undefined;
       }
     | { hasError: true; data: undefined; error: string }
@@ -101,11 +104,20 @@ export async function compileManifest<T extends ButteryCommandsBaseOptions>(
         cmdFileResult.data as string
       );
 
+      const commandPathRelativeToBin = path.relative(
+        dirs.binDir,
+        cmdFile.outPath
+      );
+
       yield {
         hasError: false,
         data: {
-          ...cmdFile,
-          module: cmdModule,
+          ...cmdModule.meta,
+          options: cmdModule.options ?? null,
+          commandId: cmdFile.commandId,
+          commandSegments: cmdFile.commandSegments,
+          commandModulePath: commandPathRelativeToBin.concat(".js"),
+          subCommands: {},
         },
         error: undefined,
       };
@@ -114,7 +126,7 @@ export async function compileManifest<T extends ButteryCommandsBaseOptions>(
 
   const cmdManifest: ButteryCommandsManifest = {};
 
-  function addCommandManifestNode(cmd: EnrichedButteryCommand) {
+  function addCommandManifestNode(cmd: ButteryCommandManifestEntry) {
     let currentCmdManifest = cmdManifest;
 
     for (const cmdSegmentIndex in cmd.commandSegments) {
@@ -122,27 +134,15 @@ export async function compileManifest<T extends ButteryCommandsBaseOptions>(
       const cmdSegment = cmd.commandSegments[i];
       if (!cmdManifest[cmdSegment]) {
         currentCmdManifest[cmdSegment] = {
-          meta: {
-            name: "",
-            description: "",
-          },
-          options: {},
-          // args: {},
-          action: undefined,
+          ...cmd,
           subCommands: {},
         };
       }
 
-      if (i === cmd.commandSegments.length - 1) {
-        // TODO: Validate the command module here.
-        currentCmdManifest[cmdSegment] = {
-          meta: cmd.module.meta,
-          options: cmd.module.options,
-          // args: cmd.module.args,
-          action: cmd.module.action,
-          subCommands: {},
-        };
-      } else {
+      // If we're not at the last segment, then we need to
+      // set the currentCommand to the this commands subCommands
+      // this allows us to recursively go deeper in the command
+      if (i !== cmd.commandSegments.length - 1) {
         currentCmdManifest = currentCmdManifest[cmdSegment].subCommands;
       }
     }
@@ -151,7 +151,7 @@ export async function compileManifest<T extends ButteryCommandsBaseOptions>(
   // Build the manifest by looping through all of the enriched command
   // files that have their meta data and then the module import from
   // the generator
-  for await (const commandFile of enrichCommandFile(commandFiles)) {
+  for await (const commandFile of buildManifestEntries(commandFiles)) {
     try {
       if (commandFile.hasError) {
         throw commandFile.error;
@@ -165,4 +165,44 @@ export async function compileManifest<T extends ButteryCommandsBaseOptions>(
   }
 
   return cmdManifest;
+}
+
+/**
+ * This function is the main build command that reads the .buttery/config
+ * parses the commands directory and then builds the binary. This command
+ * is also used locally to build the commands that build the commands.
+ */
+export async function buildManifest<T extends ButteryCommandsBaseOptions>(
+  config: ResolvedButteryConfig<"commands">,
+  dirs: ButteryCommandsDirectories,
+  options: Required<T>
+) {
+  // Create the commands manifest
+  const manifestResults = await inlineTryCatch(createManifest)(
+    config,
+    dirs,
+    options
+  );
+  if (manifestResults.hasError) {
+    LOG.error("Error when trying to build the commands manifest");
+    throw manifestResults.error;
+  }
+
+  // write the manifest to disk
+  const manifestFileName = "./manifest.js";
+  const manifestFilepath = path.resolve(dirs.binDir, manifestFileName);
+  const manifestContent = `export default ${JSON.stringify(
+    manifestResults.data,
+    null,
+    2
+  )};
+  `;
+  const writeManifestResult = await inlineTryCatch(writeFile)(
+    manifestFilepath,
+    manifestContent
+  );
+  if (writeManifestResult.hasError) {
+    LOG.error("Error when trying to write the commands.manifest.json.");
+    throw writeManifestResult.error;
+  }
 }
