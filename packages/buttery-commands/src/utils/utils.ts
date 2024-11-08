@@ -66,6 +66,7 @@ export type ButteryCommandManifestEntry = Omit<
   CommandMeta &
   Pick<CommandFile, "commandId" | "commandSegments"> & {
     commandModulePath: string;
+    level: number;
     subCommands: ButteryCommandsManifest;
   };
 

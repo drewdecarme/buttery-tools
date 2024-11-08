@@ -113,6 +113,7 @@ export async function createManifest<T extends ButteryCommandsBaseOptions>(
         hasError: false,
         data: {
           ...cmdModule.meta,
+          level: 0,
           options: cmdModule.options ?? null,
           commandId: cmdFile.commandId,
           commandSegments: cmdFile.commandSegments,
@@ -135,6 +136,7 @@ export async function createManifest<T extends ButteryCommandsBaseOptions>(
       if (!cmdManifest[cmdSegment]) {
         currentCmdManifest[cmdSegment] = {
           ...cmd,
+          level: i + 1,
           subCommands: {},
         };
       }
@@ -187,6 +189,10 @@ export async function buildManifest<T extends ButteryCommandsBaseOptions>(
     LOG.error("Error when trying to build the commands manifest");
     throw manifestResults.error;
   }
+
+  // write the program manifest
+  // const programFileName = "./program.manifest.js";
+  // const programFilepath = path.resolve(dirs.binDir, manifestFileName);
 
   // write the manifest to disk
   const manifestFileName = "./manifest.js";

@@ -39,6 +39,7 @@ async function parseCommandFromArgs(
   if (cmdOptionsResult.hasError) {
     throw cmdOptionsResult.error;
   }
+  LOG.debug(`Located command: ${currentCommand.name}`);
 
   // TODO: Do some validation on these
   console.log({ currentCommand, options: cmdOptionsResult.data });
@@ -51,11 +52,14 @@ async function parseCommandFromArgs(
 }
 
 export default async (manifest: ButteryCommandsManifest) => {
+  console.log(process.argv);
+
   try {
     // find and parse the command
     const cmdResult = await inlineTryCatch(parseCommandFromArgs)(
       process.argv.slice(2),
       {
+        level: 0,
         subCommands: manifest,
       } as ButteryCommandManifestEntry
     );

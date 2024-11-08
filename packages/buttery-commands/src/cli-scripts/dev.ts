@@ -71,6 +71,13 @@ export async function dev(options?: Partial<ButteryCommandsDevOptions>) {
   // build one time and watch
   await rebuild();
 
+  // we don't want to include any watchers in here
+  // since when we develop against this we're running
+  // a watcher higher in the call stack
+  if (process.env.LOCAL_DEV === "true") {
+    return LOG.debug("Running as LOCAL_DEV.");
+  }
+
   // Watch the commands directory by staring a chokidar instance
   let changeNum = 1;
   chokidar

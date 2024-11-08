@@ -1,17 +1,16 @@
+import path from "node:path";
+import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
+import { build } from "esbuild";
+import { LOG, defaultEsbuildOptions } from "../src/utils/utils";
+
 /**
- * Bundle buttery commands runtime into the bin directory so that the manifest
+ * Bundle buttery commands at runtime into the bin directory so that the manifest
  * can be dynamically imported, parsed and run, well... during runtime.
  *
  * The runtime itself does all of the parsing and handling of the buttery
  * commands manifest which is built from the buttery commands hierarchy
  * at build time.
  */
-
-import path from "node:path";
-import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import { build } from "esbuild";
-import { LOG, defaultEsbuildOptions } from "../src/utils/utils";
-
 async function buildRuntime() {
   LOG.debug("Building buttery commands runtime...");
   try {
