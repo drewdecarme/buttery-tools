@@ -1,3 +1,4 @@
+// ------- Meta -------
 export type CommandMeta = {
   name: string;
   description: string;
@@ -14,6 +15,7 @@ export type CommandMeta = {
  */
 export const defineMeta = (meta: CommandMeta) => meta;
 
+// ------- Options -------
 type CommandOptionShared = {
   description: string;
   alias?: string;
@@ -50,6 +52,36 @@ type InferOptionValues<T extends CommandOptions> = {
     ? string
     : never;
 };
+
+// ------- Args -------
+type CommandArgShared = {
+  name: string;
+  description: string;
+  required?: boolean;
+};
+type CommandArgBoolean = CommandArgShared & {
+  type: "boolean";
+  default?: boolean;
+};
+type CommandArgString = CommandArgShared & {
+  type: "string";
+  default?: string;
+  length?: { min?: number; max?: number };
+  choices?: string[];
+  validate?: (value: string) => boolean;
+};
+type CommandArgNumber = CommandArgShared & {
+  type: "number";
+  default?: number;
+  range?: { min?: number; max?: number };
+  choices?: number[];
+  validate?: (value: number) => boolean;
+};
+export type CommandArg =
+  | CommandArgBoolean
+  | CommandArgString
+  | CommandArgNumber;
+export type CommandArgs = { [key: string]: CommandArg };
 
 /**
  * A helper function that let's you easily define options that should be

@@ -11,7 +11,7 @@ import { LOG, defaultEsbuildOptions } from "../src/utils/utils";
  * commands manifest which is built from the buttery commands hierarchy
  * at build time.
  */
-async function buildRuntime() {
+export async function buildRuntime() {
   LOG.debug("Building buttery commands runtime...");
   try {
     await build({

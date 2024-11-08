@@ -3,6 +3,7 @@ import { printAsBullets } from "@buttery/core/logger";
 import chokidar from "chokidar";
 import { dev } from "../src/cli-scripts/dev";
 import { LOG } from "../src/utils/utils";
+import { buildRuntime } from "./runtime.build";
 
 // Allows for local development to test out all functionality
 // before it is built and published to the rest of the packages
@@ -36,6 +37,7 @@ chokidar
     LOG.checkpointStart(
       `${path.relative(rootDir, changePath)}:${event}. Rebuilding...`
     );
+    await buildRuntime();
     await dev({
       autoFix: true,
       logLevel: "debug",
