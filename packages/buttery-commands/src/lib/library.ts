@@ -53,6 +53,21 @@ type InferOptionValues<T extends CommandOptions> = {
     : never;
 };
 
+/**
+ * A helper function that let's you easily define options that should be
+ * supplied to the action function in your Buttery Command. You should use
+ * this function to create your options so TypeScript can easily infer
+ * the types of the option values supplied to the actions parameter.
+ *
+ * **Note** It's okay if you don't use this to build your command options, but your
+ * action won't be able to correctly infer the keys of your options and it may
+ * make it a little harder to work with in your action.
+ */
+export const defineOptions = <T extends CommandOptions>(options: T) => options;
+
+export type CommandAction<O extends CommandOptions = CommandOptions> =
+  (params: { options: InferOptionValues<O> }) => Promise<void> | void;
+
 // ------- Args -------
 type CommandArgShared = {
   name: string;
@@ -82,18 +97,3 @@ export type CommandArg =
   | CommandArgString
   | CommandArgNumber;
 export type CommandArgs = { [key: string]: CommandArg };
-
-/**
- * A helper function that let's you easily define options that should be
- * supplied to the action function in your Buttery Command. You should use
- * this function to create your options so TypeScript can easily infer
- * the types of the option values supplied to the actions parameter.
- *
- * **Note** It's okay if you don't use this to type your options, but your
- * action won't be able to correctly infer the keys of your options and it may
- * make it a little harder to work with in your action.
- */
-export const defineOptions = <T extends CommandOptions>(options: T) => options;
-
-export type CommandAction<O extends CommandOptions = CommandOptions> =
-  (params: { options: InferOptionValues<O> }) => Promise<void> | void;

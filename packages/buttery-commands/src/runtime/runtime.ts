@@ -1,5 +1,6 @@
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import { getCommandProperties } from "../utils/commandHasSubCommands.js";
+import { getCommandProperties } from "../utils/getCommandProperties.js";
+import type { WellFormedCommand } from "../utils/runtime.types.js";
 import {
   type ButteryCommandManifestEntry,
   type ButteryCommandsManifest,
@@ -7,6 +8,7 @@ import {
 } from "../utils/utils.js";
 import { parseArgsFromArgv } from "./parse-args-from-argv.js";
 import { parseOptionsFromArgv } from "./parse-options-from-argv.js";
+import { runCommand } from "./run-command.js";
 
 /**
  * Provided a manifest entry point, loop through all of the
@@ -15,7 +17,7 @@ import { parseOptionsFromArgv } from "./parse-options-from-argv.js";
 async function parseCommandFromArgs(
   argv: string[],
   initManifestEntry: ButteryCommandManifestEntry
-) {
+): Promise<WellFormedCommand> {
   // Get the command
   let cmd: ButteryCommandManifestEntry = initManifestEntry;
   let index = 0;
@@ -73,28 +75,8 @@ export default async (manifest: ButteryCommandsManifest) => {
   }
 
   // Run the command
-  const { command, args, options, properties } = cmdResult.data;
-
-  console.log({ command, args, options, properties });
-
-  // If we're at the base level then we need to display the help menu
-  // if (properties.isRootCommand && properties.hasSubCommands) {
-  //   return console.log("TODO: Display the help menu: root");
-  // }
-
-  // if (properties.hasSubCommands) {
-  //   // TODO: Display the help menu
-  //   return console.log(`TODO: Display the help menu: ${command.name}`);
-  // }
-
-  // // We can assume that this is a executable command
-  // if (!properties.hasSubCommands) {
-  //   LOG.debug(`Located command: ${command.name}`);
-  // }
-
-  //  if (!commandExists) {
-  //    throw `"${argv}" is not a valid command.\nPossible options: ${printAsBullets(
-  //      Object.keys(currentCommand.subCommands)
-  //    )}`;
-  //  }
+  const runResult = await inlineTryCatch(runCommand)(cmdResult.data);
+  if (runResult.hasError) {
+    return LOG.fatal(runResult.error);
+  }
 };

@@ -1,4 +1,5 @@
 import type { CommandArgs } from "../lib";
+import type { WellFormedCommandArgs } from "../utils/runtime.types";
 
 /**
  * Provided the args of the current command, we loop through
@@ -8,7 +9,7 @@ import type { CommandArgs } from "../lib";
 export async function parseArgsFromArgv(argv: string[], cmdArgs: CommandArgs) {
   const argKeys = Object.keys(cmdArgs);
 
-  return argv.reduce<Record<string, string | number | boolean>>(
+  const parsedArgs = argv.reduce<WellFormedCommandArgs>(
     (result, argValue, index) => {
       const argName = argKeys[index];
       const cmdArg = cmdArgs[argName];
@@ -108,4 +109,14 @@ export async function parseArgsFromArgv(argv: string[], cmdArgs: CommandArgs) {
     },
     {}
   );
+
+  // Validate that all of the required options are present in the command
+  const parsedOptionKeys = Object.keys(parsedArgs);
+  for (const [cmdArgKey, cmdArgValue] of Object.entries(cmdArgs)) {
+    if (cmdArgValue.required && !parsedOptionKeys.includes(cmdArgKey)) {
+      throw `Missing required position arg "${cmdArgKey}".`;
+    }
+  }
+
+  return parsedArgs;
 }

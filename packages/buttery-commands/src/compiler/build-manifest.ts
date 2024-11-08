@@ -114,7 +114,9 @@ export async function createManifest<T extends ButteryCommandsBaseOptions>(
         data: {
           ...cmdModule.meta,
           level: 0,
-          options: cmdModule.options ?? null,
+          options: cmdModule.options ?? undefined,
+          args: cmdModule.args ?? undefined,
+          hasAction: typeof cmdModule.action !== "undefined",
           commandId: cmdFile.commandId,
           commandSegments: cmdFile.commandSegments,
           commandModulePath: commandPathRelativeToBin.concat(".js"),
@@ -143,7 +145,7 @@ export async function createManifest<T extends ButteryCommandsBaseOptions>(
 
       // If we're not at the last segment, then we need to
       // set the currentCommand to the this commands subCommands
-      // this allows us to recursively go deeper in the command
+      // this allows us to recursively build the sub commands
       if (i !== cmd.commandSegments.length - 1) {
         currentCmdManifest = currentCmdManifest[cmdSegment].subCommands;
       }
