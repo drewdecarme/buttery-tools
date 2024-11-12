@@ -2,6 +2,7 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
+import type { CommandOption, CommandOptions } from "../lib/library.js";
 import type { ButteryCommandsBaseOptions } from "../options/index.js";
 import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories.js";
 import {
@@ -12,6 +13,7 @@ import {
   LOG,
 } from "../utils/utils.js";
 import { ensureCommand } from "./build-manifest-ensure-command.js";
+import { buildManifestHelpMenus } from "./build-manifest-help-menus.js";
 import { getCommands } from "./get-commands.js";
 
 /**
@@ -41,7 +43,14 @@ async function importButteryCommandFromPath(commandFilePath: string) {
   }
 }
 
-export async function createManifest<T extends ButteryCommandsBaseOptions>(
+/**
+ * This function will assemble the manifest graph by getting the command files
+ * and then loop through them to recursively build the graph. This function
+ * does nothing more than fetch information about the manifest and then build
+ * the graph. The reason for this is so that any other transformations, validations
+ * can recurse over a standard structure and validate, add, etc... to it.
+ */
+export async function assembleManifest<T extends ButteryCommandsBaseOptions>(
   config: ResolvedButteryConfig<"commands">,
   dirs: ButteryCommandsDirectories,
   options: T
@@ -60,6 +69,15 @@ export async function createManifest<T extends ButteryCommandsBaseOptions>(
     }
     return 1;
   });
+
+  const defaultOptions: CommandOptions = {
+    help: {
+      type: "boolean",
+      required: false,
+      alias: "h",
+      description: "Display the help menu",
+    },
+  };
 
   // We run the command files into async generators so we can loop through
   // them and do some async stuff to make sure the commandFiles are well formed
@@ -109,18 +127,25 @@ export async function createManifest<T extends ButteryCommandsBaseOptions>(
         cmdFile.outPath
       );
 
+      // Return a blank bootstrapped version of the cmd
+      // once this is yielded the async generator will
+      // then validate it and build it against the manifest
       yield {
         hasError: false,
         data: {
           ...cmdModule.meta,
           level: 0,
-          options: cmdModule.options ?? undefined,
+          options: {
+            ...defaultOptions,
+            ...cmdModule.options,
+          },
           args: cmdModule.args ?? undefined,
           hasAction: typeof cmdModule.action !== "undefined",
           commandId: cmdFile.commandId,
           commandSegments: cmdFile.commandSegments,
           commandModulePath: commandPathRelativeToBin.concat(".js"),
           subCommands: {},
+          help: "",
         },
         error: undefined,
       };
@@ -168,7 +193,25 @@ export async function createManifest<T extends ButteryCommandsBaseOptions>(
     }
   }
 
-  return cmdManifest;
+  // Add the root level of the manifest with the values
+  // that define the program at the config level
+  const rootCmdManifest: ButteryCommandsManifest = {
+    [config.commands.name]: {
+      name: config.commands.name,
+      commandId: config.commands.name,
+      commandModulePath: "",
+      level: 0,
+      commandSegments: [],
+      description: config.commands.description,
+      hasAction: false,
+      subCommands: cmdManifest,
+      args: undefined,
+      options: defaultOptions,
+      help: "",
+    },
+  };
+
+  return rootCmdManifest;
 }
 
 /**
@@ -182,7 +225,7 @@ export async function buildManifest<T extends ButteryCommandsBaseOptions>(
   options: Required<T>
 ) {
   // Create the commands manifest
-  const manifestResults = await inlineTryCatch(createManifest)(
+  const manifestResults = await inlineTryCatch(assembleManifest)(
     config,
     dirs,
     options
@@ -191,7 +234,16 @@ export async function buildManifest<T extends ButteryCommandsBaseOptions>(
     LOG.error("Error when trying to build the commands manifest");
     throw manifestResults.error;
   }
+  const manifest = manifestResults.data;
 
+  // Add help menus
+  const helpMenuResults = await inlineTryCatch(buildManifestHelpMenus)(
+    manifest
+  );
+  if (helpMenuResults.hasError) {
+    LOG.error("Error when trying to add help menus to the manifest");
+    throw helpMenuResults.error;
+  }
   // write the program manifest
   // const programFileName = "./program.manifest.js";
   // const programFilepath = path.resolve(dirs.binDir, manifestFileName);
@@ -199,12 +251,8 @@ export async function buildManifest<T extends ButteryCommandsBaseOptions>(
   // write the manifest to disk
   const manifestFileName = "./manifest.js";
   const manifestFilepath = path.resolve(dirs.binDir, manifestFileName);
-  const manifestContent = `export default ${JSON.stringify(
-    manifestResults.data,
-    null,
-    2
-  )};
-  `;
+  const manifestContent = `export default ${JSON.stringify(manifest, null, 2)};
+`;
   const writeManifestResult = await inlineTryCatch(writeFile)(
     manifestFilepath,
     manifestContent

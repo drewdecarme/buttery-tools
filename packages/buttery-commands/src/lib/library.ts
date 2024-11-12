@@ -65,9 +65,6 @@ type InferOptionValues<T extends CommandOptions> = {
  */
 export const defineOptions = <T extends CommandOptions>(options: T) => options;
 
-export type CommandAction<O extends CommandOptions = CommandOptions> =
-  (params: { options: InferOptionValues<O> }) => Promise<void> | void;
-
 // ------- Args -------
 type CommandArgShared = {
   name: string;
@@ -97,3 +94,34 @@ export type CommandArg =
   | CommandArgString
   | CommandArgNumber;
 export type CommandArgs = { [key: string]: CommandArg };
+
+type InferArgValues<T extends CommandArgs> = {
+  [K in keyof T]: T[K] extends CommandArgBoolean
+    ? boolean
+    : T[K] extends CommandArgNumber
+    ? number
+    : T[K] extends CommandArgString
+    ? string
+    : never;
+};
+
+/**
+ * A helper function that let's you easily define args that should be
+ * supplied to the action function in your Buttery Command. You should use
+ * this function to create your args so TypeScript can easily infer
+ * the types of the option values supplied to the actions parameter.
+ *
+ * **Note** It's okay if you don't use this to build your command args, but your
+ * action won't be able to correctly infer the keys of your args and it may
+ * make it a little harder to work with in your action.
+ */
+export const defineArgs = <T extends CommandArgs>(args: T) => args;
+
+// ------- Action -------
+export type CommandAction<
+  A extends CommandArgs = CommandArgs,
+  O extends CommandOptions = CommandOptions
+> = (params: {
+  args: InferArgValues<A>;
+  options: InferOptionValues<O>;
+}) => Promise<void> | void;

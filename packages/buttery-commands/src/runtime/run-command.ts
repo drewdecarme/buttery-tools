@@ -19,7 +19,7 @@ export async function runCommand(cmd: WellFormedCommand) {
   // Command doesn't have an action and there aren't any args or properties
   // associated with it, we're just going to display the help menu.
   if (properties.hasNoArgsOrOptions && !properties.hasAction) {
-    return console.log(`TODO: Display the help menu: ${command.name}`);
+    return console.log(command.help);
   }
 
   if (properties.hasAction) {

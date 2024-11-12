@@ -6,7 +6,7 @@ import type { WellFormedCommandArgs } from "../utils/runtime.types";
  * an array of positional args and validate them against the
  * declared args in the current command.
  */
-export async function parseArgsFromArgv(argv: string[], cmdArgs: CommandArgs) {
+export async function getArgs(argv: string[], cmdArgs: CommandArgs) {
   const argKeys = Object.keys(cmdArgs);
 
   const parsedArgs = argv.reduce<WellFormedCommandArgs>(

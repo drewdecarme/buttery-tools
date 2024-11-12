@@ -8,10 +8,7 @@ import { LOG } from "../utils/utils.js";
  * this function will parse and validate the options against
  * the command that was found
  */
-export async function parseOptionsFromArgv(
-  argv: string[],
-  cmdOptions: CommandOptions
-) {
+export async function getOptions(argv: string[], cmdOptions: CommandOptions) {
   const parsedOptions = argv.reduce<WellFormedCommandOptions>((accum, arg) => {
     // only process args that begin with a dash
     if (!arg.startsWith("-")) return accum;

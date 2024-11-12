@@ -3,7 +3,7 @@ import { version } from "../package.json";
 
 const config: ButteryConfig = {
   commands: {
-    name: "test",
+    name: "spread",
     description:
       "A CLI that tests and proves out all of the functionality exposed by @buttery/commands.",
     version,

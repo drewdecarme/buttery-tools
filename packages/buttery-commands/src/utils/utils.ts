@@ -68,6 +68,7 @@ export type ButteryCommandManifestEntry = Omit<
     level: number;
     hasAction: boolean;
     subCommands: ButteryCommandsManifest;
+    help: string;
   };
 
 export type ButteryCommandsManifest = {

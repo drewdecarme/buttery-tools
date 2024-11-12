@@ -1,74 +1,34 @@
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import { getCommandProperties } from "../utils/getCommandProperties.js";
-import type { WellFormedCommand } from "../utils/runtime.types.js";
-import {
-  type ButteryCommandManifestEntry,
-  type ButteryCommandsManifest,
-  LOG,
-} from "../utils/utils.js";
-import { parseArgsFromArgv } from "./parse-args-from-argv.js";
-import { parseOptionsFromArgv } from "./parse-options-from-argv.js";
+import { type ButteryCommandsManifest, LOG } from "../utils/utils.js";
+import { getCommand } from "./get-command.js";
 import { runCommand } from "./run-command.js";
 
 /**
- * Provided a manifest entry point, loop through all of the
- * manifest entries to find the one that matches the args
+ * The runtime exists as nothing more than a few functions
+ * that read values from the manifest, parse it and then
+ * fetch a module if it is needed fro the commands output
+ * directory.
+ *
+ * For the most part, a lot of the work is done at build time but
+ * there are things that have to be done at runtime such as command
+ * and arg validation as well as the evaluation of the action if it
+ * is provided in the file.
+ *
+ * This runtime file is called from the runtime build output. This runtime
+ * operates much like the model that vite provides where at build time
+ * the assets are built to the directories, but it's up to the framework
+ * that's implementing it to create their own runtime.
+ *
+ * So in essence, this runtime is the default runtime that is provided
+ * from the buttery commands build but it is entirely possible that a
+ * user could provide their own runtime. TODO: Document and include a way
+ * to add an runtime
  */
-async function parseCommandFromArgs(
-  argv: string[],
-  initManifestEntry: ButteryCommandManifestEntry
-): Promise<WellFormedCommand> {
-  // Get the command
-  let cmd: ButteryCommandManifestEntry = initManifestEntry;
-  let index = 0;
-  while (index < argv.length) {
-    const arg = argv[index];
-
-    // Check if the current argument is a subcommand of the current command
-    if (cmd.subCommands?.[arg]) {
-      // Move into the subcommand context
-      cmd = cmd.subCommands[arg];
-      index++;
-    } else {
-      break;
-    }
-  }
-  const remainingArgs = argv.slice(index);
-
-  // Parse the options
-  const cmdOptionsResult = await inlineTryCatch(parseOptionsFromArgv)(
-    remainingArgs,
-    cmd.options ?? {}
-  );
-  if (cmdOptionsResult.hasError) {
-    throw cmdOptionsResult.error;
-  }
-
-  // Parse the args
-  const cmdArgsResult = await inlineTryCatch(parseArgsFromArgv)(
-    remainingArgs,
-    cmd.args ?? {}
-  );
-  if (cmdArgsResult.hasError) {
-    throw cmdArgsResult.error;
-  }
-
-  return {
-    command: cmd,
-    options: cmdOptionsResult.data,
-    args: cmdArgsResult.data,
-    properties: getCommandProperties(cmd),
-  };
-}
-
 export default async (manifest: ButteryCommandsManifest) => {
   // Find, parse, and validate the options and args on the command
-  const cmdResult = await inlineTryCatch(parseCommandFromArgs)(
+  const cmdResult = await inlineTryCatch(getCommand)(
     process.argv.slice(2),
-    {
-      level: 0,
-      subCommands: manifest,
-    } as ButteryCommandManifestEntry
+    manifest
   );
   if (cmdResult.hasError) {
     return LOG.fatal(cmdResult.error);
