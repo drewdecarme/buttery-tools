@@ -2,7 +2,7 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import type { CommandOption, CommandOptions } from "../lib/library.js";
+import type { CommandOptions } from "../lib/library.js";
 import type { ButteryCommandsBaseOptions } from "../options/index.js";
 import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories.js";
 import {
