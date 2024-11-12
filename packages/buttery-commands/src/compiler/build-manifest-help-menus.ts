@@ -61,6 +61,30 @@ export async function buildManifestHelpMenus(
     lines.push(`  ${cmd.description}`);
     lines.push("");
 
+    // Subcommands
+    if (subCommands.length > 0) {
+      lines.push(formatTitle("Sub-commands:"));
+      let padEndNum = 0;
+      const subCommandsKeyValues = subCommands.reduce<
+        {
+          key: string;
+          value: string;
+        }[]
+      >((accum, subCommand) => {
+        if (subCommand.name.length > padEndNum) {
+          padEndNum = subCommand.name.length;
+        }
+        return accum.concat({
+          key: subCommand.name,
+          value: subCommand.description,
+        });
+      }, []);
+      for (const { key, value } of subCommandsKeyValues) {
+        lines.push(`  ${key.padEnd(padEndNum)}  ${value}`);
+      }
+      lines.push("");
+    }
+
     // Positional Args
     if (args.length > 0) {
       lines.push(formatTitle("Arguments:"));
