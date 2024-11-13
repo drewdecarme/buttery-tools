@@ -26,8 +26,10 @@ export async function ensureCommand<T extends ButteryCommandsBaseOptions>(
   options: T
 ): Promise<string> {
   const cmdFile = cmdFiles[cmdFileIndex];
+  LOG.debug(`Ensuring that command file exists: ${cmdFile}`);
 
   let cmdFilePath = cmdFile.inPath;
+  LOG.debug(`Ensuring that command file exists: ${cmdFile}`);
 
   const currentSegments = cmdFile.commandSegments;
   const nextSegments = cmdFiles[cmdFileIndex + 1]?.commandSegments ?? [];

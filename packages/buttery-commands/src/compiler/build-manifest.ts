@@ -34,11 +34,14 @@ export async function dynamicImport<T extends Record<string, unknown>>(
 
 async function importButteryCommandFromPath(commandFilePath: string) {
   try {
+    LOG.debug("Importing command to enrich manifest...");
+    LOG.debug(`cmdPath: ${commandFilePath}`);
     const command = await dynamicImport<ButteryCommand>(commandFilePath);
+    LOG.debug("Importing command to enrich manifest... done");
     return command;
   } catch (error) {
     throw LOG.fatal(
-      new Error(`Unable to import command at: ${commandFilePath}`)
+      new Error(`Unable to import command at "${commandFilePath}": ${error}`)
     );
   }
 }
@@ -244,9 +247,6 @@ export async function buildManifest<T extends ButteryCommandsBaseOptions>(
     LOG.error("Error when trying to add help menus to the manifest");
     throw helpMenuResults.error;
   }
-  // write the program manifest
-  // const programFileName = "./program.manifest.js";
-  // const programFilepath = path.resolve(dirs.binDir, manifestFileName);
 
   // write the manifest to disk
   const manifestFileName = "./manifest.js";

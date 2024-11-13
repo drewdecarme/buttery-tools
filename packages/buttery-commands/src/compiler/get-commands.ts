@@ -80,5 +80,13 @@ export const getCommands = async (
     throw `No command files could be located in: ${dirs.commandsDir}`;
   }
 
-  return commandFiles;
+  // Sort all of the command files based upon their naming
+  const sortedCommandFiles = commandFiles.sort((cmdFileA, cmdFileB) => {
+    if (cmdFileB.name.startsWith(cmdFileA.name)) {
+      return -1;
+    }
+    return 1;
+  });
+
+  return sortedCommandFiles;
 };

@@ -3,7 +3,6 @@ import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import chokidar from "chokidar";
 import { type BuildContext, type BuildOptions, context } from "esbuild";
 import { getBuildConfig } from "../compiler/get-build-config.js";
-import { getCommands } from "../compiler/get-commands.js";
 import { runPreBuild } from "../compiler/run-prebuild.js";
 import {
   type ButteryCommandsDevOptions,
@@ -53,16 +52,10 @@ export async function dev(options?: Partial<ButteryCommandsDevOptions>) {
     }
     const newConfig = await getButteryCommandsConfig();
     const newDirs = getButteryCommandsDirectories(config);
-    const newCommands = await getCommands(newConfig);
-    const esbuildConfig = await getBuildConfig(
-      newConfig,
-      newDirs,
-      newCommands,
-      {
-        ...parsedOptions,
-        isProd: false,
-      }
-    );
+    const esbuildConfig = await getBuildConfig(newConfig, newDirs, {
+      ...parsedOptions,
+      isProd: false,
+    });
     esbuildContext = await context(esbuildConfig);
     await esbuildContext.watch();
     LOG.watch(`Watching ${dirs.commandsDir} for changes...`);

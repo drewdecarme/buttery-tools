@@ -2,7 +2,6 @@ import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { build as esbuild } from "esbuild";
 import { getBuildConfig } from "../compiler/get-build-config";
-import { getCommands } from "../compiler/get-commands";
 import { runPreBuild } from "../compiler/run-prebuild";
 import {
   type ButteryCommandsBuildOptions,
@@ -28,8 +27,7 @@ export async function build(options?: Partial<ButteryCommandsBuildOptions>) {
   // Reconcile the buttery config & dirs
   const config = await getButteryCommandsConfig();
   const dirs = getButteryCommandsDirectories(config);
-  const commands = await getCommands(config);
-  const esbuildConfig = await getBuildConfig(config, dirs, commands, {
+  const esbuildConfig = await getBuildConfig(config, dirs, {
     ...parsedOptions,
     isProd: true,
   });
