@@ -1,7 +1,13 @@
+import path from "node:path";
 import type { WellFormedCommand } from "../utils/runtime.types";
 import { LOG } from "../utils/utils";
 
-export async function runCommand(cmd: WellFormedCommand) {
+export type RunCommandOptions = { cwd: string };
+
+export async function runCommand(
+  cmd: WellFormedCommand,
+  opts: RunCommandOptions
+) {
   LOG.debug(JSON.stringify(cmd, null, 2));
   const { command, args, options, properties } = cmd;
 
@@ -23,7 +29,9 @@ export async function runCommand(cmd: WellFormedCommand) {
   }
 
   if (properties.hasAction) {
-    const module = await import(command.commandModulePath);
+    const importPath = path.resolve(opts.cwd, command.commandModulePath);
+    LOG.debug(`Importing module from: ${importPath}`);
+    const module = await import(importPath);
     const action = module.action;
     await action({ options, args });
   }

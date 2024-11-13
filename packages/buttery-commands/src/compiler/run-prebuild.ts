@@ -69,7 +69,9 @@ export async function runPreBuild<T extends ButteryCommandsBaseOptions>(
   const runtimeEntryPath = path.join(dirs.binDir, "./index.js");
   const runtimeEntryContent = `import run from "@buttery/commands/runtime";
 import manifest from "./manifest.js";
-run(manifest);
+
+// run the CLI against the manifest
+run(manifest, { cwd: import.meta.dirname });
 `;
   LOG.debug("Creating the entry path to the commands runtime...");
   const createRuntimeEntry = await inlineTryCatch(writeFile)(

@@ -1,7 +1,7 @@
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { type ButteryCommandsManifest, LOG } from "../utils/utils.js";
 import { getCommand } from "./get-command.js";
-import { runCommand } from "./run-command.js";
+import { type RunCommandOptions, runCommand } from "./run-command.js";
 
 /**
  * The runtime exists as nothing more than a few functions
@@ -24,7 +24,10 @@ import { runCommand } from "./run-command.js";
  * user could provide their own runtime. TODO: Document and include a way
  * to add an runtime
  */
-export default async (manifest: ButteryCommandsManifest) => {
+export default async (
+  manifest: ButteryCommandsManifest,
+  options: RunCommandOptions
+) => {
   // Find, parse, and validate the options and args on the command
   const cmdResult = await inlineTryCatch(getCommand)(
     process.argv.slice(2),
@@ -35,7 +38,7 @@ export default async (manifest: ButteryCommandsManifest) => {
   }
 
   // Run the command
-  const runResult = await inlineTryCatch(runCommand)(cmdResult.data);
+  const runResult = await inlineTryCatch(runCommand)(cmdResult.data, options);
   if (runResult.hasError) {
     return LOG.fatal(runResult.error);
   }
