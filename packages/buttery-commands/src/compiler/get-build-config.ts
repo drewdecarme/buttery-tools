@@ -1,10 +1,16 @@
-import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core/config";
+import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import type { BuildOptions } from "esbuild";
 import type { ButteryCommandsBaseOptions } from "../options";
 import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
-import { LOG, defaultEsbuildOptions } from "../utils/utils";
+import {
+  type ButteryCommand,
+  LOG,
+  defaultEsbuildOptions,
+} from "../utils/utils";
 import { buildPkgJson } from "./build-pkgjson";
+import { parseCommand } from "./command-parse";
+import { validateManifest } from "./manifest-validate";
 
 export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
   config: ResolvedButteryConfig<"commands">,
@@ -29,25 +35,37 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
     })
     .concat(dirs.commandsDir.concat("/**/command.ts"));
 
+  // Instantiate a new Manifest
+  const ButteryManifest = new Map<string, ButteryCommand>();
+
   const build: BuildOptions = {
     ...defaultEsbuildOptions,
     logOverride: {
       "empty-glob": "silent",
     },
     entryPoints,
-    outdir: dirs.binDir,
+    outdir: dirs.outDir,
     minify: options.isProd,
     plugins: [
       {
-        name: "esbuild-plugin-buttery-commands-resolve-command-files",
+        name: "esbuild-plugin-buttery-commands-parse",
         setup(build) {
           build.onLoad({ filter: /.*/, namespace: "file" }, async (args) => {
-            if (args.path.includes(dirs.commandsDir)) {
-              const relPath = path.relative(dirs.commandsDir, args.path);
-              console.log("command file", { relPath, args });
-              const module = await import(args.path);
-              console.log(module);
+            // ignore anything that isn't in the commands dir
+            const isCommandFile = args.path.includes(dirs.commandsDir);
+            if (!isCommandFile) return null;
+
+            // parse the command
+            const cmdResult = await inlineTryCatch(parseCommand)(args.path, {
+              dirs,
+            });
+            if (cmdResult.hasError) {
+              throw LOG.fatal(cmdResult.error);
             }
+
+            // add the parsed command to the manifest set
+            ButteryManifest.set(cmdResult.data.id, cmdResult.data);
+
             return null;
           });
         },
@@ -67,18 +85,30 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
       },
       {
         name: "esbuild-plugin-buttery-commands-manifest",
-        setup() {
+        setup(build) {
           // we want to validate the commands when everything starts
           // so when the build ends, we know we have a well formed
           // commands structure to parse
-          // build.onStart(async () => {
-          //   try {
-          //     await validateCommands(config, dirs);
-          //   } catch (error) {
-          //     LOG.error("Error when trying to enrich the package.json");
-          //     throw LOG.fatal(new Error(String(error)));
-          //   }
-          // });
+          build.onEnd(async () => {
+            const validationResults = await inlineTryCatch(validateManifest)(
+              ButteryManifest,
+              {
+                config,
+                dirs,
+                options,
+              }
+            );
+            if (validationResults.hasError) {
+              throw LOG.fatal(validationResults.error);
+            }
+
+            // try {
+            //   await validateCommands(config, dirs);
+            // } catch (error) {
+            //   LOG.error("Error when trying to enrich the package.json");
+            //   throw LOG.fatal(new Error(String(error)));
+            // }
+          });
           // we want to build the manifest after we build the commands
           // so we can assemble the commands manifest with already transpiled
           // files.

@@ -15,6 +15,36 @@ export type CommandsBuildOptions = {
   autofix?: boolean;
 };
 
+export type ButteryCommand = {
+  /**
+   * The relative path of the command file to the
+   * commands input and also the commands output dir
+   */
+  id: string;
+  /**
+   * The name of the command that will call
+   */
+  name: string;
+  /**
+   * Describes what the command does
+   */
+  description: string;
+  /**
+   * The segments of the command path
+   */
+  segments: string[];
+  options: CommandOptions;
+  args: CommandArgs | undefined;
+  path: string;
+  subCommands: ButteryCommandsManifest;
+  help: string;
+  meta: {
+    parentCommands: string[];
+    level: number;
+    hasAction: boolean;
+  };
+};
+
 export type CommandFile = {
   /**
    * the name of the command
@@ -48,7 +78,7 @@ export const defaultEsbuildOptions: BuildOptions = {
   packages: "external",
 };
 
-export type ButteryCommand = {
+export type Command = {
   meta: CommandMeta;
   options?: CommandOptions;
   args?: CommandArgs;
@@ -58,10 +88,7 @@ export type ButteryCommand = {
 // export type EnrichedButteryCommand = CommandFile &
 //   ButteryCommand & { commandPath: string };
 
-export type ButteryCommandManifestEntry = Omit<
-  ButteryCommand,
-  "action" | "meta"
-> &
+export type ButteryCommandManifestEntry = Omit<Command, "action" | "meta"> &
   CommandMeta &
   Pick<CommandFile, "commandId" | "commandSegments"> & {
     commandModulePath: string;
@@ -74,3 +101,5 @@ export type ButteryCommandManifestEntry = Omit<
 export type ButteryCommandsManifest = {
   [key: string]: ButteryCommandManifestEntry;
 };
+
+export type ButteryCommandsManifestMap = Map<string, ButteryCommand>;
