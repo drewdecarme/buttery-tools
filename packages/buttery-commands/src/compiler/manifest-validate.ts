@@ -53,6 +53,9 @@ async function validateCommandHierarchy<T extends ButteryCommandsBaseOptions>(
   Each sub-command must have it's respective file starting at the root of the sub command. Below is a visual representation
   of what you might be missing.
 
+  NOTE: This validator validates parent / child command relationships one at a time so if there are other parents missing you
+  will be prompted to fix them in subsequent prompts.
+
   ${pc.underline("Flat File Convention")}
   .buttery/
     |--commands
