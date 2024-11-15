@@ -41,6 +41,7 @@
     "@ngneat/falso": "7.2.0",
     "@types/fs-extra": "^11",
     "@types/node": "22.8.2",
+    "@types/picomatch": "^3.0.1",
     "esbuild": "0.24.0",
     "tsx": "4.19.2",
     "typescript": "5.6.3"
@@ -51,6 +52,7 @@
     "chokidar": "^4.0.1",
     "fs-extra": "^11.2.0",
     "picocolors": "^1.1.1",
+    "picomatch": "^4.0.2",
     "zod": "^3.23.8"
   },
   "bin": {

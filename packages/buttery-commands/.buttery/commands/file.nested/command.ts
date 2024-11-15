@@ -4,6 +4,7 @@ import {
   defineArgs,
   defineOptions,
 } from "../../../src/lib/library";
+import { testCommandGlob } from "./test-glob.something";
 
 export const meta: CommandMeta = {
   name: "nested",
@@ -63,4 +64,5 @@ export const action: CommandAction<typeof args, typeof options> = async ({
 }) => {
   console.log(options.test);
   console.log(args);
+  testCommandGlob();
 };

@@ -7,7 +7,9 @@ import {
   type ButteryCommand,
   LOG,
   defaultEsbuildOptions,
+  getEntryPointsGlob,
 } from "../utils/utils";
+import { loadCommand } from "./command-load";
 import { parseCommand } from "./command-parse";
 import { buildManifest } from "./manifest-build";
 import { validateManifest } from "./manifest-validate";
@@ -18,24 +20,6 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
   dirs: ButteryCommandsDirectories,
   options: T & { isProd: boolean }
 ) {
-  // We dynamically create our entry points up to 20 glob paths
-  // If someone is creating more than 20 nested glob paths for their
-  // command files then I feel like there are more serious problems
-  // than being able to load them... :/
-  //
-  // The reason we try to evaluate on globs is that if we find that
-  // a file is invalid or we want to add another file after the load
-  // process starts, we can do that, esbuild will handle it, and then
-  // we can create the manifest after we know all of the commands
-  // are well formed
-  const entryPoints = [...new Array(20)]
-    .map((_, i) => {
-      const numOfStars = i + 1;
-      const levels = [...new Array(numOfStars)].map(() => "*").join(".");
-      return `${dirs.commandsDir}/${levels}.ts`;
-    })
-    .concat(dirs.commandsDir.concat("/**/command.ts"));
-
   // Instantiate a new Manifest
   const ButteryManifest = new Map<string, ButteryCommand>();
 
@@ -44,7 +28,7 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
     logOverride: {
       "empty-glob": "silent",
     },
-    entryPoints,
+    entryPoints: getEntryPointsGlob(dirs),
     outdir: dirs.outDir,
     minify: options.isProd,
     plugins: [
@@ -53,12 +37,12 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
         name: "esbuild-plugin-buttery-commands-parse",
         setup(build) {
           build.onLoad({ filter: /.*/, namespace: "file" }, async (args) => {
-            // ignore anything that isn't in the commands dir
-            const isCommandFile = args.path.includes(dirs.commandsDir);
-            if (!isCommandFile) return null;
+            // load the command
+            const cmdFilePath = loadCommand(args.path, dirs);
+            if (!cmdFilePath) return;
 
             // parse the command
-            const cmdResult = await inlineTryCatch(parseCommand)(args.path, {
+            const cmdResult = await inlineTryCatch(parseCommand)(cmdFilePath, {
               dirs,
             });
             if (cmdResult.hasError) {

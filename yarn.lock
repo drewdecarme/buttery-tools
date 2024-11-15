@@ -1376,10 +1376,12 @@ __metadata:
     "@ngneat/falso": "npm:7.2.0"
     "@types/fs-extra": "npm:^11"
     "@types/node": "npm:22.8.2"
+    "@types/picomatch": "npm:^3.0.1"
     chokidar: "npm:^4.0.1"
     esbuild: "npm:0.24.0"
     fs-extra: "npm:^11.2.0"
     picocolors: "npm:^1.1.1"
+    picomatch: "npm:^4.0.2"
     tsx: "npm:4.19.2"
     typescript: "npm:5.6.3"
     zod: "npm:^3.23.8"
@@ -4975,6 +4977,13 @@ __metadata:
   dependencies:
     undici-types: "npm:~6.19.8"
   checksum: 10c0/14372885db80059ed6e92c320b2bcd8f7dc271698adce11f51aa0f424a3f82aa1749a4f66321b87043791b894346b2458d514cbb65ce70167c2fd8a78a124947
+  languageName: node
+  linkType: hard
+
+"@types/picomatch@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@types/picomatch@npm:3.0.1"
+  checksum: 10c0/4f60d98668030e4a5b3d7dda1e0a6d86056f7e6201f013dcb411249dc9d9d34373d3e8de3b2f0c156be43e2b0da99d30e06a8292282dd5f84b105bf9ff654dec
   languageName: node
   linkType: hard
 
@@ -12454,6 +12463,13 @@ __metadata:
   version: 2.3.1
   resolution: "picomatch@npm:2.3.1"
   checksum: 10c0/26c02b8d06f03206fc2ab8d16f19960f2ff9e81a658f831ecb656d8f17d9edc799e8364b1f4a7873e89d9702dff96204be0fa26fe4181f6843f040f819dac4be
+  languageName: node
+  linkType: hard
+
+"picomatch@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "picomatch@npm:4.0.2"
+  checksum: 10c0/7c51f3ad2bb42c776f49ebf964c644958158be30d0a510efd5a395e8d49cb5acfed5b82c0c5b365523ce18e6ab85013c9ebe574f60305892ec3fa8eee8304ccc
   languageName: node
   linkType: hard
 

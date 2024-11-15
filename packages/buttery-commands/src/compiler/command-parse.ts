@@ -63,8 +63,6 @@ export async function parseCommand(
   cmdPath: string,
   { dirs }: { dirs: ButteryCommandsDirectories }
 ): Promise<ButteryCommand> {
-  LOG.debug(`Parsing command at path: ${cmdPath}...`);
-
   // normalize the command id
   const cmdPathRelToCommandsDir = path.relative(dirs.commandsDir, cmdPath);
   let cmdId = cmdPathRelToCommandsDir.replace(/\/command.ts/, "");

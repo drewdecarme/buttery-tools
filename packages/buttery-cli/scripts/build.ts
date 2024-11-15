@@ -1,3 +1,5 @@
 import { build } from "@buttery/commands/cli/build";
 
-build();
+build({
+  logLevel: "debug",
+});
