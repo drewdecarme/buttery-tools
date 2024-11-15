@@ -1,16 +1,14 @@
-import type { ButteryCommandManifestEntry } from "./utils";
+import type { ButteryCommand } from "./utils";
 
 export type CommandProperties = ReturnType<typeof getCommandProperties>;
 
-export function getCommandProperties(
-  manifestEntry: ButteryCommandManifestEntry
-) {
-  const numOfArgs = Object.keys(manifestEntry.args ?? {}).length;
-  const numOfOptions = Object.keys(manifestEntry.args ?? {}).length;
+export function getCommandProperties(cmd: ButteryCommand) {
+  const numOfArgs = Object.keys(cmd.args ?? {}).length;
+  const numOfOptions = Object.keys(cmd.args ?? {}).length;
   return {
-    hasSubCommands: Object.keys(manifestEntry.subCommands).length > 0,
-    isRootCommand: manifestEntry.level === 0,
-    hasAction: manifestEntry.hasAction,
+    hasSubCommands: Object.keys(cmd.subCommands).length > 0,
+    isRootCommand: cmd.meta.level === 0,
+    hasAction: cmd.meta.hasAction,
     hasNoArgsOrOptions: numOfArgs === 0 && numOfOptions === 0,
     numOfOptions,
     numOfArgs,
