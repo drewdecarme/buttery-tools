@@ -37,9 +37,6 @@ export default async (
     return LOG.fatal(cmdResult.error);
   }
 
-  // Run the command
-  const runResult = await inlineTryCatch(runCommand)(cmdResult.data, options);
-  if (runResult.hasError) {
-    return LOG.fatal(runResult.error);
-  }
+  // Run the command - error handling is up to the action
+  await runCommand(cmdResult.data, options);
 };

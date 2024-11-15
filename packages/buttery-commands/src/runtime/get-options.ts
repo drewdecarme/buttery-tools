@@ -1,7 +1,6 @@
 import { exhaustiveMatchGuard } from "@buttery/core/utils/isomorphic";
 import type { CommandOptions } from "../lib/library.js";
 import type { WellFormedCommandOptions } from "../utils/runtime.types.js";
-import { LOG } from "../utils/utils.js";
 
 /**
  * Provided an array of arguments and some command options,
@@ -36,7 +35,6 @@ export async function getOptions(argv: string[], cmdOptions: CommandOptions) {
     }
 
     // Process the option value based upon the declared type
-    LOG.debug(`Parsing option: ${optionKey}`);
     switch (cmdOption.type) {
       case "boolean": {
         let value = cmdOption.default ?? optionValue;

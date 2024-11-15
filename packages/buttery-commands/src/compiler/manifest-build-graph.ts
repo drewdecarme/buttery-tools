@@ -89,7 +89,8 @@ export async function buildManifestGraph<T extends ButteryCommandsBaseOptions>(
     [options.config.commands.name]: {
       name: options.config.commands.name,
       id: options.config.commands.name,
-      path: "",
+      pathOut: "",
+      pathSrc: "",
       segments: [],
       description: options.config.commands.description,
       subCommands: cmdGraph,

@@ -86,8 +86,9 @@ export async function parseCommand(
     throw cmdMeta.error;
   }
 
-  // get the output dir
-  const cmdOutPath = path.join(dirs.outDir, cmdPathRelToCommandsDir);
+  // get the paths
+  const cmdPathSrc = path.join(dirs.outDir, cmdPathRelToCommandsDir);
+  const cmdPathOut = cmdPathSrc.replace(/\.(ts|js|mjs)$/, ".js");
 
   // get command parents ids
   const cmdParents = getCommandParents(cmdSegments.data);
@@ -102,7 +103,8 @@ export async function parseCommand(
     },
     args: cmdModule.data.args ?? undefined,
     segments: cmdSegments.data,
-    path: cmdOutPath,
+    pathSrc: cmdPathSrc,
+    pathOut: cmdPathOut,
     help: "",
     subCommands: {},
     meta: {

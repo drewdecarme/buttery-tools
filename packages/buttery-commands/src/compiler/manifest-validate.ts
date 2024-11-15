@@ -153,6 +153,17 @@ export async function validateManifest<T extends ButteryCommandsBaseOptions>(
           if (isCommandHierarchyValid.hasError) {
             throw isCommandHierarchyValid.error;
           }
+
+          // Check to see if the command is missing an action
+          const hasSubCommands = commandsIds.reduce(
+            (accum, cmdId) =>
+              cmdId !== cmd.id && cmdId.startsWith(cmd.id) ? true : accum,
+            false
+          );
+          if (!hasSubCommands && !cmd.meta.hasAction) {
+            throw `The command "${cmd.id}" is a standalone command and doesn't have an action exported from it's command file. Calling this command will do nothing. Please export an action in "${cmd.pathSrc}".`;
+          }
+
           LOG.debug(`Validating command "${commandId}"... done.`);
           return isCommandHierarchyValid.data;
         }
