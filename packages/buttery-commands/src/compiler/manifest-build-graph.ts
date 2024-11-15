@@ -1,4 +1,5 @@
 import type { ResolvedButteryConfig } from "@buttery/core/config";
+import { printAsBullets } from "@buttery/core/logger";
 import type { ButteryCommandsBaseOptions } from "../options";
 import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
 import {
@@ -25,12 +26,21 @@ export async function buildManifestGraph<T extends ButteryCommandsBaseOptions>(
   }
 ) {
   // Get a sorted array of all of the manifest values
-  const manifestValues = [...manifest.values()].sort((cmdFileA, cmdFileB) => {
-    if (cmdFileB.name.startsWith(cmdFileA.id)) {
-      return -1;
+  LOG.debug("Converting manifest to a sorted array");
+  const manifestValues = [...manifest.values()].sort(
+    ({ segments: segmentsA }, { segments: segmentsB }) => {
+      // Compare segment by segment
+      for (let i = 0; i < Math.min(segmentsA.length, segmentsB.length); i++) {
+        if (segmentsA[i] !== segmentsB[i]) {
+          return segmentsA[i].localeCompare(segmentsB[i]);
+        }
+      }
+
+      // If all compared segments are the same, the shorter one (parent) should come first
+      return segmentsA.length - segmentsB.length;
     }
-    return 1;
-  });
+  );
+  LOG.debug(`${printAsBullets(manifestValues.map((m) => m.id))}`);
 
   const cmdGraph: ButteryCommandsGraph = {};
 
@@ -43,6 +53,7 @@ export async function buildManifestGraph<T extends ButteryCommandsBaseOptions>(
       if (!cmdGraph[cmdSegment]) {
         currentCmdManifest[cmdSegment] = {
           ...cmd,
+          subCommands: {},
           meta: {
             ...cmd.meta,
             level: i + 1,
@@ -64,9 +75,9 @@ export async function buildManifestGraph<T extends ButteryCommandsBaseOptions>(
 
   for (const manifestValue of manifestValues) {
     try {
-      LOG.debug(`Adding "${manifestValue.name}" to the manifest...`);
+      LOG.debug(`Adding "${manifestValue.name}" to the graph...`);
       addNode(manifestValue);
-      LOG.debug(`Adding "${manifestValue.name}" to the manifest... done.`);
+      LOG.debug(`Adding "${manifestValue.name}" to the graph... done.`);
     } catch (error) {
       throw new Error(String(error));
     }

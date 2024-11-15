@@ -33,7 +33,7 @@ export async function buildManifest<T extends ButteryCommandsBaseOptions>(
 
   // Add help menus
   const helpMenuResults = await inlineTryCatch(buildManifestHelpMenus)(
-    manifest
+    manifestGraph.data
   );
   if (helpMenuResults.hasError) {
     LOG.error("Error when trying to add help menus to the manifest");
@@ -44,7 +44,7 @@ export async function buildManifest<T extends ButteryCommandsBaseOptions>(
   const manifestFileName = "./manifest.js";
   const manifestFilepath = path.resolve(options.dirs.binDir, manifestFileName);
   const manifestContent = `export default ${JSON.stringify(
-    manifestGraph,
+    manifestGraph.data,
     null,
     2
   )};
