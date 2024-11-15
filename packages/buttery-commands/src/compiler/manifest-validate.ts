@@ -8,7 +8,7 @@ import type { ButteryCommandsBaseOptions } from "../options";
 import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
 import {
   type ButteryCommand,
-  type ButteryCommandsManifestMap,
+  type ButteryCommandsManifest,
   LOG,
 } from "../utils/utils";
 import { bootstrapCommand } from "./command-bootstrap";
@@ -19,7 +19,7 @@ import { parseCommand } from "./command-parse";
 async function validateCommandHierarchy<T extends ButteryCommandsBaseOptions>(
   cmd: ButteryCommand,
   allCmdIds: string[],
-  manifest: ButteryCommandsManifestMap,
+  manifest: ButteryCommandsManifest,
   {
     config,
     dirs,
@@ -130,7 +130,7 @@ Options: ${printAsBullets(possiblePaths.map((path) => path.relToButteryDir))}`;
 }
 
 export async function validateManifest<T extends ButteryCommandsBaseOptions>(
-  manifest: ButteryCommandsManifestMap,
+  manifest: ButteryCommandsManifest,
   options: {
     config: ResolvedButteryConfig<"commands">;
     dirs: ButteryCommandsDirectories;

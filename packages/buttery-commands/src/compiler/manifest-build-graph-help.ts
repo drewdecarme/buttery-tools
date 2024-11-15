@@ -1,27 +1,32 @@
 import { exhaustiveMatchGuard } from "@buttery/core/utils/isomorphic";
 import pc from "picocolors";
 import {
-  type ButteryCommandManifestEntry,
-  type ButteryCommandsManifest,
+  type ButteryCommand,
+  type ButteryCommandsGraph,
   LOG,
 } from "../utils/utils";
 
 const formatTitle = (title: string) => pc.bold(pc.underline(title));
 
+/**
+ * Provided the graph representation of the commands manifest, this function
+ * will go through all of the commands and enrich the help menu that was defaulted
+ * with an empty string
+ */
 export async function buildManifestHelpMenus(
-  manifest: ButteryCommandsManifest
+  manifestGraph: ButteryCommandsGraph
 ): Promise<void> {
   let rootCmd = "";
 
-  function buildHelpMenu(cmd: ButteryCommandManifestEntry) {
-    if (cmd.level === 0) {
+  function buildHelpMenu(cmd: ButteryCommand) {
+    if (cmd.meta.level === 0) {
       rootCmd = cmd.name;
     }
     LOG.debug(`Building help for "${cmd.name}"`);
     const lines: string[] = [];
     lines.push("");
 
-    const command = `${rootCmd} ${cmd.commandSegments.join(" ")}`;
+    const command = `${rootCmd} ${cmd.segments.join(" ")}`;
     const subCommands = Object.values(cmd.subCommands);
     const args = Object.entries(cmd.args ?? {});
     const argStrings = args.reduce<{ required: ""; optional: "" }>( // TODO: Add string formatter
@@ -230,7 +235,7 @@ export async function buildManifestHelpMenus(
     }
   }
 
-  for (const cmd of Object.values(manifest)) {
+  for (const cmd of Object.values(manifestGraph)) {
     buildHelpMenu(cmd);
   }
 }

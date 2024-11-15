@@ -1,5 +1,5 @@
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import { type ButteryCommandsManifest, LOG } from "../utils/utils.js";
+import { type ButteryCommandsGraph, LOG } from "../utils/utils.js";
 import { getCommand } from "./get-command.js";
 import { type RunCommandOptions, runCommand } from "./run-command.js";
 
@@ -25,13 +25,13 @@ import { type RunCommandOptions, runCommand } from "./run-command.js";
  * to add an runtime
  */
 export default async (
-  manifest: ButteryCommandsManifest,
+  manifestGraph: ButteryCommandsGraph,
   options: RunCommandOptions
 ) => {
   // Find, parse, and validate the options and args on the command
   const cmdResult = await inlineTryCatch(getCommand)(
     process.argv.slice(2),
-    manifest
+    manifestGraph
   );
   if (cmdResult.hasError) {
     return LOG.fatal(cmdResult.error);

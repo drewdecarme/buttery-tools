@@ -1,7 +1,7 @@
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { getCommandProperties } from "../utils/getCommandProperties";
 import type { WellFormedCommand } from "../utils/runtime.types";
-import type { ButteryCommandsManifest } from "../utils/utils";
+import type { ButteryCommandsGraph } from "../utils/utils";
 import { getArgs } from "./get-args";
 import { getOptions } from "./get-options";
 
@@ -11,10 +11,10 @@ import { getOptions } from "./get-options";
  */
 export async function getCommand(
   argv: string[],
-  manifest: ButteryCommandsManifest
+  manifestGraph: ButteryCommandsGraph
 ): Promise<WellFormedCommand> {
   // Get the root command entry
-  let cmd = Object.values(manifest)[0];
+  let cmd = Object.values(manifestGraph)[0];
 
   let index = 0;
   while (index < argv.length) {

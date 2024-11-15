@@ -1,9 +1,13 @@
 import path from "node:path";
 import { printAsBullets } from "@buttery/core/logger";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import type { CommandOptions } from "../lib";
+import type { Command } from "../lib";
 import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
-import { type ButteryCommand, type Command, LOG } from "../utils/utils";
+import {
+  type ButteryCommand,
+  LOG,
+  defaultCommandOptions,
+} from "../utils/utils";
 
 async function getCommandSegments(cmdId: string, cmdPath: string) {
   try {
@@ -55,15 +59,6 @@ function getCommandParents(cmdSegments: string[]) {
   return result;
 }
 
-const defaultOptions: CommandOptions = {
-  help: {
-    type: "boolean",
-    required: false,
-    alias: "h",
-    description: "Display the help menu",
-  },
-};
-
 export async function parseCommand(
   cmdPath: string,
   { dirs }: { dirs: ButteryCommandsDirectories }
@@ -104,7 +99,7 @@ export async function parseCommand(
     name: cmdMeta.data.name,
     description: cmdMeta.data.description,
     options: {
-      ...defaultOptions,
+      ...defaultCommandOptions,
       ...cmdModule.data.options,
     },
     args: cmdModule.data.args ?? undefined,

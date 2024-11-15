@@ -125,3 +125,14 @@ export type CommandAction<
   args: InferArgValues<A>;
   options: InferOptionValues<O>;
 }) => Promise<void> | void;
+
+// ------- Command -------
+export type Command<
+  A extends CommandArgs = CommandArgs,
+  O extends CommandOptions = CommandOptions
+> = {
+  meta: CommandMeta;
+  options?: CommandOptions;
+  args?: CommandArgs;
+  action?: CommandAction<A, O>;
+};

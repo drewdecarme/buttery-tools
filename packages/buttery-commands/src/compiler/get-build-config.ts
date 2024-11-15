@@ -8,9 +8,10 @@ import {
   LOG,
   defaultEsbuildOptions,
 } from "../utils/utils";
-import { buildPkgJson } from "./build-pkgjson";
 import { parseCommand } from "./command-parse";
+import { buildManifest } from "./manifest-build";
 import { validateManifest } from "./manifest-validate";
+import { buildPkgJson } from "./pkgjson-enrich";
 
 export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
   config: ResolvedButteryConfig<"commands">,
@@ -47,6 +48,7 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
     outdir: dirs.outDir,
     minify: options.isProd,
     plugins: [
+      // Parse and validate the commands
       {
         name: "esbuild-plugin-buttery-commands-parse",
         setup(build) {
@@ -70,6 +72,7 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
           });
         },
       },
+      // Enrich the package.json to auto call the shebang
       {
         name: "esbuild-plugin-buttery-commands-enrich-pkgjson",
         setup(build) {
@@ -83,13 +86,12 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
           });
         },
       },
+      // Validate and build the manifest
       {
         name: "esbuild-plugin-buttery-commands-manifest",
         setup(build) {
-          // we want to validate the commands when everything starts
-          // so when the build ends, we know we have a well formed
-          // commands structure to parse
           build.onEnd(async () => {
+            // validate the manifest
             const validationResults = await inlineTryCatch(validateManifest)(
               ButteryManifest,
               {
@@ -102,23 +104,19 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
               throw LOG.fatal(validationResults.error);
             }
 
-            // try {
-            //   await validateCommands(config, dirs);
-            // } catch (error) {
-            //   LOG.error("Error when trying to enrich the package.json");
-            //   throw LOG.fatal(new Error(String(error)));
-            // }
+            // build and write the manifest to disk
+            const buildResults = await inlineTryCatch(buildManifest)(
+              ButteryManifest,
+              {
+                config,
+                dirs,
+                options,
+              }
+            );
+            if (buildResults.hasError) {
+              throw LOG.fatal(buildResults.error);
+            }
           });
-          // we want to build the manifest after we build the commands
-          // so we can assemble the commands manifest with already transpiled
-          // files.
-          // build.onEnd(async () => {
-          //   try {
-          //     await buildManifest(config, dirs, options);
-          //   } catch (error) {
-          //     throw LOG.fatal(new Error(String(error)));
-          //   }
-          // });
         },
       },
     ],
