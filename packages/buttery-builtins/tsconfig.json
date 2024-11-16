@@ -1,0 +1,8 @@
+{
+  "extends": "@buttery/tsconfig/library",
+  "compilerOptions": {
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext"
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}

@@ -1,23 +1,19 @@
 import { readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
-import { type CommandsBuildFunctionArgs, LOG } from "./utils";
+import type { ResolvedButteryConfig } from "@buttery/core/config";
+import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
+import { LOG } from "../utils/utils";
 
-// TODO: Update this description
-// -- PACKAGE.JSON --
-// In order to invoke the CLI we need to add a few properties
-// from the `buttery.config.(mjs|cjs|js)` file into the `package.json`
-// file. This will allow whoever consumes the CLI to instantiate it
-// from the command line without having to worry about manually adding
-// those properties to their `package.json`
-export async function buildCommandsEnrichPackageJson({
-  config,
-}: CommandsBuildFunctionArgs) {
+/**
+ * Given the commands config reconciled from the .buttery/config
+ * this function will add some properties to the package.json file
+ * to ensure that it can be invoked using a shebang.
+ */
+export async function buildPkgJson(
+  config: ResolvedButteryConfig<"commands">,
+  dirs: ButteryCommandsDirectories
+) {
   try {
-    const packageJsonPath = path.resolve(
-      config.paths.rootDir,
-      "./package.json"
-    );
-    const packageJsonString = await readFile(packageJsonPath, {
+    const packageJsonString = await readFile(dirs.packageJson, {
       encoding: "utf8",
     });
     const packageJson = JSON.parse(packageJsonString);
@@ -37,7 +33,7 @@ export async function buildCommandsEnrichPackageJson({
       }
     }
     await writeFile(
-      packageJsonPath,
+      dirs.packageJson,
       `${JSON.stringify(packageJson, null, 2)}\n`,
       "utf-8"
     );

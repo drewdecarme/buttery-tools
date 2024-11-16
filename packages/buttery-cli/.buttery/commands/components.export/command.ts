@@ -2,10 +2,10 @@ import { readdirSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { traverse } from "@babel/core";
-import type {
-  CommandAction,
-  CommandMeta,
-  CommandOptions,
+import {
+  type CommandAction,
+  type CommandMeta,
+  defineOptions,
 } from "@buttery/commands";
 import {
   getButteryConfig,
@@ -27,15 +27,15 @@ export const meta: CommandMeta = {
   description: "Export any buttery-components via wizard or by args",
 };
 
-export const options: CommandOptions<{ outDir: string }> = {
+export const options = defineOptions({
   outDir: {
-    type: "value",
+    type: "string",
     alias: "o",
     description:
       "The absolute path of the directory the selected component should be exported to",
     required: false,
   },
-};
+});
 
 export const action: CommandAction<typeof options> = async () => {
   // TODO: Define a configuration in the buttery config to reconcile this.

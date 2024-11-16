@@ -1,14 +1,19 @@
 import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core/config";
-import type { ButteryCLIDirectories } from "./utils";
+
+export type ButteryCommandsDirectories = ReturnType<
+  typeof getButteryCommandsDirectories
+>;
 
 export const getButteryCommandsDirectories = (
   config: ResolvedButteryConfig<"commands">
-): ButteryCLIDirectories => {
+) => {
   const commandsDirName = config.commands.commandsDir ?? "commands";
-
+  const binDir = path.resolve(config.paths.rootDir, "./bin");
   return {
     commandsDir: path.resolve(config.paths.butteryDir, `./${commandsDirName}`),
-    binDir: path.resolve(config.paths.rootDir, "./bin"),
+    packageJson: path.resolve(config.paths.rootDir, "./package.json"),
+    binDir,
+    outDir: path.resolve(binDir, "./commands"),
   };
 };
