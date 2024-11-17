@@ -1,6 +1,13 @@
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { inlineTryCatch } from "@buttery/builtins";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
-import { select } from "@inquirer/prompts";
+import { confirm, input, select } from "@inquirer/prompts";
+import type {
+  TemplateManifest,
+  TemplateManifestEntry,
+} from "../../scripts/templates/types";
+import { writeDirAndFile } from "../../utils/writeDirAndFile";
 import { getButteryDocsConfig } from "../getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../getButteryDocsDirectories";
 import {
@@ -11,7 +18,10 @@ import { LOG } from "../utils";
 
 // TODO: Cleanup and add path
 export async function add(
-  path: string,
+  /**
+   * A path relative to the .buttery/docs
+   */
+  userPath: string,
   options?: Partial<ButteryDocsAddOptions>
 ) {
   const parsedOptions = parseAndValidateOptions(
@@ -29,20 +39,77 @@ export async function add(
   //
   if (parsedOptions.template) {
     LOG.debug("--template=true. Reading template manifest and prompting user");
-    const templateManifest = await readFile(dirs.templates.manifest, "utf8");
-    const templateManifestJson = JSON.parse(templateManifest);
-    const templateContentTypes = Object.keys(templateManifestJson);
+    const fileContent = await readFile(dirs.templates.manifest, "utf8");
+    const templateManifest = JSON.parse(fileContent) as TemplateManifest;
 
-    const selectedTemplateContentType = await select<string>({
+    // let the user select a template
+    const selectedTemplate = await select<TemplateManifestEntry>({
       message: "Please select a template to bootstrap doc",
-      choices: templateContentTypes,
+      choices: Object.values(templateManifest).map((manifestEntry) => ({
+        value: manifestEntry,
+        name: manifestEntry.name,
+        description: manifestEntry.description,
+      })),
     });
 
-    const templateEntry = templateManifestJson[selectedTemplateContentType];
-    const templateContent = Buffer.from(templateEntry, "base64").toString(
-      "utf-8"
+    // select the format
+    const selectedExt = await select({
+      message: "Please select a format",
+      choices: ["md", "mdx"],
+    });
+
+    const name = await input({ message: "Please name your document" });
+    const navBarDisplay = await input({
+      message:
+        "How would you like this document to display in the navigation bar?",
+      default: name,
+    });
+
+    // create the full path with the extensions
+    const resolvedPath = path.join(
+      dirs.srcDocs.root,
+      `.${userPath}.${selectedExt}`
     );
 
-    console.log(templateContent);
+    // have the user confirm that they want their file here
+    const isConfirmed = await confirm({
+      message: `Your doc will be created here: "${resolvedPath}". Is this correct?`,
+    });
+    if (!isConfirmed) {
+      return LOG.fatal(
+        new Error(
+          "User has denied the output path of the file. All paths supplied should be relative to the `.buttery/docs` directory."
+        )
+      );
+    }
+
+    const decodedFileContent = Buffer.from(
+      selectedTemplate.content,
+      "base64"
+    ).toString("utf-8");
+    const content = `---
+name: ${name} # this will display in the tab of the browser
+meta:
+  # this will display as the description tag More values can be found here: https://buttery.tools/docs/guides/seo
+  - type: name
+    name: description
+    content: A description that will be located in the header of the document
+  navBarDisplay: ${navBarDisplay}
+---
+
+${decodedFileContent}
+`;
+    const createFile = await inlineTryCatch(writeDirAndFile)(
+      resolvedPath,
+      content
+    );
+
+    if (createFile.hasError) {
+      return LOG.fatal(createFile.error);
+    }
+
+    LOG.success(
+      `Your new doc has successfully been created at: ${resolvedPath}`
+    );
   }
 }

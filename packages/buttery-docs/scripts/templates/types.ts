@@ -23,6 +23,8 @@ export type TemplateMeta = {
   description: string;
 };
 
+export type TemplateManifestEntry = Template & TemplateMeta;
+
 export type TemplateManifest = {
-  [key: string]: Template & TemplateMeta;
+  [key: string]: TemplateManifestEntry;
 };
