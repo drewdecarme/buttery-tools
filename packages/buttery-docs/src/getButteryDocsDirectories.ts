@@ -22,6 +22,11 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
 
   const userCreatedDocsDir = path.resolve(config.paths.butteryDir, "./docs");
 
+  const templatesRootDir = path.resolve(
+    nodeModulesDocsDir.target,
+    "./templates"
+  );
+
   const appRootDir = path.resolve(nodeModulesDocsDir.target, "./app");
   const serverEntryFileName =
     process.env.NODE_ENV === "production"
@@ -68,6 +73,10 @@ export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
         tokens: tokensCss,
         docsUI: docsUiCSS,
       },
+    },
+    templates: {
+      root: templatesRootDir,
+      manifest: path.resolve(templatesRootDir, "./template-manifest.json"),
     },
     output: {
       root: outputRootDir,

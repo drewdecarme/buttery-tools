@@ -15,8 +15,10 @@ const baseOptionsSchema = z.object({
    */
   prompt: z.boolean().default(true),
 });
+export type ButteryDocsBaseOptions = z.infer<typeof baseOptionsSchema>;
 
-export const devSchema = baseOptionsSchema.extend({
+// --- dev ---
+export const butteryDocsDevOptionsSchema = baseOptionsSchema.extend({
   /**
    * Opens the DevServer to the configured hostname and port
    * when it starts
@@ -32,6 +34,20 @@ export const devSchema = baseOptionsSchema.extend({
    */
   port: z.number().default(4000),
 });
-export const buildSchema = baseOptionsSchema;
-export const formatSchema = baseOptionsSchema;
-export const orderSchema = baseOptionsSchema;
+export type ButteryDocsDevOptions = z.infer<typeof butteryDocsDevOptionsSchema>;
+
+// --- build ---
+export const butteryDocsBuildOptionsSchema = baseOptionsSchema;
+export type ButteryDocsBuildOptions = z.infer<
+  typeof butteryDocsBuildOptionsSchema
+>;
+
+// --- new ---
+export const butteryDocsAddOptionsSchema = baseOptionsSchema.extend({
+  /**
+   * Brings up an interactive menu that you can select
+   * a template from to create a new doc
+   */
+  template: z.boolean().default(false),
+});
+export type ButteryDocsAddOptions = z.infer<typeof butteryDocsAddOptionsSchema>;
