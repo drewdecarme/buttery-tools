@@ -1,11 +1,11 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { writeFile as fsWriteFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import type internal from "node:stream";
 
 /**
  * Writes a file regardless of a directory doesn't exist.
  */
-export async function writeDirAndFile(
+export async function writeFile(
   filepath: string,
   data:
     | string
@@ -21,7 +21,7 @@ export async function writeDirAndFile(
     await mkdir(directory, { recursive: true });
 
     // Write the file
-    await writeFile(filepath, data, { encoding: "utf-8" });
+    await fsWriteFile(filepath, data, { encoding: "utf-8" });
   } catch (error) {
     throw new Error(String(error));
   }

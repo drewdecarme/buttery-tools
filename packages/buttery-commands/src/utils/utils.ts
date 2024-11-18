@@ -69,6 +69,11 @@ export type ButteryCommand = {
      * in the command file.
      */
     hasAction: boolean;
+    /**
+     * A boolean flag that indicates if the command definition
+     * has any required args
+     */
+    hasRequiredArgs: boolean;
   };
 };
 

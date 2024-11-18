@@ -11,20 +11,3 @@ export type GitLabRepoBlob = {
   content: string;
   sha: string;
 };
-
-export type Template = {
-  contentType: string;
-  path: string;
-  content: GitLabRepoBlob["content"];
-};
-
-export type TemplateMeta = {
-  name: string;
-  description: string;
-};
-
-export type TemplateManifestEntry = Template & TemplateMeta;
-
-export type TemplateManifest = {
-  [key: string]: TemplateManifestEntry;
-};

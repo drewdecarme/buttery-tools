@@ -1,4 +1,4 @@
-import type { CommandArgs } from "../lib";
+import type { CommandArgs } from "../lib/index.js";
 import type { WellFormedCommandArgs } from "../utils/runtime.types";
 
 /**
@@ -114,7 +114,7 @@ export async function getArgs(argv: string[], cmdArgs: CommandArgs) {
   const parsedOptionKeys = Object.keys(parsedArgs);
   for (const [cmdArgKey, cmdArgValue] of Object.entries(cmdArgs)) {
     if (cmdArgValue.required && !parsedOptionKeys.includes(cmdArgKey)) {
-      throw `Missing required position arg "${cmdArgKey}".`;
+      throw `Missing required positional arg "${cmdArgKey}".`;
     }
   }
 

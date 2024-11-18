@@ -1,13 +1,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { inlineTryCatch } from "@buttery/builtins";
+import { inlineTryCatch, writeFile } from "@buttery/builtins";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { confirm, input, select } from "@inquirer/prompts";
-import type {
-  TemplateManifest,
-  TemplateManifestEntry,
-} from "../../scripts/templates/types";
-import { writeDirAndFile } from "../../utils/writeDirAndFile";
 import { getButteryDocsConfig } from "../getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../getButteryDocsDirectories";
 import {
@@ -16,7 +11,23 @@ import {
 } from "../options";
 import { LOG } from "../utils";
 
-// TODO: Cleanup and add path
+export type Template = {
+  contentType: string;
+  path: string;
+  content: string;
+};
+
+export type TemplateMeta = {
+  name: string;
+  description: string;
+};
+
+export type TemplateManifestEntry = Template & TemplateMeta;
+
+export type TemplateManifest = {
+  [key: string]: TemplateManifestEntry;
+};
+
 export async function add(
   /**
    * A path relative to the .buttery/docs
@@ -99,10 +110,7 @@ meta:
 
 ${decodedFileContent}
 `;
-    const createFile = await inlineTryCatch(writeDirAndFile)(
-      resolvedPath,
-      content
-    );
+    const createFile = await inlineTryCatch(writeFile)(resolvedPath, content);
 
     if (createFile.hasError) {
       return LOG.fatal(createFile.error);

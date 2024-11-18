@@ -1,11 +1,11 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { inlineTryCatch } from "@buttery/builtins";
+import type { Template, TemplateManifest } from "../../src/cli-scripts/add";
 import { LOG } from "../../src/utils";
 import { fetchGitLabRepoBlob } from "./fetch-gitlab-repo-blob";
 import { fetchGitLabRepoTree } from "./fetch-gitlab-repo-tree";
 import { getTemplateMeta } from "./get-template-meta";
-import type { Template, TemplateManifest } from "./types";
 
 export async function createTemplateManifest() {
   const goodDocsRepoName = encodeURIComponent("tgdp/templates");
