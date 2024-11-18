@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { inlineTryCatch } from "@buttery/builtins";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
