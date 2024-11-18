@@ -5,20 +5,24 @@ import express from "express";
 import open from "open";
 import type { RenderToPipeableStreamOptions } from "react-dom/server";
 import { createServer } from "vite";
-import type { z } from "zod";
 import { getButteryDocsConfig } from "../getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../getButteryDocsDirectories";
 import { getButteryDocsViteConfig } from "../getButteryDocsViteConfig";
 import { generateHTMLTemplate } from "../lib/server/generateHTMLTemplate";
+import {
+  type ButteryDocsDevOptions,
+  butteryDocsDevOptionsSchema,
+} from "../options";
 import { LOG } from "../utils";
-import { devSchema } from "./_options.schema";
-
-export type ButteryDocsBuildOptions = Partial<z.infer<typeof devSchema>>;
 
 process.env.NODE_ENV = "development";
 
-export async function dev(options?: ButteryDocsBuildOptions) {
-  const parsedOptions = parseAndValidateOptions(devSchema, options, LOG);
+export async function dev(options?: Partial<ButteryDocsDevOptions>) {
+  const parsedOptions = parseAndValidateOptions(
+    butteryDocsDevOptionsSchema,
+    options,
+    LOG
+  );
   LOG.level = parsedOptions.logLevel;
 
   LOG.info("Starting @buttery/docs DevServer...");

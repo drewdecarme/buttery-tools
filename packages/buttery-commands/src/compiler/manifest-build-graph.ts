@@ -101,6 +101,7 @@ export async function buildManifestGraph<T extends ButteryCommandsBaseOptions>(
         parentCommands: [],
         level: 0,
         hasAction: false,
+        hasRequiredArgs: false,
       },
     },
   };

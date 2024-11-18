@@ -3,20 +3,22 @@ import path from "node:path";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { ensureFile } from "fs-extra";
 import { build as viteBuild } from "vite";
-import type { z } from "zod";
 import { getButteryDocsConfig } from "../getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../getButteryDocsDirectories";
 import { getButteryDocsRouteManifest } from "../getButteryDocsRouteManifest";
 import { getButteryDocsViteConfig } from "../getButteryDocsViteConfig";
+import {
+  type ButteryDocsBuildOptions,
+  butteryDocsBuildOptionsSchema,
+} from "../options";
 import { LOG } from "../utils";
-import { buildSchema } from "./_options.schema";
-
-export type ButteryDocsBuildOptions = z.infer<typeof buildSchema>;
-
-process.env.NODE_ENV = "production";
 
 export async function build(options?: ButteryDocsBuildOptions) {
-  const parsedOptions = parseAndValidateOptions(buildSchema, options, LOG);
+  const parsedOptions = parseAndValidateOptions(
+    butteryDocsBuildOptionsSchema,
+    options,
+    LOG
+  );
   LOG.level = parsedOptions.logLevel;
 
   // Process and store configurations

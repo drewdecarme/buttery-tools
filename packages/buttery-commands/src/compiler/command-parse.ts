@@ -111,6 +111,13 @@ export async function parseCommand(
       parentCommands: cmdParents,
       hasAction: typeof cmdModule.data.action !== "undefined",
       level: cmdSegments.data.length,
+      hasRequiredArgs: Object.values(cmdModule.data.args ?? {}).reduce(
+        (accum, arg) => {
+          if (arg.required) return true;
+          return accum;
+        },
+        false
+      ),
     },
   };
 }

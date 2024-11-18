@@ -37,14 +37,17 @@ export async function getOptions(argv: string[], cmdOptions: CommandOptions) {
     // Process the option value based upon the declared type
     switch (cmdOption.type) {
       case "boolean": {
-        let value = cmdOption.default ?? optionValue;
-        if (value === "true") value = true;
-        if (value === "false") value = false;
-        if (typeof value === "undefined") value = true; // option is listed but has no value next to it
+        let value = undefined;
+        if (optionValue === "true") value = true;
+        if (optionValue === "false") value = false;
+        if (typeof optionValue === "undefined") {
+          // option is listed but has no value next to it
+          value = cmdOption.default ?? true;
+        }
 
         // value hasn't been reconciled from a default or logic yet so it's technically invalid
         if (typeof value !== "boolean") {
-          throw `Invalid value "${optionValue}" for boolean option "${optionKey}". Value should either be "true", "false". Adding the option without a value will default to "true".`;
+          throw `Invalid value "${optionValue}" for boolean option "${optionKey}". Value should either be "true", "false". As long as you haven't added a default value to the "defineOption" key, adding the option without a value will default to "true".`;
         }
 
         accum[optionKey] = value;
@@ -82,7 +85,6 @@ export async function getOptions(argv: string[], cmdOptions: CommandOptions) {
 
       default:
         exhaustiveMatchGuard(cmdOption);
-        break;
     }
 
     return accum;
