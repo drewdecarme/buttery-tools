@@ -1,6 +1,6 @@
 {
   "name": "@buttery/cli",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "A file based CLI designed to making writing a CLI as easy as exporting a few functions in a file",
   "sideEffects": false,
   "type": "module",
