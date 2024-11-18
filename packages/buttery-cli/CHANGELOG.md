@@ -2,6 +2,22 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/cli (v0.4.0) <a name="0.4.0"></a>
+
+Adds a new `@buttery/docs` API called `add` which allows you to either programmatically or via the `@buttery/cli` to add a new buttery doc by means of a few prompts.
+
+```bash
+buttery docs add <relative-path-to-.buttery/docs>
+```
+
+It has support for an optional boolean argument `--template, -t` to create the new doc based upon one of the [The Good Docs Project](https://www.thegooddocsproject.dev/template) templates.
+
+```bash
+buttery docs add <relative-path-to-.buttery/docs> --template
+```
+
+
+
 ## @buttery/cli (v0.3.0) <a name="0.3.0"></a>
 
 This changeset completely re-writes the `@buttery/commands` package from the ground up. Previously, the framework would look at a few directories, read some values and then create a `commander` program that would be built to the `bin` directory of the package that you we're working in.

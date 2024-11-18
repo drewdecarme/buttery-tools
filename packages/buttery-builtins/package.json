@@ -1,6 +1,6 @@
 {
   "name": "@buttery/builtins",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Common utilities that are a part of every @buttery/tool but also should be standard in the TS/JS language",
   "sideEffects": false,
   "type": "module",

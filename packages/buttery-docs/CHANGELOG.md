@@ -2,6 +2,22 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/docs (v0.2.0) <a name="0.2.0"></a>
+
+Adds a new `@buttery/docs` API called `add` which allows you to either programmatically or via the `@buttery/cli` to add a new buttery doc by means of a few prompts.
+
+```bash
+buttery docs add <relative-path-to-.buttery/docs>
+```
+
+It has support for an optional boolean argument `--template, -t` to create the new doc based upon one of the [The Good Docs Project](https://www.thegooddocsproject.dev/template) templates.
+
+```bash
+buttery docs add <relative-path-to-.buttery/docs> --template
+```
+
+
+
 ## @buttery/docs (v0.1.4) <a name="0.1.4"></a>
 
 Removes `changeset` and adds `monoweave` to be able to version, release and manage changelogs for the monorepo using yarn modern (yarn berry).
