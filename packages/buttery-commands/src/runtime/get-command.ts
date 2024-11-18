@@ -37,7 +37,8 @@ export async function getCommand(
   // as there are no positional arguments that are required. Otherwise that
   // would be a falsy command.
   const cmdCalledWithHelp = argv.includes("--help") || argv.includes("-h");
-  const showAutoHelp = cmdArgs.length === 0 && !cmd.meta.hasRequiredArgs;
+  const showAutoHelp =
+    cmdArgs.length === 0 && !cmd.meta.hasRequiredArgs && !cmd.meta.hasAction;
   if (cmdCalledWithHelp || showAutoHelp) {
     return {
       command: cmd,
@@ -59,9 +60,7 @@ export async function getCommand(
   }
 
   // Parse the options
-  const optionArgs = cmdArgs
-    .slice(index)
-    .filter((arg) => arg !== "--help" && arg !== "-h");
+  const optionArgs = cmdArgs.filter((arg) => arg !== "--help" && arg !== "-h");
   const cmdOptionsResult = await inlineTryCatch(getOptions)(
     optionArgs,
     cmd.options ?? {}

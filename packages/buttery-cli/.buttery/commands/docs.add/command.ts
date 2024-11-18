@@ -8,7 +8,8 @@ import { add } from "@buttery/docs/cli/add";
 
 export const meta: CommandMeta = {
   name: "add",
-  description: "Iteratively develop your `@buttery/docs` app",
+  description:
+    "Add a new doc based upon the Good Docs Project templates (https://www.thegooddocsproject.dev/)",
 };
 
 export const args = defineArgs({
@@ -27,7 +28,6 @@ export const options = defineOptions({
     description:
       "Prompts the user to bootstrap their new document with a template from the Good Docs Project (https://www.thegooddocsproject.dev/template)",
     alias: "t",
-    default: false,
     required: false,
   },
   "log-level": {

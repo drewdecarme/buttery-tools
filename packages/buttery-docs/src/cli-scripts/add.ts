@@ -79,7 +79,7 @@ export async function add(
     // create the full path with the extensions
     const resolvedPath = path.join(
       dirs.srcDocs.root,
-      `.${userPath}.${selectedExt}`
+      `${userPath}.${selectedExt}`
     );
 
     // have the user confirm that they want their file here
@@ -105,6 +105,7 @@ meta:
   - type: name
     name: description
     content: A description that will be located in the header of the document
+config:
   navBarDisplay: ${navBarDisplay}
 ---
 
