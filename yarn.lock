@@ -1339,7 +1339,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@buttery/builtins@workspace:^0.1.4, @buttery/builtins@workspace:packages/buttery-builtins":
+"@buttery/builtins@workspace:^, @buttery/builtins@workspace:^0.1.4, @buttery/builtins@workspace:packages/buttery-builtins":
   version: 0.0.0-use.local
   resolution: "@buttery/builtins@workspace:packages/buttery-builtins"
   dependencies:
@@ -1428,6 +1428,7 @@ __metadata:
     "@babel/core": "npm:7.26.0"
     "@babel/preset-react": "npm:7.25.9"
     "@babel/preset-typescript": "npm:7.26.0"
+    "@buttery/builtins": "workspace:^"
     "@buttery/components": "workspace:^0.1.4"
     "@buttery/core": "workspace:^0.1.4"
     "@buttery/icons": "workspace:*"
