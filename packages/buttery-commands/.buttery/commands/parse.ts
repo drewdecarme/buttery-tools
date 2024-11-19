@@ -12,17 +12,17 @@ export const meta: CommandMeta = {
 
 export const args = defineArgs({
   path: {
-    name: "path",
-    description: "required positional argument",
     type: "string",
+    name: "path",
+    description: "The path of the command to parse",
     required: true,
   },
 });
 
 export const options = defineOptions({
-  template: {
+  debug: {
     type: "boolean",
-    description: "An optional option",
+    description: "Debug any output by printing out the logs to the terminal",
     alias: "t",
   },
 });
