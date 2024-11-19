@@ -5,6 +5,7 @@ meta:
   - type: name
     name: description
     content: A description that will be located in the header of the document
+config:
   navBarDisplay: asdf
 ---
 
