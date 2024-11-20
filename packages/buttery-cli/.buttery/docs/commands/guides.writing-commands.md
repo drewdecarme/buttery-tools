@@ -1,8 +1,8 @@
 ---
-title: Writing Commands
+title: Writing a command
 ---
 
-# Writing Commands
+# Writing a command
 
 ## General Structure
 
