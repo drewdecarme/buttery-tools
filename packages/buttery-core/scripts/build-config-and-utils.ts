@@ -1,5 +1,5 @@
 import path from "node:path";
-import { build } from "../src/builder";
+import { build } from "../src/builder/index.js";
 
 /**
  * The @buttery/core/config path needs to be bundled using esbuild to

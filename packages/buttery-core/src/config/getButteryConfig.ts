@@ -1,14 +1,14 @@
 import path from "node:path";
-import { LOG } from "../private";
-import { butteryConfigDefaults } from "./buttery-config.defaults";
+import { LOG } from "../private/index.js";
+import { butteryConfigDefaults } from "./buttery-config.defaults.js";
 import type {
   ButteryConfig,
   ButteryConfigPaths,
   GetButteryConfigOptions,
-} from "./buttery-config.types";
-import { ensureButteryStore } from "./ensureButteryStore";
-import { getButteryConfigFile } from "./getButteryConfigFile";
-import { getButteryConfigModule } from "./getButteryConfigModule";
+} from "./buttery-config.types.js";
+import { ensureButteryStore } from "./ensureButteryStore.js";
+import { getButteryConfigFile } from "./getButteryConfigFile.js";
+import { getButteryConfigModule } from "./getButteryConfigModule.js";
 
 type ButteryConfigWithPaths = {
   config: ButteryConfig;

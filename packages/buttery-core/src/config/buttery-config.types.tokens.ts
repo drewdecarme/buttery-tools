@@ -1,4 +1,4 @@
-import type { ButteryTokensColor } from "./buttery-config.types.tokens-color";
+import type { ButteryTokensColor } from "./buttery-config.types.tokens-color.js";
 
 export type ButteryConfigTokens = {
   /**

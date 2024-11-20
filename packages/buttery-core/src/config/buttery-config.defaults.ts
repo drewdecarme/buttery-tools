@@ -1,8 +1,8 @@
-import type { ButteryConfig } from "./buttery-config.types";
-import type { ButteryConfigCommands } from "./buttery-config.types.commands";
-import type { ButteryConfigDocs } from "./buttery-config.types.docs";
-import type { ButteryConfigIcons } from "./buttery-config.types.icons";
-import type { ButteryConfigTokens } from "./buttery-config.types.tokens";
+import type { ButteryConfigCommands } from "./buttery-config.types.commands.js";
+import type { ButteryConfigDocs } from "./buttery-config.types.docs.js";
+import type { ButteryConfigIcons } from "./buttery-config.types.icons.js";
+import type { ButteryConfig } from "./buttery-config.types.js";
+import type { ButteryConfigTokens } from "./buttery-config.types.tokens.js";
 
 const systemFont = `system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`;
 

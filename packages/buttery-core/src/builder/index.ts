@@ -2,7 +2,7 @@ import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { ButteryLogger, printAsBullets } from "@buttery/logs";
 import esbuild from "esbuild";
-import { exhaustiveMatchGuard } from "../utils/isomorphic";
+import { exhaustiveMatchGuard } from "../utils/isomorphic/index.js";
 
 const LOG = new ButteryLogger({
   id: "buttery-logger",
