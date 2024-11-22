@@ -1353,7 +1353,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/cli@workspace:packages/buttery-cli"
   dependencies:
-    "@buttery/commands": "workspace:*"
+    "@buttery/commands": "workspace:^"
     "@buttery/components": "workspace:*"
     "@buttery/docs": "workspace:*"
     "@buttery/tokens": "workspace:*"
@@ -1365,7 +1365,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/commands@workspace:*, @buttery/commands@workspace:^, @buttery/commands@workspace:packages/buttery-commands":
+"@buttery/commands@workspace:^, @buttery/commands@workspace:packages/buttery-commands":
   version: 0.0.0-use.local
   resolution: "@buttery/commands@workspace:packages/buttery-commands"
   dependencies:
