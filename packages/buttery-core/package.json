@@ -39,6 +39,7 @@
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
     "@buttery/tsconfig": "workspace:*",
+    "@types/fs-extra": "^11",
     "@types/node": "22.8.2",
     "tsx": "4.19.2",
     "typescript": "5.6.3"
@@ -46,7 +47,9 @@
   "dependencies": {
     "@buttery/builtins": "workspace:^0.1.5",
     "@buttery/logs": "workspace:^0.1.4",
-    "esbuild": "0.24.0",
-    "zod": "3.23.8"
+    "@inquirer/checkbox": "^4.0.2",
+    "esbuild": "^0.24.0",
+    "fs-extra": "^11.2.0",
+    "zod": "^3.23.8"
   }
 }

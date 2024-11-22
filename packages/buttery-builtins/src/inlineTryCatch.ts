@@ -3,7 +3,7 @@
  * handle the error in the continuing closure instead
  * of in a nested try/catch closure. Handling errors becomes as easy as checking to see if the `res.isError`
  * is a truthy value which then can be handled by throwing an error. Once that is checked, any reference to the
- * data will be typed correctly to the response of the function that as passed in.
+ * data will be typed correctly to the response of the function that was passed in.
  *
  * The arguments of the function are curried to avoid inline-ing the entire execution of the function. The function
  * execution is handled internally to the `inlineTryCatch` and then returned in a manner that can be worked with.
@@ -17,18 +17,14 @@
  * @example
  * const result = await inlineTryCatch(doStuffFn)(doStuffFnParams);
  * if (result.hasError) {
- *  `throw LOG.fatal(result.error);
+ *   throw LOG.fatal(result.error);
  * }
  */
-export function inlineTryCatch<T>(
-  fn: (
-    ...args: // biome-ignore lint/suspicious/noExplicitAny: We're going to let TS infer the args by casting it to any
-    any[]
-  ) => Promise<T>
+export function inlineTryCatch<T, Args extends unknown[]>(
+  fn: (...args: Args) => Promise<T> | T
 ) {
   return async (
-    // biome-ignore lint/suspicious/noExplicitAny: We're going to let TS infer the args by casting it to any
-    ...args: any[]
+    ...args: Args
   ): Promise<
     | { hasError: false; data: T; error: undefined }
     | { hasError: true; data: undefined; error: Error }
