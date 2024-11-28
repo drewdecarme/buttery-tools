@@ -2,9 +2,9 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import checkbox from "@inquirer/checkbox";
 import input from "@inquirer/input";
-import { exhaustiveMatchGuard } from "../utils/isomorphic";
-import { butteryConfigDefaults } from "./buttery-config.defaults";
-import type { ButteryConfig } from "./buttery-config.types";
+import { exhaustiveMatchGuard } from "../utils/isomorphic/index.js";
+import { butteryConfigDefaults } from "./buttery-config.defaults.js";
+import type { ButteryConfig } from "./buttery-config.types.js";
 
 /**
  * Asks the user to select which keys in the buttery config

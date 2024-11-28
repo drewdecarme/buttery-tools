@@ -1,13 +1,13 @@
 import { existsSync, lstatSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { LOG } from "../private";
-import type { GetButteryConfigOptions } from "./buttery-config.types";
+import { LOG } from "../private/index.js";
+import type { GetButteryConfigOptions } from "./buttery-config.types.js";
 import {
   createDefaultButteryConfigAndDirs,
   promptUserForButteryConfigDefaults,
   promptUserForButteryDirLocation,
-} from "./buttery-config.utils";
+} from "./buttery-config.utils.js";
 
 /**
  * Starts from a provided starting and searches up the directory structure to

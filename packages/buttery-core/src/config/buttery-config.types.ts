@@ -1,8 +1,8 @@
-import type { ButteryLogLevel } from "../logger";
-import type { ButteryConfigCommands } from "./buttery-config.types.commands";
-import type { ButteryConfigDocs } from "./buttery-config.types.docs";
-import type { ButteryConfigIcons } from "./buttery-config.types.icons";
-import type { ButteryConfigTokens } from "./buttery-config.types.tokens";
+import type { ButteryLogLevel } from "../logger/index.js";
+import type { ButteryConfigCommands } from "./buttery-config.types.commands.js";
+import type { ButteryConfigDocs } from "./buttery-config.types.docs.js";
+import type { ButteryConfigIcons } from "./buttery-config.types.icons.js";
+import type { ButteryConfigTokens } from "./buttery-config.types.tokens.js";
 
 export type ButteryConfigPaths = {
   config: string;

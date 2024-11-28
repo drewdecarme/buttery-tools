@@ -21,6 +21,7 @@
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "packageManager": "yarn@4.5.1",
   "scripts": {
+    "package:version": "yarn monoweave version",
     "build": "turbo build",
     "release": "yarn monoweave --config-file monoweave.config.json",
     "clean": "npx rimraf ./**/node_modules && npx rimraf ./**/dist"

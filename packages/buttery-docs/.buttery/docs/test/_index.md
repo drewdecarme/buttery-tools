@@ -1,14 +1,14 @@
-
 ---
-name: Quickstart # this will display in the tab of the browser
+name: asdf # this will display in the tab of the browser
 meta:
   # this will display as the description tag More values can be found here: https://buttery.tools/docs/guides/seo
   - type: name
     name: description
-    content: An abstraction built on top of the modal component that explicity provides a few pre-defined props to easily style and implement flyout drawers.
+    content: A description that will be located in the header of the document
 config:
-  navBarDisplay: Quickstart
+  navBarDisplay: asdf
 ---
+
 # API Quick Start template
 
 > If you need more information about how to fill in this template, read the accompanying [guide](./guide_api-quickstart.md).
@@ -19,8 +19,8 @@ config:
 
 Before you begin, make sure you meet these prerequisites:
 
-* Pre-requisite one
-* Pre-requisite two
+- Pre-requisite one
+- Pre-requisite two
 
 ## Get started
 
@@ -41,4 +41,3 @@ Before you begin, make sure you meet these prerequisites:
 ---
 
 > Explore other templates from [The Good Docs Project](https://thegooddocsproject.dev/). Use our [feedback form](https://thegooddocsproject.dev/feedback/?template=API%20quickstart) to give feedback on this template.
-

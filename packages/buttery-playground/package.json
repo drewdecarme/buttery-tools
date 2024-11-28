@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@buttery/cli": "workspace:*",
+    "@buttery/commands": "workspace:^",
     "@buttery/docs": "workspace:*",
     "@remix-run/cloudflare": "2.13.1",
     "@remix-run/cloudflare-pages": "2.13.1",

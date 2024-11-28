@@ -40,10 +40,10 @@ export const meta: CommandMeta = {
 `;
 
   // ensure that the file exists
-  const ensureFileResult = await inlineTryCatch(ensureFile)(cmdPath);
-  if (ensureFileResult.hasError) {
-    cmdPath;
-    throw ensureFileResult.error;
+  try {
+    await ensureFile(cmdPath);
+  } catch (error) {
+    throw new Error(`Unable to verify the ${cmdPath}`);
   }
 
   let fileContent = "";

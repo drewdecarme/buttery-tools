@@ -1,3 +1,3 @@
-export * from "./util.node.find-directory-upwards";
-export * from "./util.node.hash-string";
-export * from "./util.node.parse-and-validate-options";
+export * from "./util.node.find-directory-upwards.js";
+export * from "./util.node.hash-string.js";
+export * from "./util.node.parse-and-validate-options.js";

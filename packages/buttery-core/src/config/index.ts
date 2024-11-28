@@ -1,12 +1,12 @@
 // types
-export * from "./buttery-config.types";
-export * from "./buttery-config.types.docs";
-export * from "./buttery-config.types.commands";
-export * from "./buttery-config.types.icons";
-export * from "./buttery-config.types.tokens";
-export * from "./buttery-config.types.tokens-color";
-export * from "./docs.types";
+export * from "./buttery-config.types.js";
+export * from "./buttery-config.types.docs.js";
+export * from "./buttery-config.types.commands.js";
+export * from "./buttery-config.types.icons.js";
+export * from "./buttery-config.types.tokens.js";
+export * from "./buttery-config.types.tokens-color.js";
+export * from "./docs.types.js";
 
 // functions
-export * from "./getButteryConfig";
-export * from "./util.getNodeModulesButteryDir";
+export * from "./getButteryConfig.js";
+export * from "./util.getNodeModulesButteryDir.js";
