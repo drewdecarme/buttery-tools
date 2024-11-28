@@ -2,6 +2,18 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/cli (v0.4.1) <a name="0.4.1"></a>
+
+This changeset fixes some bugs with the bundling and transpilation of the assets needed to be run from the CLI. It's another step to providing the full mono-repo stability while dog-fooding the rest of the application.
+
+- `@buttery/builtins` - Adds full type-safety to the `inlineTryCatch` function
+- `@buttery/cli` - Adds docs to the buttery tools documentation
+- Organizes the docs in the CLI package
+- `@buttery/core` - Changes the to resolve files using `NodeNext` which requires file extensions on imports. This allows the CLI to reference barrel imports as well as singular file imports while running in a purely node context.
+- `@buttery/docs` - Re-loads the manifest and graph when files are added and changed by correctly invalidating the virtual modules.
+
+
+
 ## @buttery/cli (v0.4.0) <a name="0.4.0"></a>
 
 Adds a new `@buttery/docs` API called `add` which allows you to either programmatically or via the `@buttery/cli` to add a new buttery doc by means of a few prompts.

@@ -1339,7 +1339,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@buttery/builtins@workspace:^0.1.5, @buttery/builtins@workspace:packages/buttery-builtins":
+"@buttery/builtins@workspace:^0.1.6, @buttery/builtins@workspace:packages/buttery-builtins":
   version: 0.0.0-use.local
   resolution: "@buttery/builtins@workspace:packages/buttery-builtins"
   dependencies:
@@ -1369,7 +1369,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/commands@workspace:packages/buttery-commands"
   dependencies:
-    "@buttery/core": "workspace:^0.1.5"
+    "@buttery/core": "workspace:^0.1.6"
     "@buttery/tsconfig": "workspace:*"
     "@inquirer/prompts": "npm:7.0.1"
     "@ngneat/falso": "npm:7.2.0"
@@ -1406,11 +1406,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/core@workspace:^0.1.5, @buttery/core@workspace:packages/buttery-core":
+"@buttery/core@workspace:^0.1.6, @buttery/core@workspace:packages/buttery-core":
   version: 0.0.0-use.local
   resolution: "@buttery/core@workspace:packages/buttery-core"
   dependencies:
-    "@buttery/builtins": "workspace:^0.1.5"
+    "@buttery/builtins": "workspace:^0.1.6"
     "@buttery/logs": "workspace:^0.1.4"
     "@buttery/tsconfig": "workspace:*"
     "@inquirer/checkbox": "npm:^4.0.2"
@@ -1431,9 +1431,9 @@ __metadata:
     "@babel/core": "npm:7.26.0"
     "@babel/preset-react": "npm:7.25.9"
     "@babel/preset-typescript": "npm:7.26.0"
-    "@buttery/builtins": "workspace:^0.1.5"
+    "@buttery/builtins": "workspace:^0.1.6"
     "@buttery/components": "workspace:^0.1.4"
-    "@buttery/core": "workspace:^0.1.5"
+    "@buttery/core": "workspace:^0.1.6"
     "@buttery/icons": "workspace:*"
     "@buttery/meta": "workspace:^0.1.4"
     "@buttery/tokens": "workspace:*"
@@ -1485,7 +1485,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/icons@workspace:packages/buttery-icons"
   dependencies:
-    "@buttery/core": "workspace:^0.1.5"
+    "@buttery/core": "workspace:^0.1.6"
     "@buttery/logs": "workspace:^0.1.4"
     "@buttery/tsconfig": "workspace:*"
     "@svgr/cli": "npm:8.1.0"
@@ -1556,7 +1556,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/tokens@workspace:packages/buttery-tokens"
   dependencies:
-    "@buttery/core": "workspace:^0.1.5"
+    "@buttery/core": "workspace:^0.1.6"
     "@remix-run/dev": "npm:2.13.1"
     "@remix-run/node": "npm:2.13.1"
     "@remix-run/react": "npm:2.13.1"
