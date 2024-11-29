@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/cli (v0.4.2) <a name="0.4.2"></a>
+
+Adds all `@buttery/<package-name>` as dependencies instead of devDependencies so the CLI can use them at runtime.
+
+
+
 ## @buttery/cli (v0.4.1) <a name="0.4.1"></a>
 
 This changeset fixes some bugs with the bundling and transpilation of the assets needed to be run from the CLI. It's another step to providing the full mono-repo stability while dog-fooding the rest of the application.
