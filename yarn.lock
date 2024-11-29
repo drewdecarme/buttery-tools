@@ -1355,7 +1355,7 @@ __metadata:
   dependencies:
     "@buttery/commands": "workspace:^0.4.2"
     "@buttery/components": "workspace:^0.1.4"
-    "@buttery/docs": "workspace:^0.2.1"
+    "@buttery/docs": "workspace:^0.2.2"
     "@buttery/tokens": "workspace:^0.1.6"
     "@buttery/tsconfig": "workspace:^0.1.2"
     tsx: "npm:4.19.2"
@@ -1424,7 +1424,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/docs@workspace:*, @buttery/docs@workspace:^0.2.1, @buttery/docs@workspace:packages/buttery-docs":
+"@buttery/docs@workspace:*, @buttery/docs@workspace:^0.2.2, @buttery/docs@workspace:packages/buttery-docs":
   version: 0.0.0-use.local
   resolution: "@buttery/docs@workspace:packages/buttery-docs"
   dependencies:

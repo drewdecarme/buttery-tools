@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/cli (v0.4.4) <a name="0.4.4"></a>
+
+Adds CLI options to the `buttery docs dev|build|add` commands.
+
+
+
 ## @buttery/cli (v0.4.3) <a name="0.4.3"></a>
 
 This changeset removes some values from the `@buttery/commands` manifest due to misuse in CI. Previously the values that were generated in the manifest we're absolute strings which we're being malformed when generated in the CI runner.
