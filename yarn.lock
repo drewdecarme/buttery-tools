@@ -1353,11 +1353,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/cli@workspace:packages/buttery-cli"
   dependencies:
-    "@buttery/commands": "workspace:^"
-    "@buttery/components": "workspace:*"
-    "@buttery/docs": "workspace:*"
-    "@buttery/tokens": "workspace:*"
-    "@buttery/tsconfig": "workspace:*"
+    "@buttery/commands": "workspace:^0.4.1"
+    "@buttery/components": "workspace:^0.1.4"
+    "@buttery/docs": "workspace:^0.2.1"
+    "@buttery/tokens": "workspace:^0.1.6"
+    "@buttery/tsconfig": "workspace:^0.1.2"
     tsx: "npm:4.19.2"
     typescript: "npm:5.6.3"
   bin:
@@ -1365,7 +1365,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/commands@workspace:^, @buttery/commands@workspace:packages/buttery-commands":
+"@buttery/commands@workspace:^, @buttery/commands@workspace:^0.4.1, @buttery/commands@workspace:packages/buttery-commands":
   version: 0.0.0-use.local
   resolution: "@buttery/commands@workspace:packages/buttery-commands"
   dependencies:
@@ -1389,7 +1389,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/components@workspace:*, @buttery/components@workspace:^0.1.4, @buttery/components@workspace:packages/buttery-components":
+"@buttery/components@workspace:^0.1.4, @buttery/components@workspace:packages/buttery-components":
   version: 0.0.0-use.local
   resolution: "@buttery/components@workspace:packages/buttery-components"
   dependencies:
@@ -1424,7 +1424,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/docs@workspace:*, @buttery/docs@workspace:packages/buttery-docs":
+"@buttery/docs@workspace:*, @buttery/docs@workspace:^0.2.1, @buttery/docs@workspace:packages/buttery-docs":
   version: 0.0.0-use.local
   resolution: "@buttery/docs@workspace:packages/buttery-docs"
   dependencies:
@@ -1552,7 +1552,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/tokens@workspace:*, @buttery/tokens@workspace:packages/buttery-tokens":
+"@buttery/tokens@workspace:*, @buttery/tokens@workspace:^0.1.6, @buttery/tokens@workspace:packages/buttery-tokens":
   version: 0.0.0-use.local
   resolution: "@buttery/tokens@workspace:packages/buttery-tokens"
   dependencies:
