@@ -37,7 +37,7 @@ export async function dev(options?: Partial<ButteryDocsDevOptions>) {
   // Set some constants
   const ABORT_DELAY = 10_000;
   const PORT = parsedOptions.port;
-  const HOSTNAME = "http://localhost";
+  const HOSTNAME = `http://${parsedOptions.host}`;
   const HOSTNAME_AND_PORT = `${HOSTNAME}:${PORT}`;
 
   // create an express app
