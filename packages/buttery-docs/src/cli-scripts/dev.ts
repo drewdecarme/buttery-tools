@@ -31,7 +31,10 @@ export async function dev(options?: Partial<ButteryDocsDevOptions>) {
   const config = await getButteryDocsConfig({
     prompt: parsedOptions.prompt,
   });
+  LOG.checkpointStart("config & dirs");
   const dirs = await getButteryDocsDirectories(config);
+  LOG.debug(JSON.stringify(dirs, null, 2));
+  LOG.checkpointEnd("config & dirs");
   const viteConfig = getButteryDocsViteConfig(config, dirs);
 
   // Set some constants
@@ -78,6 +81,7 @@ export async function dev(options?: Partial<ButteryDocsDevOptions>) {
       const url = req.originalUrl;
 
       // Load the server-entry file as a module
+      LOG.debug(`Loading the server entry file "${dirs.app.appEntryServer}"`);
       const ssrEntryModule = await vite.ssrLoadModule(dirs.app.appEntryServer);
 
       // create the HTML template
