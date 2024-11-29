@@ -23,6 +23,19 @@ export const args = defineArgs({
 });
 
 export const options = defineOptions({
+  prompt: {
+    type: "boolean",
+    description:
+      "If the required folder structures don't exist, display prompts to create them / re-align them instead of throwing errors",
+    alias: "p",
+    default: true,
+  },
+  debug: {
+    type: "boolean",
+    description: "Prints out the logs",
+    alias: "d",
+    default: false,
+  },
   template: {
     type: "boolean",
     description:
@@ -31,9 +44,9 @@ export const options = defineOptions({
     required: false,
   },
   "log-level": {
+    type: "string",
     description: "The level at which the logs should display",
     default: "info",
-    type: "string",
     alias: "l",
     required: false,
   },
@@ -41,7 +54,10 @@ export const options = defineOptions({
 
 export const action: CommandAction<typeof args, typeof options> = async ({
   args,
-  options,
+  options: { debug, ...options },
 }) => {
-  add(args.path, options);
+  add(args.path, {
+    ...options,
+    logLevel: debug ? "debug" : "warn",
+  });
 };
