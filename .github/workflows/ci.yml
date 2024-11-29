@@ -8,7 +8,10 @@ jobs:
   build:
     name: CI
     runs-on: ubuntu-latest
-
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      TURBO_REMOTE_ONLY: true
     steps:
       # Checkout the repository
       - name: Checkout code
