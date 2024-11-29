@@ -21,7 +21,7 @@ export async function runCommand(
   }
 
   if (properties.hasAction) {
-    const importPath = path.resolve(opts.cwd, command.pathOut);
+    const importPath = path.resolve(opts.cwd, command.pathCmdModule);
     const module = await import(importPath);
     const action = module.action;
     await action({ options: parsedOptions, args: parsedArgs });

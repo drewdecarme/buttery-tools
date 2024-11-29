@@ -161,7 +161,7 @@ export async function validateManifest<T extends ButteryCommandsBaseOptions>(
             false
           );
           if (!hasSubCommands && !cmd.meta.hasAction) {
-            throw `The command "${cmd.id}" is a standalone command and doesn't have an action exported from it's command file. Calling this command will do nothing. Please export an action in "${cmd.pathSrc}".`;
+            throw `The command "${cmd.id}" is a standalone command and doesn't have an action exported from it's command file. Calling this command will do nothing. Please export an action in "${cmd.pathCmdModule}".`;
           }
 
           LOG.debug(`Validating command "${commandId}"... done.`);

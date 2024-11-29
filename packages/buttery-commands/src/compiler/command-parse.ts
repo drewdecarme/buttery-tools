@@ -32,6 +32,10 @@ async function getCommandModule(cmdPath: string): Promise<Command> {
   }
 }
 
+function replaceExt(path: string, replace: string) {
+  return path.replace(/\.(ts|js|mjs)$/, replace);
+}
+
 async function getCommandMeta(cmdModule: Command, cmdPath: string) {
   // validate that meta
   if (!cmdModule.meta) {
@@ -66,7 +70,7 @@ export async function parseCommand(
   // normalize the command id
   const cmdPathRelToCommandsDir = path.relative(dirs.commandsDir, cmdPath);
   let cmdId = cmdPathRelToCommandsDir.replace(/\/command.ts/, "");
-  cmdId = cmdId.replace(/\.(ts|js|mjs)$/, "");
+  cmdId = replaceExt(cmdId, "");
 
   // parse the id into segments
   const cmdSegments = await inlineTryCatch(getCommandSegments)(cmdId, cmdPath);
@@ -87,8 +91,12 @@ export async function parseCommand(
   }
 
   // get the paths
-  const cmdPathSrc = path.join(dirs.outDir, cmdPathRelToCommandsDir);
-  const cmdPathOut = cmdPathSrc.replace(/\.(ts|js|mjs)$/, ".js");
+  // const cmdPathSrc = path.join(dirs.outDir, cmdPathRelToCommandsDir);
+  // const cmdPathOut = replaceExt(cmdPathSrc, ".js");
+  const cmdPathModule = replaceExt(
+    path.join("./commands", cmdPathRelToCommandsDir),
+    ".js"
+  );
 
   // get command parents ids
   const cmdParents = getCommandParents(cmdSegments.data);
@@ -103,8 +111,7 @@ export async function parseCommand(
     },
     args: cmdModule.data.args ?? undefined,
     segments: cmdSegments.data,
-    pathSrc: cmdPathSrc,
-    pathOut: cmdPathOut,
+    pathCmdModule: cmdPathModule,
     help: "",
     subCommands: {},
     meta: {

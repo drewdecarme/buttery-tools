@@ -14,6 +14,10 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      TURBO_REMOTE_ONLY: true
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
