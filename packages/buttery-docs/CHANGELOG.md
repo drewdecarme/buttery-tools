@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/docs (v0.2.3) <a name="0.2.3"></a>
+
+Adds more logging to the `@buttery/docs` development package
+
+
+
 ## @buttery/docs (v0.2.2) <a name="0.2.2"></a>
 
 Adds CLI options to the `buttery docs dev|build|add` commands.
