@@ -2,6 +2,14 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/commands (v0.4.2) <a name="0.4.2"></a>
+
+This changeset removes some values from the `@buttery/commands` manifest due to misuse in CI. Previously the values that were generated in the manifest we're absolute strings which we're being malformed when generated in the CI runner.
+
+The variables that were being created were file paths that were used to help reconcile the location of the runtime module that was created. This changeset removes the `pathSrc` and `pathOut` from the command manifest and adds `pathCmdModule` which is a relative path of the specific command module that is being used for that command.
+
+
+
 ## @buttery/commands (v0.4.1) <a name="0.4.1"></a>
 
 This changeset fixes some bugs with the bundling and transpilation of the assets needed to be run from the CLI. It's another step to providing the full mono-repo stability while dog-fooding the rest of the application.
