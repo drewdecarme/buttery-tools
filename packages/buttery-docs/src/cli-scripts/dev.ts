@@ -85,13 +85,17 @@ export async function dev(options?: Partial<ButteryDocsDevOptions>) {
       const ssrEntryModule = await vite.ssrLoadModule(dirs.app.appEntryServer);
 
       // create the HTML template
+      LOG.debug("Generating HTML template...");
       const { htmlDev } = generateHTMLTemplate({
         cssLinks: [dirs.app.css.tokens, dirs.app.css.docsUI],
         jsScripts: [dirs.app.appEntryClient],
         Meta,
       });
+      LOG.debug(htmlDev);
+      LOG.debug("Generating HTML template... done.");
 
       // allow vite to inject the necessary scripts
+      LOG.debug("Injecting scripts into HTML base");
       const htmlTemplate = await vite.transformIndexHtml(url, htmlDev);
 
       const ssrManifest = undefined;
