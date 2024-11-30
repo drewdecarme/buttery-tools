@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@buttery/core": "workspace:^0.1.9",
-    "@inquirer/prompts": "7.0.1",
+    "@inquirer/prompts": "7.1.0",
     "chokidar": "^4.0.1",
     "fs-extra": "^11.2.0",
     "picocolors": "^1.1.1",
