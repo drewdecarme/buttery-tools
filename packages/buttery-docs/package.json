@@ -1,6 +1,6 @@
 {
   "name": "@buttery/docs",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "TODO",
   "type": "module",
   "sideEffects": false,
@@ -76,7 +76,7 @@
     "@babel/preset-typescript": "7.26.0",
     "@buttery/builtins": "workspace:^0.1.6",
     "@buttery/components": "workspace:^0.1.4",
-    "@buttery/core": "workspace:^0.1.7",
+    "@buttery/core": "workspace:^0.1.8",
     "@buttery/meta": "workspace:^0.1.4",
     "@inquirer/prompts": "^7.1.0",
     "@linaria/core": "6.2.0",

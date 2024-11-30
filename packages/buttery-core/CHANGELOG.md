@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/core (v0.1.8) <a name="0.1.8"></a>
+
+This changeset changes the starting position of the search mechanism from a derived directory to the resolved buttery directory. This will allow the search mechanism to start directly at the buttery directory instead of somewhere else where it might actually miss the node_modules.
+
+
+
 ## @buttery/core (v0.1.7) <a name="0.1.7"></a>
 
 This changeset primarily focuses on changing some of the logic to resolve the buttery directory in directory structures outside of the mono-repo. The logic was updated to look for a buttery directory each time a node_modules directory was located up the structure. Once it's found it then attempts to find the target that it was looking for.
