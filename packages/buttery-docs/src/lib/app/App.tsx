@@ -1,5 +1,11 @@
-import { header } from "virtual:data";
-import { routeDocs, routeIndex } from "virtual:routes";
+import { Meta } from "@buttery/meta/react";
+import { Suspense, lazy, useMemo } from "react";
+import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
+import "@buttery/tokens/docs/css";
+import type {
+  ButteryConfigDocsHeader,
+  ButteryDocsRouteManifestEntryDoc,
+} from "@buttery/core/config";
 import {
   Layout,
   LayoutBody,
@@ -9,15 +15,13 @@ import {
   LayoutBodyNav,
   LayoutBodyTOC,
   LayoutHeader,
-} from "@buttery/docs/components";
-import { Meta } from "@buttery/meta/react";
-import { Suspense, lazy, useMemo } from "react";
-import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
-import "@buttery/tokens/docs/css";
-import "@buttery/docs/css";
-import { routeModuleGraph } from "./utils/RouteGraph";
+} from "./components";
+import type { ButteryDocsRouteManifestGraphUtils } from "./utils/RouteGraph";
 
-function createRoute(route: typeof routeIndex, options: { isDocs: boolean }) {
+function createRoute(
+  route: ButteryDocsRouteManifestEntryDoc,
+  options: { isDocs: boolean }
+) {
   const Component = lazy(async () => {
     // Import the .(md|mdx) file as a component and collect
     // the other information that was supplied to it
@@ -66,23 +70,18 @@ function createRoute(route: typeof routeIndex, options: { isDocs: boolean }) {
   };
 }
 
-function AppLayout() {
-  return (
-    <Layout>
-      <LayoutHeader header={header} />
-      <Outlet />
-    </Layout>
-  );
-}
-
-function DocsLayout() {
+function DocsLayout({
+  routeModuleGraph,
+}: {
+  routeModuleGraph: ButteryDocsRouteManifestGraphUtils;
+}) {
   const { pathname } = useLocation();
 
   const graph = useMemo(() => {
     const pageRoute = pathname.split("/").filter(Boolean)[0];
     const graph = routeModuleGraph.getRouteGraphNodeByRoutePath(pageRoute);
     return graph;
-  }, [pathname]);
+  }, [pathname, routeModuleGraph.getRouteGraphNodeByRoutePath]);
 
   const breadcrumbLinks = routeModuleGraph.constructBreadcrumbs(pathname);
 
@@ -118,16 +117,31 @@ function DocsLayout() {
   );
 }
 
-export function App() {
+export function App(props: {
+  routeModuleGraph: ButteryDocsRouteManifestGraphUtils;
+  header: ButteryConfigDocsHeader | undefined;
+  routeDocs: ButteryDocsRouteManifestEntryDoc[];
+  routeIndex: ButteryDocsRouteManifestEntryDoc;
+}) {
   return (
     <Routes>
-      <Route path="/" element={<AppLayout />}>
+      <Route
+        path="/"
+        element={
+          <Layout>
+            <LayoutHeader header={props.header} />
+            <Outlet />
+          </Layout>
+        }
+      >
         <Route
           index
-          element={createRoute(routeIndex, { isDocs: false }).element}
+          element={createRoute(props.routeIndex, { isDocs: false }).element}
         />
-        <Route element={<DocsLayout />}>
-          {routeDocs.map((route) => {
+        <Route
+          element={<DocsLayout routeModuleGraph={props.routeModuleGraph} />}
+        >
+          {props.routeDocs.map((route) => {
             return (
               <Route
                 key={route.routePath}

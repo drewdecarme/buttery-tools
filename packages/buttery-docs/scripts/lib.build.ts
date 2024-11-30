@@ -19,32 +19,46 @@ async function buildLibrary() {
   LOG.debug(
     "Building the @buttery/docs library for consumption in the SSR app..."
   );
+
+  const entry = ["client", "server", "app"].reduce((accum, entryName) => {
+    const entryPath = path.resolve(
+      import.meta.dirname,
+      `../src/lib/${entryName}/index.ts`
+    );
+    return Object.assign(accum, { [entryName]: entryPath });
+  }, {});
+
   try {
     const config = defineConfig({
       logLevel: "silent",
       build: {
         lib: {
           formats: ["es"],
-          entry: [
-            "client/index.ts",
-            "components/index.ts",
-            "server/index.ts",
-          ].map((entry) =>
-            path.resolve(import.meta.dirname, "../src/lib/".concat(entry))
-          ),
+          entry,
+          fileName(_format, entryName) {
+            return `${entryName}/index.js`;
+          },
         },
         rollupOptions: {
           external: [
             ...Object.keys(dependencies),
-            "@buttery/tokens/dist",
+            "@buttery/tokens",
             "@buttery/meta/react",
+            "@buttery/docs/css",
+            "@buttery/docs/app",
+            "@buttery/docs/server",
+            "@buttery/docs/client",
+            "@buttery/core",
+            "@buttery/logs",
             "react/jsx-runtime",
             "react-dom/server",
+            "virtual:data",
+            "virtual:routes",
             /node_modules/,
           ],
           output: {
             dir: path.resolve(import.meta.dirname, "../dist"),
-            preserveModules: true,
+            // preserveModules: true,
           },
         },
       },

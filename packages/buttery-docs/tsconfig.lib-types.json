@@ -8,5 +8,5 @@
     "declarationDir": "dist",
     "emitDeclarationOnly": true
   },
-  "include": ["src/lib/server", "src/lib/client", "src/lib/components"]
+  "include": ["src/lib/server", "src/lib/client", "src/lib/app"]
 }

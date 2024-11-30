@@ -1,4 +1,3 @@
-import { routeGraph } from "virtual:routes";
 import type { ButteryDocsRouteManifestGraphObject } from "@buttery/core/config";
 import { LOG } from "./LOG";
 
@@ -70,7 +69,3 @@ export class ButteryDocsRouteManifestGraphUtils {
     return links;
   }
 }
-
-export const routeModuleGraph = new ButteryDocsRouteManifestGraphUtils(
-  routeGraph
-);

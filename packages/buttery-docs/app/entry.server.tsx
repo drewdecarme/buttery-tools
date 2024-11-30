@@ -9,7 +9,7 @@ import {
   renderToPipeableStream,
 } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
-import { App } from "./App";
+import { ButteryDocsApp } from "./entry.app";
 
 export async function render(
   url: string,
@@ -22,7 +22,7 @@ export async function render(
     <StrictMode>
       <ButteryMetaProvider ButteryMeta={ButteryMeta}>
         <StaticRouter location={url}>
-          <App />
+          <ButteryDocsApp />
         </StaticRouter>
       </ButteryMetaProvider>
     </StrictMode>,

@@ -7,7 +7,7 @@ import {
 } from "@buttery/docs/server";
 import type { ReactDOMServerReadableStream } from "react-dom/server";
 import { renderToReadableStream } from "react-dom/server";
-import { App } from "./App";
+import { ButteryDocsApp } from "./entry.app";
 
 const ABORT_DELAY = 5000;
 
@@ -21,7 +21,7 @@ export const render: HandleRequestCloudflarePagesRenderFunction = async (
   // Render the app to a ReadableStream using React's server renderer
   const stream = (await renderToReadableStream(
     <ButteryDocsServer {...context}>
-      <App />
+      <ButteryDocsApp />
     </ButteryDocsServer>,
     {
       signal: controller.signal,
