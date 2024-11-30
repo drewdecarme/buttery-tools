@@ -39,23 +39,23 @@
   "devDependencies": {
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
-    "storybook": "8.3.6",
+    "storybook": "8.4.6",
     "tsx": "4.19.2"
   },
   "dependencies": {
     "@buttery/core": "workspace:^0.1.8",
-    "@remix-run/dev": "2.13.1",
-    "@remix-run/node": "2.13.1",
-    "@remix-run/react": "2.13.1",
+    "@remix-run/dev": "2.15.0",
+    "@remix-run/node": "2.15.0",
+    "@remix-run/react": "2.15.0",
     "@types/chroma-js": "2.4.4",
-    "@wyw-in-js/vite": "0.5.4",
+    "@wyw-in-js/vite": "0.5.5",
     "chokidar": "4.0.1",
     "chroma-js": "3.1.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "ts-pattern": "5.5.0",
-    "typescript": "5.6.3",
-    "vite": "5.4.10",
+    "typescript": "5.7.2",
+    "vite": "6.0.1",
     "zod": "3.23.8"
   }
 }

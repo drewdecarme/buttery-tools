@@ -39,16 +39,16 @@
   "devDependencies": {
     "@buttery/tsconfig": "workspace:*",
     "@ngneat/falso": "7.2.0",
-    "@types/fs-extra": "^11",
-    "@types/node": "22.8.2",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "22.10.1",
     "@types/picomatch": "^3.0.1",
     "esbuild": "0.24.0",
     "tsx": "4.19.2",
-    "typescript": "5.6.3"
+    "typescript": "5.7.2"
   },
   "dependencies": {
     "@buttery/core": "workspace:^0.1.8",
-    "@inquirer/prompts": "7.0.1",
+    "@inquirer/prompts": "7.1.0",
     "chokidar": "^4.0.1",
     "fs-extra": "^11.2.0",
     "picocolors": "^1.1.1",
