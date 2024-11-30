@@ -26,15 +26,17 @@ export async function build(options?: ButteryIconsBuildOptions) {
     LOG
   );
 
+  // set the level of logging based upon the parsed options
   LOG.level = parsedOptions.logLevel;
-  LOG.level;
 
   try {
     LOG.loadingStart("Building @buttery/icons");
     const config = await getButteryIconsConfig({
       prompt: parsedOptions.prompt,
     });
-    const dirs = await getButteryIconsDirectories(config);
+    const dirs = await getButteryIconsDirectories(config, {
+      logLevel: parsedOptions.logLevel,
+    });
 
     const svgFilePaths = await getSVGFilePaths(dirs);
 

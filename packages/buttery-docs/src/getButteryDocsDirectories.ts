@@ -1,5 +1,6 @@
 import path from "node:path";
 import { getNodeModulesButteryOutputDir } from "@buttery/core/config";
+import type { ButteryLogLevel } from "@buttery/core/logger";
 import { findDirectoryUpwards } from "@buttery/core/utils/node";
 import type { ButteryDocsConfig } from "./getButteryDocsConfig";
 import { LOG } from "./utils";
@@ -12,12 +13,16 @@ export type ButteryDocsDirectories = Awaited<
  * Returns some absolute path directories for easily referencing directories
  * that we should be pulling files from or serving content.
  */
-export async function getButteryDocsDirectories(config: ButteryDocsConfig) {
+export async function getButteryDocsDirectories(
+  config: ButteryDocsConfig,
+  { logLevel }: { logLevel: ButteryLogLevel }
+) {
   LOG.checkpointStart("resolve docs dir");
 
   const nodeModulesDocsDir = await getNodeModulesButteryOutputDir(
     config.paths,
-    "docs"
+    "docs",
+    { logLevel }
   );
 
   const userCreatedDocsDir = path.resolve(config.paths.butteryDir, "./docs");

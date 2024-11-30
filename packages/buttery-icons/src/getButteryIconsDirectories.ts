@@ -3,6 +3,7 @@ import {
   type ResolvedButteryConfig,
   getNodeModulesButteryOutputDir,
 } from "@buttery/core/config";
+import type { ButteryLogLevel } from "@buttery/logs";
 import { LOG } from "./utils";
 
 export type ButteryIconsDirectories = Awaited<
@@ -10,11 +11,13 @@ export type ButteryIconsDirectories = Awaited<
 >;
 
 export async function getButteryIconsDirectories(
-  config: ResolvedButteryConfig<"icons">
+  config: ResolvedButteryConfig<"icons">,
+  options: { logLevel: ButteryLogLevel }
 ) {
   const nodeModulesIconsDir = await getNodeModulesButteryOutputDir(
     config.paths,
-    "icons"
+    "icons",
+    { logLevel: options.logLevel }
   );
 
   const staticDir = path.resolve(nodeModulesIconsDir.target, "./static");

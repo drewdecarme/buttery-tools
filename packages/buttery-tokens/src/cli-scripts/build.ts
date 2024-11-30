@@ -30,7 +30,9 @@ export async function build(options?: ButteryTokensBuildOptions) {
     const config = await getButteryTokensConfig({
       prompt: parsedOptions.prompt,
     });
-    const dirs = await getButteryTokensDirectories(config);
+    const dirs = await getButteryTokensDirectories(config, {
+      logLevel: parsedOptions.logLevel,
+    });
     await buildCSSUtils(config, dirs);
     LOG.loadingEnd("complete.");
   } catch (error) {
