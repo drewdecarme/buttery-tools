@@ -45,7 +45,9 @@ export async function add(
   const config = await getButteryDocsConfig({
     prompt: parsedOptions.prompt,
   });
-  const dirs = await getButteryDocsDirectories(config);
+  const dirs = await getButteryDocsDirectories(config, {
+    logLevel: parsedOptions.logLevel,
+  });
 
   //
   if (parsedOptions.template) {

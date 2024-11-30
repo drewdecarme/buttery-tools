@@ -26,7 +26,9 @@ export async function build(options?: ButteryDocsBuildOptions) {
   const config = await getButteryDocsConfig({
     prompt: parsedOptions.prompt,
   });
-  const dirs = await getButteryDocsDirectories(config);
+  const dirs = await getButteryDocsDirectories(config, {
+    logLevel: parsedOptions.logLevel,
+  });
   const viteConfig = getButteryDocsViteConfig(config, dirs);
   const butteryManifest = getButteryDocsRouteManifest(config, dirs);
 

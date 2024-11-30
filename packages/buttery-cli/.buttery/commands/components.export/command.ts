@@ -35,9 +35,17 @@ export const options = defineOptions({
       "The absolute path of the directory the selected component should be exported to",
     required: false,
   },
+  debug: {
+    type: "boolean",
+    description: "Print out logs to debug the process",
+    alias: "d",
+    required: false,
+  },
 });
 
-export const action: CommandAction<typeof options> = async () => {
+export const action: CommandAction<never, typeof options> = async ({
+  options: { debug },
+}) => {
   // TODO: Define a configuration in the buttery config to reconcile this.
   // if (!options.outDir) {
   //   LOG.error("The option --outDir,-o is missing.");
@@ -49,7 +57,8 @@ export const action: CommandAction<typeof options> = async () => {
   const config = await getButteryConfig("docs");
   const componentsDir = await getNodeModulesButteryOutputDir(
     config.paths,
-    "components"
+    "components",
+    { logLevel: debug ? "info" : "debug" }
   );
   const rootComponentsDir = path.resolve(componentsDir.target, "./lib");
 

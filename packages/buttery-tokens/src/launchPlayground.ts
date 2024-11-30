@@ -1,5 +1,6 @@
 import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core/config";
+import type { ButteryLogLevel } from "@buttery/core/logger";
 import { vitePlugin as remix } from "@remix-run/dev";
 import wyw from "@wyw-in-js/vite";
 import { createServer } from "vite";
@@ -7,11 +8,12 @@ import { getButteryTokensDirectories } from "./getButteryTokensDirectories";
 import { launchPlaygroundGetConfig } from "./launchPlaygroundGetConfig";
 
 export async function launchPlayground(
-  config: ResolvedButteryConfig<"tokens">
+  config: ResolvedButteryConfig<"tokens">,
+  options: { logLevel: ButteryLogLevel }
 ) {
   // resolve a config and the buttery tokens directories
   const reconciledConfig = await launchPlaygroundGetConfig(config);
-  const dirs = await getButteryTokensDirectories(reconciledConfig);
+  const dirs = await getButteryTokensDirectories(reconciledConfig, options);
 
   // create the dev server
   const viteServer = await createServer({

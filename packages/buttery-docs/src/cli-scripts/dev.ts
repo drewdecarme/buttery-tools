@@ -32,7 +32,9 @@ export async function dev(options?: Partial<ButteryDocsDevOptions>) {
     prompt: parsedOptions.prompt,
   });
   LOG.checkpointStart("config & dirs");
-  const dirs = await getButteryDocsDirectories(config);
+  const dirs = await getButteryDocsDirectories(config, {
+    logLevel: parsedOptions.logLevel,
+  });
   LOG.debug(JSON.stringify(dirs, null, 2));
   LOG.checkpointEnd("config & dirs");
   const viteConfig = getButteryDocsViteConfig(config, dirs);

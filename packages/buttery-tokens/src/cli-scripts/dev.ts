@@ -34,7 +34,9 @@ export async function dev(options?: ButterTokensDevOptions) {
     const config = await getButteryTokensConfig({
       prompt: parsedOptions.prompt,
     });
-    const dirs = await getButteryTokensDirectories(config);
+    const dirs = await getButteryTokensDirectories(config, {
+      logLevel: parsedOptions.logLevel,
+    });
 
     // build the make functions
     await buildCSSUtils(config, dirs);
@@ -51,7 +53,9 @@ export async function dev(options?: ButterTokensDevOptions) {
       const config = await getButteryTokensConfig({
         prompt: parsedOptions.prompt,
       });
-      const dirs = await getButteryTokensDirectories(config);
+      const dirs = await getButteryTokensDirectories(config, {
+        logLevel: parsedOptions.logLevel,
+      });
 
       await buildCSSUtils(config, dirs);
 
@@ -62,7 +66,9 @@ export async function dev(options?: ButterTokensDevOptions) {
     if (!parsedOptions.interactive) return;
 
     LOG.info("Launching interactive playground...");
-    await launchPlayground(config);
+    await launchPlayground(config, {
+      logLevel: parsedOptions.logLevel,
+    });
   } catch (error) {
     throw LOG.fatal(
       new Error(`Error when trying to run @buttery/tools in DEV mode: ${error}`)

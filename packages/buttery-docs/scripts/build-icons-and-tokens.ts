@@ -5,7 +5,7 @@ import { LOG } from "../src/utils";
 
 try {
   // build the scripts
-  await buildIcons();
+  await buildIcons({ prompt: false, logLevel: "debug" });
   await buildTokens();
 } catch (error) {
   throw LOG.fatal(

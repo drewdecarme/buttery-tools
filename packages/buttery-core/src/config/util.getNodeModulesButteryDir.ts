@@ -1,4 +1,7 @@
+import { constants, access } from "node:fs/promises";
 import path from "node:path";
+import { inlineTryCatch } from "@buttery/builtins";
+import type { ButteryLogLevel } from "@buttery/logs";
 import { ensureDir } from "fs-extra";
 import { LOG } from "../private/index.js";
 import { findDirectoryUpwards } from "../utils/node/index.js";
@@ -17,32 +20,58 @@ import type { ButteryConfigPaths } from "./buttery-config.types.js";
  */
 export async function getNodeModulesButteryOutputDir(
   paths: ButteryConfigPaths,
-  outputDirName: string
+  outputDirName: string,
+  options: { logLevel: ButteryLogLevel }
 ) {
+  if (options?.logLevel) {
+    LOG.level = options.logLevel;
+  }
+
   try {
     const startingDirectory = path.resolve(paths.rootDir, "../");
     LOG.debug(
-      `Starting to search for node_modules at directory: ${startingDirectory}`
+      `Starting to search for "node_modules" at directory "${startingDirectory}"`
     );
 
-    const node_modules_path = findDirectoryUpwards("node_modules", undefined, {
-      startingDirectory,
-    });
-    if (!node_modules_path) {
+    const butteryNodeModulesPath = findDirectoryUpwards(
+      "node_modules",
+      "@buttery",
+      {
+        startingDirectory,
+      }
+    );
+    if (!butteryNodeModulesPath) {
       throw "Unable to locate `node_modules` in your directory structure. This should not have happened. Please raise a Github issue.";
     }
 
-    LOG.debug(`Resolved "node_modules" directory: "${node_modules_path}"`);
-    const root = path.resolve(node_modules_path, "./@buttery");
-    const target = path.resolve(root, `./${outputDirName}`);
+    LOG.debug(
+      `Resolved "node_modules/@buttery" directory: "${butteryNodeModulesPath}"`
+    );
+    const butteryPackagePath = path.resolve(
+      butteryNodeModulesPath,
+      `./${outputDirName}`
+    );
 
-    LOG.debug("Ensuring that `node_modules` target exists", { target });
-    await ensureDir(target);
-    LOG.debug("Ensuring that `node_modules` target exists... done.");
+    const res = await inlineTryCatch(access)(
+      butteryPackagePath,
+      constants.F_OK
+    );
+    if (res.hasError) {
+      throw `It appears that you might be missing a buttery dependency: Please download "@buttery/${outputDirName}" and try this command again.`;
+    }
+
+    LOG.debug(`Ensuring that "@buttery/${outputDirName}" target exists...`, {
+      butteryPackagePath,
+    });
+    await ensureDir(butteryPackagePath);
+    LOG.debug(
+      `Ensuring that "@buttery/${outputDirName}" target exists... done.`
+    );
 
     return {
-      root,
-      target,
+      node_modules: path.relative(butteryPackagePath, "../"),
+      buttery: butteryPackagePath,
+      target: butteryPackagePath,
     };
   } catch (error) {
     throw LOG.fatal(new Error(error as string));

@@ -3,6 +3,7 @@ import {
   type ResolvedButteryConfig,
   getNodeModulesButteryOutputDir,
 } from "@buttery/core/config";
+import type { ButteryLogLevel } from "@buttery/core/logger";
 import { LOG } from "./logger";
 
 export type ButteryTokensDirectories = Awaited<
@@ -10,12 +11,14 @@ export type ButteryTokensDirectories = Awaited<
 >;
 
 export async function getButteryTokensDirectories(
-  config: ResolvedButteryConfig<"tokens">
+  config: ResolvedButteryConfig<"tokens">,
+  options: { logLevel: ButteryLogLevel }
 ) {
   try {
     const nodeModulesTokenDir = await getNodeModulesButteryOutputDir(
       config.paths,
-      "tokens"
+      "tokens",
+      { logLevel: options.logLevel }
     );
 
     const appDir = path.resolve(nodeModulesTokenDir.target, "./app");
