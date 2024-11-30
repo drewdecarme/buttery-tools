@@ -1,5 +1,9 @@
 import { header } from "virtual:data";
 import { routeDocs, routeIndex } from "virtual:routes";
+import { Meta } from "@buttery/meta/react";
+import { Suspense, lazy, useMemo } from "react";
+import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
+import "@buttery/tokens/docs/css";
 import {
   Layout,
   LayoutBody,
@@ -9,12 +13,7 @@ import {
   LayoutBodyNav,
   LayoutBodyTOC,
   LayoutHeader,
-} from "@buttery/docs/components";
-import { Meta } from "@buttery/meta/react";
-import { Suspense, lazy, useMemo } from "react";
-import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
-import "@buttery/tokens/docs/css";
-import "@buttery/docs/css";
+} from "./components";
 import { routeModuleGraph } from "./utils/RouteGraph";
 
 function createRoute(route: typeof routeIndex, options: { isDocs: boolean }) {

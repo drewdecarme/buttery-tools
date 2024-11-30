@@ -47,6 +47,7 @@
     "./cli/*": "./dist/cli-scripts/*.js",
     "./server": "./dist/server/index.js",
     "./client": "./dist/client/index.js",
+    "./app": "./dist/app/index.js",
     "./components": "./dist/components/index.js",
     "./css": "./dist/style.css"
   },
