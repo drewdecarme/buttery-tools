@@ -1,6 +1,6 @@
 {
   "name": "@buttery/tokens",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "TBD",
   "type": "module",
   "sideEffects": false,
@@ -43,7 +43,7 @@
     "tsx": "4.19.2"
   },
   "dependencies": {
-    "@buttery/core": "workspace:^0.1.8",
+    "@buttery/core": "workspace:^0.1.9",
     "@remix-run/dev": "2.13.1",
     "@remix-run/node": "2.13.1",
     "@remix-run/react": "2.13.1",

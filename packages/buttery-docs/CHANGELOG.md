@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/docs (v0.2.6) <a name="0.2.6"></a>
+
+Builds the shared `App` of the `entry.client` and `entry.server` when the `@buttery/docs` library is built. This was necessary for ensuring that all styles and other assets were built and bundled for use in external packages / libraries. In addition, this allows for faster startup times since the main part of the app is already built and the modules are the only things that need to be resolved. That means layouts, routes, etc... are all prebuilt.
+
+
+
 ## @buttery/docs (v0.2.4) <a name="0.2.4"></a>
 
 This changeset primarily focuses on changing some of the logic to resolve the buttery directory in directory structures outside of the mono-repo. The logic was updated to look for a buttery directory each time a node_modules directory was located up the structure. Once it's found it then attempts to find the target that it was looking for.

@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/core (v0.1.9) <a name="0.1.9"></a>
+
+Builds the shared `App` of the `entry.client` and `entry.server` when the `@buttery/docs` library is built. This was necessary for ensuring that all styles and other assets were built and bundled for use in external packages / libraries. In addition, this allows for faster startup times since the main part of the app is already built and the modules are the only things that need to be resolved. That means layouts, routes, etc... are all prebuilt.
+
+
+
 ## @buttery/core (v0.1.8) <a name="0.1.8"></a>
 
 This changeset changes the starting position of the search mechanism from a derived directory to the resolved buttery directory. This will allow the search mechanism to start directly at the buttery directory instead of somewhere else where it might actually miss the node_modules.
