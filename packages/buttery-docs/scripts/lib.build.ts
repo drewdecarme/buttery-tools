@@ -35,8 +35,7 @@ async function buildLibrary() {
         lib: {
           formats: ["es"],
           entry,
-          fileName(format, entryName) {
-            console.log({ format, entryName });
+          fileName(_format, entryName) {
             return `${entryName}/index.js`;
           },
         },
