@@ -1,6 +1,6 @@
 {
   "name": "@buttery/core",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "A collection of types that are used across all buttery packages / tools",
   "type": "module",
   "sideEffects": false,

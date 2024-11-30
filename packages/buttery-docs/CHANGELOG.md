@@ -2,6 +2,14 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/docs (v0.2.4) <a name="0.2.4"></a>
+
+This changeset primarily focuses on changing some of the logic to resolve the buttery directory in directory structures outside of the mono-repo. The logic was updated to look for a buttery directory each time a node_modules directory was located up the structure. Once it's found it then attempts to find the target that it was looking for.
+
+In addition, a required configuration parameter was added to the script so the logLevel that was passed into into the script was then reflected in the `@buttery/core` logger. This allows us to debug the resolution of the buttery module at CLI runtime.
+
+
+
 ## @buttery/docs (v0.2.3) <a name="0.2.3"></a>
 
 Adds more logging to the `@buttery/docs` development package

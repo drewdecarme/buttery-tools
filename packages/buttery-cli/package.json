@@ -1,6 +1,6 @@
 {
   "name": "@buttery/cli",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "A file based CLI designed to making writing a CLI as easy as exporting a few functions in a file",
   "sideEffects": false,
   "type": "module",
@@ -34,10 +34,10 @@
     "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
   "dependencies": {
-    "@buttery/commands": "workspace:^0.4.2",
+    "@buttery/commands": "workspace:^0.4.3",
     "@buttery/components": "workspace:^0.1.4",
-    "@buttery/docs": "workspace:^0.2.3",
-    "@buttery/tokens": "workspace:^0.1.6",
+    "@buttery/docs": "workspace:^0.2.4",
+    "@buttery/tokens": "workspace:^0.1.7",
     "@buttery/tsconfig": "workspace:^0.1.2"
   },
   "devDependencies": {
