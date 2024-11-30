@@ -5,14 +5,8 @@ declare module "virtual:routes" {
   } from "@buttery/core/config";
   // Adjust the types based on what your `virtual:routes` module exports
   export const routeGraph: ButteryDocsRouteManifestGraphObject;
-  export const routeDocs: (ButteryDocsRouteManifestEntry & {
-    importComponent: () => Promise<{
-      default: JSX.ElementType;
-      tableOfContents: TableOfContents;
-      frontmatter: Record<string, unknown>;
-    }>;
-  })[];
-  export const routeIndex: (typeof routeDocs)[0];
+  export const routeDocs: ButteryDocsRouteManifestEntryDoc[];
+  export const routeIndex: ButteryDocsRouteManifestEntryDoc;
 }
 
 declare module "virtual:data" {
