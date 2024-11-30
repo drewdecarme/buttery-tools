@@ -28,16 +28,15 @@ export async function getNodeModulesButteryOutputDir(
   }
 
   try {
-    const startingDirectory = path.resolve(paths.rootDir, "../");
     LOG.debug(
-      `Starting to search for "node_modules" at directory "${startingDirectory}"`
+      `Starting to search for "node_modules" at directory "${paths.butteryDir}"`
     );
 
     const butteryNodeModulesPath = findDirectoryUpwards(
       "node_modules",
       "@buttery",
       {
-        startingDirectory,
+        startingDirectory: paths.butteryDir,
       }
     );
     if (!butteryNodeModulesPath) {
