@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/meta (v0.1.5) <a name="0.1.5"></a>
+
+Upgrades dependencies to their latest versions. No breaking changes.
+
+
+
 ## @buttery/meta (v0.1.3) <a name="0.1.3"></a>
 
 Removes `changeset` and adds `monoweave` to be able to version, release and manage changelogs for the monorepo using yarn modern (yarn berry).

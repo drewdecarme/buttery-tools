@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/commands (v0.4.6) <a name="0.4.6"></a>
+
+Upgrades dependencies to their latest versions. No breaking changes.
+
+
+
 ## @buttery/commands (v0.4.2) <a name="0.4.2"></a>
 
 This changeset removes some values from the `@buttery/commands` manifest due to misuse in CI. Previously the values that were generated in the manifest we're absolute strings which we're being malformed when generated in the CI runner.

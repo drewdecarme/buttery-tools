@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/builtins (v0.1.7) <a name="0.1.7"></a>
+
+Upgrades dependencies to their latest versions. No breaking changes.
+
+
+
 ## @buttery/builtins (v0.1.6) <a name="0.1.6"></a>
 
 This changeset fixes some bugs with the bundling and transpilation of the assets needed to be run from the CLI. It's another step to providing the full mono-repo stability while dog-fooding the rest of the application.

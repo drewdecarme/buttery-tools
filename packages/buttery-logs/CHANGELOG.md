@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/logs (v0.1.5) <a name="0.1.5"></a>
+
+Upgrades dependencies to their latest versions. No breaking changes.
+
+
+
 ## @buttery/logs (v0.1.4) <a name="0.1.4"></a>
 
 This changeset completely re-writes the `@buttery/commands` package from the ground up. Previously, the framework would look at a few directories, read some values and then create a `commander` program that would be built to the `bin` directory of the package that you we're working in.

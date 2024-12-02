@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/cli (v0.4.9) <a name="0.4.9"></a>
+
+Upgrades dependencies to their latest versions. No breaking changes.
+
+
+
 ## @buttery/cli (v0.4.6) <a name="0.4.6"></a>
 
 This changeset primarily focuses on changing some of the logic to resolve the buttery directory in directory structures outside of the mono-repo. The logic was updated to look for a buttery directory each time a node_modules directory was located up the structure. Once it's found it then attempts to find the target that it was looking for.
