@@ -1,12 +1,23 @@
 import { ButteryMetaProvider } from "@buttery/meta/react";
-import { type ReactNode, StrictMode } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { StrictMode, useRef } from "react";
+import {
+  type RouteObject,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router";
 
-export function ButteryDocsClient({ children }: { children: ReactNode }) {
+export function ButteryDocsClient({ routes }: { routes: RouteObject[] }) {
+  const routerRef = useRef(
+    createBrowserRouter(routes, {
+      // @ts-expect-error react-router adds this for us
+      hydrationData: window?.__staticRouterHydrationData,
+    })
+  );
+
   return (
     <StrictMode>
       <ButteryMetaProvider>
-        <BrowserRouter>{children}</BrowserRouter>
+        <RouterProvider router={routerRef.current} />
       </ButteryMetaProvider>
     </StrictMode>
   );

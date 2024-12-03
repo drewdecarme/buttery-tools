@@ -20,7 +20,6 @@ export default defineConfig({
       "react/jsx-runtime",
       "@remix-run/router",
       "react-router",
-      "react-router-dom",
       "scheduler",
     ],
   },
@@ -45,13 +44,12 @@ export default defineConfig({
       "react",
       "react-dom",
       "react/jsx-runtime",
-      "react-router-dom",
       "scheduler",
       "react-router",
       "@remix-run/router",
     ],
   },
   optimizeDeps: {
-    include: ["react", "react-dom", "react/jsx-runtime", "react-router-dom"],
+    include: ["react", "react-dom", "react/jsx-runtime", "react-router"],
   },
 });

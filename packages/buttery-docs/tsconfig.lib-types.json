@@ -8,5 +8,11 @@
     "declarationDir": "dist",
     "emitDeclarationOnly": true
   },
-  "include": ["src/lib/server", "src/lib/client", "src/lib/app"]
+  "include": [
+    "src/lib/server",
+    "src/lib/server.dev/index.ts",
+    "src/lib/server.cloudflare-pages/index.ts",
+    "src/lib/client",
+    "src/lib/app"
+  ]
 }

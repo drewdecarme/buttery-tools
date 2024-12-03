@@ -20,7 +20,13 @@ async function buildLibrary() {
     "Building the @buttery/docs library for consumption in the SSR app..."
   );
 
-  const entry = ["client", "server", "app"].reduce((accum, entryName) => {
+  const entry = [
+    "client",
+    "app",
+    "server",
+    "server.dev",
+    "server.cloudflare-pages",
+  ].reduce((accum, entryName) => {
     const entryPath = path.resolve(
       import.meta.dirname,
       `../src/lib/${entryName}/index.ts`
@@ -54,10 +60,11 @@ async function buildLibrary() {
             "react-dom/server",
             "virtual:data",
             "virtual:routes",
+            "node:stream",
             /node_modules/,
           ],
           output: {
-            dir: path.resolve(import.meta.dirname, "../dist"),
+            dir: path.resolve(import.meta.dirname, "../dist/lib"),
             // preserveModules: true,
           },
         },

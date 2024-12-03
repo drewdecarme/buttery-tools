@@ -13,6 +13,8 @@ import {
 } from "../options";
 import { LOG } from "../utils";
 
+process.env.NODE_ENV = "production";
+
 export async function build(options?: ButteryDocsBuildOptions) {
   const parsedOptions = parseAndValidateOptions(
     butteryDocsBuildOptionsSchema,
@@ -48,6 +50,7 @@ export async function build(options?: ButteryDocsBuildOptions) {
       },
     });
     LOG.debug("Building client bundle for production... done");
+    console.log({ appEntryServer: dirs.app.appEntryServer });
 
     LOG.debug("Building server bundle for production...");
     await viteBuild({

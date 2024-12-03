@@ -2,7 +2,7 @@ import type { ButteryDocsRouteManifest } from "@buttery/core/config";
 import {
   type CFContext,
   handleRequestCloudflarePages,
-} from "@buttery/docs/server";
+} from "@buttery/docs/server.cloudflare-pages";
 import type { Manifest } from "vite";
 // @ts-ignore This will only exist when the app is built
 import butteryManifest from "../build/client/.buttery/buttery.manifest.json";
@@ -11,9 +11,9 @@ import viteManifest from "../build/client/.vite/manifest.json";
 // @ts-ignore This will only exist when the app is built
 import { render } from "../build/server/server.js";
 
-export async function onRequest(context: CFContext) {
+export async function onRequest(cfContext: CFContext) {
   const response = await handleRequestCloudflarePages(render, {
-    context,
+    cfContext,
     bManifest: butteryManifest as ButteryDocsRouteManifest,
     vManifest: viteManifest as Manifest,
   });

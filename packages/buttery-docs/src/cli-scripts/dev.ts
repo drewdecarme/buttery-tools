@@ -1,14 +1,11 @@
-import { Transform } from "node:stream";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
-import { ButteryMeta } from "@buttery/meta";
 import express from "express";
 import open from "open";
-import type { RenderToPipeableStreamOptions } from "react-dom/server";
 import { createServer } from "vite";
 import { getButteryDocsConfig } from "../getButteryDocsConfig";
 import { getButteryDocsDirectories } from "../getButteryDocsDirectories";
 import { getButteryDocsViteConfig } from "../getButteryDocsViteConfig";
-import { generateHTMLTemplate } from "../lib/server/generateHTMLTemplate";
+import { handleRequestDev } from "../lib/server.dev";
 import {
   type ButteryDocsDevOptions,
   butteryDocsDevOptionsSchema,
@@ -40,7 +37,6 @@ export async function dev(options?: Partial<ButteryDocsDevOptions>) {
   const viteConfig = getButteryDocsViteConfig(config, dirs);
 
   // Set some constants
-  const ABORT_DELAY = 10_000;
   const PORT = parsedOptions.port;
   const HOSTNAME = `http://${parsedOptions.host}`;
   const HOSTNAME_AND_PORT = `${HOSTNAME}:${PORT}`;
@@ -71,98 +67,17 @@ export async function dev(options?: Partial<ButteryDocsDevOptions>) {
   // will be hydrated and any subsequent applications will be managed
   // by the react router
   app.use("*", async (req, res) => {
-    // instantiate a new instances of Meta
-    // which will track any meta tags or json used in the
-    // doc files for SEO
-    LOG.debug(
-      "Instantiating ButteryMeta to SSR meta, title, description and og tags"
-    );
-    const Meta = new ButteryMeta();
+    // Load the server-entry file as a module using vite
+    LOG.debug(`Loading the server entry file "${dirs.app.appEntryServer}"`);
+    const ssrEntryModule = await vite.ssrLoadModule(dirs.app.appEntryServer);
 
-    try {
-      const url = req.originalUrl;
-
-      // Load the server-entry file as a module
-      LOG.debug(`Loading the server entry file "${dirs.app.appEntryServer}"`);
-      const ssrEntryModule = await vite.ssrLoadModule(dirs.app.appEntryServer);
-
-      // create the HTML template
-      LOG.debug("Generating HTML template...");
-      const { htmlDev } = generateHTMLTemplate({
-        cssLinks: [dirs.app.css.tokens, dirs.app.css.docsUI],
-        jsScripts: [dirs.app.appEntryClient],
-        Meta,
-      });
-      LOG.debug(htmlDev);
-      LOG.debug("Generating HTML template... done.");
-
-      // allow vite to inject the necessary scripts
-      LOG.debug("Injecting scripts into HTML base");
-      const htmlTemplate = await vite.transformIndexHtml(url, htmlDev);
-
-      const ssrManifest = undefined;
-      let didError = false;
-
-      const { pipe, abort } = await ssrEntryModule.render(
-        url,
-        Meta,
-        ssrManifest,
-        {
-          onShellError() {
-            res.status(500);
-            res.set({ "Content-Type": "text/html" });
-            res.send("<h1>Something went wrong</h1>");
-          },
-          onAllReady() {
-            res.status(didError ? 500 : 200);
-            res.set({ "Content-Type": "text/html" });
-
-            // Split the HTML into two parts
-            const [htmlStart, htmlEnd] =
-              htmlTemplate.split("<!--ssr-outlet-->");
-
-            // inject critical css (Hydration issues at the moment)
-            // const docsUiCssContent = readFileSync(dirs.app.css.docsUI, "utf8");
-            // const { critical } = collect(htmlTemplate, docsUiCssContent);
-            // htmlStart = htmlTemplate.replace("<!--ssr-critical-->", critical);
-
-            // Start writing the first part with the headers
-            res.write(htmlStart);
-
-            // Stream the chunks in one at a time
-            const transformStream = new Transform({
-              transform(chunk, encoding, callback) {
-                res.write(chunk, encoding);
-                callback();
-              },
-            });
-
-            // When the stream is complete, tack on the end of
-            // the HTML
-            transformStream.on("finish", () => {
-              res.end(htmlEnd);
-            });
-
-            // pipe the stream back into the response
-            pipe(transformStream);
-          },
-          onError(error: Error) {
-            didError = true;
-            console.error(error);
-          },
-        } as RenderToPipeableStreamOptions
-      );
-
-      setTimeout(() => {
-        abort();
-      }, ABORT_DELAY); // 10 seconds
-    } catch (e) {
-      const error = e as Error;
-      // Handle errors with Vite's SSR stack trace
-      vite.ssrFixStacktrace(error);
-      LOG.fatal(error);
-      res.status(500).end(error.stack);
-    }
+    // Run the dev handler which is a combination of node and express
+    await handleRequestDev(ssrEntryModule.render, {
+      req,
+      res,
+      dirs,
+      vite,
+    });
   });
 
   app.listen(PORT, () => {

@@ -8,7 +8,7 @@ import {
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import type { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 
 const ulStyles = css`
   list-style-type: none;

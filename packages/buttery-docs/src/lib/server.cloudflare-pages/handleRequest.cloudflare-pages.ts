@@ -2,11 +2,11 @@ import type { ButteryDocsRouteManifest } from "@buttery/core/config";
 import { ButteryMeta } from "@buttery/meta";
 import type { EventPluginContext } from "@cloudflare/workers-types";
 import type { Manifest as ViteManifest } from "vite";
-import type { ButteryDocsContext } from "./ButteryDocsServer";
-import { generateHTMLTemplate } from "./generateHTMLTemplate";
-import { getButteryRouteIdFromRequest } from "./getButteryRouteFromRequest";
-import { getRouteAssets } from "./getRouteAssets";
-import type { HandleRequestCloudflarePagesRenderFunction } from "./server.types";
+import type { ButteryDocsServerContext } from "../server/ButteryDocsServer";
+import type { createButteryDocsRenderToReadableStream } from "../server/createRenderFnReadableStream";
+import { generateHTMLTemplate } from "../server/generateHTMLTemplate";
+import { getButteryRouteIdFromRequest } from "../server/getButteryRouteFromRequest";
+import { getRouteAssets } from "../server/getRouteAssets";
 
 export type CFContext = EventPluginContext<
   unknown,
@@ -17,19 +17,19 @@ export type CFContext = EventPluginContext<
 >;
 
 export async function handleRequestCloudflarePages(
-  render: HandleRequestCloudflarePagesRenderFunction,
+  render: ReturnType<typeof createButteryDocsRenderToReadableStream>,
   {
-    context,
+    cfContext,
     vManifest,
     bManifest,
   }: {
-    context: CFContext;
+    cfContext: CFContext;
     vManifest: ViteManifest;
     bManifest: ButteryDocsRouteManifest;
   }
 ) {
   // Get the route name that we're attempting to request
-  const { pathname } = new URL(context.request.url);
+  const { pathname } = new URL(cfContext.request.url);
 
   // Get only the route paths
   const routes = Object.values(bManifest).map(
@@ -60,8 +60,18 @@ export async function handleRequestCloudflarePages(
       const encoder = new TextEncoder();
 
       // Generate the stream using the `render` function from the server bundle
-      const context: ButteryDocsContext = { route: pathname, Meta };
-      const streamBody = await render(context, responseStatusCode);
+      const context: ButteryDocsServerContext = { route: pathname, Meta };
+      const streamBody = await render(
+        // @ts-expect-error this is the true request but just adds a little extra values to it
+        cfContext.request,
+        context,
+        responseStatusCode
+      );
+
+      // Return the stream body if it is a response
+      if (streamBody instanceof Response) {
+        return streamBody;
+      }
 
       // Insert the app body into the HTML shell
       const stream = new ReadableStream({
@@ -94,7 +104,7 @@ export async function handleRequestCloudflarePages(
   }
 
   try {
-    const asset = await context.env.ASSETS.fetch(context.request);
+    const asset = await cfContext.env.ASSETS.fetch(cfContext.request);
     return asset;
   } catch (error) {
     console.error(`Error serving static file: ${pathname}`, error);
