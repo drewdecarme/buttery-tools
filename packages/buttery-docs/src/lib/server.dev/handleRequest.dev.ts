@@ -27,7 +27,7 @@ export async function handleRequestDev(
     // Insert the assets into the HTML template start and end
     LOG_SERVER_DEV.debug("Generating HTML template...");
     const { htmlDev } = generateHTMLTemplate({
-      cssLinks: [config.dirs.app.css.tokens, config.dirs.app.css.docsUI],
+      cssLinks: [config.dirs.app.css.docsUI],
       jsScripts: [config.dirs.app.appEntryClient],
       Meta,
     });
