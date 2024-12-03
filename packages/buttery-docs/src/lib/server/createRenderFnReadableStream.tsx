@@ -2,20 +2,18 @@ import {
   type ReactDOMServerReadableStream,
   renderToReadableStream,
 } from "react-dom/server";
-import {
-  type RouteObject,
-  createStaticHandler,
-  createStaticRouter,
-} from "react-router";
+import { type RouteObject, createStaticHandler } from "react-router";
 import {
   ButteryDocsServer,
   type ButteryDocsServerContext,
 } from "./ButteryDocsServer";
+import { createRouterFromRoutes } from "./createRouterFromRoutes";
+import { LOG_SERVER } from "./server.utils";
 
-const ABORT_DELAY = 5000;
+const ABORT_DELAY = 5_000;
 
 export function createButteryDocsRenderToReadableStream(routes: RouteObject[]) {
-  const { query, dataRoutes } = createStaticHandler(routes);
+  const routeHandler = createStaticHandler(routes);
 
   return async function render(
     request: Request,
@@ -25,24 +23,13 @@ export function createButteryDocsRenderToReadableStream(routes: RouteObject[]) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), ABORT_DELAY);
 
-    // 1. run actions/loaders to get the routing context with `query`
-    const routerContext = await query(request);
-
-    // If `query` returns a Response, send it raw (a route probably a redirected)
-    if (routerContext instanceof Response) {
-      return routerContext;
-    }
-
-    // 2. Create a static router for SSR
-    const router = createStaticRouter(dataRoutes, routerContext);
+    const router = await createRouterFromRoutes(routeHandler, request);
 
     // Render the app to a ReadableStream using React's server renderer
+    LOG_SERVER.debug("Rendering app to readable stream");
     const stream = (await renderToReadableStream(
-      <ButteryDocsServer
-        {...butteryContext}
-        router={router}
-        routerContext={routerContext}
-      />,
+      <ButteryDocsServer {...butteryContext} {...router} />,
+      // TODO: Move this into the implementation of the stream
       {
         signal: controller.signal,
         onError(error: unknown) {

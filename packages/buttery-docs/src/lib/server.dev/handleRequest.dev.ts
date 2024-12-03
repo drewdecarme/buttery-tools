@@ -1,5 +1,4 @@
 import { Transform } from "node:stream";
-import { ButteryLogger } from "@buttery/core/logger";
 import { ButteryMeta } from "@buttery/meta";
 import type { Request, Response } from "express";
 import type { ViteDevServer } from "vite";
@@ -8,15 +7,9 @@ import type { ButteryDocsServerContext } from "../server/ButteryDocsServer";
 import type { createButteryDocsRenderToPipeableStream } from "../server/createRenderFnPipeableStream";
 import { expressToWebRequest } from "../server/expressToWebRequest";
 import { generateHTMLTemplate } from "../server/generateHTMLTemplate";
+import { LOG_SERVER_DEV } from "./server-dev.utils";
 
 const ABORT_DELAY = 10_000;
-
-export const LOG = new ButteryLogger({
-  id: "buttery-docs",
-  prefix: "buttery:docs:dev",
-  prefixBgColor: "#812c8d",
-  logLevel: "debug",
-});
 
 export async function handleRequestDev(
   render: ReturnType<typeof createButteryDocsRenderToPipeableStream>,
@@ -32,13 +25,13 @@ export async function handleRequestDev(
     const Meta = new ButteryMeta();
 
     // Insert the assets into the HTML template start and end
-    LOG.debug("Generating HTML template...");
+    LOG_SERVER_DEV.debug("Generating HTML template...");
     const { htmlDev } = generateHTMLTemplate({
       cssLinks: [config.dirs.app.css.tokens, config.dirs.app.css.docsUI],
       jsScripts: [config.dirs.app.appEntryClient],
       Meta,
     });
-    LOG.debug("Generating HTML template... done.");
+    LOG_SERVER_DEV.debug("Generating HTML template... done.");
 
     // Create the ButteryContext to pass to the render function
     const butteryContext: ButteryDocsServerContext = {
@@ -49,12 +42,12 @@ export async function handleRequestDev(
     let didError = false;
 
     // allow vite to inject the necessary scripts
-    LOG.debug("Injecting scripts into HTML base...");
+    LOG_SERVER_DEV.debug("Injecting scripts into HTML base...");
     const htmlTemplate = await config.vite.transformIndexHtml(
       config.req.url,
       htmlDev
     );
-    LOG.debug("Injecting scripts into HTML base... done");
+    LOG_SERVER_DEV.debug("Injecting scripts into HTML base... done");
 
     // Run the render function imported from the entry-server.ts file
     const request = expressToWebRequest(config.req);
@@ -109,7 +102,7 @@ export async function handleRequestDev(
     const error = e as Error;
     // Handle errors with Vite's SSR stack trace
     config.vite.ssrFixStacktrace(error);
-    LOG.fatal(error);
+    LOG_SERVER_DEV.fatal(error);
     config.res.status(500).end(error.stack);
   }
 }
