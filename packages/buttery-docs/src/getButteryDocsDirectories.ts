@@ -44,12 +44,6 @@ export async function getButteryDocsDirectories(
   const outputBundleDir = path.resolve(outputRootDir, "./build");
 
   // initial css
-  const tokensCss = path.resolve(
-    findDirectoryUpwards("node_modules", "@buttery", {
-      startingDirectory: import.meta.dirname,
-    }) as string,
-    "./tokens/docs.css"
-  );
   const docsUiCSS = path.resolve(
     findDirectoryUpwards("node_modules", "@buttery", {
       startingDirectory: import.meta.dirname,
@@ -75,7 +69,6 @@ export async function getButteryDocsDirectories(
       appEntryServer,
       appEntryClient: path.resolve(appRootDir, "./entry.client.tsx"),
       css: {
-        tokens: tokensCss,
         docsUI: docsUiCSS,
       },
     },
