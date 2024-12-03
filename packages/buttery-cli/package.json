@@ -1,6 +1,6 @@
 {
   "name": "@buttery/cli",
-  "version": "0.4.10",
+  "version": "0.4.11",
   "description": "A file based CLI designed to making writing a CLI as easy as exporting a few functions in a file",
   "sideEffects": false,
   "type": "module",
@@ -36,7 +36,7 @@
   "dependencies": {
     "@buttery/commands": "workspace:^0.4.7",
     "@buttery/components": "workspace:^0.1.6",
-    "@buttery/docs": "workspace:^0.2.8",
+    "@buttery/docs": "workspace:^0.2.9",
     "@buttery/tokens": "workspace:^0.1.11",
     "@buttery/tsconfig": "workspace:^0.1.4"
   },
