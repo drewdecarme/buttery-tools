@@ -1,6 +1,6 @@
 {
   "name": "@buttery/icons",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "TODO:",
   "type": "module",
   "sideEffects": false,
@@ -38,8 +38,8 @@
     "typescript": "5.7.2"
   },
   "dependencies": {
-    "@buttery/core": "workspace:^0.1.10",
-    "@buttery/logs": "workspace:^0.1.5",
+    "@buttery/core": "workspace:^0.1.11",
+    "@buttery/logs": "workspace:^0.1.6",
     "@svgr/cli": "8.1.0",
     "@svgr/core": "8.1.0",
     "@svgr/plugin-jsx": "8.1.0",

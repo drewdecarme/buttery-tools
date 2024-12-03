@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/tsconfig (v0.1.4) <a name="0.1.4"></a>
+
+Upgrades `@buttery/docs` to use ReactRouter v7. This changeset is important in order to support the ongoing major releases of React Router and eventually React 19.
+
+
+
 ## @buttery/tsconfig (v0.1.3) <a name="0.1.3"></a>
 
 Upgrades dependencies to their latest versions. No breaking changes.

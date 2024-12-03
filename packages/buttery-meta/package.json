@@ -1,6 +1,6 @@
 {
   "name": "@buttery/meta",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Framework agnostic methodology for adding meta tags to your application document during SSR .Built in support for React SSR.",
   "sideEffects": false,
   "scripts": {
@@ -27,8 +27,8 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "dependencies": {
-    "@buttery/logs": "workspace:^0.1.5",
-    "@buttery/tsconfig": "workspace:^0.1.3",
+    "@buttery/logs": "workspace:^0.1.6",
+    "@buttery/tsconfig": "workspace:^0.1.4",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "zod": "3.23.8"

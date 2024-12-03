@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/builtins (v0.1.8) <a name="0.1.8"></a>
+
+Upgrades `@buttery/docs` to use ReactRouter v7. This changeset is important in order to support the ongoing major releases of React Router and eventually React 19.
+
+
+
 ## @buttery/builtins (v0.1.7) <a name="0.1.7"></a>
 
 Upgrades dependencies to their latest versions. No breaking changes.

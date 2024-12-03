@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/commands (v0.4.7) <a name="0.4.7"></a>
+
+Upgrades `@buttery/docs` to use ReactRouter v7. This changeset is important in order to support the ongoing major releases of React Router and eventually React 19.
+
+
+
 ## @buttery/commands (v0.4.6) <a name="0.4.6"></a>
 
 Upgrades dependencies to their latest versions. No breaking changes.

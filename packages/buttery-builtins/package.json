@@ -1,6 +1,6 @@
 {
   "name": "@buttery/builtins",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Common utilities that are a part of every @buttery/tool but also should be standard in the TS/JS language",
   "sideEffects": false,
   "type": "module",
@@ -27,7 +27,7 @@
     "dev": "yarn build --watch"
   },
   "dependencies": {
-    "@buttery/tsconfig": "workspace:^0.1.3"
+    "@buttery/tsconfig": "workspace:^0.1.4"
   },
   "devDependencies": {
     "@types/node": "22.10.1",

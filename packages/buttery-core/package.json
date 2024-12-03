@@ -1,6 +1,6 @@
 {
   "name": "@buttery/core",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "A collection of types that are used across all buttery packages / tools",
   "type": "module",
   "sideEffects": false,
@@ -45,8 +45,8 @@
     "typescript": "5.7.2"
   },
   "dependencies": {
-    "@buttery/builtins": "workspace:^0.1.7",
-    "@buttery/logs": "workspace:^0.1.5",
+    "@buttery/builtins": "workspace:^0.1.8",
+    "@buttery/logs": "workspace:^0.1.6",
     "@inquirer/checkbox": "^4.0.2",
     "esbuild": "^0.24.0",
     "fs-extra": "^11.2.0",
