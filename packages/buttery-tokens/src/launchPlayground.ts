@@ -1,7 +1,7 @@
 import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import type { ButteryLogLevel } from "@buttery/core/logger";
-import { vitePlugin as remix } from "@remix-run/dev";
+// import { vitePlugin as remix } from "@remix-run/dev";
 import wyw from "@wyw-in-js/vite";
 import { createServer } from "vite";
 import { getButteryTokensDirectories } from "./getButteryTokensDirectories";
@@ -32,14 +32,14 @@ export async function launchPlayground(
           presets: ["@babel/preset-typescript", "@babel/preset-react"],
         },
       }),
-      remix({
-        manifest: true,
-        future: {
-          v3_fetcherPersist: true,
-          v3_relativeSplatPath: true,
-          v3_throwAbortReason: true,
-        },
-      }),
+      // remix({
+      //   manifest: true,
+      //   future: {
+      //     v3_fetcherPersist: true,
+      //     v3_relativeSplatPath: true,
+      //     v3_throwAbortReason: true,
+      //   },
+      // }),
     ],
   });
 
