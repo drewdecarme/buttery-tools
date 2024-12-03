@@ -50,7 +50,6 @@ export async function build(options?: ButteryDocsBuildOptions) {
       },
     });
     LOG.debug("Building client bundle for production... done");
-    console.log({ appEntryServer: dirs.app.appEntryServer });
 
     LOG.debug("Building server bundle for production...");
     await viteBuild({
