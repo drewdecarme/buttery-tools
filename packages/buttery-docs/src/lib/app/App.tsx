@@ -1,10 +1,18 @@
 import { Meta } from "@buttery/meta/react";
 import { Suspense, lazy, useMemo } from "react";
-import { Link, Outlet, Route, Routes, useLocation } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  Route,
+  type RouteObject,
+  Routes,
+  useLocation,
+} from "react-router";
 import "@buttery/tokens/docs/css";
 import type {
   ButteryConfigDocsHeader,
   ButteryDocsRouteManifestEntryDoc,
+  ButteryDocsRouteManifestGraphObject,
 } from "@buttery/core/config";
 import {
   Layout,
@@ -16,7 +24,7 @@ import {
   LayoutBodyTOC,
   LayoutHeader,
 } from "./components";
-import type { ButteryDocsRouteManifestGraphUtils } from "./utils/RouteGraph";
+import { ButteryDocsRouteManifestGraphUtils } from "./utils/RouteGraph";
 
 function createRoute(
   route: ButteryDocsRouteManifestEntryDoc,
@@ -117,6 +125,9 @@ function DocsLayout({
   );
 }
 
+/**
+ * @deprecated Upgrading to react-router v7. Use the `createButteryDocsRoutes` instead
+ */
 export function App(props: {
   routeModuleGraph: ButteryDocsRouteManifestGraphUtils;
   header: ButteryConfigDocsHeader | undefined;
@@ -154,4 +165,40 @@ export function App(props: {
       </Route>
     </Routes>
   );
+}
+
+export function createButteryDocsRoutes(props: {
+  routeGraph: ButteryDocsRouteManifestGraphObject;
+  header: ButteryConfigDocsHeader | undefined;
+  routeDocs: ButteryDocsRouteManifestEntryDoc[];
+  routeIndex: ButteryDocsRouteManifestEntryDoc;
+}): RouteObject[] {
+  const routeModuleGraph = new ButteryDocsRouteManifestGraphUtils(
+    props.routeGraph
+  );
+
+  return [
+    {
+      path: "/",
+      element: (
+        <Layout>
+          <LayoutHeader header={props.header} />
+          <Outlet />
+        </Layout>
+      ),
+      children: [
+        {
+          path: "/",
+          index: true,
+          element: createRoute(props.routeIndex, { isDocs: false }).element,
+        },
+        {
+          element: <DocsLayout routeModuleGraph={routeModuleGraph} />,
+          children: props.routeDocs.map((route) =>
+            createRoute(route, { isDocs: true })
+          ),
+        },
+      ],
+    },
+  ];
 }

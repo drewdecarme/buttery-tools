@@ -37,12 +37,12 @@ export function getButteryDocsViteConfig(
     optimizeDeps: {
       include: [
         "@buttery/logs",
-        "react-router-dom",
         "@buttery/components",
         "@buttery/tokens/docs",
         "react",
         "react-dom",
         "react-dom/client",
+        "react-router",
       ],
     },
     plugins: [

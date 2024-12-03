@@ -1,21 +1,29 @@
 import type { ButteryMeta } from "@buttery/meta";
 import { ButteryMetaProvider } from "@buttery/meta/react";
-import { type ReactNode, StrictMode } from "react";
-import { StaticRouter } from "react-router-dom/server";
+import { StrictMode } from "react";
+import {
+  type StaticHandlerContext,
+  StaticRouterProvider,
+  type createStaticRouter,
+} from "react-router";
 
-export type ButteryDocsContext = {
+export type ButteryDocsServerContext = {
   route: string;
   Meta: ButteryMeta;
 };
 
 export function ButteryDocsServer({
-  children,
+  router,
+  routerContext,
   ...props
-}: ButteryDocsContext & { children: ReactNode }) {
+}: ButteryDocsServerContext & {
+  router: ReturnType<typeof createStaticRouter>;
+  routerContext: StaticHandlerContext;
+}) {
   return (
     <StrictMode>
       <ButteryMetaProvider ButteryMeta={props.Meta}>
-        <StaticRouter location={props.route}>{children}</StaticRouter>
+        <StaticRouterProvider router={router} context={routerContext} />
       </ButteryMetaProvider>
     </StrictMode>
   );

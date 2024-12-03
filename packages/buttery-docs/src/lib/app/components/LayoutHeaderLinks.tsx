@@ -8,7 +8,7 @@ import {
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import type { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import { match } from "ts-pattern";
 import { LayoutHeaderLinksTypeDropdown } from "./LayoutHeaderLinksTypeDropdown";
 import { IconComponent } from "./icons";
