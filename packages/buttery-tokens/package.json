@@ -1,6 +1,6 @@
 {
   "name": "@buttery/tokens",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "TBD",
   "type": "module",
   "sideEffects": false,
@@ -43,7 +43,7 @@
     "tsx": "4.19.2"
   },
   "dependencies": {
-    "@buttery/core": "workspace:^0.1.9",
+    "@buttery/core": "workspace:^0.1.10",
     "@types/chroma-js": "2.4.4",
     "@wyw-in-js/vite": "0.5.5",
     "chokidar": "4.0.1",

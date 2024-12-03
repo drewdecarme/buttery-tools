@@ -1,6 +1,6 @@
 {
   "name": "@buttery/commands",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "Create CLIs using file system based routing",
   "type": "module",
   "sideEffects": false,
@@ -47,7 +47,7 @@
     "typescript": "5.7.2"
   },
   "dependencies": {
-    "@buttery/core": "workspace:^0.1.9",
+    "@buttery/core": "workspace:^0.1.10",
     "@inquirer/prompts": "7.1.0",
     "chokidar": "^4.0.1",
     "fs-extra": "^11.2.0",
