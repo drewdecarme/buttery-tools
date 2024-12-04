@@ -1,7 +1,8 @@
+import { writeFile } from "node:fs/promises";
+import path from "node:path";
 import esbuild from "esbuild";
-
-import { Script, createContext } from "node:vm";
 import { LOG } from "../private/index.js";
+import { hashString } from "../utils/node/util.node.hash-string.js";
 import type { ButteryConfig } from "./buttery-config.types.js";
 
 /**
@@ -9,8 +10,9 @@ import type { ButteryConfig } from "./buttery-config.types.js";
  * of the contents of the output, read the contents into memory and create
  * a virtual module to then reconcile a compiled .buttery/config file.
  */
-async function convertEsbuildResultIntoConfig(
-  esbuildResult: Awaited<ReturnType<typeof transpileConfig>>
+async function cacheAndParseEsbuildResult(
+  esbuildResult: Awaited<ReturnType<typeof transpileConfig>>,
+  butteryStoreDirectoryPath: string
 ): Promise<ButteryConfig> {
   if (!esbuildResult) {
     throw "The result of the build process is invalid.";
@@ -18,31 +20,24 @@ async function convertEsbuildResultIntoConfig(
   LOG.debug("Converting esbuild result into virtual module...");
   try {
     const outputFile = esbuildResult.outputFiles[0];
-    const moduleContent = Buffer.from(outputFile.contents).toString("utf-8");
+    const configContent = Buffer.from(outputFile.contents).toString("utf-8");
 
-    // Create a sandbox environment to execute the module
-    const sandbox = {
-      exports: {}, // To capture the exports from the module
-      module: {
-        exports: {
-          default: {},
-        },
-      },
-    };
+    // create a hash of the content
+    const configContentHash = hashString(configContent);
+    const configPath = path.resolve(
+      butteryStoreDirectoryPath,
+      `buttery-config-${configContentHash}.js`
+    );
+    await writeFile(configPath, configContent, { encoding: "utf8" });
 
-    // Create a script from the module content
-    const script = new Script(moduleContent);
+    const configModule = await import(`file://${configPath}`);
 
-    // Run the script in the sandbox environment
-    const scriptContent = createContext(sandbox, {});
-    script.runInContext(scriptContent);
-
-    if (!sandbox.module.exports.default) {
-      throw "Cannot parse the default export off of the .buttery/config. Check that your .buttery/config has the property syntax and there aren't any errors.";
+    if (!configModule.default) {
+      throw "Cannot parse the default export out of the '.buttery/config.' Check that your .buttery/config has the proper syntax and there aren't any errors.";
     }
     LOG.debug("Converting esbuild result into virtual module... done.");
-    LOG.trace(JSON.stringify(sandbox.module.exports.default, null, 2));
-    return sandbox.module.exports.default;
+    LOG.trace(JSON.stringify(configModule.default, null, 2));
+    return configModule.default;
   } catch (error) {
     throw LOG.fatal(
       new Error(
@@ -66,7 +61,7 @@ async function transpileConfig(configFilePath: string) {
       bundle: true,
       platform: "node",
       target: ["esnext"],
-      format: "cjs",
+      format: "esm",
       packages: "external",
       minify: true,
       write: false,
@@ -93,6 +88,9 @@ export async function getButteryConfigModule(options: {
   watch?: boolean;
 }): Promise<ButteryConfig> {
   const esbuildResult = await transpileConfig(options.butteryConfigFilePath);
-  const config = await convertEsbuildResultIntoConfig(esbuildResult);
+  const config = await cacheAndParseEsbuildResult(
+    esbuildResult,
+    options.butteryStoreDirectoryPath
+  );
   return config;
 }

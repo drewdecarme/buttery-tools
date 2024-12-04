@@ -1,8 +1,63 @@
+import path from "node:path";
 import type { ButteryConfig } from "@buttery/core/config";
+import { vitePluginInteractivePreview } from "./docs/_plugins/vite-plugin-interactive-preview";
 
 const config: ButteryConfig = {
   icons: {
     iconsDirectory: "../src/lib/app/components/icons",
+  },
+  docs: {
+    buildTarget: "cloudflare-pages",
+    header: {
+      links: [
+        [
+          {
+            type: "internal",
+            text: "Docs",
+            href: "/docs",
+          },
+        ],
+        [
+          {
+            type: "internal",
+            text: "Components",
+            href: "/components",
+          },
+        ],
+        [
+          {
+            type: "social",
+            href: "https://github.com",
+            label: "Github",
+            provider: "github",
+          },
+        ],
+      ],
+    },
+    order: {
+      docs: [
+        "introduction",
+        "guides",
+        "guides.deployment",
+        "guides.mono-repo",
+        "guides.naming-files",
+        "guides.routing",
+        "guides.seo",
+        "guides.writing",
+      ],
+    },
+    vitePlugins: [
+      vitePluginInteractivePreview({
+        componentRootDir: path.resolve(
+          import.meta.dirname,
+          "../example-components"
+        ),
+        previewComponentPath: path.resolve(
+          import.meta.dirname,
+          "./docs/_components/InteractivePreview.tsx"
+        ),
+      }),
+    ],
   },
   tokens: {
     namespace: "docs",
@@ -75,40 +130,6 @@ const config: ButteryConfig = {
         value: 1440,
         storeAsRem: true,
       },
-    },
-  },
-  docs: {
-    buildTarget: "cloudflare-pages",
-    header: {
-      links: [
-        [
-          {
-            type: "internal",
-            text: "Docs",
-            href: "/docs",
-          },
-        ],
-        [
-          {
-            type: "social",
-            href: "https://github.com",
-            label: "Github",
-            provider: "github",
-          },
-        ],
-      ],
-    },
-    order: {
-      docs: [
-        "introduction",
-        "guides",
-        "guides.deployment",
-        "guides.mono-repo",
-        "guides.naming-files",
-        "guides.routing",
-        "guides.seo",
-        "guides.writing",
-      ],
     },
   },
 };

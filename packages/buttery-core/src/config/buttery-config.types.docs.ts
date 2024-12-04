@@ -1,3 +1,5 @@
+import type { Plugin } from "vite";
+
 export type ButteryConfigDocsHeaderLinkTypeSocial = {
   type: "social";
   provider: "github" | "discord";
@@ -97,4 +99,5 @@ export type ButteryConfigDocs = {
    */
   order?: ButteryConfigDocsOrder;
   header?: ButteryConfigDocsHeader;
+  vitePlugins?: Plugin[];
 };
