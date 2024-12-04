@@ -1,4 +1,6 @@
+import path from "node:path";
 import type { ButteryConfig } from "@buttery/core/config";
+import { vitePluginButteryDocsInteractivePreview } from "@buttery/docs/plugin-interactive-preview";
 
 const config: ButteryConfig = {
   commands: {
@@ -121,6 +123,14 @@ const config: ButteryConfig = {
         "architecture.runtime",
       ],
     },
+    vitePlugins: [
+      vitePluginButteryDocsInteractivePreview({
+        componentRootDir: path.resolve(
+          import.meta.dirname,
+          "../../example-components"
+        ),
+      }),
+    ],
   },
 };
 export default config;
