@@ -1,6 +1,6 @@
 import path from "node:path";
 import type { ButteryConfig } from "@buttery/core/config";
-import { vitePluginInteractivePreview } from "./docs/_plugins/vite-plugin-interactive-preview";
+import { vitePluginButteryDocsInteractivePreview } from "@buttery/docs/plugin-interactive-preview";
 
 const config: ButteryConfig = {
   icons: {
@@ -47,14 +47,10 @@ const config: ButteryConfig = {
       ],
     },
     vitePlugins: [
-      vitePluginInteractivePreview({
+      vitePluginButteryDocsInteractivePreview({
         componentRootDir: path.resolve(
           import.meta.dirname,
-          "../example-components"
-        ),
-        previewComponentPath: path.resolve(
-          import.meta.dirname,
-          "./docs/_components/InteractivePreview.tsx"
+          "../../example-components"
         ),
       }),
     ],

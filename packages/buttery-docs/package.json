@@ -49,6 +49,7 @@
     "./server.dev": "./dist/lib/server.dev/index.js",
     "./server.cloudflare-pages": "./dist/lib/server.cloudflare-pages/index.js",
     "./client": "./dist/lib/client/index.js",
+    "./plugin-interactive-preview": "./dist/lib/plugin-interactive-preview/index.js",
     "./app": "./dist/lib/app/index.js",
     "./css": "./dist/lib/docs.css"
   },
@@ -81,7 +82,7 @@
     "@buttery/core": "workspace:^0.1.11",
     "@buttery/meta": "workspace:^0.1.6",
     "@inquirer/prompts": "^7.1.0",
-    "@linaria/core": "6.2.0",
+    "@linaria/core": "^6.2.0",
     "@linaria/react": "6.2.1",
     "@linaria/server": "6.2.0",
     "@mdx-js/rollup": "3.1.0",

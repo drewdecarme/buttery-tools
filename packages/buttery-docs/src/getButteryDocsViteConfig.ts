@@ -78,6 +78,8 @@ export function getButteryDocsViteConfig(
         },
       }),
       vitePluginButteryDocsVirtual(config, dirs),
+      // add the user defined vite plugins
+      ...(config.docs.vitePlugins ?? []),
     ],
   });
 

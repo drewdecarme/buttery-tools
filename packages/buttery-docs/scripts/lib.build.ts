@@ -19,6 +19,7 @@ async function buildLibrary() {
   LOG.debug(
     "Building the @buttery/docs library for consumption in the SSR app..."
   );
+  const libBasePath = path.resolve(import.meta.dirname, "../src/lib/");
 
   const entry = [
     "client",
@@ -26,11 +27,10 @@ async function buildLibrary() {
     "server",
     "server.dev",
     "server.cloudflare-pages",
+    "plugin-interactive-preview",
+    "plugin-interactive-preview/ui",
   ].reduce((accum, entryName) => {
-    const entryPath = path.resolve(
-      import.meta.dirname,
-      `../src/lib/${entryName}/index.ts`
-    );
+    const entryPath = path.resolve(libBasePath, `${entryName}/index.ts`);
     return Object.assign(accum, { [entryName]: entryPath });
   }, {});
 
@@ -55,12 +55,15 @@ async function buildLibrary() {
             "@buttery/docs/server",
             "@buttery/docs/client",
             "@buttery/core",
+            "@buttery/core/utils/isomorphic",
             "@buttery/logs",
             "react/jsx-runtime",
             "react-dom/server",
             "virtual:data",
             "virtual:routes",
             "node:stream",
+            "node:fs",
+            "node:path",
             /node_modules/,
           ],
           output: {
@@ -79,7 +82,9 @@ async function buildLibrary() {
         }),
       ],
     });
+
     await viteBuild(config);
+
     LOG.debug(
       "Building the @buttery/docs library for consumption in the SSR app... done."
     );
