@@ -3,13 +3,12 @@ import path from "node:path";
 import { inlineTryCatch, writeFile } from "@buttery/builtins";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { confirm, input, select } from "@inquirer/prompts";
-import { getButteryDocsConfig } from "../getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../getButteryDocsDirectories";
+import { LOG } from "../build/utils";
+import { getButteryDocsConfig } from "../config/getButteryDocsConfig";
 import {
   type ButteryDocsAddOptions,
   butteryDocsAddOptionsSchema,
 } from "../options";
-import { LOG } from "../utils";
 
 export type Template = {
   contentType: string;
@@ -42,17 +41,15 @@ export async function add(
   );
   LOG.level = parsedOptions.logLevel;
 
-  const config = await getButteryDocsConfig({
+  const rConfig = await getButteryDocsConfig({
     prompt: parsedOptions.prompt,
-  });
-  const dirs = await getButteryDocsDirectories(config, {
     logLevel: parsedOptions.logLevel,
   });
 
   //
   if (parsedOptions.template) {
     LOG.debug("--template=true. Reading template manifest and prompting user");
-    const fileContent = await readFile(dirs.templates.manifest, "utf8");
+    const fileContent = await readFile(rConfig.dirs.templates.manifest, "utf8");
     const templateManifest = JSON.parse(fileContent) as TemplateManifest;
 
     // let the user select a template
@@ -80,7 +77,7 @@ export async function add(
 
     // create the full path with the extensions
     const resolvedPath = path.join(
-      dirs.srcDocs.root,
+      rConfig.dirs.srcDocs.root,
       `${userPath}.${selectedExt}`
     );
 

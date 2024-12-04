@@ -1,13 +1,12 @@
 import path from "node:path";
-import { getNodeModulesButteryOutputDir } from "@buttery/core/config";
+import {
+  type ButteryConfigPaths,
+  getNodeModulesButteryOutputDir,
+} from "@buttery/core/config";
 import type { ButteryLogLevel } from "@buttery/core/logger";
 import { findDirectoryUpwards } from "@buttery/core/utils/node";
-import type { ButteryDocsConfig } from "./getButteryDocsConfig";
-import { LOG } from "./utils";
-
-export type ButteryDocsDirectories = Awaited<
-  ReturnType<typeof getButteryDocsDirectories>
->;
+import { LOG } from "../build/utils";
+import type { ButteryDocsConfig } from "./defineButteryDocsConfig";
 
 /**
  * Returns some absolute path directories for easily referencing directories
@@ -15,17 +14,18 @@ export type ButteryDocsDirectories = Awaited<
  */
 export async function getButteryDocsDirectories(
   config: ButteryDocsConfig,
+  paths: ButteryConfigPaths,
   { logLevel }: { logLevel: ButteryLogLevel }
 ) {
   LOG.checkpointStart("resolve docs dir");
 
   const nodeModulesDocsDir = await getNodeModulesButteryOutputDir(
-    config.paths,
+    paths,
     "docs",
     { logLevel }
   );
 
-  const userCreatedDocsDir = path.resolve(config.paths.butteryDir, "./docs");
+  const userCreatedDocsDir = path.resolve(paths.butteryDir, "./docs");
 
   const templatesRootDir = path.resolve(
     nodeModulesDocsDir.target,
@@ -35,7 +35,7 @@ export async function getButteryDocsDirectories(
   const appRootDir = path.resolve(nodeModulesDocsDir.target, "./app");
   const serverEntryFileName =
     process.env.NODE_ENV === "production"
-      ? `entry.server.${config.docs.buildTarget}.tsx`
+      ? `entry.server.${config.buildTarget}.tsx`
       : "entry.server.tsx";
   const appEntryServer = path.join(appRootDir, serverEntryFileName);
 
@@ -65,7 +65,7 @@ export async function getButteryDocsDirectories(
     },
     app: {
       root: appRootDir,
-      viteCacheDir: path.resolve(config.paths.storeDir, "./docs/.vite-cache"),
+      viteCacheDir: path.resolve(paths.storeDir, "./docs/.vite-cache"),
       appEntryServer,
       appEntryClient: path.resolve(appRootDir, "./entry.client.tsx"),
       css: {

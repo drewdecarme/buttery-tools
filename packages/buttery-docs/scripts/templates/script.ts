@@ -1,8 +1,8 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { inlineTryCatch } from "@buttery/builtins";
+import { LOG } from "../../src/build/utils";
 import type { Template, TemplateManifest } from "../../src/cli-scripts/add";
-import { LOG } from "../../src/utils";
 import { fetchGitLabRepoBlob } from "./fetch-gitlab-repo-blob";
 import { fetchGitLabRepoTree } from "./fetch-gitlab-repo-tree";
 import { getTemplateMeta } from "./get-template-meta";

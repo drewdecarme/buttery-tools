@@ -1,4 +1,4 @@
-import { LOG } from "../../src/utils";
+import { LOG } from "../../src/build/utils";
 import type { GitLabRepoBlob } from "./types";
 
 export async function fetchGitLabRepoBlob(

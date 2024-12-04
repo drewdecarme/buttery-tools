@@ -1,31 +1,12 @@
 import path from "node:path";
 import { LOG } from "../private/index.js";
-import { butteryConfigDefaults } from "./buttery-config.defaults.js";
 import type {
-  ButteryConfig,
   ButteryConfigPaths,
   GetButteryConfigOptions,
 } from "./buttery-config.types.js";
+import { ensureButteryConfig } from "./ensureButteryConfig.js";
 import { ensureButteryStore } from "./ensureButteryStore.js";
-import { getButteryConfigFile } from "./getButteryConfigFile.js";
-import { getButteryConfigModule } from "./getButteryConfigModule.js";
-
-type ButteryConfigWithPaths = {
-  config: ButteryConfig;
-  paths: ButteryConfigPaths;
-};
-
-export type GetButteryConfig<N extends keyof ButteryConfig | undefined> =
-  N extends keyof ButteryConfig
-    ? ButteryConfigWithPaths & {
-        [K in N]: Required<ButteryConfig>[K];
-      }
-    : ButteryConfigWithPaths;
-
-export type ResolvedButteryConfig<T extends keyof ButteryConfig> = Omit<
-  GetButteryConfig<T>,
-  "config"
->;
+import { parseButteryConfig } from "./parseButteryConfig.js";
 
 /**
  * Searches for the `.buttery/config` file either from the current working directory
@@ -34,25 +15,25 @@ export type ResolvedButteryConfig<T extends keyof ButteryConfig> = Omit<
  * using Esbuild and then resolves the configuration as an ESModule to be used
  * in any of the commands in the CLI.
  */
-export const getButteryConfig = async <T extends keyof ButteryConfig>(
-  nestedConfigKey: T,
-  options?: GetButteryConfigOptions
-): Promise<ResolvedButteryConfig<T>> => {
+export async function getButteryConfig<T extends Record<string, unknown>>(
+  configNamespace: string,
+  options: GetButteryConfigOptions<T>
+): Promise<{
+  config: T;
+  paths: ButteryConfigPaths;
+}> {
   // Resolve the options
   const optionPrompt = options?.prompt ?? false;
-  const optionWatch = options?.watch ?? false;
-  const optionDefaultConfig = options?.defaultConfig;
-  const optionStartingDirectory = options?.startingDirectory;
-  const optionRequireConfig = options?.requireConfig ?? true;
+  const optionDefaults = options.defaults;
 
   // set the level
   LOG.level = options?.logLevel ?? "info";
 
-  // search for the config file starting with a directory or the current working directory
-  const searchDirectory = optionStartingDirectory ?? process.cwd();
-  const butteryConfigFile = await getButteryConfigFile(searchDirectory, {
+  // Find the configuration file and if it doesn't exist
+  // create the necessary structures to ensure it
+  const butteryConfigFile = await ensureButteryConfig<T>(configNamespace, {
     prompt: optionPrompt,
-    defaultConfig: optionDefaultConfig,
+    defaults: optionDefaults,
   });
 
   // ensure the .buttery/.store directory
@@ -61,13 +42,14 @@ export const getButteryConfig = async <T extends keyof ButteryConfig>(
   });
 
   // transpile the build and optionally watch
-  const butteryConfigModule = await getButteryConfigModule({
-    butteryConfigFilePath: butteryConfigFile.path,
-    butteryStoreDirectoryPath: butteryStoreDir,
-    watch: optionWatch,
+  const butteryConfigModule = await parseButteryConfig<T>({
+    configFilePath: butteryConfigFile.path,
+    configNamespace,
+    configFileName: butteryConfigFile.name,
+    storePath: butteryStoreDir,
   });
 
-  const butteryConfig: ButteryConfigWithPaths = {
+  return {
     config: butteryConfigModule,
     paths: {
       config: butteryConfigFile.path,
@@ -76,31 +58,4 @@ export const getButteryConfig = async <T extends keyof ButteryConfig>(
       rootDir: path.dirname(butteryConfigFile.directory),
     },
   };
-
-  try {
-    let nestedConfig = butteryConfig.config[nestedConfigKey];
-
-    if (optionRequireConfig) {
-      if (!nestedConfig) {
-        throw `Cannot find the "buttery.config.${nestedConfigKey}" configuration object. Please ensure that the "${nestedConfigKey}" exists in your "buttery.config".`;
-      }
-
-      if (Object.keys(nestedConfig).length === 0) {
-        throw `"buttery.config.${nestedConfigKey}" configuration object is empty. Please ensure that the "${nestedConfigKey}" has values in your "buttery.config".`;
-      }
-    } else {
-      nestedConfig = butteryConfigDefaults[nestedConfigKey];
-    }
-
-    const { config, ...restConfig } = butteryConfig;
-
-    return {
-      ...restConfig,
-      [nestedConfigKey]: nestedConfig,
-    } as Omit<GetButteryConfig<T>, "config">;
-  } catch (error) {
-    const err = new Error(error as string);
-    LOG.fatal(err);
-    throw err;
-  }
-};
+}

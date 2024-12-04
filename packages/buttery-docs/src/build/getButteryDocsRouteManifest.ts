@@ -2,8 +2,7 @@ import { type Dirent, readdirSync } from "node:fs";
 import path from "node:path";
 import type { ButteryDocsRouteManifest } from "@buttery/core/config";
 import { printAsBullets } from "@buttery/core/logger";
-import type { ButteryDocsConfig } from "./getButteryDocsConfig";
-import type { ButteryDocsDirectories } from "./getButteryDocsDirectories";
+import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
 import { getDocumentConfigFromFrontmatter } from "./getDocumentConfigFromFrontmatter";
 import { orderButteryDocsRouteManifest } from "./orderButteryDocsRouteManifest";
 import { LOG } from "./utils";
@@ -51,8 +50,7 @@ function getRoutePathFromRouteId(routeId: string): string {
  * dynamically imported.
  */
 export function getButteryDocsRouteManifest(
-  config: ButteryDocsConfig,
-  dirs: ButteryDocsDirectories
+  rConfig: ResolvedButteryDocsConfig
 ): ButteryDocsRouteManifest {
   const routeManifest: ButteryDocsRouteManifest = {};
 
@@ -83,7 +81,7 @@ export function getButteryDocsRouteManifest(
       // If the dirent is a file, let's go ahead and process it
       // and create a manifest entry
       if (dirent.isFile()) {
-        const routeId = direntFullPath.split(dirs.srcDocs.root)[1];
+        const routeId = direntFullPath.split(rConfig.dirs.srcDocs.root)[1];
         LOG.debug(`Creating manifest for route: ${routeId}`);
         const aliasPath = routeId;
         const routePath = getRoutePathFromRouteId(routeId);
@@ -108,10 +106,10 @@ export function getButteryDocsRouteManifest(
     }
   }
 
-  createRoutes(dirs.srcDocs.root);
+  createRoutes(rConfig.dirs.srcDocs.root);
 
-  if (!config.docs.order) return routeManifest;
+  if (!rConfig.config.order) return routeManifest;
   LOG.debug("Detected an order to the docs... ordering the manifest.");
 
-  return orderButteryDocsRouteManifest(config, routeManifest);
+  return orderButteryDocsRouteManifest(rConfig, routeManifest);
 }

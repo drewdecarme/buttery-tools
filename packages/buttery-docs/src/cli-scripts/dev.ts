@@ -2,15 +2,14 @@ import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import express from "express";
 import open from "open";
 import { createServer } from "vite";
-import { getButteryDocsConfig } from "../getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../getButteryDocsDirectories";
-import { getButteryDocsViteConfig } from "../getButteryDocsViteConfig";
+import { getButteryDocsViteConfig } from "../build/getButteryDocsViteConfig";
+import { LOG } from "../build/utils";
+import { getButteryDocsConfig } from "../config/getButteryDocsConfig";
 import { handleRequestDev } from "../lib/server.dev";
 import {
   type ButteryDocsDevOptions,
   butteryDocsDevOptionsSchema,
 } from "../options";
-import { LOG } from "../utils";
 
 process.env.NODE_ENV = "development";
 
@@ -25,16 +24,11 @@ export async function dev(options?: Partial<ButteryDocsDevOptions>) {
   LOG.info("Starting @buttery/docs DevServer...");
 
   // Process and store configurations
-  const config = await getButteryDocsConfig({
+  const rConfig = await getButteryDocsConfig({
     prompt: parsedOptions.prompt,
-  });
-  LOG.checkpointStart("config & dirs");
-  const dirs = await getButteryDocsDirectories(config, {
     logLevel: parsedOptions.logLevel,
   });
-  LOG.debug(JSON.stringify(dirs, null, 2));
-  LOG.checkpointEnd("config & dirs");
-  const viteConfig = getButteryDocsViteConfig(config, dirs);
+  const viteConfig = getButteryDocsViteConfig(rConfig);
 
   // Set some constants
   const PORT = parsedOptions.port;
@@ -48,7 +42,7 @@ export async function dev(options?: Partial<ButteryDocsDevOptions>) {
   LOG.debug("Creating vite server & running in middleware mode.");
   const vite = await createServer({
     ...viteConfig,
-    root: dirs.app.root, // Root directory for the Vite project
+    root: rConfig.dirs.app.root, // Root directory for the Vite project
     appType: "custom", // Avoid Vite's default HTML handling,
     clearScreen: false,
     server: {
@@ -68,14 +62,18 @@ export async function dev(options?: Partial<ButteryDocsDevOptions>) {
   // by the react router
   app.use("*", async (req, res) => {
     // Load the server-entry file as a module using vite
-    LOG.debug(`Loading the server entry file "${dirs.app.appEntryServer}"`);
-    const ssrEntryModule = await vite.ssrLoadModule(dirs.app.appEntryServer);
+    LOG.debug(
+      `Loading the server entry file "${rConfig.dirs.app.appEntryServer}"`
+    );
+    const ssrEntryModule = await vite.ssrLoadModule(
+      rConfig.dirs.app.appEntryServer
+    );
 
     // Run the dev handler which is a combination of node and express
     await handleRequestDev(ssrEntryModule.render, {
       req,
       res,
-      dirs,
+      dirs: rConfig.dirs,
       vite,
     });
   });

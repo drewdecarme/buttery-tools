@@ -1,4 +1,3 @@
-import type { ResolvedButteryConfig } from "@buttery/core/config";
 import mdx from "@mdx-js/rollup";
 import rehypeShiki from "@shikijs/rehype";
 import rehypeTOC from "@stefanprobst/rehype-extract-toc";
@@ -11,7 +10,7 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { type Plugin, defineConfig } from "vite";
-import type { ButteryDocsDirectories } from "./getButteryDocsDirectories";
+import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
 import { getButteryDocsRouteManifest } from "./getButteryDocsRouteManifest";
 import {
   type ButteryDocsVirtualModules,
@@ -19,19 +18,16 @@ import {
 } from "./getButteryDocsVirtualModules";
 import { LOG } from "./utils";
 
-export function getButteryDocsViteConfig(
-  config: ResolvedButteryConfig<"docs">,
-  dirs: ButteryDocsDirectories
-) {
+export function getButteryDocsViteConfig(rConfig: ResolvedButteryDocsConfig) {
   const viteConfig = defineConfig({
-    root: dirs.app.root,
-    cacheDir: dirs.app.viteCacheDir,
-    publicDir: dirs.srcDocs.public,
+    root: rConfig.dirs.app.root,
+    cacheDir: rConfig.dirs.app.viteCacheDir,
+    publicDir: rConfig.dirs.srcDocs.public,
     resolve: {
       preserveSymlinks: true,
       extensions: [".js", ".jsx", ".ts", ".tsx", ".mdx"],
       alias: {
-        "@docs": dirs.srcDocs.root,
+        "@docs": rConfig.dirs.srcDocs.root,
       },
     },
     optimizeDeps: {
@@ -77,9 +73,9 @@ export function getButteryDocsViteConfig(
           presets: ["@babel/preset-typescript", "@babel/preset-react"],
         },
       }),
-      vitePluginButteryDocsVirtual(config, dirs),
+      vitePluginButteryDocsVirtual(rConfig),
       // add the user defined vite plugins
-      ...(config.docs.vitePlugins ?? []),
+      // ...(config.vitePlugins ?? []),
     ],
   });
 
@@ -87,34 +83,33 @@ export function getButteryDocsViteConfig(
 }
 
 function vitePluginButteryDocsVirtual(
-  config: ResolvedButteryConfig<"docs">,
-  dirs: ButteryDocsDirectories
+  rConfig: ResolvedButteryDocsConfig
 ): Plugin {
   // Assemble the route manifest along with
   // the virtual modules that will tell vite exactly where
   // the dynamic imports are. This allows us to get around the issue
   // where you can't supply the async import a dynamic path
-  let routeManifest = getButteryDocsRouteManifest(config, dirs);
-  let vModules = getButteryDocsVirtualModules(config, routeManifest);
+  let routeManifest = getButteryDocsRouteManifest(rConfig);
+  let vModules = getButteryDocsVirtualModules(rConfig, routeManifest);
   const butteryVirtualModuleIds = Object.keys(vModules);
   const resolvedVModulePrefix = "\0";
 
   return {
     name: "vite-plugin-buttery-docs-virtual",
     configureServer(server) {
-      server.watcher.add(dirs.srcDocs.root);
+      server.watcher.add(rConfig.dirs.srcDocs.root);
       server.watcher.on("all", (_event, path) => {
-        console.log(_event, path, path.startsWith(dirs.srcDocs.root));
+        console.log(_event, path, path.startsWith(rConfig.dirs.srcDocs.root));
         // Only process things inside docs directory
-        if (!path.startsWith(dirs.srcDocs.root)) return;
+        if (!path.startsWith(rConfig.dirs.srcDocs.root)) return;
         LOG.info(
           "Detected changes in the .buttery/docs directory. Reloading..."
         );
 
         // Rebuild the static data
         LOG.debug("Rebuilding virtual modules");
-        routeManifest = getButteryDocsRouteManifest(config, dirs);
-        vModules = getButteryDocsVirtualModules(config, routeManifest);
+        routeManifest = getButteryDocsRouteManifest(rConfig);
+        vModules = getButteryDocsVirtualModules(rConfig, routeManifest);
 
         LOG.checkpointStart("Rebuild Virtual Modules");
         // Loop through the virtual modules and invalidate them

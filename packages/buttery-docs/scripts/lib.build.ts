@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import wyw from "@wyw-in-js/vite";
 import { defineConfig, build as viteBuild } from "vite";
 import { dependencies } from "../package.json";
-import { LOG } from "../src/utils";
+import { LOG } from "../src/build/utils";
 
 /**
  * Builds the library that the app uses for client and server components

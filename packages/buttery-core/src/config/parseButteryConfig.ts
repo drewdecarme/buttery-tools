@@ -3,17 +3,17 @@ import path from "node:path";
 import esbuild from "esbuild";
 import { LOG } from "../private/index.js";
 import { hashString } from "../utils/node/util.node.hash-string.js";
-import type { ButteryConfig } from "./buttery-config.types.js";
 
 /**
  * Provided a result from esbuild, this function will parse the buffer
  * of the contents of the output, read the contents into memory and create
  * a virtual module to then reconcile a compiled .buttery/config file.
  */
-async function cacheAndParseEsbuildResult(
+async function parseAndCacheEsbuildResult<T extends Record<string, unknown>>(
   esbuildResult: Awaited<ReturnType<typeof transpileConfig>>,
-  butteryStoreDirectoryPath: string
-): Promise<ButteryConfig> {
+  configNamespace: string,
+  storePath: string
+): Promise<T> {
   if (!esbuildResult) {
     throw "The result of the build process is invalid.";
   }
@@ -25,8 +25,8 @@ async function cacheAndParseEsbuildResult(
     // create a hash of the content
     const configContentHash = hashString(configContent);
     const configPath = path.resolve(
-      butteryStoreDirectoryPath,
-      `buttery-config-${configContentHash}.js`
+      storePath,
+      `buttery-${configNamespace}-config-${configContentHash}.js`
     );
     await writeFile(configPath, configContent, { encoding: "utf8" });
 
@@ -53,9 +53,9 @@ async function cacheAndParseEsbuildResult(
  * that need to be added to create a full build, they can be imported
  * into the .buttery/config with ease and without concern.
  */
-async function transpileConfig(configFilePath: string) {
+async function transpileConfig(configFilePath: string, configFileName: string) {
   try {
-    LOG.debug("Transpiling the '.buttery/config' file...");
+    LOG.debug(`Transpiling the "${configFileName}" file...`);
     const result = await esbuild.build({
       entryPoints: [configFilePath],
       bundle: true,
@@ -69,11 +69,11 @@ async function transpileConfig(configFilePath: string) {
         extends: "@buttery/tsconfig/library",
       }),
     });
-    LOG.debug("Transpiling the '.buttery/config' file... done.");
+    LOG.debug(`Transpiling the "${configFileName}" file... done.`);
     return result;
   } catch (error) {
     new Error(
-      `Fatal error when trying to transpile and build the '.buttery/config' file: ${error}`
+      `Fatal error when trying to transpile and build the "${configFileName}" file: ${error}`
     );
   }
 }
@@ -82,15 +82,22 @@ async function transpileConfig(configFilePath: string) {
  * Provided some resolved paths, this function will build the '.buttery/config' file
  * into memory and return it.
  */
-export async function getButteryConfigModule(options: {
-  butteryConfigFilePath: string;
-  butteryStoreDirectoryPath: string;
-  watch?: boolean;
-}): Promise<ButteryConfig> {
-  const esbuildResult = await transpileConfig(options.butteryConfigFilePath);
-  const config = await cacheAndParseEsbuildResult(
+export async function parseButteryConfig<
+  T extends Record<string, unknown>
+>(options: {
+  configFilePath: string;
+  configNamespace: string;
+  configFileName: string;
+  storePath: string;
+}): Promise<T> {
+  const esbuildResult = await transpileConfig(
+    options.configFilePath,
+    options.configFileName
+  );
+  const config = await parseAndCacheEsbuildResult<T>(
     esbuildResult,
-    options.butteryStoreDirectoryPath
+    options.configNamespace,
+    options.storePath
   );
   return config;
 }

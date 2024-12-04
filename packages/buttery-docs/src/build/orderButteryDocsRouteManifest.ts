@@ -1,5 +1,6 @@
 import type { ButteryDocsRouteManifest } from "@buttery/core/config";
-import type { ButteryDocsConfig } from "./getButteryDocsConfig";
+
+import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
 import { LOG } from "./utils";
 
 /**
@@ -15,7 +16,7 @@ import { LOG } from "./utils";
  * exist in the ordered route manifest.
  */
 export function orderButteryDocsRouteManifest(
-  config: ButteryDocsConfig,
+  rConfig: ResolvedButteryDocsConfig,
   routeManifest: ButteryDocsRouteManifest
 ): ButteryDocsRouteManifest {
   // Order the docs
@@ -41,14 +42,14 @@ export function orderButteryDocsRouteManifest(
   orderedRouteManifest[manifestKey] = manifestEntry;
 
   // Start going through the pages
-  for (const page in config.docs.order) {
+  for (const page in rConfig.config.order) {
     // find the index of the page and stick it in the ordered route manifest
     const pageIndexKey = `/${page}/_index`;
     const { manifestEntry, manifestKey } = getRouteManifestEntry(pageIndexKey);
     orderedRouteManifest[manifestKey] = manifestEntry;
 
     // Loop through the rest of th ordered files in the page
-    for (const pageDoc of config.docs.order[page]) {
+    for (const pageDoc of rConfig.config.order[page]) {
       const pageDocKey = `/${page}/${pageDoc}`;
       const { manifestEntry, manifestKey } = getRouteManifestEntry(pageDocKey);
       orderedRouteManifest[manifestKey] = manifestEntry;

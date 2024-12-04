@@ -3,15 +3,15 @@ import path from "node:path";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { ensureFile } from "fs-extra";
 import { build as viteBuild } from "vite";
-import { getButteryDocsConfig } from "../getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../getButteryDocsDirectories";
-import { getButteryDocsRouteManifest } from "../getButteryDocsRouteManifest";
-import { getButteryDocsViteConfig } from "../getButteryDocsViteConfig";
+import { getButteryDocsRouteManifest } from "../build/getButteryDocsRouteManifest";
+import { getButteryDocsViteConfig } from "../build/getButteryDocsViteConfig";
+import { LOG } from "../build/utils";
+import { getButteryDocsConfig } from "../config/getButteryDocsConfig";
+
 import {
   type ButteryDocsBuildOptions,
   butteryDocsBuildOptionsSchema,
 } from "../options";
-import { LOG } from "../utils";
 
 process.env.NODE_ENV = "production";
 
@@ -25,27 +25,26 @@ export async function build(options?: ButteryDocsBuildOptions) {
 
   // Process and store configurations
   LOG.loadingStart("Building @buttery/docs");
-  const config = await getButteryDocsConfig({
+  const rConfig = await getButteryDocsConfig({
     prompt: parsedOptions.prompt,
-  });
-  const dirs = await getButteryDocsDirectories(config, {
     logLevel: parsedOptions.logLevel,
   });
-  const viteConfig = getButteryDocsViteConfig(config, dirs);
-  const butteryManifest = getButteryDocsRouteManifest(config, dirs);
+
+  const viteConfig = getButteryDocsViteConfig(rConfig);
+  const butteryManifest = getButteryDocsRouteManifest(rConfig);
 
   try {
     LOG.debug("Building client bundle for production...");
     await viteBuild({
       logLevel: "silent",
-      root: dirs.app.root,
+      root: rConfig.dirs.app.root,
       ...viteConfig,
       build: {
         emptyOutDir: true,
         manifest: true,
-        outDir: path.resolve(dirs.output.bundleDir, "./client"),
+        outDir: path.resolve(rConfig.dirs.output.bundleDir, "./client"),
         rollupOptions: {
-          input: dirs.app.appEntryClient,
+          input: rConfig.dirs.app.appEntryClient,
         },
       },
     });
@@ -54,13 +53,13 @@ export async function build(options?: ButteryDocsBuildOptions) {
     LOG.debug("Building server bundle for production...");
     await viteBuild({
       logLevel: "silent",
-      root: dirs.app.root,
+      root: rConfig.dirs.app.root,
       ...viteConfig,
       build: {
         emptyOutDir: true,
         ssrManifest: true,
-        ssr: dirs.app.appEntryServer,
-        outDir: path.resolve(dirs.output.bundleDir, "./server"),
+        ssr: rConfig.dirs.app.appEntryServer,
+        outDir: path.resolve(rConfig.dirs.output.bundleDir, "./server"),
         rollupOptions: {
           output: {
             entryFileNames: "server.js",
@@ -73,7 +72,7 @@ export async function build(options?: ButteryDocsBuildOptions) {
     // create the buttery manifest
     try {
       const butteryManifestPath = path.resolve(
-        dirs.output.bundleDir,
+        rConfig.dirs.output.bundleDir,
         "./client/.buttery/buttery.manifest.json"
       );
       LOG.debug("Writing buttery manifest.json...");
@@ -88,14 +87,18 @@ export async function build(options?: ButteryDocsBuildOptions) {
       throw LOG.fatal(new Error(error as string));
     }
 
-    switch (config.docs.buildTarget) {
+    switch (rConfig.config.buildTarget) {
       case "cloudflare-pages": {
         // move functions to local dist
-        const functionsDir = path.resolve(dirs.app.root, "./functions");
+        const functionsDir = path.resolve(rConfig.dirs.app.root, "./functions");
 
-        await cp(functionsDir, path.resolve(dirs.output.root, "./functions"), {
-          recursive: true,
-        });
+        await cp(
+          functionsDir,
+          path.resolve(rConfig.dirs.output.root, "./functions"),
+          {
+            recursive: true,
+          }
+        );
         break;
       }
 
@@ -105,7 +108,7 @@ export async function build(options?: ButteryDocsBuildOptions) {
     LOG.loadingEnd("complete!");
 
     // Report the success
-    const filesAndDirs = await readdir(dirs.output.root, {
+    const filesAndDirs = await readdir(rConfig.dirs.output.root, {
       recursive: true,
       withFileTypes: true,
     });
@@ -113,14 +116,14 @@ export async function build(options?: ButteryDocsBuildOptions) {
     const files = filesAndDirs.filter((dirent) => dirent.isFile());
     LOG.success(`Successfully built documentation app!
 
-      Location: ${dirs.output.root}
+      Location: ${rConfig.dirs.output.root}
       Total Files: ${files.length}
 
     ${files.reduce(
       (accum, file) =>
         accum.concat(
           `    - ${path.relative(
-            dirs.output.root,
+            rConfig.dirs.output.root,
             `${file.parentPath}/${file.name}`
           )}\n`
         ),

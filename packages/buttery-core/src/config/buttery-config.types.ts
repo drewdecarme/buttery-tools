@@ -18,12 +18,7 @@ export type ButteryConfig = {
   icons?: ButteryConfigIcons;
 };
 
-export type GetButteryConfigOptions = {
-  /**
-   * Optional starting directory to look for the config at
-   * @default process.cwd()
-   */
-  startingDirectory?: string;
+export type GetButteryConfigOptions<ConfigShape> = {
   /**
    * Boolean value that determines if the user should be prompted
    * if the misconfiguration for the config file is detected.
@@ -31,24 +26,12 @@ export type GetButteryConfigOptions = {
    */
   prompt?: boolean;
   /**
-   * Indicate if the config file should be rebuilt when changed. Useful
-   * for when developing anything that subscribes from values in the config.
-   * @default false;
-   */
-  watch?: boolean;
-  /**
    * The key of the default config that should be added if and when
    * a directory / config isn't detected and the user indicated that they
    * would like to be prompted to reconcile the configuration.
    * @default undefined
    */
-  defaultConfig?: keyof ButteryConfig;
-  /**
-   * A boolean that tells the application if you need a config
-   * key inside of the .buttery/config file.
-   * @default true
-   */
-  requireConfig?: boolean;
+  defaults: ConfigShape;
   /**
    * The level of logs that should be displayed
    * @default info

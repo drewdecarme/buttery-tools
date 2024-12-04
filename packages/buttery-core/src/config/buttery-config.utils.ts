@@ -1,30 +1,33 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { existsSync, lstatSync } from "node:fs";
 import path from "node:path";
-import checkbox from "@inquirer/checkbox";
 import input from "@inquirer/input";
-import { exhaustiveMatchGuard } from "../utils/isomorphic/index.js";
-import { butteryConfigDefaults } from "./buttery-config.defaults.js";
-import type { ButteryConfig } from "./buttery-config.types.js";
+import { writeFileRecursive } from "../utils/node/util.node.writeFileRecursive.js";
 
-/**
- * Asks the user to select which keys in the buttery config
- * should create defaults for
- */
-export async function promptUserForButteryConfigDefaults({
-  message,
-  defaultChecked,
-}: {
-  message: string;
-  defaultChecked: keyof ButteryConfig | undefined;
-}): Promise<(keyof ButteryConfig)[]> {
-  return await checkbox<keyof ButteryConfig>({
-    message,
-    choices: Object.keys(butteryConfigDefaults).map((key) => ({
-      value: key as keyof ButteryConfig,
-      checked: key === defaultChecked,
-    })),
-  });
-}
+export const ERRORS = {
+  NO_BUTTERY_DIR(configFileName: string, postfix?: string) {
+    return `Cannot locate the "${configFileName}" file in your file structure. ${
+      postfix ?? ""
+    }`;
+  },
+  FOUND_BUTTERY_DIR_NO_CONFIG(
+    butteryDirPath: string,
+    configFileName: string,
+    postfix?: string
+  ) {
+    return `Found the .buttery directory at "${butteryDirPath}". However, no "${configFileName}" file is present. ${
+      postfix ?? ""
+    }`;
+  },
+  FOUND_EMPTY_CONFIG(
+    configFileName: string,
+    configFilePath: string,
+    postfix?: string
+  ) {
+    return `Found "${configFileName}" file at "${configFilePath}". However, this file is empty. ${
+      postfix ?? ""
+    }`;
+  },
+};
 
 /**
  * Asks the user to write a location for the path of where the buttery directory
@@ -42,77 +45,68 @@ export async function promptUserForButteryDirLocation(
 }
 
 /**
+ * Capitalizes the first letter
+ */
+function cap(str: string) {
+  if (!str) return str; // Handle empty strings
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/**
  * Provided a directory and an array of buttery configuration keys,
  * this function creates a default buttery config in the directory
  * with the defaults that map directly to the provided config keys
  */
-export async function createDefaultButteryConfigAndDirs(
+export async function createButteryConfigFile<
+  T extends Record<string, unknown>
+>(
   butteryDir: string,
-  configs: (keyof ButteryConfig)[]
+  configNamespace: string,
+  butteryConfigFileName: string,
+  defaults: T
 ) {
   try {
-    // create the necessary dirs and files
-    // creates the buttery dir and the nested dirs needed to
-    // store the files
-    await mkdir(butteryDir, { recursive: true });
-    const createButteryDirs = configs.reduce<Promise<void>[]>(
-      (accum, configKey) => {
-        const dirPath = path.resolve(butteryDir, `./${configKey}`);
-
-        switch (configKey) {
-          case "tokens":
-          case "icons":
-            return accum;
-
-          case "commands": {
-            const fn = async () => {
-              await mkdir(dirPath, { recursive: true });
-            };
-            return accum.concat(fn());
-          }
-
-          case "docs": {
-            const fn = async () => {
-              await mkdir(dirPath, { recursive: true });
-
-              const indexFilePath = path.resolve(dirPath, "./_index.md");
-              await writeFile(
-                indexFilePath,
-                `---
-title: Home
----
-
-# Home\n`
-              );
-            };
-            return accum.concat(fn());
-          }
-
-          default:
-            return exhaustiveMatchGuard(configKey);
-        }
-      },
-      []
-    );
-    await Promise.all(createButteryDirs);
-
     // crete the buttery/config content
-    const butteryConfigPath = path.resolve(butteryDir, "./config.ts");
-    const configJson = configs.reduce(
-      (accum, config) =>
-        Object.assign(accum, {
-          [config]: butteryConfigDefaults[config],
-        }),
-      {}
-    );
-    const butteryConfigContent = `import type { ButteryConfig } from "@buttery/tools/config"
-const config: ButteryConfig = ${JSON.stringify(configJson, null, 2)};
-export default config\n`;
+    const butteryConfigPath = path.resolve(butteryDir, butteryConfigFileName);
+    const butteryImport = `define${cap(configNamespace)}Config`;
+    const butteryModule = `@buttery/${configNamespace}`;
+    const butteryConfigContent = `import { ${butteryImport} } from "${butteryModule}"
+export default ${butteryImport}(${JSON.stringify(defaults, null, 2)})\n`;
 
-    await writeFile(butteryConfigPath, butteryConfigContent, {
-      encoding: "utf8",
-    });
+    await writeFileRecursive(butteryConfigPath, butteryConfigContent);
   } catch (error) {
     throw `Error when trying to create a default ".buttery/config" file: ${error}`;
   }
+}
+
+export /**
+ * Recursively looks up from the current directory up the tree until the root directory
+ * for a directory called .buttery
+ * @param currentDir - The current directory to start searching from
+ * @returns The path to the .buttery directory if found, otherwise null
+ */
+function getButteryDir(currentDir: string): string | null {
+  const targetDir = ".buttery";
+  const rootDir = path.parse(currentDir).root;
+
+  /**
+   * Recursive function to traverse up the directory tree
+   * @param directory - The directory to start searching from
+   * @returns The path to the .buttery directory if found, otherwise null
+   */
+  function traverseUp(directory: string): string | null {
+    const potentialPath = path.join(directory, targetDir);
+    if (existsSync(potentialPath) && lstatSync(potentialPath).isDirectory()) {
+      return potentialPath;
+    }
+    const parentDir = path.dirname(directory);
+
+    if (directory === rootDir) {
+      return null;
+    }
+    return traverseUp(parentDir);
+  }
+
+  const butteryDir = traverseUp(currentDir);
+  return butteryDir;
 }

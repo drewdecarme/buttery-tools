@@ -3,7 +3,8 @@ import type {
   ButteryDocsRouteManifestEntry,
 } from "@buttery/core/config";
 import { produce } from "immer";
-import type { ButteryDocsConfig } from "./getButteryDocsConfig";
+
+import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
 import { getButteryDocsRouteGraph } from "./getButteryDocsRouteGraph";
 import { LOG } from "./utils";
 
@@ -12,7 +13,7 @@ export type ButteryDocsVirtualModules = ReturnType<
 >;
 
 export function getButteryDocsVirtualModules(
-  config: ButteryDocsConfig,
+  rConfig: ResolvedButteryDocsConfig,
   routeManifest: ButteryDocsRouteManifest
 ) {
   const routeGraph = getButteryDocsRouteGraph(routeManifest);
@@ -62,7 +63,7 @@ export const routeDocs = [${Object.values(routeDocs).map(
   )}];
   `;
 
-  const data = `export const header = ${JSON.stringify(config.docs.header)}`;
+  const data = `export const header = ${JSON.stringify(rConfig.config.header)}`;
 
   return {
     "virtual:routes": routes,
