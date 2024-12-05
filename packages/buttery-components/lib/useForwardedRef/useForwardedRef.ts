@@ -16,14 +16,14 @@ import { useImperativeHandle, useRef } from "react";
 export function useForwardedRef<T>(forwardedRef: React.Ref<T>) {
   const internalRef = useRef<T | null>(null);
 
-  // @ts-expect-error
+  // @ts-expect-error we're augmenting the internal ref here so the types won't match up
   useImperativeHandle(forwardedRef, () => ({
     get current() {
       return internalRef.current;
     },
     set current(value) {
       internalRef.current = value;
-    }
+    },
   }));
 
   return internalRef;

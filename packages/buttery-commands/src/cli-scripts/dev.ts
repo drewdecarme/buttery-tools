@@ -1,6 +1,6 @@
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
-import chokidar from "chokidar";
+import { watch } from "chokidar";
 import { type BuildContext, type BuildOptions, context } from "esbuild";
 
 import { getBuildConfig } from "../compiler/get-build-config.js";
@@ -74,9 +74,9 @@ export async function dev(options?: Partial<ButteryCommandsDevOptions>) {
 
   // Watch the commands directory by staring a chokidar instance
   let changeNum = 1;
-  chokidar
-    .watch([dirs.commandsDir, config.paths.config], { ignoreInitial: true })
-    .on("all", async (event, path) => {
+  watch([dirs.commandsDir, config.paths.config], { ignoreInitial: true }).on(
+    "all",
+    async (event, path) => {
       try {
         switch (event) {
           case "add":
@@ -102,5 +102,6 @@ export async function dev(options?: Partial<ButteryCommandsDevOptions>) {
       } catch (error) {
         LOG.fatal(new Error(String(error)));
       }
-    });
+    }
+  );
 }

@@ -11,8 +11,7 @@ import { getRouteAssets } from "../server/getRouteAssets";
 
 export type CFContext = EventPluginContext<
   unknown,
-  // biome-ignore lint/suspicious/noExplicitAny: The Any mimics what's in the @cloudflare/workers-types library
-  any,
+  never,
   Record<string, unknown>,
   unknown
 >;

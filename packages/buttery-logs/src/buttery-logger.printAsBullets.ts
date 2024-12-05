@@ -1,4 +1,4 @@
-const exhaustiveMatchGuard = (_: never): never => {
+const exhaustiveMatchGuard = (_arg: never): never => {
   throw new Error("Forgot to include an option in the switch statement");
 };
 

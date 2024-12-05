@@ -44,7 +44,7 @@ export const meta: CommandMeta = {
   try {
     await ensureFile(cmdPath);
   } catch (error) {
-    throw new Error(`Unable to verify the ${cmdPath}`);
+    throw new Error(`Unable to verify the ${cmdPath}: ${error}`);
   }
 
   let fileContent = "";

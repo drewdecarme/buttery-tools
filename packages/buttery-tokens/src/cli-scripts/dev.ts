@@ -1,5 +1,5 @@
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
-import chokidar from "chokidar";
+import { watch } from "chokidar";
 import type { z } from "zod";
 
 import { butteryTokensDevOptionsSchema } from "./_options.schema";
@@ -46,7 +46,7 @@ export async function dev(options?: ButterTokensDevOptions) {
 
     // Watch the .buttery/config file to check if any changes
     // are
-    const watcher = chokidar.watch(config.paths.config);
+    const watcher = watch(config.paths.config);
     LOG.watch(config.paths.config.concat(" for changes..."));
 
     watcher.on("change", async (file) => {

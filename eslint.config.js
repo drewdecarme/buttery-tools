@@ -6,6 +6,7 @@ import pluginImport from "eslint-plugin-import";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
+  // Globally ignore some directories
   {
     ignores: [
       "**/.turbo/**",
@@ -17,9 +18,15 @@ export default [
       "**/.yarn/**",
     ],
   },
-  // All
+
+  // Add all of the recommended configurations
   pluginJs.configs.recommended,
   pluginImport.flatConfigs.recommended,
+  pluginReact.configs.flat.recommended,
+  pluginReact.configs.flat["jsx-runtime"],
+  ...tseslint.configs.recommended,
+
+  // Customizations
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
     languageOptions: {
@@ -35,10 +42,14 @@ export default [
       },
     },
     settings: {
+      react: {
+        version: "detect",
+      },
       "import/resolver": {
         typescript: {
           // Use the TypeScript configuration file
           project: "./tsconfig.json",
+          alwaysTryTypes: true,
         },
         node: {
           // Allow resolving node modules
@@ -47,6 +58,19 @@ export default [
       },
     },
     rules: {
+      "react/prop-types": 0,
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          args: "all",
+          argsIgnorePattern: "^_",
+          caughtErrors: "all",
+          caughtErrorsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          ignoreRestSiblings: true,
+        },
+      ],
       "import/order": [
         1,
         {
@@ -76,35 +100,16 @@ export default [
     },
   },
 
-  // React
-  pluginReact.configs.flat.recommended,
-  pluginReact.configs.flat["jsx-runtime"],
+  // Don't require the display name in any of the files that are pure examples
   {
-    files: ["**/*.{js,jsx,ts,tsx}"],
-    settings: {
-      react: {
-        version: "detect",
-      },
-    },
+    files: [
+      "**/*.example.ts",
+      "**/*.example.tsx",
+      "**/*.code.ts",
+      "**/*.code.tsx",
+    ],
     rules: {
-      "react/prop-types": 0,
-    },
-  },
-
-  // Typescript
-  ...tseslint.configs.recommended,
-  {
-    files: ["**/*.{ts,tsx}"],
-    settings: {
-      "import/internal-regex": "^~/",
-      "import/resolver": {
-        node: {
-          extensions: [".ts", ".tsx"],
-        },
-        typescript: {
-          alwaysTryTypes: true,
-        },
-      },
+      "react/display-name": 0,
     },
   },
 ];

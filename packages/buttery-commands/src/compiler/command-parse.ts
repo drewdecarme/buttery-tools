@@ -15,7 +15,7 @@ async function getCommandSegments(cmdId: string, cmdPath: string) {
   try {
     const cmdSegments = cmdId.split(".");
     return cmdSegments;
-  } catch (error) {
+  } catch {
     throw `"${cmdPath}" is malformed. Command files should either be follow the below conventions:
     ${printAsBullets([
       ".buttery/commands/<sub-command>.<sub-command>.<...sub-command>/command.ts",

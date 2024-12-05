@@ -4,7 +4,6 @@ import { printAsBullets } from "@buttery/core/logger";
 import path from "node:path";
 import { type Dirent, readdirSync } from "node:fs";
 
-
 import { getDocumentConfigFromFrontmatter } from "./getDocumentConfigFromFrontmatter";
 import { orderButteryDocsRouteManifest } from "./orderButteryDocsRouteManifest";
 import { LOG } from "./utils";
@@ -28,9 +27,9 @@ function getPageSegmentsFromRouteId(routeId: string) {
 function getRouteSegmentsFromRouteId(routeId: string) {
   const routeExtension = path.extname(routeId);
   const routeFilepath = routeId.split(routeExtension)[0];
-  const routeSegments = routeFilepath
-    .split("/")
-    [routeFilepath.split("/").length - 1].split(".");
+  const routeSegmentArr = routeFilepath.split("/");
+  const routeSegments =
+    routeSegmentArr[routeFilepath.split("/").length - 1].split(".");
   LOG.debug(
     `Getting route segments from route filepath: ${routeFilepath}${printAsBullets(
       routeSegments
