@@ -1103,7 +1103,9 @@ __metadata:
   resolution: "@buttery/commands@workspace:packages/buttery-commands"
   dependencies:
     "@buttery/core": "workspace:^0.1.11"
-    "@buttery/tsconfig": "workspace:*"
+    "@buttery/logs": "workspace:^"
+    "@buttery/tsconfig": "workspace:^"
+    "@buttery/utils": "workspace:^"
     "@inquirer/prompts": "npm:7.1.0"
     "@ngneat/falso": "npm:7.2.0"
     "@types/fs-extra": "npm:^11.0.4"
@@ -1283,7 +1285,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/tsconfig@workspace:*, @buttery/tsconfig@workspace:^0.1.4, @buttery/tsconfig@workspace:packages/buttery-tsconfig":
+"@buttery/tsconfig@workspace:*, @buttery/tsconfig@workspace:^, @buttery/tsconfig@workspace:^0.1.4, @buttery/tsconfig@workspace:packages/buttery-tsconfig":
   version: 0.0.0-use.local
   resolution: "@buttery/tsconfig@workspace:packages/buttery-tsconfig"
   dependencies:
