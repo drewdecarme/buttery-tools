@@ -1,9 +1,9 @@
-import { ensureFile } from "fs-extra";
+import { ensureFileRecursive } from "@buttery/utils/node";
 
 import { appendFile, readFile } from "node:fs/promises";
 import path from "node:path";
 
-import { LOG } from "../private/index.js";
+import { LOG } from "../utils/util.logger.js";
 
 /**
  * Adds an entry to the .gitignore file in the .buttery directory if
@@ -25,7 +25,7 @@ export async function ensureGitIgnoreEntry(
 
   try {
     LOG.debug("Ensuring .buttery/.gitignore file exists...");
-    await ensureFile(resolvedGitIgnoreFile);
+    await ensureFileRecursive(resolvedGitIgnoreFile);
     LOG.debug("Ensuring .buttery/.gitignore file exists... done");
   } catch (error) {
     throw LOG.fatal(
@@ -57,7 +57,7 @@ export async function ensureGitIgnoreEntry(
   } catch (error) {
     throw LOG.fatal(
       new Error(
-        `Fatal error when trying to read and append the \`.buttery/.gitignorae\` file: ${error}`
+        `Fatal error when trying to read and append the \`.buttery/.gitignore\` file: ${error}`
       )
     );
   }

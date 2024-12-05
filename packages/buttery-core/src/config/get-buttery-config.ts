@@ -4,11 +4,12 @@ import type {
   ButteryConfigPaths,
   GetButteryConfigOptions,
 } from "./buttery-config.types.js";
-import { ensureButteryConfig } from "./ensureButteryConfig.js";
-import { ensureButteryStore } from "./ensureButteryStore.js";
-import { parseButteryConfig } from "./parseButteryConfig.js";
+import { ensureButteryConfig } from "./get-buttery-config.ensure.js";
+import { ensureButteryStore } from "./buttery-store.ensure.js";
+import { parseButteryConfig } from "./get-buttery-config.parse-config-file.js";
+import { ensureGitIgnoreEntry } from "./buttery-gitignore.ensure-entry.js";
 
-import { LOG } from "../private/index.js";
+import { LOG } from "../utils/util.logger.js";
 
 /**
  * Searches for the `.buttery/config` file either from the current working directory
@@ -26,16 +27,17 @@ export async function getButteryConfig<T extends Record<string, unknown>>(
 }> {
   // Resolve the options
   const optionPrompt = options?.prompt ?? false;
-  const optionDefaults = options.defaults;
+  const optionOnEmpty = options.onEmpty;
+  const optionValidate = options.validate;
 
   // set the level
   LOG.level = options?.logLevel ?? "info";
 
   // Find the configuration file and if it doesn't exist
-  // create the necessary structures to ensure it
+  // create the necessary structures to ensure it does exist
   const butteryConfigFile = await ensureButteryConfig<T>(configNamespace, {
     prompt: optionPrompt,
-    defaults: optionDefaults,
+    onEmpty: optionOnEmpty,
   });
 
   // ensure the .buttery/.store directory
@@ -43,16 +45,26 @@ export async function getButteryConfig<T extends Record<string, unknown>>(
     butteryDir: butteryConfigFile.directory,
   });
 
+  // ensure an that .store is added to the gitignore
+  await ensureGitIgnoreEntry(".store", {
+    butteryDir: butteryConfigFile.directory,
+  });
+
   // transpile the build and optionally watch
-  const butteryConfigModule = await parseButteryConfig<T>({
+  const rawConfigModule = await parseButteryConfig<T>({
     configFilePath: butteryConfigFile.path,
     configNamespace,
     configFileName: butteryConfigFile.name,
     storePath: butteryStoreDir,
   });
 
+  // validate the raw config
+  LOG.debug("Validating config...");
+  const config = await optionValidate(rawConfigModule);
+  LOG.debug("Validating config... done.");
+
   return {
-    config: butteryConfigModule,
+    config,
     paths: {
       config: butteryConfigFile.path,
       storeDir: butteryStoreDir,

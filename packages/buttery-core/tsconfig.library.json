@@ -5,10 +5,7 @@
     "outDir": "dist",
     "declarationDir": "dist",
     "declaration": true,
-    "declarationMap": true,
-    "target": "ESNext"
+    "declarationMap": true
   },
-  // config is built separately using the builder so it is left out
-  // of this include
-  "include": ["src/builder/index.ts", "src/logger/index.ts"]
+  "include": ["src/*/index.ts"]
 }

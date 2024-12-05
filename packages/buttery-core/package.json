@@ -8,22 +8,14 @@
     "access": "public"
   },
   "exports": {
-    "./config": "./dist/config/index.js",
-    "./builder": "./dist/builder/index.js",
-    "./logger": "./dist/logger/index.js",
-    "./tsconfig": "./tsconfig/tsconfig.json",
-    "./utils/*": "./dist/utils/*/index.js"
+    "./*": "./dist/*/index.js"
   },
   "scripts": {
-    "build": "yarn tsc && yarn config-and-utils:build && yarn config-and-utils:types && yarn lib:build",
-    "config-and-utils:build": "tsx ./scripts/build-config-and-utils.ts",
-    "config-and-utils:types": "tsc --project tsconfig.types.json",
-    "lib:build": "tsc --project tsconfig.library.json",
-    "lib:dev": "yarn lib:build --watch",
+    "build": "tsc --project ./tsconfig.library.json",
+    "dev": "yarn build --watch",
     "config:test": "tsx ./scripts/config-test.ts"
   },
   "files": [
-    "tsconfig",
     "dist"
   ],
   "repository": {
@@ -39,18 +31,15 @@
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
     "@buttery/tsconfig": "workspace:*",
-    "@types/fs-extra": "^11.0.4",
     "@types/node": "22.10.1",
     "tsx": "4.19.2",
     "typescript": "5.7.2"
   },
   "dependencies": {
-    "@buttery/builtins": "workspace:^0.1.8",
-    "@buttery/logs": "workspace:^0.1.6",
-    "@inquirer/checkbox": "^4.0.2",
+    "@buttery/logs": "workspace:^",
+    "@buttery/utils": "workspace:^",
+    "@inquirer/prompts": "^7.1.0",
     "esbuild": "^0.24.0",
-    "fs-extra": "^11.2.0",
-    "vite": "^6.0.2",
     "zod": "^3.23.8"
   }
 }

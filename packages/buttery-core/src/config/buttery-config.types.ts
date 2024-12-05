@@ -1,22 +1,10 @@
-import type { ButteryConfigCommands } from "./buttery-config.types.commands.js";
-import type { ButteryConfigDocs } from "./buttery-config.types.docs.js";
-import type { ButteryConfigIcons } from "./buttery-config.types.icons.js";
-import type { ButteryConfigTokens } from "./buttery-config.types.tokens.js";
-
-import type { ButteryLogLevel } from "../logger/index.js";
+import type { ButteryLogLevel } from "@buttery/logs";
 
 export type ButteryConfigPaths = {
   config: string;
   butteryDir: string;
   storeDir: string;
   rootDir: string;
-};
-
-export type ButteryConfig = {
-  commands?: ButteryConfigCommands;
-  tokens?: ButteryConfigTokens | ButteryConfigTokens[];
-  docs?: ButteryConfigDocs;
-  icons?: ButteryConfigIcons;
 };
 
 export type GetButteryConfigOptions<ConfigShape> = {
@@ -27,12 +15,17 @@ export type GetButteryConfigOptions<ConfigShape> = {
    */
   prompt?: boolean;
   /**
-   * The key of the default config that should be added if and when
-   * a directory / config isn't detected and the user indicated that they
-   * would like to be prompted to reconcile the configuration.
-   * @default undefined
+   * A function that will returned a well formed Config based upon the generic
+   * that is provided. This function will run anytime a config file is missing
+   * and needs to be created. This callback is defined externally to this function
+   * to allow whatever is instantiating it to control what is put into the file
    */
-  defaults: ConfigShape;
+  onEmpty: () => Promise<ConfigShape>;
+  /**
+   * A promise that is run after the configuration file content is read and evaluated.
+   * This is to ensure that the variables that are return are well formed
+   */
+  validate: (rawConfig: ConfigShape) => Promise<ConfigShape>;
   /**
    * The level of logs that should be displayed
    * @default info

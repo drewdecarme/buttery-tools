@@ -1,14 +1,13 @@
-import { inlineTryCatch } from "@buttery/builtins";
 import type { ButteryLogLevel } from "@buttery/logs";
-import { ensureDir } from "fs-extra";
+import { findDirectoryUpwards } from "@buttery/utils/node";
+import { tryHandle } from "@buttery/utils/isomorphic";
 
-import { constants, access } from "node:fs/promises";
+import { constants, access, mkdir } from "node:fs/promises";
 import path from "node:path";
 
-import type { ButteryConfigPaths } from "./buttery-config.types.js";
+import { LOG } from "./util.logger.js";
 
-import { LOG } from "../private/index.js";
-import { findDirectoryUpwards } from "../utils/node/index.js";
+import type { ButteryConfigPaths } from "../config/buttery-config.types.js";
 
 /**
  * Searches up the directory structure starting at the package root
@@ -54,10 +53,7 @@ export async function getNodeModulesButteryOutputDir(
       `./${outputDirName}`
     );
 
-    const res = await inlineTryCatch(access)(
-      butteryPackagePath,
-      constants.F_OK
-    );
+    const res = await tryHandle(access)(butteryPackagePath, constants.F_OK);
     if (res.hasError) {
       throw `It appears that you might be missing a buttery dependency: Please download "@buttery/${outputDirName}" and try this command again.`;
     }
@@ -65,7 +61,7 @@ export async function getNodeModulesButteryOutputDir(
     LOG.debug(`Ensuring that "@buttery/${outputDirName}" target exists...`, {
       butteryPackagePath,
     });
-    await ensureDir(butteryPackagePath);
+    await mkdir(butteryPackagePath, { recursive: true });
     LOG.debug(
       `Ensuring that "@buttery/${outputDirName}" target exists... done.`
     );

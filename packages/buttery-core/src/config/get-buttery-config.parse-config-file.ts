@@ -1,10 +1,10 @@
-import esbuild from "esbuild";
+import { hashString } from "@buttery/utils/node";
 
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { LOG } from "../private/index.js";
-import { hashString } from "../utils/node/util.node.hash-string.js";
+import { LOG } from "../utils/util.logger.js";
+import { buildWithEsbuild } from "../build/buildWithEsbuild.js";
 
 /**
  * Provided a result from esbuild, this function will parse the buffer
@@ -58,14 +58,8 @@ async function parseAndCacheEsbuildResult<T extends Record<string, unknown>>(
 async function transpileConfig(configFilePath: string, configFileName: string) {
   try {
     LOG.debug(`Transpiling the "${configFileName}" file...`);
-    const result = await esbuild.build({
+    const result = await buildWithEsbuild({
       entryPoints: [configFilePath],
-      bundle: true,
-      platform: "node",
-      target: ["esnext"],
-      format: "esm",
-      packages: "external",
-      minify: true,
       write: false,
       tsconfigRaw: JSON.stringify({
         extends: "@buttery/tsconfig/library",

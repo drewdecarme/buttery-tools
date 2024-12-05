@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-export * from "@buttery/logs";
-
 export const ButteryLogLevelSchema = z
   .union(
     [
