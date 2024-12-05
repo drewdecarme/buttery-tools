@@ -6,8 +6,7 @@ import { butteryIconsBuildOptionsSchema } from "./_options.schema";
 import { copyStaticDir } from "../build/copy-static-dir";
 import { generateComponents } from "../build/generate-components";
 import { generateTypes } from "../build/generate-types";
-import { getButteryIconsConfig } from "../build/getButteryIconsConfig";
-import { getButteryIconsDirectories } from "../build/getButteryIconsDirectories";
+import { getButteryIconsConfig } from "../config/getButteryIconsConfig";
 import { getSVGFilePaths } from "../build/getSVGFilePaths";
 import { LOG } from "../utils/LOG";
 
@@ -33,27 +32,22 @@ export async function build(options?: ButteryIconsBuildOptions) {
 
   try {
     LOG.loadingStart("Building @buttery/icons");
-    const config = await getButteryIconsConfig({
-      prompt: parsedOptions.prompt,
-    });
-    const dirs = await getButteryIconsDirectories(config, {
-      logLevel: parsedOptions.logLevel,
-    });
+    const rConfig = await getButteryIconsConfig(parsedOptions);
 
-    const svgFilePaths = await getSVGFilePaths(dirs);
+    const svgFilePaths = await getSVGFilePaths(rConfig.dirs);
 
     if (svgFilePaths.length === 0) {
-      throw `No SVGs currently in "${dirs.io.svg}". Please add some.`;
+      throw `No SVGs currently in "${rConfig.dirs.svg}". Please add some.`;
     }
 
     // copy the library files to the output directory
-    await copyStaticDir(dirs);
+    await copyStaticDir(rConfig.dirs);
 
     //  create the components
-    await generateComponents(dirs);
+    await generateComponents(rConfig.dirs);
 
     // create types
-    await generateTypes(dirs);
+    await generateTypes(rConfig.dirs);
     LOG.loadingEnd("complete!");
   } catch (error) {
     throw LOG.fatal(

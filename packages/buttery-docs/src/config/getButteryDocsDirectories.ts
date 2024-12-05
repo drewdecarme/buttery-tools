@@ -7,10 +7,9 @@ import { findDirectoryUpwards } from "@buttery/core/utils/node";
 
 import path from "node:path";
 
-import type { ButteryDocsConfig } from "./defineButteryDocsConfig";
+import { ButteryDocsConfig } from "./docs-config.utils";
 
 import { LOG } from "../build/utils";
-
 
 /**
  * Returns some absolute path directories for easily referencing directories

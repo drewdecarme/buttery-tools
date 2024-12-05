@@ -1,7 +1,6 @@
 import { exec } from "node:child_process";
 
-import { ButteryIconsDirectories } from "./getButteryIconsDirectories";
-
+import { ButteryIconsDirectories } from "../config/getButteryIconsDirectories";
 import { LOG } from "../utils/LOG";
 
 /**
@@ -11,7 +10,7 @@ export async function generateComponents(dirs: ButteryIconsDirectories) {
   const createComponents = () =>
     new Promise<void>((resolve, reject) => {
       exec(
-        `npx @svgr/cli --out-dir ${dirs.io.generated} --filename-case kebab --typescript --jsx-runtime automatic --no-index --title-prop -- ${dirs.io.svg}`,
+        `npx @svgr/cli --out-dir ${dirs.out.generated} --filename-case kebab --typescript --jsx-runtime automatic --no-index --title-prop -- ${dirs.svg}`,
         (error, stdout) => {
           if (error) {
             LOG.error(error as unknown as string);

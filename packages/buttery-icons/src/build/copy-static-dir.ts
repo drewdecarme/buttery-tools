@@ -1,7 +1,6 @@
 import { cp } from "node:fs/promises";
 
-import { ButteryIconsDirectories } from "./getButteryIconsDirectories";
-
+import { ButteryIconsDirectories } from "../config/getButteryIconsDirectories";
 import { LOG } from "../utils/LOG";
 
 /**
@@ -10,8 +9,8 @@ import { LOG } from "../utils/LOG";
  */
 export async function copyStaticDir(dirs: ButteryIconsDirectories) {
   try {
-    LOG.debug(`Copying static files to: ${dirs.io.root}...`);
-    cp(dirs.static, dirs.io.root, { recursive: true, force: true });
+    LOG.debug(`Copying static files to: ${dirs.out.root}...`);
+    cp(dirs.static, dirs.out.root, { recursive: true, force: true });
     LOG.debug("Copying static files... done.");
   } catch (error) {
     LOG.error(`Error when copying static files: ${error}`);

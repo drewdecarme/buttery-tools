@@ -3,8 +3,7 @@ import { ensureDir } from "fs-extra";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 
-import { ButteryIconsDirectories } from "./getButteryIconsDirectories";
-
+import { ButteryIconsDirectories } from "../config/getButteryIconsDirectories";
 import { LOG } from "../utils/LOG";
 
 /**
@@ -14,12 +13,12 @@ import { LOG } from "../utils/LOG";
 export async function getSVGFilePaths(dirs: ButteryIconsDirectories) {
   // ensure the dirs are there
   LOG.debug("Ensuring root icon & svg directories exist...");
-  await ensureDir(dirs.io.svg);
+  await ensureDir(dirs.svg);
   LOG.debug("Ensuring root icon & svg directories exist... done.");
 
   // check for svgs
-  LOG.debug(`Checking ${dirs.io.svg} for raw svgs...`);
-  const dirents = await readdir(dirs.io.svg, {
+  LOG.debug(`Checking ${dirs.svg} for raw svgs...`);
+  const dirents = await readdir(dirs.svg, {
     withFileTypes: true,
     recursive: true,
   });
@@ -27,7 +26,7 @@ export async function getSVGFilePaths(dirs: ButteryIconsDirectories) {
     (dirent) => dirent.isFile() && path.extname(dirent.name) === ".svg"
   );
   LOG.debug(
-    `Checking ${dirs.io.svg} for raw svgs... Found ${rawSvgFiles.length}.`
+    `Checking ${dirs.svg} for raw svgs... Found ${rawSvgFiles.length}.`
   );
   return rawSvgFiles;
 }

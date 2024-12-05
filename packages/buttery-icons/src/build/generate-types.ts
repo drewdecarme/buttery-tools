@@ -2,8 +2,8 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { getSvgFilePaths } from "./get-svg-files";
-import { ButteryIconsDirectories } from "./getButteryIconsDirectories";
 
+import { ButteryIconsDirectories } from "../config/getButteryIconsDirectories";
 import { LOG } from "../utils/LOG";
 
 /**
@@ -28,7 +28,7 @@ export async function generateTypes(dirs: ButteryIconsDirectories) {
 
     // create the types file
     const typesFilePath = path.resolve(
-      dirs.io.root,
+      dirs.out.root,
       "./buttery-icons.types.ts"
     );
     LOG.debug(`Writing types to: "${typesFilePath}"...`);

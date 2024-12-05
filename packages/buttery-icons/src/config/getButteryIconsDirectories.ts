@@ -1,10 +1,12 @@
 import {
-  type ResolvedButteryConfig,
+  type ButteryConfigPaths,
   getNodeModulesButteryOutputDir,
 } from "@buttery/core/config";
 import type { ButteryLogLevel } from "@buttery/logs";
 
 import path from "node:path";
+
+import { ButteryIconsConfig } from "./icons-config.utils";
 
 import { LOG } from "../utils/LOG";
 
@@ -13,27 +15,27 @@ export type ButteryIconsDirectories = Awaited<
 >;
 
 export async function getButteryIconsDirectories(
-  config: ResolvedButteryConfig<"icons">,
-  options: { logLevel: ButteryLogLevel }
+  config: ButteryIconsConfig,
+  paths: ButteryConfigPaths,
+  { logLevel }: { logLevel: ButteryLogLevel }
 ) {
   const nodeModulesIconsDir = await getNodeModulesButteryOutputDir(
-    config.paths,
+    paths,
     "icons",
-    { logLevel: options.logLevel }
+    { logLevel }
   );
 
   const staticDir = path.resolve(nodeModulesIconsDir.target, "./static");
 
-  const iconsDir = config.icons.iconsDirectory
-    ? path.resolve(config.paths.butteryDir, config.icons.iconsDirectory)
-    : path.resolve(config.paths.rootDir, "./icons");
+  const svgDir = config.svgDir ?? path.resolve(paths.butteryDir, "/icons/svg");
+  const outDir = config.outDir ?? path.resolve(paths.rootDir, "icons");
 
   const dirs = {
     static: staticDir,
-    io: {
-      root: iconsDir,
-      svg: path.resolve(iconsDir, "./svg"),
-      generated: path.resolve(iconsDir, "./generated"),
+    svg: svgDir,
+    out: {
+      root: outDir,
+      generated: path.resolve(outDir, "./generated"),
     },
   };
 

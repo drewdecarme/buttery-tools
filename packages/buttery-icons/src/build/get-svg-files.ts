@@ -1,8 +1,7 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 
-import { ButteryIconsDirectories } from "./getButteryIconsDirectories";
-
+import { ButteryIconsDirectories } from "../config/getButteryIconsDirectories";
 import { LOG } from "../utils/LOG";
 
 /**
@@ -11,8 +10,8 @@ import { LOG } from "../utils/LOG";
 export async function getSvgFilePaths(dirs: ButteryIconsDirectories) {
   try {
     // get the icon files
-    LOG.debug(`Fetching SVG files from: "${dirs.io.svg}"...`);
-    const svgDirents = await readdir(dirs.io.svg, {
+    LOG.debug(`Fetching SVG files from: "${dirs.svg}"...`);
+    const svgDirents = await readdir(dirs.svg, {
       recursive: true,
       withFileTypes: true,
     });
@@ -28,7 +27,7 @@ export async function getSvgFilePaths(dirs: ButteryIconsDirectories) {
       },
       []
     );
-    LOG.debug(`Fetching SVG files from: "${dirs.io.svg}"... done.`);
+    LOG.debug(`Fetching SVG files from: "${dirs.svg}"... done.`);
     return iconFiles;
   } catch (error) {
     throw LOG.fatal(
