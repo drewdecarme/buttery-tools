@@ -10,9 +10,10 @@
   "scripts": {
     "build": "yarn tsx ./scripts/build-icons-and-tokens.ts && yarn typechecks && yarn lib:build && yarn cli-scripts:build",
     "typechecks": "tsc --project tsconfig.typechecks.json",
-    "cli-scripts:build": "tsc --project tsconfig.cli-build.json",
+    "cli-scripts:build": "tsc --project tsconfig.cli-scripts.build.json",
+    "cli-scripts:dev": "yarn cli-scripts:build --watch",
     "lib:build": "tsx ./scripts/lib.build.ts && yarn lib:types",
-    "lib:types": "tsc --project tsconfig.library-types.json",
+    "lib:types": "tsc --project tsconfig.library.types.json",
     "lib:dev": "yarn lib:build --watch",
     "local:dev": "tsx ./scripts/local.dev.ts",
     "local:build": "tsx ./scripts/local.build.ts",
