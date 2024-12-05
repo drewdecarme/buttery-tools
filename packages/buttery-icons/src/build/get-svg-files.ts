@@ -1,7 +1,7 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import type { ButteryIconsDirectories } from "./getButteryIconsDirectories";
-import { LOG } from "./utils";
+import { LOG } from "../utils/LOG";
+import { ButteryIconsDirectories } from "./getButteryIconsDirectories";
 
 /**
  * Fetches the file paths of the SVGs

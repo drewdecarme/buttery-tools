@@ -15,7 +15,6 @@
     "Transpiles"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "editor.formatOnSave": true,
   "files.associations": {
     "*.d.ts": "typescript"
   }

@@ -1,8 +1,8 @@
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { ensureDir } from "fs-extra";
-import type { ButteryIconsDirectories } from "./getButteryIconsDirectories";
-import { LOG } from "./utils";
+import { ButteryIconsDirectories } from "./getButteryIconsDirectories";
+import { LOG } from "../utils/LOG";
 
 /**
  * Ensures that all of the necessary folders exist and also

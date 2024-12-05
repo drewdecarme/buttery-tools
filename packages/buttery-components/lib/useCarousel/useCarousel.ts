@@ -10,7 +10,7 @@ export const useCarousel = <T extends Record<string, unknown>>(items: T[]) => {
 
   const next = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
-  }, [items.length]);
+  }, []);
 
   const prev = useCallback(() => {
     setCurrentIndex((prevIndex) =>

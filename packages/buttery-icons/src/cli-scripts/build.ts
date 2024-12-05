@@ -1,12 +1,12 @@
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import type { z } from "zod";
-import { copyStaticDir } from "../copy-static-dir";
-import { generateComponents } from "../generate-components";
-import { generateTypes } from "../generate-types";
-import { getButteryIconsConfig } from "../getButteryIconsConfig";
-import { getButteryIconsDirectories } from "../getButteryIconsDirectories";
-import { getSVGFilePaths } from "../getSVGFilePaths";
-import { LOG } from "../utils";
+import { copyStaticDir } from "../build/copy-static-dir";
+import { generateComponents } from "../build/generate-components";
+import { generateTypes } from "../build/generate-types";
+import { getButteryIconsConfig } from "../build/getButteryIconsConfig";
+import { getButteryIconsDirectories } from "../build/getButteryIconsDirectories";
+import { getSVGFilePaths } from "../build/getSVGFilePaths";
+import { LOG } from "../utils/LOG";
 import { butteryIconsBuildOptionsSchema } from "./_options.schema";
 
 export type ButteryIconsBuildOptions = z.infer<

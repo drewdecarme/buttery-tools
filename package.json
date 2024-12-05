@@ -32,9 +32,15 @@
     "react-router-dom": "6.27.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@eslint/js": "^9.16.0",
     "@monoweave/cli": "^1.11.0",
     "@monoweave/plugin-github": "^2.8.0",
-    "turbo": "2.3.3"
+    "eslint": "^9.16.0",
+    "eslint-import-resolver-typescript": "^3.7.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-react": "^7.37.2",
+    "globals": "^15.13.0",
+    "turbo": "2.3.3",
+    "typescript-eslint": "^8.17.0"
   }
 }

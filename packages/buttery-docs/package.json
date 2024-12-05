@@ -50,6 +50,7 @@
     "./server.cloudflare-pages": "./dist/lib/server.cloudflare-pages/index.js",
     "./client": "./dist/lib/client/index.js",
     "./plugin-interactive-preview": "./dist/lib/plugin-interactive-preview/index.js",
+    ".": "./dist/lib/index.js",
     "./app": "./dist/lib/app/index.js",
     "./css": "./dist/lib/docs.css"
   },

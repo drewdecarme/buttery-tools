@@ -40,7 +40,10 @@ async function buildLibrary() {
       build: {
         lib: {
           formats: ["es"],
-          entry,
+          entry: {
+            index: path.resolve(libBasePath, "./index.ts"),
+            ...entry,
+          },
           fileName(_format, entryName) {
             return `${entryName}/index.js`;
           },

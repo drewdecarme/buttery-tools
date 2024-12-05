@@ -14,6 +14,7 @@
     "src/lib/server.cloudflare-pages/index.ts",
     "src/lib/plugin-interactive-preview",
     "src/lib/client",
-    "src/lib/app"
+    "src/lib/app",
+    "src/lib/index.ts"
   ]
 }

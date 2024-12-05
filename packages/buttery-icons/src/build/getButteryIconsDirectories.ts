@@ -4,7 +4,7 @@ import {
   getNodeModulesButteryOutputDir,
 } from "@buttery/core/config";
 import type { ButteryLogLevel } from "@buttery/logs";
-import { LOG } from "./utils";
+import { LOG } from "../utils/LOG";
 
 export type ButteryIconsDirectories = Awaited<
   ReturnType<typeof getButteryIconsDirectories>

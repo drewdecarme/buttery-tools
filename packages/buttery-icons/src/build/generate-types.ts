@@ -1,8 +1,8 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
+import { LOG } from "../utils/LOG";
 import { getSvgFilePaths } from "./get-svg-files";
-import type { ButteryIconsDirectories } from "./getButteryIconsDirectories";
-import { LOG } from "./utils";
+import { ButteryIconsDirectories } from "./getButteryIconsDirectories";
 
 /**
  * Reads the SVG file names from the svg directory reconciled in the config

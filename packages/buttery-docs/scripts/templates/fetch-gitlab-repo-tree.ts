@@ -1,5 +1,6 @@
-import { LOG } from "../../src/build/utils";
 import type { GitLabRepoTreeNode } from "./types";
+
+import { LOG } from "../../src/build/utils";
 
 export async function fetchGitLabRepoTree(repoName: string) {
   try {
