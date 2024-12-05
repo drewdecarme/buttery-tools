@@ -28,8 +28,7 @@
   },
   "resolutions": {
     "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "react-router-dom": "6.27.0"
+    "react-dom": "18.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",
@@ -41,6 +40,7 @@
     "eslint-plugin-react": "^7.37.2",
     "globals": "^15.13.0",
     "turbo": "2.3.3",
+    "typescript": "^5.7.2",
     "typescript-eslint": "^8.17.0"
   }
 }
