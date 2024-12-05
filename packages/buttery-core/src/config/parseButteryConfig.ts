@@ -1,6 +1,8 @@
+import esbuild from "esbuild";
+
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
-import esbuild from "esbuild";
+
 import { LOG } from "../private/index.js";
 import { hashString } from "../utils/node/util.node.hash-string.js";
 

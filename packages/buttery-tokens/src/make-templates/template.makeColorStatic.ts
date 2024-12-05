@@ -1,9 +1,10 @@
+import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
+
 import { hexToHsl, hexToRgb } from "../color-utils/util.color-conversions";
 import {
   type ColorModels,
   createColorTokensFromColorModels
 } from "../color-utils/util.create-color-variants";
-import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 
 const template: CompileFunction = ({
   config,

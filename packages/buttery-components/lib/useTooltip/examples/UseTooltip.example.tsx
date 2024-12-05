@@ -1,4 +1,5 @@
 import { css } from "@linaria/core";
+
 import { useTooltip } from "../useTooltip";
 
 const tooltipCss = css`

@@ -4,9 +4,10 @@ import type {
 } from "@buttery/core/config";
 import { produce } from "immer";
 
-import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
 import { getButteryDocsRouteGraph } from "./getButteryDocsRouteGraph";
 import { LOG } from "./utils";
+
+import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
 
 export type ButteryDocsVirtualModules = ReturnType<
   typeof getButteryDocsVirtualModules

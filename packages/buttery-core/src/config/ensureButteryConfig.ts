@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { LOG } from "../private/index.js";
+
 import type { GetButteryConfigOptions } from "./buttery-config.types.js";
 import {
   ERRORS,
@@ -9,6 +9,8 @@ import {
   getButteryDir,
   waitForUserToConfirm,
 } from "./buttery-config.utils.js";
+
+import { LOG } from "../private/index.js";
 
 /**
  * Starts from a provided starting and searches up the directory structure to

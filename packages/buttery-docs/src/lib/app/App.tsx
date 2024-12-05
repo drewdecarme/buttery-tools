@@ -14,6 +14,7 @@ import type {
   ButteryDocsRouteManifestEntryDoc,
   ButteryDocsRouteManifestGraphObject,
 } from "@buttery/core/config";
+
 import {
   Layout,
   LayoutBody,

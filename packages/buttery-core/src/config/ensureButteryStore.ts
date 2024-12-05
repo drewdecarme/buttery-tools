@@ -1,7 +1,11 @@
-import path from "node:path";
 import { ensureDir } from "fs-extra";
-import { LOG } from "../private/index.js";
+
+import path from "node:path";
+
 import { ensureGitIgnoreEntry } from "./ensureGitignoreEntry.js";
+
+import { LOG } from "../private/index.js";
+
 
 /**
  * Ensures that the `/.buttery/.store` exists. If there is issues ensuring

@@ -1,5 +1,6 @@
 import { css } from "@linaria/core";
 import type { FC } from "react";
+
 import { useTooltip } from "../useTooltip";
 
 const tooltipClass = css`

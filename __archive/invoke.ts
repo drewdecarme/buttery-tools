@@ -1,4 +1,5 @@
 import path from "node:path";
+
 import { findDirectoryUpwards } from "../buttery-tools/utils/node";
 
 const butteryPath = findDirectoryUpwards("node_modules", "@buttery", {

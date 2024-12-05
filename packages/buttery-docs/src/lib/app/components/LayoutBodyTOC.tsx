@@ -10,6 +10,7 @@ import {
 import { css } from "@linaria/core";
 import type { Toc as TableOfContents } from "@stefanprobst/rehype-extract-toc";
 import { type FC, type MouseEventHandler, useCallback, useMemo } from "react";
+
 import { LayoutTextOverline } from "./LayoutTextOverline";
 
 const layoutBodyStyles = css`

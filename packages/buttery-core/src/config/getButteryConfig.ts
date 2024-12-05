@@ -1,5 +1,5 @@
 import path from "node:path";
-import { LOG } from "../private/index.js";
+
 import type {
   ButteryConfigPaths,
   GetButteryConfigOptions,
@@ -7,6 +7,8 @@ import type {
 import { ensureButteryConfig } from "./ensureButteryConfig.js";
 import { ensureButteryStore } from "./ensureButteryStore.js";
 import { parseButteryConfig } from "./parseButteryConfig.js";
+
+import { LOG } from "../private/index.js";
 
 /**
  * Searches for the `.buttery/config` file either from the current working directory

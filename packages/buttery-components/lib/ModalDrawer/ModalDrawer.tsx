@@ -1,5 +1,4 @@
 import { type ForwardedRef, forwardRef } from "react";
-
 import {
   Modal,
   type ModalPropsCustom,

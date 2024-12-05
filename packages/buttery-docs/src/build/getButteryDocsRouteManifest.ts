@@ -1,11 +1,15 @@
-import { type Dirent, readdirSync } from "node:fs";
-import path from "node:path";
 import type { ButteryDocsRouteManifest } from "@buttery/core/config";
 import { printAsBullets } from "@buttery/core/logger";
-import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
+
+import path from "node:path";
+import { type Dirent, readdirSync } from "node:fs";
+
+
 import { getDocumentConfigFromFrontmatter } from "./getDocumentConfigFromFrontmatter";
 import { orderButteryDocsRouteManifest } from "./orderButteryDocsRouteManifest";
 import { LOG } from "./utils";
+
+import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
 
 const shouldReadDirectory = (dirent: Dirent): boolean => {
   // TODO: Figure out what level the dirent is in relation to the root directory

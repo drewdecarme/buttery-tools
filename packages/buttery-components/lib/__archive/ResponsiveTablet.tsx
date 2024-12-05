@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from "react";
+
 import { Responsive } from "./Responsive";
 
 export const ResponsiveTablet: FC<{ children: ReactNode }> = ({ children }) => {

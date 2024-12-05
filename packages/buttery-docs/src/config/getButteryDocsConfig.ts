@@ -2,6 +2,7 @@ import {
   type GetButteryConfigOptions,
   getButteryConfig,
 } from "@buttery/core/config";
+
 import type { ButteryDocsConfig } from "./defineButteryDocsConfig";
 import { getButteryDocsDirectories } from "./getButteryDocsDirectories";
 

@@ -1,9 +1,10 @@
+import type { ButteryConfigTokens } from "@buttery/core/config";
+
 import { exec } from "node:child_process";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
 
-import type { ButteryConfigTokens } from "@buttery/core/config";
 import type { ButteryTokensDirectories } from "./getButteryTokensDirectories";
 import { LOG } from "./logger";
 import { MakeTemplates } from "./make-templates/MakeTemplates";

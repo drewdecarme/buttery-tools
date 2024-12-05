@@ -1,8 +1,10 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { inlineTryCatch, writeFile } from "@buttery/builtins";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { confirm, input, select } from "@inquirer/prompts";
+
+import path from "node:path";
+import { readFile } from "node:fs/promises";
+
 import { LOG } from "../build/utils";
 import { getButteryDocsConfig } from "../config/getButteryDocsConfig";
 import {

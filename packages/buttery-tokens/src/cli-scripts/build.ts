@@ -1,10 +1,12 @@
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import type { z } from "zod";
+
+import { butteryTokensBuildOptionsSchema } from "./_options.schema";
+
 import { buildCSSUtils } from "../buildCSSUtils";
 import { getButteryTokensConfig } from "../getButteryTokensConfig";
 import { getButteryTokensDirectories } from "../getButteryTokensDirectories";
 import { LOG } from "../logger";
-import { butteryTokensBuildOptionsSchema } from "./_options.schema";
 
 export type ButteryTokensBuildOptions = z.infer<
   typeof butteryTokensBuildOptionsSchema

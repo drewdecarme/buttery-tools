@@ -1,4 +1,5 @@
 import path from "node:path";
+
 import { getCommandProperties } from "../utils/getCommandProperties";
 import type { WellFormedCommand } from "../utils/runtime.types";
 

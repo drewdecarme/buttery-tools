@@ -1,4 +1,5 @@
 import { css } from "@linaria/core";
+
 import { Modal } from "../Modal";
 import { useModal } from "../modal.useModal";
 const styles = css`

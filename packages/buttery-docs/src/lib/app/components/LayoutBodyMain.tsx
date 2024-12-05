@@ -7,7 +7,6 @@ import {
   makeReset,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
-
 import type { FC, ReactNode } from "react";
 
 const layoutBodyMainStyles = css`

@@ -1,11 +1,14 @@
-import { constants, access } from "node:fs/promises";
-import path from "node:path";
 import { inlineTryCatch } from "@buttery/builtins";
 import type { ButteryLogLevel } from "@buttery/logs";
 import { ensureDir } from "fs-extra";
+
+import { constants, access } from "node:fs/promises";
+import path from "node:path";
+
+import type { ButteryConfigPaths } from "./buttery-config.types.js";
+
 import { LOG } from "../private/index.js";
 import { findDirectoryUpwards } from "../utils/node/index.js";
-import type { ButteryConfigPaths } from "./buttery-config.types.js";
 
 /**
  * Searches up the directory structure starting at the package root

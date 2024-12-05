@@ -1,5 +1,4 @@
 import { type ForwardedRef, type ReactNode, forwardRef } from "react";
-
 import {
   type ModalDefaultState,
   type ModalRef,
@@ -7,6 +6,7 @@ import {
   useModalDialog,
 } from "@BUTTERY_COMPONENT/useModalDialog";
 import { classes } from "@BUTTERY_COMPONENT/utils";
+
 import { ModalProvider } from "./Modal.provider";
 
 export type ModalPropsNative = Omit<JSX.IntrinsicElements["dialog"], "ref">;

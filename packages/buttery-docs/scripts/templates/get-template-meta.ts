@@ -5,10 +5,12 @@ import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
-import type { TemplateMeta } from "../../src/cli-scripts/add";
+
 import { fetchGitLabRepoBlob } from "./fetch-gitlab-repo-blob";
 import type { GitLabRepoTreeNode } from "./types";
 import { decodeBlobContent } from "./util.decodeBlobContent";
+
+import type { TemplateMeta } from "../../src/cli-scripts/add";
 
 export async function getTemplateMeta(
   repoName: string,

@@ -1,9 +1,11 @@
-import path from "node:path";
 import {
   type ResolvedButteryConfig,
   getNodeModulesButteryOutputDir,
 } from "@buttery/core/config";
 import type { ButteryLogLevel } from "@buttery/core/logger";
+
+import path from "node:path";
+
 import { LOG } from "./logger";
 
 export type ButteryTokensDirectories = Awaited<

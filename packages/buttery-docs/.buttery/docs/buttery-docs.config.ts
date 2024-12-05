@@ -1,4 +1,5 @@
 import path from "node:path";
+
 import { vitePluginButteryDocsInteractivePreview } from "../../dist/lib/plugin-interactive-preview";
 import { defineButteryDocsConfig } from "../../src/lib";
 

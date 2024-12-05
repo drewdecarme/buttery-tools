@@ -1,4 +1,5 @@
 import type { Manifest, ManifestChunk } from "vite";
+
 import { getCriticalViteChunks } from "./getCriticalViteChunks";
 
 /**

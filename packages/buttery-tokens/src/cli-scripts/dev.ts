@@ -1,12 +1,14 @@
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import chokidar from "chokidar";
 import type { z } from "zod";
+
+import { butteryTokensDevOptionsSchema } from "./_options.schema";
+
 import { buildCSSUtils } from "../buildCSSUtils";
 import { getButteryTokensConfig } from "../getButteryTokensConfig";
 import { getButteryTokensDirectories } from "../getButteryTokensDirectories";
 import { launchPlayground } from "../launchPlayground";
 import { LOG } from "../logger";
-import { butteryTokensDevOptionsSchema } from "./_options.schema";
 
 export type ButterTokensDevOptions = z.infer<
   typeof butteryTokensDevOptionsSchema

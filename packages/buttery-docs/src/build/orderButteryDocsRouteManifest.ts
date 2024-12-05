@@ -1,7 +1,8 @@
 import type { ButteryDocsRouteManifest } from "@buttery/core/config";
 
-import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
 import { LOG } from "./utils";
+
+import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
 
 /**
  * Reads the config.docs.order configuration and orders the

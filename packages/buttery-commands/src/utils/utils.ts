@@ -1,7 +1,9 @@
 import { ButteryLogger } from "@buttery/core/logger";
 import type { BuildOptions } from "esbuild";
-import type { CommandArgs, CommandOptions } from "../lib/library";
+
 import type { ButteryCommandsDirectories } from "./getButteryCommandsDirectories";
+
+import type { CommandArgs, CommandOptions } from "../lib/library";
 
 // ---- Start Types ----
 export type CommandsBuildOptions = {

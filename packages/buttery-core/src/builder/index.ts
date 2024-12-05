@@ -1,7 +1,9 @@
-import { readdir } from "node:fs/promises";
-import path from "node:path";
 import { ButteryLogger, printAsBullets } from "@buttery/logs";
 import esbuild from "esbuild";
+
+import { readdir } from "node:fs/promises";
+import path from "node:path";
+
 import { exhaustiveMatchGuard } from "../utils/isomorphic/index.js";
 
 const LOG = new ButteryLogger({

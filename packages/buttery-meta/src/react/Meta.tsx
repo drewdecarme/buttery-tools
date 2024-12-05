@@ -1,7 +1,9 @@
 import { type FC, type ReactElement, useEffect } from "react";
+
+import { useButteryMetaContext } from "./ButteryMeta.context.js";
+
 import type { ButteryMetaDescriptor } from "../buttery-meta.utils.js";
 import { exhaustiveMatchGuard } from "../exhaustive-match-guard.js";
-import { useButteryMetaContext } from "./ButteryMeta.context.js";
 
 export type MetaProps = {
   children?: ReactElement[];

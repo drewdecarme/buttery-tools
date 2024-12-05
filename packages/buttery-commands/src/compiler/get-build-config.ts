@@ -1,19 +1,21 @@
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import type { BuildOptions } from "esbuild";
-import type { ButteryCommandsBaseOptions } from "../options";
-import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
+
+import { loadCommand } from "./command-load";
+import { parseCommand } from "./command-parse";
+import { buildManifest } from "./manifest-build";
+import { validateManifest } from "./manifest-validate";
+import { buildPkgJson } from "./pkgjson-enrich";
+
 import {
   type ButteryCommand,
   LOG,
   defaultEsbuildOptions,
   getEntryPointsGlob,
 } from "../utils/utils";
-import { loadCommand } from "./command-load";
-import { parseCommand } from "./command-parse";
-import { buildManifest } from "./manifest-build";
-import { validateManifest } from "./manifest-validate";
-import { buildPkgJson } from "./pkgjson-enrich";
+import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
+import type { ButteryCommandsBaseOptions } from "../options";
 
 export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
   config: ResolvedButteryConfig<"commands">,

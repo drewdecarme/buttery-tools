@@ -1,4 +1,5 @@
 import { type StaticHandler, createStaticRouter } from "react-router";
+
 import { LOG_SERVER } from "./server.utils";
 
 export async function createRouterFromRoutes(

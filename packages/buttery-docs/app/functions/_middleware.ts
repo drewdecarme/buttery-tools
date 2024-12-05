@@ -1,9 +1,11 @@
 import type { ButteryDocsRouteManifest } from "@buttery/core/config";
+import type { Manifest } from "vite";
+
 import {
   type CFContext,
   handleRequestCloudflarePages,
 } from "@buttery/docs/server.cloudflare-pages";
-import type { Manifest } from "vite";
+
 // @ts-ignore This will only exist when the app is built
 import butteryManifest from "../build/client/.buttery/buttery.manifest.json";
 // @ts-ignore This will only exist when the app is built

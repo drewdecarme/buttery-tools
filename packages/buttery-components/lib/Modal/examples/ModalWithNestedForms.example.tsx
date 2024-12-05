@@ -12,6 +12,7 @@ import {
   useRef,
   useState,
 } from "react";
+
 import { Modal } from "../Modal";
 import { useModal } from "../modal.useModal";
 

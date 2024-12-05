@@ -1,4 +1,5 @@
 import path from "node:path";
+
 import { add } from "../src/cli-scripts/add";
 
 /**

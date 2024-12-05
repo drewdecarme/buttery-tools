@@ -1,4 +1,5 @@
 import { Suspense, forwardRef, lazy } from "react";
+
 import type { IconNames } from "./buttery-icons.types";
 
 export type IconComponentNative = JSX.IntrinsicElements["div"];

@@ -1,5 +1,6 @@
-import { build } from "../src/cli-scripts/build";
 import { buildRuntime } from "./runtime.build";
+
+import { build } from "../src/cli-scripts/build";
 
 // Allows for local development to test out all functionality
 // before it is built and published to the rest of the packages

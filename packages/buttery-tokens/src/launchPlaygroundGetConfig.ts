@@ -1,6 +1,6 @@
 import { select } from "@inquirer/prompts";
-
 import type { ResolvedButteryConfig } from "@buttery/core/config";
+
 import type { ButteryTokensConfig } from "./getButteryTokensConfig";
 import { LOG } from "./logger";
 

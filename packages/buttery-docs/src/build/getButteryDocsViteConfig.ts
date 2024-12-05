@@ -10,13 +10,15 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { type Plugin, defineConfig } from "vite";
-import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
+
 import { getButteryDocsRouteManifest } from "./getButteryDocsRouteManifest";
 import {
   type ButteryDocsVirtualModules,
   getButteryDocsVirtualModules,
 } from "./getButteryDocsVirtualModules";
 import { LOG } from "./utils";
+
+import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
 
 export function getButteryDocsViteConfig(rConfig: ResolvedButteryDocsConfig) {
   const viteConfig = defineConfig({

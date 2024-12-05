@@ -1,5 +1,6 @@
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { printAsBullets } from "@buttery/core/logger";
+
 import type { ButteryCommandsBaseOptions } from "../options";
 import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
 import {

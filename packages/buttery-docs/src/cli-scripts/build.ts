@@ -1,13 +1,14 @@
-import { cp, readdir, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { ensureFile } from "fs-extra";
 import { build as viteBuild } from "vite";
+
+import path from "node:path";
+import { cp, readdir, writeFile } from "node:fs/promises";
+
 import { getButteryDocsRouteManifest } from "../build/getButteryDocsRouteManifest";
 import { getButteryDocsViteConfig } from "../build/getButteryDocsViteConfig";
 import { LOG } from "../build/utils";
 import { getButteryDocsConfig } from "../config/getButteryDocsConfig";
-
 import {
   type ButteryDocsBuildOptions,
   butteryDocsBuildOptionsSchema,

@@ -3,6 +3,7 @@ import type {
   ButteryDocsRouteManifestEntry,
   ButteryDocsRouteManifestGraphObject,
 } from "@buttery/core/config";
+
 import { LOG } from "./utils";
 
 /**

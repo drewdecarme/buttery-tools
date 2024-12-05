@@ -1,6 +1,8 @@
 import { exec } from "node:child_process";
-import { LOG } from "../utils/LOG";
+
 import { ButteryIconsDirectories } from "./getButteryIconsDirectories";
+
+import { LOG } from "../utils/LOG";
 
 /**
  * Runs an opinionated SVGR command to create the component files

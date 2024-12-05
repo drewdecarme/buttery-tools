@@ -1,4 +1,5 @@
 import type { ButteryDocsRouteManifestGraphObject } from "@buttery/core/config";
+
 import { LOG } from "./LOG";
 
 /**

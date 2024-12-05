@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import UseTooltipExample from "./UseTooltip.example";
 
 const meta: Meta = {

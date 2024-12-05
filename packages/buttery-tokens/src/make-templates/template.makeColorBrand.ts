@@ -1,6 +1,8 @@
 import { match } from "ts-pattern";
-
 import { exhaustiveMatchGuard } from "@buttery/core/utils/isomorphic";
+
+import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
+
 import {
   hexToHsl,
   hexToRgb,
@@ -13,7 +15,6 @@ import {
   createColorTokensFromColorModels,
 } from "../color-utils/util.create-color-variants";
 import { LOG } from "../logger";
-import { type CompileFunction, MakeTemplate } from "./MakeTemplate";
 
 const template: CompileFunction = ({
   config,

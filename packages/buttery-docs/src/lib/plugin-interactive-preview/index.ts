@@ -1,7 +1,8 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
 import { exhaustiveMatchGuard } from "@buttery/core/utils/isomorphic";
 import type { Plugin } from "vite";
+
+import { readFileSync } from "node:fs";
+import path from "node:path";
 
 type VitePluginButteryDocsInteractivePreviewOptions = {
   componentRootDir: string;

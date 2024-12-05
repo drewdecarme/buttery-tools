@@ -3,6 +3,7 @@ import {
   renderToReadableStream,
 } from "react-dom/server";
 import { type RouteObject, createStaticHandler } from "react-router";
+
 import {
   ButteryDocsServer,
   type ButteryDocsServerContext,

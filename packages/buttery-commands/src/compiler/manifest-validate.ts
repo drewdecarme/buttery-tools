@@ -1,18 +1,21 @@
-import path from "node:path";
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { printAsBullets } from "@buttery/core/logger";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { select } from "@inquirer/prompts";
 import pc from "picocolors";
+
+import path from "node:path";
+
+import { bootstrapCommand } from "./command-bootstrap";
+import { parseCommand } from "./command-parse";
+
 import type { ButteryCommandsBaseOptions } from "../options";
-import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
 import {
   type ButteryCommand,
   type ButteryCommandsManifest,
   LOG,
 } from "../utils/utils";
-import { bootstrapCommand } from "./command-bootstrap";
-import { parseCommand } from "./command-parse";
+import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
 
 /**
  */

@@ -2,6 +2,7 @@ import type { ButteryDocsRouteManifest } from "@buttery/core/config";
 import { ButteryMeta } from "@buttery/meta";
 import type { EventPluginContext } from "@cloudflare/workers-types";
 import type { Manifest as ViteManifest } from "vite";
+
 import type { ButteryDocsServerContext } from "../server/ButteryDocsServer";
 import type { createButteryDocsRenderToReadableStream } from "../server/createRenderFnReadableStream";
 import { generateHTMLTemplate } from "../server/generateHTMLTemplate";

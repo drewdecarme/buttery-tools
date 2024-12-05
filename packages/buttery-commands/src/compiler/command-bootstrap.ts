@@ -1,10 +1,11 @@
-import { writeFile } from "node:fs/promises";
 import {
   exhaustiveMatchGuard,
   inlineTryCatch,
 } from "@buttery/core/utils/isomorphic";
 import { input, select } from "@inquirer/prompts";
 import { ensureFile } from "fs-extra";
+
+import { writeFile } from "node:fs/promises";
 
 export async function bootstrapCommand(
   cmdPath: string,

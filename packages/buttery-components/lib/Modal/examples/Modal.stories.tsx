@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import ModalBaseExample from "./ModalBase.example";
 import ModalBasicExample from "./ModalBasic.example";
 import ModalWithNestedFormsExample from "./ModalWithNestedForms.example";

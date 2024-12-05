@@ -1,5 +1,6 @@
 import { renderToString } from "react-dom/server.browser";
 import { StaticRouter } from "react-router";
+
 import App from "./App";
 
 export function render(url: string) {

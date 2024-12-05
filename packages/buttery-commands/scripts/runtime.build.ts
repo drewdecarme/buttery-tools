@@ -1,6 +1,8 @@
-import path from "node:path";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { build } from "esbuild";
+
+import path from "node:path";
+
 import { LOG, defaultEsbuildOptions } from "../src/utils/utils";
 
 /**
