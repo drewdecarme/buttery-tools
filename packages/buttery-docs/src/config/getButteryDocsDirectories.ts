@@ -1,15 +1,13 @@
-import {
-  type ButteryConfigPaths,
-  getNodeModulesButteryOutputDir,
-} from "@buttery/core/config";
-import type { ButteryLogLevel } from "@buttery/core/logger";
-import { findDirectoryUpwards } from "@buttery/core/utils/node";
+import type { ButteryConfigPaths } from "@buttery/core/config";
+import { findDirectoryUpwards } from "@buttery/utils/node";
+import type { ButteryLogLevel } from "@buttery/logs";
+import { getNodeModulesButteryOutputDir } from "@buttery/core/utils";
 
 import path from "node:path";
 
-import { ButteryDocsConfig } from "./docs-config.utils";
+import type { ButteryDocsConfig } from "./_config.utils.js";
 
-import { LOG } from "../build/utils";
+import { LOG } from "../utils/util.logger.js";
 
 /**
  * Returns some absolute path directories for easily referencing directories

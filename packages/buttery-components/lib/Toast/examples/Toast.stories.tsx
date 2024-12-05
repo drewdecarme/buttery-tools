@@ -1,8 +1,8 @@
 import type { Meta } from "@storybook/react";
 
-import ToastExample from "./Toast.example";
-import ToastBestPracticeExample from "./ToastBestPractice.example";
-import ToastMultipleToastersExample from "./ToastMultipleToasters.example";
+import ToastExample from "./Toast.example.js";
+import ToastBestPracticeExample from "./ToastBestPractice.example.js";
+import ToastMultipleToastersExample from "./ToastMultipleToasters.example.js";
 
 const meta: Meta = {
   title: "Popovers / Toast",

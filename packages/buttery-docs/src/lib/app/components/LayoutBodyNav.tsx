@@ -1,4 +1,3 @@
-import type { ButteryDocsRouteManifestGraphObject } from "@buttery/core/config";
 import {
   makeColorBrand,
   makeColorShade,
@@ -11,8 +10,10 @@ import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router";
 
-import { LayoutBodyNavItem } from "./LayoutBodyNavItem";
-import { LayoutTextOverline } from "./LayoutTextOverline";
+import { LayoutBodyNavItem } from "./LayoutBodyNavItem.js";
+import { LayoutTextOverline } from "./LayoutTextOverline.js";
+
+import type { ButteryDocsRouteManifestGraphObject } from "../../../utils/util.types.js";
 
 const navStyles = css`
   grid-area: layout-sidebar;

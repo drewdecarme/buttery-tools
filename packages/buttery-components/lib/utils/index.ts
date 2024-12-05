@@ -1,3 +1,3 @@
-export * from "./exhaustiveMatchGuard";
-export * from "./classes";
-export * from "./nodeHasAttributesInChildren";
+export * from "./exhaustiveMatchGuard.js";
+export * from "./classes.js";
+export * from "./nodeHasAttributesInChildren.js";

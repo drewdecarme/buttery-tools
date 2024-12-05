@@ -2,8 +2,8 @@ import type { ResolvedButteryConfig } from "@buttery/core/config";
 
 import { readFile, writeFile } from "node:fs/promises";
 
-import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
-import { LOG } from "../utils/utils";
+import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
+import { LOG } from "../utils/LOG";
 
 /**
  * Given the commands config reconciled from the .buttery/config

@@ -96,7 +96,7 @@ export const usePopover = <T extends HTMLElement>({ id }: PopoverOptions) => {
     // add the close class to make any transitions associated with
     popoverRef.current.classList.replace("open", "close");
     const animations = popoverRef.current.getAnimations({
-      subtree: true
+      subtree: true,
     });
     // wait for all of the animations to run with .close
     await Promise.allSettled(animations.map((animation) => animation.finished));
@@ -115,6 +115,6 @@ export const usePopover = <T extends HTMLElement>({ id }: PopoverOptions) => {
     setPopoverRef,
     setTargetRef,
     showPopover,
-    hidePopover
+    hidePopover,
   };
 };

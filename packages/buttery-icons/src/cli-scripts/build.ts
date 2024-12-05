@@ -8,7 +8,7 @@ import { generateComponents } from "../build/generate-components";
 import { generateTypes } from "../build/generate-types";
 import { getButteryIconsConfig } from "../config/getButteryIconsConfig";
 import { getSVGFilePaths } from "../build/getSVGFilePaths";
-import { LOG } from "../utils/LOG";
+import { LOG } from "../utils/util.logger";
 
 export type ButteryIconsBuildOptions = z.infer<
   typeof butteryIconsBuildOptionsSchema

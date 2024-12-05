@@ -3,18 +3,18 @@ import {
   getButteryConfig,
 } from "@buttery/core/config";
 
-import { getButteryDocsDirectories } from "./getButteryDocsDirectories";
+import { getButteryDocsDirectories } from "./getButteryDocsDirectories.js";
 import {
-  ButteryDocsConfig,
-  butteryDocsConfigDefaults,
-} from "./docs-config.utils";
+  butteryDocsConfigSchema,
+  type ButteryDocsConfig,
+} from "./_config.utils.js";
 
 export type ResolvedButteryDocsConfig = Awaited<
   ReturnType<typeof getButteryDocsConfig>
 >;
 
 type GetButteryDocsParams = Required<
-  Omit<GetButteryConfigOptions<ButteryDocsConfig>, "defaults">
+  Pick<GetButteryConfigOptions<ButteryDocsConfig>, "prompt" | "logLevel">
 >;
 
 export async function getButteryDocsConfig({
@@ -24,7 +24,18 @@ export async function getButteryDocsConfig({
   const { config, paths } = await getButteryConfig<ButteryDocsConfig>("docs", {
     logLevel,
     prompt,
-    defaults: butteryDocsConfigDefaults,
+    async onEmpty() {
+      return {
+        buildTarget: "cloudflare-pages",
+      };
+    },
+    async validate(rawConfig) {
+      const res = butteryDocsConfigSchema.safeParse(rawConfig);
+      if (res.error) {
+        throw res.error;
+      }
+      return res.data;
+    },
   });
 
   const dirs = await getButteryDocsDirectories(config, paths, {

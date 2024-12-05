@@ -1,4 +1,4 @@
-import { exhaustiveMatchGuard } from "@buttery/core/utils/isomorphic";
+import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 import type { Plugin } from "vite";
 
 import { readFileSync } from "node:fs";

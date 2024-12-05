@@ -1,4 +1,3 @@
-import type { ButteryConfigDocs } from "@buttery/core/config";
 import {
   makeColorShade,
   makeColorStatic,
@@ -10,7 +9,9 @@ import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router";
 
-import { LayoutHeaderLinks } from "./LayoutHeaderLinks";
+import { LayoutHeaderLinks } from "./LayoutHeaderLinks.js";
+
+import type { ButteryDocsConfigHeader } from "../../../config/_config.utils.js";
 
 const layoutHeaderStyles = css`
   grid-area: layout-header;
@@ -64,7 +65,7 @@ const divStyles = css`
   font-weight: ${makeFontWeight("bold")};
 `;
 
-export type LayoutHeaderProps = { header: ButteryConfigDocs["header"] | null };
+export type LayoutHeaderProps = { header: ButteryDocsConfigHeader | undefined };
 
 export const LayoutHeader: FC<LayoutHeaderProps> = ({ header }) => {
   return (

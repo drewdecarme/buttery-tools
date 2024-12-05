@@ -9,13 +9,13 @@ import path from "node:path";
 import { bootstrapCommand } from "./command-bootstrap";
 import { parseCommand } from "./command-parse";
 
-import type { ButteryCommandsBaseOptions } from "../options";
+import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils";
 import {
   type ButteryCommand,
   type ButteryCommandsManifest,
   LOG,
-} from "../utils/utils";
-import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
+} from "../utils/LOG";
+import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
 
 /**
  */

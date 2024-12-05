@@ -1,7 +1,7 @@
 import { css } from "@linaria/core";
 
-import { DropdownMenu } from "../DropdownMenu";
-import { useDropdownMenu } from "../dropdown-menu.useDropdownMenu";
+import { DropdownMenu } from "../DropdownMenu.js";
+import { useDropdownMenu } from "../dropdown-menu.useDropdownMenu.js";
 
 const menuClassName = css`
   opacity: 0;

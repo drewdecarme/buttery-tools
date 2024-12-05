@@ -1,2 +1,2 @@
-export * from "./DropdownMenu";
-export * from "./dropdown-menu.useDropdownMenu";
+export * from "./DropdownMenu.js";
+export * from "./dropdown-menu.useDropdownMenu.js";

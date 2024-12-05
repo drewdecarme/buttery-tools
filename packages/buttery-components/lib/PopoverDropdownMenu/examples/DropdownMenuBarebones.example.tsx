@@ -1,5 +1,5 @@
-import { DropdownMenu } from "../DropdownMenu";
-import { useDropdownMenu } from "../dropdown-menu.useDropdownMenu";
+import { DropdownMenu } from "../DropdownMenu.js";
+import { useDropdownMenu } from "../dropdown-menu.useDropdownMenu.js";
 
 export default () => {
   const { targetProps, dropdownProps } = useDropdownMenu();

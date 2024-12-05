@@ -1071,7 +1071,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@buttery/builtins@workspace:^0.1.8, @buttery/builtins@workspace:packages/buttery-builtins":
+"@buttery/builtins@workspace:packages/buttery-builtins":
   version: 0.0.0-use.local
   resolution: "@buttery/builtins@workspace:packages/buttery-builtins"
   dependencies:
@@ -1122,7 +1122,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/components@workspace:^0.1.6, @buttery/components@workspace:packages/buttery-components":
+"@buttery/components@workspace:^, @buttery/components@workspace:^0.1.6, @buttery/components@workspace:packages/buttery-components":
   version: 0.0.0-use.local
   resolution: "@buttery/components@workspace:packages/buttery-components"
   dependencies:
@@ -1143,17 +1143,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/core@workspace:packages/buttery-core"
   dependencies:
-    "@buttery/builtins": "workspace:^0.1.8"
-    "@buttery/logs": "workspace:^0.1.6"
+    "@buttery/logs": "workspace:^"
     "@buttery/tsconfig": "workspace:*"
-    "@inquirer/checkbox": "npm:^4.0.2"
-    "@types/fs-extra": "npm:^11.0.4"
+    "@buttery/utils": "workspace:^"
+    "@inquirer/prompts": "npm:^7.1.0"
     "@types/node": "npm:22.10.1"
     esbuild: "npm:^0.24.0"
-    fs-extra: "npm:^11.2.0"
     tsx: "npm:4.19.2"
     typescript: "npm:5.7.2"
-    vite: "npm:^6.0.2"
     zod: "npm:^3.23.8"
   languageName: unknown
   linkType: soft
@@ -1165,12 +1162,13 @@ __metadata:
     "@babel/core": "npm:7.26.0"
     "@babel/preset-react": "npm:7.25.9"
     "@babel/preset-typescript": "npm:7.26.0"
-    "@buttery/builtins": "workspace:^0.1.8"
-    "@buttery/components": "workspace:^0.1.6"
-    "@buttery/core": "workspace:^0.1.11"
+    "@buttery/components": "workspace:^"
+    "@buttery/core": "workspace:^"
     "@buttery/icons": "workspace:*"
+    "@buttery/logs": "workspace:^"
     "@buttery/meta": "workspace:^0.1.6"
     "@buttery/tokens": "workspace:*"
+    "@buttery/utils": "workspace:^"
     "@cloudflare/workers-types": "npm:4.20241202.0"
     "@inquirer/prompts": "npm:^7.1.0"
     "@linaria/core": "npm:^6.2.0"
@@ -1220,8 +1218,9 @@ __metadata:
   resolution: "@buttery/icons@workspace:packages/buttery-icons"
   dependencies:
     "@buttery/core": "workspace:^0.1.11"
-    "@buttery/logs": "workspace:^0.1.6"
+    "@buttery/logs": "workspace:^"
     "@buttery/tsconfig": "workspace:*"
+    "@buttery/utils": "workspace:^"
     "@svgr/cli": "npm:8.1.0"
     "@svgr/core": "npm:8.1.0"
     "@svgr/plugin-jsx": "npm:8.1.0"
@@ -1235,7 +1234,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/logs@workspace:^0.1.6, @buttery/logs@workspace:packages/buttery-logs":
+"@buttery/logs@workspace:^, @buttery/logs@workspace:^0.1.6, @buttery/logs@workspace:packages/buttery-logs":
   version: 0.0.0-use.local
   resolution: "@buttery/logs@workspace:packages/buttery-logs"
   dependencies:
@@ -1288,6 +1287,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/tsconfig@workspace:packages/buttery-tsconfig"
   dependencies:
+    typescript: "npm:5.7.2"
+  languageName: unknown
+  linkType: soft
+
+"@buttery/utils@workspace:^, @buttery/utils@workspace:packages/buttery-utils":
+  version: 0.0.0-use.local
+  resolution: "@buttery/utils@workspace:packages/buttery-utils"
+  dependencies:
+    "@buttery/tsconfig": "workspace:*"
     typescript: "npm:5.7.2"
   languageName: unknown
   linkType: soft
@@ -12794,7 +12802,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:6.0.2, vite@npm:^6.0.2":
+"vite@npm:6.0.2":
   version: 6.0.2
   resolution: "vite@npm:6.0.2"
   dependencies:

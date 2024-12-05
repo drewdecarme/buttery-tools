@@ -1,4 +1,4 @@
-import { ButteryLogger } from "@buttery/core/logger";
+import { ButteryLogger } from "@buttery/logs";
 
 export const LOG = new ButteryLogger({
   id: "buttery-docs",

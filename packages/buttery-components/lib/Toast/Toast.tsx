@@ -1,4 +1,4 @@
-import { classes } from "@BUTTERY_COMPONENT/utils";
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 import { css } from "@linaria/core";
 import {
   type FC,

@@ -6,9 +6,9 @@ import { ensureDir } from "fs-extra";
 import path from "node:path";
 import { rm, writeFile } from "node:fs/promises";
 
-import type { ButteryCommandsBaseOptions } from "../options";
-import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
-import { LOG } from "../utils/utils";
+import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils";
+import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
+import { LOG } from "../utils/LOG";
 
 /**
  * Cleans out some of the production directories that distribute

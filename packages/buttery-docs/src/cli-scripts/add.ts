@@ -1,16 +1,15 @@
-import { inlineTryCatch, writeFile } from "@buttery/builtins";
-import { parseAndValidateOptions } from "@buttery/core/utils/node";
+import { parseAndValidateOptions } from "@buttery/core/utils";
+import { tryHandle } from "@buttery/utils/isomorphic";
 import { confirm, input, select } from "@inquirer/prompts";
 
 import path from "node:path";
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 
-import { LOG } from "../build/utils";
-import { getButteryDocsConfig } from "../config/getButteryDocsConfig";
-import {
-  type ButteryDocsAddOptions,
-  butteryDocsAddOptionsSchema,
-} from "../options";
+import type { ButteryDocsAddOptions } from "./_cli-scripts.utils.js";
+import { butteryDocsAddOptionsSchema } from "./_cli-scripts.utils.js";
+
+import { getButteryDocsConfig } from "../config/getButteryDocsConfig.js";
+import { LOG } from "../utils/util.logger.js";
 
 export type Template = {
   contentType: string;
@@ -112,7 +111,7 @@ config:
 
 ${decodedFileContent}
 `;
-    const createFile = await inlineTryCatch(writeFile)(resolvedPath, content);
+    const createFile = await tryHandle(writeFile)(resolvedPath, content);
 
     if (createFile.hasError) {
       return LOG.fatal(createFile.error);

@@ -1,3 +1,4 @@
+// @ts-expect-error Not sure why this is happening but it works
 import type { StorybookConfig } from "@storybook/react-vite";
 
 import { dirname, join } from "node:path";

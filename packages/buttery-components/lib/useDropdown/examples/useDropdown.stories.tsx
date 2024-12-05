@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
 
-import { default as ExampleUseDropdown } from "./UseDropdown.example";
+import { default as ExampleUseDropdown } from "./UseDropdown.example.js";
 
 const meta: Meta = {
   title: "Hooks / useDropdown",

@@ -1,16 +1,16 @@
 import {
   ensurePopover,
   ensureTarget,
-  usePopover
-} from "@BUTTERY_COMPONENT/usePopover";
+  usePopover,
+} from "@BUTTERY_COMPONENT/usePopover/index.js";
 import { type RefCallback, useCallback } from "react";
 
-import type { DropdownOptions } from "./useDropdown.types";
+import type { DropdownOptions } from "./useDropdown.types.js";
 import {
   getIsDropdownOpen,
   processDropdownOptions,
-  setDropdownPositionStyles
-} from "./useDropdown.utils";
+  setDropdownPositionStyles,
+} from "./useDropdown.utils.js";
 
 export type DropdownRefHandleOpen = (
   e?: React.MouseEvent,
@@ -34,7 +34,7 @@ export const useDropdown = <T extends HTMLElement>(
     setPopoverRef,
     setTargetRef,
     showPopover,
-    hidePopover
+    hidePopover,
   } = usePopover<T>({ id: options.id });
 
   const setDropdownRef = useCallback<RefCallback<T>>(
@@ -70,7 +70,7 @@ export const useDropdown = <T extends HTMLElement>(
         arrow: parsedOptions.dxArrow,
         offset: parsedOptions.dxOffset,
         dropdownNode: popoverRef.current,
-        targetNode: targetRef.current
+        targetNode: targetRef.current,
       });
     },
     [targetRef.current, popoverRef.current, showPopover, options]
@@ -100,6 +100,6 @@ export const useDropdown = <T extends HTMLElement>(
     setTargetRef,
     closeDropdown,
     openDropdown,
-    toggleDropdown
+    toggleDropdown,
   };
 };

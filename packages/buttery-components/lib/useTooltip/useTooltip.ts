@@ -1,9 +1,9 @@
 import {
   type DropdownOptions,
-  useDropdown
-} from "@BUTTERY_COMPONENT/useDropdown";
-import { ensurePopover } from "@BUTTERY_COMPONENT/usePopover";
-import { exhaustiveMatchGuard } from "@BUTTERY_COMPONENT/utils";
+  useDropdown,
+} from "@BUTTERY_COMPONENT/useDropdown/index.js";
+import { ensurePopover } from "@BUTTERY_COMPONENT/usePopover/index.js";
+import { exhaustiveMatchGuard } from "@BUTTERY_COMPONENT/utils/index.js";
 import { type RefCallback, useCallback, useId, useMemo } from "react";
 
 export type UseTooltipOptionsTooltip = DropdownOptions & {
@@ -63,7 +63,7 @@ export const useTooltip = <T extends HTMLElement>(
     setTargetRef,
     openDropdown,
     closeDropdown,
-    toggleDropdown
+    toggleDropdown,
   } = useDropdown<T>({ id, ...options });
 
   const setTooltipRef = useCallback<RefCallback<T>>(
@@ -86,7 +86,7 @@ export const useTooltip = <T extends HTMLElement>(
           onFocus: () => openDropdown(),
           onBlur: () => closeDropdown(),
           onMouseEnter: () => openDropdown(),
-          onMouseLeave: () => closeDropdown()
+          onMouseLeave: () => closeDropdown(),
         };
         switch (options.dxKind) {
           case "label":
@@ -94,7 +94,7 @@ export const useTooltip = <T extends HTMLElement>(
               ...props,
               ref: setTargetRef,
               type: "button",
-              "aria-labelledby": options.dxLabeledBy
+              "aria-labelledby": options.dxLabeledBy,
             };
             break;
 
@@ -103,7 +103,7 @@ export const useTooltip = <T extends HTMLElement>(
               ...props,
               ref: setTargetRef,
               type: "button",
-              "aria-labelledby": id
+              "aria-labelledby": id,
             };
             break;
 
@@ -116,7 +116,7 @@ export const useTooltip = <T extends HTMLElement>(
       case "toggletip":
         return {
           ref: setTargetRef,
-          onClick: toggleDropdown
+          onClick: toggleDropdown,
         };
 
       default:
@@ -126,7 +126,7 @@ export const useTooltip = <T extends HTMLElement>(
 
   const tooltipProps = useMemo(
     () => ({
-      ref: setTooltipRef
+      ref: setTooltipRef,
     }),
     [setTooltipRef]
   );
@@ -134,7 +134,7 @@ export const useTooltip = <T extends HTMLElement>(
   return useMemo(
     () => ({
       targetProps,
-      tooltipProps
+      tooltipProps,
     }),
     [targetProps, tooltipProps]
   );

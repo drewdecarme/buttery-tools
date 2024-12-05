@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-import { Toast } from "./Toast";
+import { Toast } from "./Toast.js";
 import {
   type ToastComponent,
   type ToastOptions,
   deleteToastOptions,
   getToastOptions,
   toastContainerId,
-} from "./toast.utils";
+} from "./toast.utils.js";
 
 export function Toaster<
   ToastComponentProps extends { [key: string]: unknown }

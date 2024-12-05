@@ -1,1 +1,1 @@
-export * from "./useDynamicNode";
+export * from "./useDynamicNode.js";

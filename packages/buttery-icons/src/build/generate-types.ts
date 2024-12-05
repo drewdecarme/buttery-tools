@@ -4,7 +4,7 @@ import path from "node:path";
 import { getSvgFilePaths } from "./get-svg-files";
 
 import { ButteryIconsDirectories } from "../config/getButteryIconsDirectories";
-import { LOG } from "../utils/LOG";
+import { LOG } from "../utils/util.logger";
 
 /**
  * Reads the SVG file names from the svg directory reconciled in the config

@@ -1,8 +1,8 @@
 import { css } from "@linaria/core";
 import { type FormEventHandler, useCallback } from "react";
 
-import { Modal } from "../Modal";
-import { useModal } from "../modal.useModal";
+import { Modal } from "../Modal.js";
+import { useModal } from "../modal.useModal.js";
 
 const styles = css`
   /* Animation for appearing */

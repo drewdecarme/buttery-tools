@@ -17,9 +17,9 @@ export function transformMarkdownAssetPath(): Plugin {
         );
         return {
           code: transformedCode,
-          map: null
+          map: null,
         };
       }
-    }
+    },
   };
 }

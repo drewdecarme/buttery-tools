@@ -4,10 +4,10 @@ import {
   type ModalRef,
   type UseModalOptions,
   useModalDialog,
-} from "@BUTTERY_COMPONENT/useModalDialog";
-import { classes } from "@BUTTERY_COMPONENT/utils";
+} from "@BUTTERY_COMPONENT/useModalDialog/index.js";
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 
-import { ModalProvider } from "./Modal.provider";
+import { ModalProvider } from "./Modal.provider.js";
 
 export type ModalPropsNative = Omit<JSX.IntrinsicElements["dialog"], "ref">;
 export type ModalPropsCustom = UseModalOptions & {

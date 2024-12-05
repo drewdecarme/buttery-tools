@@ -1,5 +1,4 @@
 import { classes } from "@buttery/components";
-import type { ButteryDocsRouteManifestGraphObject } from "@buttery/core/config";
 import {
   makeColorBrand,
   makeColorShade,
@@ -9,6 +8,8 @@ import {
 import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router";
+
+import type { ButteryDocsRouteManifestGraphObject } from "../../../utils/util.types.js";
 
 const ulStyles = css`
   list-style-type: none;

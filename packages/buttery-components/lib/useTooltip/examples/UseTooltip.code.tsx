@@ -1,4 +1,4 @@
-import { useTooltip } from "../useTooltip";
+import { useTooltip } from "../useTooltip.js";
 
 export default () => {
   const { targetProps, tooltipProps } = useTooltip({

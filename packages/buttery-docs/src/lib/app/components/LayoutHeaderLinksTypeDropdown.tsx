@@ -1,5 +1,4 @@
 import { DropdownNav, useDropdownNav } from "@buttery/components";
-import type { ButteryConfigDocsHeaderLinkTypeDropdown } from "@buttery/core/config";
 import {
   makeColorBrand,
   makeColorShade,
@@ -11,7 +10,9 @@ import {
 import { css } from "@linaria/core";
 import { NavLink } from "react-router";
 
-import { IconComponent } from "./icons";
+import { IconComponent } from "./icons/IconComponent.js";
+
+import type { ButteryDocsConfigHeaderLinkTypeDropdown } from "../../../config/_config.utils.js";
 
 const buttonStyles = css`
   ${makeReset("button")};
@@ -119,7 +120,7 @@ const dropdownStyles = css`
 `;
 
 export function LayoutHeaderLinksTypeDropdown(
-  props: ButteryConfigDocsHeaderLinkTypeDropdown
+  props: ButteryDocsConfigHeaderLinkTypeDropdown
 ) {
   const { targetProps, dropdownProps } = useDropdownNav({
     dxOffset: 16,

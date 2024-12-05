@@ -1,10 +1,9 @@
 import type {
   ButteryDocsRouteManifest,
-  ButteryDocsRouteManifestEntry,
   ButteryDocsRouteManifestGraphObject,
-} from "@buttery/core/config";
-
-import { LOG } from "./utils";
+  ButteryDocsRouteManifestEntry,
+} from "../lib/index.js";
+import { LOG } from "../utils/util.logger.js";
 
 /**
  * Takes the route manifest and recursively turns it into a graphical

@@ -13,9 +13,9 @@ import {
   LOG,
   defaultEsbuildOptions,
   getEntryPointsGlob,
-} from "../utils/utils";
-import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
-import type { ButteryCommandsBaseOptions } from "../options";
+} from "../utils/LOG";
+import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
+import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils";
 
 export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
   config: ResolvedButteryConfig<"commands">,

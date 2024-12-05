@@ -41,7 +41,8 @@
   },
   "dependencies": {
     "@buttery/core": "workspace:^0.1.11",
-    "@buttery/logs": "workspace:^0.1.6",
+    "@buttery/logs": "workspace:^",
+    "@buttery/utils": "workspace:^",
     "@svgr/cli": "8.1.0",
     "@svgr/core": "8.1.0",
     "@svgr/plugin-jsx": "8.1.0",

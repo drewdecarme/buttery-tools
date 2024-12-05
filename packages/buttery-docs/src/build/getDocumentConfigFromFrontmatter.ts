@@ -2,7 +2,7 @@ import matter from "gray-matter";
 
 import { readFileSync } from "node:fs";
 
-import { LOG } from "./utils";
+import { LOG } from "../utils/util.logger.js";
 
 type ButterDocsDocumentConfig = {
   title?: string;

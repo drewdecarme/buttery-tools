@@ -1,11 +1,11 @@
 import type { Meta } from "@storybook/react";
 
-import DropdownMenuExample from "./DropdownMenu.example";
-import DropdownMenuBarebonesExample from "./DropdownMenuBarebones.example";
-import DropdownMenuGroupsExample from "./DropdownMenuGroups.example";
-import DropdownMenuPositionsExample from "./DropdownMenuPositions.example";
-import DropdownMenuWithArrowExample from "./DropdownMenuWithArrow.example";
-import DropdownMenuWithOffsetExample from "./DropdownMenuWithOffset.example";
+import DropdownMenuExample from "./DropdownMenu.example.js";
+import DropdownMenuBarebonesExample from "./DropdownMenuBarebones.example.js";
+import DropdownMenuGroupsExample from "./DropdownMenuGroups.example.js";
+import DropdownMenuPositionsExample from "./DropdownMenuPositions.example.js";
+import DropdownMenuWithArrowExample from "./DropdownMenuWithArrow.example.js";
+import DropdownMenuWithOffsetExample from "./DropdownMenuWithOffset.example.js";
 
 const meta: Meta = {
   title: "Popovers / Dropdown Menu",

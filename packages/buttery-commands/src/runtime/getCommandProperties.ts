@@ -2,7 +2,8 @@ import type {
   WellFormedCommandArgs,
   WellFormedCommandOptions,
 } from "./runtime.types";
-import type { ButteryCommand } from "./utils";
+
+import type { ButteryCommand } from "../utils/LOG";
 
 export type CommandProperties = ReturnType<typeof getCommandProperties>;
 

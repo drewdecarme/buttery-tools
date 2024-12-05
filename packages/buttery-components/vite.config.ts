@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 
 import path from "node:path";
 
-import packageJson from "./package.json";
+import packageJson from "./package.json" with { type: "json"};
 
 export default defineConfig({
   build: {
@@ -13,30 +13,31 @@ export default defineConfig({
       fileName(_format, entryName) {
         return `${entryName}.js`;
       },
-      formats: ["es"]
+      formats: ["es"],
     },
     rollupOptions: {
       output: {
-        preserveModules: true
+        preserveModules: true,
       },
       external: Object.keys(packageJson.dependencies).concat(
         "react/jsx-runtime"
-      )
-    }
+      ),
+    },
   },
   resolve: {
     alias: {
-      "@BUTTERY_COMPONENT": path.resolve(import.meta.dirname, "./lib")
-    }
+      "@BUTTERY_COMPONENT": path.resolve(import.meta.dirname, "./lib"),
+    },
   },
   plugins: [
     react(),
+    // @ts-expect-error this actually has call signatures
     wyw({
       include: "/**/*.(ts|tsx)",
       babelOptions: {
         compact: false,
-        presets: ["@babel/preset-typescript", "@babel/preset-react"]
-      }
-    })
-  ]
+        presets: ["@babel/preset-typescript", "@babel/preset-react"],
+      },
+    }),
+  ],
 });

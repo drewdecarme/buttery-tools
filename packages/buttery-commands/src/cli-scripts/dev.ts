@@ -3,15 +3,15 @@ import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { watch } from "chokidar";
 import { type BuildContext, type BuildOptions, context } from "esbuild";
 
-import { getBuildConfig } from "../compiler/get-build-config.js";
-import { runPreBuild } from "../compiler/run-prebuild.js";
+import { getBuildConfig } from "../build/get-build-config.js";
+import { runPreBuild } from "../build/run-prebuild.js";
 import {
   type ButteryCommandsDevOptions,
   butteryCommandsDevOptionsSchema,
-} from "../options";
-import { getButteryCommandsConfig } from "../utils/getButteryCommandsConfig.js";
-import { getButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories.js";
-import { LOG } from "../utils/utils.js";
+} from "./_cli-scripts.utils.js";
+import { getButteryCommandsConfig } from "../config/getButteryCommandsConfig.js";
+import { getButteryCommandsDirectories } from "../config/getButteryCommandsDirectories.js";
+import { LOG } from "../utils/LOG.js";
 
 /**
  * Compiles and builds the buttery commands binary

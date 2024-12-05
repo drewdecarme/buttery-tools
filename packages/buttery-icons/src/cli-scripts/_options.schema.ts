@@ -1,4 +1,4 @@
-import { ButteryLogLevelSchema } from "@buttery/core/logger";
+import { ButteryLogLevelSchema } from "@buttery/core";
 import { z } from "zod";
 
 const baseOptionsSchema = z.object({

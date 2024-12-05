@@ -1,7 +1,7 @@
 import type {
   DropdownOptions,
-  DropdownRef
-} from "@BUTTERY_COMPONENT/useDropdown";
+  DropdownRef,
+} from "@BUTTERY_COMPONENT/useDropdown/index.js";
 import { useCallback, useId, useMemo, useRef } from "react";
 
 export type UseDropdownNavOptions = Partial<DropdownOptions>;
@@ -44,7 +44,7 @@ export const useDropdownNav = (options: UseDropdownNavOptions) => {
     return {
       onKeyDown: handleTargetKeyDown,
       onClick: toggleNav,
-      "aria-controls": id
+      "aria-controls": id,
     };
   }, [handleTargetKeyDown, toggleNav, id]);
 
@@ -55,7 +55,7 @@ export const useDropdownNav = (options: UseDropdownNavOptions) => {
   >(
     () => ({
       id,
-      ref: dropdownNavRef
+      ref: dropdownNavRef,
     }),
     [id]
   );
@@ -66,7 +66,7 @@ export const useDropdownNav = (options: UseDropdownNavOptions) => {
       dropdownProps,
       openNav,
       closeNav,
-      toggleNav
+      toggleNav,
     }),
     [targetProps, dropdownProps, openNav, closeNav, toggleNav]
   );

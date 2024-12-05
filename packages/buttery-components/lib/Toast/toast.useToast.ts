@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from "react";
 
-import { setToastOptions, toastContainerId } from "./toast.utils";
+import { setToastOptions, toastContainerId } from "./toast.utils.js";
 
 export const useToast = <
-  ToastOptions extends Record<string, unknown>,
+  ToastOptions extends Record<string, unknown>
 >(params?: {
   /**
    * An optional ID that should be supplied to the toaster and this hook

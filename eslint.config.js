@@ -59,6 +59,13 @@ export default [
     },
     rules: {
       "react/prop-types": 0,
+      "@typescript-eslint/consistent-type-imports": [
+        "warn",
+        {
+          prefer: "type-imports",
+          disallowTypeAnnotations: true,
+        },
+      ],
       "@typescript-eslint/no-unused-vars": [
         "error",
         {

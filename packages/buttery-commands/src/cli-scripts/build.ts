@@ -2,15 +2,16 @@ import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { build as esbuild } from "esbuild";
 
-import { getBuildConfig } from "../compiler/get-build-config";
-import { runPreBuild } from "../compiler/run-prebuild";
 import {
   type ButteryCommandsBuildOptions,
   butteryCommandsBuildOptionsSchema,
-} from "../options";
-import { getButteryCommandsConfig } from "../utils/getButteryCommandsConfig";
-import { getButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
-import { LOG } from "../utils/utils";
+} from "./_cli-scripts.utils";
+
+import { getBuildConfig } from "../build/get-build-config";
+import { runPreBuild } from "../build/run-prebuild";
+import { getButteryCommandsConfig } from "../config/getButteryCommandsConfig";
+import { getButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
+import { LOG } from "../utils/LOG";
 
 /**
  * Compiles and builds the buttery commands binary

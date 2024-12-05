@@ -1,4 +1,4 @@
-import { classes } from "@BUTTERY_COMPONENT/utils";
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 import { css } from "@linaria/core";
 import {
   randBoolean,
@@ -7,8 +7,8 @@ import {
 } from "@ngneat/falso";
 import type { FC } from "react";
 
-import { Toaster } from "../Toaster";
-import { useToast } from "../toast.useToast";
+import { Toaster } from "../Toaster.js";
+import { useToast } from "../toast.useToast.js";
 
 const divCSS = css`
   width: 400px;

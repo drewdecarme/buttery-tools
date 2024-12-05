@@ -1,18 +1,17 @@
-import { parseAndValidateOptions } from "@buttery/core/utils/node";
+import { parseAndValidateOptions } from "@buttery/core/utils";
 import { ensureFile } from "fs-extra";
 import { build as viteBuild } from "vite";
 
 import path from "node:path";
 import { cp, readdir, writeFile } from "node:fs/promises";
 
-import { getButteryDocsRouteManifest } from "../build/getButteryDocsRouteManifest";
-import { getButteryDocsViteConfig } from "../build/getButteryDocsViteConfig";
-import { LOG } from "../build/utils";
-import { getButteryDocsConfig } from "../config/getButteryDocsConfig";
-import {
-  type ButteryDocsBuildOptions,
-  butteryDocsBuildOptionsSchema,
-} from "../options";
+import type { ButteryDocsBuildOptions } from "./_cli-scripts.utils.js";
+import { butteryDocsBuildOptionsSchema } from "./_cli-scripts.utils.js";
+
+import { getButteryDocsRouteManifest } from "../build/getButteryDocsRouteManifest.js";
+import { getButteryDocsViteConfig } from "../build/getButteryDocsViteConfig.js";
+import { getButteryDocsConfig } from "../config/getButteryDocsConfig.js";
+import { LOG } from "../utils/util.logger.js";
 
 process.env.NODE_ENV = "production";
 

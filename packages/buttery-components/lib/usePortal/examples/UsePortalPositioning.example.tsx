@@ -5,7 +5,7 @@ import {
   useRef,
 } from "react";
 
-import { usePortal } from "../usePortal";
+import { usePortal } from "../usePortal.js";
 
 export default () => {
   const { openPortal, closePortal, Portal } = usePortal();

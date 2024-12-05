@@ -2,9 +2,9 @@ import {
   type DropdownOptions,
   type UseDropdownOptions,
   useDropdown,
-} from "@BUTTERY_COMPONENT/useDropdown";
-import { useWindowEventListener } from "@BUTTERY_COMPONENT/useWindowEventListener";
-import { classes } from "@BUTTERY_COMPONENT/utils";
+} from "@BUTTERY_COMPONENT/useDropdown/index.js";
+import { useWindowEventListener } from "@BUTTERY_COMPONENT/useWindowEventListener/index.js";
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 import {
   type FocusEventHandler,
   type MutableRefObject,
@@ -19,7 +19,7 @@ import {
   useState,
 } from "react";
 
-import { LOG_ITD } from "./input-text-dropdown.utils";
+import { LOG_ITD } from "./input-text-dropdown.utils.js";
 
 export type InputTextDropdownRef = {
   setValue: (value: string) => void;

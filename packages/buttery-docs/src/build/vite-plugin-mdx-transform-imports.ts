@@ -2,7 +2,7 @@ import type { Plugin } from "vite";
 
 import path from "node:path";
 
-import { LOG } from "./utils";
+import { LOG } from "../utils/util.logger.js";
 
 type MdxTransformImportsOptions = {
   rootPath: string;

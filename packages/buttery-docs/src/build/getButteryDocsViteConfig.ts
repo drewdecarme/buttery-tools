@@ -11,14 +11,12 @@ import remarkGfm from "remark-gfm";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { type Plugin, defineConfig } from "vite";
 
-import { getButteryDocsRouteManifest } from "./getButteryDocsRouteManifest";
-import {
-  type ButteryDocsVirtualModules,
-  getButteryDocsVirtualModules,
-} from "./getButteryDocsVirtualModules";
-import { LOG } from "./utils";
+import { getButteryDocsRouteManifest } from "./getButteryDocsRouteManifest.js";
+import type { ButteryDocsVirtualModules } from "./getButteryDocsVirtualModules.js";
+import { getButteryDocsVirtualModules } from "./getButteryDocsVirtualModules.js";
 
-import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
+import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig.js";
+import { LOG } from "../utils/util.logger.js";
 
 export function getButteryDocsViteConfig(rConfig: ResolvedButteryDocsConfig) {
   const viteConfig = defineConfig({
@@ -69,6 +67,7 @@ export function getButteryDocsViteConfig(rConfig: ResolvedButteryDocsConfig) {
       }),
 
       react(),
+      // @ts-expect-error There actually is a call signature here
       wyw({
         include: ["**/*.{ts,tsx}"],
         babelOptions: {

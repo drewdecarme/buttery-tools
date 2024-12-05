@@ -1,15 +1,15 @@
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { printAsBullets } from "@buttery/core/logger";
 
-import type { ButteryCommandsBaseOptions } from "../options";
-import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
+import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils";
+import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
 import {
   type ButteryCommand,
   type ButteryCommandsGraph,
   type ButteryCommandsManifest,
   LOG,
   defaultCommandOptions,
-} from "../utils/utils";
+} from "../utils/LOG";
 
 /**
  * This function will assemble the manifest graph by getting the command files

@@ -1,6 +1,6 @@
 import { type StaticHandler, createStaticRouter } from "react-router";
 
-import { LOG_SERVER } from "./server.utils";
+import { LOG_SERVER } from "./server.utils.js";
 
 export async function createRouterFromRoutes(
   { query, dataRoutes }: StaticHandler,

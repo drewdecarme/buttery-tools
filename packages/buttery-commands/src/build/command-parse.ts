@@ -4,12 +4,8 @@ import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import path from "node:path";
 
 import type { Command } from "../lib";
-import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
-import {
-  type ButteryCommand,
-  LOG,
-  defaultCommandOptions,
-} from "../utils/utils";
+import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
+import { type ButteryCommand, LOG, defaultCommandOptions } from "../utils/LOG";
 
 async function getCommandSegments(cmdId: string, cmdPath: string) {
   try {

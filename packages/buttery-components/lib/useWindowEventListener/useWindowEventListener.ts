@@ -53,7 +53,7 @@ export function useWindowEventListener() {
     // set it to a ref
     removeEventRef.current = {
       ...removeEventRef.current,
-      [eventName]: cleanupFn
+      [eventName]: cleanupFn,
     };
     return cleanupFn;
   }, []);

@@ -1,7 +1,7 @@
 import type {
   ModalDefaultState,
-  ModalRef
-} from "@BUTTERY_COMPONENT/useModalDialog";
+  ModalRef,
+} from "@BUTTERY_COMPONENT/useModalDialog/index.js";
 import { type MutableRefObject, useCallback, useMemo, useRef } from "react";
 
 export function useDrawer<T extends ModalDefaultState>() {
@@ -21,7 +21,7 @@ export function useDrawer<T extends ModalDefaultState>() {
     () => ({
       drawerRef: drawerRef as unknown as MutableRefObject<ModalRef>,
       openDrawer,
-      closeDrawer
+      closeDrawer,
     }),
     [closeDrawer, openDrawer]
   );

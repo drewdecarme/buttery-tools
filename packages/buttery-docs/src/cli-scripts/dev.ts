@@ -1,16 +1,15 @@
-import { parseAndValidateOptions } from "@buttery/core/utils/node";
+import { parseAndValidateOptions } from "@buttery/core/utils";
 import express from "express";
 import open from "open";
 import { createServer } from "vite";
 
-import { getButteryDocsViteConfig } from "../build/getButteryDocsViteConfig";
-import { LOG } from "../build/utils";
-import { getButteryDocsConfig } from "../config/getButteryDocsConfig";
-import { handleRequestDev } from "../lib/server.dev";
-import {
-  type ButteryDocsDevOptions,
-  butteryDocsDevOptionsSchema,
-} from "../options";
+import type { ButteryDocsDevOptions } from "./_cli-scripts.utils.js";
+import { butteryDocsDevOptionsSchema } from "./_cli-scripts.utils.js";
+
+import { getButteryDocsViteConfig } from "../build/getButteryDocsViteConfig.js";
+import { getButteryDocsConfig } from "../config/getButteryDocsConfig.js";
+import { handleRequestDev } from "../lib/server.dev/handleRequest.dev.js";
+import { LOG } from "../utils/util.logger.js";
 
 process.env.NODE_ENV = "development";
 

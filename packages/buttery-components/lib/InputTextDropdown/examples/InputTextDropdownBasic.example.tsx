@@ -1,4 +1,4 @@
-import { InputTextDropdown } from "../";
+import { InputTextDropdown } from "../InputTextDropdown.js";
 
 export default () => {
   return (

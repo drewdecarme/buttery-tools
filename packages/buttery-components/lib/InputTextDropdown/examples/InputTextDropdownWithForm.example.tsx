@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import { InputTextDropdown } from "../InputTextDropdown";
+import { InputTextDropdown } from "../InputTextDropdown.js";
 
 const gender = [...new Array(20)].map(() => randGender());
 

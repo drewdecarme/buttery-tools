@@ -1,1 +1,1 @@
-export * from "./useWindowEventListener";
+export * from "./useWindowEventListener.js";

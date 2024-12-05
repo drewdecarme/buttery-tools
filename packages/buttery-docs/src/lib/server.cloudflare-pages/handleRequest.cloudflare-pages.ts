@@ -1,13 +1,13 @@
-import type { ButteryDocsRouteManifest } from "@buttery/core/config";
 import { ButteryMeta } from "@buttery/meta";
 import type { EventPluginContext } from "@cloudflare/workers-types";
 import type { Manifest as ViteManifest } from "vite";
 
-import type { ButteryDocsServerContext } from "../server/ButteryDocsServer";
-import type { createButteryDocsRenderToReadableStream } from "../server/createRenderFnReadableStream";
-import { generateHTMLTemplate } from "../server/generateHTMLTemplate";
-import { getButteryRouteIdFromRequest } from "../server/getButteryRouteFromRequest";
-import { getRouteAssets } from "../server/getRouteAssets";
+import type { ButteryDocsRouteManifest } from "../../utils/util.types.js";
+import type { ButteryDocsServerContext } from "../server/ButteryDocsServer.js";
+import type { createButteryDocsRenderToReadableStream } from "../server/createRenderFnReadableStream.js";
+import { generateHTMLTemplate } from "../server/generateHTMLTemplate.js";
+import { getButteryRouteIdFromRequest } from "../server/getButteryRouteFromRequest.js";
+import { getRouteAssets } from "../server/getRouteAssets.js";
 
 export type CFContext = EventPluginContext<
   unknown,

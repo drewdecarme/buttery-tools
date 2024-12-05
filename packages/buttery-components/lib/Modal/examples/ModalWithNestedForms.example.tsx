@@ -1,7 +1,7 @@
 import {
   InputTextDropdown,
   useInputTextDropdown,
-} from "@BUTTERY_COMPONENT/InputTextDropdown";
+} from "@BUTTERY_COMPONENT/InputTextDropdown/index.js";
 import { css } from "@linaria/core";
 import { randColor } from "@ngneat/falso";
 import {
@@ -13,8 +13,8 @@ import {
   useState,
 } from "react";
 
-import { Modal } from "../Modal";
-import { useModal } from "../modal.useModal";
+import { Modal } from "../Modal.js";
+import { useModal } from "../modal.useModal.js";
 
 const styles = css`
   /* Animation for appearing */

@@ -4,7 +4,7 @@ import { readdir } from "node:fs/promises";
 import path from "node:path";
 
 import { ButteryIconsDirectories } from "../config/getButteryIconsDirectories";
-import { LOG } from "../utils/LOG";
+import { LOG } from "../utils/util.logger";
 
 /**
  * Ensures that all of the necessary folders exist and also

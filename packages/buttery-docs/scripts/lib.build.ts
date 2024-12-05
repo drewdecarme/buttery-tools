@@ -4,8 +4,8 @@ import { defineConfig, build as viteBuild } from "vite";
 
 import path from "node:path";
 
-import { dependencies } from "../package.json";
-import { LOG } from "../src/build/utils";
+import packageJson from "../package.json" with { type: "json" };
+import { LOG } from "../src/utils/util.logger.js";
 
 /**
  * Builds the library that the app uses for client and server components
@@ -52,7 +52,7 @@ async function buildLibrary() {
         },
         rollupOptions: {
           external: [
-            ...Object.keys(dependencies),
+            ...Object.keys(packageJson.dependencies),
             "@buttery/tokens",
             "@buttery/meta/react",
             "@buttery/docs/css",
@@ -79,6 +79,7 @@ async function buildLibrary() {
       },
       plugins: [
         react(),
+        // @ts-expect-error This actually does have type signatures
         wyw({
           include: ["**/*.{ts,tsx}"],
           babelOptions: {

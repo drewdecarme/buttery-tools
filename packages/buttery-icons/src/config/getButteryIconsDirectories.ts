@@ -8,7 +8,7 @@ import path from "node:path";
 
 import { ButteryIconsConfig } from "./icons-config.utils";
 
-import { LOG } from "../utils/LOG";
+import { LOG } from "../utils/util.logger";
 
 export type ButteryIconsDirectories = Awaited<
   ReturnType<typeof getButteryIconsDirectories>
@@ -25,11 +25,14 @@ export async function getButteryIconsDirectories(
     { logLevel }
   );
 
+  // collect the static dir convention
   const staticDir = path.resolve(nodeModulesIconsDir.target, "./static");
 
+  // reconcile the configuration variables
   const svgDirRel = config.svgDir ?? ".buttery/icons/svg";
   const outDirRel = config.outDir ?? "icons";
 
+  // Create full paths of the configs needed for creation
   const svgDir = path.resolve(paths.rootDir, svgDirRel);
   const outDir = path.resolve(paths.rootDir, outDirRel);
 

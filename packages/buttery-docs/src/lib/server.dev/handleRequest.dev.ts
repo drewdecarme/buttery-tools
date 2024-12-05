@@ -4,13 +4,13 @@ import type { ViteDevServer } from "vite";
 
 import { Transform } from "node:stream";
 
-import { LOG_SERVER_DEV } from "./server-dev.utils";
+import { LOG_SERVER_DEV } from "./server-dev.utils.js";
 
-import type { ResolvedButteryDocsConfig } from "../../config/getButteryDocsConfig";
-import type { ButteryDocsServerContext } from "../server/ButteryDocsServer";
-import type { createButteryDocsRenderToPipeableStream } from "../server/createRenderFnPipeableStream";
-import { expressToWebRequest } from "../server/expressToWebRequest";
-import { generateHTMLTemplate } from "../server/generateHTMLTemplate";
+import type { ResolvedButteryDocsConfig } from "../../config/getButteryDocsConfig.js";
+import type { ButteryDocsServerContext } from "../server/ButteryDocsServer.js";
+import type { createButteryDocsRenderToPipeableStream } from "../server/createRenderFnPipeableStream.js";
+import { expressToWebRequest } from "../server/expressToWebRequest.js";
+import { generateHTMLTemplate } from "../server/generateHTMLTemplate.js";
 
 const ABORT_DELAY = 10_000;
 

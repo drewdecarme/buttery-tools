@@ -1,3 +1,3 @@
-export * from "./Modal";
-export * from "./modal.useModal";
-export * from "./modal.useModalContext";
+export * from "./Modal.js";
+export * from "./modal.useModal.js";
+export * from "./modal.useModalContext.js";

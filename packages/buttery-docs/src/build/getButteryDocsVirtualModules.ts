@@ -1,13 +1,13 @@
+import { produce } from "immer";
+
+import { getButteryDocsRouteGraph } from "./getButteryDocsRouteGraph.js";
+
+import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig.js";
+import { LOG } from "../utils/util.logger.js";
 import type {
   ButteryDocsRouteManifest,
   ButteryDocsRouteManifestEntry,
-} from "@buttery/core/config";
-import { produce } from "immer";
-
-import { getButteryDocsRouteGraph } from "./getButteryDocsRouteGraph";
-import { LOG } from "./utils";
-
-import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig";
+} from "../utils/util.types.js";
 
 export type ButteryDocsVirtualModules = ReturnType<
   typeof getButteryDocsVirtualModules
@@ -55,12 +55,12 @@ export const routeIndex = {
 };
 export const routeGraph = ${JSON.stringify(routeGraph, null, 2)};
 export const routeDocs = [${Object.values(routeDocs).map(
-    (routeEntry) => `\{
+    (routeEntry) => `{
   routePath: "${routeEntry.routePath}",
   aliasPath: "${routeEntry.aliasPath}",
   root: "${routeEntry.root}",
   importComponent: async () => await import("@docs${routeEntry.aliasPath}")
-\}`
+}`
   )}];
   `;
 

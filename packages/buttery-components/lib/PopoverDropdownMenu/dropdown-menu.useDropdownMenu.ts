@@ -1,7 +1,7 @@
 import type {
   DropdownOptions,
-  DropdownRef
-} from "@BUTTERY_COMPONENT/useDropdown";
+  DropdownRef,
+} from "@BUTTERY_COMPONENT/useDropdown/index.js";
 import { useCallback, useId, useMemo, useRef } from "react";
 
 export const useDropdownMenu = (options?: Omit<DropdownOptions, "id">) => {
@@ -44,7 +44,7 @@ export const useDropdownMenu = (options?: Omit<DropdownOptions, "id">) => {
       "aria-expanded": false,
       "aria-controls": id,
       onKeyDown: handleTargetKeyDown,
-      onClick: toggleMenu
+      onClick: toggleMenu,
     };
   }, [handleTargetKeyDown, id, toggleMenu]);
 
@@ -54,7 +54,7 @@ export const useDropdownMenu = (options?: Omit<DropdownOptions, "id">) => {
   }>(
     () => ({
       options: { id, ...options },
-      ref: dropdownMenuRef
+      ref: dropdownMenuRef,
     }),
     [options, id]
   );
@@ -65,7 +65,7 @@ export const useDropdownMenu = (options?: Omit<DropdownOptions, "id">) => {
       dropdownProps,
       openMenu,
       closeMenu,
-      toggleMenu
+      toggleMenu,
     }),
     [openMenu, closeMenu, toggleMenu, targetProps, dropdownProps]
   );

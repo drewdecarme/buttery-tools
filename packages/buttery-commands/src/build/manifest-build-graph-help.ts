@@ -5,7 +5,7 @@ import {
   type ButteryCommand,
   type ButteryCommandsGraph,
   LOG,
-} from "../utils/utils";
+} from "../utils/LOG";
 
 const formatTitle = (title: string) => pc.bold(pc.underline(title));
 

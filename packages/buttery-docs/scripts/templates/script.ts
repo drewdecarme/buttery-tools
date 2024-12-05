@@ -3,12 +3,12 @@ import { inlineTryCatch } from "@buttery/builtins";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { fetchGitLabRepoBlob } from "./fetch-gitlab-repo-blob";
-import { fetchGitLabRepoTree } from "./fetch-gitlab-repo-tree";
-import { getTemplateMeta } from "./get-template-meta";
+import { fetchGitLabRepoBlob } from "./fetch-gitlab-repo-blob.js";
+import { fetchGitLabRepoTree } from "./fetch-gitlab-repo-tree.js";
+import { getTemplateMeta } from "./get-template-meta.js";
 
-import type { Template, TemplateManifest } from "../../src/cli-scripts/add";
-import { LOG } from "../../src/build/utils";
+import type { Template, TemplateManifest } from "../../src/cli-scripts/add.js";
+import { LOG } from "../../src/utils/util.logger.js";
 
 export async function createTemplateManifest() {
   const goodDocsRepoName = encodeURIComponent("tgdp/templates");

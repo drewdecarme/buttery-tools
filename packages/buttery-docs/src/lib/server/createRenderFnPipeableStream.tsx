@@ -4,12 +4,10 @@ import {
 } from "react-dom/server";
 import { type RouteObject, createStaticHandler } from "react-router";
 
-import {
-  ButteryDocsServer,
-  type ButteryDocsServerContext,
-} from "./ButteryDocsServer";
-import { createRouterFromRoutes } from "./createRouterFromRoutes";
-import { LOG_SERVER } from "./server.utils";
+import type { ButteryDocsServerContext } from "./ButteryDocsServer.js";
+import { ButteryDocsServer } from "./ButteryDocsServer.js";
+import { createRouterFromRoutes } from "./createRouterFromRoutes.js";
+import { LOG_SERVER } from "./server.utils.js";
 
 export function createButteryDocsRenderToPipeableStream(routes: RouteObject[]) {
   const handler = createStaticHandler(routes);

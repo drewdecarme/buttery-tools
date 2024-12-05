@@ -1,5 +1,4 @@
 /* eslint-disable import/no-unresolved */
-import type { ButteryDocsRouteManifest } from "@buttery/core/config";
 import type { Manifest } from "vite";
 
 import {
@@ -7,6 +6,7 @@ import {
   handleRequestCloudflarePages,
 } from "@buttery/docs/server.cloudflare-pages";
 
+import type { ButteryDocsRouteManifest } from "../../src/utils/util.types.js";
 // @ts-expect-error This will only exist when the app is built
 import butteryManifest from "../build/client/.buttery/buttery.manifest.json";
 // @ts-expect-error This will only exist when the app is built

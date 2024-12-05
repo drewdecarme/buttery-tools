@@ -1,5 +1,3 @@
-import type { ResolvedButteryConfig } from "@buttery/core/config";
-
 import path from "node:path";
 
 export type ButteryCommandsDirectories = ReturnType<

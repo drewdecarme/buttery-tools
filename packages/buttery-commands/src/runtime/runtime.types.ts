@@ -1,4 +1,4 @@
-import type { ButteryCommand } from "./utils";
+import type { ButteryCommand } from "../utils/LOG";
 
 export type WellFormedCommandArgs = Record<string, string | number | boolean>;
 

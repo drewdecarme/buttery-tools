@@ -1,1 +1,1 @@
-export * from "./useModalDialog";
+export * from "./useModalDialog.js";

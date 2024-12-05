@@ -2,9 +2,9 @@ import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 
 import { getArgs } from "./get-args";
 import { getOptions } from "./get-options";
+import type { WellFormedCommand } from "./runtime.types";
 
-import type { WellFormedCommand } from "../utils/runtime.types";
-import type { ButteryCommandsGraph } from "../utils/utils";
+import type { ButteryCommandsGraph } from "../utils/LOG";
 
 /**
  * Provided a manifest entry point, loop through all of the

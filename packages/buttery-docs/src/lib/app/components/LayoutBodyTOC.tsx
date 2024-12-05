@@ -11,7 +11,7 @@ import { css } from "@linaria/core";
 import type { Toc as TableOfContents } from "@stefanprobst/rehype-extract-toc";
 import { type FC, type MouseEventHandler, useCallback, useMemo } from "react";
 
-import { LayoutTextOverline } from "./LayoutTextOverline";
+import { LayoutTextOverline } from "./LayoutTextOverline.js";
 
 const layoutBodyStyles = css`
   grid-area: layout-toc;

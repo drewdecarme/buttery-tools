@@ -7,9 +7,9 @@ import path from "node:path";
 import { buildManifestHelpMenus } from "./manifest-build-graph-help.js";
 import { buildManifestGraph } from "./manifest-build-graph.js";
 
-import type { ButteryCommandsBaseOptions } from "../options/index.js";
-import type { ButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories.js";
-import { type ButteryCommandsManifest, LOG } from "../utils/utils.js";
+import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils.js";
+import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories.js";
+import { type ButteryCommandsManifest, LOG } from "../utils/LOG.js";
 
 /**
  * This function is the main build command that reads the .buttery/config

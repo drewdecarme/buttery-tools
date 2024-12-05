@@ -1,7 +1,7 @@
 import { randProduct } from "@ngneat/falso";
 
-import { DropdownNav } from "../DropdownNav";
-import { useDropdownNav } from "../dropdown-nav.useDropdownNav";
+import { DropdownNav } from "../DropdownNav.js";
+import { useDropdownNav } from "../dropdown-nav.useDropdownNav.js";
 
 const products = [...new Array(4)].map(() => {
   const { title, category } = randProduct();

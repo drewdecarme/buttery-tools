@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef } from "react";
 
-import type { InputTextDropdownRef } from "./InputTextDropdown";
+import type { InputTextDropdownRef } from "./InputTextDropdown.js";
 
 export function useInputTextDropdown() {
   const ref = useRef<InputTextDropdownRef>(null);
@@ -19,7 +19,7 @@ export function useInputTextDropdown() {
     () => ({
       ref,
       closeDropdown,
-      setValue
+      setValue,
     }),
     [closeDropdown, setValue]
   );

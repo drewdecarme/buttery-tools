@@ -1,11 +1,11 @@
-import { classes } from "@BUTTERY_COMPONENT/utils";
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 import { css } from "@linaria/core";
 import { randBoolean, randSentence } from "@ngneat/falso";
 import { type FC, useCallback } from "react";
 
-import { Toaster } from "../Toaster";
-import { useToast } from "../toast.useToast";
-import type { ToastComponent } from "../toast.utils";
+import { Toaster } from "../Toaster.js";
+import { useToast } from "../toast.useToast.js";
+import type { ToastComponent } from "../toast.utils.js";
 
 const divCSS = css`
   width: 400px;

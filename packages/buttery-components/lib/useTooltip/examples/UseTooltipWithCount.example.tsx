@@ -1,7 +1,7 @@
 import { css } from "@linaria/core";
 import type { FC } from "react";
 
-import { useTooltip } from "../useTooltip";
+import { useTooltip } from "../useTooltip.js";
 
 const tooltipClass = css`
   padding: 0.5rem 1rem;

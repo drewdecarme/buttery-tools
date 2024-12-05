@@ -1,5 +1,5 @@
-import { Modal } from "../Modal";
-import { useModal } from "../modal.useModal";
+import { Modal } from "../Modal.js";
+import { useModal } from "../modal.useModal.js";
 
 export default function ModalUsage() {
   const { modalRef, openModal } = useModal();

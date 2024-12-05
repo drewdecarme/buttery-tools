@@ -1,4 +1,3 @@
-import type { ButteryConfigDocsHeaderLink } from "@buttery/core/config";
 import {
   makeColorBrand,
   makeColorShade,
@@ -11,8 +10,10 @@ import type { FC } from "react";
 import { NavLink } from "react-router";
 import { match } from "ts-pattern";
 
-import { LayoutHeaderLinksTypeDropdown } from "./LayoutHeaderLinksTypeDropdown";
-import { IconComponent } from "./icons";
+import { LayoutHeaderLinksTypeDropdown } from "./LayoutHeaderLinksTypeDropdown.js";
+import { IconComponent } from "./icons/IconComponent.js";
+
+import type { ButteryDocsConfigHeaderLink } from "../../../config/_config.utils.js";
 
 const divStyles = css`
   display: flex;
@@ -67,7 +68,7 @@ const internalCss = css`
 `;
 
 export const LayoutHeaderLinks: FC<{
-  links?: ButteryConfigDocsHeaderLink[][];
+  links?: ButteryDocsConfigHeaderLink[][];
 }> = ({ links = [] }) => {
   return (
     <div className={divStyles}>
