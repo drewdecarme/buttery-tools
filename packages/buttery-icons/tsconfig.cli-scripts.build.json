@@ -5,8 +5,7 @@
     "outDir": "dist",
     "declaration": true,
     "declarationMap": true,
-    "declarationDir": "dist",
-    "emitDeclarationOnly": true
+    "declarationDir": "dist"
   },
-  "include": ["src/cli-scripts"]
+  "include": ["src/cli-scripts/*.ts"]
 }

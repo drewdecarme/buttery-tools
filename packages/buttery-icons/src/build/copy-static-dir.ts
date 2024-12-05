@@ -1,7 +1,7 @@
 import { cp } from "node:fs/promises";
 
-import { ButteryIconsDirectories } from "../config/getButteryIconsDirectories";
-import { LOG } from "../utils/util.logger";
+import type { ButteryIconsDirectories } from "../config/getButteryIconsDirectories.js";
+import { LOG } from "../utils/util.logger.js";
 
 /**
  * Copies the necessary source files into the io directory to then

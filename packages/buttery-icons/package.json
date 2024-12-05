@@ -11,8 +11,9 @@
   "scripts": {
     "build": "yarn tsc && yarn cli-scripts:build && yarn lib:build",
     "lib:build": "yarn tsc --project ./tsconfig.library.json",
-    "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
-    "cli-scripts:types": "tsc --project tsconfig.cli-types.json",
+    "lib:dev": "yarn lib:build --watch",
+    "cli-scripts:build": "tsc --project tsconfig.cli-scripts.build.json",
+    "cli-scripts:dev": "yarn cli-scripts:build --watch",
     "local:build": "tsx ./scripts/local.build.ts"
   },
   "exports": {

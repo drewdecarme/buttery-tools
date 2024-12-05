@@ -1,4 +1,6 @@
-export type ButteryIconsConfig = {
+import { z } from "zod";
+
+export const butteryIconsConfigSchema = z.object({
   /**
    * The directory where the raw svgs are going to be stored. This is
    * also the directory where the IconComponent, it's generated types,
@@ -10,14 +12,17 @@ export type ButteryIconsConfig = {
    *
    * @default <root>/.buttery/icons/svg
    */
-  svgDir?: string;
+  svgDir: z.preprocess(
+    (value) => value || "./.buttery/icons/svg",
+    z.string().optional()
+  ),
   /**
    * The destination directory that all of the transformed icons will be
    * generated and the icon component housed. A relative path at the same level
    * as the .buttery directory
    * @default <root>/icons
    */
-  outDir?: string;
-};
+  outDir: z.preprocess((value) => value || "./icons", z.string().optional()),
+});
 
-export const butteryIconsConfigDefaults: ButteryIconsConfig = {};
+export type ButteryIconsConfig = z.infer<typeof butteryIconsConfigSchema>;

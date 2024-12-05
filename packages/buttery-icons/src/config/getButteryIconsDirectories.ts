@@ -1,14 +1,12 @@
-import {
-  type ButteryConfigPaths,
-  getNodeModulesButteryOutputDir,
-} from "@buttery/core/config";
+import { type ButteryConfigPaths } from "@buttery/core/config";
 import type { ButteryLogLevel } from "@buttery/logs";
+import { getNodeModulesButteryOutputDir } from "@buttery/core/utils";
 
 import path from "node:path";
 
-import { ButteryIconsConfig } from "./icons-config.utils";
+import type { ButteryIconsConfig } from "./_config.utils.js";
 
-import { LOG } from "../utils/util.logger";
+import { LOG } from "../utils/util.logger.js";
 
 export type ButteryIconsDirectories = Awaited<
   ReturnType<typeof getButteryIconsDirectories>

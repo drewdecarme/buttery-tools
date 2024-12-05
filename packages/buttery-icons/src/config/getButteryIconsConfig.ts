@@ -3,18 +3,16 @@ import {
   getButteryConfig,
 } from "@buttery/core/config";
 
-import {
-  ButteryIconsConfig,
-  butteryIconsConfigDefaults,
-} from "./icons-config.utils";
-import { getButteryIconsDirectories } from "./getButteryIconsDirectories";
-
-type GetButteryIconsParams = Required<
-  Omit<GetButteryConfigOptions<ButteryIconsConfig>, "defaults">
->;
+import type { ButteryIconsConfig } from "./_config.utils.js";
+import { butteryIconsConfigSchema } from "./_config.utils.js";
+import { getButteryIconsDirectories } from "./getButteryIconsDirectories.js";
 
 export type ResolvedButteryIconsConfig = Awaited<
   ReturnType<typeof getButteryIconsConfig>
+>;
+
+type GetButteryIconsParams = Required<
+  Pick<GetButteryConfigOptions<ButteryIconsConfig>, "prompt" | "logLevel">
 >;
 
 export async function getButteryIconsConfig({
@@ -26,7 +24,17 @@ export async function getButteryIconsConfig({
     {
       logLevel,
       prompt,
-      defaults: butteryIconsConfigDefaults,
+      async onEmpty() {
+        const defaults = await butteryIconsConfigSchema.parseAsync({});
+        return defaults;
+      },
+      async validate(rawConfig) {
+        const res = await butteryIconsConfigSchema.safeParseAsync(rawConfig);
+        if (res.error) {
+          throw res.error;
+        }
+        return res.data;
+      },
     }
   );
 

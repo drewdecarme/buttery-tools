@@ -1,1 +1,1 @@
-export { defineIconsConfig } from "../config/defineIconsConfig";
+export { defineIconsConfig } from "../config/defineIconsConfig.js";

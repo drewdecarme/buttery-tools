@@ -1,4 +1,4 @@
-import { ButteryIconsConfig } from "./icons-config.utils";
+import type { ButteryIconsConfig } from "./_config.utils.js";
 
 export function defineIconsConfig(
   params: ButteryIconsConfig
