@@ -1,1 +1,1 @@
-export { defineButteryIconsConfig } from "../config/defineButteryIconsConfig";
+export { defineIconsConfig } from "../config/defineIconsConfig";

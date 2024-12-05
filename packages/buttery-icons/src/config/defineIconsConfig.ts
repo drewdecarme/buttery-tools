@@ -1,6 +1,6 @@
 import { ButteryIconsConfig } from "./icons-config.utils";
 
-export function defineButteryIconsConfig(
+export function defineIconsConfig(
   params: ButteryIconsConfig
 ): ButteryIconsConfig {
   return params;

@@ -16,6 +16,7 @@
     "local:build": "tsx ./scripts/local.build.ts"
   },
   "exports": {
+    ".": "./dist/lib/index.js",
     "./cli/*": "./dist/cli-scripts/*.js"
   },
   "publishConfig": {

@@ -13,7 +13,8 @@ export type ButteryIconsConfig = {
   svgDir?: string;
   /**
    * The destination directory that all of the transformed icons will be
-   * generated and the icon component housed. Relative to the .buttery directory
+   * generated and the icon component housed. A relative path at the same level
+   * as the .buttery directory
    * @default <root>/icons
    */
   outDir?: string;

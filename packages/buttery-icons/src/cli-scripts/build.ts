@@ -50,8 +50,7 @@ export async function build(options?: ButteryIconsBuildOptions) {
     await generateTypes(rConfig.dirs);
     LOG.loadingEnd("complete!");
   } catch (error) {
-    throw LOG.fatal(
-      new Error(`Error when trying to build @buttery/icons: ${error}`)
-    );
+    LOG.loadingEnd("");
+    LOG.fatal(new Error(`Error when trying to build @buttery/icons: ${error}`));
   }
 }

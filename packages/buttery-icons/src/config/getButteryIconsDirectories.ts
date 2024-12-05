@@ -27,8 +27,11 @@ export async function getButteryIconsDirectories(
 
   const staticDir = path.resolve(nodeModulesIconsDir.target, "./static");
 
-  const svgDir = config.svgDir ?? path.resolve(paths.butteryDir, "/icons/svg");
-  const outDir = config.outDir ?? path.resolve(paths.rootDir, "icons");
+  const svgDirRel = config.svgDir ?? ".buttery/icons/svg";
+  const outDirRel = config.outDir ?? "icons";
+
+  const svgDir = path.resolve(paths.rootDir, svgDirRel);
+  const outDir = path.resolve(paths.rootDir, outDirRel);
 
   const dirs = {
     static: staticDir,
@@ -39,8 +42,8 @@ export async function getButteryIconsDirectories(
     },
   };
 
-  LOG.trace("Directories:");
-  LOG.trace(JSON.stringify(dirs, null, 2));
+  LOG.debug("Directories:");
+  LOG.debug(JSON.stringify(dirs, null, 2));
 
   return dirs;
 }
