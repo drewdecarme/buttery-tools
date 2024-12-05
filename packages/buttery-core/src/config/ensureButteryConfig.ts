@@ -7,7 +7,7 @@ import {
   ERRORS,
   createButteryConfigFile,
   getButteryDir,
-  promptUserForButteryDirLocation,
+  waitForUserToConfirm,
 } from "./buttery-config.utils.js";
 
 /**
@@ -39,13 +39,15 @@ export async function ensureButteryConfig<T extends Record<string, unknown>>(
 
   // Create a config directory and file based upon the answers that the user is prompted for
   if (!butteryDir && optionPrompt) {
-    LOG.warning(ERRORS.NO_BUTTERY_DIR(configFileName, "Let's create one."));
-    const userButteryDir = await promptUserForButteryDirLocation(
-      optionSearchFromPath
+    LOG.warning(
+      ERRORS.NO_BUTTERY_DIR(
+        configFileName,
+        `A "${configFileName}" file will be created for you.`
+      )
     );
+    await waitForUserToConfirm(configFileName);
 
-    // set the butteryDir to the path that the user defined
-    butteryDir = userButteryDir;
+    butteryDir = path.resolve(optionSearchFromPath, "./.buttery");
 
     // create the default config
     await createButteryConfigFile(
@@ -67,7 +69,7 @@ export async function ensureButteryConfig<T extends Record<string, unknown>>(
   const configFilePath = path.resolve(
     butteryDir,
     configNamespace,
-    "./config.ts"
+    configFileName
   );
   let doesConfigFileExist = existsSync(configFilePath);
 
@@ -80,6 +82,7 @@ export async function ensureButteryConfig<T extends Record<string, unknown>>(
         "Let's create one."
       )
     );
+    await waitForUserToConfirm(configFileName);
 
     await createButteryConfigFile(
       butteryDir,
@@ -110,6 +113,7 @@ export async function ensureButteryConfig<T extends Record<string, unknown>>(
         `Let's populate it.`
       )
     );
+    await waitForUserToConfirm(configFileName);
 
     await createButteryConfigFile(
       butteryDir,

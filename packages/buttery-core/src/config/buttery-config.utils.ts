@@ -1,6 +1,7 @@
 import { existsSync, lstatSync } from "node:fs";
 import path from "node:path";
-import input from "@inquirer/input";
+import { confirm } from "@inquirer/prompts";
+import { LOG } from "../private/LOG.js";
 import { writeFileRecursive } from "../utils/node/util.node.writeFileRecursive.js";
 
 export const ERRORS = {
@@ -14,7 +15,7 @@ export const ERRORS = {
     configFileName: string,
     postfix?: string
   ) {
-    return `Found the .buttery directory at "${butteryDirPath}". However, no "${configFileName}" file is present. ${
+    return `Found the ".buttery" directory at "${butteryDirPath}". However, no "${configFileName}" file is present. ${
       postfix ?? ""
     }`;
   },
@@ -30,26 +31,20 @@ export const ERRORS = {
 };
 
 /**
- * Asks the user to write a location for the path of where the buttery directory
- * should be placed. Returns the resolved .buttery/ directory.
- */
-export async function promptUserForButteryDirLocation(
-  startingDirectory: string
-) {
-  const baseDir = await input({
-    message: "In what directory would you like to create one?",
-    default: startingDirectory,
-  });
-  const butteryDir = path.resolve(baseDir, "./.buttery");
-  return butteryDir;
-}
-
-/**
  * Capitalizes the first letter
  */
 function cap(str: string) {
   if (!str) return str; // Handle empty strings
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export async function waitForUserToConfirm(filename: string) {
+  const shouldContinue = await confirm({
+    message: "Would you like to continue?",
+  });
+  if (!shouldContinue) {
+    throw `User cancelled auto "${filename}" creation.`;
+  }
 }
 
 /**
@@ -67,15 +62,23 @@ export async function createButteryConfigFile<
 ) {
   try {
     // crete the buttery/config content
-    const butteryConfigPath = path.resolve(butteryDir, butteryConfigFileName);
+    const butteryConfigPath = path.resolve(
+      butteryDir,
+      configNamespace,
+      butteryConfigFileName
+    );
+    LOG.debug(`Creating ${butteryConfigFileName} at "${butteryConfigPath}"...`);
     const butteryImport = `define${cap(configNamespace)}Config`;
     const butteryModule = `@buttery/${configNamespace}`;
     const butteryConfigContent = `import { ${butteryImport} } from "${butteryModule}"
 export default ${butteryImport}(${JSON.stringify(defaults, null, 2)})\n`;
 
     await writeFileRecursive(butteryConfigPath, butteryConfigContent);
+    LOG.debug(
+      `Creating ${butteryConfigFileName} at "${butteryConfigPath}"... done.`
+    );
   } catch (error) {
-    throw `Error when trying to create a default ".buttery/config" file: ${error}`;
+    throw `Error when trying to create a "${butteryConfigFileName}" file: ${error}`;
   }
 }
 
