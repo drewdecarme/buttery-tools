@@ -1,7 +1,8 @@
-import { inlineTryCatch } from "@buttery/builtins";
 
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
+
+import { inlineTryCatch } from "@buttery/builtins";
 
 import { fetchGitLabRepoBlob } from "./fetch-gitlab-repo-blob.js";
 import { fetchGitLabRepoTree } from "./fetch-gitlab-repo-tree.js";

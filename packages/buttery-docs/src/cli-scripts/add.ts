@@ -1,9 +1,10 @@
+import path from "node:path";
+import { readFile, writeFile } from "node:fs/promises";
+
 import { parseAndValidateOptions } from "@buttery/core/utils";
 import { tryHandle } from "@buttery/utils/isomorphic";
 import { confirm, input, select } from "@inquirer/prompts";
 
-import path from "node:path";
-import { readFile, writeFile } from "node:fs/promises";
 
 import type { ButteryDocsAddOptions } from "./_cli-scripts.utils.js";
 import { butteryDocsAddOptionsSchema } from "./_cli-scripts.utils.js";

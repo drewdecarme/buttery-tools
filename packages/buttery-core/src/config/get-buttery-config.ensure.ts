@@ -1,9 +1,9 @@
-import { findDirectoryUpwards, writeFileRecursive } from "@buttery/utils/node";
-import { confirm } from "@inquirer/prompts";
-
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+
+import { confirm } from "@inquirer/prompts";
+import { findDirectoryUpwards, writeFileRecursive } from "@buttery/utils/node";
 
 import type { GetButteryConfigOptions } from "./buttery-config.types.js";
 

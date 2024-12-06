@@ -1,8 +1,9 @@
+import { writeFile } from "node:fs/promises";
+import path from "node:path";
+
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 
-import { writeFile } from "node:fs/promises";
-import path from "node:path";
 
 import { buildManifestHelpMenus } from "./manifest-build-graph-help.js";
 import { buildManifestGraph } from "./manifest-build-graph.js";

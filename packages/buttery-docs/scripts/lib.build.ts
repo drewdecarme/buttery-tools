@@ -1,8 +1,9 @@
+import path from "node:path";
+
 import react from "@vitejs/plugin-react";
 import wyw from "@wyw-in-js/vite";
 import { defineConfig, build as viteBuild } from "vite";
 
-import path from "node:path";
 
 import packageJson from "../package.json" with { type: "json" };
 import { LOG } from "../src/utils/util.logger.js";

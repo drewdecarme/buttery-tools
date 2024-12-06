@@ -1,7 +1,8 @@
-import type { ButteryConfigTokens } from "@buttery/core/config";
 
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+
+import type { ButteryConfigTokens } from "@buttery/core/config";
 
 import type { MakeTemplate } from "./MakeTemplate";
 

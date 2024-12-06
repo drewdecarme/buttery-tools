@@ -3,12 +3,13 @@ import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { watch } from "chokidar";
 import { type BuildContext, type BuildOptions, context } from "esbuild";
 
-import { getBuildConfig } from "../build/get-build-config.js";
-import { runPreBuild } from "../build/run-prebuild.js";
 import {
   type ButteryCommandsDevOptions,
   butteryCommandsDevOptionsSchema,
 } from "./_cli-scripts.utils.js";
+
+import { getBuildConfig } from "../build/get-build-config.js";
+import { runPreBuild } from "../build/run-prebuild.js";
 import { getButteryCommandsConfig } from "../config/getButteryCommandsConfig.js";
 import { getButteryCommandsDirectories } from "../config/getButteryCommandsDirectories.js";
 import { LOG } from "../utils/LOG.js";

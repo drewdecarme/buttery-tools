@@ -1,5 +1,6 @@
-import type { CommandArgs } from "../lib/index.js";
 import type { WellFormedCommandArgs } from "./runtime.types.js";
+
+import type { CommandArgs } from "../lib/index.js";
 
 /**
  * Provided the args of the current command, we loop through

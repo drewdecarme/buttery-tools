@@ -1,6 +1,7 @@
+import { readFileSync } from "node:fs";
+
 import matter from "gray-matter";
 
-import { readFileSync } from "node:fs";
 
 import { LOG } from "../utils/util.logger.js";
 

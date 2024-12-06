@@ -1,10 +1,11 @@
+import path from "node:path";
+import { rm, writeFile } from "node:fs/promises";
+
 import type { ResolvedButteryConfig } from "@buttery/core/config";
 import { printAsBullets } from "@buttery/core/logger";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { ensureDir } from "fs-extra";
 
-import path from "node:path";
-import { rm, writeFile } from "node:fs/promises";
 
 import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils";
 import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";

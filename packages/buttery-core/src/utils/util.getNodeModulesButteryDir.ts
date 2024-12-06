@@ -1,9 +1,10 @@
+import { constants, access, mkdir } from "node:fs/promises";
+import path from "node:path";
+
 import type { ButteryLogLevel } from "@buttery/logs";
 import { findDirectoryUpwards } from "@buttery/utils/node";
 import { tryHandle } from "@buttery/utils/isomorphic";
 
-import { constants, access, mkdir } from "node:fs/promises";
-import path from "node:path";
 
 import { LOG } from "./util.logger.js";
 

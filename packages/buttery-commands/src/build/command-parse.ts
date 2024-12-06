@@ -1,7 +1,8 @@
+import path from "node:path";
+
 import { printAsBullets } from "@buttery/core/logger";
 import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 
-import path from "node:path";
 
 import type { Command } from "../lib";
 import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";

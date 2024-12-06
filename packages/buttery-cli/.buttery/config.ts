@@ -1,7 +1,8 @@
+import path from "node:path";
+
 import type { ButteryConfig } from "@buttery/core/config";
 import { vitePluginButteryDocsInteractivePreview } from "@buttery/docs/plugin-interactive-preview";
 
-import path from "node:path";
 
 const config: ButteryConfig = {
   commands: {

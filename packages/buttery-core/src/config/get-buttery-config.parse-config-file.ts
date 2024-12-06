@@ -1,7 +1,8 @@
-import { hashString } from "@buttery/utils/node";
 
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
+
+import { hashString } from "@buttery/utils/node";
 
 import { LOG } from "../utils/util.logger.js";
 import { buildWithEsbuild } from "../build/buildWithEsbuild.js";

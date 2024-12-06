@@ -82,8 +82,8 @@ export default [
         1,
         {
           groups: [
-            "external",
             "builtin",
+            "external",
             "internal",
             "sibling",
             "parent",

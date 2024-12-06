@@ -3,7 +3,7 @@ import {
   getButteryConfig,
 } from "@buttery/core/config";
 
-import { ButteryCommandsConfig } from "./_config.utils";
+import type { ButteryCommandsConfig } from "./_config.utils";
 import { getButteryCommandsDirectories } from "./getButteryCommandsDirectories";
 
 type GetButteryCommandsParams = Required<

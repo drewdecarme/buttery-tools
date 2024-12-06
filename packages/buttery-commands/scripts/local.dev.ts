@@ -1,7 +1,8 @@
+import path from "node:path";
+
 import { printAsBullets } from "@buttery/core/logger";
 import { watch } from "chokidar";
 
-import path from "node:path";
 
 import { buildRuntime } from "./runtime.build";
 

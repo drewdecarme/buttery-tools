@@ -1,3 +1,7 @@
+import path from "node:path";
+import { readdir } from "node:fs/promises";
+import { readdirSync } from "node:fs";
+
 import { traverse } from "@babel/core";
 import {
   type CommandAction,
@@ -11,9 +15,6 @@ import {
 import { ButteryLogger, printAsBullets } from "@buttery/logs";
 import { select } from "@inquirer/prompts";
 
-import path from "node:path";
-import { readdir } from "node:fs/promises";
-import { readdirSync } from "node:fs";
 
 import { parseFile } from "./components.export.parseFile";
 

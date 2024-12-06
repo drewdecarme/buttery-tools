@@ -1,6 +1,7 @@
+import { readFileSync } from "node:fs";
+
 import { parse } from "@babel/parser";
 
-import { readFileSync } from "node:fs";
 
 /**
  * Parse the contents of a file into an AST.

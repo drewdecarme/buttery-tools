@@ -1,7 +1,8 @@
-import type { ResolvedButteryConfig } from "@buttery/core/config";
 
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
+
+import type { ResolvedButteryConfig } from "@buttery/core/config";
 
 import { buildCSSUtilsTypeScript } from "./buildCSSUtilsTypeScript";
 import type { ButteryTokensDirectories } from "./getButteryTokensDirectories";

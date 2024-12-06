@@ -1,8 +1,9 @@
+import path from "node:path";
+
 import { type ButteryConfigPaths } from "@buttery/core/config";
 import type { ButteryLogLevel } from "@buttery/logs";
 import { getNodeModulesButteryOutputDir } from "@buttery/core/utils";
 
-import path from "node:path";
 
 import type { ButteryIconsConfig } from "./_config.utils.js";
 

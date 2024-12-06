@@ -1,7 +1,8 @@
-import { printAsBullets } from "@buttery/logs";
 
 import path from "node:path";
 import { type Dirent, readdirSync } from "node:fs";
+
+import { printAsBullets } from "@buttery/logs";
 
 import { getDocumentConfigFromFrontmatter } from "./getDocumentConfigFromFrontmatter.js";
 import { orderButteryDocsRouteManifest } from "./orderButteryDocsRouteManifest.js";

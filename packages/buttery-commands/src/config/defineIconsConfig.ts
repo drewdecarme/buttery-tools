@@ -1,4 +1,4 @@
-import { ButteryCommandsConfig } from "./_config.utils";
+import type { ButteryCommandsConfig } from "./_config.utils";
 
 export function defineCommandsConfig(
   params: ButteryCommandsConfig

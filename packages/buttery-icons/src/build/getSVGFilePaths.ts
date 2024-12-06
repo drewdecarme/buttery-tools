@@ -1,7 +1,7 @@
-import { ensureDir } from "fs-extra";
-
 import { readdir } from "node:fs/promises";
 import path from "node:path";
+
+import { ensureDir } from "fs-extra";
 
 import type { ButteryIconsDirectories } from "../config/getButteryIconsDirectories.js";
 import { LOG } from "../utils/util.logger.js";

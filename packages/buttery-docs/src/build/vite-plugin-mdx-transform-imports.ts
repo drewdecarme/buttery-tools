@@ -1,6 +1,7 @@
+import path from "node:path";
+
 import type { Plugin } from "vite";
 
-import path from "node:path";
 
 import { LOG } from "../utils/util.logger.js";
 
