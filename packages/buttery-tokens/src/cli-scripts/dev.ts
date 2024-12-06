@@ -2,7 +2,7 @@ import { parseAndValidateOptions } from "@buttery/core/utils/node";
 import { watch } from "chokidar";
 import type { z } from "zod";
 
-import { butteryTokensDevOptionsSchema } from "./_options.schema";
+import { butteryTokensDevOptionsSchema } from "./_cli-scripts.utils";
 
 import { buildCSSUtils } from "../buildCSSUtils";
 import { getButteryTokensConfig } from "../getButteryTokensConfig";

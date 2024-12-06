@@ -43,7 +43,8 @@
     "tsx": "4.19.2"
   },
   "dependencies": {
-    "@buttery/core": "workspace:^0.1.11",
+    "@buttery/core": "workspace:^",
+    "@buttery/utils": "workspace:^",
     "@types/chroma-js": "2.4.4",
     "@wyw-in-js/vite": "0.5.5",
     "chokidar": "4.0.1",
@@ -53,6 +54,6 @@
     "ts-pattern": "5.5.0",
     "typescript": "5.7.2",
     "vite": "6.0.2",
-    "zod": "3.23.8"
+    "zod": "^3.23.8"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "extends": "@buttery/core/tsconfig",
+  "extends": "@buttery/tsconfig/library",
   "compilerOptions": {
     "noEmit": false,
     "declaration": true

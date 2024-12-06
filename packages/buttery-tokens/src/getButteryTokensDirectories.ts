@@ -6,7 +6,6 @@ import {
 } from "@buttery/core/config";
 import type { ButteryLogLevel } from "@buttery/core/logger";
 
-
 import { LOG } from "./logger";
 
 export type ButteryTokensDirectories = Awaited<
