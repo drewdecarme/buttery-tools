@@ -6,17 +6,20 @@ export const butteryTokensConfigFontSchema = z
      * The base font-size
      * @default 16
      */
-    baseSize: z.preprocess(
-      (value) => (typeof value === "undefined" ? 16 : value),
-      z.number().optional()
-    ),
+    baseSize: z.preprocess((value) => value ?? 16, z.number().optional()),
     /**
      * A record of key/value strings that will be variables that can be used as the font families.
      * You can have as many as you want but a good guidance would be
-     * 1. `font-family-heading`
-     * 2. `font-family-body`
+     * 1. `heading`
+     * 2. `body`
      */
-    families: z.record(z.string(), z.string()),
+    families: z.preprocess(
+      (value) =>
+        value ?? {
+          heading: "Roboto",
+        },
+      z.record(z.string(), z.string()).optional()
+    ),
     /**
      * A record of key/value strings that will be variables that can be used as the font weights.
      * You can have as many as you want but a good guidance would be
@@ -26,21 +29,36 @@ export const butteryTokensConfigFontSchema = z
      * 2. `bold`
      * 2. `black`
      */
-    weights: z.record(z.string(), z.string()),
-    variants: z.record(
-      z.string(),
-      z.object({
-        family: z.string(),
-        weight: z.string(),
-        size: z.number(),
-        lineHeight: z.number(),
-      })
+    weights: z.preprocess(
+      (value) =>
+        value ?? {
+          regular: 400,
+        },
+      z.record(z.string(), z.number()).optional()
+    ),
+    variants: z.preprocess(
+      (value) => value ?? {},
+      z
+        .record(
+          z.string(),
+          z.object({
+            family: z.string(),
+            weight: z.string(),
+            size: z.number(),
+            lineHeight: z.number(),
+          })
+        )
+        .optional()
     ),
   })
   .superRefine((data, ctx) => {
     // Ensure font.variants[variantName].family keys match font.families
-    const familyKeys = Object.keys(data.families);
-    for (const [key, variant] of Object.entries(data.variants)) {
+    const familyKeys = Object.keys(data.families ?? {});
+    const variantEntries = Object.entries(data.variants ?? {});
+
+    if (variantEntries.length === 0) return;
+
+    for (const [key, variant] of variantEntries) {
       if (!familyKeys.includes(variant.family)) {
         ctx.addIssue({
           code: "invalid_union",
@@ -52,8 +70,8 @@ export const butteryTokensConfigFontSchema = z
     }
 
     // Ensure font.variants[variantName].weight keys match font.weights
-    const weightKeys = Object.keys(data.weights);
-    for (const [key, variant] of Object.entries(data.variants)) {
+    const weightKeys = Object.keys(data.weights ?? {});
+    for (const [key, variant] of variantEntries) {
       if (!weightKeys.includes(variant.weight)) {
         ctx.addIssue({
           code: "invalid_union",
@@ -64,3 +82,9 @@ export const butteryTokensConfigFontSchema = z
       }
     }
   });
+
+export type ButteryTokensConfigFont = z.infer<
+  typeof butteryTokensConfigFontSchema
+>;
+export type ButteryTokensConfigFontWellFormed =
+  Required<ButteryTokensConfigFont>;

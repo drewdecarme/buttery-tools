@@ -24,6 +24,7 @@ export type GetButteryConfigOptions<ConfigShape> = {
   /**
    * A promise that is run after the configuration file content is read and evaluated.
    * This is to ensure that the variables that are return are well formed
+   * TODO: Validate the schema instead of a fn
    */
   validate: (rawConfig: ConfigShape) => Promise<ConfigShape>;
   /**

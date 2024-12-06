@@ -1,10 +1,18 @@
 import { z } from "zod";
 
-import { butteryTokensConfigRuntimeSchema } from "./schema.runtime";
-import { butteryTokensConfigFontSchema } from "./schema.font";
+import { butteryTokensConfigRuntimeSchema } from "./schema.runtime.js";
+import { butteryTokensConfigFontSchema } from "./schema.font.js";
+import { butteryTokensConfigColorSchema } from "./schema.color.js";
 
 export const butteryTokensConfigSchema = z.object({
-  runtime: butteryTokensConfigRuntimeSchema,
+  runtime: z.preprocess(
+    (value) =>
+      value ?? {
+        namespace: "replace-me",
+        prefix: "--buttery",
+      },
+    butteryTokensConfigRuntimeSchema
+  ),
   /**
    * ## Description
    * The integer that will regulate the visual harmony of the application by enforcing strict spacing requirements
@@ -32,14 +40,14 @@ export const butteryTokensConfigSchema = z.object({
    *
    * @default 4
    */
-  gridSystem: z.preprocess(
-    (value) => (typeof value === "undefined" ? 4 : value),
-    z.number().optional()
-  ),
+  gridSystem: z.preprocess((value) => value ?? 4, z.number().optional()),
   /**
    * The font definitions and configurations for your design tokens
    */
-  font: butteryTokensConfigFontSchema,
+  font: z.preprocess(
+    (value) => value ?? {},
+    butteryTokensConfigFontSchema.optional()
+  ),
   /**
    * Define the breakpoints that will govern how the application responds to the viewport size.
    * @default {
@@ -56,20 +64,25 @@ export const butteryTokensConfigSchema = z.object({
    */
   breakpoints: z.preprocess(
     (value) =>
-      typeof value === "undefined"
-        ? {
-            "phone-sm": 320, // This breakpoint targets small mobile devices, including older smartphones like the iPhone 5 and SE. It's crucial to ensure basic functionality and readability on these smaller screens.,
-            phone: 375, // Common for newer smartphones, including devices like the iPhone 6, 7, 8, and X series. Many Android phones also fall into this range.,
-            "phone-lg": 414, // This size includes larger smartphones like the iPhone Plus series (6, 7, 8 Plus) and many of the larger Android phones,
-            "tablet-sm": 480, // Often used for small tablets and large smartphones in landscape mode.
-            tablet: 768, // Targets smaller tablets, such as the iPad Mini, and larger smartphones in landscape mode. This is a key breakpoint for transitioning from a mobile-friendly layout to a more tablet-optimized design.
-            "tablet-lg": 1024, // This size is common for standard tablets like the iPad. It’s a significant breakpoint where layouts often shift to accommodate a more desktop-like experience.
-            "desktop-sm": 1200, // A common breakpoint for smaller desktop monitors and larger tablets in landscape mode. It marks the transition to more complex and spacious layouts.
-            desktop: 1280, // Often used for larger desktop and laptop screens. This breakpoint helps in enhancing the layout for high-resolution monitors, providing more space for content and navigation elements.
-            "desktop-lg": 1400, // Targets full HD monitors, commonly used in desktop displays. Ensures that content utilizes the available screen real estate efficiently.
-          }
-        : value,
+      value ?? {
+        "phone-sm": 320, // This breakpoint targets small mobile devices, including older smartphones like the iPhone 5 and SE. It's crucial to ensure basic functionality and readability on these smaller screens.,
+        phone: 375, // Common for newer smartphones, including devices like the iPhone 6, 7, 8, and X series. Many Android phones also fall into this range.,
+        "phone-lg": 414, // This size includes larger smartphones like the iPhone Plus series (6, 7, 8 Plus) and many of the larger Android phones,
+        "tablet-sm": 480, // Often used for small tablets and large smartphones in landscape mode.
+        tablet: 768, // Targets smaller tablets, such as the iPad Mini, and larger smartphones in landscape mode. This is a key breakpoint for transitioning from a mobile-friendly layout to a more tablet-optimized design.
+        "tablet-lg": 1024, // This size is common for standard tablets like the iPad. It’s a significant breakpoint where layouts often shift to accommodate a more desktop-like experience.
+        "desktop-sm": 1200, // A common breakpoint for smaller desktop monitors and larger tablets in landscape mode. It marks the transition to more complex and spacious layouts.
+        desktop: 1280, // Often used for larger desktop and laptop screens. This breakpoint helps in enhancing the layout for high-resolution monitors, providing more space for content and navigation elements.
+        "desktop-lg": 1400, // Targets full HD monitors, commonly used in desktop displays. Ensures that content utilizes the available screen real estate efficiently.
+      },
     z.record(z.string(), z.number()).optional()
+  ),
+  /**
+   * The color definitions and configurations for your design tokens
+   */
+  color: z.preprocess(
+    (value) => value ?? {},
+    butteryTokensConfigColorSchema.optional()
   ),
   /**
    * ## Description

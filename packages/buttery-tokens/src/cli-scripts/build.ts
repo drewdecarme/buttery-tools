@@ -1,23 +1,18 @@
-import { parseAndValidateOptions } from "@buttery/core/utils/node";
-import type { z } from "zod";
+import { parseAndValidateOptions } from "@buttery/core/utils";
+import { tryHandle } from "@buttery/utils/isomorphic";
 
-import { butteryTokensBuildOptionsSchema } from "./_cli-scripts.utils";
+import type { ButteryTokensBuildOptions } from "./_cli-scripts.utils.js";
+import { butteryTokensBuildOptionsSchema } from "./_cli-scripts.utils.js";
 
-import { buildCSSUtils } from "../buildCSSUtils";
-import { getButteryTokensConfig } from "../getButteryTokensConfig";
-import { getButteryTokensDirectories } from "../getButteryTokensDirectories";
-import { LOG } from "../logger";
-
-export type ButteryTokensBuildOptions = z.infer<
-  typeof butteryTokensBuildOptionsSchema
->;
+import { buildButteryTokens } from "../build/buttery-tokens.build.js";
+import { LOG } from "../utils/util.logger.js";
 
 /**
  * Build the @buttery/tokens library to the `node_modules/@buttery/tokens`
  * under your provided namespace so the `make` utilities and the
  * :root CSS can be imported and used in your applications.
  */
-export async function build(options?: ButteryTokensBuildOptions) {
+export async function build(options?: Partial<ButteryTokensBuildOptions>) {
   // parse and validate & set the options
   const parsedOptions = parseAndValidateOptions(
     butteryTokensBuildOptionsSchema,
@@ -26,20 +21,8 @@ export async function build(options?: ButteryTokensBuildOptions) {
   );
   LOG.level = parsedOptions.logLevel;
 
-  try {
-    LOG.loadingStart("Building @buttery/tokens...");
-    // Fetch the tokens config and resolve the paths
-    const config = await getButteryTokensConfig({
-      prompt: parsedOptions.prompt,
-    });
-    const dirs = await getButteryTokensDirectories(config, {
-      logLevel: parsedOptions.logLevel,
-    });
-    await buildCSSUtils(config, dirs);
-    LOG.loadingEnd("complete.");
-  } catch (error) {
-    throw LOG.fatal(
-      new Error(`Error when trying to build @buttery/tools: ${error}`)
-    );
+  const res = await tryHandle(buildButteryTokens)(parsedOptions);
+  if (res.hasError) {
+    throw LOG.fatal(res.error);
   }
 }

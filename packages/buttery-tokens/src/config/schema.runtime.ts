@@ -54,15 +54,17 @@ export const butteryTokensConfigRuntimeSchema = z.object({
    *
    * @default true
    */
-  strict: z.preprocess(
-    (value) => (typeof value === "undefined" ? true : false),
-    z.boolean().optional()
-  ),
+  strict: z.preprocess((value) => value ?? false, z.boolean().optional()),
   /**
    * Stops the warnings from being printed to the console when `runtime.strict === false`. This should be used SPARINGLY
+   * @default false
    */
   suppressStrictWarnings: z.preprocess(
-    (value) => (typeof value === "undefined" ? false : true),
+    (value) => value ?? false,
     z.boolean().optional()
   ),
 });
+
+export type ButteryTokensConfigRuntime = z.infer<
+  typeof butteryTokensConfigRuntimeSchema
+>;

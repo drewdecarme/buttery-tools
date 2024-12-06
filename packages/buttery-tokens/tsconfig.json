@@ -1,3 +1,8 @@
 {
-  "extends": "@buttery/tsconfig/library"
+  "extends": "@buttery/tsconfig/library",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["@remix-run/cloudflare"]
+  }
 }

@@ -15,6 +15,7 @@ const optionsSchema = z.object({
    */
   prompt: z.boolean().default(true),
 });
+export type ButteryTokensBaseOptions = z.infer<typeof optionsSchema>;
 
 export const butteryTokensDevOptionsSchema = optionsSchema.extend({
   /**
@@ -24,5 +25,11 @@ export const butteryTokensDevOptionsSchema = optionsSchema.extend({
    */
   interactive: z.boolean().default(false),
 });
+export type ButteryTokensDevOptions = z.infer<
+  typeof butteryTokensDevOptionsSchema
+>;
 
 export const butteryTokensBuildOptionsSchema = optionsSchema;
+export type ButteryTokensBuildOptions = z.infer<
+  typeof butteryTokensBuildOptionsSchema
+>;

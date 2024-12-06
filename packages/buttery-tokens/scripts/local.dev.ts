@@ -1,3 +1,3 @@
-import { dev } from "../src/cli-scripts/dev";
+import { dev } from "../src/cli-scripts/dev.js";
 
-dev();
+dev({ logLevel: "debug", prompt: true });
