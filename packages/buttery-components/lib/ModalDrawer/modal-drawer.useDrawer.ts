@@ -1,8 +1,9 @@
+import { type MutableRefObject, useCallback, useMemo, useRef } from "react";
+
 import type {
   ModalDefaultState,
   ModalRef,
 } from "@BUTTERY_COMPONENT/useModalDialog/index.js";
-import { type MutableRefObject, useCallback, useMemo, useRef } from "react";
 
 export function useDrawer<T extends ModalDefaultState>() {
   const drawerRef = useRef<ModalRef<T>>(null);

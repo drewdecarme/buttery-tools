@@ -1,10 +1,11 @@
+import { ensurePopover } from "@BUTTERY_COMPONENT/usePopover/index.js";
+import { type RefCallback, useCallback, useId, useMemo } from "react";
+
 import {
   type DropdownOptions,
   useDropdown,
 } from "@BUTTERY_COMPONENT/useDropdown/index.js";
-import { ensurePopover } from "@BUTTERY_COMPONENT/usePopover/index.js";
 import { exhaustiveMatchGuard } from "@BUTTERY_COMPONENT/utils/index.js";
-import { type RefCallback, useCallback, useId, useMemo } from "react";
 
 export type UseTooltipOptionsTooltip = DropdownOptions & {
   dxType: "tooltip";

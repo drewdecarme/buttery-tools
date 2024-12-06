@@ -1,12 +1,4 @@
 import {
-  type DropdownOptions,
-  type DropdownRef,
-  useDropdown,
-} from "@BUTTERY_COMPONENT/useDropdown/index.js";
-import { getIsDropdownOpen } from "@BUTTERY_COMPONENT/useDropdown/index.js";
-import { usePortal } from "@BUTTERY_COMPONENT/usePortal/index.js";
-import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
-import {
   type RefCallback,
   forwardRef,
   useCallback,
@@ -14,6 +6,15 @@ import {
   useImperativeHandle,
   useRef,
 } from "react";
+
+import {
+  type DropdownOptions,
+  type DropdownRef,
+  useDropdown,
+} from "@BUTTERY_COMPONENT/useDropdown/index.js";
+import { getIsDropdownOpen } from "@BUTTERY_COMPONENT/useDropdown/index.js";
+import { usePortal } from "@BUTTERY_COMPONENT/usePortal/index.js";
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 
 export type DropdownMenuPropsNative = JSX.IntrinsicElements["div"] & {
   options: DropdownOptions;

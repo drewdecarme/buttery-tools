@@ -1,11 +1,4 @@
 import {
-  type DropdownOptions,
-  type UseDropdownOptions,
-  useDropdown,
-} from "@BUTTERY_COMPONENT/useDropdown/index.js";
-import { useWindowEventListener } from "@BUTTERY_COMPONENT/useWindowEventListener/index.js";
-import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
-import {
   type FocusEventHandler,
   type MutableRefObject,
   type ReactNode,
@@ -18,6 +11,14 @@ import {
   useRef,
   useState,
 } from "react";
+
+import {
+  type DropdownOptions,
+  type UseDropdownOptions,
+  useDropdown,
+} from "@BUTTERY_COMPONENT/useDropdown/index.js";
+import { useWindowEventListener } from "@BUTTERY_COMPONENT/useWindowEventListener/index.js";
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 
 import { LOG_ITD } from "./input-text-dropdown.utils.js";
 

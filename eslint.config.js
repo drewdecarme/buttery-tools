@@ -48,7 +48,7 @@ export default [
       "import/resolver": {
         typescript: {
           // Use the TypeScript configuration file
-          project: "./tsconfig.json",
+          project: "packages/*/tsconfig.json",
           alwaysTryTypes: true,
         },
         node: {

@@ -1,5 +1,6 @@
-import type { ModalDefaultState } from "@BUTTERY_COMPONENT/useModalDialog/index.js";
 import { type ReactNode, useMemo } from "react";
+
+import type { ModalDefaultState } from "@BUTTERY_COMPONENT/useModalDialog/index.js";
 
 import { ModalContext, type ModalContextType } from "./Modal.context.js";
 

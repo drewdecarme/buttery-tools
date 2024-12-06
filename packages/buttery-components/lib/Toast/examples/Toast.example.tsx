@@ -1,8 +1,9 @@
-import { Toaster, useToast } from "@BUTTERY_COMPONENT/Toast/index.js";
-import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 import { css } from "@linaria/core";
 import { randBoolean, randSentence } from "@ngneat/falso";
 import { type FC, useCallback } from "react";
+
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
+import { Toaster, useToast } from "@BUTTERY_COMPONENT/Toast/index.js";
 
 const divCSS = css`
   width: 400px;

@@ -1,17 +1,18 @@
 import {
-  type DropdownRef,
-  type DropdownRefHandleOpen,
-  useDropdown,
-} from "@BUTTERY_COMPONENT/useDropdown/index.js";
-import { getIsDropdownOpen } from "@BUTTERY_COMPONENT/useDropdown/index.js";
-import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
-import {
   type RefCallback,
   forwardRef,
   useCallback,
   useImperativeHandle,
   useRef,
 } from "react";
+
+import {
+  type DropdownRef,
+  type DropdownRefHandleOpen,
+  useDropdown,
+} from "@BUTTERY_COMPONENT/useDropdown/index.js";
+import { getIsDropdownOpen } from "@BUTTERY_COMPONENT/useDropdown/index.js";
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 
 export type DropdownNavPropsNative = JSX.IntrinsicElements["div"] & {
   id: string;

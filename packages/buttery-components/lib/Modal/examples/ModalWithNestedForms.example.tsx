@@ -1,7 +1,3 @@
-import {
-  InputTextDropdown,
-  useInputTextDropdown,
-} from "@BUTTERY_COMPONENT/InputTextDropdown/index.js";
 import { css } from "@linaria/core";
 import { randColor } from "@ngneat/falso";
 import {
@@ -12,6 +8,11 @@ import {
   useRef,
   useState,
 } from "react";
+
+import {
+  InputTextDropdown,
+  useInputTextDropdown,
+} from "@BUTTERY_COMPONENT/InputTextDropdown/index.js";
 
 import { Modal } from "../Modal.js";
 import { useModal } from "../modal.useModal.js";

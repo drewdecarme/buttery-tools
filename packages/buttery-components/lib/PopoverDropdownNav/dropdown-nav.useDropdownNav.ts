@@ -1,8 +1,9 @@
+import { useCallback, useId, useMemo, useRef } from "react";
+
 import type {
   DropdownOptions,
   DropdownRef,
 } from "@BUTTERY_COMPONENT/useDropdown/index.js";
-import { useCallback, useId, useMemo, useRef } from "react";
 
 export type UseDropdownNavOptions = Partial<DropdownOptions>;
 export const useDropdownNav = (options: UseDropdownNavOptions) => {

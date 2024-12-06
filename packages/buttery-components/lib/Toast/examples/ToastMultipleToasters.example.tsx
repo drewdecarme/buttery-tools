@@ -1,4 +1,3 @@
-import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 import { css } from "@linaria/core";
 import {
   randBoolean,
@@ -6,6 +5,8 @@ import {
   randSentence,
 } from "@ngneat/falso";
 import type { FC } from "react";
+
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 
 import { Toaster } from "../Toaster.js";
 import { useToast } from "../toast.useToast.js";
