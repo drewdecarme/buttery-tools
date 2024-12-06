@@ -21,6 +21,15 @@ export const butteryTokensConfigFontSchema = z
       z.record(z.string(), z.string()).optional()
     ),
     /**
+     * A fallback for font families that don't render
+     */
+    fallback: z.preprocess(
+      (value) =>
+        value ??
+        'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+      z.string().optional()
+    ),
+    /**
      * A record of key/value strings that will be variables that can be used as the font weights.
      * You can have as many as you want but a good guidance would be
      * 1. `light`

@@ -14,7 +14,7 @@ const butteryTokensColorToneSchema = z.object({
   colors: z.record(
     z.string(),
     z.object({
-      hue: z.number().min(0).max(60),
+      hue: z.number().min(0).max(360),
       variants: butteryTokensColorBrandVariantAutoSchema,
     })
   ),

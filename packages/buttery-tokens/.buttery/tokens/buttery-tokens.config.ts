@@ -1,38 +1,70 @@
-import { defineTokensConfig } from "@buttery/tokens"
+import { defineTokensConfig } from "@buttery/tokens";
 export default defineTokensConfig({
-  "runtime": {
-    "namespace": "pg",
-    "prefix": "pg",
-    "strict": false,
-    "suppressStrictWarnings": false
+  runtime: {
+    namespace: "playground",
+    prefix: "playground",
+    strict: true,
+    suppressStrictWarnings: false,
   },
-  "gridSystem": 4,
-  "font": {
-    "baseSize": 16,
-    "families": {
-      "heading": "Roboto"
+  gridSystem: 4,
+  font: {
+    baseSize: 16,
+    families: {
+      heading: "Poppins",
+      body: "Poppins",
     },
-    "weights": {
-      "regular": 400
+    weights: {
+      bold: 700,
+      "semi-bold": 600,
+      medium: 500,
+      regular: 400,
+      light: 300,
     },
-    "variants": {}
+    variants: {},
   },
-  "breakpoints": {
-    "phone-sm": 320,
-    "phone": 375,
-    "phone-lg": 414,
-    "tablet-sm": 480,
-    "tablet": 768,
-    "tablet-lg": 1024,
-    "desktop-sm": 1200,
-    "desktop": 1280,
-    "desktop-lg": 1400
+  breakpoints: {
+    phone: 375,
+    tablet: 768,
+    desktop: 1280,
   },
-  "color": {
-    "brand": {
-      "type": "manual",
-      "colors": {}
+  color: {
+    brand: {
+      type: "fluorescent",
+      saturation: 82,
+      brightness: 90,
+      colors: {
+        primary: {
+          hue: 47,
+          variants: 10,
+        },
+        secondary: {
+          hue: 170,
+          variants: 10,
+        },
+        warning: {
+          hue: 60,
+          variants: 10,
+        },
+        danger: {
+          hue: 359,
+          variants: 10,
+        },
+        success: {
+          hue: 131,
+          variants: 10,
+        },
+      },
     },
-    "neutral": {}
-  }
-})
+    neutral: {
+      background: "#fff",
+      surface: "#fff",
+      neutral: {
+        hex: "#030305",
+        variants: 10,
+      },
+    },
+  },
+  custom: {
+    "layout-header": 60,
+  },
+});
