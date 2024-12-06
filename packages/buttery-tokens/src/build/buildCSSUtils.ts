@@ -1,4 +1,4 @@
-import { writeFile } from "node:fs/promises";
+import { writeFileRecursive } from "@buttery/utils/node";
 
 import { buildCSSUtilsTypeScript } from "./buildCSSUtilsTypeScript.js";
 
@@ -11,9 +11,12 @@ export async function buildCSSUtils(rConfig: ResolvedButteryTokensConfig) {
   // Write the import paths. These are files that will be created in the root
   // of the node modules directory in order for someone to easily  their
   // utilities based upon the namespace they provided
-  const exportPathContent = `export * from "./dist/${rConfig.config.runtime.namespace}/index.js";`;
+  const exportPathContent = `export * from "./${rConfig.config.runtime.namespace}/index.js";`;
   const exportPromises = [".js", ".d.ts"].map((fileExt) =>
-    writeFile(rConfig.dirs.output.namespace.concat(fileExt), exportPathContent)
+    writeFileRecursive(
+      rConfig.dirs.output.namespace.concat(fileExt),
+      exportPathContent
+    )
   );
   await Promise.all(exportPromises);
 

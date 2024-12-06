@@ -32,7 +32,10 @@ export async function getButteryTokensDirectories(
 
     const pgBaseDir = LOCAL_DEV ? paths.rootDir : nodeModulesTokenDir.target;
     const playgroundDir = path.resolve(pgBaseDir, "./src/playground");
-    const outputDistDir = path.resolve(nodeModulesTokenDir.target, "./dist");
+    const outputDistDir = path.resolve(
+      nodeModulesTokenDir.target,
+      "./dist/out"
+    );
     const outputDistNamespace = path.resolve(
       outputDistDir,
       config.runtime.namespace
@@ -62,7 +65,7 @@ export async function getButteryTokensDirectories(
        */
       output: {
         root: nodeModulesTokenDir.target,
-        dist: outputDistDir,
+        out: outputDistDir,
         namespace: outputDistNamespace,
         namespaceTsconfig: outputDistNamespaceTsconfig,
       },

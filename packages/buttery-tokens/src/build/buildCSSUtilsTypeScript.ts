@@ -28,7 +28,7 @@ export async function buildCSSUtilsTypeScript({
     config,
     outDir: dirs.output.namespace,
     css: {
-      outDir: dirs.output.root,
+      outDir: dirs.output.out,
       fileName: config.runtime.namespace,
     },
   });
