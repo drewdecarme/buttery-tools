@@ -6,6 +6,7 @@ import { tryHandle } from "@buttery/utils/isomorphic";
 import { MakeTemplates } from "./make-templates/MakeTemplates.js";
 import { MakeTemplateFontFamily } from "./make-templates/template.makeFontFamily.js";
 import { MakeTemplateFontWeight } from "./make-templates/template.makeFontWeight.js";
+import { MakeTemplateColor } from "./make-templates/template.makeColor.js";
 
 import { LOG } from "../utils/util.logger.js";
 import type { ResolvedButteryTokensConfig } from "../config/getButteryTokensConfig.js";
@@ -36,9 +37,9 @@ export async function buildCSSUtilsTypeScript({
   // Register the templates that should be generated
   Templates.register(MakeTemplateFontFamily);
   Templates.register(MakeTemplateFontWeight);
+  Templates.register(MakeTemplateColor);
   // Templates.register(MakeTemplateRem);
   // Templates.register(MakeTemplateResponsive);
-  // Templates.register(MakeTemplateColorBrand);
   // Templates.register(MakeTemplateColorShade);
   // if (config.color.static) {
   //   Templates.register(MakeTemplateColorStatic);

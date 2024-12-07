@@ -35,7 +35,7 @@ export default defineTokensConfig({
       colors: {
         primary: {
           hue: 47,
-          variants: 10,
+          variants: 3,
         },
         secondary: {
           hue: 170,
@@ -43,11 +43,11 @@ export default defineTokensConfig({
         },
         warning: {
           hue: 60,
-          variants: 10,
+          variants: 6,
         },
         danger: {
           hue: 359,
-          variants: 10,
+          variants: 4,
         },
         success: {
           hue: 131,
@@ -60,7 +60,10 @@ export default defineTokensConfig({
       surface: "#fff",
       neutral: {
         hex: "#030305",
-        variants: 10,
+        variants: {
+          dark: "#030304",
+          light: "#030306",
+        },
       },
     },
   },
