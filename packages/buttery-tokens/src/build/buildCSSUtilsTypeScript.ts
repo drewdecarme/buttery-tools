@@ -7,9 +7,13 @@ import { MakeTemplates } from "./make-templates/MakeTemplates.js";
 import { MakeTemplateFontFamily } from "./make-templates/template.makeFontFamily.js";
 import { MakeTemplateFontWeight } from "./make-templates/template.makeFontWeight.js";
 import { MakeTemplateColor } from "./make-templates/template.makeColor.js";
+import { MakeTemplateRem } from "./make-templates/template.makeRem.js";
+import { MakeTemplateCustom } from "./make-templates/template.makeCustom.js";
+import { MakeTemplateReset } from "./make-templates/template.makeReset.js";
+import { MakeTemplateResponsive } from "./make-templates/template.makeResponsive.js";
 
-import { LOG } from "../utils/util.logger.js";
 import type { ResolvedButteryTokensConfig } from "../config/getButteryTokensConfig.js";
+import { LOG } from "../utils/util.logger.js";
 
 /**
  * Provided a config and a collection of directories, this function gathers
@@ -38,16 +42,12 @@ export async function buildCSSUtilsTypeScript({
   Templates.register(MakeTemplateFontFamily);
   Templates.register(MakeTemplateFontWeight);
   Templates.register(MakeTemplateColor);
-  // Templates.register(MakeTemplateRem);
-  // Templates.register(MakeTemplateResponsive);
-  // Templates.register(MakeTemplateColorShade);
-  // if (config.color.static) {
-  //   Templates.register(MakeTemplateColorStatic);
-  // }
-  // Templates.register(MakeTemplateReset);
-  // if (config.custom) {
-  //   Templates.register(MakeTemplateCustom);
-  // }
+  Templates.register(MakeTemplateRem);
+  Templates.register(MakeTemplateResponsive);
+  Templates.register(MakeTemplateReset);
+  if (config.custom) {
+    Templates.register(MakeTemplateCustom);
+  }
 
   // Generate all of the registered templates
   LOG.debug("Generating make functions...");

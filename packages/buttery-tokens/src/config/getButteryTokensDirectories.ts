@@ -23,15 +23,13 @@ export async function getButteryTokensDirectories(
       "tokens",
       { logLevel: logLevel }
     );
-    // this should only be enabled to do live development on the playground app
-    const LOCAL_DEV = process.env.BUTTERY_TOKENS_LOCAL_DEV === "1";
+    const nodeModulesTokensPlaygroundDir = await getNodeModulesButteryOutputDir(
+      paths,
+      "tokens-playground",
+      { logLevel: logLevel }
+    );
 
-    if (LOCAL_DEV) {
-      LOG.warning("LOCAL_DEV is enabled for the playground UI");
-    }
-
-    const pgBaseDir = LOCAL_DEV ? paths.rootDir : nodeModulesTokenDir.target;
-    const playgroundDir = path.resolve(pgBaseDir, "./src/playground");
+    const playgroundDir = path.resolve(nodeModulesTokensPlaygroundDir.target);
     const outputDistDir = path.resolve(
       nodeModulesTokenDir.target,
       "./dist/out"
@@ -53,7 +51,8 @@ export async function getButteryTokensDirectories(
        */
       playground: {
         root: playgroundDir,
-        app: path.resolve(playgroundDir, "./app"),
+        server: path.resolve(playgroundDir, "./build/server/index.js"),
+        static: path.resolve(playgroundDir, "./build/client"),
       },
       /**
        * The directory where the buttery token utilities

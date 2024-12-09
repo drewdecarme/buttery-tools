@@ -221,8 +221,8 @@ type ColorOptions = { opacity?: number };
  * \`
  * \`\`\`
  */
-export function ${functionName}<T extends keyof ColorVariantMap>(tokenName: T, options?: ColorOptions): string;
 export function ${functionName}<T extends keyof ColorVariantMap, V extends ColorVariants<T>>(tokenName: T, variant: V, options?: ColorOptions): string;
+export function ${functionName}<T extends keyof ColorVariantMap>(tokenName: T, options?: ColorOptions): string;
 export function makeColor<T extends keyof ColorVariantMap, V extends ColorVariants<T>>(tokenName: T, variantOrOptions?: V | ColorOptions, options?: ColorOptions): string {
   if (typeof variantOrOptions === "undefined") {
     return \`rgb(var(${cssVarPrefix}-\${tokenName}-rgb)\`;
@@ -235,7 +235,7 @@ export function makeColor<T extends keyof ColorVariantMap, V extends ColorVarian
   }
 
   // variant has been defined
-  const variant = colorVariantMap[tokenName][variantOrOptions];
+  const variant = variantOrOptions.toString();
   const opacity = options?.opacity ?? 1;
   return \`rgba(var(${cssVarPrefix}-\${tokenName}-\${variant}-rgb), \${opacity})\`;
 }

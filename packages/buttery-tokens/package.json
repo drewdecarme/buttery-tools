@@ -13,6 +13,11 @@
     "local:dev": "tsx ./scripts/local.dev.ts",
     "local:dev-ui": "tsx ./scripts/local.dev-ui.ts"
   },
+  "files": [
+    "lib",
+    "dist",
+    "static"
+  ],
   "exports": {
     ".": "./dist/lib/index.js",
     "./*": {
@@ -42,6 +47,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240512.0",
     "@remix-run/dev": "^2.15.0",
+    "@types/express": "^4",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "autoprefixer": "^10.4.19",
@@ -49,24 +55,29 @@
     "tsx": "4.19.2"
   },
   "dependencies": {
-    "@buttery/core": "workspace:^",
-    "@buttery/tsconfig": "workspace:^",
-    "@buttery/utils": "workspace:^",
+    "@buttery/core": "workspace:*",
+    "@buttery/tokens-playground": "workspace:*",
+    "@buttery/tsconfig": "workspace:*",
+    "@buttery/utils": "workspace:*",
     "@inquirer/prompts": "^7.1.0",
+    "@linaria/core": "^6.2.0",
     "@remix-run/cloudflare": "^2.15.0",
     "@remix-run/cloudflare-pages": "^2.15.0",
+    "@remix-run/express": "^2.15.1",
+    "@remix-run/node": "^2.15.1",
     "@remix-run/react": "^2.15.0",
     "@types/chroma-js": "2.4.4",
     "@types/node": "^22.10.1",
     "@wyw-in-js/vite": "0.5.5",
     "chroma-js": "3.1.2",
+    "express": "^4.21.2",
     "isbot": "^5.1.17",
     "postcss": "^8.4.49",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "ts-pattern": "5.5.0",
     "typescript": "5.7.2",
-    "vite": "6.0.2",
+    "vite": "5.4.11",
     "wrangler": "3.57.1",
     "zod": "^3.23.8"
   }

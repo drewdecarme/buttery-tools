@@ -28,7 +28,8 @@
   },
   "resolutions": {
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "vite": "5.4.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",

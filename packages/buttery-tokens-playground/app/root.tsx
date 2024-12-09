@@ -6,6 +6,9 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { css } from "@linaria/core";
+import { makeColor } from "@buttery/tokens/playground";
+import "@buttery/tokens/playground/css";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -20,6 +23,10 @@ export const links: LinksFunction = () => [
   },
 ];
 
+const bodyStyles = css`
+  background-color: ${makeColor("primary", "50")};
+`;
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -29,7 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className={bodyStyles}>
         {children}
         <ScrollRestoration />
         <Scripts />

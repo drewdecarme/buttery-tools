@@ -1,12 +1,20 @@
 import { z } from "zod";
 
+const fontWeightDefault = 400;
+const familyDefault = "system-ui";
+const fallbackDefault =
+  'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+
 export const butteryTokensConfigFontSchema = z
   .object({
     /**
      * The base font-size
      * @default 16
      */
-    baseSize: z.preprocess((value) => value ?? 16, z.number().optional()),
+    baseSize: z.preprocess(
+      (value) => value ?? 16,
+      z.number().optional().default(16)
+    ),
     /**
      * A record of key/value strings that will be variables that can be used as the font families.
      * You can have as many as you want but a good guidance would be
@@ -16,18 +24,20 @@ export const butteryTokensConfigFontSchema = z
     families: z.preprocess(
       (value) =>
         value ?? {
-          heading: "Roboto",
+          heading: familyDefault,
+          body: familyDefault,
         },
-      z.record(z.string(), z.string()).optional()
+      z.record(z.string(), z.string()).optional().default({
+        heading: familyDefault,
+        body: familyDefault,
+      })
     ),
     /**
      * A fallback for font families that don't render
      */
     fallback: z.preprocess(
-      (value) =>
-        value ??
-        'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-      z.string().optional()
+      (value) => value ?? fallbackDefault,
+      z.string().optional().default(fallbackDefault)
     ),
     /**
      * A record of key/value strings that will be variables that can be used as the font weights.
@@ -41,9 +51,11 @@ export const butteryTokensConfigFontSchema = z
     weights: z.preprocess(
       (value) =>
         value ?? {
-          regular: 400,
+          regular: fontWeightDefault,
         },
-      z.record(z.string(), z.number()).optional()
+      z.record(z.string(), z.number()).optional().default({
+        regular: fontWeightDefault,
+      })
     ),
     variants: z.preprocess(
       (value) => value ?? {},
