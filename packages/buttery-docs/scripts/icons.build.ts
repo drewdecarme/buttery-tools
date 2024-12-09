@@ -1,3 +1,3 @@
 import { build } from "@buttery/icons/cli/build";
 
-build();
+build({ logLevel: "debug", prompt: true });

@@ -1,7 +1,7 @@
 import { parseAndValidateOptions } from "@buttery/core/utils";
 import type { z } from "zod";
 
-import { butteryIconsBuildOptionsSchema } from "./_options.schema.js";
+import { butteryIconsBuildOptionsSchema } from "./_cli-scripts.utils.js";
 
 import { copyStaticDir } from "../build/copy-static-dir.js";
 import { generateComponents } from "../build/generate-components.js";
@@ -20,7 +20,7 @@ export type ButteryIconsBuildOptions = z.infer<
  * dynamically imported and typed using a standard
  * component
  */
-export async function build(options?: ButteryIconsBuildOptions) {
+export async function build(options?: Partial<ButteryIconsBuildOptions>) {
   const parsedOptions = parseAndValidateOptions(
     butteryIconsBuildOptionsSchema,
     options,

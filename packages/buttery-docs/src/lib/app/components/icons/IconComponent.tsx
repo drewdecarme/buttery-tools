@@ -2,10 +2,7 @@ import { Suspense, forwardRef, lazy } from "react";
 
 import type { IconNames } from "./buttery-icons.types.js";
 
-export type IconComponentNative = Omit<
-  JSX.IntrinsicElements["div"],
-  "children"
->;
+export type IconComponentNative = JSX.IntrinsicElements["div"];
 export type IconComponentCustom = {
   icon: IconNames;
   /**
@@ -18,7 +15,7 @@ export type IconComponent = IconComponentNative & IconComponentCustom;
 
 export const IconComponent = forwardRef<HTMLDivElement, IconComponent>(
   function IconComponent(
-    { className, icon, ddSize = "inherit", ...restProps },
+    { children, className, icon, ddSize = "inherit", ...restProps },
     ref
   ) {
     const Icon = lazy(() => import(`./generated/${icon}.tsx`));

@@ -67,7 +67,8 @@ export function getButteryDocsViteConfig(rConfig: ResolvedButteryDocsConfig) {
       }),
 
       react(),
-      // @ts-expect-error There actually is a call signature here
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore there's a type mismatch but it doesn't show during compilation
       wyw({
         include: ["**/*.{ts,tsx}"],
         babelOptions: {

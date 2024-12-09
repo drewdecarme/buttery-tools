@@ -140,7 +140,6 @@ function createNeutralVariants(
   if (!neutralConfig) return {};
   return Object.entries(neutralConfig).reduce<VariantManifest>(
     (accum, [colorName, colorValue]) => {
-      console.log(colorName, colorValue);
       return Object.assign(accum, {
         [colorName]:
           typeof colorValue === "string"
