@@ -5,23 +5,30 @@ import { type CompileFunction, MakeTemplate } from "./MakeTemplate.js";
 
 import type {
   ButteryTokensColorVariant,
+  ButteryTokensConfigColor,
   ButteryTokensConfigColorBrand,
   ButteryTokensConfigColorDefHex,
   ButteryTokensConfigColorDefHue,
   ButteryTokensConfigColorNeutral,
 } from "../../config/schema.color.js";
-import { hsbToHex } from "../../utils/util.color-conversions.js";
+import {
+  hexToHsl,
+  hexToRgb,
+  hsbToHex,
+} from "../../utils/util.color-conversions.js";
+import { LOG } from "../../utils/util.logger.js";
 
 type HEXValue = string;
 type VariantMap = {
+  base: string;
   [variantName: string]: HEXValue;
 };
 type VariantManifest = {
   [colorName: string]: VariantMap;
 };
 
-function autoCreateVariantMap(variants: string[]): VariantMap {
-  return variants.reduce<VariantMap>((accum, variant, i) => {
+function autoCreateVariantMap(variants: string[]): Omit<VariantMap, "base"> {
+  return variants.reduce<Omit<VariantMap, "base">>((accum, variant, i) => {
     const variantName = i === 0 ? "50" : (i * 100).toString();
     return Object.assign(accum, {
       [variantName]: variant,
@@ -42,19 +49,28 @@ function createVariantsFromBaseHex(
     const numOfVariants = variantDef;
     const variants = scale.colors(numOfVariants);
     const variantMap = autoCreateVariantMap(variants);
-    return variantMap;
+    return {
+      base: baseHex,
+      ...variantMap,
+    };
   }
   // create a set number of auto variants with the hex values in the array
   if (Array.isArray(variantDef)) {
     const numOfVariants = variantDef.length;
     const variants = scale.colors(numOfVariants);
     const variantMap = autoCreateVariantMap(variants);
-    return variantMap;
+    return {
+      base: baseHex,
+      ...variantMap,
+    };
   }
 
   // the object is already in the format we want so
   // we just return it
-  return variantDef;
+  return {
+    base: baseHex,
+    ...variantDef,
+  };
 }
 
 function createVariantsFromDefHue(
@@ -133,6 +149,16 @@ function createNeutralVariants(
   );
 }
 
+function createColorManifest(
+  colorConfig: ButteryTokensConfigColor | undefined
+) {
+  const colorVariantsBrand = createBrandVariants(colorConfig?.brand);
+  const colorVariantsNeutral = createNeutralVariants(colorConfig?.neutral);
+
+  const variantManifest = { ...colorVariantsBrand, ...colorVariantsNeutral };
+  return variantManifest;
+}
+
 function flattenVariantManifest(
   manifest: VariantManifest
 ): Record<string, string> {
@@ -157,23 +183,16 @@ const template: CompileFunction = ({
 }) => {
   const brandColorNames = Object.keys(config.color?.brand?.colors ?? {});
   const neutralColorNames = Object.keys(config.color?.neutral ?? {});
-  const colorNames = brandColorNames.concat(neutralColorNames);
+  const colorNames = [...brandColorNames, ...neutralColorNames];
   const colorUnion = methods.createTypeUnion(colorNames);
-  console.log({ colorUnion });
 
-  const colorVariantsBrand = createBrandVariants(config.color?.brand);
-  const colorVariantsNeutral = createNeutralVariants(config.color?.neutral);
-
-  const variantManifest = { ...colorVariantsBrand, ...colorVariantsNeutral };
-
-  console.log("variantManifest");
-  console.log(JSON.stringify(variantManifest, null, 2));
-  console.log("variantManifest - flattened");
-  console.log(JSON.stringify(flattenVariantManifest(variantManifest), null, 2));
+  const colorManifest = createColorManifest(config.color);
 
   return `export type Color = ${colorUnion};
-export type ColorVariant = ${colorUnion};
-export type MakeColor = (tokenName: Color, options?: { variant?: ColorVariant; opacity?: number }) => string;
+export const colorVariantMap = ${JSON.stringify(colorManifest, null, 2)};
+type ColorVariantMap = typeof colorVariantMap;
+type ColorVariants<T extends keyof ColorVariantMap> = keyof ColorVariantMap[T];
+type ColorOptions = { opacity?: number };
 
 /**
  * ## Description
@@ -202,76 +221,56 @@ export type MakeColor = (tokenName: Color, options?: { variant?: ColorVariant; o
  * \`
  * \`\`\`
  */
-export const ${functionName}: MakeColor = (tokenName, options) => {
+export function ${functionName}<T extends keyof ColorVariantMap>(tokenName: T, options?: ColorOptions): string;
+export function ${functionName}<T extends keyof ColorVariantMap, V extends ColorVariants<T>>(tokenName: T, variant: V, options?: ColorOptions): string;
+export function makeColor<T extends keyof ColorVariantMap, V extends ColorVariants<T>>(tokenName: T, variantOrOptions?: V | ColorOptions, options?: ColorOptions): string {
+  if (typeof variantOrOptions === "undefined") {
+    return \`rgb(var(${cssVarPrefix}-\${tokenName}-rgb)\`;
+  }
+
+  // no variant
+  if (typeof variantOrOptions === "object") {
+    const opacity = variantOrOptions?.opacity ?? 1;
+    return \`rgba(var(${cssVarPrefix}-\${tokenName}-rgb), \${opacity})\`;
+  }
+
+  // variant has been defined
+  const variant = colorVariantMap[tokenName][variantOrOptions];
   const opacity = options?.opacity ?? 1;
-  const variant = options?.variant ? \`\${options.variant}-\` : "";
-  return \`rgba(var(${cssVarPrefix}-\${tokenName}-\${variant}rgb), \${opacity})\`;
-};
+  return \`rgba(var(${cssVarPrefix}-\${tokenName}-\${variant}-rgb), \${opacity})\`;
+}
 `;
 };
 
-const css: CompileFunction = ({
-  config,
-  // cssVarPrefix,
-}) => {
-  console.log(config);
-  return "";
-  // let colorModels: ColorModels[] = [];
+const css: CompileFunction = ({ config, cssVarPrefix }) => {
+  const colorManifest = createColorManifest(config.color);
+  const flatManifest = flattenVariantManifest(colorManifest);
 
-  // switch (brand.mode) {
-  //   case "category": {
-  //     colorModels = Object.entries(brand.hues).reduce<ColorModels[]>(
-  //       (accum, [hueName, hueValue]) => {
-  //         const hex = hsbToHex(hueValue, brand.saturation, brand.brightness);
+  const variants = Object.entries(flatManifest).reduce<string[]>(
+    (accum, [variantId, variantVal]) => {
+      const [name, colorVariantId] = variantId.split("-");
+      const variantName = colorVariantId === "base" ? name : variantId;
 
-  //         const baseColorModel = {
-  //           name: hueName,
-  //           hex,
-  //           hsl: hsbToHsl(hueValue, brand.saturation, brand.brightness),
-  //           rgb: hexToRgb(hex),
-  //         };
-  //         const variantColorModels = createColorModelVariants(baseColorModel, {
-  //           strategy: "min-hex-max",
-  //           ...brand.variants,
-  //         });
-  //         return accum.concat([baseColorModel, ...variantColorModels]);
-  //       },
-  //       []
-  //     );
-  //     break;
-  //   }
+      // construct the variant variables
+      const variantPrefix = `${cssVarPrefix}-${variantName}`;
+      const hex = variantVal;
+      const { h, s, l } = hexToHsl(variantVal);
+      const { r, g, b } = hexToRgb(variantVal);
+      const variant = `${variantPrefix}: ${hex}`;
+      const variantHex = `${variantPrefix}-hex: ${hex}`;
+      const variantHsl = `${variantPrefix}-hsl: ${h}, ${s}, ${l}`;
+      const variantRgb = `${variantPrefix}-rgb: ${r}, ${g}, ${b}`;
 
-  //   case "manual": {
-  //     colorModels = Object.entries(brand.values).reduce<ColorModels[]>(
-  //       (accum, [hexName, hexValue]) => {
-  //         const baseColorModel = {
-  //           name: hexName,
-  //           hex: hexValue,
-  //           hsl: hexToHsl(hexValue),
-  //           rgb: hexToRgb(hexValue),
-  //         };
-  //         const variantColorModels = createColorModelVariants(baseColorModel, {
-  //           strategy: "min-hex-max",
-  //           ...brand.variants,
-  //         });
-  //         return accum.concat([baseColorModel, ...variantColorModels]);
-  //       },
-  //       []
-  //     );
-  //     break;
-  //   }
+      return [...accum, variant, variantHex, variantHsl, variantRgb];
+    },
+    []
+  );
 
-  //   default:
-  //     exhaustiveMatchGuard(brand);
-  // }
+  const variantString = variants.join(`;\n`);
+  LOG.debug("Variants:");
+  LOG.debug(variantString);
 
-  // const colorBrandTokens = createColorTokensFromColorModels(colorModels, {
-  //   prefix: cssVarPrefix,
-  // });
-
-  // LOG.debug(colorBrandTokens);
-
-  // return colorBrandTokens;
+  return variantString;
 };
 
 export const MakeTemplateColor = new MakeTemplate({
