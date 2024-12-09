@@ -1,6 +1,5 @@
 import {
-  makeColorBrand,
-  makeColorShade,
+  makeColor,
   makeFontWeight,
   makeRem,
   makeReset,
@@ -31,8 +30,7 @@ const ulStyles = css`
   & + * {
     padding-left: ${makeRem(16)};
     margin-left: ${makeRem(16)};
-    border-left: ${makeRem(1)} solid
-      ${makeColorShade("neutral", { variant: "50" })};
+    border-left: ${makeRem(1)} solid ${makeColor("neutral", "50")};
   }
 `;
 
@@ -45,7 +43,7 @@ const anchorSocialStyles = css`
   width: ${makeRem(28)};
 
   &:hover {
-    color: ${makeColorBrand("primary")};
+    color: ${makeColor("primary")};
   }
 `;
 
@@ -57,12 +55,12 @@ const internalCss = css`
   font-size: ${makeRem(16)};
 
   &:hover {
-    color: ${makeColorBrand("primary")};
+    color: ${makeColor("primary")};
     text-decoration: underline;
   }
 
   &.active {
-    color: ${makeColorBrand("primary")};
+    color: ${makeColor("primary")};
     font-weight: ${makeFontWeight("bold")};
   }
 `;

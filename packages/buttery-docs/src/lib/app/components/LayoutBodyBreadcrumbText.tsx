@@ -1,5 +1,5 @@
 import { classes } from "@buttery/components";
-import { makeColorBrand, makeColorShade, makeRem } from "@buttery/tokens/docs";
+import { makeColor, makeRem } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import { forwardRef } from "react";
 
@@ -11,7 +11,7 @@ export type LayoutBodyBreadcrumbTextProps =
   LayoutBodyBreadcrumbTextPropsCustom & LayoutBodyBreadcrumbTextPropsNative;
 
 const styles = css`
-  color: ${makeColorShade("neutral")};
+  color: ${makeColor("neutral")};
   font-size: ${makeRem(14)};
 
   position: relative;
@@ -19,13 +19,13 @@ const styles = css`
   &:not(.active) {
     &:hover,
     &:focus {
-      color: ${makeColorBrand("primary")};
+      color: ${makeColor("primary")};
       transition: all 0.15s ease-in-out;
     }
   }
 
   &.active {
-    color: ${makeColorShade("neutral", { variant: "300" })};
+    color: ${makeColor("neutral", "300")};
   }
 `;
 

@@ -1,61 +1,62 @@
-export default {
-  namespace: "docs",
+import { defineTokensConfig } from "@buttery/tokens";
+
+export default defineTokensConfig({
+  runtime: {
+    namespace: "docs",
+    prefix: "buttery-docs",
+    suppressStrictWarnings: false,
+    strict: true,
+  },
   gridSystem: 4,
-  prefix: "buttery-docs",
-  strict: true,
-  suppressStrictWarnings: false,
+  breakpoints: {
+    phone: 375,
+    tablet: 768,
+    desktop: 1280,
+  },
   font: {
-    size: 16,
-    family: {
-      heading:
-        '"Source Sans 3", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-      body: '"Source Sans 3", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+    baseSize: 16,
+    fallback: "system-ui",
+    families: {
+      heading: "Source Sans 3",
+      body: "Source Sans 3",
     },
-    weight: {
+    weights: {
       bold: 700,
       "semi-bold": 600,
       medium: 500,
       regular: 400,
       light: 300,
     },
-    typography: {},
-  },
-
-  breakpoints: {
-    phone: 375,
-    tablet: 768,
-    desktop: 1280,
   },
   color: {
     brand: {
-      mode: "category",
-      tone: "jewel",
+      type: "jewel",
       saturation: 83,
       brightness: 76,
-      hues: {
-        primary: 198,
-        secondary: 170,
-        warning: 60,
-        danger: 359,
-      },
-      variants: {
-        mode: "auto",
-        numOfVariants: 10,
-        scaleMin: 2,
-        scaleMax: 2,
-      },
-    },
-    shade: {
-      values: {
-        neutral: "#030305",
-      },
-      variants: {
-        mode: "auto",
-        numOfVariants: 10,
-        scaleMin: 5,
+      colors: {
+        primary: {
+          hue: 198,
+          variants: 10,
+        },
+        secondary: {
+          hue: 170,
+          variants: 10,
+        },
+        warning: {
+          hue: 60,
+          variants: 10,
+        },
+        danger: {
+          hue: 359,
+          variants: 10,
+        },
       },
     },
-    static: {
+    neutral: {
+      neutral: {
+        hex: "#030305",
+        variants: 10,
+      },
       background: "#ffffff",
       surface: "#ffffff",
     },
@@ -70,4 +71,4 @@ export default {
       storeAsRem: true,
     },
   },
-};
+});

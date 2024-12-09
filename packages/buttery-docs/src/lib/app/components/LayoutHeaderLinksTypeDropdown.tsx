@@ -1,7 +1,6 @@
 import { DropdownNav, useDropdownNav } from "@buttery/components";
 import {
-  makeColorBrand,
-  makeColorShade,
+  makeColor,
   makeFontFamily,
   makeFontWeight,
   makeRem,
@@ -25,11 +24,11 @@ const buttonStyles = css`
   align-items: center;
 
   &:hover {
-    color: ${makeColorBrand("primary")};
+    color: ${makeColor("primary")};
   }
 
   &.active {
-    color: ${makeColorBrand("primary")};
+    color: ${makeColor("primary")};
     font-weight: ${makeFontWeight("bold")};
   }
 `;
@@ -104,7 +103,7 @@ const dropdownStyles = css`
 
       .sub-title {
         font-size: ${makeRem(14)};
-        color: ${makeColorShade("neutral", { variant: "500" })};
+        color: ${makeColor("neutral", "500")};
         /* font-style: italic; */
       }
 
@@ -112,7 +111,7 @@ const dropdownStyles = css`
       &:hover {
         .title,
         .sub-title {
-          color: ${makeColorBrand("primary")};
+          color: ${makeColor("primary")};
         }
       }
     }

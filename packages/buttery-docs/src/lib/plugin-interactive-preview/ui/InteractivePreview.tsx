@@ -1,4 +1,4 @@
-import { makeColorBrand, makeColorShade } from "@buttery/tokens/docs";
+import { makeColor } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import React, { type ReactNode, useState } from "react";
 
@@ -37,8 +37,7 @@ const SourceCodeIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 const styles = css`
-  --preview-border-color: ${makeColorShade("neutral", {
-    variant: "100",
+  --preview-border-color: ${makeColor("neutral", "100", {
     opacity: 0.6,
   })};
 
@@ -77,22 +76,18 @@ const styles = css`
 
         &:hover,
         &:focus {
-          background: ${makeColorBrand("primary", {
-            variant: "500",
+          background: ${makeColor("primary", "500", {
             opacity: 0.2,
           })};
         }
 
         &.active {
-          color: ${makeColorBrand("primary")};
+          color: ${makeColor("primary")};
         }
 
         &:focus {
           outline: none;
-          border: 1px solid
-            ${makeColorBrand("primary", {
-              variant: "500",
-            })};
+          border: 1px solid ${makeColor("primary", "500")};
         }
       }
     }

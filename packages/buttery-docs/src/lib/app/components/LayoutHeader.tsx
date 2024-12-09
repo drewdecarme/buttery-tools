@@ -1,6 +1,5 @@
 import {
-  makeColorShade,
-  makeColorStatic,
+  makeColor,
   makeCustom,
   makeFontWeight,
   makeRem,
@@ -21,8 +20,8 @@ const layoutHeaderStyles = css`
   align-items: center;
   padding: 0 ${makeRem(32)};
   border-bottom: ${makeRem(1)} solid
-    ${makeColorShade("neutral", { variant: "50", opacity: 0.5 })};
-  background: ${makeColorStatic("background")};
+    ${makeColor("neutral", "50", { opacity: 0.5 })};
+  background: ${makeColor("background")};
   z-index: 10;
 
   & > div {
@@ -61,7 +60,7 @@ const imgStyles = css`
 const divStyles = css`
   font-size: ${makeRem(16)};
   text-transform: uppercase;
-  color: ${makeColorShade("neutral")};
+  color: ${makeColor("neutral")};
   font-weight: ${makeFontWeight("bold")};
 `;
 

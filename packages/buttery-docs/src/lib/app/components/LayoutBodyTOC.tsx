@@ -1,7 +1,5 @@
 import {
-  makeColorBrand,
-  makeColorShade,
-  makeColorStatic,
+  makeColor,
   makeCustom,
   makeFontWeight,
   makeRem,
@@ -15,7 +13,7 @@ import { LayoutTextOverline } from "./LayoutTextOverline.js";
 
 const layoutBodyStyles = css`
   grid-area: layout-toc;
-  background: ${makeColorStatic("background")};
+  background: ${makeColor("background")};
 
   & > div {
     padding: ${makeRem(32)};
@@ -31,7 +29,7 @@ const layoutBodyStyles = css`
       bottom: ${makeRem(32)};
       width: ${makeRem(1)};
       border-left: ${makeRem(1)} solid
-        ${makeColorShade("neutral", { variant: "50", opacity: 0.5 })};
+        ${makeColor("neutral", "50", { opacity: 0.5 })};
     }
   }
 `;
@@ -49,19 +47,19 @@ const ulStyles = css`
       display: flex;
       align-items: center;
       height: ${makeRem(32)};
-      color: ${makeColorShade("neutral")};
+      color: ${makeColor("neutral")};
       transition: all 0.15s ease-in-out;
       font-size: ${makeRem(14)};
 
       &:not(.active) {
         &:hover {
-          color: ${makeColorBrand("secondary")};
+          color: ${makeColor("secondary")};
           text-decoration: underline;
         }
       }
 
       &.active {
-        color: ${makeColorBrand("secondary")};
+        color: ${makeColor("secondary")};
         font-weight: ${makeFontWeight("semi-bold")};
       }
     }
