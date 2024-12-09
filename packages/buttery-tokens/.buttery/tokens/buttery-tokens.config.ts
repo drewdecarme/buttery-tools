@@ -1,4 +1,5 @@
 import { defineTokensConfig } from "@buttery/tokens";
+
 export default defineTokensConfig({
   runtime: {
     namespace: "playground",

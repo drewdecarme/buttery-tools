@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-const fontWeightDefault = 400;
-const familyDefault = "system-ui";
 const fallbackDefault =
   'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
 
@@ -24,20 +22,17 @@ export const butteryTokensConfigFontSchema = z
     families: z.preprocess(
       (value) =>
         value ?? {
-          heading: familyDefault,
-          body: familyDefault,
+          heading: "system-ui",
+          body: "system-ui",
         },
-      z.record(z.string(), z.string()).optional().default({
-        heading: familyDefault,
-        body: familyDefault,
-      })
+      z.record(z.string(), z.string()).optional()
     ),
     /**
      * A fallback for font families that don't render
      */
     fallback: z.preprocess(
       (value) => value ?? fallbackDefault,
-      z.string().optional().default(fallbackDefault)
+      z.string().optional()
     ),
     /**
      * A record of key/value strings that will be variables that can be used as the font weights.
@@ -51,10 +46,10 @@ export const butteryTokensConfigFontSchema = z
     weights: z.preprocess(
       (value) =>
         value ?? {
-          regular: fontWeightDefault,
+          regular: 400,
         },
       z.record(z.string(), z.number()).optional().default({
-        regular: fontWeightDefault,
+        regular: 400,
       })
     ),
     variants: z.preprocess(

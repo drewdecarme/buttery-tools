@@ -140,9 +140,12 @@ function createNeutralVariants(
   if (!neutralConfig) return {};
   return Object.entries(neutralConfig).reduce<VariantManifest>(
     (accum, [colorName, colorValue]) => {
-      if (typeof colorValue === "string") return accum;
+      console.log(colorName, colorValue);
       return Object.assign(accum, {
-        [colorName]: createVariantsFromDefHex({ [colorName]: colorValue }),
+        [colorName]:
+          typeof colorValue === "string"
+            ? colorValue
+            : createVariantsFromDefHex({ [colorName]: colorValue }),
       });
     },
     {}
@@ -166,6 +169,11 @@ function flattenVariantManifest(
 
   for (const color in manifest) {
     const variants = manifest[color];
+    if (typeof variants !== "object") {
+      flatManifest[color] = variants;
+      continue;
+    }
+
     for (const variant in variants) {
       flatManifest[`${color}-${variant}`] = variants[variant];
     }
