@@ -1,8 +1,7 @@
-
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { inlineTryCatch } from "@buttery/builtins";
+import { tryHandle } from "@buttery/utils/isomorphic";
 
 import { fetchGitLabRepoBlob } from "./fetch-gitlab-repo-blob.js";
 import { fetchGitLabRepoTree } from "./fetch-gitlab-repo-tree.js";
@@ -15,7 +14,7 @@ export async function createTemplateManifest() {
   const goodDocsRepoName = encodeURIComponent("tgdp/templates");
 
   // Get the good docs repo assets
-  const goodDocsRepoNodes = await inlineTryCatch(fetchGitLabRepoTree)(
+  const goodDocsRepoNodes = await tryHandle(fetchGitLabRepoTree)(
     goodDocsRepoName
   );
   if (goodDocsRepoNodes.hasError) {
@@ -34,7 +33,7 @@ export async function createTemplateManifest() {
     const contentType = entry.path.split("/template_")[0];
     const fn = async (): Promise<Template> => {
       LOG.debug(`Fetching template: "${contentType}"...`);
-      const templateBlobRes = await inlineTryCatch(fetchGitLabRepoBlob)(
+      const templateBlobRes = await tryHandle(fetchGitLabRepoBlob)(
         goodDocsRepoName,
         entry.id
       );
@@ -55,7 +54,7 @@ export async function createTemplateManifest() {
    * Get the descriptions of each of the templates by fetching
    * and parsing the README.md tables.
    */
-  const templateMeta = await inlineTryCatch(getTemplateMeta)(
+  const templateMeta = await tryHandle(getTemplateMeta)(
     goodDocsRepoName,
     goodDocsRepoNodes.data
   );
@@ -67,7 +66,7 @@ export async function createTemplateManifest() {
   // created in the getTemplates reducer
   const templateManifest: TemplateManifest = {};
   for (const getTemplate of getTemplates) {
-    const templateRes = await inlineTryCatch(getTemplate)();
+    const templateRes = await tryHandle(getTemplate)();
     if (templateRes.hasError) {
       return LOG.fatal(templateRes.error);
     }
