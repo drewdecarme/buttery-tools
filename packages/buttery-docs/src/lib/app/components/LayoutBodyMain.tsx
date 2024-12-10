@@ -19,7 +19,7 @@ const layoutBodyMainStyles = css`
   }
 
   code {
-    background: ${makeColor("neutral", "50", { opacity: 0.5 })};
+    background: ${makeColor("neutral-50", { opacity: 0.5 })};
     padding: ${makeRem(4)};
     border-radius: ${makeRem(4)};
   }
@@ -32,7 +32,7 @@ const layoutBodyMainStyles = css`
   }
 
   blockquote {
-    background-color: ${makeColor("secondary", "500", {
+    background-color: ${makeColor("secondary-500", {
       opacity: 0.1,
     })} !important;
     margin: 0;
@@ -47,7 +47,7 @@ const layoutBodyMainStyles = css`
   }
 
   table {
-    --bd-table-border: ${makeRem(1)} solid ${makeColor("neutral", "50")};
+    --bd-table-border: ${makeRem(1)} solid ${makeColor("neutral-50")};
     border-spacing: 0;
     border: var(--bd-table-border);
     width: 100%;
@@ -59,7 +59,7 @@ const layoutBodyMainStyles = css`
     }
 
     thead {
-      background: ${makeColor("secondary", "50", {
+      background: ${makeColor("secondary-50", {
         opacity: 0.3,
       })};
     }
@@ -114,7 +114,7 @@ const layoutBodyMainStyles = css`
     }
 
     h2 {
-      border-bottom: ${makeRem(1)} solid ${makeColor("neutral", "50")};
+      border-bottom: ${makeRem(1)} solid ${makeColor("neutral-50")};
 
       & + p {
         margin: ${makeRem(16)} 0;
@@ -135,10 +135,10 @@ const layoutBodyMainStyles = css`
       z-index: 9;
 
       a {
-        background-color: ${makeColor("secondary", "50", {
+        background-color: ${makeColor("secondary-50", {
           opacity: 0.2,
         })};
-        color: ${makeColor("secondary", "700")} !important;
+        color: ${makeColor("secondary-700")} !important;
         padding: 0 ${makeRem(4)};
         &:hover {
           text-decoration: underline;

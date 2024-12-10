@@ -23,7 +23,7 @@ const ulStyles = css`
         top: 0;
         bottom: 0;
         width: ${makeRem(1)};
-        background: ${makeColor("neutral", "50")};
+        background: ${makeColor("neutral-50")};
       }
     }
   }
@@ -50,13 +50,13 @@ const anchorCss = css`
   }
 
   &.active {
-    background: ${makeColor("primary", "300", { opacity: 0.2 })};
+    background: ${makeColor("primary-300", { opacity: 0.2 })};
     color: ${makeColor("primary")};
     font-weight: ${makeFontWeight("semi-bold")};
   }
   &:not(.active) {
     &:hover {
-      background: ${makeColor("primary", "200", {
+      background: ${makeColor("primary-200", {
         opacity: 0.2,
       })};
       color: ${makeColor("primary")};

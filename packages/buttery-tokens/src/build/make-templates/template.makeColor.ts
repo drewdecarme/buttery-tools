@@ -158,22 +158,21 @@ function createColorManifest(
   const colorVariantsNeutral = createNeutralVariants(colorConfig?.neutral);
 
   const variantManifest = { ...colorVariantsBrand, ...colorVariantsNeutral };
-  return variantManifest;
-}
 
-function flattenVariantManifest(
-  manifest: VariantManifest
-): Record<string, string> {
   const flatManifest: Record<string, string> = {};
 
-  for (const color in manifest) {
-    const variants = manifest[color];
+  for (const color in variantManifest) {
+    const variants = variantManifest[color];
     if (typeof variants !== "object") {
       flatManifest[color] = variants;
       continue;
     }
 
     for (const variant in variants) {
+      if (variant === "base") {
+        flatManifest[color] = variants[variant];
+        continue;
+      }
       flatManifest[`${color}-${variant}`] = variants[variant];
     }
   }
@@ -183,23 +182,16 @@ function flattenVariantManifest(
 
 const template: CompileFunction = ({
   config,
-  methods,
   docs,
   functionName,
   cssVarPrefix,
 }) => {
-  const brandColorNames = Object.keys(config.color?.brand?.colors ?? {});
-  const neutralColorNames = Object.keys(config.color?.neutral ?? {});
-  const colorNames = [...brandColorNames, ...neutralColorNames];
-  const colorUnion = methods.createTypeUnion(colorNames);
+  const manifest = createColorManifest(config.color);
+  const colorNames = Object.keys(manifest);
 
-  const colorManifest = createColorManifest(config.color);
-
-  return `export type Color = ${colorUnion};
-export const colorVariantMap = ${JSON.stringify(colorManifest, null, 2)};
-type ColorVariantMap = typeof colorVariantMap;
-type ColorVariants<T extends keyof ColorVariantMap> = keyof ColorVariantMap[T];
-type ColorOptions = { opacity?: number };
+  return `export const colorAndVariants = ${JSON.stringify(manifest, null, 2)};
+export type ColorAndVariants = keyof typeof colorAndVariants;
+export type MakeColorOptions = { opacity?: number };
 
 /**
  * ## Description
@@ -228,41 +220,23 @@ type ColorOptions = { opacity?: number };
  * \`
  * \`\`\`
  */
-export function ${functionName}<T extends keyof ColorVariantMap, V extends ColorVariants<T>>(tokenName: T, variant: V, options?: ColorOptions): string;
-export function ${functionName}<T extends keyof ColorVariantMap>(tokenName: T, options?: ColorOptions): string;
-export function makeColor<T extends keyof ColorVariantMap, V extends ColorVariants<T>>(tokenName: T, variantOrOptions?: V | ColorOptions, options?: ColorOptions): string {
-  if (typeof variantOrOptions === "undefined") {
-    return \`rgb(var(${cssVarPrefix}-\${tokenName}-rgb)\`;
-  }
-
-  // no variant
-  if (typeof variantOrOptions === "object") {
-    const opacity = variantOrOptions?.opacity ?? 1;
-    return \`rgba(var(${cssVarPrefix}-\${tokenName}-rgb), \${opacity})\`;
-  }
-
-  // variant has been defined
-  const variant = variantOrOptions.toString();
+export function ${functionName}<T extends ColorAndVariants>(tokenName: T, options?: MakeColorOptions): string {
   const opacity = options?.opacity ?? 1;
-  return \`rgba(var(${cssVarPrefix}-\${tokenName}-\${variant}-rgb), \${opacity})\`;
+  return \`rgba(var(${cssVarPrefix}-\${tokenName}-rgb), \${opacity})\`;
 }
 `;
 };
 
 const css: CompileFunction = ({ config, cssVarPrefix }) => {
-  const colorManifest = createColorManifest(config.color);
-  const flatManifest = flattenVariantManifest(colorManifest);
+  const manifest = createColorManifest(config.color);
 
-  const variants = Object.entries(flatManifest).reduce<string[]>(
-    (accum, [variantId, variantVal]) => {
-      const [name, colorVariantId] = variantId.split("-");
-      const variantName = colorVariantId === "base" ? name : variantId;
-
+  const variants = Object.entries(manifest).reduce<string[]>(
+    (accum, [variantId, variantHexValue]) => {
       // construct the variant variables
-      const variantPrefix = `${cssVarPrefix}-${variantName}`;
-      const hex = variantVal;
-      const { h, s, l } = hexToHsl(variantVal);
-      const { r, g, b } = hexToRgb(variantVal);
+      const variantPrefix = `${cssVarPrefix}-${variantId}`;
+      const hex = variantHexValue;
+      const { h, s, l } = hexToHsl(hex);
+      const { r, g, b } = hexToRgb(hex);
       const variant = `${variantPrefix}: ${hex}`;
       const variantHex = `${variantPrefix}-hex: ${hex}`;
       const variantHsl = `${variantPrefix}-hsl: ${h}, ${s}, ${l}`;

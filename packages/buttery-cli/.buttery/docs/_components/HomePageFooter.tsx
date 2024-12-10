@@ -7,7 +7,7 @@ const footerStyles = css`
   & > div {
     max-width: ${makeCustom("layout-max-width")};
     border-top: ${makeRem(1)} solid
-      ${makeColor("neutral", "100", { opacity: 0.3 })};
+      ${makeColor("neutral-100", { opacity: 0.3 })};
     height: ${makeRem(80)};
     display: flex;
     justify-content: space-between;

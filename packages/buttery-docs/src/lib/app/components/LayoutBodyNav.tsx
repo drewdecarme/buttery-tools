@@ -17,8 +17,7 @@ import type { ButteryDocsRouteManifestGraphObject } from "../../../utils/util.ty
 const navStyles = css`
   grid-area: layout-sidebar;
   align-self: start;
-  border-right: ${makeRem(1)} solid
-    ${makeColor("neutral", "50", { opacity: 0.5 })};
+  border-right: ${makeRem(1)} solid ${makeColor("neutral-50", { opacity: 0.5 })};
   max-height: ${`calc(100% - ${makeCustom("layout-header-height")})`};
   overflow-y: auto;
   position: sticky;
@@ -39,8 +38,7 @@ const sectionStyles = css`
   margin-bottom: ${makeRem(16)};
   & + & {
     padding-top: ${makeRem(16)};
-    border-top: ${makeRem(1)} solid
-      ${makeColor("neutral", "50", { opacity: 0.5 })};
+    border-top: ${makeRem(1)} solid ${makeColor("neutral-50", { opacity: 0.5 })};
   }
 `;
 

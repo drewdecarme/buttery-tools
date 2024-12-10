@@ -32,7 +32,7 @@ export const bodyStyles = css`
       line-height: 1.5;
     }
   }
-  background: ${makeColor("neutral", "50", { opacity: 0.12 })};
+  background: ${makeColor("neutral-50", { opacity: 0.12 })};
 `;
 
 export type LayoutPropsNative = JSX.IntrinsicElements["div"];

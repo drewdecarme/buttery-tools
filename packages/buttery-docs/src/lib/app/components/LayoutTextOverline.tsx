@@ -16,7 +16,7 @@ export const layoutNavOverlineCSS = css`
   font-size: ${makeRem(12)};
   text-transform: uppercase;
   font-weight: ${makeFontWeight("bold")};
-  color: ${makeColor("neutral", "900")};
+  color: ${makeColor("neutral-900")};
 `;
 
 export const LayoutTextOverline = forwardRef<

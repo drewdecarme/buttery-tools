@@ -20,7 +20,7 @@ const layoutHeaderStyles = css`
   align-items: center;
   padding: 0 ${makeRem(32)};
   border-bottom: ${makeRem(1)} solid
-    ${makeColor("neutral", "50", { opacity: 0.5 })};
+    ${makeColor("neutral-50", { opacity: 0.5 })};
   background: ${makeColor("background")};
   z-index: 10;
 

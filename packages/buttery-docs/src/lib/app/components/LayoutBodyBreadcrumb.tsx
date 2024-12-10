@@ -27,7 +27,7 @@ const styles = css`
     margin-left: ${makeRem(32)};
     margin-right: ${makeRem(32)};
     border-bottom: ${makeRem(1)} solid
-      ${makeColor("neutral", "50", { opacity: 0.5 })};
+      ${makeColor("neutral-50", { opacity: 0.5 })};
 
     & > li {
       position: relative;

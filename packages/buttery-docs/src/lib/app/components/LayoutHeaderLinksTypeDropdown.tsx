@@ -103,7 +103,7 @@ const dropdownStyles = css`
 
       .sub-title {
         font-size: ${makeRem(14)};
-        color: ${makeColor("neutral", "500")};
+        color: ${makeColor("neutral-500")};
         /* font-style: italic; */
       }
 

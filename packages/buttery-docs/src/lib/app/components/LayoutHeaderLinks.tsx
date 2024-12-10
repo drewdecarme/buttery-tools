@@ -30,7 +30,7 @@ const ulStyles = css`
   & + * {
     padding-left: ${makeRem(16)};
     margin-left: ${makeRem(16)};
-    border-left: ${makeRem(1)} solid ${makeColor("neutral", "50")};
+    border-left: ${makeRem(1)} solid ${makeColor("neutral-50")};
   }
 `;
 

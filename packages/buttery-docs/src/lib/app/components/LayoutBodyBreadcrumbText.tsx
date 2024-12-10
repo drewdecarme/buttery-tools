@@ -25,7 +25,7 @@ const styles = css`
   }
 
   &.active {
-    color: ${makeColor("neutral", "300")};
+    color: ${makeColor("neutral-300")};
   }
 `;
 

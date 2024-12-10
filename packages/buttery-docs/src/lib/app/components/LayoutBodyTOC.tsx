@@ -29,7 +29,7 @@ const layoutBodyStyles = css`
       bottom: ${makeRem(32)};
       width: ${makeRem(1)};
       border-left: ${makeRem(1)} solid
-        ${makeColor("neutral", "50", { opacity: 0.5 })};
+        ${makeColor("neutral-50", { opacity: 0.5 })};
     }
   }
 `;

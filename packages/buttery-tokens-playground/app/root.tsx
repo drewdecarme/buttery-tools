@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import type { LinksFunction } from "@remix-run/cloudflare";
 import {
   Links,
@@ -24,7 +25,7 @@ export const links: LinksFunction = () => [
 ];
 
 const bodyStyles = css`
-  background-color: ${makeColor("primary", "50")};
+  background-color: ${makeColor("primary-50")};
 `;
 
 export function Layout({ children }: { children: React.ReactNode }) {
