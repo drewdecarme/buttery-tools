@@ -4,6 +4,9 @@ import {
   defineOptions,
 } from "@buttery/commands";
 import { build } from "@buttery/docs/cli/build";
+import { tryHandle } from "@buttery/utils/isomorphic";
+
+import { LOG_CLI } from "../_utils";
 
 export const meta: CommandMeta = {
   name: "build",
@@ -30,8 +33,11 @@ export const options = defineOptions({
 export const action: CommandAction<never, typeof options> = async ({
   options: { debug, ...options },
 }) => {
-  build({
+  const res = await tryHandle(build)({
     ...options,
     logLevel: debug ? "debug" : "warn",
   });
+  if (res.error) {
+    LOG_CLI.fatal(res.error);
+  }
 };

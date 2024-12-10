@@ -5,10 +5,7 @@ import type { ButteryLogLevel } from "@buttery/logs";
 import { findDirectoryUpwards } from "@buttery/utils/node";
 import { tryHandle } from "@buttery/utils/isomorphic";
 
-
 import { LOG } from "./util.logger.js";
-
-import type { ButteryConfigPaths } from "../config/buttery-config.types.js";
 
 /**
  * Searches up the directory structure starting at the package root
@@ -22,7 +19,7 @@ import type { ButteryConfigPaths } from "../config/buttery-config.types.js";
  * required to copy files, run apps, etc... from the CLI.
  */
 export async function getNodeModulesButteryOutputDir(
-  paths: ButteryConfigPaths,
+  startingDirectory: string,
   outputDirName: string,
   options: { logLevel: ButteryLogLevel }
 ) {
@@ -32,14 +29,14 @@ export async function getNodeModulesButteryOutputDir(
 
   try {
     LOG.debug(
-      `Starting to search for "node_modules" at directory "${paths.butteryDir}"`
+      `Starting to search for "node_modules" at directory "${startingDirectory}"`
     );
 
     const butteryNodeModulesPath = findDirectoryUpwards(
       "node_modules",
       "@buttery",
       {
-        startingDirectory: paths.butteryDir,
+        startingDirectory: startingDirectory,
       }
     );
     if (!butteryNodeModulesPath) {

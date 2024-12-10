@@ -5,14 +5,18 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/lib/index.js",
+    "./cli/*": "./dist/cli-scripts/*.js"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "dev": "vite",
-    "build": "yarn tsc && vite build && yarn tsc --project tsconfig.types.json"
+    "build": "yarn tsc && vite build && yarn types && yarn cli-scripts:build",
+    "types": "yarn tsc --project tsconfig.types.json",
+    "cli-scripts:build": "tsc --project tsconfig.cli-scripts.json",
+    "cli-scripts:dev": "yarn cli-scripts:build --watch"
   },
   "repository": {
     "type": "git",
@@ -31,6 +35,7 @@
   "devDependencies": {
     "@buttery/tsconfig": "workspace:*",
     "@linaria/core": "6.2.0",
+    "@types/babel__core": "^7",
     "@types/node": "22.10.1",
     "@vitejs/plugin-react-swc": "3.7.2",
     "@wyw-in-js/vite": "0.5.5",
@@ -38,8 +43,13 @@
     "vite": "6.0.3"
   },
   "dependencies": {
-    "@buttery/logs": "workspace:^0.1.6",
+    "@babel/core": "^7.26.0",
+    "@babel/parser": "^7.26.3",
+    "@buttery/core": "workspace:^",
+    "@buttery/logs": "workspace:^",
+    "@inquirer/prompts": "^7.2.0",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "zod": "^3.24.0"
   }
 }

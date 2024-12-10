@@ -52,7 +52,7 @@
     "./plugin-interactive-preview": "./dist/lib/plugin-interactive-preview/index.js",
     ".": "./dist/lib/index.js",
     "./app": "./dist/lib/app/index.js",
-    "./css": "./dist/lib/docs.css"
+    "./css": "./dist/lib/style.css"
   },
   "devDependencies": {
     "@buttery/icons": "workspace:*",

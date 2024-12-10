@@ -5,7 +5,6 @@ import { findDirectoryUpwards } from "@buttery/utils/node";
 import type { ButteryLogLevel } from "@buttery/logs";
 import { getNodeModulesButteryOutputDir } from "@buttery/core/utils";
 
-
 import type { ButteryDocsConfig } from "./_config.utils.js";
 
 import { LOG } from "../utils/util.logger.js";
@@ -22,7 +21,7 @@ export async function getButteryDocsDirectories(
   LOG.checkpointStart("resolve docs dir");
 
   const nodeModulesDocsDir = await getNodeModulesButteryOutputDir(
-    paths,
+    paths.butteryDir,
     "docs",
     { logLevel }
   );

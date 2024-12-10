@@ -9,6 +9,7 @@ import packageJson from "./package.json" with { type: "json"};
 
 export default defineConfig({
   build: {
+    outDir: path.resolve(import.meta.dirname, "./dist/lib"),
     lib: {
       entry: path.resolve(import.meta.dirname, "./lib/index.ts"),
       fileName(_format, entryName) {

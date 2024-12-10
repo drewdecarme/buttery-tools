@@ -1156,11 +1156,12 @@ __metadata:
   resolution: "@buttery/cli@workspace:packages/buttery-cli"
   dependencies:
     "@buttery/commands": "workspace:^0.4.7"
-    "@buttery/components": "workspace:^0.1.6"
-    "@buttery/core": "workspace:^"
+    "@buttery/components": "workspace:^"
     "@buttery/docs": "workspace:^0.2.8"
+    "@buttery/logs": "workspace:^"
     "@buttery/tokens": "workspace:^0.1.11"
     "@buttery/tsconfig": "workspace:^0.1.4"
+    "@buttery/utils": "workspace:^"
     tsx: "npm:4.19.2"
     typescript: "npm:5.7.2"
   bin:
@@ -1194,13 +1195,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/components@workspace:^, @buttery/components@workspace:^0.1.6, @buttery/components@workspace:packages/buttery-components":
+"@buttery/components@workspace:^, @buttery/components@workspace:packages/buttery-components":
   version: 0.0.0-use.local
   resolution: "@buttery/components@workspace:packages/buttery-components"
   dependencies:
-    "@buttery/logs": "workspace:^0.1.6"
+    "@babel/core": "npm:^7.26.0"
+    "@babel/parser": "npm:^7.26.3"
+    "@buttery/core": "workspace:^"
+    "@buttery/logs": "workspace:^"
     "@buttery/tsconfig": "workspace:*"
+    "@inquirer/prompts": "npm:^7.2.0"
     "@linaria/core": "npm:6.2.0"
+    "@types/babel__core": "npm:^7"
     "@types/node": "npm:22.10.1"
     "@vitejs/plugin-react-swc": "npm:3.7.2"
     "@wyw-in-js/vite": "npm:0.5.5"
@@ -1208,6 +1214,7 @@ __metadata:
     react-dom: "npm:18.3.1"
     typescript: "npm:5.7.2"
     vite: "npm:6.0.3"
+    zod: "npm:^3.24.0"
   languageName: unknown
   linkType: soft
 
@@ -4933,7 +4940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/babel__core@npm:7.20.5, @types/babel__core@npm:^7.20.5":
+"@types/babel__core@npm:7.20.5, @types/babel__core@npm:^7, @types/babel__core@npm:^7.20.5":
   version: 7.20.5
   resolution: "@types/babel__core@npm:7.20.5"
   dependencies:
@@ -16984,6 +16991,13 @@ __metadata:
   version: 3.23.8
   resolution: "zod@npm:3.23.8"
   checksum: 10c0/8f14c87d6b1b53c944c25ce7a28616896319d95bc46a9660fe441adc0ed0a81253b02b5abdaeffedbeb23bdd25a0bf1c29d2c12dd919aef6447652dd295e3e69
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.24.0":
+  version: 3.24.0
+  resolution: "zod@npm:3.24.0"
+  checksum: 10c0/2f03f36fdaefbb67f5a67c1b03645096b842be4dd488de400809c75835359cf94c81a98704f48bf23685e45cf73ae799c649c44bd8e023c326bd8b9537f65d5b
   languageName: node
   linkType: hard
 

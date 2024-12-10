@@ -37,6 +37,6 @@ export const options = defineOptions({
   },
 });
 
-export const action: CommandAction<typeof options> = async () => {
+export const action: CommandAction<never, typeof options> = async () => {
   console.log("TODO!");
 };

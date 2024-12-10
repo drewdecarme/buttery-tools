@@ -19,12 +19,12 @@ export async function getButteryTokensDirectories(
 ) {
   try {
     const nodeModulesTokenDir = await getNodeModulesButteryOutputDir(
-      paths,
+      paths.butteryDir,
       "tokens",
       { logLevel: logLevel }
     );
     const nodeModulesTokensPlaygroundDir = await getNodeModulesButteryOutputDir(
-      paths,
+      paths.butteryDir,
       "tokens-playground",
       { logLevel: logLevel }
     );

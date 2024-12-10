@@ -18,10 +18,9 @@
     ".": "./dist/index.js"
   },
   "scripts": {
-    "build": "yarn cli:build && yarn lib:build && yarn docs:build",
+    "build": "yarn cli:build && yarn docs:build",
     "cli:dev": "tsx ./scripts/dev.ts",
     "cli:build": "tsx ./scripts/build.ts",
-    "lib:build": "yarn tsc --project tsconfig.library.json",
     "docs:build": "yarn buttery docs build",
     "docs:dev": "cd ./.buttery/docs/dist && wrangler pages dev ./build/client",
     "docs:release": "yarn docs:build && cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-tools"
@@ -39,13 +38,14 @@
   },
   "dependencies": {
     "@buttery/commands": "workspace:^0.4.7",
-    "@buttery/components": "workspace:^0.1.6",
+    "@buttery/components": "workspace:^",
     "@buttery/docs": "workspace:^0.2.8",
+    "@buttery/logs": "workspace:^",
     "@buttery/tokens": "workspace:^0.1.11",
-    "@buttery/tsconfig": "workspace:^0.1.4"
+    "@buttery/tsconfig": "workspace:^0.1.4",
+    "@buttery/utils": "workspace:^"
   },
   "devDependencies": {
-    "@buttery/core": "workspace:^",
     "tsx": "4.19.2",
     "typescript": "5.7.2"
   }

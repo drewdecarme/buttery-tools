@@ -4,7 +4,6 @@ import { type ButteryConfigPaths } from "@buttery/core/config";
 import type { ButteryLogLevel } from "@buttery/logs";
 import { getNodeModulesButteryOutputDir } from "@buttery/core/utils";
 
-
 import type { ButteryIconsConfig } from "./_config.utils.js";
 
 import { LOG } from "../utils/util.logger.js";
@@ -19,7 +18,7 @@ export async function getButteryIconsDirectories(
   { logLevel }: { logLevel: ButteryLogLevel }
 ) {
   const nodeModulesIconsDir = await getNodeModulesButteryOutputDir(
-    paths,
+    paths.butteryDir,
     "icons",
     { logLevel }
   );

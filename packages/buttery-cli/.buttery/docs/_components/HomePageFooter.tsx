@@ -1,9 +1,4 @@
-import {
-  makeColorShade,
-  makeColorStatic,
-  makeCustom,
-  makeRem,
-} from "@buttery/tokens/docs";
+import { makeColor, makeCustom, makeRem } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 
 const footerStyles = css`
@@ -12,11 +7,11 @@ const footerStyles = css`
   & > div {
     max-width: ${makeCustom("layout-max-width")};
     border-top: ${makeRem(1)} solid
-      ${makeColorShade("neutral", { variant: "100", opacity: 0.3 })};
+      ${makeColor("neutral", "100", { opacity: 0.3 })};
     height: ${makeRem(80)};
     display: flex;
     justify-content: space-between;
-    background: ${makeColorStatic("background")};
+    background: ${makeColor("background")};
     padding: 0 ${makeRem(32)};
     align-items: center;
   }
