@@ -15,6 +15,13 @@ export type GetButteryConfigOptions<ConfigShape> = {
    */
   prompt?: boolean;
   /**
+   * An optional string prefix to add to the beginning of the resolved
+   * configuration file name. This configuration specifically solves the need
+   * for some files in some directories to be prefixed with a certain string
+   * to be ignored during their own build steps
+   */
+  configPrefix?: string;
+  /**
    * A function that will returned a well formed Config based upon the generic
    * that is provided. This function will run anytime a config file is missing
    * and needs to be created. This callback is defined externally to this function

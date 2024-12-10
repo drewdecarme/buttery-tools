@@ -1,3 +1,5 @@
+import path from "node:path";
+
 import picomatch from "picomatch";
 
 import { getEntryPointsGlob } from "./build.utils.js";
@@ -23,7 +25,8 @@ export function loadCommand(
   LOG.debug("Loading command...");
   const entryPointGlob = getEntryPointsGlob(dirs);
   const isMatch = picomatch(entryPointGlob);
-  const isCommandFile = isMatch(filePath);
+  const filename = path.parse(filePath).name;
+  const isCommandFile = isMatch(filePath) && !filename.startsWith("_");
   if (!isCommandFile) {
     LOG.debug(`Loading command... INVALID_COMMAND. Ignoring: "${filePath}"`);
     return undefined;

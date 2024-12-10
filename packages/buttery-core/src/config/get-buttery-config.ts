@@ -29,6 +29,7 @@ export async function getButteryConfig<T extends Record<string, unknown>>(
   const optionPrompt = options?.prompt ?? false;
   const optionOnEmpty = options.onEmpty;
   const optionValidate = options.validate;
+  const optionConfigPrefix = options.configPrefix;
 
   // set the level
   LOG.level = options?.logLevel ?? "info";
@@ -38,6 +39,7 @@ export async function getButteryConfig<T extends Record<string, unknown>>(
   const butteryConfigFile = await ensureButteryConfig<T>(configNamespace, {
     prompt: optionPrompt,
     onEmpty: optionOnEmpty,
+    configPrefix: optionConfigPrefix,
   });
 
   // ensure the .buttery/.store directory

@@ -104,14 +104,16 @@ export async function ensureButteryConfig<T extends Record<string, unknown>>(
   configNamespace: string,
   options: Pick<GetButteryConfigOptions<T>, "prompt" | "onEmpty"> & {
     searchFromPath?: string;
+    configPrefix?: string;
   }
 ) {
   // Resolve the options to their defaults
   const optionPrompt = options?.prompt ?? false;
   const optionSearchFromPath = options?.searchFromPath ?? process.cwd();
+  const optionConfigPrefix = options.configPrefix ?? "";
 
   // Create the configuration file name out of the namespace
-  const configFileName = `buttery-${configNamespace}.config.ts`;
+  const configFileName = `${optionConfigPrefix}buttery-${configNamespace}.config.ts`;
 
   // Check for the config file in the .buttery directory
   let butteryDir = findDirectoryUpwards(".buttery", undefined, {

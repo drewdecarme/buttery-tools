@@ -28,6 +28,7 @@ export async function getButteryCommandsConfig({
     {
       logLevel,
       prompt,
+      configPrefix: "_",
       // TODO: config prefix option
       async onEmpty() {
         const name = await input({
