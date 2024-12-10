@@ -1,9 +1,8 @@
-import { readFileSync } from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 
 import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 import type { Plugin } from "vite";
-
 
 type VitePluginButteryDocsInteractivePreviewOptions = {
   componentRootDir: string;
@@ -67,7 +66,7 @@ export function vitePluginButteryDocsInteractivePreview(
           options.componentRootDir,
           params.path
         );
-        const codeBlock = readFileSync(transformedPath, {
+        const codeBlock = fs.readFileSync(transformedPath, {
           encoding: "utf8",
         });
 
@@ -78,10 +77,7 @@ export function vitePluginButteryDocsInteractivePreview(
           case "interactive":
             return `
 
-import { InteractivePreview as InteractivePreviewComponent${matchNum} } from "${path.resolve(
-              import.meta.dirname,
-              "./ui/index.js"
-            )}";
+import { InteractivePreview as InteractivePreviewComponent${matchNum} } from "@buttery/docs/plugin-interactive-preview/ui";
 import { ${params.export} as Component${matchNum} } from "${transformedPath}";
 
 <InteractivePreviewComponent${matchNum}>

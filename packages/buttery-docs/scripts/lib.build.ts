@@ -30,7 +30,7 @@ async function buildLibrary() {
     "server",
     "server.dev",
     "server.cloudflare-pages",
-    "plugin-interactive-preview",
+    "plugin-interactive-preview/vite",
     "plugin-interactive-preview/ui",
   ].reduce((accum, entryName) => {
     const entryPath = path.resolve(libBasePath, `${entryName}/index.ts`);
@@ -60,6 +60,8 @@ async function buildLibrary() {
             "@buttery/docs/app",
             "@buttery/docs/server",
             "@buttery/docs/client",
+            "@buttery/docs/plugin-interactive-preview/vite",
+            "@buttery/docs/plugin-interactive-preview/ui",
             "@buttery/core",
             "@buttery/core/utils/isomorphic",
             "@buttery/logs",

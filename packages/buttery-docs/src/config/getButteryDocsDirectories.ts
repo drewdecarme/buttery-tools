@@ -49,7 +49,7 @@ export async function getButteryDocsDirectories(
     findDirectoryUpwards("node_modules", "@buttery", {
       startingDirectory: import.meta.dirname,
     }) as string,
-    "./docs/dist/lib/docs.css"
+    "./docs/dist/lib/style.css"
   );
 
   LOG.checkpointEnd("resolve docs dir");

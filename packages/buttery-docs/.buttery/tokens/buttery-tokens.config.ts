@@ -17,8 +17,8 @@ export default defineTokensConfig({
     baseSize: 16,
     fallback: "system-ui",
     families: {
-      heading: "Source Sans 3",
-      body: "Source Sans 3",
+      heading: "'Source Sans 3'",
+      body: "'Source Sans 3'",
     },
     weights: {
       bold: 700,
