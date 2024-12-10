@@ -1,12 +1,14 @@
 import path from "node:path";
 
-import { printAsBullets } from "@buttery/core/logger";
-import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
+import { tryHandle } from "@buttery/utils/isomorphic";
+import { printAsBullets } from "@buttery/logs";
 
+import { defaultCommandOptions } from "./build.utils.js";
 
-import type { Command } from "../lib";
-import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
-import { type ButteryCommand, LOG, defaultCommandOptions } from "../utils/LOG";
+import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories.js";
+import type { Command } from "../lib/index.js";
+import type { ButteryCommand } from "../utils/LOG.js";
+import { LOG } from "../utils/LOG.js";
 
 async function getCommandSegments(cmdId: string, cmdPath: string) {
   try {
@@ -72,19 +74,19 @@ export async function parseCommand(
   cmdId = replaceExt(cmdId, "");
 
   // parse the id into segments
-  const cmdSegments = await inlineTryCatch(getCommandSegments)(cmdId, cmdPath);
+  const cmdSegments = await tryHandle(getCommandSegments)(cmdId, cmdPath);
   if (cmdSegments.hasError) {
     throw cmdSegments.error;
   }
 
   // import the command module
-  const cmdModule = await inlineTryCatch(getCommandModule)(cmdPath);
+  const cmdModule = await tryHandle(getCommandModule)(cmdPath);
   if (cmdModule.hasError) {
     throw cmdModule.error;
   }
 
   // get command meta
-  const cmdMeta = await inlineTryCatch(getCommandMeta)(cmdModule.data, cmdPath);
+  const cmdMeta = await tryHandle(getCommandMeta)(cmdModule.data, cmdPath);
   if (cmdMeta.hasError) {
     throw cmdMeta.error;
   }

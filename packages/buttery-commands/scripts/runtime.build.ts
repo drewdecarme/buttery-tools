@@ -1,10 +1,9 @@
 import path from "node:path";
 
-import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import { build } from "@buttery/core/utils/esbuild";
+import { tryHandle } from "@buttery/utils/isomorphic";
+import { buildWithEsbuild } from "@buttery/core/build";
 
-
-import { LOG } from "../src/utils/LOG";
+import { LOG } from "../src/utils/LOG.js";
 
 /**
  * Bundle buttery commands at runtime into the bin directory so that the manifest
@@ -17,7 +16,7 @@ import { LOG } from "../src/utils/LOG";
 export async function buildRuntime() {
   LOG.debug("Building buttery commands runtime...");
   try {
-    await build({
+    await buildWithEsbuild({
       entryPoints: [
         path.resolve(import.meta.dirname, "../src/runtime/runtime.ts"),
       ],
@@ -30,7 +29,7 @@ export async function buildRuntime() {
   }
 }
 
-const runtimeResult = await inlineTryCatch(buildRuntime)();
+const runtimeResult = await tryHandle(buildRuntime)();
 if (runtimeResult.hasError) {
   LOG.fatal(runtimeResult.error);
 }

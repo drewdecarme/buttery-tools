@@ -1,11 +1,8 @@
-import { exhaustiveMatchGuard } from "@buttery/core/utils/isomorphic";
+import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 import pc from "picocolors";
 
-import {
-  type ButteryCommand,
-  type ButteryCommandsGraph,
-  LOG,
-} from "../utils/LOG";
+import type { ButteryCommandsGraph, ButteryCommand } from "../utils/LOG.js";
+import { LOG } from "../utils/LOG.js";
 
 const formatTitle = (title: string) => pc.bold(pc.underline(title));
 

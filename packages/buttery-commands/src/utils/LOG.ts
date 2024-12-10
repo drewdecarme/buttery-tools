@@ -1,6 +1,6 @@
-import { ButteryLogger } from "@buttery/core/logger";
+import { ButteryLogger } from "@buttery/logs";
 
-import type { CommandArgs, CommandOptions } from "../lib";
+import type { CommandOptions, CommandArgs } from "../lib/index.js";
 
 // ---- Start Types ----
 export type ButteryCommand = {

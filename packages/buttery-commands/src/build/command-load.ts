@@ -1,7 +1,9 @@
 import picomatch from "picomatch";
 
-import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
-import { LOG, getEntryPointsGlob } from "../utils/LOG";
+import { getEntryPointsGlob } from "./build.utils.js";
+
+import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories.js";
+import { LOG } from "../utils/LOG.js";
 
 /**
  * This function will evaluate a loaded file against the entry points glob

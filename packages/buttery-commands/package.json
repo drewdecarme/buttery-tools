@@ -9,10 +9,11 @@
   },
   "scripts": {
     "build": "yarn tsc && yarn cli-scripts:build && yarn runtime:build && yarn lib:build",
-    "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
-    "cli-scripts:types": "yarn tsc --project tsconfig.cli-types.json",
     "runtime:build": "tsx ./scripts/runtime.build.ts",
+    "cli-scripts:build": "tsc --project tsconfig.library.json",
+    "cli-scripts:dev": "yarn cli-scripts:build --watch",
     "lib:build": "yarn tsc --project tsconfig.library.json",
+    "lib:dev": "yarn lib:build --watch",
     "local:dev": "tsx ./scripts/local.dev.ts",
     "local:build": "tsx ./scripts/local.build.ts",
     "local:start": "yarn node ./bin/index.js"
@@ -50,7 +51,7 @@
     "@buttery/core": "workspace:^0.1.11",
     "@buttery/logs": "workspace:^",
     "@buttery/utils": "workspace:^",
-    "@inquirer/prompts": "7.1.0",
+    "@inquirer/prompts": "^7.2.0",
     "chokidar": "^4.0.1",
     "fs-extra": "^11.2.0",
     "picocolors": "^1.1.1",

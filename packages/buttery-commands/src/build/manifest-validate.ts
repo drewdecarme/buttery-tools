@@ -1,22 +1,17 @@
 import path from "node:path";
 
-import type { ResolvedButteryConfig } from "@buttery/core/config";
-import { printAsBullets } from "@buttery/core/logger";
-import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { select } from "@inquirer/prompts";
 import pc from "picocolors";
+import { printAsBullets } from "@buttery/logs";
+import { tryHandle } from "@buttery/utils/isomorphic";
 
+import { bootstrapCommand } from "./command-bootstrap.js";
+import { parseCommand } from "./command-parse.js";
 
-import { bootstrapCommand } from "./command-bootstrap";
-import { parseCommand } from "./command-parse";
-
-import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils";
-import {
-  type ButteryCommand,
-  type ButteryCommandsManifest,
-  LOG,
-} from "../utils/LOG";
-import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
+import type { ResolvedButteryCommandsConfig } from "../config/getButteryCommandsConfig.js";
+import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils.js";
+import type { ButteryCommand, ButteryCommandsManifest } from "../utils/LOG.js";
+import { LOG } from "../utils/LOG.js";
 
 /**
  */
@@ -25,12 +20,10 @@ async function validateCommandHierarchy<T extends ButteryCommandsBaseOptions>(
   allCmdIds: string[],
   manifest: ButteryCommandsManifest,
   {
-    config,
-    dirs,
+    rConfig: { dirs, paths },
     options,
   }: {
-    config: ResolvedButteryConfig<"commands">;
-    dirs: ButteryCommandsDirectories;
+    rConfig: ResolvedButteryCommandsConfig;
     options: T;
   }
 ) {
@@ -42,7 +35,7 @@ async function validateCommandHierarchy<T extends ButteryCommandsBaseOptions>(
         path.join(dirs.commandsDir, parentCmdId.concat(".ts")),
         path.join(dirs.commandsDir, parentCmdId, "/command.ts"),
       ].map((possiblePath) => ({
-        display: path.relative(config.paths.rootDir, possiblePath),
+        display: path.relative(paths.rootDir, possiblePath),
         relToButteryDir: possiblePath,
       }));
 
@@ -102,7 +95,7 @@ async function validateCommandHierarchy<T extends ButteryCommandsBaseOptions>(
         });
 
         // parse the new command
-        const cmdResult = await inlineTryCatch(parseCommand)(cmdPath, {
+        const cmdResult = await tryHandle(parseCommand)(cmdPath, {
           dirs,
         });
         if (cmdResult.hasError) {
@@ -136,8 +129,7 @@ Options: ${printAsBullets(possiblePaths.map((path) => path.relToButteryDir))}`;
 export async function validateManifest<T extends ButteryCommandsBaseOptions>(
   manifest: ButteryCommandsManifest,
   options: {
-    config: ResolvedButteryConfig<"commands">;
-    dirs: ButteryCommandsDirectories;
+    rConfig: ResolvedButteryCommandsConfig;
     options: T;
   }
 ) {
@@ -151,7 +143,7 @@ export async function validateManifest<T extends ButteryCommandsBaseOptions>(
         async () => {
           LOG.debug(`Validating command "${commandId}"...`);
           // Check to see if all of the parent commands are valid
-          const isCommandHierarchyValid = await inlineTryCatch(
+          const isCommandHierarchyValid = await tryHandle(
             validateCommandHierarchy
           )(cmd, commandsIds, manifest, options);
           if (isCommandHierarchyValid.hasError) {

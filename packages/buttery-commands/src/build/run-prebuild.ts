@@ -1,27 +1,23 @@
 import path from "node:path";
 import { rm, writeFile } from "node:fs/promises";
 
-import type { ResolvedButteryConfig } from "@buttery/core/config";
-import { printAsBullets } from "@buttery/core/logger";
-import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
 import { ensureDir } from "fs-extra";
+import { tryHandle } from "@buttery/utils/isomorphic";
+import { printAsBullets } from "@buttery/logs";
 
-
-import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils";
-import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
-import { LOG } from "../utils/LOG";
+import type { ResolvedButteryCommandsConfig } from "../config/getButteryCommandsConfig.js";
+import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils.js";
+import { LOG } from "../utils/LOG.js";
 
 /**
  * Cleans out some of the production directories that distribute
  * the build and runtime versions of the commands so we're working
  * with the most recent set.
  */
-export async function cleanOutputDirs(
-  config: ResolvedButteryConfig<"commands">
-) {
+export async function cleanOutputDirs(rConfig: ResolvedButteryCommandsConfig) {
   try {
     const dirsToClean = ["./bin"].map((dir) =>
-      path.resolve(config.paths.rootDir, dir)
+      path.resolve(rConfig.paths.rootDir, dir)
     );
     LOG.debug(
       `Cleaning the following directories for a clean build: ${printAsBullets(
@@ -29,7 +25,7 @@ export async function cleanOutputDirs(
       )}`
     );
     const cleanFoldersFn = dirsToClean.map((folder) =>
-      rm(path.resolve(config.paths.rootDir, folder), {
+      rm(path.resolve(rConfig.paths.rootDir, folder), {
         recursive: true,
         force: true,
       })
@@ -47,12 +43,11 @@ export async function cleanOutputDirs(
  * and files in order to build the runtime
  */
 export async function runPreBuild<T extends ButteryCommandsBaseOptions>(
-  config: ResolvedButteryConfig<"commands">,
-  dirs: ButteryCommandsDirectories,
+  rConfig: ResolvedButteryCommandsConfig,
   _options: Required<T>
 ) {
   // clean the directories
-  const cleanResult = await inlineTryCatch(cleanOutputDirs)(config);
+  const cleanResult = await tryHandle(cleanOutputDirs)(rConfig);
   if (cleanResult.hasError) {
     throw cleanResult.error;
   }
@@ -67,9 +62,9 @@ export async function runPreBuild<T extends ButteryCommandsBaseOptions>(
   // be available since it would be in the @buttery/commands/bin directory instead
   // of the directory that the @buttery/commands framework is targeting.
   LOG.debug("Re-initializing the binary directory...");
-  await ensureDir(dirs.binDir);
+  await ensureDir(rConfig.dirs.binDir);
   LOG.debug("Re-initializing the binary directory... done.");
-  const runtimeEntryPath = path.join(dirs.binDir, "./index.js");
+  const runtimeEntryPath = path.join(rConfig.dirs.binDir, "./index.js");
   const runtimeEntryContent = `import run from "@buttery/commands/runtime";
 import manifest from "./manifest.js";
 
@@ -77,7 +72,7 @@ import manifest from "./manifest.js";
 run(manifest, { cwd: import.meta.dirname });
 `;
   LOG.debug("Creating the entry path to the commands runtime...");
-  const createRuntimeEntry = await inlineTryCatch(writeFile)(
+  const createRuntimeEntry = await tryHandle(writeFile)(
     runtimeEntryPath,
     runtimeEntryContent
   );

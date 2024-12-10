@@ -2,16 +2,21 @@ import {
   type GetButteryConfigOptions,
   getButteryConfig,
 } from "@buttery/core/config";
+import { input } from "@inquirer/prompts";
 
-import type { ButteryCommandsConfig } from "./_config.utils";
-import { getButteryCommandsDirectories } from "./getButteryCommandsDirectories";
-
-type GetButteryCommandsParams = Required<
-  Omit<GetButteryConfigOptions<ButteryCommandsConfig>, "defaults">
->;
+import {
+  butteryCommandsConfigSchema,
+  type ButteryCommandsConfig,
+} from "./_config.utils.js";
+import { getButteryCommandsDirectories } from "./getButteryCommandsDirectories.js";
+import { defineCommandsConfig } from "./defineIconsConfig.js";
 
 export type ResolvedButteryCommandsConfig = Awaited<
   ReturnType<typeof getButteryCommandsConfig>
+>;
+
+type GetButteryCommandsParams = Required<
+  Pick<GetButteryConfigOptions<ButteryCommandsConfig>, "prompt" | "logLevel">
 >;
 
 export async function getButteryCommandsConfig({
@@ -19,16 +24,38 @@ export async function getButteryCommandsConfig({
   prompt,
 }: GetButteryCommandsParams) {
   const { config, paths } = await getButteryConfig<ButteryCommandsConfig>(
-    "icons",
+    "commands",
     {
       logLevel,
       prompt,
-      async onEmpty() {},
-      async validate(rawConfig) {},
+      // TODO: config prefix option
+      async onEmpty() {
+        const name = await input({
+          message:
+            "What would you like to name the CLI? (Note: this is also the name you will use to invoke the command from the terminal).",
+        });
+        const description = await input({
+          message: "Please describe in a a sentence the purpose of the CLI.",
+        });
+        const defaults = await butteryCommandsConfigSchema.parseAsync(
+          defineCommandsConfig({
+            name,
+            description,
+          })
+        );
+        return defaults;
+      },
+      async validate(rawConfig) {
+        const res = await butteryCommandsConfigSchema.safeParseAsync(rawConfig);
+        if (res.error) {
+          throw res.error;
+        }
+        return res.data;
+      },
     }
   );
 
-  const dirs = await getButteryCommandsDirectories(config, paths, {
+  const dirs = getButteryCommandsDirectories(config, paths, {
     logLevel,
   });
 

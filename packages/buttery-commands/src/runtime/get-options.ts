@@ -1,4 +1,4 @@
-import { exhaustiveMatchGuard } from "@buttery/core/utils/isomorphic";
+import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
 import type { WellFormedCommandOptions } from "./runtime.types.js";
 

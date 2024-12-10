@@ -1,4 +1,4 @@
-import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
+import { tryHandle } from "@buttery/utils/isomorphic";
 
 import { getCommand } from "./get-command.js";
 import { type RunCommandOptions, runCommand } from "./run-command.js";
@@ -31,7 +31,7 @@ export default async (
   options: RunCommandOptions
 ) => {
   // Find, parse, and validate the options and args on the command
-  const cmdResult = await inlineTryCatch(getCommand)(
+  const cmdResult = await tryHandle(getCommand)(
     process.argv.slice(2),
     manifestGraph
   );

@@ -1,4 +1,4 @@
-import { LOG } from "../utils/LOG";
+import { LOG } from "../utils/LOG.js";
 
 /**
  * Build's the @buttery/commands binary

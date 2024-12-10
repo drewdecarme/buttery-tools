@@ -1,16 +1,14 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import type { ResolvedButteryConfig } from "@buttery/core/config";
-import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-
+import { tryHandle } from "@buttery/utils/isomorphic";
 
 import { buildManifestHelpMenus } from "./manifest-build-graph-help.js";
 import { buildManifestGraph } from "./manifest-build-graph.js";
 
 import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils.js";
-import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories.js";
 import { type ButteryCommandsManifest, LOG } from "../utils/LOG.js";
+import type { ResolvedButteryCommandsConfig } from "../config/getButteryCommandsConfig.js";
 
 /**
  * This function is the main build command that reads the .buttery/config
@@ -20,23 +18,19 @@ import { type ButteryCommandsManifest, LOG } from "../utils/LOG.js";
 export async function buildManifest<T extends ButteryCommandsBaseOptions>(
   manifest: ButteryCommandsManifest,
   options: {
-    config: ResolvedButteryConfig<"commands">;
-    dirs: ButteryCommandsDirectories;
-    options: Required<T>;
+    rConfig: ResolvedButteryCommandsConfig;
+    options: T;
   }
 ) {
   // Build the graph representation of the manifest
-  const manifestGraph = await inlineTryCatch(buildManifestGraph)(
-    manifest,
-    options
-  );
+  const manifestGraph = await tryHandle(buildManifestGraph)(manifest, options);
   if (manifestGraph.hasError) {
     LOG.error("Error when trying to build the commands manifest");
     throw manifestGraph.error;
   }
 
   // Add help menus
-  const helpMenuResults = await inlineTryCatch(buildManifestHelpMenus)(
+  const helpMenuResults = await tryHandle(buildManifestHelpMenus)(
     manifestGraph.data
   );
   if (helpMenuResults.hasError) {
@@ -46,14 +40,17 @@ export async function buildManifest<T extends ButteryCommandsBaseOptions>(
 
   // write the manifest to disk
   const manifestFileName = "./manifest.js";
-  const manifestFilepath = path.resolve(options.dirs.binDir, manifestFileName);
+  const manifestFilepath = path.resolve(
+    options.rConfig.dirs.binDir,
+    manifestFileName
+  );
   const manifestContent = `export default ${JSON.stringify(
     manifestGraph.data,
     null,
     2
   )};
 `;
-  const writeManifestResult = await inlineTryCatch(writeFile)(
+  const writeManifestResult = await tryHandle(writeFile)(
     manifestFilepath,
     manifestContent
   );

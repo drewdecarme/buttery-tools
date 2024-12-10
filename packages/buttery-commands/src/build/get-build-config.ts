@@ -1,25 +1,21 @@
-import type { ResolvedButteryConfig } from "@buttery/core/config";
-import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
+import { tryHandle } from "@buttery/utils/isomorphic";
 import type { BuildOptions } from "esbuild";
 
-import { loadCommand } from "./command-load";
-import { parseCommand } from "./command-parse";
-import { buildManifest } from "./manifest-build";
-import { validateManifest } from "./manifest-validate";
-import { buildPkgJson } from "./pkgjson-enrich";
+import { getEntryPointsGlob } from "./build.utils.js";
+import { loadCommand } from "./command-load.js";
+import { parseCommand } from "./command-parse.js";
+import { buildManifest } from "./manifest-build.js";
+import { validateManifest } from "./manifest-validate.js";
+import { buildPkgJson } from "./pkgjson-enrich.js";
 
-import {
-  type ButteryCommand,
-  LOG,
-  defaultEsbuildOptions,
-  getEntryPointsGlob,
-} from "../utils/LOG";
-import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
-import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils";
+import { LOG } from "../utils/LOG.js";
+import type { ButteryCommand } from "../utils/LOG.js";
+import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils.js";
+import { defaultEsbuildOptions } from "../../dist/utils/utils.js";
+import type { ResolvedButteryCommandsConfig } from "../config/getButteryCommandsConfig.js";
 
 export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
-  config: ResolvedButteryConfig<"commands">,
-  dirs: ButteryCommandsDirectories,
+  rConfig: ResolvedButteryCommandsConfig,
   options: T & { isProd: boolean }
 ) {
   // Instantiate a new Manifest
@@ -30,8 +26,8 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
     logOverride: {
       "empty-glob": "silent",
     },
-    entryPoints: getEntryPointsGlob(dirs),
-    outdir: dirs.outDir,
+    entryPoints: getEntryPointsGlob(rConfig.dirs),
+    outdir: rConfig.dirs.outDir,
     minify: options.isProd,
     plugins: [
       // Parse and validate the commands
@@ -40,12 +36,12 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
         setup(build) {
           build.onLoad({ filter: /.*/, namespace: "file" }, async (args) => {
             // load the command
-            const cmdFilePath = loadCommand(args.path, dirs);
+            const cmdFilePath = loadCommand(args.path, rConfig.dirs);
             if (!cmdFilePath) return;
 
             // parse the command
-            const cmdResult = await inlineTryCatch(parseCommand)(cmdFilePath, {
-              dirs,
+            const cmdResult = await tryHandle(parseCommand)(cmdFilePath, {
+              dirs: rConfig.dirs,
             });
             if (cmdResult.hasError) {
               throw LOG.fatal(cmdResult.error);
@@ -64,7 +60,7 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
         setup(build) {
           build.onStart(async () => {
             try {
-              await buildPkgJson(config, dirs);
+              await buildPkgJson(rConfig);
             } catch (error) {
               LOG.error("Error when trying to enrich the package.json");
               throw LOG.fatal(new Error(String(error)));
@@ -78,11 +74,10 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
         setup(build) {
           build.onEnd(async () => {
             // validate the manifest
-            const validationResults = await inlineTryCatch(validateManifest)(
+            const validationResults = await tryHandle(validateManifest)(
               ButteryManifest,
               {
-                config,
-                dirs,
+                rConfig,
                 options,
               }
             );
@@ -91,11 +86,10 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
             }
 
             // build and write the manifest to disk
-            const buildResults = await inlineTryCatch(buildManifest)(
+            const buildResults = await tryHandle(buildManifest)(
               ButteryManifest,
               {
-                config,
-                dirs,
+                rConfig,
                 options,
               }
             );

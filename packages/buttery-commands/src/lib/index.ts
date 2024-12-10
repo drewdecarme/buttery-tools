@@ -1,5 +1,3 @@
-export { defineCommandsConfig } from "../config/defineIconsConfig";
-
 // ------- Meta -------
 export type CommandMeta = {
   name: string;

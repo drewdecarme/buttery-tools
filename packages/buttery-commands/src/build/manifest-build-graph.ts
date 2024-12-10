@@ -1,15 +1,15 @@
-import type { ResolvedButteryConfig } from "@buttery/core/config";
-import { printAsBullets } from "@buttery/core/logger";
+import { printAsBullets } from "@buttery/logs";
 
-import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils";
-import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
-import {
-  type ButteryCommand,
-  type ButteryCommandsGraph,
-  type ButteryCommandsManifest,
-  LOG,
-  defaultCommandOptions,
-} from "../utils/LOG";
+import { defaultCommandOptions } from "./build.utils.js";
+
+import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils.js";
+import type { ResolvedButteryCommandsConfig } from "../config/getButteryCommandsConfig.js";
+import type {
+  ButteryCommandsManifest,
+  ButteryCommandsGraph,
+  ButteryCommand,
+} from "../utils/LOG.js";
+import { LOG } from "../utils/LOG.js";
 
 /**
  * This function will assemble the manifest graph by getting the command files
@@ -21,8 +21,7 @@ import {
 export async function buildManifestGraph<T extends ButteryCommandsBaseOptions>(
   manifest: ButteryCommandsManifest,
   options: {
-    config: ResolvedButteryConfig<"commands">;
-    dirs: ButteryCommandsDirectories;
+    rConfig: ResolvedButteryCommandsConfig;
     options: T;
   }
 ) {
@@ -87,12 +86,12 @@ export async function buildManifestGraph<T extends ButteryCommandsBaseOptions>(
   // Add the root level of the graph with the values
   // that define the program at the config level
   const graphWithRoot: ButteryCommandsGraph = {
-    [options.config.commands.name]: {
-      name: options.config.commands.name,
-      id: options.config.commands.name,
+    [options.rConfig.config.name]: {
+      name: options.rConfig.config.name,
+      id: options.rConfig.config.name,
       pathCmdModule: "",
       segments: [],
-      description: options.config.commands.description,
+      description: options.rConfig.config.description,
       subCommands: cmdGraph,
       args: undefined,
       options: defaultCommandOptions,

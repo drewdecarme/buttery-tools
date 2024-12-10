@@ -1,5 +1,5 @@
-import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories";
-import type { CommandOptions } from "../lib";
+import type { ButteryCommandsDirectories } from "../config/getButteryCommandsDirectories.js";
+import type { CommandOptions } from "../lib/index.js";
 
 /**
  * We dynamically create our entry points up to 20 glob paths

@@ -1,12 +1,8 @@
 import { writeFile } from "node:fs/promises";
 
-import {
-  exhaustiveMatchGuard,
-  inlineTryCatch,
-} from "@buttery/core/utils/isomorphic";
+import { exhaustiveMatchGuard, tryHandle } from "@buttery/utils/isomorphic";
 import { input, select } from "@inquirer/prompts";
 import { ensureFile } from "fs-extra";
-
 
 export async function bootstrapCommand(
   cmdPath: string,
@@ -65,11 +61,9 @@ export const meta: CommandMeta = {
       exhaustiveMatchGuard(bootstrapType);
   }
 
-  const writeFileResult = await inlineTryCatch(writeFile)(
-    cmdPath,
-    fileContent,
-    { encoding: "utf8" }
-  );
+  const writeFileResult = await tryHandle(writeFile)(cmdPath, fileContent, {
+    encoding: "utf8",
+  });
   if (writeFileResult.hasError) {
     throw writeFileResult.error;
   }

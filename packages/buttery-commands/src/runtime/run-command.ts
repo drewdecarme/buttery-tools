@@ -1,7 +1,7 @@
 import path from "node:path";
 
-import { getCommandProperties } from "./getCommandProperties";
-import type { WellFormedCommand } from "./runtime.types";
+import { getCommandProperties } from "./getCommandProperties.js";
+import type { WellFormedCommand } from "./runtime.types.js";
 
 export type RunCommandOptions = { cwd: string };
 
