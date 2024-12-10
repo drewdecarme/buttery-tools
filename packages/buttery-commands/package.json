@@ -10,7 +10,7 @@
   "scripts": {
     "build": "yarn tsc && yarn cli-scripts:build && yarn runtime:build && yarn lib:build",
     "runtime:build": "tsx ./scripts/runtime.build.ts",
-    "cli-scripts:build": "tsc --project tsconfig.library.json",
+    "cli-scripts:build": "tsc --project tsconfig.cli-scripts.json",
     "cli-scripts:dev": "yarn cli-scripts:build --watch",
     "lib:build": "yarn tsc --project tsconfig.library.json",
     "lib:dev": "yarn lib:build --watch",
@@ -22,7 +22,7 @@
     "dist"
   ],
   "exports": {
-    ".": "./dist/index.js",
+    ".": "./dist/lib/index.js",
     "./runtime": "./dist/runtime.js",
     "./cli/*": "./dist/cli-scripts/*.js"
   },

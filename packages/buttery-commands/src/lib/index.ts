@@ -1,3 +1,5 @@
+export { defineCommandsConfig } from "../config/defineCommandsConfig.js";
+
 // ------- Meta -------
 export type CommandMeta = {
   name: string;

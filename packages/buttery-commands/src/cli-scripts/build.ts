@@ -1,6 +1,6 @@
 import { parseAndValidateOptions } from "@buttery/core/utils";
-import { build as esbuild } from "esbuild";
 import { tryHandle } from "@buttery/utils/isomorphic";
+import { buildWithEsbuild } from "@buttery/core/build";
 
 import type { ButteryCommandsBuildOptions } from "./_cli-scripts.utils.js";
 import { butteryCommandsBuildOptionsSchema } from "./_cli-scripts.utils.js";
@@ -37,7 +37,7 @@ export async function build(options?: Partial<ButteryCommandsBuildOptions>) {
   }
 
   // build the commands
-  const buildResults = await tryHandle(esbuild)(esbuildConfig);
+  const buildResults = await tryHandle(buildWithEsbuild)(esbuildConfig);
   if (buildResults.hasError) {
     return LOG.fatal(buildResults.error);
   }

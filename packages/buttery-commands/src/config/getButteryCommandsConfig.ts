@@ -9,7 +9,7 @@ import {
   type ButteryCommandsConfig,
 } from "./_config.utils.js";
 import { getButteryCommandsDirectories } from "./getButteryCommandsDirectories.js";
-import { defineCommandsConfig } from "./defineIconsConfig.js";
+import { defineCommandsConfig } from "./defineCommandsConfig.js";
 
 export type ResolvedButteryCommandsConfig = Awaited<
   ReturnType<typeof getButteryCommandsConfig>

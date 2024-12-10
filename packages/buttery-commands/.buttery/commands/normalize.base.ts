@@ -1,4 +1,4 @@
-import type { CommandMeta } from "../../src/lib/library";
+import type { CommandMeta } from "@buttery/commands";
 
 export const meta: CommandMeta = {
   name: "base",

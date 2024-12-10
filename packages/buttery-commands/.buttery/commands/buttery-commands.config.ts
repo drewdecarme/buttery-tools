@@ -1,4 +1,4 @@
-import { defineCommandsConfig } from "../../src/lib/index.js";
+import { defineCommandsConfig } from "@buttery/commands";
 
 export default defineCommandsConfig({
   name: "spread",

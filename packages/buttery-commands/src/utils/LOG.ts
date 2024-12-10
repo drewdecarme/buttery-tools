@@ -30,14 +30,6 @@ export type ButteryCommand = {
    */
   args: CommandArgs | undefined;
   /**
-   * The path of the source of the command module
-   */
-  // pathSrc: string;
-  /**
-   * The path of the transpiled and bundled command module
-   */
-  // pathOut: string;
-  /**
    * The path of the command module relative to the manifest
    */
   pathCmdModule: string;

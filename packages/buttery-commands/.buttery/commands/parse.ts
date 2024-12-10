@@ -3,7 +3,7 @@ import {
   type CommandMeta,
   defineArgs,
   defineOptions,
-} from "../../src/lib/library";
+} from "@buttery/commands";
 
 export const meta: CommandMeta = {
   name: "parse",

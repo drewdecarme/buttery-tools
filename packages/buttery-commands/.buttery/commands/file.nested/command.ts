@@ -1,11 +1,11 @@
-import { testCommandGlob } from "./test-glob.something";
-
 import {
   type CommandAction,
   type CommandMeta,
   defineArgs,
   defineOptions,
-} from "../../../src/lib/library";
+} from "@buttery/commands";
+
+import { testCommandGlob } from "./test-glob.something";
 
 export const meta: CommandMeta = {
   name: "nested",

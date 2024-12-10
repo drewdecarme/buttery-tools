@@ -11,7 +11,6 @@ import { buildPkgJson } from "./pkgjson-enrich.js";
 import { LOG } from "../utils/LOG.js";
 import type { ButteryCommand } from "../utils/LOG.js";
 import type { ButteryCommandsBaseOptions } from "../cli-scripts/_cli-scripts.utils.js";
-import { defaultEsbuildOptions } from "../../dist/utils/utils.js";
 import type { ResolvedButteryCommandsConfig } from "../config/getButteryCommandsConfig.js";
 
 export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
@@ -22,7 +21,6 @@ export async function getBuildConfig<T extends ButteryCommandsBaseOptions>(
   const ButteryManifest = new Map<string, ButteryCommand>();
 
   const build: BuildOptions = {
-    ...defaultEsbuildOptions,
     logOverride: {
       "empty-glob": "silent",
     },
