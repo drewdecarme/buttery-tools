@@ -1,6 +1,6 @@
 import {
   vitePlugin as remix,
-  cloudflareDevProxyVitePlugin as remixCloudflareDevProxy,
+  // cloudflareDevProxyVitePlugin as remixCloudflareDevProxy,
 } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -21,7 +21,7 @@ export default defineConfig({
         presets: ["@babel/preset-typescript", "@babel/preset-react"],
       },
     }),
-    remixCloudflareDevProxy(),
+    // remixCloudflareDevProxy(),
     remix({
       future: {
         v3_fetcherPersist: true,

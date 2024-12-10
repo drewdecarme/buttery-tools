@@ -1345,6 +1345,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@buttery/tokens-playground@workspace:packages/buttery-tokens-playground"
   dependencies:
+    "@buttery/components": "workspace:^"
     "@cloudflare/workers-types": "npm:^4.20240512.0"
     "@linaria/core": "npm:^6.2.0"
     "@remix-run/dev": "npm:^2.15.1"
