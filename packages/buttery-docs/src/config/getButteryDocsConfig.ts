@@ -34,7 +34,7 @@ export async function getButteryDocsConfig({
       if (res.error) {
         throw res.error;
       }
-      return res.data;
+      return rawConfig; // return the raw config so any TS functions aren't removed
     },
   });
 

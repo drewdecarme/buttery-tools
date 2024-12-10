@@ -9,7 +9,7 @@ import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
-import { type Plugin, defineConfig } from "vite";
+import { type Plugin as VitePlugin, defineConfig } from "vite";
 
 import { getButteryDocsRouteManifest } from "./getButteryDocsRouteManifest.js";
 import type { ButteryDocsVirtualModules } from "./getButteryDocsVirtualModules.js";
@@ -19,6 +19,20 @@ import type { ResolvedButteryDocsConfig } from "../config/getButteryDocsConfig.j
 import { LOG } from "../utils/util.logger.js";
 
 export function getButteryDocsViteConfig(rConfig: ResolvedButteryDocsConfig) {
+  let userDefinedPlugins: VitePlugin[] = [];
+  if (typeof rConfig.config.vitePlugins === "function") {
+    LOG.debug("Parsing functional vitePlugins...");
+    userDefinedPlugins = rConfig.config.vitePlugins({
+      rootDir: rConfig.paths.rootDir,
+    });
+    LOG.debug("Parsing functional vitePlugins... done.");
+  }
+  if (Array.isArray(rConfig.config.vitePlugins)) {
+    LOG.debug("Parsing vitePlugins...");
+    userDefinedPlugins = rConfig.config.vitePlugins;
+    LOG.debug("Parsing vitePlugins... done.");
+  }
+
   const viteConfig = defineConfig({
     root: rConfig.dirs.app.root,
     cacheDir: rConfig.dirs.app.viteCacheDir,
@@ -77,7 +91,7 @@ export function getButteryDocsViteConfig(rConfig: ResolvedButteryDocsConfig) {
       }),
       vitePluginButteryDocsVirtual(rConfig),
       // add the user defined vite plugins
-      // ...(config.vitePlugins ?? []),
+      ...userDefinedPlugins,
     ],
   });
 
@@ -86,7 +100,7 @@ export function getButteryDocsViteConfig(rConfig: ResolvedButteryDocsConfig) {
 
 function vitePluginButteryDocsVirtual(
   rConfig: ResolvedButteryDocsConfig
-): Plugin {
+): VitePlugin {
   // Assemble the route manifest along with
   // the virtual modules that will tell vite exactly where
   // the dynamic imports are. This allows us to get around the issue

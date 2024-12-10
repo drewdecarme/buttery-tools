@@ -1,6 +1,6 @@
 import path from "node:path";
 
-import { vitePluginButteryDocsInteractivePreview } from "../../src/lib/plugin-interactive-preview";
+import { vitePluginButteryDocsInteractivePreview } from "../../src/lib/plugin-interactive-preview/vite";
 import { defineButteryDocsConfig } from "../../src/lib";
 
 export default defineButteryDocsConfig({
@@ -43,12 +43,11 @@ export default defineButteryDocsConfig({
       "guides.writing",
     ],
   },
-  vitePlugins: () => [
-    vitePluginButteryDocsInteractivePreview({
-      componentRootDir: path.resolve(
-        import.meta.dirname,
-        "../../example-components"
-      ),
-    }),
-  ],
+  vitePlugins: ({ rootDir }) => {
+    return [
+      vitePluginButteryDocsInteractivePreview({
+        componentRootDir: path.resolve(rootDir, "./example-components"),
+      }),
+    ];
+  },
 });

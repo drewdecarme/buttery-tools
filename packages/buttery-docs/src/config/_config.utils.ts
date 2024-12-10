@@ -117,5 +117,13 @@ export const butteryDocsConfigSchema = z.object({
 });
 
 export type ButteryDocsConfig = z.infer<typeof butteryDocsConfigSchema> & {
-  vitePlugins?: ((params: unknown) => Plugin[]) | Plugin[];
+  vitePlugins?:
+    | ((params: {
+        /**
+         * The directory that the .buttery/ directory resides in, typically the
+         * root of the package or repository
+         */
+        rootDir: string;
+      }) => Plugin[])
+    | Plugin[];
 };
