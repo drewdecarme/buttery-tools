@@ -13,7 +13,7 @@ export default defineTokensConfig({
     families: {
       logo: `"Poppins"`,
       heading: `"Inter"`,
-      body: `"Avenir"`,
+      body: `"Mulish"`,
     },
     weights: {
       bold: 700,

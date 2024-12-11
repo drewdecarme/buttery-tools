@@ -23,6 +23,7 @@ export * from "./usePortal/index.js";
 export * from "./useToggle/index.js";
 export * from "./useTooltip/index.js";
 export * from "./useWindowEventListener/index.js";
+export * from "./useTrackingNode/index.js";
 
 // Utils
 export * from "./utils/index.js";

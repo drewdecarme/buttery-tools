@@ -13,7 +13,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "yarn tsc && vite build && yarn types && yarn cli-scripts:build",
+    "build": "vite build && yarn types && yarn cli-scripts:build",
     "types": "yarn tsc --project tsconfig.types.json",
     "cli-scripts:build": "tsc --project tsconfig.cli-scripts.json",
     "cli-scripts:dev": "yarn cli-scripts:build --watch"
