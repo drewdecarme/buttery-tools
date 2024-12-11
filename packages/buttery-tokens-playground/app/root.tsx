@@ -1,15 +1,19 @@
-/* eslint-disable import/no-duplicates */
-import type { LinksFunction } from "@remix-run/cloudflare";
 import {
   Links,
   Meta,
+  NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { css } from "@linaria/core";
-import { makeColor } from "@buttery/tokens/playground";
 import "@buttery/tokens/playground/css";
+import type { LinksFunction } from "@remix-run/node";
+
+import { LayoutHeader } from "./components/LayoutHeader";
+import { LayoutHeaderLogo } from "./components/LayoutHeaderLogo";
+import { LayoutHeaderNav } from "./components/LayoutHeaderNav";
+import { LayoutMain } from "./components/LayoutMain";
+import { Layout as Body } from "./components/Layout";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -24,10 +28,6 @@ export const links: LinksFunction = () => [
   },
 ];
 
-const bodyStyles = css`
-  background-color: ${makeColor("primary-50")};
-`;
-
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -37,11 +37,30 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className={bodyStyles}>
-        {children}
+      <Body>
+        <LayoutHeader>
+          <LayoutHeaderLogo
+            dxSrc="/images/buttery-logo-tokens.png"
+            dxAlt="buttery-tokens-logo"
+          >
+            Buttery Tokens
+          </LayoutHeaderLogo>
+          <LayoutHeaderNav>
+            <ul>
+              <li>
+                <NavLink to="/config">configuration</NavLink>
+              </li>
+              <li>
+                <NavLink to="/projects">projects</NavLink>
+              </li>
+            </ul>
+          </LayoutHeaderNav>
+        </LayoutHeader>
+        <LayoutMain>{children}</LayoutMain>
+        <footer></footer>
         <ScrollRestoration />
         <Scripts />
-      </body>
+      </Body>
     </html>
   );
 }

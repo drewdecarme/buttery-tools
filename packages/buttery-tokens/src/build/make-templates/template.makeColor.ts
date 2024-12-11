@@ -247,7 +247,7 @@ const css: CompileFunction = ({ config, cssVarPrefix }) => {
     []
   );
 
-  const variantString = variants.join(`;\n`);
+  const variantString = variants.join(`;\n`).concat(";\n");
   LOG.debug("Variants:");
   LOG.debug(variantString);
 

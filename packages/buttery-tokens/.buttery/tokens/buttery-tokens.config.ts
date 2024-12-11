@@ -11,8 +11,9 @@ export default defineTokensConfig({
   font: {
     baseSize: 16,
     families: {
-      heading: "Poppins",
-      body: "Poppins",
+      logo: `"Poppins"`,
+      heading: `"Inter"`,
+      body: `"Avenir"`,
     },
     weights: {
       bold: 700,
@@ -69,6 +70,8 @@ export default defineTokensConfig({
     },
   },
   custom: {
-    "layout-header": 60,
+    "layout-header-height": { value: 100, storeAsRem: true },
+    "layout-max-width": { value: 1280, storeAsRem: true },
+    "layout-gutters": { value: 32, storeAsRem: true },
   },
 });

@@ -81,6 +81,7 @@ export class MakeTemplates {
         );
         // add the css to the root css
         tokensCSSFileContent = tokensCSSFileContent.concat(compiledCSSVars);
+        // add some sane defaults
       } catch (error) {
         const err = new Error(
           `Error when generating "${fileName}" at "${filePath}": ${error}`
@@ -118,7 +119,19 @@ export class MakeTemplates {
       LOG.debug("Creating root css...");
       // wrap the tokens in the root
       tokensCSSFileContent = `:root {
-${tokensCSSFileContent}}`;
+${tokensCSSFileContent}}
+
+html, body {
+  font-size: ${this.config.font?.baseSize ?? 16}px;
+  box-sizing: border-box;
+}
+
+*::after, *::before {
+  box-sizing: border-box;
+}
+`;
+      LOG.debug("CSS Content");
+      LOG.debug(tokensCSSFileContent);
       await writeFile(this.tokensCSSFile, tokensCSSFileContent, {
         encoding: "utf8",
       });

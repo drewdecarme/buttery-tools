@@ -11,6 +11,8 @@ import { MakeTemplateRem } from "./make-templates/template.makeRem.js";
 import { MakeTemplateCustom } from "./make-templates/template.makeCustom.js";
 import { MakeTemplateReset } from "./make-templates/template.makeReset.js";
 import { MakeTemplateResponsive } from "./make-templates/template.makeResponsive.js";
+import { MakeTemplatePx } from "./make-templates/template.makePx.js";
+import { MakeTemplateFontBaseSize } from "./make-templates/template.makeFontBaseSize.js";
 
 import type { ResolvedButteryTokensConfig } from "../config/getButteryTokensConfig.js";
 import { LOG } from "../utils/util.logger.js";
@@ -39,10 +41,12 @@ export async function buildCSSUtilsTypeScript({
   });
 
   // Register the templates that should be generated
+  Templates.register(MakeTemplateColor);
   Templates.register(MakeTemplateFontFamily);
   Templates.register(MakeTemplateFontWeight);
-  Templates.register(MakeTemplateColor);
+  Templates.register(MakeTemplateFontBaseSize);
   Templates.register(MakeTemplateRem);
+  Templates.register(MakeTemplatePx);
   Templates.register(MakeTemplateResponsive);
   Templates.register(MakeTemplateReset);
   if (config.custom) {
