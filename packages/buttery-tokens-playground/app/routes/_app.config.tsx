@@ -1,10 +1,11 @@
 import { NavLink, Outlet } from "@remix-run/react";
 
+import { ConfigurationProvider } from "~/components/Config.context";
 import { NavTabs } from "~/components/NavTabs";
 
 export default function AppConfigRoute() {
   return (
-    <div>
+    <ConfigurationProvider>
       <h2>Configure</h2>
       <NavTabs>
         <ul>
@@ -30,6 +31,6 @@ export default function AppConfigRoute() {
       <div>
         <Outlet />
       </div>
-    </div>
+    </ConfigurationProvider>
   );
 }

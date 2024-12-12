@@ -1,45 +1,39 @@
 import { z } from "zod";
 
-const butteryTokensColorVariantBaseSchema = z.union([
-  z.number(),
-  z.string().array(),
-]);
-const butteryTokensColorVariantAutoSchema = butteryTokensColorVariantBaseSchema;
+const ColorVariantBaseSchema = z.union([z.number(), z.string().array()]);
+const ColorVariantAutoSchema = ColorVariantBaseSchema;
 
-const butteryTokensColorVariantManualSchema =
-  butteryTokensColorVariantBaseSchema.or(z.record(z.string(), z.string()));
+const ColorVariantManualSchema = ColorVariantBaseSchema.or(
+  z.record(z.string(), z.string())
+);
 
 // we use the manual schema since it has the union of all of the variations we need
 export type ButteryTokensColorVariant = z.infer<
-  typeof butteryTokensColorVariantManualSchema
+  typeof ColorVariantManualSchema
 >;
 
-const butteryTokensConfigColorDefHueSchema = z.record(
+const ColorDefHueSchema = z.record(
   z.string(),
   z.object({
     hue: z.number().min(0).max(360),
-    variants: butteryTokensColorVariantAutoSchema,
+    variants: ColorVariantAutoSchema,
   })
 );
-export type ButteryTokensConfigColorDefHue = z.infer<
-  typeof butteryTokensConfigColorDefHueSchema
->;
+export type ButteryTokensConfigColorDefHue = z.infer<typeof ColorDefHueSchema>;
 
-const butteryTokensConfigColorDefHex = z.record(
+const ColorDefHex = z.record(
   z.string(),
   z.object({
     hex: z.string(),
-    variants: butteryTokensColorVariantManualSchema,
+    variants: ColorVariantManualSchema,
   })
 );
-export type ButteryTokensConfigColorDefHex = z.infer<
-  typeof butteryTokensConfigColorDefHex
->;
+export type ButteryTokensConfigColorDefHex = z.infer<typeof ColorDefHex>;
 
 // Brand Categories
-const butteryTokensConfigColorBrandTypeJewelSchema = z.object({
+const ColorBrandTypeJewelSchema = z.object({
   type: z.literal("jewel"),
-  colors: butteryTokensConfigColorDefHueSchema,
+  colors: ColorDefHueSchema,
   saturation: z.union([
     z.literal(73),
     z.literal(74),
@@ -78,9 +72,9 @@ const butteryTokensConfigColorBrandTypeJewelSchema = z.object({
   ]),
 });
 
-const butteryTokensConfigColorBrandTypePastelSchema = z.object({
+const ColorBrandTypePastelSchema = z.object({
   type: z.literal("pastel"),
-  colors: butteryTokensConfigColorDefHueSchema,
+  colors: ColorDefHueSchema,
   saturation: z.union([
     z.literal(14),
     z.literal(15),
@@ -103,9 +97,9 @@ const butteryTokensConfigColorBrandTypePastelSchema = z.object({
   ]),
 });
 
-const butteryTokensConfigColorBrandTypeEarthSchema = z.object({
+const ColorBrandTypeEarthSchema = z.object({
   type: z.literal("earth"),
-  colors: butteryTokensConfigColorDefHueSchema,
+  colors: ColorDefHueSchema,
   saturation: z.union([
     z.literal(36),
     z.literal(37),
@@ -160,9 +154,9 @@ const butteryTokensConfigColorBrandTypeEarthSchema = z.object({
   ]),
 });
 
-const butteryTokensConfigColorBrandTypeNeutralSchema = z.object({
+const ColorBrandTypeNeutralSchema = z.object({
   type: z.literal("neutral"),
-  colors: butteryTokensConfigColorDefHueSchema,
+  colors: ColorDefHueSchema,
   saturation: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]),
   brightness: z.union([
     z.literal(58),
@@ -210,9 +204,9 @@ const butteryTokensConfigColorBrandTypeNeutralSchema = z.object({
   ]),
 });
 
-const butteryTokensConfigColorBrandTypeFluorescentSchema = z.object({
+const ColorBrandTypeFluorescentSchema = z.object({
   type: z.literal("fluorescent"),
-  colors: butteryTokensConfigColorDefHueSchema,
+  colors: ColorDefHueSchema,
   saturation: z.union([
     z.literal(63),
     z.literal(64),
@@ -276,51 +270,62 @@ const butteryTokensConfigColorBrandTypeFluorescentSchema = z.object({
   ]),
 });
 
-const butteryTokensConfigColorBrandTypeManualSchema = z.object({
+const ColorBrandTypeManualSchema = z.object({
   type: z.literal("manual"),
-  colors: butteryTokensConfigColorDefHex,
+  colors: ColorDefHex,
 });
-
-const butteryTokensConfigColorBrandSchema = z.discriminatedUnion("type", [
-  butteryTokensConfigColorBrandTypeManualSchema,
-  butteryTokensConfigColorBrandTypeJewelSchema,
-  butteryTokensConfigColorBrandTypePastelSchema,
-  butteryTokensConfigColorBrandTypeEarthSchema,
-  butteryTokensConfigColorBrandTypeNeutralSchema,
-  butteryTokensConfigColorBrandTypeFluorescentSchema,
-]);
-export type ButteryTokensConfigColorBrand = z.infer<
-  typeof butteryTokensConfigColorBrandSchema
+export type ButteryTokensConfigColorBrandTypeManual = z.infer<
+  typeof ColorBrandTypeManualSchema
 >;
 
-const butteryTokensConfigColorNeutralSchema = z.record(
+export const ColorBrandTypeAutoSchema = z.discriminatedUnion("type", [
+  ColorBrandTypeFluorescentSchema,
+  ColorBrandTypeJewelSchema,
+  ColorBrandTypePastelSchema,
+  ColorBrandTypeEarthSchema,
+  ColorBrandTypeNeutralSchema,
+]);
+export type ButteryTokensConfigColorBrandTypeAuto = z.infer<
+  typeof ColorBrandTypeAutoSchema
+>;
+
+const ColorBrandSchema = z.discriminatedUnion("type", [
+  ColorBrandTypeManualSchema,
+  ColorBrandTypeFluorescentSchema,
+  ColorBrandTypeJewelSchema,
+  ColorBrandTypePastelSchema,
+  ColorBrandTypeEarthSchema,
+  ColorBrandTypeNeutralSchema,
+]);
+
+export type ButteryTokensConfigColorBrand = z.infer<typeof ColorBrandSchema>;
+
+const ColorNeutralSchema = z.record(
   z.string(),
-  z.union([z.string(), butteryTokensConfigColorDefHex.valueSchema])
+  z.union([z.string(), ColorDefHex.valueSchema])
 );
 export type ButteryTokensConfigColorNeutral = z.infer<
-  typeof butteryTokensConfigColorNeutralSchema
+  typeof ColorNeutralSchema
 >;
 
-export const butteryTokensConfigColorSchema = z.object({
-  brand: z.preprocess(
-    (value) =>
-      value ?? {
-        type: "manual",
-        colors: {},
+export const ColorSchema = z.object({
+  brand: ColorBrandSchema.default({
+    type: "manual",
+    colors: {
+      primary: {
+        hex: "#ccc",
+        variants: 10,
       },
-    butteryTokensConfigColorBrandSchema.optional()
-  ),
-  neutral: z.preprocess(
-    (value) => value ?? {},
-    butteryTokensConfigColorNeutralSchema.optional()
-  ),
+    },
+  }),
+  neutral: ColorNeutralSchema.default({
+    "grey-1": {
+      hex: "#ccc",
+      variants: 10,
+    },
+  }),
 });
-
-export type ButteryTokensConfigColor = z.infer<
-  typeof butteryTokensConfigColorSchema
->;
-export type ButteryTokensConfigColorWellFormed =
-  Required<ButteryTokensConfigColor>;
+export type ButteryTokensConfigColor = z.infer<typeof ColorSchema>;
 
 // const testManual: ButteryTokensConfigColor = {
 //   brand: {

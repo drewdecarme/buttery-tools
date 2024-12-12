@@ -1,21 +1,17 @@
 import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 import chroma from "chroma-js";
+import type {
+  ButteryTokensColorVariant,
+  ButteryTokensConfigColorDefHue,
+  ButteryTokensConfigColorDefHex,
+  ButteryTokensConfigColorBrand,
+  ButteryTokensConfigColorNeutral,
+  ButteryTokensConfigColor,
+} from "@buttery/tokens-utils/schemas";
+import { hsbToHex, hexToHsl, hexToRgb } from "@buttery/tokens-utils";
 
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate.js";
 
-import type {
-  ButteryTokensColorVariant,
-  ButteryTokensConfigColor,
-  ButteryTokensConfigColorBrand,
-  ButteryTokensConfigColorDefHex,
-  ButteryTokensConfigColorDefHue,
-  ButteryTokensConfigColorNeutral,
-} from "../../config/schema.color.js";
-import {
-  hexToHsl,
-  hexToRgb,
-  hsbToHex,
-} from "../../utils/util.color-conversions.js";
 import { LOG } from "../../utils/util.logger.js";
 
 type HEXValue = string;

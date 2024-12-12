@@ -1,7 +1,8 @@
-import type { ButteryTokensConfig } from "./_config.utils.js";
+import type { ButteryTokensConfig } from "@buttery/tokens-utils/schemas";
 
-export function defineTokensConfig(
-  params: ButteryTokensConfig
-): ButteryTokensConfig {
+type PartialConfig = Partial<Omit<ButteryTokensConfig, "runtime">> &
+  Pick<ButteryTokensConfig, "runtime">;
+
+export function defineTokensConfig(params: PartialConfig): PartialConfig {
   return params;
 }

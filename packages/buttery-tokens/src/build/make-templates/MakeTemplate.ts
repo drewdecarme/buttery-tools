@@ -1,4 +1,5 @@
-import type { ButteryTokensConfig } from "../../config/_config.utils.js";
+import type { ButteryTokensConfig } from "@buttery/tokens-utils/schemas";
+
 import type { ResolvedButteryTokensConfig } from "../../config/getButteryTokensConfig.js";
 
 export type CompileFunctionParams = {

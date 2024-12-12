@@ -1,0 +1,34 @@
+{
+  "name": "@buttery/tokens-utils",
+  "version": "0.0.1",
+  "description": "A collection of schemas and utils that can be shared across the @buttery/tokens & @buttery/tokens-playground packages",
+  "scripts": {
+    "build": "yarn tsc --project tsconfig.library.json",
+    "dev": "yarn build --watch"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    },
+    "./schemas": "./dist/schemas/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "dependencies": {
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@buttery/tsconfig": "workspace:^",
+    "typescript": "^5.7.2"
+  }
+}

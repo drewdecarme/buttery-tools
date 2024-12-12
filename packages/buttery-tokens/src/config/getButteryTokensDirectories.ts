@@ -3,8 +3,7 @@ import path from "node:path";
 import { getNodeModulesButteryOutputDir } from "@buttery/core/utils";
 import type { ButteryLogLevel } from "@buttery/logs";
 import type { ButteryConfigPaths } from "@buttery/core/config";
-
-import type { ButteryTokensConfig } from "./_config.utils.js";
+import type { ButteryTokensConfig } from "@buttery/tokens-utils/schemas";
 
 import { LOG } from "../utils/util.logger.js";
 

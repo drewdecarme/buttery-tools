@@ -57,6 +57,7 @@
   "dependencies": {
     "@buttery/core": "workspace:*",
     "@buttery/tokens-playground": "workspace:*",
+    "@buttery/tokens-utils": "workspace:^",
     "@buttery/tsconfig": "workspace:*",
     "@buttery/utils": "workspace:*",
     "@inquirer/prompts": "^7.1.0",

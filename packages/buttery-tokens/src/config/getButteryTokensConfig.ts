@@ -3,11 +3,9 @@ import {
   getButteryConfig,
 } from "@buttery/core/config";
 import { input } from "@inquirer/prompts";
+import type { ButteryTokensConfig } from "@buttery/tokens-utils/schemas";
+import { ConfigSchema } from "@buttery/tokens-utils/schemas";
 
-import {
-  butteryTokensConfigSchema,
-  type ButteryTokensConfig,
-} from "./_config.utils.js";
 import { getButteryTokensDirectories } from "./getButteryTokensDirectories.js";
 import { defineTokensConfig } from "./defineTokensConfig.js";
 
@@ -37,7 +35,7 @@ export async function getButteryTokensConfig({
           message:
             "What prefix would you like to use for your CSS tokens? (Prefixing is important in order to ensure that your tokens don't clash with other tokens from 3rd party libraries or stylesheets).",
         });
-        const defaults = await butteryTokensConfigSchema.parseAsync(
+        const defaults = await ConfigSchema.parseAsync(
           defineTokensConfig({
             runtime: {
               namespace,
@@ -48,7 +46,7 @@ export async function getButteryTokensConfig({
         return defaults;
       },
       async validate(rawConfig) {
-        const res = await butteryTokensConfigSchema.safeParseAsync(rawConfig);
+        const res = await ConfigSchema.safeParseAsync(rawConfig);
         if (res.error) {
           throw res.error;
         }

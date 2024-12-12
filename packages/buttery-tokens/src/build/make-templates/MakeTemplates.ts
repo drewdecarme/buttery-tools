@@ -1,9 +1,10 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import type { ButteryTokensConfig } from "@buttery/tokens-utils/schemas";
+
 import type { MakeTemplate } from "./MakeTemplate.js";
 
-import type { ButteryTokensConfig } from "../../config/_config.utils.js";
 import { LOG } from "../../utils/util.logger.js";
 
 export class MakeTemplates {
