@@ -64,7 +64,7 @@ export function useTrackingNode<
     const node = parentRef.current.querySelector<ObservedNode>(querySelector);
     if (!node) return;
     callback(node, trackingRef.current);
-  }, []);
+  }, [callback, parentRef, querySelector]);
 
   useEffect(() => {
     if (!parentRef.current) return;
@@ -86,7 +86,13 @@ export function useTrackingNode<
     return () => {
       Observer.disconnect();
     };
-  }, [parentRef.current, querySelector, callback, options?.attributeFilter]);
+  }, [
+    querySelector,
+    callback,
+    options?.attributeFilter,
+    parentRef,
+    runCallback,
+  ]);
 
   return trackingRef;
 }

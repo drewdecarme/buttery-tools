@@ -70,5 +70,5 @@ export function useDetermineActiveSection(pathname: string) {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [pathname]);
+  }, [getHeadings, pathname, setActiveAnchor]);
 }

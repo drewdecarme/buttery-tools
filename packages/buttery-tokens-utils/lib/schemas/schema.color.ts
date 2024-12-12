@@ -12,7 +12,7 @@ export type ButteryTokensColorVariant = z.infer<
   typeof ColorVariantManualSchema
 >;
 
-const ColorDefHueSchema = z.record(
+export const ColorDefHueSchema = z.record(
   z.string(),
   z.object({
     hue: z.number().min(0).max(360),
@@ -21,14 +21,14 @@ const ColorDefHueSchema = z.record(
 );
 export type ButteryTokensConfigColorDefHue = z.infer<typeof ColorDefHueSchema>;
 
-const ColorDefHex = z.record(
+export const ColorDefHexSchema = z.record(
   z.string(),
   z.object({
     hex: z.string(),
     variants: ColorVariantManualSchema,
   })
 );
-export type ButteryTokensConfigColorDefHex = z.infer<typeof ColorDefHex>;
+export type ButteryTokensConfigColorDefHex = z.infer<typeof ColorDefHexSchema>;
 
 // Brand Categories
 const ColorBrandTypeJewelSchema = z.object({
@@ -272,7 +272,7 @@ const ColorBrandTypeFluorescentSchema = z.object({
 
 const ColorBrandTypeManualSchema = z.object({
   type: z.literal("manual"),
-  colors: ColorDefHex,
+  colors: ColorDefHexSchema,
 });
 export type ButteryTokensConfigColorBrandTypeManual = z.infer<
   typeof ColorBrandTypeManualSchema
@@ -302,29 +302,31 @@ export type ButteryTokensConfigColorBrand = z.infer<typeof ColorBrandSchema>;
 
 const ColorNeutralSchema = z.record(
   z.string(),
-  z.union([z.string(), ColorDefHex.valueSchema])
+  z.union([z.string(), ColorDefHexSchema.valueSchema])
 );
 export type ButteryTokensConfigColorNeutral = z.infer<
   typeof ColorNeutralSchema
 >;
 
-export const ColorSchema = z.object({
-  brand: ColorBrandSchema.default({
-    type: "manual",
-    colors: {
-      primary: {
-        hex: "#ccc",
+export const ColorSchema = z
+  .object({
+    brand: ColorBrandSchema.default({
+      type: "manual",
+      colors: {
+        primary: {
+          hex: "#5A29E0",
+          variants: 10,
+        },
+      },
+    }),
+    neutral: ColorNeutralSchema.default({
+      "grey-1": {
+        hex: "#000000",
         variants: 10,
       },
-    },
-  }),
-  neutral: ColorNeutralSchema.default({
-    "grey-1": {
-      hex: "#ccc",
-      variants: 10,
-    },
-  }),
-});
+    }),
+  })
+  .default({});
 export type ButteryTokensConfigColor = z.infer<typeof ColorSchema>;
 
 // const testManual: ButteryTokensConfigColor = {

@@ -1,31 +1,15 @@
-import {
-  type ButteryTokensConfigFontWellFormed,
-  type ButteryTokensConfigColorBrandTypeManual,
-  type ButteryTokensConfigColorBrandTypeAuto,
-} from "@buttery/tokens-utils/schemas";
+import { ConfigSchema } from "@buttery/tokens-utils/schemas";
 import type { FC, ReactNode } from "react";
 import { useRef, useContext, useMemo, createContext } from "react";
 import type { Updater } from "use-immer";
 import { useImmer } from "use-immer";
 
-import {
-  initConfig,
-  initConfigColorAuto,
-  initConfigColorManual,
-} from "./config.utils";
+import type { ConfigurationStateColor } from "./config.utils";
+import { getInitColorStateFromConfig } from "./config.utils";
 
-type ConfigurationContextTypePersisted = {
-  color: {
-    brand: {
-      auto: ButteryTokensConfigColorBrandTypeAuto;
-      manual: ButteryTokensConfigColorBrandTypeManual;
-    };
-  };
-};
-type ConfigurationContextType = {
-  config: ButteryTokensConfigFontWellFormed;
-  setConfig: Updater<ButteryTokensConfigFontWellFormed>;
-  persistedRef: React.MutableRefObject<ConfigurationContextTypePersisted>;
+export type ConfigurationContextType = {
+  color: ConfigurationStateColor;
+  setColor: Updater<ConfigurationStateColor>;
 };
 const ConfigurationContext = createContext<ConfigurationContextType | null>(
   null
@@ -34,23 +18,18 @@ export type ConfigurationProviderProps = {
   children: ReactNode;
 };
 
+const config = ConfigSchema.parse({});
+
 export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
   children,
 }) => {
-  const [config, setConfig] =
-    useImmer<ButteryTokensConfigFontWellFormed>(initConfig);
-  const persistedRef = useRef<ConfigurationContextTypePersisted>({
-    color: {
-      brand: {
-        auto: initConfigColorAuto,
-        manual: initConfigColorManual,
-      },
-    },
-  });
+  // color transforms & state
+  const initColorRef = useRef(getInitColorStateFromConfig(config));
+  const [color, setColor] = useImmer(initColorRef.current);
 
   const value = useMemo<ConfigurationContextType>(
-    () => ({ config, setConfig, persistedRef }),
-    [config, persistedRef]
+    () => ({ color, setColor }),
+    [color, setColor]
   );
 
   return (

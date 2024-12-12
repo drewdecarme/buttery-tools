@@ -2,7 +2,7 @@ import { makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import { useCallback } from "react";
 import type { ChangeEventHandler } from "react";
-import { match, P } from "ts-pattern";
+import { match } from "ts-pattern";
 
 import { InputRadioCard } from "~/components/InputRadioCard";
 
@@ -94,29 +94,19 @@ const PencilIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export function ConfigColorBrandMode() {
-  const { config, setConfig, persistedRef } = useConfigurationContext();
+  const { color, setColor } = useConfigurationContext();
 
   const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     ({ currentTarget: { value, checked } }) => {
       console.log({ value, checked });
-      setConfig((draft) => {
-        if (value === "auto") {
-          draft.color = {
-            brand: persistedRef.current.color.brand.auto,
-            neutral: draft.color?.neutral ?? {},
-          };
-        }
-
-        if (value === "manual") {
-          draft.color = {
-            brand: persistedRef.current.color.brand.manual,
-            neutral: draft.color?.neutral ?? {},
-          };
-        }
+      setColor((draft) => {
+        draft.brand.type = value === "auto" ? "auto" : "manual";
       });
     },
-    []
+    [setColor]
   );
+
+  console.log(color.brand);
 
   return (
     <>
@@ -128,7 +118,7 @@ export function ConfigColorBrandMode() {
           dxHelp="Best when configuring static colors provided by a design / product team"
           value="manual"
           name="mode"
-          defaultChecked={config.color?.brand?.type === "manual"}
+          defaultChecked={color.brand.type === "manual"}
           onChange={handleOnChange}
         />
         <InputRadioCard
@@ -138,18 +128,23 @@ export function ConfigColorBrandMode() {
           dxHelp="Best when starting from scratch without design assets"
           value="auto"
           name="mode"
-          defaultChecked={config.color?.brand?.type !== "manual"}
+          defaultChecked={color.brand.type === "auto"}
           onChange={handleOnChange}
         />
       </div>
-      {match(config.color?.brand)
-        .with({ type: P.nullish }, () => null)
+      {match(color.brand)
         .with({ type: "manual" }, (state) => (
-          <ConfigColorBrandModeManual state={state} />
+          <ConfigColorBrandModeManual
+            state={state.manual}
+            setColor={setColor}
+          />
         ))
-        .otherwise(() => (
-          <div>auto</div>
-        ))}
+        .with(
+          { type: "auto" },
+          (state) => null
+          // <ConfigColorBrandModeManual state={state.auto} setConfig={setColor} />
+        )
+        .exhaustive()}
     </>
   );
 }

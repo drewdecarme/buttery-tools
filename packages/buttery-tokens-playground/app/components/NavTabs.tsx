@@ -58,13 +58,16 @@ export const NavTabs = forwardRef<HTMLElement, NavTabsProps>(function NavTabs(
 
   const moveNode = useCallback<
     UseTrackingNodeCallback<HTMLDivElement, HTMLAnchorElement>
-  >((anchor, div) => {
-    if (!navRef.current) return;
+  >(
+    (anchor, div) => {
+      if (!navRef.current) return;
 
-    const rect = anchor.getBoundingClientRect();
-    div.style.left = makePx(rect.left - navRef.current.offsetLeft);
-    div.style.width = makePx(rect.width);
-  }, []);
+      const rect = anchor.getBoundingClientRect();
+      div.style.left = makePx(rect.left - navRef.current.offsetLeft);
+      div.style.width = makePx(rect.width);
+    },
+    [navRef]
+  );
 
   const divRef = useTrackingNode<HTMLDivElement, HTMLAnchorElement>(
     navRef,

@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { optionalSchema } from "./schema-utils.js";
+
 /**
  * The base font-size
  */
@@ -36,23 +38,14 @@ const FontVariantsSchema = z.record(
 );
 export const FontSchema = z
   .object({
-    baseSize: FontBaseSizeSchema.default(16),
-    families: FontFamiliesSchema.default({
-      heading: "system-ui",
-      body: "system-ui",
-    }),
-    fallback: FontFallbackSchema.default(
+    baseSize: optionalSchema(FontBaseSizeSchema, 16),
+    families: optionalSchema(FontFamiliesSchema, {}),
+    fallback: optionalSchema(
+      FontFallbackSchema,
       'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
     ),
-    weights: FontWeightsSchema.default({ normal: 400 }),
-    variants: FontVariantsSchema.default({
-      textPrimary: {
-        family: "system-ui",
-        weight: "normal",
-        lineHeight: 1.3,
-        size: 16,
-      },
-    }),
+    weights: optionalSchema(FontWeightsSchema, {}),
+    variants: optionalSchema(FontVariantsSchema, {}),
   })
   .superRefine((data, ctx) => {
     // Ensure font.variants[variantName].family keys match font.families
@@ -84,5 +77,6 @@ export const FontSchema = z
         });
       }
     }
-  });
+  })
+  .default({});
 export type ButteryTokensConfigFont = z.infer<typeof FontSchema>;

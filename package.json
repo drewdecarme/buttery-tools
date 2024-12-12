@@ -19,7 +19,7 @@
     "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
-  "packageManager": "yarn@4.5.1",
+  "packageManager": "yarn@4.5.3",
   "scripts": {
     "package:version": "yarn monoweave version",
     "build": "turbo build",
@@ -43,5 +43,8 @@
     "turbo": "2.3.3",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.17.0"
+  },
+  "dependencies": {
+    "eslint-plugin-react-hooks": "^5.1.0"
   }
 }

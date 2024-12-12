@@ -82,7 +82,7 @@ function DocsLayout({
     const pageRoute = pathname.split("/").filter(Boolean)[0];
     const graph = routeModuleGraph.getRouteGraphNodeByRoutePath(pageRoute);
     return graph;
-  }, [pathname, routeModuleGraph.getRouteGraphNodeByRoutePath]);
+  }, [pathname, routeModuleGraph]);
 
   const breadcrumbLinks = routeModuleGraph.constructBreadcrumbs(pathname);
 

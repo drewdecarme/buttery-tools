@@ -1,7 +1,6 @@
 import { ConfigColorBrandMode } from "~/components/ConfigColorBrandMode";
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
-import { LayoutConfigSectionControlsDescription } from "~/components/LayoutConfigSectionControlsDescription";
 
 export default function ConfigColorsRoute() {
   return (

@@ -6,6 +6,7 @@ const template: CompileFunction = ({ methods, docs, functionName }) => {
     "button",
     "body",
     "anchor",
+    "input",
   ]);
 
   return `export type MakeReset = (element: ${resetUnion}) => string;
@@ -71,6 +72,26 @@ export const ${functionName}: MakeReset = (element) => {
 
           &:visited {
             color: inherit;
+          }
+        \`;
+
+      case "input":
+        return \`
+          margin: 0;
+          padding: 0;
+          border: none;
+          background: none;
+          font: inherit;
+          color: inherit;
+          appearance: none;
+          outline: none;
+          box-sizing: border-box;
+          width: inherit;
+
+          &[type="number"]::-webkit-inner-spin-button,
+          &[type="number"]::-webkit-outer-spin-button {
+            appearance: none;
+            margin: 0;
           }
         \`;
 

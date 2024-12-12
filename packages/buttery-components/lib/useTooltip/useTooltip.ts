@@ -77,7 +77,7 @@ export const useTooltip = <T extends HTMLElement>(
         dropdownRef.current.role = "tooltip";
       }
     },
-    [setDropdownRef, dropdownRef.current]
+    [setDropdownRef, dropdownRef]
   );
 
   const targetProps = useMemo<JSX.IntrinsicElements["button"]>(() => {
