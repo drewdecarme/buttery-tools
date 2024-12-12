@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "dependencies": {
+    "@buttery/utils": "workspace:^",
+    "chroma-js": "^3.1.2",
     "zod": "^3.24.1"
   },
   "devDependencies": {

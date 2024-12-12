@@ -1378,6 +1378,8 @@ __metadata:
   resolution: "@buttery/tokens-utils@workspace:packages/buttery-tokens-utils"
   dependencies:
     "@buttery/tsconfig": "workspace:^"
+    "@buttery/utils": "workspace:^"
+    chroma-js: "npm:^3.1.2"
     typescript: "npm:^5.7.2"
     zod: "npm:^3.24.1"
   languageName: unknown
@@ -7240,7 +7242,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chroma-js@npm:3.1.2":
+"chroma-js@npm:3.1.2, chroma-js@npm:^3.1.2":
   version: 3.1.2
   resolution: "chroma-js@npm:3.1.2"
   checksum: 10c0/145ce9aea91dac81c6158082675084778e8c83e6959032e37fd4ba9b01db9f5c29c520453ec4bab7e87689f12756fcc63821e3c6b866e083ea41d341c7b2bf71

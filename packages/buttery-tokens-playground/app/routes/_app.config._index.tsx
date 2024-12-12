@@ -1,3 +1,4 @@
+import { ColorPreviewBrand } from "~/components/ColorPreviewBrand";
 import { ConfigColorBrandMode } from "~/components/ConfigColorBrandMode";
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
@@ -18,7 +19,9 @@ export default function ConfigColorsRoute() {
         >
           <ConfigColorBrandMode />
         </LayoutConfigSectionControls>
-        <div style={{ height: 500, background: "green" }}></div>
+        <div>
+          <ColorPreviewBrand />
+        </div>
       </LayoutConfigSection>
       <LayoutConfigSection>
         <LayoutConfigSectionControls

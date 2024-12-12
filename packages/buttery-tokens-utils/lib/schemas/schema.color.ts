@@ -1,10 +1,37 @@
 import { z } from "zod";
 
-const ColorVariantBaseSchema = z.union([z.number(), z.string().array()]);
+const ColorVariantTypeAutoSchema = z.number();
+export type ColorVariantTypeAuto = z.infer<typeof ColorVariantTypeAutoSchema>;
+const ColorVariantTypeAutoNamedSchema = z.string().array();
+export type ColorVariantTypeAutoSchema = z.infer<
+  typeof ColorVariantTypeAutoNamedSchema
+>;
+const ColorVariantTypeKeyValueSchema = z.record(z.string(), z.string());
+export type ColorVariantTypeKeyValue = z.infer<
+  typeof ColorVariantTypeKeyValueSchema
+>;
+
+export const ColorVariantTypesSchema = z.discriminatedUnion("type", [
+  z.object({ type: z.literal("auto"), variant: ColorVariantTypeAutoSchema }),
+  z.object({
+    type: z.literal("auto-named"),
+    variant: ColorVariantTypeAutoNamedSchema,
+  }),
+  z.object({
+    type: z.literal("key-value"),
+    variant: ColorVariantTypeKeyValueSchema,
+  }),
+]);
+export type ColorVariantTypes = z.infer<typeof ColorVariantTypesSchema>;
+
+const ColorVariantBaseSchema = z.union([
+  ColorVariantTypeAutoSchema,
+  ColorVariantTypeAutoNamedSchema,
+]);
 const ColorVariantAutoSchema = ColorVariantBaseSchema;
 
 const ColorVariantManualSchema = ColorVariantBaseSchema.or(
-  z.record(z.string(), z.string())
+  ColorVariantTypeKeyValueSchema
 );
 
 // we use the manual schema since it has the union of all of the variations we need

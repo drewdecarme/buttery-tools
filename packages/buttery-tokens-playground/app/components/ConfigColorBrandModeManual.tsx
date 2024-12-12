@@ -1,7 +1,5 @@
 import { css } from "@linaria/core";
 import { makeRem, makeReset } from "@buttery/tokens/playground";
-import { useCallback } from "react";
-import type { MouseEventHandler } from "react";
 import { generateGUID } from "@buttery/utils/isomorphic";
 
 import { ColorSwatchAdd } from "./ColorSwatchAdd";
@@ -24,17 +22,6 @@ export function ConfigColorBrandModeManual({
   state: ConfigurationStateColorBrandColorsManual;
   setColor: ConfigurationContextType["setColor"];
 }) {
-  const handleOnAdd = useCallback<MouseEventHandler<HTMLButtonElement>>(() => {
-    setColor((draft) => {
-      const id = generateGUID();
-      draft.brand.manual[id] = {
-        hex: "#000000",
-        name: "another",
-        variants: 10,
-      };
-    });
-  }, [setColor]);
-
   return (
     <ul className={styles}>
       {Object.entries(state).map(([colorId, colorNameAndDef]) => {
@@ -47,7 +34,18 @@ export function ConfigColorBrandModeManual({
         );
       })}
       <li>
-        <ColorSwatchAdd onClick={handleOnAdd} />
+        <ColorSwatchAdd
+          onClick={() =>
+            setColor((draft) => {
+              const id = generateGUID();
+              draft.brand.manual[id] = {
+                hex: "#000000",
+                name: `brand${Object.entries(state).length + 1}`,
+                variants: 10,
+              };
+            })
+          }
+        />
       </li>
     </ul>
   );
