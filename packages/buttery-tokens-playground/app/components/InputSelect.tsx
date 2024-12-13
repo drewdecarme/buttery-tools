@@ -1,13 +1,34 @@
 import { classes } from "@buttery/components";
 import { makeRem, makeColor, makeReset } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef } from "react";
+
+import { ArrowDown01Icon } from "~/icons/IconArrowDown";
 
 export type InputSelectPropsNative = JSX.IntrinsicElements["select"];
 export type InputSelectPropsCustom = {
   dxSize: "dense";
 };
 export type InputSelectProps = InputSelectPropsNative & InputSelectPropsCustom;
+
+const divStyles = css`
+  position: relative;
+
+  .icon {
+    position: absolute;
+    right: 0;
+    z-index: 10;
+    top: 50%;
+  }
+
+  &:has(.s-dense) {
+    .icon {
+      margin-top: -${makeRem(6)};
+      right: ${makeRem(6)};
+    }
+  }
+`;
 
 const styles = css`
   ${makeReset("input")};
@@ -29,15 +50,18 @@ const styles = css`
 export const InputSelect = forwardRef<HTMLSelectElement, InputSelectProps>(
   function InputSelect({ children, className, dxSize, ...restProps }, ref) {
     return (
-      <select
-        {...restProps}
-        className={classes(styles, className, {
-          [`s-${dxSize}`]: dxSize,
-        })}
-        ref={ref}
-      >
-        {children}
-      </select>
+      <div className={divStyles}>
+        <select
+          {...restProps}
+          className={classes(styles, className, {
+            [`s-${dxSize}`]: dxSize,
+          })}
+          ref={ref}
+        >
+          {children}
+        </select>
+        <ArrowDown01Icon dxSize={12} className="icon" />
+      </div>
     );
   }
 );
