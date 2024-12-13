@@ -1,10 +1,13 @@
 import { useCallback } from "react";
 import type { ChangeEventHandler, MouseEventHandler } from "react";
+import type { ColorVariantTypes } from "@buttery/tokens-utils/schemas";
+import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
 import { ConfigColorSwatchHex } from "./ConfigColorSwatchHex";
 import { ColorSwatch } from "./ColorSwatch";
 import type { ConfigurationStateColorBrandColorsManual } from "./config.utils";
 import type { ConfigurationContextType } from "./Config.context";
+import type { ColorSwatchVariantsPropsCustom } from "./ConfigColorSwatchVariants";
 import { ColorSwatchVariants } from "./ConfigColorSwatchVariants";
 
 export function ConfigColorBrandModeManualSwatch<
@@ -44,6 +47,85 @@ export function ConfigColorBrandModeManualSwatch<
     });
   }, [id, setColor]);
 
+  const handleChangeVariantType = useCallback<
+    ChangeEventHandler<HTMLSelectElement>
+  >(
+    ({ currentTarget: { value } }) => {
+      const type = value as ColorVariantTypes["type"];
+      switch (type) {
+        case "auto":
+          setColor((draft) => {
+            draft.brand.manual[id].variants = 10;
+          });
+          break;
+        case "auto-named":
+          setColor((draft) => {
+            draft.brand.manual[id].variants = ["light", "dark"];
+          });
+          break;
+        case "key-value":
+          setColor((draft) => {
+            draft.brand.manual[id].variants = {
+              light: "#cccccc",
+              dark: "#525252",
+            };
+          });
+          break;
+
+        default:
+          exhaustiveMatchGuard(type);
+      }
+    },
+    [id, setColor]
+  );
+
+  const handleChangeVariantAuto = useCallback<
+    ColorSwatchVariantsPropsCustom["onChangeVariantAuto"]
+  >(
+    (variant) => {
+      setColor((draft) => {
+        draft.brand.manual[id].variants = variant;
+      });
+    },
+    [id, setColor]
+  );
+
+  const handleChangeVariantNamed = useCallback<
+    ColorSwatchVariantsPropsCustom["onChangeVariantNamed"]
+  >(
+    (params) => {
+      switch (params.mode) {
+        case "change":
+          setColor((draft) => {
+            const variants = draft.brand.manual[id].variants;
+            if (!Array.isArray(variants)) return;
+            variants[params.index] = params.value;
+          });
+          break;
+
+        case "add":
+          setColor((draft) => {
+            const variants = draft.brand.manual[id].variants;
+            if (!Array.isArray(variants)) return;
+            variants.push(params.newValue);
+          });
+          break;
+
+        case "remove":
+          setColor((draft) => {
+            const variants = draft.brand.manual[id].variants;
+            if (!Array.isArray(variants)) return;
+            variants.splice(params.index, 1);
+          });
+          break;
+
+        default:
+          exhaustiveMatchGuard(params);
+      }
+    },
+    [id, setColor]
+  );
+
   return (
     <ColorSwatch dxOnRemove={handleRemove}>
       <ConfigColorSwatchHex
@@ -53,7 +135,12 @@ export function ConfigColorBrandModeManualSwatch<
         onChangeHex={handleChangeHex}
         onChangeName={handleChangeName}
       />
-      <ColorSwatchVariants dxVariants={variants} />
+      <ColorSwatchVariants
+        dxVariants={variants}
+        onChangeVariantType={handleChangeVariantType}
+        onChangeVariantAuto={handleChangeVariantAuto}
+        onChangeVariantNamed={handleChangeVariantNamed}
+      />
     </ColorSwatch>
   );
 }

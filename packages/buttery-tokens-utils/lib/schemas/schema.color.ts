@@ -2,10 +2,8 @@ import { z } from "zod";
 
 const ColorVariantTypeAutoSchema = z.number();
 export type ColorVariantTypeAuto = z.infer<typeof ColorVariantTypeAutoSchema>;
-const ColorVariantTypeAutoNamedSchema = z.string().array();
-export type ColorVariantTypeAutoSchema = z.infer<
-  typeof ColorVariantTypeAutoNamedSchema
->;
+const ColorVariantTypeNamedSchema = z.string().array();
+export type ColorVariantTypeNamed = z.infer<typeof ColorVariantTypeNamedSchema>;
 const ColorVariantTypeKeyValueSchema = z.record(z.string(), z.string());
 export type ColorVariantTypeKeyValue = z.infer<
   typeof ColorVariantTypeKeyValueSchema
@@ -15,7 +13,7 @@ export const ColorVariantTypesSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("auto"), variant: ColorVariantTypeAutoSchema }),
   z.object({
     type: z.literal("auto-named"),
-    variant: ColorVariantTypeAutoNamedSchema,
+    variant: ColorVariantTypeNamedSchema,
   }),
   z.object({
     type: z.literal("key-value"),
@@ -26,7 +24,7 @@ export type ColorVariantTypes = z.infer<typeof ColorVariantTypesSchema>;
 
 const ColorVariantBaseSchema = z.union([
   ColorVariantTypeAutoSchema,
-  ColorVariantTypeAutoNamedSchema,
+  ColorVariantTypeNamedSchema,
 ]);
 const ColorVariantAutoSchema = ColorVariantBaseSchema;
 

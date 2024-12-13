@@ -15,19 +15,18 @@ const styles = css`
   border: ${makeRem(1)} solid ${makeColor("neutral-light", { opacity: 0.1 })};
   border-radius: ${makeRem(4)};
 
-  li {
+  & > li {
     width: 100%;
     & + li {
       border-top: ${makeRem(1)} solid
         ${makeColor("neutral-light", { opacity: 0.1 })};
     }
-  }
-
-  li:last-child {
-    button {
-      padding: ${makeRem(16)};
-      background: ${makeColor("neutral-light", { opacity: 0.05 })};
-      width: 100%;
+    &:last-child {
+      button {
+        padding: ${makeRem(16)};
+        background: ${makeColor("neutral-light", { opacity: 0.05 })};
+        width: 100%;
+      }
     }
   }
 `;

@@ -28,6 +28,7 @@ export type InputLabelProps = InputLabelPropsNative & InputLabelPropsCustom;
 
 const styles = css`
   display: inline-block;
+  vertical-align: top;
 
   .label {
     font-size: ${makeRem(14)};

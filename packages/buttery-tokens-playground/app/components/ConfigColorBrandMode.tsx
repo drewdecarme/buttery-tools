@@ -1,6 +1,6 @@
 import { makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import type { ChangeEventHandler } from "react";
 import { match } from "ts-pattern";
 
@@ -110,34 +110,39 @@ export function ConfigColorBrandMode() {
 
   return (
     <>
-      <InputSection>
-        <InputLabel
-          dxLabel="Select how you would like to create colors"
-          dxHelp="Each mode has different controls for adding and configuring colors and variants."
-        />
-        <div className={groupStyles}>
-          <InputRadioCard
-            DXIcon={PencilIcon}
-            dxTitle="Manual"
-            dxDescription="Manually add base colors using hex values to statically define variants"
-            dxHelp="Best when configuring static colors provided by a design / product team"
-            value="manual"
-            name="mode"
-            defaultChecked={color.brand.type === "manual"}
-            onChange={handleOnChange}
-          />
-          <InputRadioCard
-            DXIcon={MagicWand01Icon}
-            dxTitle="Automatic"
-            dxDescription="Select a preset palette 'tone' & add variants derived from tone preset scale."
-            dxHelp="Best when starting from scratch without design assets"
-            value="auto"
-            name="mode"
-            defaultChecked={color.brand.type === "auto"}
-            onChange={handleOnChange}
-          />
-        </div>
-      </InputSection>
+      {useMemo(
+        () => (
+          <InputSection>
+            <InputLabel
+              dxLabel="Select how you would like to create colors"
+              dxHelp="Each mode has different controls for adding and configuring colors and variants."
+            />
+            <div className={groupStyles}>
+              <InputRadioCard
+                DXIcon={PencilIcon}
+                dxTitle="Manual"
+                dxDescription="Manually add base colors using hex values to statically define variants"
+                dxHelp="Best when configuring static colors provided by a design / product team"
+                value="manual"
+                name="mode"
+                defaultChecked={color.brand.type === "manual"}
+                onChange={handleOnChange}
+              />
+              <InputRadioCard
+                DXIcon={MagicWand01Icon}
+                dxTitle="Automatic"
+                dxDescription="Select a preset palette 'tone' & add variants derived from tone preset scale."
+                dxHelp="Best when starting from scratch without design assets"
+                value="auto"
+                name="mode"
+                defaultChecked={color.brand.type === "auto"}
+                onChange={handleOnChange}
+              />
+            </div>
+          </InputSection>
+        ),
+        [color.brand.type, handleOnChange]
+      )}
       <InputSection>
         {match(color.brand)
           .with({ type: "manual" }, (state) => (
