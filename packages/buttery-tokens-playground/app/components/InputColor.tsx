@@ -1,6 +1,7 @@
 import { classes } from "@buttery/components";
 import { makeRem, makeReset } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef } from "react";
 
 export type InputColorPropsNative = Omit<
@@ -31,7 +32,7 @@ const styles = css`
 
   &.s-dense {
     border-radius: ${makeRem(2)};
-    height: 90%;
+    height: ${makeRem(24)};
     aspect-ratio: 1 / 1;
   }
 `;

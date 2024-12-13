@@ -8,6 +8,7 @@ import {
   makeReset,
 } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef, useCallback } from "react";
 
 export type NavTabsPropsNative = JSX.IntrinsicElements["nav"];

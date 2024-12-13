@@ -11,16 +11,19 @@ import { makeColor, makeRem } from "@buttery/tokens/playground";
 
 import { InputSelect } from "./InputSelect";
 import { InputLabel } from "./InputLabel";
-import { ColorSwatchVariantAuto } from "./ColorSwatchVariantAuto";
-import type { ColorSwatchVariantNamedProps } from "./ColorSwatchVariantNamed";
-import { ColorSwatchVariantNamed } from "./ColorSwatchVariantNamed";
+import { ColorSwatchVariantTypeAuto } from "./ColorSwatchVariantTypeAuto";
+import type { ColorSwatchVariantTypeNamedProps } from "./ColorSwatchVariantTypeNamed";
+import { ColorSwatchVariantTypeNamed } from "./ColorSwatchVariantTypeNamed";
+import type { ColorSwatchVariantTypeManualProps } from "./ColorSwatchVariantTypeManual";
+import { ColorSwatchVariantTypeManual } from "./ColorSwatchVariantTypeManual";
 
 export type ColorSwatchVariantsPropsNative = JSX.IntrinsicElements["div"];
 export type ColorSwatchVariantsPropsCustom = {
   dxVariants: ButteryTokensColorVariant;
   onChangeVariantType: ChangeEventHandler<HTMLSelectElement>;
   onChangeVariantAuto: (variant: ButteryTokensColorVariant) => void;
-  onChangeVariantNamed: ColorSwatchVariantNamedProps["onChangeVariantNamed"];
+  onChangeVariantNamed: ColorSwatchVariantTypeNamedProps["onChangeVariantNamed"];
+  onChangeVariantManual: ColorSwatchVariantTypeManualProps["onChangeVariantManual"];
 };
 export type ColorSwatchVariantsProps = ColorSwatchVariantsPropsNative &
   ColorSwatchVariantsPropsCustom;
@@ -77,6 +80,7 @@ export const ColorSwatchVariants = forwardRef<
     onChangeVariantType,
     onChangeVariantAuto,
     onChangeVariantNamed,
+    onChangeVariantManual,
     ...restProps
   },
   ref
@@ -131,20 +135,28 @@ export const ColorSwatchVariants = forwardRef<
       <div>
         {match(variantUnion)
           .with({ type: "auto" }, ({ variant }) => (
-            <ColorSwatchVariantAuto
+            <ColorSwatchVariantTypeAuto
               variant={variant}
               onChangeVariantAuto={onChangeVariantAuto}
             />
           ))
           .with({ type: "auto-named" }, ({ variant }) => {
             return (
-              <ColorSwatchVariantNamed
+              <ColorSwatchVariantTypeNamed
                 variants={variant}
                 onChangeVariantNamed={onChangeVariantNamed}
               />
             );
           })
-          .otherwise(() => null)}
+          .with({ type: "key-value" }, ({ variant }) => {
+            return (
+              <ColorSwatchVariantTypeManual
+                variants={variant}
+                onChangeVariantManual={onChangeVariantManual}
+              />
+            );
+          })
+          .exhaustive()}
       </div>
     </div>
   );

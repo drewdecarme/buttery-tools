@@ -126,6 +126,17 @@ export function ColorBrandModeManualSwatch<
     [id, setColor]
   );
 
+  const handleChangeVariantManual = useCallback<
+    ColorSwatchVariantsPropsCustom["onChangeVariantManual"]
+  >(
+    (variants) => {
+      setColor((draft) => {
+        draft.brand.manual[id].variants = variants;
+      });
+    },
+    [id, setColor]
+  );
+
   return (
     <ColorSwatch dxOnRemove={handleRemove}>
       <ColorSwatchHex
@@ -140,6 +151,7 @@ export function ColorBrandModeManualSwatch<
         onChangeVariantType={handleChangeVariantType}
         onChangeVariantAuto={handleChangeVariantAuto}
         onChangeVariantNamed={handleChangeVariantNamed}
+        onChangeVariantManual={handleChangeVariantManual}
       />
     </ColorSwatch>
   );

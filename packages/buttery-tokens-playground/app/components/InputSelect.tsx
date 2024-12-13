@@ -20,6 +20,7 @@ const divStyles = css`
     right: 0;
     z-index: 10;
     top: 50%;
+    pointer-events: none;
   }
 
   &:has(.s-dense) {

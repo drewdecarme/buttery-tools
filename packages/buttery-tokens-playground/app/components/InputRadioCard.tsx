@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { forwardRef } from "react";
 import { css } from "@linaria/core";
 import { makeColor, makeFontWeight, makeRem } from "@buttery/tokens/playground";

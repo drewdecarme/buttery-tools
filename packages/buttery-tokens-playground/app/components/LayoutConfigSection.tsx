@@ -1,6 +1,7 @@
 import { classes } from "@buttery/components";
 import { makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef } from "react";
 
 export type LayoutConfigSectionPropsNative = JSX.IntrinsicElements["section"];

@@ -1,5 +1,6 @@
 import { makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 
 const blockStyles = css`
   height: 100%;

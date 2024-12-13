@@ -1,6 +1,7 @@
 import { classes } from "@buttery/components";
 import { makeColor, makeCustom, makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef } from "react";
 
 export type LayoutHeaderPropsNative = JSX.IntrinsicElements["header"];

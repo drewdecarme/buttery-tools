@@ -1,4 +1,5 @@
 import { classes } from "@buttery/components";
+import type { JSX } from "react";
 import { forwardRef } from "react";
 import { css } from "@linaria/core";
 import { makeFontFamily } from "@buttery/tokens/playground";

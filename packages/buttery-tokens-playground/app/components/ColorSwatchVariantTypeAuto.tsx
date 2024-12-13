@@ -7,7 +7,7 @@ import type { ChangeEvent } from "react";
 import { InputLabel } from "./InputLabel";
 import { InputNumber } from "./InputNumber";
 
-export function ColorSwatchVariantAuto({
+export function ColorSwatchVariantTypeAuto({
   variant,
   onChangeVariantAuto,
 }: {
