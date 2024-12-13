@@ -153,7 +153,7 @@ export function ConfigColorBrandMode() {
           ))
           .with(
             { type: "auto" },
-            (state) => null
+            (_state) => null
             // <ConfigColorBrandModeManual state={state.auto} setConfig={setColor} />
           )
           .exhaustive()}

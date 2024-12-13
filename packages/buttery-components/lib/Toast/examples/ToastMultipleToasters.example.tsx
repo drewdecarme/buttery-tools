@@ -103,7 +103,7 @@ export default () => {
           })
         }
       >
-        Create "Components" toast
+        Create Components toast
       </button>
       <ComponentsToaster />
       <button
@@ -116,7 +116,7 @@ export default () => {
           })
         }
       >
-        Create "Features" toast
+        Create Features toast
       </button>
       <FeaturesToaster />
     </>

@@ -17,6 +17,7 @@ export default [
       "**/.store/**",
       "**/.vite-cache/**",
       "**/.yarn/**",
+      "packages/buttery-tokens-playground/build/**",
     ],
   },
 

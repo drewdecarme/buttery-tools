@@ -1,4 +1,4 @@
-import type { MouseEventHandler, ReactElement } from "react";
+import type { JSX, MouseEventHandler, ReactElement } from "react";
 import React, { forwardRef } from "react";
 import { css } from "@linaria/core";
 import { classes, useToggle } from "@buttery/components";

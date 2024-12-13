@@ -1,6 +1,7 @@
 import { classes } from "@buttery/components";
 import { makeRem, makeColor, makeReset } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef } from "react";
 
 export type InputTextPropsNative = Omit<JSX.IntrinsicElements["input"], "type">;

@@ -46,7 +46,7 @@ export const useDropdown = <T extends HTMLElement>(
         popoverRef.current.style.inset = "unset";
       }
     },
-    [setPopoverRef, popoverRef.current]
+    [setPopoverRef, popoverRef]
   );
 
   const openDropdown = useCallback<DropdownRef["handleOpen"]>(
@@ -73,7 +73,7 @@ export const useDropdown = <T extends HTMLElement>(
         targetNode: targetRef.current,
       });
     },
-    [targetRef.current, popoverRef.current, showPopover, options]
+    [popoverRef, targetRef, options, showPopover]
   );
 
   const closeDropdown = useCallback(async () => {

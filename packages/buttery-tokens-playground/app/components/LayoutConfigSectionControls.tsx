@@ -6,8 +6,10 @@ import {
   makeReset,
 } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
-import type { ReactNode } from "react";
+import type { JSX, ReactNode } from "react";
 import { forwardRef } from "react";
+
+import { InformationCircleIcon } from "~/icons/IconInformationCircle";
 
 export type LayoutConfigSectionControlsPropsNative =
   JSX.IntrinsicElements["article"];
@@ -18,38 +20,6 @@ export type LayoutConfigSectionControlsPropsCustom = {
 export type LayoutConfigSectionControlsProps =
   LayoutConfigSectionControlsPropsNative &
     LayoutConfigSectionControlsPropsCustom;
-
-const InformationCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    width={16}
-    height={16}
-    color={"#000000"}
-    fill={"none"}
-    {...props}
-  >
-    <path
-      d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    />
-    <path
-      d="M12.2422 17V12C12.2422 11.5286 12.2422 11.2929 12.0957 11.1464C11.9493 11 11.7136 11 11.2422 11"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M11.992 8H12.001"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 const styles = css`
   padding-right: ${makeRem(32)};
@@ -90,7 +60,7 @@ export const LayoutConfigSectionControls = forwardRef<
       <div className="title">
         <h3>{dxTitle}</h3>
         <button>
-          <InformationCircleIcon />
+          <InformationCircleIcon dxSize={16} />
         </button>
       </div>
       {children}

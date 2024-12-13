@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/react";
 
-import "@buttery/tokens/docs.css";
+import "@buttery/tokens/docs/css";
 
 const preview: Preview = {
   parameters: {

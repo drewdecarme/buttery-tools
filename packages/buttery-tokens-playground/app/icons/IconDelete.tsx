@@ -1,14 +1,15 @@
-export const IconDelete = (
-  props: React.SVGProps<SVGSVGElement> & { dxSize?: number }
-) => (
+export const IconDelete = ({
+  dxSize = 24,
+  ...restProps
+}: React.SVGProps<SVGSVGElement> & { dxSize?: number }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    width={props.dxSize ?? 24}
-    height={props.dxSize ?? 24}
+    width={dxSize ?? 24}
+    height={dxSize ?? 24}
     color="currentColor"
     fill={"none"}
-    {...props}
+    {...restProps}
   >
     <title>delete</title>
     <path

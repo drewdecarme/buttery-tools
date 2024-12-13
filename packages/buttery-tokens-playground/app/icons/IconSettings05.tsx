@@ -1,14 +1,15 @@
-export const IconSettings05 = (
-  props: React.SVGProps<SVGSVGElement> & { dxSize?: number }
-) => (
+export const IconSettings05 = ({
+  dxSize = 24,
+  ...restProps
+}: React.SVGProps<SVGSVGElement> & { dxSize?: number }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    width={props.dxSize ?? 24}
-    height={props.dxSize ?? 24}
+    width={dxSize}
+    height={dxSize}
     color="currentColor"
     fill={"none"}
-    {...props}
+    {...restProps}
   >
     <title>config</title>
     <path

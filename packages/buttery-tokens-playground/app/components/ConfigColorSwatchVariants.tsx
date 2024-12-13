@@ -4,7 +4,7 @@ import type {
   ColorVariantTypes,
 } from "@buttery/tokens-utils/schemas";
 import { css } from "@linaria/core";
-import type { ChangeEventHandler } from "react";
+import type { ChangeEventHandler, JSX } from "react";
 import { useMemo, forwardRef, useId } from "react";
 import { match } from "ts-pattern";
 import { makeColor, makeRem } from "@buttery/tokens/playground";

@@ -41,15 +41,15 @@
     "typescript": "5.7.2"
   },
   "dependencies": {
-    "@buttery/core": "workspace:^0.1.11",
-    "@buttery/logs": "workspace:^",
-    "@buttery/utils": "workspace:^",
+    "@buttery/core": "workspace:0.1.11",
+    "@buttery/logs": "workspace:*",
+    "@buttery/utils": "workspace:*",
     "@svgr/cli": "8.1.0",
     "@svgr/core": "8.1.0",
     "@svgr/plugin-jsx": "8.1.0",
     "@svgr/plugin-prettier": "8.1.0",
     "@svgr/plugin-svgo": "8.1.0",
     "fs-extra": "11.2.0",
-    "zod": "3.23.8"
+    "zod": "3.24.1"
   }
 }
