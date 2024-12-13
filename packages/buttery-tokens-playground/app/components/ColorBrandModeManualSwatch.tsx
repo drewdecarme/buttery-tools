@@ -3,14 +3,14 @@ import type { ChangeEventHandler, MouseEventHandler } from "react";
 import type { ColorVariantTypes } from "@buttery/tokens-utils/schemas";
 import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
-import { ConfigColorSwatchHex } from "./ConfigColorSwatchHex";
+import { ColorSwatchHex } from "./ColorSwatchHex";
 import { ColorSwatch } from "./ColorSwatch";
 import type { ConfigurationStateColorBrandColorsManual } from "./config.utils";
 import type { ConfigurationContextType } from "./Config.context";
-import type { ColorSwatchVariantsPropsCustom } from "./ConfigColorSwatchVariants";
-import { ColorSwatchVariants } from "./ConfigColorSwatchVariants";
+import type { ColorSwatchVariantsPropsCustom } from "./ColorSwatchVariants";
+import { ColorSwatchVariants } from "./ColorSwatchVariants";
 
-export function ConfigColorBrandModeManualSwatch<
+export function ColorBrandModeManualSwatch<
   T extends ConfigurationStateColorBrandColorsManual
 >({
   colorDef,
@@ -128,7 +128,7 @@ export function ConfigColorBrandModeManualSwatch<
 
   return (
     <ColorSwatch dxOnRemove={handleRemove}>
-      <ConfigColorSwatchHex
+      <ColorSwatchHex
         id={id}
         hex={hex}
         name={name}

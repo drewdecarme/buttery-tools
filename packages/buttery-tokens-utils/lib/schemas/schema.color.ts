@@ -44,7 +44,7 @@ export const ColorDefHueSchema = z.record(
     variants: ColorVariantAutoSchema,
   })
 );
-export type ButteryTokensConfigColorDefHue = z.infer<typeof ColorDefHueSchema>;
+export type ButteryTokensColorDefHue = z.infer<typeof ColorDefHueSchema>;
 
 export const ColorDefHexSchema = z.record(
   z.string(),
@@ -53,7 +53,7 @@ export const ColorDefHexSchema = z.record(
     variants: ColorVariantManualSchema,
   })
 );
-export type ButteryTokensConfigColorDefHex = z.infer<typeof ColorDefHexSchema>;
+export type ButteryTokensColorDefHex = z.infer<typeof ColorDefHexSchema>;
 
 // Brand Categories
 const ColorBrandTypeJewelSchema = z.object({
@@ -299,7 +299,7 @@ const ColorBrandTypeManualSchema = z.object({
   type: z.literal("manual"),
   colors: ColorDefHexSchema,
 });
-export type ButteryTokensConfigColorBrandTypeManual = z.infer<
+export type ButteryTokensColorBrandTypeManual = z.infer<
   typeof ColorBrandTypeManualSchema
 >;
 
@@ -310,7 +310,7 @@ export const ColorBrandTypeAutoSchema = z.discriminatedUnion("type", [
   ColorBrandTypeEarthSchema,
   ColorBrandTypeNeutralSchema,
 ]);
-export type ButteryTokensConfigColorBrandTypeAuto = z.infer<
+export type ButteryTokensColorBrandTypeAuto = z.infer<
   typeof ColorBrandTypeAutoSchema
 >;
 
@@ -323,15 +323,13 @@ const ColorBrandSchema = z.discriminatedUnion("type", [
   ColorBrandTypeNeutralSchema,
 ]);
 
-export type ButteryTokensConfigColorBrand = z.infer<typeof ColorBrandSchema>;
+export type ButteryTokensColorBrand = z.infer<typeof ColorBrandSchema>;
 
 const ColorNeutralSchema = z.record(
   z.string(),
   z.union([z.string(), ColorDefHexSchema.valueSchema])
 );
-export type ButteryTokensConfigColorNeutral = z.infer<
-  typeof ColorNeutralSchema
->;
+export type ButteryTokensColorNeutral = z.infer<typeof ColorNeutralSchema>;
 
 export const ColorSchema = z
   .object({
@@ -352,9 +350,9 @@ export const ColorSchema = z
     }),
   })
   .default({});
-export type ButteryTokensConfigColor = z.infer<typeof ColorSchema>;
+export type ButteryTokensColor = z.infer<typeof ColorSchema>;
 
-// const testManual: ButteryTokensConfigColor = {
+// const testManual: ButteryTokensColor = {
 //   brand: {
 //     type: "manual",
 //     colors: {
@@ -381,7 +379,7 @@ export type ButteryTokensConfigColor = z.infer<typeof ColorSchema>;
 //   },
 // };
 
-// const testTone: ButteryTokensConfigColor = {
+// const testTone: ButteryTokensColor = {
 //   brand: {
 //     type: "fluorescent",
 //     saturation: 82,

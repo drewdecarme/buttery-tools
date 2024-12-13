@@ -12,7 +12,7 @@ const styles = css`
   gap: ${makeRem(8)};
 `;
 
-export function ConfigColorSwatchHex(props: {
+export function ColorSwatchHex(props: {
   id: string;
   hex: string;
   name: string;

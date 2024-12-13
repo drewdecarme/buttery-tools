@@ -1,9 +1,9 @@
 import { ColorPreviewBrand } from "~/components/ColorPreviewBrand";
-import { ConfigColorBrandMode } from "~/components/ConfigColorBrandMode";
+import { ColorBrandMode } from "~/components/ColorBrandMode";
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
 
-export default function ConfigColorsRoute() {
+export default function ColorsRoute() {
   return (
     <>
       <LayoutConfigSection>
@@ -17,7 +17,7 @@ export default function ConfigColorsRoute() {
             </>
           }
         >
-          <ConfigColorBrandMode />
+          <ColorBrandMode />
         </LayoutConfigSectionControls>
         <div>
           <ColorPreviewBrand />

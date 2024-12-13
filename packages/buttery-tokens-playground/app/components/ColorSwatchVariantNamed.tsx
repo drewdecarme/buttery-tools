@@ -36,7 +36,7 @@ const addStyles = css`
   text-align: left;
 `;
 
-export type ConfigColorSwatchVariantNamedProps = {
+export type ColorSwatchVariantNamedProps = {
   variants: ColorVariantTypeNamed;
   onChangeVariantNamed: (
     params:
@@ -47,7 +47,7 @@ export type ConfigColorSwatchVariantNamedProps = {
 };
 
 const VariantInput: FC<
-  Pick<ConfigColorSwatchVariantNamedProps, "onChangeVariantNamed"> & {
+  Pick<ColorSwatchVariantNamedProps, "onChangeVariantNamed"> & {
     value: string;
     index: number;
     isRemoveVisible: boolean;
@@ -83,10 +83,10 @@ const VariantInput: FC<
   );
 });
 
-export function ConfigColorSwatchVariantNamed({
+export function ColorSwatchVariantNamed({
   variants,
   onChangeVariantNamed,
-}: ConfigColorSwatchVariantNamedProps) {
+}: ColorSwatchVariantNamedProps) {
   function addVariant() {
     onChangeVariantNamed({
       mode: "add",

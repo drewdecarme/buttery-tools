@@ -5,10 +5,10 @@ import { hsbToHex } from "./util.color-conversions.js";
 
 import type {
   ButteryTokensColorVariant,
-  ButteryTokensConfigColorDefHue,
-  ButteryTokensConfigColorDefHex,
-  ButteryTokensConfigColorBrand,
-  ButteryTokensConfigColorNeutral,
+  ButteryTokensColorDefHue,
+  ButteryTokensColorDefHex,
+  ButteryTokensColorBrand,
+  ButteryTokensColorNeutral,
 } from "../schemas/schema.color.js";
 
 type HEXValue = string;
@@ -69,7 +69,7 @@ export function createVariantsFromBaseHex(
 }
 
 export function createVariantsFromDefHue(
-  colorDef: ButteryTokensConfigColorDefHue,
+  colorDef: ButteryTokensColorDefHue,
   saturation: number,
   brightness: number
 ): VariantMap {
@@ -80,7 +80,7 @@ export function createVariantsFromDefHue(
 }
 
 export function createVariantsFromDefHex(
-  colorDef: ButteryTokensConfigColorDefHex
+  colorDef: ButteryTokensColorDefHex
 ): VariantMap {
   const [_, colorValue] = Object.entries(colorDef)[0];
   return createVariantsFromBaseHex(colorValue.hex, colorValue.variants);
@@ -91,7 +91,7 @@ export function createVariantsFromDefHex(
  * based upon the type of the brand config.
  */
 export function createBrandVariants(
-  brandConfig: ButteryTokensConfigColorBrand | undefined
+  brandConfig: ButteryTokensColorBrand | undefined
 ): VariantManifest {
   if (!brandConfig?.colors) return {};
 
@@ -130,7 +130,7 @@ export function createBrandVariants(
  * and creates their variants
  */
 export function createNeutralVariants(
-  neutralConfig: ButteryTokensConfigColorNeutral | undefined
+  neutralConfig: ButteryTokensColorNeutral | undefined
 ): VariantManifest {
   if (!neutralConfig) return {};
   return Object.entries(neutralConfig).reduce<VariantManifest>(

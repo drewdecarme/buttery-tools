@@ -7,7 +7,7 @@ import { match } from "ts-pattern";
 import { InputRadioCard } from "~/components/InputRadioCard";
 
 import { useConfigurationContext } from "./Config.context";
-import { ConfigColorBrandModeManual } from "./ConfigColorBrandModeManual";
+import { ColorBrandModeManual } from "./ColorBrandModeManual";
 import { InputLabel } from "./InputLabel";
 import { InputSection } from "./InputGroup";
 
@@ -95,7 +95,7 @@ const PencilIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export function ConfigColorBrandMode() {
+export function ColorBrandMode() {
   const { color, setColor } = useConfigurationContext();
 
   const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
@@ -146,15 +146,12 @@ export function ConfigColorBrandMode() {
       <InputSection>
         {match(color.brand)
           .with({ type: "manual" }, (state) => (
-            <ConfigColorBrandModeManual
-              state={state.manual}
-              setColor={setColor}
-            />
+            <ColorBrandModeManual state={state.manual} setColor={setColor} />
           ))
           .with(
             { type: "auto" },
             (_state) => null
-            // <ConfigColorBrandModeManual state={state.auto} setConfig={setColor} />
+            // <ColorBrandModeManual state={state.auto} setConfig={setColor} />
           )
           .exhaustive()}
       </InputSection>

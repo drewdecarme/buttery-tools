@@ -11,16 +11,16 @@ import { makeColor, makeRem } from "@buttery/tokens/playground";
 
 import { InputSelect } from "./InputSelect";
 import { InputLabel } from "./InputLabel";
-import { ConfigColorSwatchVariantAuto } from "./ConfigColorSwatchVariantAuto";
-import type { ConfigColorSwatchVariantNamedProps } from "./ConfigColorSwatchVariantNamed";
-import { ConfigColorSwatchVariantNamed } from "./ConfigColorSwatchVariantNamed";
+import { ColorSwatchVariantAuto } from "./ColorSwatchVariantAuto";
+import type { ColorSwatchVariantNamedProps } from "./ColorSwatchVariantNamed";
+import { ColorSwatchVariantNamed } from "./ColorSwatchVariantNamed";
 
 export type ColorSwatchVariantsPropsNative = JSX.IntrinsicElements["div"];
 export type ColorSwatchVariantsPropsCustom = {
   dxVariants: ButteryTokensColorVariant;
   onChangeVariantType: ChangeEventHandler<HTMLSelectElement>;
   onChangeVariantAuto: (variant: ButteryTokensColorVariant) => void;
-  onChangeVariantNamed: ConfigColorSwatchVariantNamedProps["onChangeVariantNamed"];
+  onChangeVariantNamed: ColorSwatchVariantNamedProps["onChangeVariantNamed"];
 };
 export type ColorSwatchVariantsProps = ColorSwatchVariantsPropsNative &
   ColorSwatchVariantsPropsCustom;
@@ -131,14 +131,14 @@ export const ColorSwatchVariants = forwardRef<
       <div>
         {match(variantUnion)
           .with({ type: "auto" }, ({ variant }) => (
-            <ConfigColorSwatchVariantAuto
+            <ColorSwatchVariantAuto
               variant={variant}
               onChangeVariantAuto={onChangeVariantAuto}
             />
           ))
           .with({ type: "auto-named" }, ({ variant }) => {
             return (
-              <ConfigColorSwatchVariantNamed
+              <ColorSwatchVariantNamed
                 variants={variant}
                 onChangeVariantNamed={onChangeVariantNamed}
               />

@@ -1,4 +1,4 @@
-import type { ButteryTokensConfigColor } from "@buttery/tokens-utils/schemas";
+import type { ButteryTokensColor } from "@buttery/tokens-utils/schemas";
 import {
   createBrandVariants,
   createNeutralVariants,
@@ -10,9 +10,7 @@ import { type CompileFunction, MakeTemplate } from "./MakeTemplate.js";
 
 import { LOG } from "../../utils/util.logger.js";
 
-function createColorManifest(
-  colorConfig: ButteryTokensConfigColor | undefined
-) {
+function createColorManifest(colorConfig: ButteryTokensColor | undefined) {
   const colorVariantsBrand = createBrandVariants(colorConfig?.brand);
   const colorVariantsNeutral = createNeutralVariants(colorConfig?.neutral);
 

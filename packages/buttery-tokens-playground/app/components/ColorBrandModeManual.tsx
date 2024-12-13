@@ -3,7 +3,7 @@ import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 import { generateGUID } from "@buttery/utils/isomorphic";
 
 import { ColorSwatchAdd } from "./ColorSwatchAdd";
-import { ConfigColorBrandModeManualSwatch } from "./ConfigColorBrandModeManualSwatch";
+import { ColorBrandModeManualSwatch } from "./ColorBrandModeManualSwatch";
 import type { ConfigurationContextType } from "./Config.context";
 import type { ConfigurationStateColorBrandColorsManual } from "./config.utils";
 import { InputLabel } from "./InputLabel";
@@ -31,7 +31,7 @@ const styles = css`
   }
 `;
 
-export function ConfigColorBrandModeManual({
+export function ColorBrandModeManual({
   state,
   setColor,
 }: {
@@ -48,7 +48,7 @@ export function ConfigColorBrandModeManual({
         {Object.entries(state).map(([colorId, colorNameAndDef]) => {
           return (
             <li key={colorId}>
-              <ConfigColorBrandModeManualSwatch
+              <ColorBrandModeManualSwatch
                 colorDef={{ [colorId]: colorNameAndDef }}
                 setColor={setColor}
               />
