@@ -11,7 +11,7 @@ const bodyStyles = css`
   padding: 0;
 
   * {
-    box-sizing: content-box;
+    box-sizing: border-box;
     font-family: ${makeFontFamily("body")};
   }
 `;

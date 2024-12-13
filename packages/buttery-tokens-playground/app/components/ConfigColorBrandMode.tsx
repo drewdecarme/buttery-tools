@@ -8,6 +8,8 @@ import { InputRadioCard } from "~/components/InputRadioCard";
 
 import { useConfigurationContext } from "./Config.context";
 import { ConfigColorBrandModeManual } from "./ConfigColorBrandModeManual";
+import { InputLabel } from "./InputLabel";
+import { InputSection } from "./InputGroup";
 
 const groupStyles = css`
   display: flex;
@@ -106,45 +108,51 @@ export function ConfigColorBrandMode() {
     [setColor]
   );
 
-  console.log(color.brand);
-
   return (
     <>
-      <div className={groupStyles}>
-        <InputRadioCard
-          DXIcon={PencilIcon}
-          dxTitle="Manual"
-          dxDescription="Manually add base colors using hex values to statically define variants"
-          dxHelp="Best when configuring static colors provided by a design / product team"
-          value="manual"
-          name="mode"
-          defaultChecked={color.brand.type === "manual"}
-          onChange={handleOnChange}
+      <InputSection>
+        <InputLabel
+          dxLabel="Select how you would like to create colors"
+          dxHelp="Each mode has different controls for adding and configuring colors and variants."
         />
-        <InputRadioCard
-          DXIcon={MagicWand01Icon}
-          dxTitle="Automatic"
-          dxDescription="Select a preset palette 'tone' & add variants derived from tone preset scale."
-          dxHelp="Best when starting from scratch without design assets"
-          value="auto"
-          name="mode"
-          defaultChecked={color.brand.type === "auto"}
-          onChange={handleOnChange}
-        />
-      </div>
-      {match(color.brand)
-        .with({ type: "manual" }, (state) => (
-          <ConfigColorBrandModeManual
-            state={state.manual}
-            setColor={setColor}
+        <div className={groupStyles}>
+          <InputRadioCard
+            DXIcon={PencilIcon}
+            dxTitle="Manual"
+            dxDescription="Manually add base colors using hex values to statically define variants"
+            dxHelp="Best when configuring static colors provided by a design / product team"
+            value="manual"
+            name="mode"
+            defaultChecked={color.brand.type === "manual"}
+            onChange={handleOnChange}
           />
-        ))
-        .with(
-          { type: "auto" },
-          (state) => null
-          // <ConfigColorBrandModeManual state={state.auto} setConfig={setColor} />
-        )
-        .exhaustive()}
+          <InputRadioCard
+            DXIcon={MagicWand01Icon}
+            dxTitle="Automatic"
+            dxDescription="Select a preset palette 'tone' & add variants derived from tone preset scale."
+            dxHelp="Best when starting from scratch without design assets"
+            value="auto"
+            name="mode"
+            defaultChecked={color.brand.type === "auto"}
+            onChange={handleOnChange}
+          />
+        </div>
+      </InputSection>
+      <InputSection>
+        {match(color.brand)
+          .with({ type: "manual" }, (state) => (
+            <ConfigColorBrandModeManual
+              state={state.manual}
+              setColor={setColor}
+            />
+          ))
+          .with(
+            { type: "auto" },
+            (state) => null
+            // <ConfigColorBrandModeManual state={state.auto} setConfig={setColor} />
+          )
+          .exhaustive()}
+      </InputSection>
     </>
   );
 }

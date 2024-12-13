@@ -14,7 +14,7 @@ export type ColorSwatchAddProps = ColorSwatchAddPropsNative;
 const buttonStyles = css`
   ${makeReset("button")};
   display: flex;
-  color: ${makeColor("secondary-600")};
+  color: ${makeColor("secondary-800")};
   font-weight: ${makeFontWeight("semi-bold")};
   font-size: ${makeRem(12)};
   gap: ${makeRem(4)};
