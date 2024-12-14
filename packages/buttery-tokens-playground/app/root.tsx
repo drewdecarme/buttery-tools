@@ -14,6 +14,7 @@ import { LayoutHeaderLogo } from "./components/LayoutHeaderLogo";
 import { LayoutHeaderNav } from "./components/LayoutHeaderNav";
 import { LayoutMain } from "./components/LayoutMain";
 import { Layout as Body } from "./components/Layout";
+import { LayoutFooter } from "./components/LayoutFooter";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -73,7 +74,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </LayoutHeaderNav>
         </LayoutHeader>
         <LayoutMain>{children}</LayoutMain>
-        <footer></footer>
+        <LayoutFooter>footer</LayoutFooter>
         <ScrollRestoration />
         <Scripts />
       </Body>

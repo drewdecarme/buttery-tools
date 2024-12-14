@@ -1,6 +1,7 @@
 import { classes } from "@buttery/components";
 import {
   makeColor,
+  makeCustom,
   makeFontWeight,
   makeRem,
   makeReset,
@@ -30,7 +31,16 @@ const styles = css`
     display: flex;
     align-items: center;
     gap: ${makeRem(8)};
-    margin-bottom: ${makeRem(24)};
+    position: sticky;
+    top: 131px;
+    background: white;
+    padding-top: ${makeCustom("layout-section-offset-top")};
+    padding-bottom: ${makeRem(24)};
+    z-index: 10;
+
+    h3 {
+      margin: 0;
+    }
 
     button {
       ${makeReset("button")};

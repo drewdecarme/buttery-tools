@@ -11,7 +11,6 @@ const styles = css`
   display: grid;
   grid-template-columns: 1fr 60%;
   gap: ${makeRem(32)};
-  margin-top: ${makeRem(32)};
 `;
 
 export const LayoutConfigSection = forwardRef<
