@@ -38,6 +38,10 @@ export const links: LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000",
   },
+  {
+    rel: "stylesheet",
+    href: "/font/consolas.css",
+  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {

@@ -14,6 +14,7 @@ export default defineTokensConfig({
       logo: `"Poppins"`,
       heading: `"Inter"`,
       body: `"Mulish"`,
+      code: `"Consolas"`,
     },
     weights: {
       bold: 700,
