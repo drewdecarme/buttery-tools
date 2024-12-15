@@ -32,7 +32,7 @@ const styles = css`
     align-items: center;
     gap: ${makeRem(8)};
     position: sticky;
-    top: 158px;
+    top: 131px;
     background: white;
     padding-top: ${makeCustom("layout-section-offset-top")};
     padding-bottom: ${makeRem(24)};
