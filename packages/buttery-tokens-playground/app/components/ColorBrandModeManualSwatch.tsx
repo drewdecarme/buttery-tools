@@ -24,7 +24,7 @@ export function ColorBrandModeManualSwatch<
   const handleChangeHex = useCallback<ChangeEventHandler<HTMLInputElement>>(
     ({ currentTarget: { value } }) => {
       setColor((draft) => {
-        const color = draft.brand.manual[id];
+        const color = draft.brand.manual.colors[id];
         color.hex = value;
       });
     },
@@ -34,7 +34,7 @@ export function ColorBrandModeManualSwatch<
   const handleChangeName = useCallback<ChangeEventHandler<HTMLInputElement>>(
     ({ currentTarget: { value } }) => {
       setColor((draft) => {
-        const color = draft.brand.manual[id];
+        const color = draft.brand.manual.colors[id];
         color.name = value;
       });
     },
@@ -43,7 +43,7 @@ export function ColorBrandModeManualSwatch<
 
   const handleRemove = useCallback<MouseEventHandler<HTMLButtonElement>>(() => {
     setColor((draft) => {
-      delete draft.brand.manual[id];
+      delete draft.brand.manual.colors[id];
     });
   }, [id, setColor]);
 
@@ -55,17 +55,17 @@ export function ColorBrandModeManualSwatch<
       switch (type) {
         case "auto":
           setColor((draft) => {
-            draft.brand.manual[id].variants = 10;
+            draft.brand.manual.colors[id].variants = 10;
           });
           break;
         case "auto-named":
           setColor((draft) => {
-            draft.brand.manual[id].variants = ["light", "dark"];
+            draft.brand.manual.colors[id].variants = ["light", "dark"];
           });
           break;
         case "key-value":
           setColor((draft) => {
-            draft.brand.manual[id].variants = {
+            draft.brand.manual.colors[id].variants = {
               light: "#cccccc",
               dark: "#525252",
             };
@@ -84,7 +84,7 @@ export function ColorBrandModeManualSwatch<
   >(
     (variant) => {
       setColor((draft) => {
-        draft.brand.manual[id].variants = variant;
+        draft.brand.manual.colors[id].variants = variant;
       });
     },
     [id, setColor]
@@ -97,7 +97,7 @@ export function ColorBrandModeManualSwatch<
       switch (params.mode) {
         case "change":
           setColor((draft) => {
-            const variants = draft.brand.manual[id].variants;
+            const variants = draft.brand.manual.colors[id].variants;
             if (!Array.isArray(variants)) return;
             variants[params.index] = params.value;
           });
@@ -105,7 +105,7 @@ export function ColorBrandModeManualSwatch<
 
         case "add":
           setColor((draft) => {
-            const variants = draft.brand.manual[id].variants;
+            const variants = draft.brand.manual.colors[id].variants;
             if (!Array.isArray(variants)) return;
             variants.push(params.newValue);
           });
@@ -113,7 +113,7 @@ export function ColorBrandModeManualSwatch<
 
         case "remove":
           setColor((draft) => {
-            const variants = draft.brand.manual[id].variants;
+            const variants = draft.brand.manual.colors[id].variants;
             if (!Array.isArray(variants)) return;
             variants.splice(params.index, 1);
           });
@@ -131,7 +131,7 @@ export function ColorBrandModeManualSwatch<
   >(
     (variants) => {
       setColor((draft) => {
-        draft.brand.manual[id].variants = variants;
+        draft.brand.manual.colors[id].variants = variants;
       });
     },
     [id, setColor]

@@ -2,6 +2,8 @@ import type {
   ColorDefHueSchema,
   ButteryTokensConfig,
   ColorDefHexSchema,
+  ButteryTokensColorBrandTypeAuto,
+  ButteryTokensColorBrandTypeManual,
 } from "@buttery/tokens-utils/schemas";
 import { ConfigSchema } from "@buttery/tokens-utils/schemas";
 import { generateGUID } from "@buttery/utils/isomorphic";
@@ -19,9 +21,17 @@ export type ConfigurationStateColorBrandColorsManual = {
     name: string;
   };
 };
-type ConfigurationStateColorBrand = {
-  auto: ConfigurationStateColorBrandColorsAuto;
-  manual: ConfigurationStateColorBrandColorsManual;
+export type ConfigurationStateColorBrandAuto =
+  ButteryTokensColorBrandTypeAuto & {
+    colors: ConfigurationStateColorBrandColorsAuto;
+  };
+export type ConfigurationStateColorBrandManual =
+  ButteryTokensColorBrandTypeManual & {
+    colors: ConfigurationStateColorBrandColorsManual;
+  };
+export type ConfigurationStateColorBrand = {
+  auto: ConfigurationStateColorBrandAuto;
+  manual: ConfigurationStateColorBrandManual;
 };
 export type ConfigurationStateColor = {
   brand: ConfigurationStateColorBrand & {
@@ -32,7 +42,7 @@ export type ConfigurationStateColor = {
 export function getInitColorStateFromConfig(
   config: ButteryTokensConfig
 ): ConfigurationStateColor {
-  const colors = Object.entries(config.color.brand.colors).reduce(
+  const colors = Object.entries(config.color.brand.colors ?? {}).reduce(
     (accum, [colorName, colorDefValue]) =>
       Object.assign(accum, {
         [generateGUID()]: {
@@ -42,11 +52,35 @@ export function getInitColorStateFromConfig(
       }),
     {}
   );
+  if (config.color.brand.type === "manual") {
+    return {
+      brand: {
+        type: "manual",
+        manual: {
+          type: "manual",
+          colors,
+        },
+        auto: {
+          type: "earth",
+          brightness: 36,
+          saturation: 36,
+          colors: {},
+        },
+      },
+    };
+  }
+
   return {
     brand: {
-      type: config.color.brand.type === "manual" ? "manual" : "auto",
-      manual: config.color.brand.type === "manual" ? colors : {},
-      auto: config.color.brand.type !== "manual" ? colors : {},
+      type: "auto",
+      manual: {
+        type: "manual",
+        colors: {},
+      },
+      auto: {
+        ...config.color.brand,
+        colors,
+      },
     },
   };
 }

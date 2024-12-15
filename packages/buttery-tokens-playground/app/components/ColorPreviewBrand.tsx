@@ -14,7 +14,7 @@ export function ColorPreviewBrand() {
     case "manual": {
       const variants = createBrandVariants({
         type: "manual",
-        colors: Object.values(color.brand.manual).reduce(
+        colors: Object.values(color.brand.manual.colors).reduce(
           (accum, { name, ...restDef }) =>
             Object.assign(accum, { [name]: restDef }),
           {}

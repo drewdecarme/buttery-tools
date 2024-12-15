@@ -12,6 +12,7 @@ import { useConfigurationContext } from "./Config.context";
 import { ColorBrandModeManual } from "./ColorBrandModeManual";
 import { InputLabel } from "./InputLabel";
 import { InputSection } from "./InputGroup";
+import { ColorBrandModeAuto } from "./ColorBrandModeAuto";
 
 const groupStyles = css`
   display: flex;
@@ -75,11 +76,9 @@ export function ColorBrandMode() {
           .with({ type: "manual" }, (state) => (
             <ColorBrandModeManual state={state.manual} setColor={setColor} />
           ))
-          .with(
-            { type: "auto" },
-            (_state) => null
-            // <ColorBrandModeManual state={state.auto} setConfig={setColor} />
-          )
+          .with({ type: "auto" }, (state) => (
+            <ColorBrandModeAuto state={state.auto} setColor={setColor} />
+          ))
           .exhaustive()}
       </InputSection>
     </>
