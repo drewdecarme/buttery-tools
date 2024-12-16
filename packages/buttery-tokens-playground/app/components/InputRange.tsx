@@ -27,6 +27,12 @@ export type InputRangePropsCustom = {
   dxDisplayMin?: boolean;
   dxDisplayInput?: boolean;
   dxDisplayTooltip?: boolean;
+  dxVariant?: "normal" | "hue";
+  /**
+   * Custom handler that has the value of the range
+   * passed as a parameter
+   */
+  dxOnChange?: (value: number) => void;
 };
 export type InputRangeProps = InputRangePropsNative & InputRangePropsCustom;
 
@@ -56,12 +62,28 @@ const inputStyles = css`
   --thumb-offset: calc(calc(var(--thumb-size) / 4) * -1);
 
   --track-height: calc(var(--thumb-size) / 2);
-  --track-bg: ${`linear-gradient(
+  &.v-normal {
+    --track-bg: ${`linear-gradient(
     to right,
     ${makeColor("primary")} 0%, 
     ${makeColor("primary")} var(--percentage),
     ${makeColor("neutral-dark", { opacity: 0.02 })} var(--percentage),
     ${makeColor("neutral-dark", { opacity: 0.02 })} 100%)`};
+  }
+
+  &.v-hue {
+    --track-bg: linear-gradient(
+      to right,
+      red,
+      yellow,
+      lime,
+      cyan,
+      blue,
+      magenta,
+      red
+    );
+  }
+
   --track-border-radius: ${makeRem(4)};
 
   --shadow-color: 0deg 0% 0%;
@@ -168,6 +190,8 @@ export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
       dxDisplayMax,
       dxDisplayInput,
       dxDisplayTooltip,
+      dxVariant = "normal",
+      dxOnChange,
       className,
       ...restProps
     },
@@ -194,20 +218,22 @@ export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
     const handleInput = useCallback<FormEventHandler<HTMLInputElement>>(
       ({ currentTarget }) => {
         setPercentage(currentTarget);
+        if (dxOnChange) dxOnChange(Number(currentTarget.value));
         // set the input value if it's available in the dom
         if (!inputRef.current) return;
         inputRef.current.value = currentTarget.value.toString();
       },
-      [setPercentage]
+      [dxOnChange, setPercentage]
     );
 
     const inputRangeCallbackRef = useCallback<RefCallback<HTMLInputElement>>(
       (node) => {
         if (!node) return;
         setPercentage(node);
+        if (dxOnChange) dxOnChange(Number(node.value));
         ref.current = node;
       },
-      [ref, setPercentage]
+      [dxOnChange, ref, setPercentage]
     );
 
     const inputNumberCallbackRef = useCallback<RefCallback<HTMLInputElement>>(
@@ -231,14 +257,20 @@ export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
     );
 
     return (
-      <div className={containerStyles}>
+      <div className={classes(containerStyles)}>
         {dxDisplayMin && <span className="label">{min}</span>}
         <input
           {...restProps}
           min={min}
           max={max}
           type="range"
-          className={classes(inputStyles, className)}
+          className={classes(
+            inputStyles,
+            {
+              [`v-${dxVariant}`]: dxVariant,
+            },
+            className
+          )}
           onInput={handleInput}
           ref={inputRangeCallbackRef}
         />

@@ -21,8 +21,8 @@ export const DisplayMax: Story = {
   args: {
     min: 10,
     max: 80,
-    dxDisplayMax: "true"
-  }
+    dxDisplayMax: "true",
+  },
 };
 
 export const DisplayMin: Story = {
@@ -30,8 +30,8 @@ export const DisplayMin: Story = {
     min: 10,
     max: 80,
     dxDisplayMax: false,
-    dxDisplayMin: true
-  }
+    dxDisplayMin: true,
+  },
 };
 
 export const DisplayMaxMin: Story = {
@@ -39,8 +39,8 @@ export const DisplayMaxMin: Story = {
     min: 10,
     max: 80,
     dxDisplayMax: true,
-    dxDisplayMin: true
-  }
+    dxDisplayMin: true,
+  },
 };
 
 export const DisplayMinMaxWithInput: Story = {
@@ -49,8 +49,8 @@ export const DisplayMinMaxWithInput: Story = {
     max: 80,
     dxDisplayMax: true,
     dxDisplayMin: true,
-    dxDisplayInput: true
-  }
+    dxDisplayInput: true,
+  },
 };
 
 export const DisplayInputOnly: Story = {
@@ -59,6 +59,17 @@ export const DisplayInputOnly: Story = {
     max: 80,
     dxDisplayMax: false,
     dxDisplayMin: false,
-    dxDisplayInput: true
-  }
+    dxDisplayInput: true,
+  },
+};
+
+export const VariantHue: Story = {
+  args: {
+    min: 0,
+    max: 360,
+    dxDisplayMax: false,
+    dxDisplayMin: false,
+    dxDisplayInput: true,
+    dxVariant: "hue",
+  },
 };

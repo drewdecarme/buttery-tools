@@ -3,12 +3,11 @@ import { css } from "@linaria/core";
 import type { ChangeEventHandler } from "react";
 
 import { InputText } from "./InputText";
-import { InputRange } from "./InputRange";
+import { InputHue } from "./InputHue";
 
 const styles = css`
   display: grid;
-  grid-template-columns: ${makeRem(24)} 3fr auto ${makeRem(100)};
-  align-items: center;
+  grid-template-columns: 3fr auto ${makeRem(100)};
   gap: ${makeRem(8)};
 
   .bar {
@@ -28,14 +27,7 @@ export function ColorSwatchHue(props: {
 }) {
   return (
     <div className={styles}>
-      <div />
-      <InputRange
-        dxDisplayInput
-        value={props.hue}
-        min={0}
-        max={360}
-        onChange={props.onChangeHue}
-      />
+      <InputHue value={props.hue} onChange={props.onChangeHue} />
       <div className="bar" />
       <InputText
         dxSize="dense"
