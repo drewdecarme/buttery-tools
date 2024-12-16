@@ -31,6 +31,14 @@ const styles = css`
   }
 `;
 
+export function createInputTextClassName<T extends { dxSize: "dense" }>({
+  dxSize,
+}: T) {
+  return classes(styles, {
+    [`s-${dxSize}`]: dxSize,
+  });
+}
+
 export const InputText = forwardRef<HTMLInputElement, InputTextProps>(
   function InputText(
     { children, className, dxType = "text", dxSize, ...restProps },
@@ -39,9 +47,7 @@ export const InputText = forwardRef<HTMLInputElement, InputTextProps>(
     return (
       <input
         {...restProps}
-        className={classes(styles, className, {
-          [`s-${dxSize}`]: dxSize,
-        })}
+        className={classes(createInputTextClassName({ dxSize }), className)}
         type={dxType}
         ref={ref}
       >

@@ -36,6 +36,7 @@ export type InputTextDropdownPropsNative = Omit<
   "ref"
 >;
 export type InputTextDropdownPropsCustom = DropdownOptions & {
+  dxDropdownClassName?: string;
   children: ReactNode;
 };
 export type InputTextDropdownProps = InputTextDropdownPropsNative &
@@ -45,7 +46,15 @@ export const InputTextDropdown = forwardRef<
   InputTextDropdownRef,
   InputTextDropdownProps
 >(function InputTextDropdown(
-  { children, className, dxPosition, dxArrow, dxOffset, ...restProps },
+  {
+    children,
+    className,
+    dxPosition,
+    dxArrow,
+    dxOffset,
+    dxDropdownClassName,
+    ...restProps
+  },
   ref
 ) {
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -189,7 +198,11 @@ export const InputTextDropdown = forwardRef<
         onBlur={handleBlur}
       />
       {isOpen ? (
-        <div ref={setDivRef} onBlur={handleDropdownBlur}>
+        <div
+          ref={setDivRef}
+          onBlur={handleDropdownBlur}
+          className={dxDropdownClassName}
+        >
           {children}
         </div>
       ) : null}
