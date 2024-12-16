@@ -201,13 +201,22 @@ export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
       [setPercentage]
     );
 
-    const callbackRef = useCallback<RefCallback<HTMLInputElement>>(
+    const inputRangeCallbackRef = useCallback<RefCallback<HTMLInputElement>>(
       (node) => {
         if (!node) return;
         setPercentage(node);
         ref.current = node;
       },
       [ref, setPercentage]
+    );
+
+    const inputNumberCallbackRef = useCallback<RefCallback<HTMLInputElement>>(
+      (node) => {
+        if (!node || !ref.current) return;
+        inputRef.current = node;
+        node.value = ref.current.value;
+      },
+      [ref]
     );
 
     const handleManualChange = useCallback<
@@ -231,12 +240,12 @@ export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
           type="range"
           className={classes(inputStyles, className)}
           onInput={handleInput}
-          ref={callbackRef}
+          ref={inputRangeCallbackRef}
         />
         {dxDisplayMax && <span className="label">{max}</span>}
         {dxDisplayInput && (
           <InputNumber
-            ref={inputRef}
+            ref={inputNumberCallbackRef}
             dxSize="dense"
             min={min}
             max={max}
