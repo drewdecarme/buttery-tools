@@ -71,16 +71,14 @@ export function ColorBrandMode() {
         ),
         [color.brand.type, handleOnChange]
       )}
-      <InputSection>
-        {match(color.brand)
-          .with({ type: "manual" }, (state) => (
-            <ColorBrandModeManual state={state.manual} setColor={setColor} />
-          ))
-          .with({ type: "auto" }, (state) => (
-            <ColorBrandModeAuto state={state.auto} setColor={setColor} />
-          ))
-          .exhaustive()}
-      </InputSection>
+      {match(color.brand)
+        .with({ type: "manual" }, (state) => (
+          <ColorBrandModeManual state={state.manual} setColor={setColor} />
+        ))
+        .with({ type: "auto" }, (state) => (
+          <ColorBrandModeAuto state={state.auto} setColor={setColor} />
+        ))
+        .exhaustive()}
     </>
   );
 }

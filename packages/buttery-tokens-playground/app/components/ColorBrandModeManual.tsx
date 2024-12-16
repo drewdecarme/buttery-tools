@@ -6,6 +6,7 @@ import type { ConfigurationContextType } from "./Config.context";
 import type { ConfigurationStateColorBrandManual } from "./config.utils";
 import { InputLabel } from "./InputLabel";
 import { ColorSwatchList } from "./ColorSwatchList";
+import { InputSection } from "./InputGroup";
 
 export function ColorBrandModeManual({
   state,
@@ -15,7 +16,7 @@ export function ColorBrandModeManual({
   setColor: ConfigurationContextType["setColor"];
 }) {
   return (
-    <>
+    <InputSection>
       <InputLabel
         dxLabel="Add brand colors to your color palette"
         dxHelp="You can configure each color's base value, name, and how variants are created."
@@ -46,6 +47,6 @@ export function ColorBrandModeManual({
           />
         </li>
       </ColorSwatchList>
-    </>
+    </InputSection>
   );
 }

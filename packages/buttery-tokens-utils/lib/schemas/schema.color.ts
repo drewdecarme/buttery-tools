@@ -56,7 +56,7 @@ export const ColorDefHexSchema = z.record(
 export type ButteryTokensColorDefHex = z.infer<typeof ColorDefHexSchema>;
 
 // Brand Categories
-const ColorBrandTypeJewelSchema = z.object({
+export const ColorBrandTypeJewelSchema = z.object({
   type: z.literal("jewel"),
   colors: ColorDefHueSchema,
   saturation: z.union([
@@ -97,7 +97,7 @@ const ColorBrandTypeJewelSchema = z.object({
   ]),
 });
 
-const ColorBrandTypePastelSchema = z.object({
+export const ColorBrandTypePastelSchema = z.object({
   type: z.literal("pastel"),
   colors: ColorDefHueSchema,
   saturation: z.union([
@@ -122,7 +122,7 @@ const ColorBrandTypePastelSchema = z.object({
   ]),
 });
 
-const ColorBrandTypeEarthSchema = z.object({
+export const ColorBrandTypeEarthSchema = z.object({
   type: z.literal("earth"),
   colors: ColorDefHueSchema,
   saturation: z.union([
@@ -179,7 +179,7 @@ const ColorBrandTypeEarthSchema = z.object({
   ]),
 });
 
-const ColorBrandTypeNeutralSchema = z.object({
+export const ColorBrandTypeNeutralSchema = z.object({
   type: z.literal("neutral"),
   colors: ColorDefHueSchema,
   saturation: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]),
@@ -229,7 +229,7 @@ const ColorBrandTypeNeutralSchema = z.object({
   ]),
 });
 
-const ColorBrandTypeFluorescentSchema = z.object({
+export const ColorBrandTypeFluorescentSchema = z.object({
   type: z.literal("fluorescent"),
   colors: ColorDefHueSchema,
   saturation: z.union([

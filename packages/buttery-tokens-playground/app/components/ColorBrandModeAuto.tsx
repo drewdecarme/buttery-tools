@@ -13,9 +13,15 @@ import { IconBrush } from "~/icons/IconBrush";
 import { IconColors } from "~/icons/IconColors";
 
 import type { ConfigurationContextType } from "./Config.context";
-import type { ConfigurationStateColorBrandAuto } from "./config.utils";
+import {
+  colorAutoPresets,
+  type ConfigurationStateColorBrandAuto,
+} from "./config.utils";
 import { InputLabel } from "./InputLabel";
 import { InputRadio } from "./InputRadio";
+import { InputSection } from "./InputGroup";
+import { ColorSwatchAdd } from "./ColorSwatchAdd";
+import { ColorSwatchList } from "./ColorSwatchList";
 
 const colorCategories: {
   type: ButteryTokensColorBrandTypeAuto["type"];
@@ -131,52 +137,82 @@ export function ColorBrandModeAuto({
 
   return (
     <>
-      <InputLabel
-        dxLabel="Select a color category"
-        dxHelp="The color category determines the tone of the hues that you choose"
-      />
-      <ul className={styles}>
-        {colorCategories.map((category) => {
-          return (
-            <li key={category.type}>
-              <InputRadio
-                dxVariant="block"
-                name="type"
-                value={category.type}
-                checked={state.type === category.type}
-                dxTextPrimary={category.display}
-                dxTextSecondary={category.description}
-                DXIcon={category.Icon}
-                onChange={handleSelectCategory}
-              />
-            </li>
-          );
-        })}
-        {/* {Object.entries(state).map(([colorId, colorNameAndDef]) => {
-          return (
-            <li key={colorId}>
-              <ColorBrandModeAutoSwatch
+      <InputSection>
+        <InputLabel
+          dxLabel="Select a color category"
+          dxHelp="The color category determines the tone of the hues that you choose"
+        />
+        <ul className={styles}>
+          {colorCategories.map((category) => {
+            return (
+              <li key={category.type}>
+                <InputRadio
+                  dxVariant="block"
+                  name="type"
+                  value={category.type}
+                  checked={state.type === category.type}
+                  dxTextPrimary={category.display}
+                  dxTextSecondary={category.description}
+                  DXIcon={category.Icon}
+                  onChange={handleSelectCategory}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </InputSection>
+      <InputSection>
+        <InputLabel
+          dxLabel="Configure your colors"
+          dxHelp="Adjust the saturation, brightness and hues to get the colors you want in accordance with the selected category"
+        />
+        <div>
+          <label>
+            <span>Saturation</span>
+            <input
+              type="range"
+              step={1}
+              {...colorAutoPresets[state.type].saturation}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            <span>Brightness</span>
+            <input
+              type="range"
+              step={1}
+              {...colorAutoPresets[state.type].brightness}
+            />
+          </label>
+        </div>
+        <ColorSwatchList>
+          {Object.entries(state.colors).map(([colorId, colorNameAndDef]) => {
+            return (
+              <li key={colorId}>
+                {/* <ColorBrandModeAutoSwatch
                 colorDef={{ [colorId]: colorNameAndDef }}
                 setColor={setColor}
-              />
-            </li>
-          );
-        })} */}
-        {/* <li>
-          <ColorSwatchAdd
-            onClick={() =>
-              setColor((draft) => {
-                const id = generateGUID();
-                draft.brand.manual[id] = {
-                  hex: "#000000",
-                  name: `brand${Object.entries(state).length + 1}`,
-                  variants: 10,
-                };
-              })
-            }
-          />
-        </li> */}
-      </ul>
+              /> */}
+              </li>
+            );
+          })}
+          <li>
+            <ColorSwatchAdd
+              onClick={() =>
+                setColor((draft) => {
+                  const id = generateGUID();
+                  draft.brand.auto.colors[id] = {
+                    hue: 180,
+                    name: `brand${Object.entries(state).length + 1}`,
+                    variants: 10,
+                  };
+                })
+              }
+            />
+          </li>
+        </ColorSwatchList>
+      </InputSection>
     </>
   );
 }

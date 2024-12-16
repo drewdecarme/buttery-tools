@@ -9,7 +9,9 @@
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "wrangler pages dev ./build/client",
     "typecheck": "tsc",
-    "typegen": "wrangler types"
+    "typegen": "wrangler types",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "files": [
     "build"
@@ -32,12 +34,21 @@
     "zod": "3.24.1"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.2",
     "@cloudflare/workers-types": "4.20241205.0",
     "@linaria/core": "6.2.0",
     "@remix-run/dev": "2.15.1",
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/addon-interactions": "^8.4.7",
+    "@storybook/addon-onboarding": "^8.4.7",
+    "@storybook/blocks": "^8.4.7",
+    "@storybook/react": "^8.4.7",
+    "@storybook/react-vite": "^8.4.7",
+    "@storybook/test": "^8.4.7",
     "@types/express": "5.0.0",
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.2",
+    "storybook": "^8.4.7",
     "typescript": "5.7.2",
     "vite": "6.0.3",
     "vite-tsconfig-paths": "5.1.4",

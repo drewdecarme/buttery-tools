@@ -93,6 +93,20 @@ export const ${functionName}: MakeReset = (element) => {
             appearance: none;
             margin: 0;
           }
+
+          // range
+          &[type="range"]::-ms-track {
+            background: transparent; /* Transparent since MS uses a pseudo track */
+            border-color: transparent;
+            color: transparent;
+          },
+          &[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none; /* Removes default styling */
+          }
+          &[type="range"]:focus {
+            outline: none;
+          }
         \`;
 
       default:

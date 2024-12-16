@@ -2,9 +2,9 @@ import {
   vitePlugin as remix,
   // cloudflareDevProxyVitePlugin as remixCloudflareDevProxy,
 } from "@remix-run/dev";
-import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
-import wyw from "@wyw-in-js/vite";
+import { mergeConfig } from "vite";
+
+import baseConfig from "./vite.config.base";
 
 declare module "@remix-run/cloudflare" {
   interface Future {
@@ -12,16 +12,8 @@ declare module "@remix-run/cloudflare" {
   }
 }
 
-export default defineConfig({
+export default mergeConfig(baseConfig, {
   plugins: [
-    wyw({
-      include: "/**/*.(ts|tsx)",
-      babelOptions: {
-        compact: false,
-        presets: ["@babel/preset-typescript", "@babel/preset-react"],
-      },
-    }),
-    // remixCloudflareDevProxy(),
     remix({
       future: {
         v3_fetcherPersist: true,
@@ -31,6 +23,5 @@ export default defineConfig({
         v3_lazyRouteDiscovery: true,
       },
     }),
-    tsconfigPaths(),
   ],
 });
