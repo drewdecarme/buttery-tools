@@ -52,7 +52,7 @@
     "@buttery/logs": "workspace:*",
     "@buttery/utils": "workspace:*",
     "@inquirer/prompts": "7.2.0",
-    "chokidar": "4.0.1",
+    "chokidar": "4.0.2",
     "fs-extra": "11.2.0",
     "picocolors": "1.1.1",
     "picomatch": "4.0.2",

@@ -20,7 +20,6 @@ import {
 export async function exportComponent(
   options?: ButteryComponentsExportOptions
 ) {
-  // @ts-expect-error It says it's excessively deep but it's not
   const parsedOptions = parseAndValidateOptions(
     butteryComponentsExportOptionsSchema,
     options,

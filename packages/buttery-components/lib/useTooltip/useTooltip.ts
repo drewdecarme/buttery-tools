@@ -1,5 +1,5 @@
 import { ensurePopover } from "@BUTTERY_COMPONENT/usePopover/index.js";
-import { type RefCallback, useCallback, useId, useMemo } from "react";
+import { type JSX, type RefCallback, useCallback, useId, useMemo } from "react";
 
 import {
   type DropdownOptions,

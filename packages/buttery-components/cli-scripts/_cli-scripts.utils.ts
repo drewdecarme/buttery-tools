@@ -7,7 +7,6 @@ const baseOptionsSchema = z.object({
    * The level of detail the logs should be displayed at
    * @default info
    */
-  // @ts-expect-error This is correct but it's showing up as an error here for some reason... dunno why.
   logLevel: ButteryLogLevelSchema.default("info"),
 });
 export type ButteryComponentsBaseOptions = z.infer<typeof baseOptionsSchema>;

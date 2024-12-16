@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { useCallback, useId, useMemo, useRef } from "react";
 
 import type {

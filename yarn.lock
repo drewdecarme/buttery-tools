@@ -1189,7 +1189,7 @@ __metadata:
     "@types/fs-extra": "npm:11.0.4"
     "@types/node": "npm:22.10.2"
     "@types/picomatch": "npm:3.0.1"
-    chokidar: "npm:4.0.1"
+    chokidar: "npm:4.0.2"
     esbuild: "npm:0.24.0"
     fs-extra: "npm:11.2.0"
     picocolors: "npm:1.1.1"
@@ -1234,7 +1234,7 @@ __metadata:
     "@buttery/utils": "workspace:*"
     "@inquirer/prompts": "npm:7.2.0"
     "@types/node": "npm:22.10.2"
-    chokidar: "npm:4.0.1"
+    chokidar: "npm:4.0.2"
     esbuild: "npm:0.24.0"
     tsx: "npm:4.19.2"
     typescript: "npm:5.7.2"
@@ -1256,7 +1256,7 @@ __metadata:
     "@buttery/meta": "workspace:0.1.6"
     "@buttery/tokens": "workspace:*"
     "@buttery/utils": "workspace:*"
-    "@cloudflare/workers-types": "npm:4.20241205.0"
+    "@cloudflare/workers-types": "npm:4.20241216.0"
     "@inquirer/prompts": "npm:7.2.0"
     "@linaria/core": "npm:6.2.0"
     "@linaria/react": "npm:6.2.1"
@@ -1291,7 +1291,7 @@ __metadata:
     remark-parse: "npm:11.0.0"
     rollup: "npm:4.28.1"
     storybook: "npm:8.4.7"
-    ts-pattern: "npm:5.5.0"
+    ts-pattern: "npm:5.6.0"
     tsx: "npm:4.19.2"
     typescript: "npm:5.7.2"
     unified: "npm:11.0.5"
@@ -1357,7 +1357,7 @@ __metadata:
     "@buttery/tokens-utils": "workspace:*"
     "@buttery/utils": "workspace:*"
     "@chromatic-com/storybook": "npm:^3.2.2"
-    "@cloudflare/workers-types": "npm:4.20241205.0"
+    "@cloudflare/workers-types": "npm:4.20241216.0"
     "@linaria/core": "npm:6.2.0"
     "@remix-run/dev": "npm:2.15.1"
     "@remix-run/express": "npm:2.15.1"
@@ -1376,16 +1376,16 @@ __metadata:
     "@wyw-in-js/vite": "npm:0.5.5"
     express: "npm:4.21.2"
     immer: "npm:10.1.1"
-    isbot: "npm:5.1.17"
+    isbot: "npm:5.1.18"
     react: "npm:19.0.0"
     react-dom: "npm:19.0.0"
     storybook: "npm:^8.4.7"
-    ts-pattern: "npm:5.5.0"
+    ts-pattern: "npm:5.6.0"
     typescript: "npm:5.7.2"
     use-immer: "npm:0.11.0"
     vite: "npm:6.0.3"
     vite-tsconfig-paths: "npm:5.1.4"
-    wrangler: "npm:3.95.0"
+    wrangler: "npm:3.96.0"
     zod: "npm:3.24.1"
   languageName: unknown
   linkType: soft
@@ -1411,7 +1411,7 @@ __metadata:
     "@buttery/tokens-utils": "workspace:*"
     "@buttery/tsconfig": "workspace:*"
     "@buttery/utils": "workspace:*"
-    "@cloudflare/workers-types": "npm:4.20241205.0"
+    "@cloudflare/workers-types": "npm:4.20241216.0"
     "@inquirer/prompts": "npm:7.2.0"
     "@linaria/core": "npm:6.2.0"
     "@remix-run/cloudflare": "npm:2.15.1"
@@ -1429,16 +1429,16 @@ __metadata:
     autoprefixer: "npm:10.4.20"
     chroma-js: "npm:3.1.2"
     express: "npm:4.21.2"
-    isbot: "npm:5.1.17"
+    isbot: "npm:5.1.18"
     postcss: "npm:8.4.49"
     react: "npm:19.0.0"
     react-dom: "npm:19.0.0"
     storybook: "npm:8.4.7"
-    ts-pattern: "npm:5.5.0"
+    ts-pattern: "npm:5.6.0"
     tsx: "npm:4.19.2"
     typescript: "npm:5.7.2"
     vite: "npm:6.0.3"
-    wrangler: "npm:3.95.0"
+    wrangler: "npm:3.96.0"
     zod: "npm:3.24.1"
   languageName: unknown
   linkType: soft
@@ -1528,20 +1528,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/workers-shared@npm:0.11.0":
-  version: 0.11.0
-  resolution: "@cloudflare/workers-shared@npm:0.11.0"
-  dependencies:
-    mime: "npm:^3.0.0"
-    zod: "npm:^3.22.3"
-  checksum: 10c0/800d6340486ddf03c315321473c929d12075377a7110d5f7b35ce878f9d52da934f9935a641bc64bc513a756cb36092a03c758ce6ba0e006ae67e0efba51fc9c
-  languageName: node
-  linkType: hard
-
-"@cloudflare/workers-types@npm:4.20241205.0":
-  version: 4.20241205.0
-  resolution: "@cloudflare/workers-types@npm:4.20241205.0"
-  checksum: 10c0/d7635537cbd6839f8344814adaed4853741170567328742653c6564b9423c3be72fb5406f5e9f34f4d93d9346e24d24004484da8964aaa12f5857d1e1800bb59
+"@cloudflare/workers-types@npm:4.20241216.0":
+  version: 4.20241216.0
+  resolution: "@cloudflare/workers-types@npm:4.20241216.0"
+  checksum: 10c0/711c825367e56641007bdc2cb2d99bc1712d5b3bc854376b909f816bbbf59b67308d9813a6dc4d8fd62abf724a59b0bbf7428060ec34eb2e356e83d24f379ee8
   languageName: node
   linkType: hard
 
@@ -7220,12 +7210,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:4.0.1, chokidar@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "chokidar@npm:4.0.1"
+"chokidar@npm:4.0.2":
+  version: 4.0.2
+  resolution: "chokidar@npm:4.0.2"
   dependencies:
     readdirp: "npm:^4.0.1"
-  checksum: 10c0/4bb7a3adc304059810bb6c420c43261a15bb44f610d77c35547addc84faa0374265c3adc67f25d06f363d9a4571962b02679268c40de07676d260de1986efea9
+  checksum: 10c0/562a3456d529ce9e16f9a6447f86a3e82a816200fed473fa0b6f84b447ce29f96210c92874a8d5e619a0b453d92a352e93252baa214e376a9a08489e96337c65
   languageName: node
   linkType: hard
 
@@ -7245,6 +7235,15 @@ __metadata:
     fsevents:
       optional: true
   checksum: 10c0/8361dcd013f2ddbe260eacb1f3cb2f2c6f2b0ad118708a343a5ed8158941a39cb8fb1d272e0f389712e74ee90ce8ba864eece9e0e62b9705cb468a2f6d917462
+  languageName: node
+  linkType: hard
+
+"chokidar@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "chokidar@npm:4.0.1"
+  dependencies:
+    readdirp: "npm:^4.0.1"
+  checksum: 10c0/4bb7a3adc304059810bb6c420c43261a15bb44f610d77c35547addc84faa0374265c3adc67f25d06f363d9a4571962b02679268c40de07676d260de1986efea9
   languageName: node
   linkType: hard
 
@@ -11130,10 +11129,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"isbot@npm:5.1.17":
-  version: 5.1.17
-  resolution: "isbot@npm:5.1.17"
-  checksum: 10c0/b4adee17c54bee4cfca5ed9ab1b3151f4df558a1d3b37c94bbd3b7e1f7e4a5130efdc2f54bae83e6fe3371d40576dcd90cd7072823a85b9e0a517eb51e057074
+"isbot@npm:5.1.18":
+  version: 5.1.18
+  resolution: "isbot@npm:5.1.18"
+  checksum: 10c0/31e56a8a6f7b0312e202466c80f9cda54c03ab4749417497b40e68b0cbdb0f92ab7976cf54309e28164b5c2a114936493ac52cac0b855ac3a6e6e3388a2e1873
   languageName: node
   linkType: hard
 
@@ -15996,10 +15995,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-pattern@npm:5.5.0":
-  version: 5.5.0
-  resolution: "ts-pattern@npm:5.5.0"
-  checksum: 10c0/4ae1fbeadcf193e72b27419d5fe71f559c100e45710eabf29e2ff3a8fa9ba29adfcd6d5d7d8169b95e2b264683a2eb8d94dbd3c893357b045b52b0c34c2b7c72
+"ts-pattern@npm:5.6.0":
+  version: 5.6.0
+  resolution: "ts-pattern@npm:5.6.0"
+  checksum: 10c0/0da058218634ba5880d21816493c6634b56c111044aaec8e882a7b58a7564b6cc201b03012b7fd54b775af4ebe723d3ff91243769e9dc8aedb1f10dacc5f8f83
   languageName: node
   linkType: hard
 
@@ -17072,12 +17071,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:3.95.0":
-  version: 3.95.0
-  resolution: "wrangler@npm:3.95.0"
+"wrangler@npm:3.96.0":
+  version: 3.96.0
+  resolution: "wrangler@npm:3.96.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.3.4"
-    "@cloudflare/workers-shared": "npm:0.11.0"
     "@esbuild-plugins/node-globals-polyfill": "npm:^0.2.3"
     "@esbuild-plugins/node-modules-polyfill": "npm:^0.2.2"
     blake3-wasm: "npm:^2.1.5"
@@ -17106,7 +17104,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10c0/967c8b7a82c4e782a88096446e2f2dcbe02ffd2cfa100790f16a44909913f750c8a80854b844311acf3345334a5f8510da74fa997b59751b9c9877cf71a328ca
+  checksum: 10c0/96b4d97fb707d3ed496263deedafa5bb6d94fd530d008c96f73647754b4ee2460c56f7be4a9e0a6285f538ba41308ee49e20322925978c040462ef424c9d95a4
   languageName: node
   linkType: hard
 

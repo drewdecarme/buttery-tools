@@ -1,4 +1,4 @@
-import { type ForwardedRef, type ReactNode, forwardRef } from "react";
+import { forwardRef, type JSX, type ForwardedRef, type ReactNode } from "react";
 
 import {
   type ModalDefaultState,

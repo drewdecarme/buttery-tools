@@ -1,8 +1,11 @@
+import type {
+  FocusEventHandler,
+  JSX,
+  ReactNode,
+  RefCallback,
+  RefObject,
+} from "react";
 import {
-  type FocusEventHandler,
-  type MutableRefObject,
-  type ReactNode,
-  type RefCallback,
   forwardRef,
   useCallback,
   useId,
@@ -25,14 +28,17 @@ import { LOG_ITD } from "./input-text-dropdown.utils.js";
 export type InputTextDropdownRef = {
   setValue: (value: string) => void;
   handleClose: () => void;
-  inputRef: MutableRefObject<HTMLInputElement | null>;
+  inputRef: RefObject<HTMLInputElement | null>;
 };
 
-export type InputTextDropdownPropsNative = JSX.IntrinsicElements["input"];
+export type InputTextDropdownPropsNative = Omit<
+  JSX.IntrinsicElements["input"],
+  "ref"
+>;
 export type InputTextDropdownPropsCustom = DropdownOptions & {
   children: ReactNode;
 };
-export type InputTextDropdownProps = Omit<InputTextDropdownPropsNative, "ref"> &
+export type InputTextDropdownProps = InputTextDropdownPropsNative &
   InputTextDropdownPropsCustom;
 
 export const InputTextDropdown = forwardRef<
