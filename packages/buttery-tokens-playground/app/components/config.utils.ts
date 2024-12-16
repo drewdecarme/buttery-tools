@@ -14,7 +14,7 @@ import {
   ConfigSchema,
 } from "@buttery/tokens-utils/schemas";
 import { generateGUID } from "@buttery/utils/isomorphic";
-import type { z } from "zod";
+import type { z, ZodLiteral, ZodUnion, ZodUnionDef } from "zod";
 
 export const initConfig: ButteryTokensConfig = ConfigSchema.parse({});
 
@@ -46,10 +46,13 @@ export type ConfigurationStateColor = {
   };
 };
 
-function getMinMax(options: number[]) {
+function getMinMax<T extends number>(
+  def: ZodUnionDef<[ZodLiteral<T>, ...ZodLiteral<T>[]]>
+) {
+  const optionalArr = def.options.map((option) => option._def.value);
   return {
-    min: Math.min(...options),
-    max: Math.max(...options),
+    min: Math.min(...optionalArr),
+    max: Math.max(...optionalArr),
   };
 }
 
@@ -60,46 +63,31 @@ export const colorAutoPresets: {
   };
 } = {
   earth: {
-    saturation: getMinMax(
-      ColorBrandTypeEarthSchema.shape.saturation._def.options.map(Number)
-    ),
-    brightness: getMinMax(
-      ColorBrandTypeEarthSchema.shape.brightness._def.options.map(Number)
-    ),
+    saturation: getMinMax(ColorBrandTypeEarthSchema.shape.saturation._def),
+    brightness: getMinMax(ColorBrandTypeEarthSchema.shape.brightness._def),
   },
   fluorescent: {
     saturation: getMinMax(
-      ColorBrandTypeFluorescentSchema.shape.saturation._def.options.map(Number)
+      ColorBrandTypeFluorescentSchema.shape.saturation._def
     ),
     brightness: getMinMax(
-      ColorBrandTypeFluorescentSchema.shape.brightness._def.options.map(Number)
+      ColorBrandTypeFluorescentSchema.shape.brightness._def
     ),
   },
   jewel: {
-    saturation: getMinMax(
-      ColorBrandTypeJewelSchema.shape.saturation._def.options.map(Number)
-    ),
-    brightness: getMinMax(
-      ColorBrandTypeJewelSchema.shape.brightness._def.options.map(Number)
-    ),
+    saturation: getMinMax(ColorBrandTypeJewelSchema.shape.saturation._def),
+    brightness: getMinMax(ColorBrandTypeJewelSchema.shape.brightness._def),
   },
   neutral: {
-    saturation: getMinMax(
-      ColorBrandTypeNeutralSchema.shape.saturation._def.options.map(Number)
-    ),
-    brightness: getMinMax(
-      ColorBrandTypeNeutralSchema.shape.brightness._def.options.map(Number)
-    ),
+    saturation: getMinMax(ColorBrandTypeNeutralSchema.shape.saturation._def),
+    brightness: getMinMax(ColorBrandTypeNeutralSchema.shape.brightness._def),
   },
   pastel: {
-    saturation: getMinMax(
-      ColorBrandTypePastelSchema.shape.saturation._def.options.map(Number)
-    ),
-    brightness: getMinMax(
-      ColorBrandTypePastelSchema.shape.brightness._def.options.map(Number)
-    ),
+    saturation: getMinMax(ColorBrandTypePastelSchema.shape.saturation._def),
+    brightness: getMinMax(ColorBrandTypePastelSchema.shape.brightness._def),
   },
 };
+console.log(colorAutoPresets);
 
 export function getInitColorStateFromConfig(
   config: ButteryTokensConfig

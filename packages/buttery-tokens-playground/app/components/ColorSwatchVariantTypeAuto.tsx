@@ -1,5 +1,5 @@
 import type {
-  ButteryTokensColorVariant,
+  ButteryTokensColorVariantBase,
   ColorVariantTypeAuto,
 } from "@buttery/tokens-utils/schemas";
 import type { ChangeEvent } from "react";
@@ -12,7 +12,9 @@ export function ColorSwatchVariantTypeAuto({
   onChangeVariantAuto,
 }: {
   variant: ColorVariantTypeAuto;
-  onChangeVariantAuto: (variant: ButteryTokensColorVariant) => void;
+  onChangeVariantAuto: <T extends ButteryTokensColorVariantBase>(
+    variant: T
+  ) => void;
 }) {
   function handleChangeVariantTypeAuto({
     currentTarget: { value },

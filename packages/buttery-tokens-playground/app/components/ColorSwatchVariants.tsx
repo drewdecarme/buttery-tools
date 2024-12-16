@@ -1,6 +1,7 @@
 import { classes } from "@buttery/components";
 import type {
   ButteryTokensColorVariant,
+  ButteryTokensColorVariantBase,
   ColorVariantTypes,
 } from "@buttery/tokens-utils/schemas";
 import { css } from "@linaria/core";
@@ -21,7 +22,9 @@ export type ColorSwatchVariantsPropsNative = JSX.IntrinsicElements["div"];
 export type ColorSwatchVariantsPropsCustom = {
   dxVariants: ButteryTokensColorVariant;
   onChangeVariantType: ChangeEventHandler<HTMLSelectElement>;
-  onChangeVariantAuto: (variant: ButteryTokensColorVariant) => void;
+  onChangeVariantAuto: <T extends ButteryTokensColorVariantBase>(
+    variant: T
+  ) => void;
   onChangeVariantNamed: ColorSwatchVariantTypeNamedProps["onChangeVariantNamed"];
   onChangeVariantManual: ColorSwatchVariantTypeManualProps["onChangeVariantManual"];
 };

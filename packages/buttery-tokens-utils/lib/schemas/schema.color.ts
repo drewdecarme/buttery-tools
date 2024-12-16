@@ -27,6 +27,9 @@ const ColorVariantBaseSchema = z.union([
   ColorVariantTypeNamedSchema,
 ]);
 const ColorVariantAutoSchema = ColorVariantBaseSchema;
+export type ButteryTokensColorVariantBase = z.infer<
+  typeof ColorVariantAutoSchema
+>;
 
 const ColorVariantManualSchema = ColorVariantBaseSchema.or(
   ColorVariantTypeKeyValueSchema

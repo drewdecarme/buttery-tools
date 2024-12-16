@@ -22,6 +22,8 @@ import { InputRadio } from "./InputRadio";
 import { InputSection } from "./InputGroup";
 import { ColorSwatchAdd } from "./ColorSwatchAdd";
 import { ColorSwatchList } from "./ColorSwatchList";
+import { InputRange } from "./InputRange";
+import { ColorBrandModeAutoSwatch } from "./ColorBrandModeAutoSwatch";
 
 const colorCategories: {
   type: ButteryTokensColorBrandTypeAuto["type"];
@@ -72,6 +74,11 @@ const styles = css`
   display: flex;
   flex-direction: column;
   gap: ${makeRem(8)};
+`;
+
+const inputLabelStyles = css`
+  margin-bottom: ${makeRem(16)};
+  margin-top: ${makeRem(8)};
 `;
 
 export function ColorBrandModeAuto({
@@ -166,52 +173,65 @@ export function ColorBrandModeAuto({
           dxLabel="Configure your colors"
           dxHelp="Adjust the saturation, brightness and hues to get the colors you want in accordance with the selected category"
         />
-        <div>
-          <label>
-            <span>Saturation</span>
-            <input
-              type="range"
-              step={1}
-              {...colorAutoPresets[state.type].saturation}
-            />
-          </label>
+        <div className={inputLabelStyles}>
+          <InputLabel
+            dxLabel="Saturation"
+            htmlFor="saturation"
+            dxSize="dense"
+          />
+          <InputRange
+            id="saturation"
+            dxDisplayMin
+            dxDisplayMax
+            dxDisplayInput
+            {...colorAutoPresets[state.type].saturation}
+            className={inputLabelStyles}
+          />
         </div>
-        <div>
-          <label>
-            <span>Brightness</span>
-            <input
-              type="range"
-              step={1}
-              {...colorAutoPresets[state.type].brightness}
-            />
-          </label>
+        <div className={inputLabelStyles}>
+          <InputLabel
+            dxLabel="Brightness"
+            htmlFor="brightness"
+            dxSize="dense"
+          />
+          <InputRange
+            id="brightness"
+            dxDisplayMin
+            dxDisplayMax
+            dxDisplayInput
+            {...colorAutoPresets[state.type].brightness}
+            className={inputLabelStyles}
+          />
         </div>
-        <ColorSwatchList>
-          {Object.entries(state.colors).map(([colorId, colorNameAndDef]) => {
-            return (
-              <li key={colorId}>
-                {/* <ColorBrandModeAutoSwatch
-                colorDef={{ [colorId]: colorNameAndDef }}
-                setColor={setColor}
-              /> */}
-              </li>
-            );
-          })}
-          <li>
-            <ColorSwatchAdd
-              onClick={() =>
-                setColor((draft) => {
-                  const id = generateGUID();
-                  draft.brand.auto.colors[id] = {
-                    hue: 180,
-                    name: `brand${Object.entries(state).length + 1}`,
-                    variants: 10,
-                  };
-                })
-              }
-            />
-          </li>
-        </ColorSwatchList>
+        <div className={inputLabelStyles}>
+          <InputLabel dxLabel="Hues & Variants" dxSize="dense" />
+          <ColorSwatchList>
+            {Object.entries(state.colors).map(([colorId, colorNameAndDef]) => {
+              return (
+                <li key={colorId}>
+                  <ColorBrandModeAutoSwatch
+                    colorDef={{ [colorId]: colorNameAndDef }}
+                    setColor={setColor}
+                  />
+                </li>
+              );
+            })}
+            <li>
+              <ColorSwatchAdd
+                onClick={() =>
+                  setColor((draft) => {
+                    const id = generateGUID();
+                    draft.brand.auto.colors[id] = {
+                      hue: 180,
+                      name: `brand${Object.entries(state).length + 1}`,
+                      variants: 10,
+                    };
+                  })
+                }
+              />
+            </li>
+          </ColorSwatchList>
+        </div>
       </InputSection>
     </>
   );

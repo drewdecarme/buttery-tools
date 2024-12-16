@@ -37,6 +37,10 @@ const styles = css`
       gap: ${makeRem(16)};
     }
   }
+
+  & + * {
+    min-height: 80vh;
+  }
 `;
 
 export default function AppConfigRoute() {
@@ -100,9 +104,7 @@ export default function AppConfigRoute() {
           </ul>
         </NavTabs>
       </div>
-      <div>
-        <Outlet />
-      </div>
+      <Outlet />
     </ConfigurationProvider>
   );
 }
