@@ -25,7 +25,6 @@ const styles = css`
   filter: drop-shadow(3px 8px 28px rgba(130, 130, 130, 0.3));
   border-radius: 0.5rem;
   padding: 0;
-  width: 200px;
 
   /* Animation for appearing */
   @keyframes appear {

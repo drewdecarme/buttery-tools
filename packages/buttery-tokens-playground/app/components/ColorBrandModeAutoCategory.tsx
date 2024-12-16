@@ -1,6 +1,11 @@
 import type { ButteryTokensColorBrandTypeAuto } from "@buttery/tokens-utils/schemas";
 import { css } from "@linaria/core";
-import { makeRem, makeReset } from "@buttery/tokens/playground";
+import {
+  makeColor,
+  makeFontWeight,
+  makeRem,
+  makeReset,
+} from "@buttery/tokens/playground";
 import { useCallback } from "react";
 import { classes } from "@buttery/components";
 
@@ -59,25 +64,61 @@ const colorCategories: {
 
 const styles = css`
   ${makeReset("ul")};
-
-  display: flex;
-  flex-direction: column;
-  gap: ${makeRem(8)};
 `;
 
 const itemStyles = css`
   ${makeReset("button")};
-  width: 100%;
+  text-align: left;
+  width: ${makeRem(400)};
+  display: grid;
+  grid-template-columns: ${makeRem(24)} 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "icon title"
+    "icon description";
+  column-gap: ${makeRem(8)};
+  font-size: ${makeRem(12)};
+  transition: all 0.1s ease-in-out;
+  min-height: ${makeRem(52)};
+  align-content: center;
+  padding: ${makeRem(12)} ${makeRem(16)};
+
+  &:first-child {
+    border-top-right-radius: inherit;
+    border-top-left-radius: inherit;
+  }
+  &:last-child {
+    border-bottom-right-radius: inherit;
+    border-bottom-left-radius: inherit;
+  }
 
   &.active {
-    color: red;
+    background: ${makeColor("primary", { opacity: 0.2 })};
+  }
+
+  .icon {
+    grid-area: icon;
+    display: grid;
+    height: 100%;
+    width: 100%;
+    place-content: center;
+  }
+  .title {
+    grid-area: title;
+    margin-bottom: ${makeRem(4)};
+    font-weight: ${makeFontWeight("semi-bold")};
+  }
+  .description {
+    grid-area: description;
+    color: ${makeColor("neutral-light", { opacity: 0.7 })};
+    font-size: ${makeRem(11)};
   }
 `;
 
 function CategoryItem({
-  // Icon,
+  Icon,
   display,
-  // description,
+  description,
   isSelected,
   type,
 }: (typeof colorCategories)[0] & {
@@ -90,7 +131,11 @@ function CategoryItem({
       className={classes(itemStyles, { active: isSelected })}
       onClick={() => onDropdownSelect(type)}
     >
-      {display}
+      <div className="icon">
+        <Icon dxSize={16} />
+      </div>
+      <div className="title">{display}</div>
+      <div className="description">{description}</div>
     </button>
   );
 }
