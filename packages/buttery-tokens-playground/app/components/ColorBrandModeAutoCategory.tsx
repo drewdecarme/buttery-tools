@@ -109,7 +109,11 @@ export function ColorBrandModeAutoCategory<T extends string>(props: {
   );
 
   return (
-    <InputSelectDropdown dxOnSelect={handleSelect} id={props.id}>
+    <InputSelectDropdown
+      dxOnSelect={handleSelect}
+      id={props.id}
+      defaultValue={props.selectedType}
+    >
       <ul className={styles}>
         {colorCategories.map((category) => {
           return (

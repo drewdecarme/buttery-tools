@@ -62,7 +62,7 @@ export const LayoutConfigSectionControls = forwardRef<
   HTMLElement,
   LayoutConfigSectionControlsProps
 >(function LayoutConfigSectionControls(
-  { children, className, dxTitle, ...restProps },
+  { children, className, dxTitle, dxDescription: _, ...restProps },
   ref
 ) {
   return (
