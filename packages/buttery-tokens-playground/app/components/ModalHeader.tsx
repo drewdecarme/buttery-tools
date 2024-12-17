@@ -1,5 +1,6 @@
 import { classes, useModalContext } from "@buttery/components";
 import {
+  makeColor,
   makeFontFamily,
   makeFontWeight,
   makeRem,
@@ -16,22 +17,30 @@ export type ModalHeaderPropsNative = Omit<
 >;
 export type ModalHeaderPropsCustom = {
   dxHideClose?: boolean;
+  dxSubtitle?: string;
   children: string;
 };
 export type ModalHeaderProps = ModalHeaderPropsNative & ModalHeaderPropsCustom;
 
 const styles = css`
-  padding: ${makeRem(24)};
+  padding: ${makeRem(32)};
   display: flex;
   gap: ${makeRem(24)};
-  align-items: center;
 
   .title {
     flex: 1;
-    font-size: ${makeRem(20)};
+    font-size: ${makeRem(24)};
     font-family: ${makeFontFamily("body")};
     font-weight: ${makeFontWeight("bold")};
     line-height: 1;
+  }
+
+  .subtitle {
+    font-size: ${makeRem(16)};
+    margin-top: ${makeRem(12)};
+    color: ${makeColor("neutral-light", { opacity: 0.8 })};
+    font-family: ${makeFontFamily("body")};
+    font-weight: ${makeFontWeight("regular")};
   }
 
   button {
@@ -45,16 +54,19 @@ const styles = css`
 `;
 export const ModalHeader = forwardRef<HTMLElement, ModalHeaderProps>(
   function ModalHeader(
-    { children, className, dxHideClose = false, ...restProps },
+    { children, className, dxHideClose = false, dxSubtitle, ...restProps },
     ref
   ) {
     const { closeModal } = useModalContext();
     return (
       <header {...restProps} className={classes(styles, className)} ref={ref}>
-        <div className="title">{children}</div>
+        <div>
+          <div className="title">{children}</div>
+          {dxSubtitle && <div className="subtitle">{dxSubtitle}</div>}
+        </div>
         {!dxHideClose && (
           <button onClick={closeModal} autoFocus>
-            <IconCancel dxSize={16} />
+            <IconCancel dxSize={24} />
           </button>
         )}
       </header>

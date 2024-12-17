@@ -3,6 +3,7 @@ import { forwardRef } from "react";
 import type { ModalRef, UseModalOptions } from "@buttery/components";
 import { classes, ModalProvider, useModalDialog } from "@buttery/components";
 import { css } from "@linaria/core";
+import { makeRem } from "@buttery/tokens/playground";
 
 export type ModalDrawerPropsNative = Omit<
   JSX.IntrinsicElements["dialog"],
@@ -10,6 +11,7 @@ export type ModalDrawerPropsNative = Omit<
 >;
 export type ModalDrawerPropsCustom = UseModalOptions & {
   dxVariant: "right-to-left";
+  dxSize?: "sm" | "md" | "lg" | "xl";
   children: ReactNode;
 };
 export type ModalDrawerProps = ModalDrawerPropsNative & ModalDrawerPropsCustom;
@@ -20,15 +22,19 @@ const styles = css`
   &.s {
     &-sm {
       --drawer-width: 20%;
+      width: var(--drawer-width);
     }
     &-md {
       --drawer-width: 40%;
+      width: var(--drawer-width);
     }
     &-lg {
       --drawer-width: 60%;
+      width: var(--drawer-width);
     }
     &-xl {
       --drawer-width: 80%;
+      width: var(--drawer-width);
     }
   }
 
@@ -91,9 +97,12 @@ const styles = css`
     }
 
     left: calc(100% - var(--drawer-width));
+    right: 0;
     height: 100%;
     max-height: 100%;
     position: fixed;
+    border-top-left-radius: ${makeRem(4)};
+    border-bottom-left-radius: ${makeRem(4)};
 
     @media (prefers-reduced-motion: no-preference) {
       &[open] {
@@ -114,7 +123,7 @@ const styles = css`
 
 export const ModalDrawer = forwardRef<ModalRef, ModalDrawerProps>(
   function ModalDrawer(
-    { children, className, dxVariant, ...restProps }: ModalDrawerProps,
+    { children, className, dxVariant, dxSize, ...restProps }: ModalDrawerProps,
     ref
   ) {
     const { isOpen, dialogRef, dialogState, closeModal } = useModalDialog({
@@ -128,7 +137,14 @@ export const ModalDrawer = forwardRef<ModalRef, ModalDrawerProps>(
       <dialog
         id={restProps.id}
         ref={dialogRef}
-        className={classes(styles, dxVariant, className)}
+        className={classes(
+          styles,
+          dxVariant,
+          dxSize && {
+            [`s-${dxSize}`]: dxSize,
+          },
+          className
+        )}
       >
         <ModalProvider initialState={dialogState} closeModal={closeModal}>
           {children}

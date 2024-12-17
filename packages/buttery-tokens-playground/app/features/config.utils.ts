@@ -1,3 +1,4 @@
+import { exhaustiveMatchGuard } from "@buttery/components";
 import type {
   ColorDefHueSchema,
   ButteryTokensConfig,
@@ -14,6 +15,7 @@ import {
   ConfigSchema,
 } from "@buttery/tokens-utils/schemas";
 import { generateGUID } from "@buttery/utils/isomorphic";
+import { createHighlighter } from "shiki";
 import type { z, ZodLiteral, ZodUnionDef } from "zod";
 
 export const initConfig: ButteryTokensConfig = ConfigSchema.parse({});
@@ -87,7 +89,6 @@ export const colorAutoPresets: {
     brightness: getMinMax(ColorBrandTypePastelSchema.shape.brightness._def),
   },
 };
-console.log(colorAutoPresets);
 
 export function getInitColorStateFromConfig(
   config: ButteryTokensConfig
@@ -134,3 +135,42 @@ export function getInitColorStateFromConfig(
     },
   };
 }
+
+export function transformColorStateIntoColorConfig(
+  colorState: ConfigurationStateColor
+): ButteryTokensConfig["color"] {
+  switch (colorState.brand.type) {
+    case "manual":
+      return {
+        brand: {
+          type: "manual",
+          colors: Object.values(colorState.brand.manual.colors).reduce(
+            (accum, { name, ...restDef }) =>
+              Object.assign(accum, { [name]: restDef }),
+            {}
+          ),
+        },
+        neutral: {},
+      };
+    case "auto":
+      return {
+        brand: {
+          ...colorState.brand.auto,
+          colors: Object.values(colorState.brand.auto.colors).reduce(
+            (accum, { name, ...restDef }) =>
+              Object.assign(accum, { [name]: restDef }),
+            {}
+          ),
+        },
+        neutral: {},
+      };
+
+    default:
+      exhaustiveMatchGuard(colorState.brand.type);
+  }
+}
+
+export const highlighter = await createHighlighter({
+  themes: ["dark-plus"],
+  langs: ["typescript", "json"],
+});

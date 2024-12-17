@@ -39,6 +39,7 @@ const styles = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 
   &.v {
     &-contained {
@@ -58,8 +59,11 @@ const styles = css`
       line-height: 1;
       &.c {
         &-primary {
-          border: ${makeRem(1)} solid ${makeColor("primary")};
-          color: ${makeColor("primary-200")};
+          border: ${makeRem(1)} solid ${makeColor("primary-600")};
+          color: ${makeColor("primary-600")};
+          &:hover {
+            color: ${makeColor("primary-900")};
+          }
         }
         &-secondary {
         }

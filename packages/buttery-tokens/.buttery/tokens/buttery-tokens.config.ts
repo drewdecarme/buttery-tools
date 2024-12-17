@@ -38,7 +38,7 @@ export default defineTokensConfig({
       colors: {
         primary: {
           hue: 47,
-          variants: 3,
+          variants: 10,
         },
         secondary: {
           hue: 170,

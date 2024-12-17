@@ -9,6 +9,8 @@ import { IconCopy } from "~/icons/IconCopy";
 import { IconDownload05 } from "~/icons/IconDownload05";
 import { IconFloppyDisk } from "~/icons/IconFloppyDisk";
 import { ConfigurationProvider } from "~/features/Config.context";
+import { IconView } from "~/icons/IconView";
+import { ConfigView } from "~/features/ConfigView";
 
 const styles = css`
   position: sticky;
@@ -71,12 +73,7 @@ export default function AppConfigRoute() {
             >
               Export
             </Button>
-            <Button
-              dxVariant="outlined"
-              DXAdornmentStart={<IconCopy dxSize={16} />}
-            >
-              View
-            </Button>
+            <ConfigView />
             <Button
               dxVariant="outlined"
               DXAdornmentStart={<IconFloppyDisk dxSize={16} />}
