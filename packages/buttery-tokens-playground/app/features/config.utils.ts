@@ -171,6 +171,6 @@ export function transformColorStateIntoColorConfig(
 }
 
 export const highlighter = await createHighlighter({
-  themes: ["dark-plus"],
+  themes: ["dark-plus", "github-light", "slack-dark"],
   langs: ["typescript", "json"],
 });

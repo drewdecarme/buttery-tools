@@ -75,5 +75,6 @@ export default defineTokensConfig({
     "layout-max-width": { value: 1280, storeAsRem: true },
     "layout-gutters": { value: 32, storeAsRem: true },
     "layout-section-offset-top": { value: 32, storeAsRem: true },
+    "modal-gutters": { value: 32, storeAsRem: true },
   },
 });

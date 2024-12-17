@@ -1,6 +1,7 @@
 import { classes, useModalContext } from "@buttery/components";
 import {
   makeColor,
+  makeCustom,
   makeFontFamily,
   makeFontWeight,
   makeRem,
@@ -23,7 +24,7 @@ export type ModalHeaderPropsCustom = {
 export type ModalHeaderProps = ModalHeaderPropsNative & ModalHeaderPropsCustom;
 
 const styles = css`
-  padding: ${makeRem(32)};
+  padding: ${makeCustom("modal-gutters")};
   display: flex;
   gap: ${makeRem(24)};
 

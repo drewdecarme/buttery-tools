@@ -9,7 +9,6 @@ import { IconCopy } from "~/icons/IconCopy";
 import { IconDownload05 } from "~/icons/IconDownload05";
 import { IconFloppyDisk } from "~/icons/IconFloppyDisk";
 import { ConfigurationProvider } from "~/features/Config.context";
-import { IconView } from "~/icons/IconView";
 import { ConfigView } from "~/features/ConfigView";
 
 const styles = css`

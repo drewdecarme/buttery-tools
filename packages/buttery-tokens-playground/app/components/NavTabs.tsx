@@ -28,6 +28,13 @@ const styles = css`
 
     a {
       ${makeReset("anchor")};
+    }
+    button {
+      ${makeReset("button")};
+    }
+
+    a,
+    button {
       display: grid;
       place-content: center;
       height: ${makeRem(60)};
@@ -37,7 +44,7 @@ const styles = css`
       transition: all 0.15s ease-in-out;
 
       &.active {
-        color: ${makeColor("primary-100")};
+        color: ${makeColor("primary-500")};
       }
     }
   }
@@ -47,7 +54,7 @@ const divStyles = css`
   position: absolute;
   height: ${makeRem(2)};
   bottom: 0;
-  background: ${makeColor("primary-100")};
+  background: ${makeColor("primary-500")};
   transition: all 0.2s ease-in-out;
 `;
 
@@ -78,7 +85,7 @@ export const NavTabs = forwardRef<HTMLElement, NavTabsProps>(function NavTabs(
 
   const divRef = useTrackingNode<HTMLDivElement, HTMLAnchorElement>(
     navRef,
-    "a.active",
+    ".active",
     moveNode,
     { attributeFilter: ["class"] }
   );

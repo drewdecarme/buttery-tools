@@ -6,7 +6,7 @@ import {
   useImperativeHandle,
   useMemo,
   useRef,
-  useState
+  useState,
 } from "react";
 
 export type ModalDefaultState = Record<string, unknown>;
@@ -33,7 +33,7 @@ export type UseModalOptions = {
    * The default functionality of a dialog is to close on the
    * press of the escape key. There are instances where we don't want to close
    * the dialog either due to other escape key listeners for popovers or for
-   * other reasons such as desctructive actions during wizards in dialogs.
+   * other reasons such as destructive actions during wizards in dialogs.
    * Adding this pop will disable the functionality of closing the dialog
    * with the escape key
    * @default false
@@ -85,6 +85,7 @@ export const useModalDialog = <T extends ModalDefaultState = ModalDefaultState>(
     const dialogNode = modalRef.current;
 
     const onClose = params?.onClose ?? (() => void 0);
+
     // add the class close to the dialog to add any closing animations
     dialogNode.dataset.close = "true";
 
@@ -150,7 +151,7 @@ export const useModalDialog = <T extends ModalDefaultState = ModalDefaultState>(
     [
       handleCloseModal,
       params.closeOnBackdropClick,
-      params.disableCloseOnEscapePress
+      params.disableCloseOnEscapePress,
     ]
   );
 
@@ -165,7 +166,7 @@ export const useModalDialog = <T extends ModalDefaultState = ModalDefaultState>(
         setIsOpen(true);
       },
       handleClose: handleCloseModal,
-      nodeRef: modalRef
+      nodeRef: modalRef,
     };
   });
 
@@ -174,7 +175,7 @@ export const useModalDialog = <T extends ModalDefaultState = ModalDefaultState>(
       isOpen,
       dialogRef,
       dialogState,
-      closeModal: handleCloseModal
+      closeModal: handleCloseModal,
     }),
     [handleCloseModal, dialogRef, dialogState, isOpen]
   );
