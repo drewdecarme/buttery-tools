@@ -11,6 +11,10 @@ export type LayoutConfigSectionPreviewProps =
 
 const styles = css`
   padding-top: ${makeCustom("layout-section-offset-top")};
+  & > * {
+    position: sticky;
+    top: calc(158px + 32px);
+  }
 `;
 
 export const LayoutConfigSectionPreview = forwardRef<
@@ -22,7 +26,7 @@ export const LayoutConfigSectionPreview = forwardRef<
 ) {
   return (
     <div {...restProps} className={classes(styles, className)} ref={ref}>
-      {children}
+      <div>{children}</div>
     </div>
   );
 });

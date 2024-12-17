@@ -8,10 +8,10 @@ export type LayoutHeaderPropsNative = JSX.IntrinsicElements["header"];
 export type LayoutHeaderProps = LayoutHeaderPropsNative;
 
 const styles = css`
-  padding: 0 ${makeCustom("layout-gutters")};
   height: ${makeCustom("layout-header-height")};
   border-bottom: ${makeRem(1)} solid
     ${makeColor("neutral-dark", { opacity: 0.1 })};
+  padding: 0 ${makeCustom("layout-gutters")};
 
   & > div {
     max-width: ${makeCustom("layout-max-width")};

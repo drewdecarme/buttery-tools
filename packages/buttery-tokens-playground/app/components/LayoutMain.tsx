@@ -9,18 +9,14 @@ export type LayoutMainProps = LayoutMainPropsNative;
 
 const styles = css`
   max-width: ${makeCustom("layout-max-width")};
-  padding: 0 ${makeCustom("layout-gutters")};
   margin: 0 auto;
-
-  & > div {
-  }
 `;
 
 export const LayoutMain = forwardRef<HTMLElement, LayoutMainProps>(
   function LayoutMain({ children, className, ...restProps }, ref) {
     return (
       <main {...restProps} className={classes(styles, className)} ref={ref}>
-        <div>{children}</div>
+        {children}
       </main>
     );
   }

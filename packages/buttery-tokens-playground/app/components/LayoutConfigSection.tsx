@@ -1,5 +1,5 @@
 import { classes } from "@buttery/components";
-import { makeRem } from "@buttery/tokens/playground";
+import { makeCustom, makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import type { JSX } from "react";
 import { forwardRef } from "react";
@@ -11,6 +11,7 @@ const styles = css`
   display: grid;
   grid-template-columns: 1fr 60%;
   gap: ${makeRem(32)};
+  padding: 0 ${makeCustom("layout-gutters")};
 `;
 
 export const LayoutConfigSection = forwardRef<

@@ -1,4 +1,4 @@
-import { makeColor, makeRem } from "@buttery/tokens/playground";
+import { makeColor, makeCustom, makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import { NavLink, Outlet } from "@remix-run/react";
 
@@ -20,7 +20,7 @@ const styles = css`
     display: grid;
     grid-template-columns: 1fr auto;
     width: 100%;
-    padding: ${makeRem(20)} 0;
+    padding: ${makeRem(20)} ${makeCustom("layout-gutters")};
 
     h2 {
       margin: 0;
@@ -35,6 +35,9 @@ const styles = css`
     .actions {
       display: flex;
       gap: ${makeRem(16)};
+    }
+    & + * {
+      padding: 0 ${makeCustom("layout-gutters")};
     }
   }
 
