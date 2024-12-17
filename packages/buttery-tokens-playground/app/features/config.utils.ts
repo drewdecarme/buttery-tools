@@ -15,7 +15,6 @@ import {
   ConfigSchema,
 } from "@buttery/tokens-utils/schemas";
 import { generateGUID } from "@buttery/utils/isomorphic";
-import { createHighlighter } from "shiki";
 import type { z, ZodLiteral, ZodUnionDef } from "zod";
 
 export const initConfig: ButteryTokensConfig = ConfigSchema.parse({});
@@ -169,8 +168,3 @@ export function transformColorStateIntoColorConfig(
       exhaustiveMatchGuard(colorState.brand.type);
   }
 }
-
-export const highlighter = await createHighlighter({
-  themes: ["dark-plus", "github-light", "slack-dark"],
-  langs: ["typescript", "json"],
-});

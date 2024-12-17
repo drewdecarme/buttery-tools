@@ -1,6 +1,7 @@
 import { makeColor, makeCustom, makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
-import { NavLink, Outlet } from "@remix-run/react";
+import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { ConfigSchema } from "@buttery/tokens-utils/schemas";
 
 import { Button } from "~/components/Button";
 import { ButtonGroup } from "~/components/ButtonGroup";
@@ -10,6 +11,7 @@ import { IconDownload05 } from "~/icons/IconDownload05";
 import { IconFloppyDisk } from "~/icons/IconFloppyDisk";
 import { ConfigurationProvider } from "~/features/Config.context";
 import { ConfigView } from "~/features/ConfigView";
+import { getIsLocalConfig } from "~/utils/util.getLocalConfig";
 
 const styles = css`
   position: sticky;
@@ -47,9 +49,29 @@ const styles = css`
   }
 `;
 
+export function loader() {
+  const localConfig = getIsLocalConfig();
+  // local config
+  if (typeof localConfig !== "boolean") {
+    return {
+      config: localConfig.config,
+    };
+  }
+
+  const parsedConfig = ConfigSchema.safeParse({});
+  if (parsedConfig.error) {
+    throw parsedConfig.error;
+  }
+  return {
+    config: parsedConfig.data,
+  };
+}
+
 export default function AppConfigRoute() {
+  const { config } = useLoaderData<typeof loader>();
+
   return (
-    <ConfigurationProvider>
+    <ConfigurationProvider config={config}>
       <div className={styles}>
         <div className="page-header">
           <div>

@@ -29,6 +29,7 @@ const styles = css`
   background: var(--bg-color);
   line-height: 1;
   font-weight: ${makeFontWeight("semi-bold")};
+  white-space: nowrap;
 
   &.s {
     &-dense {
@@ -78,7 +79,7 @@ export const Label = forwardRef<HTMLSpanElement, LabelProps>(function Label(
       className={classes(styles, { [`s-${dxSize}`]: dxSize }, className)}
       style={{
         // @ts-expect-error CSS doesn't like custom properties but this works well
-        ["--bg-color"]: makeColor(dxColor, { opacity: 0.25 }),
+        ["--bg-color"]: makeColor(dxColor),
       }}
       ref={ref}
     >

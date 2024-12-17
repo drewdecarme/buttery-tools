@@ -1322,7 +1322,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/logs@workspace:*, @buttery/logs@workspace:0.1.6, @buttery/logs@workspace:packages/buttery-logs":
+"@buttery/logs@workspace:*, @buttery/logs@workspace:0.1.6, @buttery/logs@workspace:^, @buttery/logs@workspace:packages/buttery-logs":
   version: 0.0.0-use.local
   resolution: "@buttery/logs@workspace:packages/buttery-logs"
   dependencies:
@@ -1354,6 +1354,7 @@ __metadata:
   resolution: "@buttery/tokens-playground@workspace:packages/buttery-tokens-playground"
   dependencies:
     "@buttery/components": "workspace:*"
+    "@buttery/logs": "workspace:^"
     "@buttery/tokens-utils": "workspace:*"
     "@buttery/utils": "workspace:*"
     "@chromatic-com/storybook": "npm:^3.2.2"

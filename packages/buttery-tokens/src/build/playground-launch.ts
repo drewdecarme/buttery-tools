@@ -20,6 +20,10 @@ export async function launchPlayground(rConfig: ResolvedButteryTokensConfig) {
   );
 
   const port = process.env.PORT || 5700;
+
+  // Set some local environment variables
+  process.env.BUTTERY_TOKENS_PG_LOCAL_CONFIG = JSON.stringify(rConfig.config);
+
   app.listen(port, () => {
     LOG.watch(
       `✅ Buttery Tokens Playground is running at http://localhost:${port}`

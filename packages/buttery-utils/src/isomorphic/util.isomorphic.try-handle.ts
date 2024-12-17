@@ -42,3 +42,24 @@ export function tryHandle<T, Args extends unknown[]>(
     }
   };
 }
+
+export function tryHandleSync<T, Args extends unknown[]>(
+  fn: (...args: Args) => T
+) {
+  return (
+    ...args: Args
+  ):
+    | { hasError: false; data: T; error: undefined }
+    | { hasError: true; data: undefined; error: Error } => {
+    try {
+      const data = fn(...args);
+      return { data, hasError: false, error: undefined };
+    } catch (error) {
+      return {
+        data: undefined,
+        hasError: true,
+        error: error instanceof Error ? error : new Error(String(error)),
+      };
+    }
+  };
+}

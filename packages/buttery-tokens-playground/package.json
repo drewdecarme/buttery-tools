@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "@buttery/components": "workspace:*",
+    "@buttery/logs": "workspace:^",
     "@buttery/tokens-utils": "workspace:*",
     "@buttery/utils": "workspace:*",
     "@remix-run/express": "2.15.1",

@@ -1,11 +1,12 @@
 import { useModal } from "@buttery/components";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { css } from "@linaria/core";
 import {
   makeCustom,
   makeFontFamily,
   makeRem,
 } from "@buttery/tokens/playground";
+import { codeToHtml } from "shiki";
 
 import { Button } from "~/components/Button";
 import { ModalDrawer } from "~/components/ModalDrawer";
@@ -14,7 +15,6 @@ import { IconView } from "~/icons/IconView";
 import { NavTabs } from "~/components/NavTabs";
 
 import { useConfigurationContext } from "./Config.context";
-import { highlighter } from "./config.utils";
 
 const codeStyles = css`
   width: 100%;
@@ -51,14 +51,20 @@ const tabStyles = css`
 export function ConfigView() {
   const { openModal, modalRef } = useModal();
   const { getConfig } = useConfigurationContext();
+  const [configHTML, setConfigHTML] = useState<string>("");
 
-  const configHtml = useMemo(() => {
-    const config = getConfig();
-    const code = highlighter.codeToHtml(JSON.stringify(config, null, 2), {
-      theme: "slack-dark",
-      lang: "json",
-    });
-    return code;
+  useEffect(() => {
+    async function highlightCode() {
+      const config = getConfig();
+      const configJson = JSON.stringify(config, null, 2);
+      const html = await codeToHtml(configJson, {
+        theme: "slack-dark",
+        lang: "json",
+      });
+      setConfigHTML(html);
+    }
+
+    highlightCode();
   }, [getConfig]);
 
   return (
@@ -91,7 +97,7 @@ export function ConfigView() {
         </NavTabs>
         <div
           className={codeStyles}
-          dangerouslySetInnerHTML={{ __html: configHtml }}
+          dangerouslySetInnerHTML={{ __html: configHTML }}
         />
       </ModalDrawer>
     </>
