@@ -14,7 +14,7 @@ import {
   ConfigSchema,
 } from "@buttery/tokens-utils/schemas";
 import { generateGUID } from "@buttery/utils/isomorphic";
-import type { z, ZodLiteral, ZodUnion, ZodUnionDef } from "zod";
+import type { z, ZodLiteral, ZodUnionDef } from "zod";
 
 export const initConfig: ButteryTokensConfig = ConfigSchema.parse({});
 

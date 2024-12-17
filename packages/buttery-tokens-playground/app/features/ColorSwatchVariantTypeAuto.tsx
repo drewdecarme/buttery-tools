@@ -4,8 +4,8 @@ import type {
 } from "@buttery/tokens-utils/schemas";
 import type { ChangeEvent } from "react";
 
-import { InputLabel } from "./InputLabel";
-import { InputNumber } from "./InputNumber";
+import { InputLabel } from "../components/InputLabel";
+import { InputNumber } from "../components/InputNumber";
 
 export function ColorSwatchVariantTypeAuto({
   variant,

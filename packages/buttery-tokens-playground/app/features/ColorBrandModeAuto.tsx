@@ -10,13 +10,14 @@ import {
   colorAutoPresets,
   type ConfigurationStateColorBrandAuto,
 } from "./config.utils";
-import { InputLabel } from "./InputLabel";
-import { InputSection } from "./InputGroup";
 import { ColorSwatchAdd } from "./ColorSwatchAdd";
 import { ColorSwatchList } from "./ColorSwatchList";
-import { InputRange } from "./InputRange";
 import { ColorBrandModeAutoSwatch } from "./ColorBrandModeAutoSwatch";
 import { ColorBrandModeAutoCategory } from "./ColorBrandModeAutoCategory";
+
+import { InputRange } from "../components/InputRange";
+import { InputSection } from "../components/InputGroup";
+import { InputLabel } from "../components/InputLabel";
 
 const inputLabelStyles = css`
   margin-bottom: ${makeRem(16)};

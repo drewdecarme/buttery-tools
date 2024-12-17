@@ -4,11 +4,11 @@ import { NavLink, Outlet } from "@remix-run/react";
 
 import { Button } from "~/components/Button";
 import { ButtonGroup } from "~/components/ButtonGroup";
-import { ConfigurationProvider } from "~/components/Config.context";
 import { NavTabs } from "~/components/NavTabs";
 import { IconCopy } from "~/icons/IconCopy";
 import { IconDownload05 } from "~/icons/IconDownload05";
 import { IconFloppyDisk } from "~/icons/IconFloppyDisk";
+import { ConfigurationProvider } from "~/features/Config.context";
 
 const styles = css`
   position: sticky;

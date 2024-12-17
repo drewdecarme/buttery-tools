@@ -4,9 +4,10 @@ import { ColorSwatchAdd } from "./ColorSwatchAdd";
 import { ColorBrandModeManualSwatch } from "./ColorBrandModeManualSwatch";
 import type { ConfigurationContextType } from "./Config.context";
 import type { ConfigurationStateColorBrandManual } from "./config.utils";
-import { InputLabel } from "./InputLabel";
 import { ColorSwatchList } from "./ColorSwatchList";
-import { InputSection } from "./InputGroup";
+
+import { InputLabel } from "../components/InputLabel";
+import { InputSection } from "../components/InputGroup";
 
 export function ColorBrandModeManual({
   state,

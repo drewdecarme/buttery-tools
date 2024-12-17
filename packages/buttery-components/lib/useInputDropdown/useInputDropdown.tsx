@@ -1,5 +1,17 @@
-import type { FocusEventHandler, RefCallback } from "react";
-import { useRef, useId, useState, useMemo, useCallback } from "react";
+import type {
+  FocusEventHandler,
+  MutableRefObject,
+  RefCallback,
+  RefObject,
+} from "react";
+import {
+  useRef,
+  useId,
+  useState,
+  useMemo,
+  useCallback,
+  useImperativeHandle,
+} from "react";
 
 import {
   useDropdown,
@@ -9,16 +21,29 @@ import { useWindowEventListener } from "@BUTTERY_COMPONENT/useWindowEventListene
 
 import { LOG_UID } from "./use-input-dropdown.utils.js";
 
-export type UseInputDropdownParams = UseDropdownOptions & {};
+export type UseInputDropdownRef<InputNode extends HTMLElement> = {
+  setValue: (value: string) => void;
+  handleClose: () => void;
+  inputRef: RefObject<InputNode | null>;
+};
+
+export type UseInputDropdownParams<InputNode extends HTMLElement> =
+  UseDropdownOptions & {
+    forwardedRef: MutableRefObject<InputNode | null>;
+    imperativeRef: RefObject<UseInputDropdownRef<InputNode>>;
+  };
 
 export function useInputDropdown<
-  InputElement extends
-    | HTMLInputElement
-    | HTMLSelectElement
-    | HTMLTextAreaElement,
-  DropdownElement extends HTMLElement
->({ dxArrow, dxOffset, dxPosition }: UseInputDropdownParams) {
-  const inputRef = useRef<InputElement | null>(null);
+  InputNode extends HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+  DropdownNode extends HTMLElement
+>({
+  dxArrow,
+  dxOffset,
+  dxPosition,
+  forwardedRef,
+  imperativeRef,
+}: UseInputDropdownParams<InputNode>) {
+  const inputRef = useRef<InputNode | null>(null);
   const id = useId();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownOptions = useMemo<UseDropdownOptions>(
@@ -31,20 +56,21 @@ export function useInputDropdown<
     setTargetRef,
     closeDropdown,
     dropdownRef,
-  } = useDropdown<DropdownElement>(dropdownOptions);
+  } = useDropdown<DropdownNode>(dropdownOptions);
 
   const { addWindowEventListener, removeWindowEventListener } =
     useWindowEventListener();
 
   // Set the inputRef to the target of the dropdown so the
   // dropdown knows where to mount itself
-  const setInputRef = useCallback<RefCallback<InputElement>>(
+  const setInputRef = useCallback<RefCallback<InputNode>>(
     (inputNode) => {
       if (!inputNode) return;
       setTargetRef(inputNode);
       inputRef.current = inputNode;
+      forwardedRef.current = inputNode;
     },
-    [setTargetRef]
+    [forwardedRef, setTargetRef]
   );
 
   // A central handler for removing the event listener
@@ -67,7 +93,7 @@ export function useInputDropdown<
   // Set the dropdownRef to the div when it becomes available
   // in the DOM. Once it mounts in the DOM we can then open
   // the dropdown in relation to the target, which is set above.
-  const setDropdownRef = useCallback<RefCallback<DropdownElement>>(
+  const setDropdownRef = useCallback<RefCallback<DropdownNode>>(
     (dropdownNode) => {
       if (!dropdownNode) return;
       LOG_UID.debug(
@@ -131,6 +157,23 @@ export function useInputDropdown<
       }
     }, 0);
   }, [dropdownRef, handleClose]);
+
+  // Set the ref with other functions to be used
+  // outside the context of this component
+  useImperativeHandle(imperativeRef, () => {
+    return {
+      handleClose,
+      setValue: (value) => {
+        if (!inputRef.current) return;
+        LOG_UID.debug(
+          "Input value has been set outside of the context of the dropdown. Setting value.",
+          { value }
+        );
+        inputRef.current.value = value;
+      },
+      inputRef,
+    };
+  });
 
   const dropdownProps = useMemo(
     () => ({

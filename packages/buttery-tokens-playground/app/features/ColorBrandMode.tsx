@@ -8,11 +8,12 @@ import { InputRadioCard } from "~/components/InputRadioCard";
 import { IconPencil } from "~/icons/IconPencil";
 import { IconMagicWand01 } from "~/icons/IconMagicWand01";
 
-import { useConfigurationContext } from "./Config.context";
 import { ColorBrandModeManual } from "./ColorBrandModeManual";
-import { InputLabel } from "./InputLabel";
-import { InputSection } from "./InputGroup";
 import { ColorBrandModeAuto } from "./ColorBrandModeAuto";
+import { useConfigurationContext } from "./Config.context";
+
+import { InputLabel } from "../components/InputLabel";
+import { InputSection } from "../components/InputGroup";
 
 const groupStyles = css`
   display: flex;

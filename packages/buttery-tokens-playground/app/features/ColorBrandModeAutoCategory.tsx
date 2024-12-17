@@ -16,8 +16,8 @@ import { IconEarth } from "~/icons/IconEarth";
 import { IconGem } from "~/icons/IconGem";
 import { IconIdea01 } from "~/icons/IconIdea01";
 
-import { InputSelectDropdown } from "./InputSelectDropdown";
-import { useInputSelectDropdownContext } from "./InputSelectDropdown.context";
+import { InputDropdownSelect } from "../components/InputDropdownSelect";
+import { useInputDropdownSelectContext } from "../components/InputDropdownSelect.context";
 
 const colorCategories: {
   type: ButteryTokensColorBrandTypeAuto["type"];
@@ -124,12 +124,12 @@ function CategoryItem({
 }: (typeof colorCategories)[0] & {
   isSelected: boolean;
 }) {
-  const { onSelect: onDropdownSelect } = useInputSelectDropdownContext();
+  const { onSelect } = useInputDropdownSelectContext();
 
   return (
     <button
       className={classes(itemStyles, { active: isSelected })}
-      onClick={() => onDropdownSelect(type)}
+      onClick={() => onSelect(type)}
     >
       <div className="icon">
         <Icon dxSize={16} />
@@ -154,7 +154,8 @@ export function ColorBrandModeAutoCategory<T extends string>(props: {
   );
 
   return (
-    <InputSelectDropdown
+    <InputDropdownSelect
+      dxSize="dense"
       dxOnSelect={handleSelect}
       id={props.id}
       defaultValue={props.selectedType}
@@ -172,6 +173,6 @@ export function ColorBrandModeAutoCategory<T extends string>(props: {
           );
         })}
       </ul>
-    </InputSelectDropdown>
+    </InputDropdownSelect>
   );
 }

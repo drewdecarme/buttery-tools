@@ -10,13 +10,14 @@ import { useMemo, forwardRef, useId } from "react";
 import { match } from "ts-pattern";
 import { makeColor, makeRem } from "@buttery/tokens/playground";
 
-import { InputSelect } from "./InputSelect";
-import { InputLabel } from "./InputLabel";
 import { ColorSwatchVariantTypeAuto } from "./ColorSwatchVariantTypeAuto";
 import type { ColorSwatchVariantTypeNamedProps } from "./ColorSwatchVariantTypeNamed";
 import { ColorSwatchVariantTypeNamed } from "./ColorSwatchVariantTypeNamed";
 import type { ColorSwatchVariantTypeManualProps } from "./ColorSwatchVariantTypeManual";
 import { ColorSwatchVariantTypeManual } from "./ColorSwatchVariantTypeManual";
+
+import { InputLabel } from "../components/InputLabel";
+import { InputSelect } from "../components/InputSelect";
 
 export type ColorSwatchVariantsPropsNative = JSX.IntrinsicElements["div"];
 export type ColorSwatchVariantsPropsCustom = {

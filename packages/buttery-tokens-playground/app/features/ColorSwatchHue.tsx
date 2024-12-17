@@ -2,8 +2,8 @@ import { makeColor, makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import type { ChangeEventHandler } from "react";
 
-import { InputText } from "./InputText";
-import { InputHue } from "./InputHue";
+import { InputText } from "../components/InputText";
+import { InputHue } from "../components/InputHue";
 
 const styles = css`
   display: grid;

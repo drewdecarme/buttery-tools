@@ -1,5 +1,5 @@
-import { ColorPreviewBrand } from "~/components/ColorPreviewBrand";
-import { ColorBrandMode } from "~/components/ColorBrandMode";
+import { ColorPreviewBrand } from "~/features/ColorPreviewBrand";
+import { ColorBrandMode } from "~/features/ColorBrandMode";
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
 import { LayoutConfigSectionPreview } from "~/components/LayoutConfigSectionPreview";

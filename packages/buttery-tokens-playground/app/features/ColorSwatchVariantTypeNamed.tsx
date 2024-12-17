@@ -1,10 +1,11 @@
 import type { ColorVariantTypeNamed } from "@buttery/tokens-utils/schemas";
 
-import { InputLabel } from "./InputLabel";
-import { InputText } from "./InputText";
 import { ColorSwatchVariantAdd } from "./ColorSwatchVariantAdd";
 import { ColorSwatchVariantRemove } from "./ColorSwatchVariantRemove";
 import { ColorSwatchVariantList } from "./ColorSwatchVariantList";
+
+import { InputText } from "../components/InputText";
+import { InputLabel } from "../components/InputLabel";
 
 export type ColorSwatchVariantTypeNamedProps = {
   variants: ColorVariantTypeNamed;

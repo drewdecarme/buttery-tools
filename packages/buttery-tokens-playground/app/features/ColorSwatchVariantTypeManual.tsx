@@ -3,12 +3,13 @@ import { useEffect } from "react";
 import { generateGUID } from "@buttery/utils/isomorphic";
 import { useImmer } from "use-immer";
 
-import { InputLabel } from "./InputLabel";
-import { InputText } from "./InputText";
-import { InputColor } from "./InputColor";
 import { ColorSwatchVariantAdd } from "./ColorSwatchVariantAdd";
 import { ColorSwatchVariantRemove } from "./ColorSwatchVariantRemove";
 import { ColorSwatchVariantList } from "./ColorSwatchVariantList";
+
+import { InputLabel } from "../components/InputLabel";
+import { InputText } from "../components/InputText";
+import { InputColor } from "../components/InputColor";
 
 export type ColorSwatchVariantTypeManualProps = {
   variants: ColorVariantTypeKeyValue;

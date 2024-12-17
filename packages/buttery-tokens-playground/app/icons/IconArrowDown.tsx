@@ -1,4 +1,4 @@
-export const ArrowDown01Icon = ({
+export const IconArrowDown = ({
   dxSize = 24,
   ...restProps
 }: React.SVGProps<SVGSVGElement> & { dxSize: number }) => (

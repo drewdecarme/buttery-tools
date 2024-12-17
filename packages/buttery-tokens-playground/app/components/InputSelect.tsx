@@ -4,7 +4,7 @@ import { css } from "@linaria/core";
 import type { JSX } from "react";
 import { forwardRef } from "react";
 
-import { ArrowDown01Icon } from "~/icons/IconArrowDown";
+import { IconArrowDown } from "~/icons/IconArrowDown";
 
 export type InputSelectPropsNative = JSX.IntrinsicElements["select"];
 export type InputSelectPropsCustom = {
@@ -61,7 +61,7 @@ export const InputSelect = forwardRef<HTMLSelectElement, InputSelectProps>(
         >
           {children}
         </select>
-        <ArrowDown01Icon dxSize={12} className="icon" />
+        <IconArrowDown dxSize={12} className="icon" />
       </div>
     );
   }
