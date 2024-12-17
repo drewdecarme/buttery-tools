@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
 import { makeRem } from "@buttery/tokens/playground";
 import type { ButteryTokensColorBrandTypeAuto } from "@buttery/tokens-utils/schemas";
+import type { ChangeEventHandler } from "react";
 import { useCallback, useId } from "react";
 import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
 
@@ -83,6 +84,30 @@ export function ColorBrandModeAuto({
     [setColor]
   );
 
+  const handleChangeBrightness = useCallback<
+    ChangeEventHandler<HTMLInputElement>
+  >(
+    ({ currentTarget: { value } }) => {
+      setColor((draft) => {
+        // @ts-expect-error This number is validated by the min and max on the range
+        draft.brand.auto.brightness = Number(value);
+      });
+    },
+    [setColor]
+  );
+
+  const handleChangeSaturation = useCallback<
+    ChangeEventHandler<HTMLInputElement>
+  >(
+    ({ currentTarget: { value } }) => {
+      setColor((draft) => {
+        // @ts-expect-error This number is validated by the min and max on the range
+        draft.brand.auto.saturation = Number(value);
+      });
+    },
+    [setColor]
+  );
+
   const selectId = useId();
 
   return (
@@ -98,25 +123,6 @@ export function ColorBrandModeAuto({
           onSelect={handleSelectCategory}
           selectedType={state.type}
         />
-
-        {/* <ul className={styles}>
-          {colorCategories.map((category) => {
-            return (
-              <li key={category.type}>
-                <InputRadio
-                  dxVariant="block"
-                  name="type"
-                  value={category.type}
-                  checked={state.type === category.type}
-                  dxTextPrimary={category.display}
-                  dxTextSecondary={category.description}
-                  DXIcon={category.Icon}
-                  onChange={handleSelectCategory}
-                />
-              </li>
-            );
-          })}
-        </ul> */}
       </InputSection>
       <InputSection>
         <InputLabel
@@ -137,6 +143,7 @@ export function ColorBrandModeAuto({
             dxDisplayInput
             {...colorAutoPresets[state.type].saturation}
             className={inputLabelStyles}
+            onChange={handleChangeSaturation}
           />
         </div>
         <div className={inputLabelStyles}>
@@ -152,6 +159,7 @@ export function ColorBrandModeAuto({
             dxDisplayInput
             {...colorAutoPresets[state.type].brightness}
             className={inputLabelStyles}
+            onChange={handleChangeBrightness}
           />
         </div>
         <div className={inputLabelStyles}>
@@ -174,7 +182,7 @@ export function ColorBrandModeAuto({
                     const id = generateGUID();
                     draft.brand.auto.colors[id] = {
                       hue: 180,
-                      name: `brand${Object.entries(state).length + 1}`,
+                      name: `brand${Object.entries(state.colors).length + 1}`,
                       variants: 10,
                     };
                   })

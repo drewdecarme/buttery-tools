@@ -6,7 +6,6 @@
     "baseUrl": ".",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "allowImportingTsExtensions": true,
     "paths": {
       "@BUTTERY_COMPONENT/*": ["./lib/*"]
     }

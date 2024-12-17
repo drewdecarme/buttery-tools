@@ -1,9 +1,10 @@
+import { type RefCallback, useCallback } from "react";
+
 import {
   ensurePopover,
   ensureTarget,
   usePopover,
-} from "@BUTTERY_COMPONENT/usePopover/index.js";
-import { type RefCallback, useCallback } from "react";
+} from "@BUTTERY_COMPONENT/usePopover/usePopover.js";
 
 import type { DropdownOptions } from "./useDropdown.types.js";
 import {
@@ -25,7 +26,7 @@ export type DropdownRef = {
 
 export type UseDropdownOptions = DropdownOptions & { id: string };
 
-export const useDropdown = <T extends HTMLElement>(
+export const useDropdown = <DropdownNode extends HTMLElement>(
   options: UseDropdownOptions
 ) => {
   const {
@@ -35,9 +36,9 @@ export const useDropdown = <T extends HTMLElement>(
     setTargetRef,
     showPopover,
     hidePopover,
-  } = usePopover<T>({ id: options.id });
+  } = usePopover<DropdownNode>({ id: options.id });
 
-  const setDropdownRef = useCallback<RefCallback<T>>(
+  const setDropdownRef = useCallback<RefCallback<DropdownNode>>(
     (node) => {
       setPopoverRef(node);
       // add a few more styles specific to the dropdown version of the popover

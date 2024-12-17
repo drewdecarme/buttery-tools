@@ -20,7 +20,11 @@ export function ensureTarget<T extends HTMLElement>(node: T | null): node is T {
   return node !== null;
 }
 
-export type FocusableElement = HTMLButtonElement | HTMLInputElement;
+export type FocusableElement =
+  | HTMLButtonElement
+  | HTMLInputElement
+  | HTMLSelectElement
+  | HTMLTextAreaElement;
 
 export type PopoverOptions = {
   /**

@@ -63,9 +63,15 @@ export const NavTabs = forwardRef<HTMLElement, NavTabsProps>(function NavTabs(
     (anchor, div) => {
       if (!navRef.current) return;
 
-      const rect = anchor.getBoundingClientRect();
-      div.style.left = makePx(rect.left - navRef.current.offsetLeft);
-      div.style.width = makePx(rect.width);
+      // calculate the left position relative to the container and not the viewport
+      // since this can be in a sticky container which would skew the anchorRect
+      // calculations
+      const containerRect = navRef.current.getBoundingClientRect();
+      const anchorRect = anchor.getBoundingClientRect();
+      const left = anchorRect.left - containerRect.left;
+
+      div.style.left = makePx(left);
+      div.style.width = makePx(anchorRect.width);
     },
     [navRef]
   );

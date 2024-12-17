@@ -77,7 +77,7 @@ const styles = css`
   }
 
   & > div {
-    border-radius: ${makeRem(16)};
+    border-radius: ${makeRem(12)};
     height: ${makeRem(60)};
     width: auto;
     overflow: hidden;

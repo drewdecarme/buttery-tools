@@ -24,6 +24,7 @@ export * from "./useToggle/index.js";
 export * from "./useTooltip/index.js";
 export * from "./useWindowEventListener/index.js";
 export * from "./useTrackingNode/index.js";
+export * from "./useInputDropdown/index.js";
 
 // Utils
 export * from "./utils/index.js";
