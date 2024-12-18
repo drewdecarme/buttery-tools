@@ -11,8 +11,13 @@ import { css } from "@linaria/core";
 import type { JSX } from "react";
 import { forwardRef, useCallback } from "react";
 
+import { NavTabsContextProvider } from "./NavTabs.context";
+
 export type NavTabsPropsNative = JSX.IntrinsicElements["nav"];
-export type NavTabsProps = NavTabsPropsNative;
+export type NavTabsPropsCustom = {
+  dxInitActiveTab?: string;
+};
+export type NavTabsProps = NavTabsPropsNative & NavTabsPropsCustom;
 
 const styles = css`
   position: relative;
@@ -59,7 +64,7 @@ const divStyles = css`
 `;
 
 export const NavTabs = forwardRef<HTMLElement, NavTabsProps>(function NavTabs(
-  { children, className, ...restProps },
+  { children, className, dxInitActiveTab, ...restProps },
   forwardedRef
 ) {
   const navRef = useForwardedRef(forwardedRef);
@@ -91,9 +96,11 @@ export const NavTabs = forwardRef<HTMLElement, NavTabsProps>(function NavTabs(
   );
 
   return (
-    <nav {...restProps} className={classes(styles, className)} ref={navRef}>
-      <div ref={divRef} className={divStyles} />
-      {children}
-    </nav>
+    <NavTabsContextProvider dxInitActiveTab={dxInitActiveTab}>
+      <nav {...restProps} className={classes(styles, className)} ref={navRef}>
+        <div ref={divRef} className={divStyles} />
+        {children}
+      </nav>
+    </NavTabsContextProvider>
   );
 });

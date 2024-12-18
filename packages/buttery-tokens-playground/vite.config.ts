@@ -5,7 +5,6 @@ import {
 import { mergeConfig } from "vite";
 
 import baseConfig from "./vite.config.base";
-
 declare module "@remix-run/cloudflare" {
   interface Future {
     v3_singleFetch: true;

@@ -19,7 +19,6 @@ const styles = css`
   padding: 0;
   border: 0;
   margin: 0;
-  display: grid;
   margin: auto;
   border-radius: ${makeRem(4)};
   transition: backdrop-filter 1s ease;
