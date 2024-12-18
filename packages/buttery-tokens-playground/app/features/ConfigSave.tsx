@@ -1,6 +1,5 @@
 import { useModal } from "@buttery/components";
 import { css } from "@linaria/core";
-import { DiffEditor } from "@monaco-editor/react";
 
 import { Button } from "~/components/Button";
 import { Modal } from "~/components/Modal";
