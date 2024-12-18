@@ -1,2 +1,6 @@
-export * from "./DropdownMenu.js";
-export * from "./dropdown-menu.useDropdownMenu.js";
+export {
+  DropdownMenu,
+  type DropdownMenuProps,
+  type DropdownMenuPropsNative,
+} from "./DropdownMenu.js";
+export { useDropdownMenu } from "./dropdown-menu.useDropdownMenu.js";

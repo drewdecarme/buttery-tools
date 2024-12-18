@@ -96,6 +96,18 @@ const styles = css`
   }
 `;
 
+export function createButtonStyles({
+  dxColor,
+  dxVariant,
+  dxSize,
+}: Required<Omit<ButtonPropsCustom, "DXAdornmentStart">>): string {
+  return classes(styles, {
+    [`c-${dxColor}`]: dxColor,
+    [`s-${dxSize}`]: dxSize,
+    [`v-${dxVariant}`]: dxVariant,
+  });
+}
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(
     {
@@ -113,12 +125,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         {...restProps}
         className={classes(
-          styles,
-          {
-            [`c-${dxColor}`]: dxColor,
-            [`s-${dxSize}`]: dxSize,
-            [`v-${dxVariant}`]: dxVariant,
-          },
+          createButtonStyles({ dxColor, dxSize, dxVariant }),
           className
         )}
         ref={ref}
