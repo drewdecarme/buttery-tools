@@ -27,10 +27,15 @@ const styles = css`
   padding: ${makeCustom("modal-gutters")};
   display: flex;
   gap: ${makeRem(24)};
+  width: 100%;
+
+  & > div {
+    flex: 1;
+  }
 
   .title {
     flex: 1;
-    font-size: ${makeRem(24)};
+    font-size: ${makeRem(20)};
     font-family: ${makeFontFamily("body")};
     font-weight: ${makeFontWeight("bold")};
     line-height: 1;
