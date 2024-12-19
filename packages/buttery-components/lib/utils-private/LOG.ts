@@ -3,6 +3,7 @@ import { type ButteryLogLevel, ButteryLogger } from "@buttery/logs";
 class ButteryComponentLoggers {
   InputTextDropdown: ButteryLogger;
   UseInputDropdown: ButteryLogger;
+  UseDropdownMenu: ButteryLogger;
 
   constructor(options: { defaultLevel: ButteryLogLevel }) {
     this.InputTextDropdown = new ButteryLogger({
@@ -15,6 +16,12 @@ class ButteryComponentLoggers {
       id: "USE_INPUT_DROPDOWN",
       prefix: "UseInputDropdown",
       prefixBgColor: "#fd954b",
+      logLevel: options.defaultLevel,
+    });
+    this.UseDropdownMenu = new ButteryLogger({
+      id: "USE_DROPDOWN_MENU",
+      prefix: "useDropdownMenu",
+      prefixBgColor: "#05f7b9",
       logLevel: options.defaultLevel,
     });
 

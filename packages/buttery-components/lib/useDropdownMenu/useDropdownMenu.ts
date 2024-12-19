@@ -2,6 +2,8 @@ import { useId, useRef, useCallback, useMemo, useEffect } from "react";
 
 import { useDropdown } from "@BUTTERY_COMPONENT/useDropdown/useDropdown.js";
 import type { DropdownOptions } from "@BUTTERY_COMPONENT/useDropdown/useDropdown.types.js";
+
+import { LOG_UDM } from "./use-dropdown-menu.utils.js";
 /**
  * A dropdown menu hook designed to be used with display menus
  * when a button is clicked
@@ -31,7 +33,7 @@ export function useDropdownMenu<DropdownNode extends HTMLElement>(
 
   // Closes the menu and removes the listeners
   const closeMenu = useCallback(() => {
-    console.log("Closing menu");
+    LOG_UDM.debug("Closing menu");
 
     isMenuOpenRef.current = false;
 
@@ -40,7 +42,7 @@ export function useDropdownMenu<DropdownNode extends HTMLElement>(
     if (!onWindowClick || !onWindowKeydown) return;
 
     // Remove event listeners
-    console.log("Removing window event listeners");
+    LOG_UDM.debug("Removing window event listeners");
     window.removeEventListener("click", onWindowClick);
     window.removeEventListener("keydown", onWindowKeydown);
 
@@ -49,7 +51,7 @@ export function useDropdownMenu<DropdownNode extends HTMLElement>(
 
   // Opens the dropdown
   const openMenu = useCallback(() => {
-    console.log("Opening menu");
+    LOG_UDM.debug("Opening menu");
 
     // Add a window listener to listen for a click and determine
     // if its a part of the dropdown or target or not
@@ -68,7 +70,7 @@ export function useDropdownMenu<DropdownNode extends HTMLElement>(
       ) {
         return;
       }
-      console.log("External node to dropdown or target clicked. Moving");
+      LOG_UDM.debug("External node to dropdown or target clicked. Moving");
       closeMenu();
     }
 
@@ -76,11 +78,11 @@ export function useDropdownMenu<DropdownNode extends HTMLElement>(
     function handleWindowKeydown(e: KeyboardEvent) {
       if (!isMenuOpenRef.current) return;
       if (e.key !== "Escape") return;
-      console.log("Escape key pressed. Closing menu");
+      LOG_UDM.debug("Escape key pressed. Closing menu");
       closeMenu();
     }
 
-    console.log("Adding window event listeners to determine when to close");
+    LOG_UDM.debug("Adding window event listeners to determine when to close");
     isMenuOpenRef.current = true;
     onWindowClickRef.current = handleWindowClick;
     onWindowKeydownRef.current = handleWindowKeydown;
@@ -105,7 +107,7 @@ export function useDropdownMenu<DropdownNode extends HTMLElement>(
       e.stopPropagation();
       if (!menuRef.current) return;
       if (menuRef.current.classList.contains("open")) {
-        console.log("Target clicked. Closing menu");
+        LOG_UDM.debug("Target clicked. Closing menu");
         closeMenu();
       } else {
         openMenu();
