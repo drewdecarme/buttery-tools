@@ -1,7 +1,6 @@
-import type { DropdownOptions, FocusableElement } from "@buttery/components";
 import { useDropdown } from "@buttery/components";
-import type { MouseEventHandler, RefCallback } from "react";
-import { forwardRef, useCallback, useId } from "react";
+import type { MouseEventHandler } from "react";
+import { forwardRef, useCallback } from "react";
 import { css } from "@linaria/core";
 import { makeRem } from "@buttery/tokens/playground";
 
