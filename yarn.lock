@@ -1211,14 +1211,24 @@ __metadata:
     "@buttery/core": "workspace:*"
     "@buttery/logs": "workspace:*"
     "@buttery/tsconfig": "workspace:*"
+    "@chromatic-com/storybook": "npm:^3.2.2"
     "@inquirer/prompts": "npm:7.2.0"
     "@linaria/core": "npm:6.2.0"
+    "@ngneat/falso": "npm:^7.2.0"
+    "@storybook/addon-essentials": "npm:^8.4.7"
+    "@storybook/addon-interactions": "npm:^8.4.7"
+    "@storybook/addon-onboarding": "npm:^8.4.7"
+    "@storybook/blocks": "npm:^8.4.7"
+    "@storybook/react": "npm:^8.4.7"
+    "@storybook/react-vite": "npm:^8.4.7"
+    "@storybook/test": "npm:^8.4.7"
     "@types/babel__core": "npm:7.20.5"
     "@types/node": "npm:22.10.2"
     "@vitejs/plugin-react-swc": "npm:3.7.2"
     "@wyw-in-js/vite": "npm:0.5.5"
     react: "npm:19.0.0"
     react-dom: "npm:19.0.0"
+    storybook: "npm:^8.4.7"
     typescript: "npm:5.7.2"
     vite: "npm:6.0.3"
     zod: "npm:3.24.1"
@@ -3473,7 +3483,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ngneat/falso@npm:7.2.0":
+"@ngneat/falso@npm:7.2.0, @ngneat/falso@npm:^7.2.0":
   version: 7.2.0
   resolution: "@ngneat/falso@npm:7.2.0"
   dependencies:
