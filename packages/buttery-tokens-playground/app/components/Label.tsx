@@ -30,33 +30,31 @@ const styles = css`
   line-height: 1;
   font-weight: ${makeFontWeight("semi-bold")};
   white-space: nowrap;
+  border-radius: ${makeRem(4)};
 
   &.s {
     &-dense {
-      padding: 0 ${makeRem(16)};
-      height: ${makeRem(24)};
-      font-size: ${makeRem(12)};
-      border-radius: ${makeRem(16)};
+      padding: 0 ${makeRem(8)};
+      height: ${makeRem(20)};
+      font-size: ${makeRem(10)};
       gap: ${makeRem(6)};
     }
   }
 
   &.s {
     &-normal {
-      padding: 0 ${makeRem(20)};
-      height: ${makeRem(28)};
-      font-size: ${makeRem(14)};
-      border-radius: ${makeRem(20)};
+      padding: 0 ${makeRem(10)};
+      height: ${makeRem(24)};
+      font-size: ${makeRem(12)};
       gap: ${makeRem(8)};
     }
   }
 
   &.s {
     &-large {
-      padding: 0 ${makeRem(24)};
-      height: ${makeRem(32)};
-      font-size: ${makeRem(16)};
-      border-radius: ${makeRem(24)};
+      padding: 0 ${makeRem(12)};
+      height: ${makeRem(28)};
+      font-size: ${makeRem(14)};
       gap: ${makeRem(12)};
     }
   }
@@ -86,9 +84,9 @@ export const Label = forwardRef<HTMLSpanElement, LabelProps>(function Label(
       {DXIconStart && (
         <DXIconStart
           dxSize={match(dxSize)
-            .with("dense", () => 12)
-            .with("normal", () => 16)
-            .with("large", () => 20)
+            .with("dense", () => 10)
+            .with("normal", () => 12)
+            .with("large", () => 14)
             .exhaustive()}
         />
       )}
