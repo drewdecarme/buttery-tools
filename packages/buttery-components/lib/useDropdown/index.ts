@@ -7,11 +7,10 @@ export type {
 export { useDropdown } from "./useDropdown.js";
 export type {
   DropdownRef,
-  DropdownRefHandleOpen,
   UseDropdownOptions,
+  UseDropdownHandleOpen,
 } from "./useDropdown.js";
 export {
-  getIsDropdownOpen,
   processDropdownOptions,
   setDropdownPositionStyles,
 } from "./useDropdown.utils.js";

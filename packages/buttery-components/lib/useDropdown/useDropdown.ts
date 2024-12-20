@@ -2,10 +2,6 @@ import { type RefCallback, useCallback, useMemo } from "react";
 
 import type { FocusableElement } from "@BUTTERY_COMPONENT/usePopover/usePopover.js";
 import { usePopover } from "@BUTTERY_COMPONENT/usePopover/usePopover.js";
-import {
-  ensurePopover,
-  ensureTarget,
-} from "@BUTTERY_COMPONENT/usePopover/use-popover.utils.js";
 
 import type { DropdownOptions } from "./useDropdown.types.js";
 import {
@@ -54,7 +50,7 @@ export const useDropdown = <
   const openDropdown = useCallback<UseDropdownHandleOpen>(() => {
     const popover = popoverRef.current;
     const target = targetRef.current;
-    if (!ensurePopover(popover) || !ensureTarget(target)) return;
+    if (!popover || !target) return;
 
     // apply the options either from the hook or
     // from the params which take precedence.
