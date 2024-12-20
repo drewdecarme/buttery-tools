@@ -1,12 +1,17 @@
-import { useDropdownMenu } from "@buttery/components";
+import { classes, useDropdownMenu } from "@buttery/components";
 import type { MouseEventHandler } from "react";
 import { forwardRef, useCallback } from "react";
 import { css } from "@linaria/core";
-import { makeRem } from "@buttery/tokens/playground";
+import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 
 import { IconArrowDown } from "~/icons/IconArrowDown";
 
-import { Button, type ButtonPropsCustom } from "./Button";
+import {
+  Button,
+  createButtonClassNames,
+  type ButtonPropsCustom,
+} from "./Button";
+import { createDropdownStyles } from "./shared-styles";
 
 export type ButtonDropdownOption = {
   dxLabel: string;
@@ -58,11 +63,45 @@ const styles = css`
   }
 `;
 
+const dropdownStyles = createDropdownStyles(css`
+  ${makeReset("ul")};
+
+  &.c-primary {
+    border: ${makeRem(1)} solid ${makeColor("primary")};
+  }
+  &.c-secondary {
+    border: ${makeRem(1)} solid ${makeColor("secondary")};
+  }
+
+  button {
+    ${makeReset("button")};
+  }
+
+  &.s-dense {
+    padding: ${makeRem(4)};
+
+    button {
+      font-size: ${makeRem(10)};
+      padding: ${makeRem(4)} ${makeRem(8)};
+    }
+  }
+
+  &.s-normal {
+    padding: ${makeRem(8)};
+
+    button {
+      font-size: ${makeRem(12)};
+      padding: ${makeRem(4)} ${makeRem(12)};
+    }
+  }
+`);
+
 function ButtonDropdownOption({
   dxAction,
   dxLabel,
   onClose,
-}: ButtonDropdownOption & { onClose: () => void }) {
+  className,
+}: ButtonDropdownOption & { onClose: () => void; className?: string }) {
   const handleClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
     (e) => {
       dxAction(e);
@@ -70,7 +109,11 @@ function ButtonDropdownOption({
     },
     [dxAction, onClose]
   );
-  return <button onClick={handleClick}>{dxLabel}</button>;
+  return (
+    <button onClick={handleClick} className={className}>
+      {dxLabel}
+    </button>
+  );
 }
 
 export const ButtonDropdown = forwardRef<
@@ -113,7 +156,13 @@ export const ButtonDropdown = forwardRef<
       >
         <IconArrowDown dxSize={dxSize === "dense" ? 12 : 14} />
       </Button>
-      <ul ref={setDropdownRef} className="dropdown">
+      <ul
+        ref={setDropdownRef}
+        className={classes(
+          dropdownStyles,
+          createButtonClassNames({ dxColor, dxSize, dxVariant })
+        )}
+      >
         {dxOptions.map((option) => (
           <li key={option.dxLabel}>
             <ButtonDropdownOption {...option} onClose={closeMenu} />

@@ -96,16 +96,22 @@ const styles = css`
   }
 `;
 
-export function createButtonStyles({
+export function createButtonClassNames({
   dxColor,
   dxVariant,
   dxSize,
 }: Required<Omit<ButtonPropsCustom, "DXAdornmentStart">>): string {
-  return classes(styles, {
+  return classes({
     [`c-${dxColor}`]: dxColor,
     [`s-${dxSize}`]: dxSize,
     [`v-${dxVariant}`]: dxVariant,
   });
+}
+
+export function createButtonStyles(
+  args: Required<Omit<ButtonPropsCustom, "DXAdornmentStart">>
+): string {
+  return classes(styles, createButtonClassNames(args));
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
