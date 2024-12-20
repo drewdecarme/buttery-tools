@@ -30,9 +30,12 @@ export type ButtonDropdownPropsCustom = ButtonPropsCustom & {
 export type ButtonDropdownProps = ButtonDropdownPropsNative &
   ButtonDropdownPropsCustom;
 
+export const buttonDropdownClassName = "btn-dropdown";
+
 const styles = css`
-  display: inline-flex;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: auto auto;
+  height: min-content;
 
   & > button {
     &:nth-child(1) {
@@ -65,6 +68,7 @@ const styles = css`
 
 const dropdownStyles = createDropdownStyles(css`
   ${makeReset("ul")};
+  border-radius: ${makeRem(4)} !important;
 
   &.c-primary {
     border: ${makeRem(1)} solid ${makeColor("primary")};
@@ -75,6 +79,7 @@ const dropdownStyles = createDropdownStyles(css`
 
   button {
     ${makeReset("button")};
+    white-space: nowrap;
   }
 
   &.s-dense {
@@ -87,7 +92,7 @@ const dropdownStyles = createDropdownStyles(css`
   }
 
   &.s-normal {
-    padding: ${makeRem(8)};
+    padding: ${makeRem(4)};
 
     button {
       font-size: ${makeRem(12)};
@@ -138,7 +143,10 @@ export const ButtonDropdown = forwardRef<
     });
 
   return (
-    <div className={styles} ref={alignmentRef}>
+    <div
+      className={classes(buttonDropdownClassName, styles)}
+      ref={alignmentRef}
+    >
       <Button
         ref={ref}
         dxColor={dxColor}

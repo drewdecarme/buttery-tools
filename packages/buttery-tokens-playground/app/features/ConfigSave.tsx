@@ -10,6 +10,7 @@ import { NavTabContent } from "~/components/NavTabContent";
 import { NavTabLabel } from "~/components/NavTabLabel";
 import { NavTabs } from "~/components/NavTabs";
 import { IconFloppyDisk } from "~/icons/IconFloppyDisk";
+import { ButtonDropdown } from "~/components/ButtonDropdown";
 
 import { ConfigSaveDiff } from "./ConfigSaveDiff";
 
@@ -48,13 +49,13 @@ export function ConfigSave() {
   const { openModal, modalRef } = useModal();
   return (
     <>
-      <Button
+      <ButtonDropdown
         dxVariant="outlined"
         DXAdornmentStart={<IconFloppyDisk dxSize={16} />}
-        onClick={openModal}
+        dxOptions={[{ dxLabel: "Compare and Save", dxAction: openModal }]}
       >
         Save
-      </Button>
+      </ButtonDropdown>
       <Modal ref={modalRef} dxSize="full">
         <ModalHeader dxSubtitle="Save you work by accepting the difference between your changes and the previous version of your configuration file.">
           Compare and Save
