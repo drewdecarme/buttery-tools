@@ -1,9 +1,8 @@
-import { forwardRef, useCallback, useRef } from "react";
+import { forwardRef, useCallback } from "react";
 import {
-  type UseInputDropdownRef,
   classes,
-  useInputDropdown,
   type DropdownOptions,
+  useDropdownInput,
   useForwardedRef,
 } from "@buttery/components";
 import { css } from "@linaria/core";
@@ -112,35 +111,38 @@ export const InputDropdownSelect = forwardRef<
   ref
 ) {
   const forwardedRef = useForwardedRef(ref);
-  const imperativeRef = useRef<UseInputDropdownRef<HTMLInputElement>>();
 
-  const { isOpen, dropdownProps, inputProps, setDropdownRef, setInputRef } =
-    useInputDropdown({
-      dxArrow,
-      dxOffset,
-      dxPosition,
-      forwardedRef,
-      imperativeRef,
-    });
+  const {
+    isOpen,
+    containerRef,
+    setInputMenuRef,
+    setTargetRef,
+    targetRef,
+    closeInputMenu,
+  } = useDropdownInput({
+    dxArrow,
+    dxOffset,
+    dxPosition,
+    forwardedRef,
+  });
 
   const handleSelect = useCallback<(value: string) => void>(
     (value) => {
-      if (!imperativeRef.current) return;
-      imperativeRef.current.setValue(value);
+      if (!targetRef.current) return;
+      targetRef.current.value = value;
       if (dxOnSelect) dxOnSelect(value);
-      imperativeRef.current.handleClose();
+      closeInputMenu();
     },
-    [dxOnSelect, imperativeRef]
+    [closeInputMenu, dxOnSelect, targetRef]
   );
 
   return (
-    <div>
+    <div ref={containerRef}>
       <div className={textContainerStyles}>
         <InputText
           {...restProps}
-          {...inputProps}
           dxSize={dxSize}
-          ref={setInputRef}
+          ref={setTargetRef}
           readOnly
           className={classes(className)}
         />
@@ -150,7 +152,7 @@ export const InputDropdownSelect = forwardRef<
       </div>
       <InputDropdownSelectProvider onSelect={handleSelect}>
         {isOpen && (
-          <div ref={setDropdownRef} className={styles} {...dropdownProps}>
+          <div ref={setInputMenuRef} className={styles}>
             {children}
           </div>
         )}

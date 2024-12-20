@@ -10,7 +10,7 @@ const options = [...new Array(10)].map(() => ({
 }));
 
 export default () => {
-  const { menuRef, targetRef } = useDropdownMenu<HTMLUListElement>();
+  const { setDropdownRef, setTargetRef } = useDropdownMenu<HTMLUListElement>();
   const [selectedOption, setSelectedOption] = useState<
     (typeof options)[0] | undefined
   >(undefined);
@@ -26,8 +26,8 @@ export default () => {
 
   return (
     <>
-      <button ref={targetRef}>open the menu</button>
-      <ul ref={menuRef}>
+      <button ref={setTargetRef}>open the menu</button>
+      <ul ref={setDropdownRef}>
         {options.map((option) => (
           <li key={option.id}>
             <label>

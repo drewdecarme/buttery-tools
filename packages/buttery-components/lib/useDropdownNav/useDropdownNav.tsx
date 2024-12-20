@@ -6,8 +6,10 @@ import { useDropdown } from "@BUTTERY_COMPONENT/useDropdown/useDropdown.js";
 
 import { LOG_UDN } from "./use-dropdown-nav.utils.js";
 
+export type UseDropdownNavArgs = DropdownOptions;
+
 export function useDropdownNav<DropdownNode extends HTMLElement>(
-  options?: DropdownOptions
+  options?: UseDropdownNavArgs
 ) {
   const id = useId();
   const onWindowClickRef = useRef<((e: MouseEvent) => void) | null>(null);

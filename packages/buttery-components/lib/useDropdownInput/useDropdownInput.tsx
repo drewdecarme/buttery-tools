@@ -5,7 +5,7 @@ import type { DropdownOptions } from "@BUTTERY_COMPONENT/useDropdown/useDropdown
 import type { UseDropdownOptions } from "@BUTTERY_COMPONENT/useDropdown/useDropdown.js";
 import { useDropdown } from "@BUTTERY_COMPONENT/useDropdown/useDropdown.js";
 
-export type UseDropdownInputOptions = DropdownOptions & {
+export type UseDropdownInputArgs = DropdownOptions & {
   /**
    * A provided ID that will overwrite the ID that is created internally.
    */
@@ -15,7 +15,7 @@ export type UseDropdownInputOptions = DropdownOptions & {
 export function useDropdownInput<
   DropdownNode extends HTMLElement,
   TargetNode extends HTMLInputElement
->(options: UseDropdownInputOptions) {
+>(options: UseDropdownInputArgs) {
   const id = useId();
   const isDropdownOpenRef = useRef(false);
   const [isOpen, setIsOpen] = useState(false);

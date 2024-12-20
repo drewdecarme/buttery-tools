@@ -1,4 +1,4 @@
-import { type RefCallback, useCallback, useMemo } from "react";
+import { type RefCallback, useCallback, useMemo, useRef } from "react";
 
 import type { FocusableElement } from "@BUTTERY_COMPONENT/usePopover/usePopover.js";
 import { usePopover } from "@BUTTERY_COMPONENT/usePopover/usePopover.js";
@@ -20,7 +20,8 @@ export type UseDropdownOptions = DropdownOptions & { id: string };
 
 export const useDropdown = <
   DropdownNode extends HTMLElement,
-  TargetNode extends FocusableElement
+  TargetNode extends FocusableElement,
+  AlignmentNode extends HTMLElement = HTMLElement
 >(
   options: UseDropdownOptions
 ) => {
@@ -32,6 +33,7 @@ export const useDropdown = <
     showPopover,
     hidePopover,
   } = usePopover<DropdownNode, TargetNode>({ id: options.id });
+  const alignmentRef = useRef<AlignmentNode | null>(null);
 
   const memoOptions = useMemo(() => options, [options]);
 
@@ -62,6 +64,7 @@ export const useDropdown = <
       offset: parsedOptions.dxOffset,
       dropdownNode: popover,
       targetNode: target,
+      alignmentNode: alignmentRef.current,
     });
 
     // show the popover
@@ -72,6 +75,7 @@ export const useDropdown = <
     () => ({
       dropdownRef: popoverRef,
       setDropdownRef,
+      alignmentRef,
       targetRef,
       setTargetRef,
       closeDropdown: hidePopover,

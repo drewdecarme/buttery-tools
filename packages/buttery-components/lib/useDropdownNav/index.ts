@@ -1,1 +1,1 @@
-export * from "./useDropdownNav.js";
+export { useDropdownNav, type UseDropdownNavArgs } from "./useDropdownNav.js";

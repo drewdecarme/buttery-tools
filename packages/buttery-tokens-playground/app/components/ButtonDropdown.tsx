@@ -1,4 +1,4 @@
-import { useDropdown } from "@buttery/components";
+import { useDropdownMenu } from "@buttery/components";
 import type { MouseEventHandler } from "react";
 import { forwardRef, useCallback } from "react";
 import { css } from "@linaria/core";
@@ -26,7 +26,7 @@ export type ButtonDropdownProps = ButtonDropdownPropsNative &
   ButtonDropdownPropsCustom;
 
 const styles = css`
-  display: flex;
+  display: inline-flex;
   align-items: stretch;
 
   & > button {
@@ -88,12 +88,14 @@ export const ButtonDropdown = forwardRef<
   },
   ref
 ) {
-  const { openMenu, closeMenu, targetRef, menuRef } = useDropdownMenu({
-    dxOffset: 4,
-  });
+  const { closeMenu, setTargetRef, setDropdownRef, alignmentRef } =
+    useDropdownMenu<HTMLUListElement, HTMLDivElement>({
+      dxOffset: 4,
+      dxPosition: "bottom-left",
+    });
 
   return (
-    <div className={styles}>
+    <div className={styles} ref={alignmentRef}>
       <Button
         ref={ref}
         dxColor={dxColor}
@@ -104,15 +106,14 @@ export const ButtonDropdown = forwardRef<
         {children}
       </Button>
       <Button
-        ref={targetRef}
-        onClick={openMenu}
+        ref={setTargetRef}
         dxColor={dxColor}
         dxSize={dxSize}
         dxVariant={dxVariant}
       >
         <IconArrowDown dxSize={dxSize === "dense" ? 12 : 14} />
       </Button>
-      <ul ref={menuRef} className="dropdown">
+      <ul ref={setDropdownRef} className="dropdown">
         {dxOptions.map((option) => (
           <li key={option.dxLabel}>
             <ButtonDropdownOption {...option} onClose={closeMenu} />

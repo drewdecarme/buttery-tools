@@ -90,14 +90,17 @@ export function setDropdownPositionStyles<
     arrow,
     dropdownNode,
     targetNode,
+    alignmentNode,
   }: {
     arrow: DropdownOptionArrow;
     offset: number;
     dropdownNode: DropdownElement;
     targetNode: TargetElement;
+    alignmentNode: HTMLElement | null;
   }
 ) {
-  const targetBox = targetNode.getBoundingClientRect();
+  const alignmentTarget = alignmentNode ?? targetNode;
+  const targetBox = alignmentTarget.getBoundingClientRect();
 
   if (!targetBox) {
     return console.warn(
