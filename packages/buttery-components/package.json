@@ -36,7 +36,7 @@
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
     "@buttery/tsconfig": "workspace:*",
-    "@chromatic-com/storybook": "^3.2.2",
+    "@chromatic-com/storybook": "^3.2.3",
     "@linaria/core": "6.2.0",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
@@ -51,14 +51,14 @@
     "@wyw-in-js/vite": "0.5.5",
     "storybook": "^8.4.7",
     "typescript": "5.7.2",
-    "vite": "6.0.3"
+    "vite": "6.0.5"
   },
   "dependencies": {
     "@babel/core": "7.26.0",
     "@babel/parser": "7.26.3",
     "@buttery/core": "workspace:*",
     "@buttery/logs": "workspace:*",
-    "@inquirer/prompts": "7.2.0",
+    "@inquirer/prompts": "7.2.1",
     "@ngneat/falso": "^7.2.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
