@@ -1,6 +1,6 @@
 import type { ButteryTokensConfig } from "@buttery/tokens-utils/schemas";
 import { ConfigSchema } from "@buttery/tokens-utils/schemas";
-import type { FC, ReactNode } from "react";
+import type { FC, MutableRefObject, ReactNode } from "react";
 import { useRef, useContext, useMemo, createContext, useCallback } from "react";
 import type { Updater } from "use-immer";
 import { useImmer } from "use-immer";
@@ -15,6 +15,7 @@ export type ConfigurationContextType = {
   color: ConfigurationStateColor;
   setColor: Updater<ConfigurationStateColor>;
   getConfig: () => ButteryTokensConfig;
+  originalConfig: MutableRefObject<ButteryTokensConfig>;
 };
 const ConfigurationContext = createContext<ConfigurationContextType | null>(
   null
@@ -117,6 +118,7 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
 }) => {
   // color transforms & state
   const initColorRef = useRef(getInitColorStateFromConfig(config));
+
   const [color, setColor] = useImmer(initColorRef.current);
 
   const getConfig = useCallback(() => {
@@ -130,8 +132,10 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
     return config.data;
   }, [color]);
 
+  const originalConfig = useRef(getConfig());
+
   const value = useMemo<ConfigurationContextType>(
-    () => ({ color, setColor, getConfig }),
+    () => ({ color, setColor, getConfig, originalConfig }),
     [color, getConfig, setColor]
   );
 

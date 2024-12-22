@@ -11,6 +11,10 @@ export type ModalPropsNative = Omit<
 >;
 export type ModalPropsCustom = UseModalOptions & {
   dxSize?: "sm" | "md" | "lg" | "xl" | "full";
+  /**
+   * How the content is laid out in the modal
+   */
+  dxVariant?: "contain" | "flow";
   children: ReactNode;
 };
 export type ModalProps = ModalPropsNative & ModalPropsCustom;
@@ -25,6 +29,14 @@ const styles = css`
   filter: ${` drop-shadow(1px 2px 20px ${makeColor("neutral", {
     opacity: 0.5,
   })})`};
+
+  &.v {
+    &-contain {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      height: 100%;
+    }
+  }
 
   &.s {
     &-sm {
@@ -114,7 +126,13 @@ const styles = css`
 `;
 
 export const Modal = forwardRef<ModalRef, ModalProps>(function Modal(
-  { children, className, dxSize = "md", ...restProps }: ModalProps,
+  {
+    children,
+    className,
+    dxSize = "md",
+    dxVariant = "flow",
+    ...restProps
+  }: ModalProps,
   ref
 ) {
   const { isOpen, dialogRef, dialogState, closeModal } = useModalDialog({
@@ -132,6 +150,7 @@ export const Modal = forwardRef<ModalRef, ModalProps>(function Modal(
         styles,
         dxSize && {
           [`s-${dxSize}`]: dxSize,
+          [`v-${dxVariant}`]: dxVariant,
         },
         className
       )}

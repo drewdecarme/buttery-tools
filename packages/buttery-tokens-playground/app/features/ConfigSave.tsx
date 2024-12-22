@@ -1,68 +1,46 @@
 import { useModal } from "@buttery/components";
-import { css } from "@linaria/core";
 
-import { Button } from "~/components/Button";
 import { Modal } from "~/components/Modal";
 import { ModalBody } from "~/components/ModalBody";
 import { ModalHeader } from "~/components/ModalHeader";
-import { NavTab } from "~/components/NavTab";
-import { NavTabContent } from "~/components/NavTabContent";
-import { NavTabLabel } from "~/components/NavTabLabel";
-import { NavTabs } from "~/components/NavTabs";
 import { IconFloppyDisk } from "~/icons/IconFloppyDisk";
 import { ButtonDropdown } from "~/components/ButtonDropdown";
+import { Button } from "~/components/Button";
+import { ModalFooter } from "~/components/ModalFooter";
 
 import { ConfigSaveDiff } from "./ConfigSaveDiff";
 
-const styles = css`
-  * {
-    font-family: unset;
-  }
-`;
-
-function Differ() {
-  return (
-    <div className={styles}>
-      <NavTabs dxInitActiveTab="diff">
-        <ul>
-          <li>
-            <NavTab id="diff">
-              <NavTabLabel>Diff Editor</NavTabLabel>
-              <NavTabContent>
-                <ConfigSaveDiff />
-              </NavTabContent>
-            </NavTab>
-          </li>
-          <li>
-            <NavTab id="version-history">
-              <NavTabLabel>Version History</NavTabLabel>
-              <NavTabContent>test</NavTabContent>
-            </NavTab>
-          </li>
-        </ul>
-      </NavTabs>
-    </div>
-  );
-}
-
 export function ConfigSave() {
-  const { openModal, modalRef } = useModal();
+  const { openModal, modalRef, closeModal } = useModal();
   return (
     <>
       <ButtonDropdown
-        dxVariant="outlined"
+        dxVariant="contained"
         DXAdornmentStart={<IconFloppyDisk dxSize={16} />}
         dxOptions={[{ dxLabel: "Compare and Save", dxAction: openModal }]}
       >
         Save
       </ButtonDropdown>
-      <Modal ref={modalRef} dxSize="full">
-        <ModalHeader dxSubtitle="Save you work by accepting the difference between your changes and the previous version of your configuration file.">
-          Compare and Save
+      <Modal ref={modalRef} dxSize="full" dxVariant="contain">
+        <ModalHeader dxSubtitle="View your modified config next to the original & make any changes necessary. Once complete, click the 'save' button at the bottom right hand of the screen.">
+          View Diff & Save
         </ModalHeader>
         <ModalBody>
-          <Differ />
+          <ConfigSaveDiff />
         </ModalBody>
+        <ModalFooter>
+          <Button
+            dxColor="primary"
+            dxSize="big"
+            dxVariant="outlined"
+            onClick={closeModal}
+          >
+            Cancel
+          </Button>
+          <Button dxColor="primary" dxSize="big" dxVariant="contained">
+            Save
+          </Button>
+        </ModalFooter>
       </Modal>
     </>
   );

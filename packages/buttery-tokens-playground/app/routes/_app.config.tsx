@@ -81,22 +81,26 @@ export default function AppConfigRoute() {
               design system
             </p>
           </div>
-          <ButtonGroup>
-            <Button
-              dxVariant="outlined"
-              DXAdornmentStart={<IconCopy dxSize={16} />}
-            >
-              Copy
-            </Button>
-            <Button
-              dxVariant="outlined"
-              DXAdornmentStart={<IconDownload05 dxSize={16} />}
-            >
-              Export
-            </Button>
-            <ConfigView />
-            <ConfigSave />
-          </ButtonGroup>
+          <div className="actions">
+            <ButtonGroup>
+              <Button
+                dxVariant="outlined"
+                DXAdornmentStart={<IconCopy dxSize={16} />}
+              >
+                Copy
+              </Button>
+              <Button
+                dxVariant="outlined"
+                DXAdornmentStart={<IconDownload05 dxSize={16} />}
+              >
+                Export
+              </Button>
+              <ConfigView />
+            </ButtonGroup>
+            <ButtonGroup>
+              <ConfigSave />
+            </ButtonGroup>
+          </div>
         </div>
         <NavTabs>
           <ul>

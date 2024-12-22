@@ -47,6 +47,8 @@ const styles = css`
     color: ${makeColor("neutral-light", { opacity: 0.8 })};
     font-family: ${makeFontFamily("body")};
     font-weight: ${makeFontWeight("regular")};
+    max-width: 70ch;
+    line-height: 1.4;
   }
 
   button {

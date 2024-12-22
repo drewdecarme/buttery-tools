@@ -20,7 +20,7 @@ export type ButtonPropsCustom = {
    * The size of the button
    * @default normal
    */
-  dxSize?: "dense" | "normal";
+  dxSize?: "dense" | "normal" | "big";
   /**
    * The color of the button
    * @default primary
@@ -43,7 +43,7 @@ const styles = css`
 
   &.v {
     &-contained {
-      border-radius: ${makeRem(16)};
+      border-radius: ${makeRem(8)};
       line-height: 1;
       &.c {
         &-primary {
@@ -55,7 +55,7 @@ const styles = css`
       }
     }
     &-outlined {
-      border-radius: ${makeRem(16)};
+      border-radius: ${makeRem(8)};
       line-height: 1;
       &.c {
         &-primary {
@@ -92,6 +92,13 @@ const styles = css`
       font-weight: ${makeFontWeight("medium")};
       padding: 0 ${makeRem(16)};
       gap: ${makeRem(8)};
+    }
+    &-big {
+      height: ${makeRem(44)};
+      font-size: ${makeRem(14)};
+      font-weight: ${makeFontWeight("medium")};
+      padding: 0 ${makeRem(20)};
+      gap: ${makeRem(10)};
     }
   }
 `;

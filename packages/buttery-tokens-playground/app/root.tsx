@@ -1,7 +1,6 @@
 import {
   Links,
   Meta,
-  NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -12,12 +11,12 @@ import type { LinksFunction } from "@remix-run/node";
 
 import { LayoutHeader } from "./components/LayoutHeader";
 import { LayoutHeaderLogo } from "./components/LayoutHeaderLogo";
-import { LayoutHeaderNav } from "./components/LayoutHeaderNav";
 import { LayoutMain } from "./components/LayoutMain";
 import { Layout as Body } from "./components/Layout";
 import { LayoutFooter } from "./components/LayoutFooter";
 import { Label } from "./components/Label";
 import { getIsLocalConfig } from "./utils/util.getLocalConfig";
+import { LayoutHeaderMenu } from "./components/LayoutHeaderMenu";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -60,40 +59,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <Body>
         <LayoutHeader>
-          <div>
-            <LayoutHeaderLogo
-              dxSrc="/images/buttery-logo-tokens.png"
-              dxAlt="buttery-tokens-logo"
-              dxLabel={
-                isLocal && (
-                  <div>
-                    <Label dxSize="dense" dxColor="primary">
-                      LOCAL MODE
-                    </Label>
-                  </div>
-                )
-              }
-            >
-              Buttery Tokens
-            </LayoutHeaderLogo>
-            {isLocal && (
-              <div>
-                <Label dxSize="dense" dxColor="primary">
-                  LOCAL MODE
-                </Label>
-              </div>
-            )}
-          </div>
-          <LayoutHeaderNav>
-            <ul>
-              <li>
-                <NavLink to="/config">configuration</NavLink>
-              </li>
-              <li>
-                <NavLink to="/projects">projects</NavLink>
-              </li>
-            </ul>
-          </LayoutHeaderNav>
+          <LayoutHeaderLogo
+            dxSrc="/images/buttery-logo-tokens.png"
+            dxAlt="buttery-tokens-logo"
+            dxLabel={
+              isLocal && (
+                <div>
+                  <Label dxSize="dense" dxColor="primary">
+                    LOCAL MODE
+                  </Label>
+                </div>
+              )
+            }
+          >
+            Buttery Tokens
+          </LayoutHeaderLogo>
+          <div />
+          <LayoutHeaderMenu />
         </LayoutHeader>
         <LayoutMain>{children}</LayoutMain>
         <LayoutFooter>footer</LayoutFooter>
