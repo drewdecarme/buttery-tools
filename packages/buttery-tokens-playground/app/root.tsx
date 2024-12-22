@@ -1,13 +1,6 @@
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-} from "@remix-run/react";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "react-router";
 import "@buttery/tokens/playground/css";
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction } from "react-router";
 
 import { LayoutHeader } from "./components/LayoutHeader";
 import { LayoutHeaderLogo } from "./components/LayoutHeaderLogo";

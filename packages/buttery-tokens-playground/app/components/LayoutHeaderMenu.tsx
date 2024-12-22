@@ -6,7 +6,7 @@ import {
   makeReset,
 } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
-import { NavLink } from "@remix-run/react";
+import { NavLink } from "react-router";
 import type { RefCallback } from "react";
 import { useCallback } from "react";
 

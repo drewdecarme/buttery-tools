@@ -1,7 +1,4 @@
-import {
-  vitePlugin as remix,
-  // cloudflareDevProxyVitePlugin as remixCloudflareDevProxy,
-} from "@remix-run/dev";
+import { reactRouter } from "@react-router/dev/vite";
 import { mergeConfig } from "vite";
 
 import baseConfig from "./vite.config.base";
@@ -13,7 +10,7 @@ declare module "@remix-run/cloudflare" {
 
 export default mergeConfig(baseConfig, {
   plugins: [
-    remix({
+    reactRouter({
       future: {
         v3_fetcherPersist: true,
         v3_relativeSplatPath: true,

@@ -1,6 +1,6 @@
 import { makeColor, makeCustom, makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
-import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { NavLink, Outlet, useLoaderData } from "react-router";
 import { ConfigSchema } from "@buttery/tokens-utils/schemas";
 
 import { Button } from "~/components/Button";
