@@ -11,7 +11,6 @@ const styles = css`
   height: ${makeCustom("layout-header-height")};
   border-bottom: ${makeRem(1)} solid
     ${makeColor("neutral-dark", { opacity: 0.1 })};
-  padding: 0 ${makeCustom("layout-gutters")};
 
   & > div {
     max-width: ${makeCustom("layout-max-width")};
@@ -20,6 +19,7 @@ const styles = css`
     gap: ${makeRem(16)};
     align-items: center;
     margin: 0 auto;
+    padding: 0 ${makeCustom("layout-gutters")};
   }
 `;
 

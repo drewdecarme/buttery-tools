@@ -1,5 +1,5 @@
 import { classes, useDropdownMenu } from "@buttery/components";
-import type { MouseEventHandler } from "react";
+import type { JSX, MouseEventHandler } from "react";
 import { forwardRef, useCallback } from "react";
 import { css } from "@linaria/core";
 import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
@@ -67,6 +67,12 @@ const styles = css`
 `;
 
 const dropdownStyles = createDropdownStyles(css`
+  display: none;
+
+  &:popover-open {
+    display: block;
+  }
+
   ${makeReset("ul")};
   border-radius: ${makeRem(4)} !important;
 

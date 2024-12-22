@@ -8,3 +8,4 @@ node_modules
 .wrangler
 
 *storybook.log
+.react-router/
