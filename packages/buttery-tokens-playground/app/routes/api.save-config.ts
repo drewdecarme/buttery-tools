@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { writeFileRecursive } from "@buttery/utils/node";
@@ -19,38 +19,37 @@ export async function action({ request }: ActionFunctionArgs) {
     return { config: null };
   }
 
+  const originalConfig = String(process.env.BUTTERY_TOKENS_PG_LOCAL_CONFIG);
   const configFilePath = String(process.env.BUTTERY_TOKENS_PG_CONFIG_PATH);
   const storePath = String(process.env.BUTTERY_TOKENS_PG_VERSION_DIR);
-
-  console.log({ storePath, configFilePath });
 
   if (!configFilePath) {
     return {
       status: 400,
       message:
-        "The application is being run in LOCAL mode but was unable to detect the path to save the config to.",
+        "The application is being run in LOCAL mode but was unable to reconcile some environment variables. This should not have happened. Please raise a GitHub issue.",
     };
   }
 
-  // read the existing configuration and write it into a new version file
-  LOG.debug("Reading existing configuration to create new version");
-  const originalConfig = await tryHandle(readFile)(configFilePath);
-  if (originalConfig.hasError) {
-    LOG.fatal(originalConfig.error);
-    return {
-      status: 500,
-      message: "Unable to create a new version of the buttery-tokens.config.ts",
-    };
-  }
+  // Take the existing configuration and write it to a versioned file
   const newVersionTimestamp = String(new Date().getTime());
   const newVersionPath = path.join(
     storePath,
-    `buttery-tokens.config.${newVersionTimestamp}.ts`
+    `buttery-tokens.config.${newVersionTimestamp}.json`
   );
   LOG.debug("Creating a new version of the configuration");
   const newVersion = await tryHandle(writeFileRecursive)(
     newVersionPath,
-    originalConfig.data
+    JSON.stringify(
+      {
+        meta: {
+          savedOn: new Date().toISOString(),
+        },
+        config: JSON.parse(originalConfig),
+      },
+      null,
+      2
+    )
   );
   if (newVersion.hasError) {
     LOG.fatal(newVersion.error);

@@ -50,12 +50,12 @@ const tabStyles = css`
 
 export function ConfigView() {
   const { openModal, modalRef } = useModal();
-  const { getConfig } = useConfigurationContext();
+  const { getConfigFromState } = useConfigurationContext();
   const [configHTML, setConfigHTML] = useState<string>("");
 
   useEffect(() => {
     async function highlightCode() {
-      const config = getConfig();
+      const config = getConfigFromState();
       const configJson = JSON.stringify(config, null, 2);
       const html = await codeToHtml(configJson, {
         theme: "slack-dark",
@@ -65,7 +65,7 @@ export function ConfigView() {
     }
 
     highlightCode();
-  }, [getConfig]);
+  }, [getConfigFromState]);
 
   return (
     <>
