@@ -71,7 +71,7 @@ export default function AppConfigRoute() {
   const { config } = useLoaderData<typeof loader>();
 
   return (
-    <ConfigurationProvider config={config}>
+    <ConfigurationProvider originalConfig={config}>
       <div className={styles}>
         <div className="page-header">
           <div>

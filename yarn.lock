@@ -1366,7 +1366,7 @@ __metadata:
     "@buttery/components": "workspace:*"
     "@buttery/logs": "workspace:^"
     "@buttery/tokens-utils": "workspace:*"
-    "@buttery/utils": "workspace:*"
+    "@buttery/utils": "workspace:^"
     "@chromatic-com/storybook": "npm:^3.2.3"
     "@cloudflare/workers-types": "npm:4.20241218.0"
     "@linaria/core": "npm:6.2.0"
@@ -1461,7 +1461,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/utils@workspace:*, @buttery/utils@workspace:packages/buttery-utils":
+"@buttery/utils@workspace:*, @buttery/utils@workspace:^, @buttery/utils@workspace:packages/buttery-utils":
   version: 0.0.0-use.local
   resolution: "@buttery/utils@workspace:packages/buttery-utils"
   dependencies:

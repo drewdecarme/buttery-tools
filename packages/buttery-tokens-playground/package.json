@@ -20,7 +20,7 @@
     "@buttery/components": "workspace:*",
     "@buttery/logs": "workspace:^",
     "@buttery/tokens-utils": "workspace:*",
-    "@buttery/utils": "workspace:*",
+    "@buttery/utils": "workspace:^",
     "@monaco-editor/react": "^4.6.0",
     "@react-router/express": "^7.0.0",
     "@react-router/fs-routes": "^7.1.0",

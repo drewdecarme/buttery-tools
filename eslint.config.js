@@ -15,6 +15,7 @@ export default [
       "**/dist/**",
       "**/bin/**",
       "**/.store/**",
+      "**/.react-router/**",
       "**/.vite-cache/**",
       "**/.yarn/**",
       "packages/buttery-tokens-playground/build/**",

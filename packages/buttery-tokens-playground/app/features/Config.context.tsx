@@ -1,7 +1,7 @@
 import type { ButteryTokensConfig } from "@buttery/tokens-utils/schemas";
 import { ConfigSchema } from "@buttery/tokens-utils/schemas";
-import type { FC, MutableRefObject, ReactNode } from "react";
-import { useRef, useContext, useMemo, createContext, useCallback } from "react";
+import type { FC, ReactNode } from "react";
+import { useContext, useMemo, createContext, useCallback } from "react";
 import type { Updater } from "use-immer";
 import { useImmer } from "use-immer";
 
@@ -14,15 +14,64 @@ import {
 export type ConfigurationContextType = {
   color: ConfigurationStateColor;
   setColor: Updater<ConfigurationStateColor>;
-  getConfig: () => ButteryTokensConfig;
-  originalConfig: MutableRefObject<ButteryTokensConfig>;
+  getConfigFromState: () => ButteryTokensConfig;
+  originalConfig: ButteryTokensConfig;
 };
 const ConfigurationContext = createContext<ConfigurationContextType | null>(
   null
 );
 export type ConfigurationProviderProps = {
   children: ReactNode;
-  config: ButteryTokensConfig;
+  originalConfig: ButteryTokensConfig;
+};
+
+export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
+  children,
+  originalConfig,
+}) => {
+  // Start setting initial state
+  const [color, setColor] = useImmer(
+    getInitColorStateFromConfig(originalConfig)
+  );
+
+  const getConfigFromState = useCallback<
+    ConfigurationContextType["getConfigFromState"]
+  >(() => {
+    const configColor = transformColorStateIntoColorConfig(color);
+    const config = ConfigSchema.safeParse({
+      color: configColor,
+    });
+    if (config.error) {
+      throw config.error;
+    }
+    return config.data;
+  }, [color]);
+
+  const value = useMemo<ConfigurationContextType>(
+    () => ({
+      color,
+      setColor,
+      getConfigFromState,
+      originalConfig,
+    }),
+    [color, getConfigFromState, originalConfig, setColor]
+  );
+
+  return (
+    <ConfigurationContext.Provider value={value}>
+      {children}
+    </ConfigurationContext.Provider>
+  );
+};
+
+export const useConfigurationContext = (): ConfigurationContextType => {
+  const context = useContext(ConfigurationContext);
+  if (!context) {
+    throw new Error(
+      "'useConfigurationContext()' must be used within a <ConfigurationProvider /> component"
+    );
+  }
+  return context;
 };
 
 // const config = ConfigSchema.parse({
@@ -111,47 +160,3 @@ export type ConfigurationProviderProps = {
 //   custom: {},
 //   font: {},
 // } as ButteryTokensConfig);
-
-export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
-  children,
-  config,
-}) => {
-  // color transforms & state
-  const initColorRef = useRef(getInitColorStateFromConfig(config));
-
-  const [color, setColor] = useImmer(initColorRef.current);
-
-  const getConfig = useCallback(() => {
-    const configColor = transformColorStateIntoColorConfig(color);
-    const config = ConfigSchema.safeParse({
-      color: configColor,
-    });
-    if (config.error) {
-      throw config.error;
-    }
-    return config.data;
-  }, [color]);
-
-  const originalConfig = useRef(getConfig());
-
-  const value = useMemo<ConfigurationContextType>(
-    () => ({ color, setColor, getConfig, originalConfig }),
-    [color, getConfig, setColor]
-  );
-
-  return (
-    <ConfigurationContext.Provider value={value}>
-      {children}
-    </ConfigurationContext.Provider>
-  );
-};
-
-export const useConfigurationContext = (): ConfigurationContextType => {
-  const context = useContext(ConfigurationContext);
-  if (!context) {
-    throw new Error(
-      "'useConfigurationContext()' must be used within a <ConfigurationProvider /> component"
-    );
-  }
-  return context;
-};

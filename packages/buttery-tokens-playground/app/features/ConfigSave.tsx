@@ -9,14 +9,23 @@ import { Button } from "~/components/Button";
 import { ModalFooter } from "~/components/ModalFooter";
 
 import { ConfigSaveDiff } from "./ConfigSaveDiff";
+import { useSaveConfig } from "./config.useSave";
 
 export function ConfigSave() {
   const { openModal, modalRef, closeModal } = useModal();
+  const { saveConfig } = useSaveConfig();
+
+  function saveAndClose() {
+    saveConfig();
+    closeModal();
+  }
+
   return (
     <>
       <ButtonDropdown
         dxVariant="contained"
         DXAdornmentStart={<IconFloppyDisk dxSize={16} />}
+        onClick={saveConfig}
         dxOptions={[{ dxLabel: "Compare and Save", dxAction: openModal }]}
       >
         Save
@@ -37,7 +46,12 @@ export function ConfigSave() {
           >
             Cancel
           </Button>
-          <Button dxColor="primary" dxSize="big" dxVariant="contained">
+          <Button
+            dxColor="primary"
+            dxSize="big"
+            dxVariant="contained"
+            onClick={saveAndClose}
+          >
             Save
           </Button>
         </ModalFooter>

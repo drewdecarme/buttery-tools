@@ -31,9 +31,12 @@ const diffStyles = css`
 `;
 
 export function ConfigSaveDiff() {
-  const { getConfig, originalConfig } = useConfigurationContext();
+  const { getConfigFromState, originalConfig } = useConfigurationContext();
 
-  const modifiedConfig = useMemo(() => getConfig(), [getConfig]);
+  const modifiedConfig = useMemo(
+    () => getConfigFromState(),
+    [getConfigFromState]
+  );
 
   return (
     <>
@@ -55,7 +58,7 @@ export function ConfigSaveDiff() {
         className={diffStyles}
         theme="vs-dark"
         height="500px"
-        original={JSON.stringify(originalConfig.current, null, 2)}
+        original={JSON.stringify(originalConfig, null, 2)}
         modified={JSON.stringify(modifiedConfig, null, 2)}
         language="json"
         options={{
