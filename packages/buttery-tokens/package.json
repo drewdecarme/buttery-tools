@@ -5,13 +5,14 @@
   "type": "module",
   "sideEffects": false,
   "scripts": {
-    "build": "yarn tsc && yarn cli-scripts:build",
+    "build": "yarn tsc && yarn cli-scripts:build && yarn json-schema:build",
     "cli-scripts:build": "tsc --project ./tsconfig.cli-build.json",
     "cli-scripts:dev": "yarn cli-scripts:build --watch",
     "lib:build": "yarn tsc --project ./tsconfig.library-build.json",
     "local:build": "tsx  --trace-exit ./scripts/local.build.ts",
     "local:dev": "tsx ./scripts/local.dev.ts",
-    "local:dev-ui": "tsx ./scripts/local.dev-ui.ts"
+    "local:dev-ui": "tsx ./scripts/local.dev-ui.ts",
+    "json-schema:build": "tsx ./scripts/copy-schema-json.ts"
   },
   "files": [
     "lib",
@@ -28,7 +29,8 @@
       "types": "./dist/out/*.d.ts",
       "import": "./dist/out/*.css"
     },
-    "./cli/*": "./dist/cli-scripts/*.js"
+    "./cli/*": "./dist/cli-scripts/*.js",
+    "./schema.json": "./dist/schema.json"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../buttery-tokens-utils/schema.json",
+  "runtime": {
+    "namespace": "replace-me",
+    "prefix": "--buttery"
+  },
+  "breakpoints": {
+    "phone": 375,
+    "tablet": 768,
+    "desktop": 1280
+  },
+  "color": {
+    "brand": {
+      "type": "fluorescent",
+      "saturation": 65,
+      "brightness": 95,
+      "colors": {
+        "primary": {
+          "hue": 56,
+          "variants": 10
+        }
+      }
+    }
+  },
+  "font": {
+    "baseSize": 4,
+    "families": {}
+  }
+}

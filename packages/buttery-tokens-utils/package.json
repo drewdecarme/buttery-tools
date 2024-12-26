@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "description": "A collection of schemas and utils that can be shared across the @buttery/tokens & @buttery/tokens-playground packages",
   "scripts": {
-    "build": "yarn tsc --project tsconfig.library.json",
-    "dev": "yarn build --watch"
+    "build": "yarn json-schema:build && yarn tsc --project tsconfig.library.json",
+    "dev": "yarn build --watch",
+    "json-schema:build": "yarn tsx ./scripts/create-json-schema.ts",
+    "json-schema:deploy-dev": "yarn wrangler r2 object put buttery-tools/tokens/schema.dev.json --file ./dist/schema.json"
   },
   "type": "module",
   "exports": {
@@ -12,7 +14,8 @@
       "import": "./dist/utils/index.js",
       "types": "./dist/utils/index.d.ts"
     },
-    "./schemas": "./dist/schemas/index.js"
+    "./schemas": "./dist/schemas/index.js",
+    "./schema.json": "./schema.json"
   },
   "repository": {
     "type": "git",
@@ -25,12 +28,17 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "dependencies": {
-    "@buttery/utils": "workspace:*",
     "chroma-js": "3.1.2",
     "zod": "3.24.1"
   },
   "devDependencies": {
+    "@buttery/logs": "workspace:*",
     "@buttery/tsconfig": "workspace:*",
-    "typescript": "5.7.2"
+    "@buttery/utils": "workspace:*",
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "5.7.2",
+    "wrangler": "^3.99.0",
+    "zod-to-json-schema": "^3.24.1"
   }
 }
