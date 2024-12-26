@@ -1,7 +1,7 @@
 import { makeColor, makeCustom, makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import { NavLink, Outlet, useLoaderData } from "react-router";
-import { ConfigSchema } from "@buttery/tokens-utils/schemas";
+import { tryHandle } from "@buttery/utils/isomorphic";
 
 import { Button } from "~/components/Button";
 import { ButtonGroup } from "~/components/ButtonGroup";
@@ -10,8 +10,9 @@ import { IconCopy } from "~/icons/IconCopy";
 import { IconDownload05 } from "~/icons/IconDownload05";
 import { ConfigurationProvider } from "~/features/Config.context";
 import { ConfigView } from "~/features/ConfigView";
-import { getIsLocalConfig } from "~/utils/util.getLocalConfig";
+import { getButteryConfig } from "~/utils/util.getLocalConfig";
 import { ConfigSave } from "~/features/ConfigSave";
+import { errors } from "~/utils/util.error-modes";
 
 const styles = css`
   position: sticky;
@@ -49,22 +50,13 @@ const styles = css`
   }
 `;
 
-export function loader() {
-  const localConfig = getIsLocalConfig();
-  // local config
-  if (typeof localConfig !== "boolean") {
-    return {
-      config: localConfig.config,
-    };
+export async function loader() {
+  const config = await tryHandle(getButteryConfig)();
+  if (config.hasError) {
+    throw errors.API_ERROR(500, config.error);
   }
 
-  const parsedConfig = ConfigSchema.safeParse({});
-  if (parsedConfig.error) {
-    throw parsedConfig.error;
-  }
-  return {
-    config: parsedConfig.data,
-  };
+  return { config: config.data };
 }
 
 export default function AppConfigRoute() {

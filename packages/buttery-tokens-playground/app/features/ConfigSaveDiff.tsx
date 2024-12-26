@@ -1,6 +1,5 @@
 import { css } from "@linaria/core";
 import { DiffEditor } from "@monaco-editor/react";
-import { useMemo } from "react";
 import { makeColor, makeFontWeight, makeRem } from "@buttery/tokens/playground";
 
 import { useConfigurationContext } from "./Config.context";
@@ -33,11 +32,6 @@ const diffStyles = css`
 export function ConfigSaveDiff() {
   const { getConfigFromState, originalConfig } = useConfigurationContext();
 
-  const modifiedConfig = useMemo(
-    () => getConfigFromState(),
-    [getConfigFromState]
-  );
-
   return (
     <>
       <div className={styles}>
@@ -59,7 +53,7 @@ export function ConfigSaveDiff() {
         theme="vs-dark"
         height="500px"
         original={JSON.stringify(originalConfig, null, 2)}
-        modified={JSON.stringify(modifiedConfig, null, 2)}
+        modified={JSON.stringify(getConfigFromState(), null, 2)}
         language="json"
         options={{
           renderOverviewRuler: false,

@@ -1,8 +1,17 @@
 {
-  "$schema": "../../../buttery-tokens-utils/schema.json",
   "runtime": {
     "namespace": "replace-me",
-    "prefix": "--buttery"
+    "prefix": "--buttery",
+    "strict": true,
+    "suppressStrictWarnings": false
+  },
+  "gridSystem": 4,
+  "font": {
+    "baseSize": 16,
+    "families": {},
+    "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
+    "weights": {},
+    "variants": {}
   },
   "breakpoints": {
     "phone": 375,
@@ -12,18 +21,24 @@
   "color": {
     "brand": {
       "type": "fluorescent",
-      "saturation": 65,
-      "brightness": 95,
       "colors": {
         "primary": {
           "hue": 56,
           "variants": 10
+        },
+        "brand2": {
+          "hue": 273,
+          "variants": 10
+        },
+        "brand3": {
+          "hue": 334,
+          "variants": 10
         }
-      }
-    }
+      },
+      "saturation": 65,
+      "brightness": 95
+    },
+    "neutral": {}
   },
-  "font": {
-    "baseSize": 4,
-    "families": {}
-  }
+  "custom": {}
 }

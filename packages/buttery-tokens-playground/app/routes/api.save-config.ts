@@ -1,76 +1,75 @@
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { writeFileRecursive } from "@buttery/utils/node";
 import { tryHandle } from "@buttery/utils/isomorphic";
-import { data, type ActionFunctionArgs } from "react-router";
+import { type ActionFunctionArgs } from "react-router";
 
-import { wrapConfig } from "~/utils/util.config-template";
-import { getIsLocalConfig } from "~/utils/util.getLocalConfig";
+import {
+  getIsLocalConfig,
+  getLocalConfigVars,
+} from "~/utils/util.getLocalConfig";
 import { LOG } from "~/utils/util.logger";
+import { errors } from "~/utils/util.error-modes";
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const isLocalConfig = getIsLocalConfig();
 
-  const config = String(formData.get("config"));
+  const formConfig = String(formData.get("config"));
+  const newConfigJson = JSON.parse(formConfig);
+  const newConfig = JSON.stringify(newConfigJson, null, 2);
 
   if (!isLocalConfig) {
     return { config: null };
   }
 
-  const originalConfig = String(process.env.BUTTERY_TOKENS_PG_LOCAL_CONFIG);
-  const configFilePath = String(process.env.BUTTERY_TOKENS_PG_CONFIG_PATH);
-  const storePath = String(process.env.BUTTERY_TOKENS_PG_VERSION_DIR);
-
-  if (!configFilePath) {
-    return {
-      status: 400,
-      message:
-        "The application is being run in LOCAL mode but was unable to reconcile some environment variables. This should not have happened. Please raise a GitHub issue.",
-    };
-  }
+  const localVars = getLocalConfigVars();
 
   // Take the existing configuration and write it to a versioned file
+  const originalConfig = await readFile(localVars.CONFIG_PATH, {
+    encoding: "utf8",
+  });
+  const originalConfigJson = JSON.parse(originalConfig);
   const newVersionTimestamp = String(new Date().getTime());
   const newVersionPath = path.join(
-    storePath,
+    localVars.VERSION_DIR,
     `buttery-tokens.config.${newVersionTimestamp}.json`
   );
-  LOG.debug("Creating a new version of the configuration");
+
+  LOG.debug(
+    `Creating a new version of the configuration to: ${newVersionPath}`
+  );
   const newVersion = await tryHandle(writeFileRecursive)(
     newVersionPath,
     JSON.stringify(
       {
         meta: {
-          savedOn: new Date().toISOString(),
+          created_at: new Date().toISOString(),
         },
-        config: JSON.parse(originalConfig),
+        config: originalConfigJson,
       },
       null,
       2
     )
   );
   if (newVersion.hasError) {
-    LOG.fatal(newVersion.error);
-    return {
-      status: 500,
-      message: "Unable to create a new version of the buttery-tokens.config.ts",
-    };
+    return errors.API_ERROR(
+      500,
+      newVersion.error,
+      "Unable to create a new version of the tokens configuration."
+    );
   }
 
   // Save the new configuration
-  const parsedConfig = JSON.parse(config);
-  const res = await tryHandle(writeFile)(
-    configFilePath,
-    wrapConfig(parsedConfig)
-  );
+  LOG.debug(`Saving the new configuration to: ${localVars.CONFIG_PATH}`);
+  const res = await tryHandle(writeFile)(localVars.CONFIG_PATH, newConfig);
   if (res.hasError) {
-    LOG.fatal(res.error);
-    return data({
-      status: 500,
-      message: res.error.message,
-    });
+    return errors.API_ERROR(
+      500,
+      res.error,
+      "Unable to save the new configuration"
+    );
   }
-  return { config: parsedConfig };
+  return { config: newConfigJson };
 }

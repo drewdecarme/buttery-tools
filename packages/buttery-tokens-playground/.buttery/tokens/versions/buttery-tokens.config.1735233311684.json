@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "created_at": "2024-12-26T17:15:11.684Z"
+  },
+  "config": {
+    "runtime": {
+      "namespace": "replace-me",
+      "prefix": "--buttery",
+      "strict": true,
+      "suppressStrictWarnings": false
+    },
+    "gridSystem": 4,
+    "font": {
+      "baseSize": 16,
+      "families": {},
+      "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
+      "weights": {},
+      "variants": {}
+    },
+    "breakpoints": {
+      "phone": 375,
+      "tablet": 768,
+      "desktop": 1280
+    },
+    "color": {
+      "brand": {
+        "type": "fluorescent",
+        "colors": {
+          "primary": {
+            "hue": 56,
+            "variants": 10
+          }
+        },
+        "saturation": 65,
+        "brightness": 95
+      },
+      "neutral": {}
+    },
+    "custom": {}
+  }
+}
