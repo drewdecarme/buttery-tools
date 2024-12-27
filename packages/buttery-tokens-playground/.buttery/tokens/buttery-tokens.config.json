@@ -23,7 +23,7 @@
       "type": "fluorescent",
       "colors": {
         "primary": {
-          "hue": 56,
+          "hue": 233,
           "variants": 10
         },
         "brand2": {
@@ -32,6 +32,10 @@
         },
         "brand3": {
           "hue": 334,
+          "variants": 10
+        },
+        "brand4": {
+          "hue": 114,
           "variants": 10
         }
       },
