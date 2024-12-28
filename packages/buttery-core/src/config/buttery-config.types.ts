@@ -7,6 +7,8 @@ export type ButteryConfigPaths = {
   rootDir: string;
 };
 
+export type GetButteryConfigOptionExtensions = "ts" | "json";
+
 export type GetButteryConfigOptions<ConfigShape> = {
   /**
    * Boolean value that determines if the user should be prompted
@@ -39,4 +41,12 @@ export type GetButteryConfigOptions<ConfigShape> = {
    * @default info
    */
   logLevel?: ButteryLogLevel;
+  /**
+   * In some cases there is a need to change the file extension
+   * that is searched for to resolve the config. Add this option
+   * if you wish to search for something different other than a .ts
+   * file
+   * @default ts
+   */
+  extension?: GetButteryConfigOptionExtensions;
 };

@@ -26,6 +26,7 @@ export async function getButteryTokensConfig({
     {
       logLevel,
       prompt,
+      extension: "json",
       async onEmpty() {
         const namespace = await input({
           message:

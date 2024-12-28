@@ -25,22 +25,15 @@ export async function getButteryConfig<T extends Record<string, unknown>>(
   config: T;
   paths: ButteryConfigPaths;
 }> {
-  // Resolve the options
-  const optionPrompt = options?.prompt ?? false;
-  const optionOnEmpty = options.onEmpty;
-  const optionValidate = options.validate;
-  const optionConfigPrefix = options.configPrefix;
-
   // set the level
   LOG.level = options?.logLevel ?? "info";
 
   // Find the configuration file and if it doesn't exist
   // create the necessary structures to ensure it does exist
-  const butteryConfigFile = await ensureButteryConfig<T>(configNamespace, {
-    prompt: optionPrompt,
-    onEmpty: optionOnEmpty,
-    configPrefix: optionConfigPrefix,
-  });
+  const butteryConfigFile = await ensureButteryConfig<T>(
+    configNamespace,
+    options
+  );
 
   // ensure the .buttery/.store directory
   const butteryStoreDir = await ensureButteryStore({
@@ -62,7 +55,7 @@ export async function getButteryConfig<T extends Record<string, unknown>>(
 
   // validate the raw config
   LOG.debug("Validating config...");
-  const config = await optionValidate(rawConfigModule);
+  const config = await options.validate(rawConfigModule);
   LOG.debug("Validating config... done.");
 
   return {

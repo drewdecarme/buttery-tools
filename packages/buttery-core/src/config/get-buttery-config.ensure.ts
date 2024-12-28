@@ -4,8 +4,12 @@ import path from "node:path";
 
 import { confirm } from "@inquirer/prompts";
 import { findDirectoryUpwards, writeFileRecursive } from "@buttery/utils/node";
+import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
-import type { GetButteryConfigOptions } from "./buttery-config.types.js";
+import type {
+  GetButteryConfigOptionExtensions,
+  GetButteryConfigOptions,
+} from "./buttery-config.types.js";
 
 import { LOG } from "../utils/util.logger.js";
 
@@ -27,6 +31,27 @@ async function waitForUserToConfirm(filename: string) {
   });
   if (!shouldContinue) {
     throw `User cancelled auto "${filename}" creation.`;
+  }
+}
+
+function getConfigFileName<
+  T extends Required<
+    Pick<GetButteryConfigOptions<T>, "extension" | "configPrefix">
+  >
+>(namespace: string, options: T) {
+  const configFileName = `${
+    options.configPrefix ?? ""
+  }buttery-${namespace}.config`;
+
+  switch (options.extension) {
+    case "ts":
+      return configFileName.concat(".ts");
+
+    case "json":
+      return configFileName.concat(".json");
+
+    default:
+      return exhaustiveMatchGuard(options.extension);
   }
 }
 
@@ -63,6 +88,7 @@ const ENSURE_ERRORS = {
 async function createButteryConfigFile<T extends Record<string, unknown>>(
   butteryDir: string,
   configNamespace: string,
+  extension: GetButteryConfigOptionExtensions,
   butteryConfigFileName: string,
   onEmpty: GetButteryConfigOptions<T>["onEmpty"]
 ) {
@@ -79,8 +105,22 @@ async function createButteryConfigFile<T extends Record<string, unknown>>(
     LOG.debug(`Creating ${butteryConfigFileName} at "${butteryConfigPath}"...`);
     const butteryImport = `define${cap(configNamespace)}Config`;
     const butteryModule = `@buttery/${configNamespace}`;
-    const butteryConfigContent = `import { ${butteryImport} } from "${butteryModule}"
+    let butteryConfigContent = "";
+
+    // Depending upon the extension the file content will change
+    switch (extension) {
+      case "ts":
+        butteryConfigContent = `import { ${butteryImport} } from "${butteryModule}"
 export default ${butteryImport}(${JSON.stringify(awaitedConfig, null, 2)})\n`;
+        break;
+
+      case "json":
+        butteryConfigContent = JSON.stringify(awaitedConfig, null, 2);
+        break;
+
+      default:
+        exhaustiveMatchGuard(extension);
+    }
 
     await writeFileRecursive(butteryConfigPath, butteryConfigContent);
     LOG.debug(
@@ -102,7 +142,10 @@ export default ${butteryImport}(${JSON.stringify(awaitedConfig, null, 2)})\n`;
  */
 export async function ensureButteryConfig<T extends Record<string, unknown>>(
   configNamespace: string,
-  options: Pick<GetButteryConfigOptions<T>, "prompt" | "onEmpty"> & {
+  options: Pick<
+    GetButteryConfigOptions<T>,
+    "prompt" | "onEmpty" | "extension"
+  > & {
     searchFromPath?: string;
     configPrefix?: string;
   }
@@ -110,10 +153,13 @@ export async function ensureButteryConfig<T extends Record<string, unknown>>(
   // Resolve the options to their defaults
   const optionPrompt = options?.prompt ?? false;
   const optionSearchFromPath = options?.searchFromPath ?? process.cwd();
-  const optionConfigPrefix = options.configPrefix ?? "";
+  const optionExtension = options.extension ?? "ts";
 
   // Create the configuration file name out of the namespace
-  const configFileName = `${optionConfigPrefix}buttery-${configNamespace}.config.ts`;
+  const configFileName = getConfigFileName(configNamespace, {
+    extension: optionExtension,
+    configPrefix: options.configPrefix ?? "",
+  });
 
   // Check for the config file in the .buttery directory
   let butteryDir = findDirectoryUpwards(".buttery", undefined, {
@@ -134,6 +180,7 @@ export async function ensureButteryConfig<T extends Record<string, unknown>>(
     await createButteryConfigFile(
       butteryDir,
       configNamespace,
+      optionExtension,
       configFileName,
       options.onEmpty
     );
@@ -163,6 +210,7 @@ export async function ensureButteryConfig<T extends Record<string, unknown>>(
     await createButteryConfigFile(
       butteryDir,
       configNamespace,
+      optionExtension,
       configFileName,
       options.onEmpty
     );
@@ -190,6 +238,7 @@ export async function ensureButteryConfig<T extends Record<string, unknown>>(
     await createButteryConfigFile(
       butteryDir,
       configNamespace,
+      optionExtension,
       configFileName,
       options.onEmpty
     );
