@@ -2,6 +2,7 @@ import { css } from "@linaria/core";
 
 import type {
   DropdownOptionArrow,
+  DropdownOptionOrigin,
   DropdownOptionPosition,
   DropdownOptions,
 } from "./useDropdown.types.js";
@@ -78,6 +79,7 @@ export const processDropdownOptions = (
     color: options?.dxArrow?.color ?? "transparent",
   },
   dxOffset: options?.dxOffset ?? 0,
+  dxOrigin: options?.dxOrigin ?? "top-left",
 });
 
 export function setDropdownPositionStyles<
@@ -93,6 +95,7 @@ export function setDropdownPositionStyles<
     alignmentNode,
   }: {
     arrow: DropdownOptionArrow;
+    origin: DropdownOptionOrigin;
     offset: number;
     dropdownNode: DropdownElement;
     targetNode: TargetElement;
@@ -108,6 +111,48 @@ export function setDropdownPositionStyles<
     );
   }
 
+  let dropdownHeight = dropdownNode.offsetHeight;
+  let dropdownWidth = dropdownNode.offsetWidth;
+
+  // Ensure the popover dimensions are non-zero
+  if (dropdownHeight === 0 || dropdownWidth === 0) {
+    console.warn("Popover dimensions are zero. Measuring dynamically...");
+    const tempNode = document.createElement("div");
+
+    // Copy computed styles to the temp node
+    const computedStyles = getComputedStyle(dropdownNode);
+    console.log(computedStyles);
+    Array.from(computedStyles).forEach((property) => {
+      tempNode.style.setProperty(
+        property,
+        computedStyles.getPropertyValue(property)
+      );
+    });
+
+    tempNode.style.setProperty("display", dropdownNode.style.display);
+    tempNode.style.setProperty("position", "absolute");
+    tempNode.style.setProperty("visibility", "hidden");
+    tempNode.style.setProperty("width", "auto");
+    tempNode.style.setProperty("height", "auto");
+    document.body.appendChild(tempNode);
+
+    // Copy styles safely
+    const styles = Array.from(dropdownNode.style)
+      .filter((property) => dropdownNode.style.getPropertyValue(property))
+      .reduce((acc, property) => {
+        console.log(property);
+        acc[property] = dropdownNode.style.getPropertyValue(property);
+        return acc;
+      }, {} as Record<string, string>);
+
+    Object.assign(tempNode.style, styles);
+
+    dropdownHeight = tempNode.offsetHeight;
+    dropdownWidth = tempNode.offsetWidth;
+
+    document.body.removeChild(tempNode);
+  }
+
   const { popoverTop, popoverLeft, resolvedPosition } =
     calculateDropdownPosition(position, {
       targetBox,
@@ -115,8 +160,8 @@ export function setDropdownPositionStyles<
       popover: {
         // using offsets here to ignore any scaling while also
         // factoring in padding, margin, border and possible scroll bars
-        height: dropdownNode.offsetHeight,
-        width: dropdownNode.offsetWidth,
+        height: dropdownHeight,
+        width: dropdownWidth,
       },
     });
 
@@ -193,6 +238,7 @@ function calculateDropdownPosition(
     case "bottom-right":
       top = targetBox.bottom + offset;
       left = targetBox.left + targetBox.width - popover.width;
+      console.log(targetBox.left, targetBox.width, popover.width);
       resolvedPosition = position;
       break;
     case "bottom-center":

@@ -62,6 +62,7 @@ export const useDropdown = <
     setDropdownPositionStyles(parsedOptions.dxPosition, {
       arrow: parsedOptions.dxArrow,
       offset: parsedOptions.dxOffset,
+      origin: parsedOptions.dxOrigin,
       dropdownNode: popover,
       targetNode: target,
       alignmentNode: alignmentRef.current,
