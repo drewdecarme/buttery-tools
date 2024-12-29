@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
 
-import UseDropdownOriginExample from "./UseDropdownOrigin.example.js";
+import UseDropdownPositioningExample from "./UseDropdownPositioning.example.js";
 import UseDropdownExample from "./UseDropdown.example.js";
 
 const meta: Meta = {
@@ -13,4 +13,4 @@ const meta: Meta = {
 export default meta;
 
 export const Base = UseDropdownExample;
-export const Origin = UseDropdownOriginExample;
+export const Positioning = UseDropdownPositioningExample;

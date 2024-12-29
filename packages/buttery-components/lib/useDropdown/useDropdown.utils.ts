@@ -70,6 +70,21 @@ const arrowClassNames: { [key in DropdownOptionPosition]: string } = {
   "right-bottom": arrowLeft,
 };
 
+export const useDropdownPositions: DropdownOptionPosition[] = [
+  "bottom-center",
+  "bottom-left",
+  "bottom-right",
+  "top-center",
+  "top-left",
+  "top-right",
+  "right-bottom",
+  "right-middle",
+  "right-top",
+  "left-bottom",
+  "left-middle",
+  "left-top",
+];
+
 export const processDropdownOptions = (
   options?: Omit<DropdownOptions, "id">
 ): Required<Omit<DropdownOptions, "id">> => ({
@@ -119,9 +134,8 @@ export function setDropdownPositionStyles<
     console.warn("Popover dimensions are zero. Measuring dynamically...");
     const tempNode = document.createElement("div");
 
-    // Copy computed styles to the temp node
+    // Copy computed css style properties to the temp node
     const computedStyles = getComputedStyle(dropdownNode);
-    console.log(computedStyles);
     Array.from(computedStyles).forEach((property) => {
       tempNode.style.setProperty(
         property,
@@ -129,27 +143,26 @@ export function setDropdownPositionStyles<
       );
     });
 
-    tempNode.style.setProperty("display", dropdownNode.style.display);
-    tempNode.style.setProperty("position", "absolute");
-    tempNode.style.setProperty("visibility", "hidden");
-    tempNode.style.setProperty("width", "auto");
-    tempNode.style.setProperty("height", "auto");
-    document.body.appendChild(tempNode);
-
-    // Copy styles safely
+    // Copy the dropdown styles to the temp node
     const styles = Array.from(dropdownNode.style)
       .filter((property) => dropdownNode.style.getPropertyValue(property))
       .reduce((acc, property) => {
-        console.log(property);
         acc[property] = dropdownNode.style.getPropertyValue(property);
         return acc;
       }, {} as Record<string, string>);
-
     Object.assign(tempNode.style, styles);
 
+    // Set the display property of the temp node
+    tempNode.style.setProperty("display", dropdownNode.style.display);
+
+    // Add the temp node to the DOM to calculate dimensions
+    document.body.appendChild(tempNode);
+
+    // Set the dimensions of the dropdown node
     dropdownHeight = tempNode.offsetHeight;
     dropdownWidth = tempNode.offsetWidth;
 
+    // Remove the element once calculations are complete
     document.body.removeChild(tempNode);
   }
 
