@@ -131,39 +131,14 @@ export function setDropdownPositionStyles<
 
   // Ensure the popover dimensions are non-zero
   if (dropdownHeight === 0 || dropdownWidth === 0) {
-    console.warn("Popover dimensions are zero. Measuring dynamically...");
-    const tempNode = document.createElement("div");
+    dropdownNode.style.setProperty("visibility", "hidden");
+    dropdownNode.style.setProperty("display", "block");
 
-    // Copy computed css style properties to the temp node
-    const computedStyles = getComputedStyle(dropdownNode);
-    Array.from(computedStyles).forEach((property) => {
-      tempNode.style.setProperty(
-        property,
-        computedStyles.getPropertyValue(property)
-      );
-    });
+    dropdownHeight = dropdownNode.offsetHeight;
+    dropdownWidth = dropdownNode.offsetWidth;
 
-    // Copy the dropdown styles to the temp node
-    const styles = Array.from(dropdownNode.style)
-      .filter((property) => dropdownNode.style.getPropertyValue(property))
-      .reduce((acc, property) => {
-        acc[property] = dropdownNode.style.getPropertyValue(property);
-        return acc;
-      }, {} as Record<string, string>);
-    Object.assign(tempNode.style, styles);
-
-    // Set the display property of the temp node
-    tempNode.style.setProperty("display", dropdownNode.style.display);
-
-    // Add the temp node to the DOM to calculate dimensions
-    document.body.appendChild(tempNode);
-
-    // Set the dimensions of the dropdown node
-    dropdownHeight = tempNode.offsetHeight;
-    dropdownWidth = tempNode.offsetWidth;
-
-    // Remove the element once calculations are complete
-    document.body.removeChild(tempNode);
+    dropdownNode.style.removeProperty("visibility");
+    dropdownNode.style.removeProperty("display");
   }
 
   const { popoverTop, popoverLeft, resolvedPosition } =

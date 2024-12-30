@@ -6,7 +6,7 @@ import type { DropdownOptionPosition } from "../useDropdown.types.js";
 
 export default () => {
   const [position, setPosition] =
-    useState<DropdownOptionPosition>("bottom-left");
+    useState<DropdownOptionPosition>("bottom-right");
   const { openDropdown, closeDropdown, setDropdownRef, setTargetRef } =
     useDropdown({
       id: "use-dropdown",
@@ -38,7 +38,6 @@ export default () => {
           ref={setDropdownRef}
           style={{
             border: "1px solid red",
-            width: 300,
           }}
         >
           this is some dropdown where the top right is aligned

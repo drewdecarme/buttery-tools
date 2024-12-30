@@ -1,6 +1,6 @@
 import { classes, useDropdownMenu } from "@buttery/components";
-import type { JSX, MouseEventHandler } from "react";
-import { forwardRef, useCallback } from "react";
+import type { JSX } from "react";
+import { forwardRef } from "react";
 import { css } from "@linaria/core";
 import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 
@@ -12,20 +12,17 @@ import {
   type ButtonPropsCustom,
 } from "./Button";
 import { createDropdownStyles } from "./shared-styles";
+import { ButtonDropdownProvider } from "./ButtonDropdown.context";
 
-export type ButtonDropdownOption = {
-  dxLabel: string;
-  dxAction: MouseEventHandler<HTMLButtonElement>;
-};
 export type ButtonDropdownPropsNative = Omit<
   JSX.IntrinsicElements["button"],
   "className"
 >;
 export type ButtonDropdownPropsCustom = ButtonPropsCustom & {
   /**
-   * The dropdown options of the button
+   * The label of the button that isn't the dropdown
    */
-  dxOptions: ButtonDropdownOption[];
+  dxLabel: string;
 };
 export type ButtonDropdownProps = ButtonDropdownPropsNative &
   ButtonDropdownPropsCustom;
@@ -36,6 +33,7 @@ const styles = css`
   display: grid;
   grid-template-columns: auto auto;
   height: min-content;
+  width: max-content;
 
   & > button {
     &:nth-child(1) {
@@ -107,25 +105,9 @@ const dropdownStyles = createDropdownStyles(css`
   }
 `);
 
-function ButtonDropdownOption({
-  dxAction,
-  dxLabel,
-  onClose,
-  className,
-}: ButtonDropdownOption & { onClose: () => void; className?: string }) {
-  const handleClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
-    (e) => {
-      dxAction(e);
-      onClose();
-    },
-    [dxAction, onClose]
-  );
-  return (
-    <button onClick={handleClick} className={className}>
-      {dxLabel}
-    </button>
-  );
-}
+export type ButtonDropdownOptionProps = {
+  onClose: () => void;
+};
 
 export const ButtonDropdown = forwardRef<
   HTMLButtonElement,
@@ -133,7 +115,7 @@ export const ButtonDropdown = forwardRef<
 >(function ButtonDropdown(
   {
     children,
-    dxOptions,
+    dxLabel,
     DXAdornmentStart,
     dxColor = "primary",
     dxVariant = "contained",
@@ -143,9 +125,9 @@ export const ButtonDropdown = forwardRef<
   ref
 ) {
   const { closeMenu, setTargetRef, setDropdownRef, alignmentRef } =
-    useDropdownMenu<HTMLUListElement, HTMLDivElement>({
+    useDropdownMenu<HTMLDivElement, HTMLDivElement>({
       dxOffset: 4,
-      dxPosition: "bottom-left",
+      dxPosition: "bottom-right",
     });
 
   return (
@@ -160,7 +142,7 @@ export const ButtonDropdown = forwardRef<
         dxVariant={dxVariant}
         {...restProps}
       >
-        {children}
+        {dxLabel}
       </Button>
       <Button
         ref={setTargetRef}
@@ -170,19 +152,17 @@ export const ButtonDropdown = forwardRef<
       >
         <IconArrowDown dxSize={dxSize === "dense" ? 12 : 14} />
       </Button>
-      <ul
+      <div
         ref={setDropdownRef}
         className={classes(
           dropdownStyles,
           createButtonClassNames({ dxColor, dxSize, dxVariant })
         )}
       >
-        {dxOptions.map((option) => (
-          <li key={option.dxLabel}>
-            <ButtonDropdownOption {...option} onClose={closeMenu} />
-          </li>
-        ))}
-      </ul>
+        <ButtonDropdownProvider closeDropdown={closeMenu}>
+          {children}
+        </ButtonDropdownProvider>
+      </div>
     </div>
   );
 });
