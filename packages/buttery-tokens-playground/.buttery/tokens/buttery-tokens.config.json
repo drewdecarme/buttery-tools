@@ -37,6 +37,10 @@
         "brand4": {
           "hue": 114,
           "variants": 10
+        },
+        "brand5": {
+          "hue": 40,
+          "variants": 10
         }
       },
       "saturation": 65,
