@@ -7,6 +7,12 @@ import type {
   DropdownOptions,
 } from "./useDropdown.types.js";
 
+export function isDropdownOpen<T extends HTMLElement = HTMLElement>(
+  node: T | undefined | null
+) {
+  return node?.classList.contains("open");
+}
+
 const arrowBaseClassName = css`
   overflow: visible;
   position: relative;
