@@ -13,4 +13,5 @@ export type {
 export {
   processDropdownOptions,
   setDropdownPositionStyles,
+  arrowClassName,
 } from "./useDropdown.utils.js";

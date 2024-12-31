@@ -55,7 +55,7 @@ export type UseTooltipOptions =
   | UseTooltipOptionsTooltip
   | UseTooltipOptionsToggleTip;
 
-export const useTooltip = <
+export const useDropdownTooltip = <
   DropdownNode extends HTMLElement,
   TargetNode extends HTMLButtonElement | HTMLAnchorElement
 >(

@@ -6,7 +6,8 @@
   "sideEffects": false,
   "exports": {
     ".": "./dist/lib/index.js",
-    "./cli/*": "./dist/cli-scripts/*.js"
+    "./cli/*": "./dist/cli-scripts/*.js",
+    "./styles": "./dist/lib/style.css"
   },
   "publishConfig": {
     "access": "public"

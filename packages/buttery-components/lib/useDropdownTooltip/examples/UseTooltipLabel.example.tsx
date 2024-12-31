@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { useTooltip } from "../useDropdownTooltip.js";
+import { useDropdownTooltip } from "../useDropdownTooltip.js";
 
 const tooltipCss = css`
   padding: 0.5rem 1rem;
@@ -22,7 +22,7 @@ const targetCss = css`
 `;
 
 export default () => {
-  const { setTargetRef, setTooltipRef } = useTooltip({
+  const { setTargetRef, setTooltipRef } = useDropdownTooltip({
     dxType: "tooltip",
   });
 

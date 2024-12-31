@@ -13,7 +13,7 @@ export function isDropdownOpen<T extends HTMLElement = HTMLElement>(
   return node?.classList.contains("open");
 }
 
-const arrowBaseClassName = css`
+export const arrowClassName = css`
   overflow: visible;
   position: relative;
 
@@ -61,7 +61,7 @@ const arrowRight = css`
   }
 `;
 
-const arrowClassNames: { [key in DropdownOptionPosition]: string } = {
+export const arrowClassNames: { [key in DropdownOptionPosition]: string } = {
   "bottom-center": arrowUp,
   "bottom-left": arrowUp,
   "bottom-right": arrowUp,
@@ -171,7 +171,7 @@ export function setDropdownPositionStyles<
     popoverTop,
   });
 
-  dropdownNode.classList.add(arrowBaseClassName);
+  dropdownNode.classList.add(arrowClassName);
   dropdownNode.style.setProperty("--arrow-size", `${arrow.size}px`);
   dropdownNode.style.setProperty("--arrow-left", arrowLeft);
   dropdownNode.style.setProperty("--arrow-top", arrowTop);

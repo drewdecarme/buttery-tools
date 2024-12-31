@@ -12,6 +12,7 @@ export * from "./useDropdownInput/index.js";
 export * from "./useDropdownMenu/index.js";
 export * from "./useDropdownTooltip/index.js";
 export * from "./useDropdownNav/index.js";
+export * from "./useDropdownTooltip/index.js";
 export * from "./useDynamicNode/index.js";
 export * from "./useForwardedRef/index.js";
 export * from "./useIntersectionObserver/index.js";

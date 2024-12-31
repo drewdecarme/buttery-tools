@@ -9,6 +9,7 @@ const tooltipClass = css`
   color: white;
   border: 0;
   border-radius: 0.5rem;
+  --arrow-color: limegreen !important;
 `;
 
 const buttonClass = css`
@@ -55,12 +56,20 @@ export default () => {
     dxPosition: "top-center",
     dxArrow: {
       size: 8,
-      color: "black",
     },
   });
 
   return (
-    <>
+    <div style={{ maxWidth: 300, margin: "0 auto" }}>
+      <div>
+        It&apos;s possible to override the arrow color without statical
+        defininig it in the hook. The hook provides a programmatic way to color
+        the arrow, but most times you&apos;re going to want to color it using
+        CSS or some form of styling methodolgy. In order to do so, you can
+        override the `--arrow-color` custom propertry by adding important to it
+      </div>
+      <br />
+      <br />
       <button
         ref={setTargetRef}
         className={buttonClass}
@@ -74,6 +83,6 @@ export default () => {
       <div ref={setTooltipRef} className={tooltipClass} id="likes-label">
         Likes
       </div>
-    </>
+    </div>
   );
 };
