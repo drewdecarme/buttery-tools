@@ -6,11 +6,7 @@ import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 
 import { IconArrowDown } from "~/icons/IconArrowDown";
 
-import {
-  Button,
-  createButtonClassNames,
-  type ButtonPropsCustom,
-} from "./Button";
+import { Button, type ButtonPropsCustom } from "./Button";
 import { createDropdownStyles } from "./shared-styles";
 import { ButtonDropdownProvider } from "./ButtonDropdown.context";
 
@@ -152,13 +148,7 @@ export const ButtonDropdown = forwardRef<
       >
         <IconArrowDown dxSize={dxSize === "dense" ? 12 : 14} />
       </Button>
-      <div
-        ref={setDropdownRef}
-        className={classes(
-          dropdownStyles,
-          createButtonClassNames({ dxColor, dxSize, dxVariant })
-        )}
-      >
+      <div ref={setDropdownRef} className={classes(dropdownStyles)}>
         <ButtonDropdownProvider closeDropdown={closeMenu}>
           {children}
         </ButtonDropdownProvider>
