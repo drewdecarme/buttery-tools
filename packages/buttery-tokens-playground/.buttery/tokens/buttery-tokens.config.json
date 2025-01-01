@@ -43,10 +43,23 @@
           "variants": 10
         }
       },
-      "saturation": 65,
+      "saturation": 88,
       "brightness": 95
     },
-    "neutral": {}
+    "neutral": {
+      "neutral": {
+        "hex": "#4A4A4A",
+        "variants": 10
+      },
+      "surface": {
+        "hex": "#d4d4d4",
+        "variants": 1
+      },
+      "background": {
+        "hex": "#F5F5F5",
+        "variants": 1
+      }
+    }
   },
   "custom": {}
 }

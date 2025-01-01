@@ -67,11 +67,7 @@ export default function AppConfigRoute() {
       <div className={styles}>
         <div className="page-header">
           <div>
-            <h2>Configure</h2>
-            <p>
-              Each section allows you to customize each part of the token based
-              design system
-            </p>
+            <h2>Configuration</h2>
           </div>
           <div className="actions">
             <ButtonGroup>

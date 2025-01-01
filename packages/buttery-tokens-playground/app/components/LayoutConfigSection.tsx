@@ -11,7 +11,8 @@ const styles = css`
   display: grid;
   grid-template-columns: 1fr 60%;
   gap: ${makeRem(32)};
-  padding: 0 ${makeCustom("layout-gutters")};
+  padding: ${makeCustom("layout-gutters")};
+  padding-bottom: ${makeCustom("layout-gutters")};
 `;
 
 export const LayoutConfigSection = forwardRef<

@@ -3,29 +3,27 @@ import type { ChangeEventHandler, MouseEventHandler } from "react";
 import type { ColorVariantTypes } from "@buttery/tokens-utils/schemas";
 import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
+import { ColorSwatchHex } from "./ColorSwatchHex";
 import { ColorSwatch } from "./ColorSwatch";
-import type { ConfigurationStateColorsAuto } from "./config.utils";
+import type { ConfigurationStateColorsManual } from "./config.utils";
 import type { ConfigurationContextType } from "./Config.context";
 import type { ColorSwatchVariantsPropsCustom } from "./ColorSwatchVariants";
 import { ColorSwatchVariants } from "./ColorSwatchVariants";
-import { ColorSwatchHue } from "./ColorSwatchHue";
 
-export function ColorBrandModeAutoSwatch<
-  T extends ConfigurationStateColorsAuto
->({
+export function ColorNeutralSwatch<T extends ConfigurationStateColorsManual>({
   colorDef,
   setColor,
 }: {
   colorDef: T;
   setColor: ConfigurationContextType["setColor"];
 }) {
-  const [id, { name, hue, variants }] = Object.entries(colorDef)[0];
+  const [id, { name, hex, variants }] = Object.entries(colorDef)[0];
 
-  const handleChangeHue = useCallback<ChangeEventHandler<HTMLInputElement>>(
+  const handleChangeHex = useCallback<ChangeEventHandler<HTMLInputElement>>(
     ({ currentTarget: { value } }) => {
       setColor((draft) => {
-        const color = draft.brand.auto.colors[id];
-        color.hue = Number(value);
+        const color = draft.neutral[id];
+        color.hex = value;
       });
     },
     [id, setColor]
@@ -34,7 +32,7 @@ export function ColorBrandModeAutoSwatch<
   const handleChangeName = useCallback<ChangeEventHandler<HTMLInputElement>>(
     ({ currentTarget: { value } }) => {
       setColor((draft) => {
-        const color = draft.brand.auto.colors[id];
+        const color = draft.neutral[id];
         color.name = value;
       });
     },
@@ -43,7 +41,7 @@ export function ColorBrandModeAutoSwatch<
 
   const handleRemove = useCallback<MouseEventHandler<HTMLButtonElement>>(() => {
     setColor((draft) => {
-      delete draft.brand.auto.colors[id];
+      delete draft.neutral[id];
     });
   }, [id, setColor]);
 
@@ -55,15 +53,21 @@ export function ColorBrandModeAutoSwatch<
       switch (type) {
         case "auto":
           setColor((draft) => {
-            draft.brand.auto.colors[id].variants = 10;
+            draft.neutral[id].variants = 10;
           });
           break;
         case "auto-named":
           setColor((draft) => {
-            draft.brand.auto.colors[id].variants = ["light", "dark"];
+            draft.neutral[id].variants = ["light", "dark"];
           });
           break;
         case "key-value":
+          setColor((draft) => {
+            draft.neutral[id].variants = {
+              light: "#cccccc",
+              dark: "#525252",
+            };
+          });
           break;
 
         default:
@@ -78,7 +82,7 @@ export function ColorBrandModeAutoSwatch<
   >(
     (variant) => {
       setColor((draft) => {
-        draft.brand.auto.colors[id].variants = variant;
+        draft.neutral[id].variants = variant;
       });
     },
     [id, setColor]
@@ -91,7 +95,7 @@ export function ColorBrandModeAutoSwatch<
       switch (params.mode) {
         case "change":
           setColor((draft) => {
-            const variants = draft.brand.auto.colors[id].variants;
+            const variants = draft.neutral[id].variants;
             if (!Array.isArray(variants)) return;
             variants[params.index] = params.value;
           });
@@ -99,7 +103,7 @@ export function ColorBrandModeAutoSwatch<
 
         case "add":
           setColor((draft) => {
-            const variants = draft.brand.auto.colors[id].variants;
+            const variants = draft.neutral[id].variants;
             if (!Array.isArray(variants)) return;
             variants.push(params.newValue);
           });
@@ -107,7 +111,7 @@ export function ColorBrandModeAutoSwatch<
 
         case "remove":
           setColor((draft) => {
-            const variants = draft.brand.auto.colors[id].variants;
+            const variants = draft.neutral[id].variants;
             if (!Array.isArray(variants)) return;
             variants.splice(params.index, 1);
           });
@@ -125,10 +129,7 @@ export function ColorBrandModeAutoSwatch<
   >(
     (variants) => {
       setColor((draft) => {
-        // only handle the number and array
-        if (typeof variants === "number" || Array.isArray(variants)) {
-          draft.brand.auto.colors[id].variants = variants;
-        }
+        draft.neutral[id].variants = variants;
       });
     },
     [id, setColor]
@@ -136,11 +137,11 @@ export function ColorBrandModeAutoSwatch<
 
   return (
     <ColorSwatch dxOnRemove={handleRemove}>
-      <ColorSwatchHue
+      <ColorSwatchHex
         id={id}
-        hue={hue}
+        hex={hex}
         name={name}
-        onChangeHue={handleChangeHue}
+        onChangeHex={handleChangeHex}
         onChangeName={handleChangeName}
       />
       <ColorSwatchVariants

@@ -28,8 +28,7 @@ export function ColorBrandMode() {
   const { color, setColor } = useConfigurationContext();
 
   const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
-    ({ currentTarget: { value, checked } }) => {
-      console.log({ value, checked });
+    ({ currentTarget: { value } }) => {
       setColor((draft) => {
         draft.brand.type = value === "auto" ? "auto" : "manual";
       });

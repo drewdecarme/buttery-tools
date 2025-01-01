@@ -19,32 +19,35 @@ import type { z, ZodLiteral, ZodUnionDef } from "zod";
 
 export const initConfig: ButteryTokensConfig = ConfigSchema.parse({});
 
-export type ConfigurationStateColorBrandColorsAuto = {
+export type ConfigurationStateColorsAuto = {
   [id: string]: z.infer<typeof ColorDefHueSchema.valueSchema> & {
     name: string;
   };
 };
-export type ConfigurationStateColorBrandColorsManual = {
+export type ConfigurationStateColorsManual = {
   [id: string]: z.infer<typeof ColorDefHexSchema.valueSchema> & {
     name: string;
   };
 };
 export type ConfigurationStateColorBrandAuto =
   ButteryTokensColorBrandTypeAuto & {
-    colors: ConfigurationStateColorBrandColorsAuto;
+    colors: ConfigurationStateColorsAuto;
   };
 export type ConfigurationStateColorBrandManual =
   ButteryTokensColorBrandTypeManual & {
-    colors: ConfigurationStateColorBrandColorsManual;
+    colors: ConfigurationStateColorsManual;
   };
 export type ConfigurationStateColorBrand = {
   auto: ConfigurationStateColorBrandAuto;
   manual: ConfigurationStateColorBrandManual;
 };
+export type ConfigurationStateColorNeutral = ConfigurationStateColorsManual;
+
 export type ConfigurationStateColor = {
   brand: ConfigurationStateColorBrand & {
     type: keyof ConfigurationStateColorBrand;
   };
+  neutral: ConfigurationStateColorsManual;
 };
 
 function getMinMax<T extends number>(
@@ -117,6 +120,23 @@ export function getInitColorStateFromConfig(
           colors: {},
         },
       },
+      neutral: {
+        neutral: {
+          hex: "#4A4A4A",
+          name: "neutral",
+          variants: 10,
+        },
+        surface: {
+          hex: "#FAFAFA",
+          name: "surface",
+          variants: 2,
+        },
+        background: {
+          hex: "#F5F5F5",
+          name: "background",
+          variants: 2,
+        },
+      },
     };
   }
 
@@ -132,36 +152,55 @@ export function getInitColorStateFromConfig(
         colors,
       },
     },
+    neutral: {
+      neutral: {
+        hex: "#4A4A4A",
+        name: "neutral",
+        variants: 10,
+      },
+      surface: {
+        hex: "#FAFAFA",
+        name: "surface",
+        variants: 1,
+      },
+      background: {
+        hex: "#F5F5F5",
+        name: "background",
+        variants: 1,
+      },
+    },
   };
 }
 
 export function transformColorStateIntoColorConfig(
   colorState: ConfigurationStateColor
 ): ButteryTokensConfig["color"] {
+  const neutralColors = Object.values(colorState.neutral).reduce(
+    (accum, { name, ...restDef }) => Object.assign(accum, { [name]: restDef }),
+    {}
+  );
+  const brandColors = Object.values(
+    colorState.brand[colorState.brand.type].colors
+  ).reduce(
+    (accum, { name, ...restDef }) => Object.assign(accum, { [name]: restDef }),
+    {}
+  );
   switch (colorState.brand.type) {
     case "manual":
       return {
         brand: {
           type: "manual",
-          colors: Object.values(colorState.brand.manual.colors).reduce(
-            (accum, { name, ...restDef }) =>
-              Object.assign(accum, { [name]: restDef }),
-            {}
-          ),
+          colors: brandColors,
         },
-        neutral: {},
+        neutral: neutralColors,
       };
     case "auto":
       return {
         brand: {
           ...colorState.brand.auto,
-          colors: Object.values(colorState.brand.auto.colors).reduce(
-            (accum, { name, ...restDef }) =>
-              Object.assign(accum, { [name]: restDef }),
-            {}
-          ),
+          colors: brandColors,
         },
-        neutral: {},
+        neutral: neutralColors,
       };
 
     default:

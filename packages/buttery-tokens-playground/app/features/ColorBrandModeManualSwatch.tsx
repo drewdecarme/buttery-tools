@@ -5,13 +5,13 @@ import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
 import { ColorSwatchHex } from "./ColorSwatchHex";
 import { ColorSwatch } from "./ColorSwatch";
-import type { ConfigurationStateColorBrandColorsManual } from "./config.utils";
+import type { ConfigurationStateColorsManual } from "./config.utils";
 import type { ConfigurationContextType } from "./Config.context";
 import type { ColorSwatchVariantsPropsCustom } from "./ColorSwatchVariants";
 import { ColorSwatchVariants } from "./ColorSwatchVariants";
 
 export function ColorBrandModeManualSwatch<
-  T extends ConfigurationStateColorBrandColorsManual
+  T extends ConfigurationStateColorsManual
 >({
   colorDef,
   setColor,

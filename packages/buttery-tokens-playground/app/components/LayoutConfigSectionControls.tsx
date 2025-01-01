@@ -32,10 +32,10 @@ const styles = css`
     align-items: center;
     gap: ${makeRem(8)};
     position: sticky;
-    top: 158px;
+    top: ${makeRem(133)};
     background: white;
-    padding-top: ${makeCustom("layout-section-offset-top")};
-    padding-bottom: ${makeRem(24)};
+    padding-top: ${makeCustom("layout-section-title-margin")};
+    padding-bottom: ${makeCustom("layout-section-title-margin")};
     z-index: 10;
 
     h3 {
@@ -53,7 +53,7 @@ const styles = css`
 
   h3 {
     margin: 0;
-    font-size: ${makeRem(16)};
+    font-size: ${makeRem(20)};
     font-weight: ${makeFontWeight("bold")};
   }
 `;

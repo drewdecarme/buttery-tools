@@ -3,6 +3,8 @@ import { ColorBrandMode } from "~/features/ColorBrandMode";
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
 import { LayoutConfigSectionPreview } from "~/components/LayoutConfigSectionPreview";
+import { ColorPreviewNeutral } from "~/features/ColorPreviewNeutral";
+import { ColorNeutral } from "~/features/ColorNeutral";
 
 export default function ColorsRoute() {
   return (
@@ -37,9 +39,11 @@ export default function ColorsRoute() {
             </>
           }
         >
-          neutral confic
+          <ColorNeutral />
         </LayoutConfigSectionControls>
-        <LayoutConfigSectionPreview>neutral preview</LayoutConfigSectionPreview>
+        <LayoutConfigSectionPreview>
+          <ColorPreviewNeutral />
+        </LayoutConfigSectionPreview>
       </LayoutConfigSection>
     </>
   );
