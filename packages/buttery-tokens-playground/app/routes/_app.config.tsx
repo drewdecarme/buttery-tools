@@ -18,7 +18,7 @@ const styles = css`
   position: sticky;
   top: 0;
   background: white;
-  z-index: 10;
+  z-index: 11;
 
   .page-header {
     display: grid;

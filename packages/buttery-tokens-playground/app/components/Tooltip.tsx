@@ -81,7 +81,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     return (
       <div
         {...restProps}
-        className={classes(styles, className, {
+        className={classes(styles, className, "tooltip", {
           [`v-${dxVariant}`]: dxVariant,
         })}
         ref={ref}

@@ -24,11 +24,11 @@
       "colors": {
         "primary": {
           "hue": 233,
-          "variants": 10
+          "variants": 7
         },
         "brand2": {
           "hue": 273,
-          "variants": 10
+          "variants": 4
         },
         "brand3": {
           "hue": 334,
@@ -41,6 +41,10 @@
         "brand5": {
           "hue": 40,
           "variants": 10
+        },
+        "brand6": {
+          "hue": 20,
+          "variants": 10
         }
       },
       "saturation": 88,
@@ -52,12 +56,32 @@
         "variants": 10
       },
       "surface": {
-        "hex": "#d4d4d4",
+        "hex": "#FAFAFA",
         "variants": 1
       },
       "background": {
         "hex": "#F5F5F5",
         "variants": 1
+      },
+      "neutral4": {
+        "hex": "#000000",
+        "variants": 10
+      },
+      "neutral5": {
+        "hex": "#000000",
+        "variants": 10
+      },
+      "neutral6": {
+        "hex": "#000000",
+        "variants": 10
+      },
+      "neutral7": {
+        "hex": "#000000",
+        "variants": 10
+      },
+      "neutral8": {
+        "hex": "#000000",
+        "variants": 10
       }
     }
   },

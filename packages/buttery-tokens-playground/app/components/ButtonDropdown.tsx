@@ -6,15 +6,16 @@ import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 
 import { IconArrowDown } from "~/icons/IconArrowDown";
 
-import { Button, type ButtonPropsCustom } from "./Button";
+import { Button } from "./Button";
 import { createDropdownStyles } from "./shared-styles";
 import { ButtonDropdownProvider } from "./ButtonDropdown.context";
+import type { ButtonRegularPropsCustom } from "./ButtonRegular";
 
 export type ButtonDropdownPropsNative = Omit<
   JSX.IntrinsicElements["button"],
   "className"
 >;
-export type ButtonDropdownPropsCustom = ButtonPropsCustom & {
+export type ButtonDropdownPropsCustom = ButtonRegularPropsCustom & {
   /**
    * The label of the button that isn't the dropdown
    */
@@ -148,7 +149,10 @@ export const ButtonDropdown = forwardRef<
       >
         <IconArrowDown dxSize={dxSize === "dense" ? 12 : 14} />
       </Button>
-      <div ref={setDropdownRef} className={classes(dropdownStyles)}>
+      <div
+        ref={setDropdownRef}
+        className={classes(dropdownStyles, "btn-dropdown")}
+      >
         <ButtonDropdownProvider closeDropdown={closeMenu}>
           {children}
         </ButtonDropdownProvider>

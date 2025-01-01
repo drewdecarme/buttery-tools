@@ -12,7 +12,7 @@ const styles = css`
   gap: 0;
 
   & > button,
-  & > div {
+  & > .btn-dropdown {
     border-radius: 0 !important;
 
     &:not(:last-child) {

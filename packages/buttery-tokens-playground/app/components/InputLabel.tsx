@@ -32,26 +32,26 @@ const styles = css`
   vertical-align: top;
 
   .label {
-    font-size: ${makeRem(14)};
+    font-size: ${makeRem(16)};
     font-weight: ${makeFontWeight("semi-bold")};
     font-family: ${makeFontFamily("body")};
     color: ${makeColor("neutral-dark")};
     margin-bottom: ${makeRem(8)};
 
     &.dense {
-      font-size: ${makeRem(12)};
+      font-size: ${makeRem(14)};
       margin-bottom: ${makeRem(6)};
     }
   }
 
   .help {
     margin-top: ${makeRem(4)};
-    font-size: ${makeRem(12)};
+    font-size: ${makeRem(14)};
     color: ${makeColor("neutral-dark", { opacity: 0.8 })};
     font-weight: ${makeFontWeight("regular")};
 
     &.dense {
-      font-size: ${makeRem(10)};
+      font-size: ${makeRem(12)};
       margin-top: ${makeRem(0)};
     }
   }

@@ -18,8 +18,8 @@ const styles = css`
   ${makeReset("input")};
 
   &.s-dense {
-    height: ${makeRem(24)};
-    font-size: ${makeRem(12)};
+    height: ${makeRem(28)};
+    font-size: ${makeRem(14)};
     border: ${makeRem(1)} solid ${makeColor("neutral", { opacity: 0.1 })};
     border-radius: ${makeRem(2)};
     padding: 0 ${makeRem(8)};

@@ -95,7 +95,7 @@ export const colorAutoPresets: {
 export function getInitColorStateFromConfig(
   config: ButteryTokensConfig
 ): ConfigurationStateColor {
-  const colors = Object.entries(config.color.brand.colors ?? {}).reduce(
+  const brandColors = Object.entries(config.color.brand.colors ?? {}).reduce(
     (accum, [colorName, colorDefValue]) =>
       Object.assign(accum, {
         [generateGUID()]: {
@@ -105,13 +105,29 @@ export function getInitColorStateFromConfig(
       }),
     {}
   );
+  const neutralColors = Object.entries(config.color.neutral ?? {}).reduce(
+    (accum, [colorName, colorDefValue]) => {
+      const def =
+        typeof colorDefValue === "string"
+          ? { hex: colorDefValue }
+          : colorDefValue;
+      return Object.assign(accum, {
+        [generateGUID()]: {
+          name: colorName,
+          ...def,
+        },
+      });
+    },
+    {}
+  );
+  // START HERE WITH THE NEUTRAL COLORS
   if (config.color.brand.type === "manual") {
     return {
       brand: {
         type: "manual",
         manual: {
           type: "manual",
-          colors,
+          colors: brandColors,
         },
         auto: {
           type: "earth",
@@ -120,23 +136,7 @@ export function getInitColorStateFromConfig(
           colors: {},
         },
       },
-      neutral: {
-        neutral: {
-          hex: "#4A4A4A",
-          name: "neutral",
-          variants: 10,
-        },
-        surface: {
-          hex: "#FAFAFA",
-          name: "surface",
-          variants: 2,
-        },
-        background: {
-          hex: "#F5F5F5",
-          name: "background",
-          variants: 2,
-        },
-      },
+      neutral: neutralColors,
     };
   }
 
@@ -149,26 +149,10 @@ export function getInitColorStateFromConfig(
       },
       auto: {
         ...config.color.brand,
-        colors,
+        colors: brandColors,
       },
     },
-    neutral: {
-      neutral: {
-        hex: "#4A4A4A",
-        name: "neutral",
-        variants: 10,
-      },
-      surface: {
-        hex: "#FAFAFA",
-        name: "surface",
-        variants: 1,
-      },
-      background: {
-        hex: "#F5F5F5",
-        name: "background",
-        variants: 1,
-      },
-    },
+    neutral: neutralColors,
   };
 }
 

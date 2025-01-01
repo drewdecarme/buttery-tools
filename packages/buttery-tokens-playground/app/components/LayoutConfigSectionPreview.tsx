@@ -1,5 +1,5 @@
 import { classes } from "@buttery/components";
-import { makeCustom } from "@buttery/tokens/playground";
+import { makeCustom, makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import type { JSX } from "react";
 import { forwardRef } from "react";
@@ -10,10 +10,10 @@ export type LayoutConfigSectionPreviewProps =
   LayoutConfigSectionPreviewPropsNative;
 
 const styles = css`
-  padding-top: ${makeCustom("layout-section-offset-top")};
   & > * {
     position: sticky;
-    top: calc(158px + 32px);
+    top: ${makeRem(133)};
+    padding: 0 ${makeCustom("layout-gutters")};
   }
 `;
 

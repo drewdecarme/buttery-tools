@@ -44,7 +44,7 @@ const containerStyles = css`
   font-family: ${makeFontFamily("body")};
 
   .label {
-    font-size: ${makeRem(12)};
+    font-size: ${makeRem(14)};
     color: ${makeColor("neutral", { opacity: 0.8 })};
   }
 

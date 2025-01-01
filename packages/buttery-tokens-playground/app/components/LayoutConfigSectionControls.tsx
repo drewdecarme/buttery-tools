@@ -1,7 +1,6 @@
 import { classes } from "@buttery/components";
 import {
   makeColor,
-  makeCustom,
   makeFontWeight,
   makeRem,
   makeReset,
@@ -11,6 +10,8 @@ import type { JSX, ReactNode } from "react";
 import { forwardRef } from "react";
 
 import { InformationCircleIcon } from "~/icons/IconInformationCircle";
+
+import { LayoutConfigSectionTitle } from "./LayoutConfigSectionTitle";
 
 export type LayoutConfigSectionControlsPropsNative =
   JSX.IntrinsicElements["article"];
@@ -28,15 +29,7 @@ const styles = css`
     ${makeColor("neutral-light", { opacity: 0.2 })};
 
   & > .title {
-    display: flex;
-    align-items: center;
     gap: ${makeRem(8)};
-    position: sticky;
-    top: ${makeRem(133)};
-    background: white;
-    padding-top: ${makeCustom("layout-section-title-margin")};
-    padding-bottom: ${makeCustom("layout-section-title-margin")};
-    z-index: 10;
 
     h3 {
       margin: 0;
@@ -67,12 +60,12 @@ export const LayoutConfigSectionControls = forwardRef<
 ) {
   return (
     <article {...restProps} className={classes(styles, className)} ref={ref}>
-      <div className="title">
+      <LayoutConfigSectionTitle className="title">
         <h3>{dxTitle}</h3>
         <button>
           <InformationCircleIcon dxSize={16} />
         </button>
-      </div>
+      </LayoutConfigSectionTitle>
       {children}
     </article>
   );

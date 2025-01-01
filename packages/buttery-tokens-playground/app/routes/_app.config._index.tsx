@@ -5,6 +5,7 @@ import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionCon
 import { LayoutConfigSectionPreview } from "~/components/LayoutConfigSectionPreview";
 import { ColorPreviewNeutral } from "~/features/ColorPreviewNeutral";
 import { ColorNeutral } from "~/features/ColorNeutral";
+import { ColorPreviewControls } from "~/features/ColorPreviewControls";
 
 export default function ColorsRoute() {
   return (
@@ -23,6 +24,7 @@ export default function ColorsRoute() {
           <ColorBrandMode />
         </LayoutConfigSectionControls>
         <LayoutConfigSectionPreview>
+          <ColorPreviewControls />
           <ColorPreviewBrand />
         </LayoutConfigSectionPreview>
       </LayoutConfigSection>
@@ -42,6 +44,7 @@ export default function ColorsRoute() {
           <ColorNeutral />
         </LayoutConfigSectionControls>
         <LayoutConfigSectionPreview>
+          <ColorPreviewControls />
           <ColorPreviewNeutral />
         </LayoutConfigSectionPreview>
       </LayoutConfigSection>

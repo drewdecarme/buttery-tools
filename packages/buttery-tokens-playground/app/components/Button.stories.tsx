@@ -1,10 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import { IconFloppyDisk } from "~/icons/IconFloppyDisk";
+
 import { Button, type ButtonProps } from "./Button";
 
 const meta: Meta = {
   title: "Button",
   component: Button,
+  parameters: {
+    layout: "centered",
+  },
 };
 
 export default meta;
@@ -56,4 +61,28 @@ export const TextNormal: Story = {
     dxSize: "normal",
     children: "Button",
   },
+};
+
+export const IconDense: Story = {
+  args: {
+    dxVariant: "icon",
+    dxSize: "dense",
+    DXIcon: IconFloppyDisk,
+  } as ButtonProps,
+};
+
+export const IconNormal: Story = {
+  args: {
+    dxVariant: "icon",
+    dxSize: "normal",
+    DXIcon: IconFloppyDisk,
+  } as ButtonProps,
+};
+
+export const IconBig: Story = {
+  args: {
+    dxVariant: "icon",
+    dxSize: "big",
+    DXIcon: IconFloppyDisk,
+  } as ButtonProps,
 };
