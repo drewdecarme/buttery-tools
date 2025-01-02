@@ -28,7 +28,7 @@
         },
         "secondary": {
           "hue": 52,
-          "variants": 9
+          "variants": 10
         },
         "brand3": {
           "hue": 334,
@@ -59,7 +59,7 @@
           "variants": 10
         }
       },
-      "saturation": 88,
+      "saturation": 100,
       "brightness": 95
     },
     "neutral": {
