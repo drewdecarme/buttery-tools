@@ -11,42 +11,41 @@ const styles = css`
   display: flex;
   gap: 0;
 
-  & > button,
-  & > .btn-dropdown {
+  & > button {
     border-radius: 0 !important;
 
-    &:not(:last-child) {
+    &:not(:last-of-type) {
       border-right: 0 !important;
 
       & > button {
-        &:nth-child(2) {
+        &:nth-of-type(2) {
           border-right: 0;
         }
       }
     }
-    &:first-child {
+    &:first-of-type {
       border-top-left-radius: ${makeRem(4)} !important;
       border-bottom-left-radius: ${makeRem(4)} !important;
 
       & > button {
-        &:nth-child(1) {
+        &:nth-of-type(1) {
           border-top-left-radius: ${makeRem(4)} !important;
           border-bottom-left-radius: ${makeRem(4)} !important;
         }
-        &:nth-child(2) {
+        &:nth-of-type(2) {
           border-radius: 0;
         }
       }
     }
-    &:last-child {
+    &:last-of-type {
       border-top-right-radius: ${makeRem(4)} !important;
       border-bottom-right-radius: ${makeRem(4)} !important;
 
       & > button {
-        &:nth-child(1) {
+        &:nth-of-type(1) {
           border-radius: 0;
         }
-        &:nth-child(2) {
+        &:nth-of-type(2) {
           border-top-right-radius: ${makeRem(4)} !important;
           border-bottom-right-radius: ${makeRem(4)} !important;
         }

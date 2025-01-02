@@ -7,6 +7,7 @@ import {
   type ColorAndVariants,
 } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef } from "react";
 import { match } from "ts-pattern";
 

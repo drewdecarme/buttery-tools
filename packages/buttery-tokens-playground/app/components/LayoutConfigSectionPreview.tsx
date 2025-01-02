@@ -14,6 +14,7 @@ const styles = css`
     position: sticky;
     top: ${makeRem(133)};
     padding: 0 ${makeCustom("layout-gutters")};
+    padding-bottom: ${makeCustom("layout-gutters")};
   }
 `;
 

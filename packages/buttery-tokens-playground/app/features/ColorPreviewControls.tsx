@@ -1,23 +1,32 @@
-import { css } from "@linaria/core";
-
 import { Button } from "~/components/Button";
-import { LayoutConfigSectionTitle } from "~/components/LayoutConfigSectionTitle";
+import { ButtonGroup } from "~/components/ButtonGroup";
 import { IconMoon2 } from "~/icons/IconMoon2";
+import { IconUniversalAccess } from "~/icons/IconUniversalAccess";
+import { IconSun03 } from "~/icons/IconSun03";
 
-const styles = css`
-  justify-content: flex-end;
-`;
+import { useColorPreviewContext } from "./ColorPreview.context";
 
 export function ColorPreviewControls() {
+  const { themeMode, setThemeMode } = useColorPreviewContext();
   return (
-    <LayoutConfigSectionTitle className={styles}>
+    <ButtonGroup>
       <Button
         dxVariant="icon"
-        DXIcon={IconMoon2}
+        DXIcon={IconUniversalAccess}
         dxStyle="outlined"
         dxSize="normal"
-        dxHelp="Split view into light & dark"
+        dxHelp="View accessibility metrics"
       />
-    </LayoutConfigSectionTitle>
+      <Button
+        dxVariant="icon"
+        DXIcon={themeMode === "light" ? IconMoon2 : IconSun03}
+        onClick={() =>
+          setThemeMode((prevState) => (prevState === "dark" ? "light" : "dark"))
+        }
+        dxStyle="outlined"
+        dxSize="normal"
+        dxHelp={`Toggle ${themeMode === "dark" ? "light" : "dark"} theme`}
+      />
+    </ButtonGroup>
   );
 }

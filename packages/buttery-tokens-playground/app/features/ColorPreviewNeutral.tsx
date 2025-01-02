@@ -1,7 +1,7 @@
 import { createNeutralVariants } from "@buttery/tokens-utils";
 
 import { useConfigurationContext } from "./Config.context";
-import { ColorPreview } from "./ColorPreview";
+import { ColorPreviewBlocks } from "./ColorPreviewBlocks";
 
 export function ColorPreviewNeutral() {
   const { color } = useConfigurationContext();
@@ -16,7 +16,7 @@ export function ColorPreviewNeutral() {
   return Object.entries(variants).map(
     ([colorName, { base: baseVariantHex, ...restVariants }], i) => {
       return (
-        <ColorPreview
+        <ColorPreviewBlocks
           key={colorName.concat(`-${i}`)}
           colorName={colorName}
           baseVariantHex={baseVariantHex}

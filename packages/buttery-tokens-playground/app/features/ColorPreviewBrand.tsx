@@ -1,60 +1,61 @@
-import { exhaustiveMatchGuard } from "@buttery/components";
 import { createBrandVariants } from "@buttery/tokens-utils";
+import { match } from "ts-pattern";
 
 import { useConfigurationContext } from "./Config.context";
-import { ColorPreview } from "./ColorPreview";
+import { ColorPreviewBlocks } from "./ColorPreviewBlocks";
+import { ColorPreviewContainer } from "./ColorPreviewContainer";
 
 export function ColorPreviewBrand() {
   const { color } = useConfigurationContext();
 
-  switch (color.brand.type) {
-    case "auto": {
-      const variants = createBrandVariants({
-        ...color.brand.auto,
-        colors: Object.values(color.brand.auto.colors).reduce(
-          (accum, { name, ...restDef }) =>
-            Object.assign(accum, { [name]: restDef }),
-          {}
-        ),
-      });
-      return Object.entries(variants).map(
-        ([colorName, { base: baseVariantHex, ...restVariants }], i) => {
-          return (
-            <ColorPreview
-              key={colorName.concat(`-${i}`)}
-              colorName={colorName}
-              baseVariantHex={baseVariantHex}
-              variants={restVariants}
-            />
+  return (
+    <ColorPreviewContainer>
+      {match(color.brand)
+        .with({ type: "auto" }, (state) => {
+          const variants = createBrandVariants({
+            ...state.auto,
+            colors: Object.values(state.auto.colors).reduce(
+              (accum, { name, ...restDef }) =>
+                Object.assign(accum, { [name]: restDef }),
+              {}
+            ),
+          });
+          return Object.entries(variants).map(
+            ([colorName, { base: baseVariantHex, ...restVariants }], i) => {
+              return (
+                <ColorPreviewBlocks
+                  key={colorName.concat(`-${i}`)}
+                  colorName={colorName}
+                  baseVariantHex={baseVariantHex}
+                  variants={restVariants}
+                />
+              );
+            }
           );
-        }
-      );
-    }
-
-    case "manual": {
-      const variants = createBrandVariants({
-        type: "manual",
-        colors: Object.values(color.brand.manual.colors).reduce(
-          (accum, { name, ...restDef }) =>
-            Object.assign(accum, { [name]: restDef }),
-          {}
-        ),
-      });
-      return Object.entries(variants).map(
-        ([colorName, { base: baseVariantHex, ...restVariants }], i) => {
-          return (
-            <ColorPreview
-              key={colorName.concat(`-${i}`)}
-              colorName={colorName}
-              baseVariantHex={baseVariantHex}
-              variants={restVariants}
-            />
+        })
+        .with({ type: "manual" }, (state) => {
+          const variants = createBrandVariants({
+            type: "manual",
+            colors: Object.values(state.manual.colors).reduce(
+              (accum, { name, ...restDef }) =>
+                Object.assign(accum, { [name]: restDef }),
+              {}
+            ),
+          });
+          return Object.entries(variants).map(
+            ([colorName, { base: baseVariantHex, ...restVariants }], i) => {
+              return (
+                <ColorPreviewBlocks
+                  key={colorName.concat(`-${i}`)}
+                  colorName={colorName}
+                  baseVariantHex={baseVariantHex}
+                  variants={restVariants}
+                />
+              );
+            }
           );
-        }
-      );
-    }
-
-    default:
-      exhaustiveMatchGuard(color.brand.type);
-  }
+        })
+        .exhaustive()}
+    </ColorPreviewContainer>
+  );
 }
