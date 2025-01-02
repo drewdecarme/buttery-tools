@@ -20,6 +20,11 @@ const styles = css`
   background: white;
   z-index: 11;
 
+  & > * {
+    margin: 0 auto;
+    max-width: ${makeCustom("layout-max-width")};
+  }
+
   .page-header {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -41,8 +46,11 @@ const styles = css`
       gap: ${makeRem(16)};
     }
     & + * {
-      padding: 0 ${makeCustom("layout-gutters")};
     }
+  }
+
+  .tabs {
+    padding: 0 ${makeCustom("layout-gutters")};
   }
 
   & + * {
@@ -91,7 +99,7 @@ export default function AppConfigRoute() {
           </div>
         </div>
         <NavTabs>
-          <ul>
+          <ul className="tabs">
             <li>
               <NavLink to="." end>
                 Color

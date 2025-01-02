@@ -3,11 +3,16 @@ import type { ChangeEventHandler, MouseEventHandler } from "react";
 import type { ColorVariantTypes } from "@buttery/tokens-utils/schemas";
 import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
+import { ColorBlob, useColorBlob } from "~/components/ColorBlob";
+import { InputGroup } from "~/components/InputGroup";
+
 import { ColorSwatch } from "./ColorSwatch";
 import type { ConfigurationStateColorsAuto } from "./config.utils";
 import type { ConfigurationContextType } from "./Config.context";
 import type { ColorSwatchVariantsPropsCustom } from "./ColorSwatchVariants";
 import { ColorSwatchVariants } from "./ColorSwatchVariants";
+import { ColorSwatchSummary } from "./ColorSwatchSummary";
+import { ColorSwatchName } from "./ColorSwatchName";
 import { ColorSwatchHue } from "./ColorSwatchHue";
 
 export function ColorBrandModeAutoSwatch<
@@ -19,16 +24,19 @@ export function ColorBrandModeAutoSwatch<
   colorDef: T;
   setColor: ConfigurationContextType["setColor"];
 }) {
+  const { colorBlobRef, setHue } = useColorBlob();
   const [id, { name, hue, variants }] = Object.entries(colorDef)[0];
 
   const handleChangeHue = useCallback<ChangeEventHandler<HTMLInputElement>>(
     ({ currentTarget: { value } }) => {
       setColor((draft) => {
         const color = draft.brand.auto.colors[id];
-        color.hue = Number(value);
+        const hue = Number(value);
+        color.hue = hue;
+        setHue(hue);
       });
     },
-    [id, setColor]
+    [id, setColor, setHue]
   );
 
   const handleChangeName = useCallback<ChangeEventHandler<HTMLInputElement>>(
@@ -48,7 +56,7 @@ export function ColorBrandModeAutoSwatch<
   }, [id, setColor]);
 
   const handleChangeVariantType = useCallback<
-    ChangeEventHandler<HTMLSelectElement>
+    ChangeEventHandler<HTMLInputElement>
   >(
     ({ currentTarget: { value } }) => {
       const type = value as ColorVariantTypes["type"];
@@ -136,20 +144,28 @@ export function ColorBrandModeAutoSwatch<
 
   return (
     <ColorSwatch dxOnRemove={handleRemove}>
-      <ColorSwatchHue
-        id={id}
-        hue={hue}
-        name={name}
-        onChangeHue={handleChangeHue}
-        onChangeName={handleChangeName}
-      />
-      <ColorSwatchVariants
-        dxVariants={variants}
-        onChangeVariantType={handleChangeVariantType}
-        onChangeVariantAuto={handleChangeVariantAuto}
-        onChangeVariantNamed={handleChangeVariantNamed}
-        onChangeVariantManual={handleChangeVariantManual}
-      />
+      <ColorSwatchSummary dxTitle={name} dxSubtitle={`Hue: ${hue}`}>
+        <ColorBlob
+          ref={colorBlobRef}
+          dxVariant="circle"
+          dxType="hue"
+          dxValue={hue}
+        />
+      </ColorSwatchSummary>
+      <div>
+        <InputGroup>
+          <ColorSwatchName name={name} onChangeName={handleChangeName} />
+          <ColorSwatchHue hue={hue} onChangeHue={handleChangeHue} />
+          <ColorSwatchVariants
+            dxVariants={variants}
+            dxAvailableOptions={["auto", "auto-named"]}
+            onChangeVariantType={handleChangeVariantType}
+            onChangeVariantAuto={handleChangeVariantAuto}
+            onChangeVariantNamed={handleChangeVariantNamed}
+            onChangeVariantManual={handleChangeVariantManual}
+          />
+        </InputGroup>
+      </div>
     </ColorSwatch>
   );
 }

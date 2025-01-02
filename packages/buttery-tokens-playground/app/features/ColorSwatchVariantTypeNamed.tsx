@@ -30,7 +30,11 @@ export function ColorSwatchVariantTypeNamed({
 
   return (
     <>
-      <InputLabel dxLabel="Named Variants" dxSize="dense" />
+      <InputLabel
+        dxLabel="Named Variants"
+        dxSize="dense"
+        dxHelp="Provide custom names for the auto generated variant colors"
+      />
       <ColorSwatchVariantList>
         {variants.map((v, index) => {
           return (

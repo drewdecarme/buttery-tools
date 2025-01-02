@@ -16,7 +16,7 @@ import { ColorBrandModeAutoSwatch } from "./ColorBrandModeAutoSwatch";
 import { ColorBrandModeAutoCategory } from "./ColorBrandModeAutoCategory";
 
 import { InputRange } from "../components/InputRange";
-import { InputSection } from "../components/InputGroup";
+import { InputSection } from "../components/InputSection";
 import { InputLabel } from "../components/InputLabel";
 
 const inputLabelStyles = css`

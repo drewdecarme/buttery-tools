@@ -7,7 +7,7 @@ import type { ConfigurationStateColorBrandManual } from "./config.utils";
 import { ColorSwatchList } from "./ColorSwatchList";
 
 import { InputLabel } from "../components/InputLabel";
-import { InputSection } from "../components/InputGroup";
+import { InputSection } from "../components/InputSection";
 
 export function ColorBrandModeManual({
   state,

@@ -4,8 +4,8 @@ import { css } from "@linaria/core";
 import { classes, useToggle } from "@buttery/components";
 import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 
-import { IconSettings02 } from "~/icons/IconSettings02";
 import { IconDelete } from "~/icons/IconDelete";
+import { IconSettings05 } from "~/icons/IconSettings05";
 
 export type ColorSwatchPropsNative = Omit<
   JSX.IntrinsicElements["div"],
@@ -20,6 +20,8 @@ export type ColorSwatchProps = ColorSwatchPropsNative & ColorSwatchPropsCustom;
 
 const styles = css`
   width: 100%;
+  background: white;
+  border-radius: inherit;
 
   & > div {
     padding: ${makeRem(16)} ${makeRem(16)};
@@ -93,7 +95,7 @@ export const ColorSwatch = forwardRef<HTMLDivElement, ColorSwatchProps>(
           {top}
           <div className={containerStyles}>
             <button className={buttonStyles} onClick={toggle}>
-              <IconSettings02 dxSize={16} />
+              <IconSettings05 dxSize={16} />
             </button>
             <button
               className={classes(buttonStyles, "delete")}

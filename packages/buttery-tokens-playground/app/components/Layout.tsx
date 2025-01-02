@@ -10,6 +10,7 @@ export type LayoutProps = LayoutPropsNative;
 const bodyStyles = css`
   margin: 0;
   padding: 0;
+  overflow-x: auto;
 
   * {
     box-sizing: border-box;

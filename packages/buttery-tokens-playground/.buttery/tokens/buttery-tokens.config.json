@@ -23,12 +23,12 @@
       "type": "fluorescent",
       "colors": {
         "primary": {
-          "hue": 233,
-          "variants": 7
-        },
-        "brand2": {
           "hue": 273,
-          "variants": 4
+          "variants": 10
+        },
+        "secondary": {
+          "hue": 52,
+          "variants": 9
         },
         "brand3": {
           "hue": 334,
@@ -39,11 +39,23 @@
           "variants": 10
         },
         "brand5": {
-          "hue": 40,
+          "hue": 180,
           "variants": 10
         },
         "brand6": {
-          "hue": 20,
+          "hue": 180,
+          "variants": 10
+        },
+        "brand7": {
+          "hue": 180,
+          "variants": 10
+        },
+        "brand8": {
+          "hue": 180,
+          "variants": 10
+        },
+        "brand9": {
+          "hue": 180,
           "variants": 10
         }
       },

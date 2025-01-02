@@ -12,8 +12,19 @@ import {
 } from "./ColorPreview.context";
 
 const styles = css`
+  position: relative;
+
   &.light {
     background: white;
+    &::after {
+      content: "";
+      position: absolute;
+      left: 100%;
+      top: 0;
+      bottom: 0;
+      width: 100vw;
+      background: white;
+    }
   }
   &.dark {
     background: #1e1e1e;

@@ -11,15 +11,17 @@ const styles = css`
   ${makeReset("ul")};
   display: flex;
   flex-direction: column;
-  border: ${makeRem(1)} solid ${makeColor("neutral-light", { opacity: 0.1 })};
   border-radius: ${makeRem(4)};
+  gap: ${makeRem(8)};
 
   & > li {
     width: 100%;
-    & + li {
+    border-radius: ${makeRem(4)};
+    border: ${makeRem(1)} solid ${makeColor("neutral-light", { opacity: 0.1 })};
+    /* & + li {
       border-top: ${makeRem(1)} solid
         ${makeColor("neutral-light", { opacity: 0.1 })};
-    }
+    } */
     &:last-child {
       button {
         padding: ${makeRem(16)};

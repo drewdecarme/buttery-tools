@@ -24,6 +24,7 @@ const styles = css`
   border: ${makeRem(1)} solid ${makeColor("neutral", { opacity: 0.2 })};
   font-size: ${makeRem(12)};
   transition: all 0.1s ease-in-out;
+  background: white;
 
   &:has(input:checked) {
     border-color: ${makeColor("primary")};

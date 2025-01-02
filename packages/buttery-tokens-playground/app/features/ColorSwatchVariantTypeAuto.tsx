@@ -23,7 +23,11 @@ export function ColorSwatchVariantTypeAuto({
   }
 
   return (
-    <InputLabel dxLabel="Total # of variants" dxSize="dense">
+    <InputLabel
+      dxSize="dense"
+      dxLabel="Total Count"
+      dxHelp="Number of auto-named variants based upon the base color"
+    >
       <InputNumber
         dxSize="dense"
         value={variant}

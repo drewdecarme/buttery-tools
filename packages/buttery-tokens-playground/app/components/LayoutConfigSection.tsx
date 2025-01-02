@@ -10,8 +10,8 @@ export type LayoutConfigSectionProps = LayoutConfigSectionPropsNative;
 const styles = css`
   display: grid;
   grid-template-columns: ${makeRem(520)} 1fr;
-  padding: 0 ${makeCustom("layout-gutters")};
-  padding-bottom: ${makeCustom("layout-gutters")};
+  max-width: ${makeCustom("layout-max-width")};
+  margin: 0 auto;
 `;
 
 export const LayoutConfigSection = forwardRef<

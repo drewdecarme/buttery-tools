@@ -3,12 +3,16 @@ import type { ChangeEventHandler, MouseEventHandler } from "react";
 import type { ColorVariantTypes } from "@buttery/tokens-utils/schemas";
 import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
+import { ColorBlob, useColorBlob } from "~/components/ColorBlob";
+
 import { ColorSwatchHex } from "./ColorSwatchHex";
 import { ColorSwatch } from "./ColorSwatch";
 import type { ConfigurationStateColorsManual } from "./config.utils";
 import type { ConfigurationContextType } from "./Config.context";
 import type { ColorSwatchVariantsPropsCustom } from "./ColorSwatchVariants";
 import { ColorSwatchVariants } from "./ColorSwatchVariants";
+import { ColorSwatchSummary } from "./ColorSwatchSummary";
+import { ColorSwatchName } from "./ColorSwatchName";
 
 export function ColorBrandModeManualSwatch<
   T extends ConfigurationStateColorsManual
@@ -20,6 +24,7 @@ export function ColorBrandModeManualSwatch<
   setColor: ConfigurationContextType["setColor"];
 }) {
   const [id, { name, hex, variants }] = Object.entries(colorDef)[0];
+  const { colorBlobRef, setHex } = useColorBlob();
 
   const handleChangeHex = useCallback<ChangeEventHandler<HTMLInputElement>>(
     ({ currentTarget: { value } }) => {
@@ -27,8 +32,9 @@ export function ColorBrandModeManualSwatch<
         const color = draft.brand.manual.colors[id];
         color.hex = value;
       });
+      setHex(value);
     },
-    [id, setColor]
+    [id, setColor, setHex]
   );
 
   const handleChangeName = useCallback<ChangeEventHandler<HTMLInputElement>>(
@@ -139,20 +145,25 @@ export function ColorBrandModeManualSwatch<
 
   return (
     <ColorSwatch dxOnRemove={handleRemove}>
-      <ColorSwatchHex
-        id={id}
-        hex={hex}
-        name={name}
-        onChangeHex={handleChangeHex}
-        onChangeName={handleChangeName}
-      />
-      <ColorSwatchVariants
-        dxVariants={variants}
-        onChangeVariantType={handleChangeVariantType}
-        onChangeVariantAuto={handleChangeVariantAuto}
-        onChangeVariantNamed={handleChangeVariantNamed}
-        onChangeVariantManual={handleChangeVariantManual}
-      />
+      <ColorSwatchSummary>
+        <ColorBlob
+          ref={colorBlobRef}
+          dxVariant="circle"
+          dxType="hex"
+          dxValue={hex}
+        />
+        <ColorSwatchName name={name} onChangeName={handleChangeName} />
+      </ColorSwatchSummary>
+      <div>
+        <ColorSwatchHex id={id} hex={hex} onChangeHex={handleChangeHex} />
+        <ColorSwatchVariants
+          dxVariants={variants}
+          onChangeVariantType={handleChangeVariantType}
+          onChangeVariantAuto={handleChangeVariantAuto}
+          onChangeVariantNamed={handleChangeVariantNamed}
+          onChangeVariantManual={handleChangeVariantManual}
+        />
+      </div>
     </ColorSwatch>
   );
 }

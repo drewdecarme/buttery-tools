@@ -12,13 +12,14 @@ const styles = css`
   display: flex;
   flex-direction: column;
   gap: ${makeRem(4)};
+  width: 100%;
 
   li {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto;
+    width: 100%;
     gap: ${makeRem(8)};
     align-items: center;
-    height: ${makeRem(24)};
   }
 `;
 

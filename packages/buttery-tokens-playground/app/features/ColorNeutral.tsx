@@ -1,6 +1,6 @@
 import { generateGUID } from "@buttery/utils/isomorphic";
 
-import { InputSection } from "~/components/InputGroup";
+import { InputSection } from "~/components/InputSection";
 import { InputLabel } from "~/components/InputLabel";
 
 import { useConfigurationContext } from "./Config.context";

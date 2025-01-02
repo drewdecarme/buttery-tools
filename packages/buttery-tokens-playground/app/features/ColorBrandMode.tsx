@@ -13,7 +13,7 @@ import { ColorBrandModeAuto } from "./ColorBrandModeAuto";
 import { useConfigurationContext } from "./Config.context";
 
 import { InputLabel } from "../components/InputLabel";
-import { InputSection } from "../components/InputGroup";
+import { InputSection } from "../components/InputSection";
 
 const groupStyles = css`
   display: flex;

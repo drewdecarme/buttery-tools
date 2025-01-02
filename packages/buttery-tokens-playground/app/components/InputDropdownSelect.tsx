@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { forwardRef, useCallback } from "react";
 import {
   classes,
@@ -67,6 +68,7 @@ const textContainerStyles = css`
 
   input {
     cursor: pointer;
+    background: white;
   }
 
   .icon {

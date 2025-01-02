@@ -6,9 +6,12 @@ import type {
 } from "@buttery/tokens-utils/schemas";
 import { css } from "@linaria/core";
 import type { ChangeEventHandler, JSX } from "react";
-import { useMemo, forwardRef, useId } from "react";
+import { useMemo, forwardRef } from "react";
 import { match } from "ts-pattern";
-import { makeColor, makeRem } from "@buttery/tokens/playground";
+import { makeRem } from "@buttery/tokens/playground";
+
+import { InputRadioTabs } from "~/components/InputRadioTabs";
+import { InputRadioTab } from "~/components/InputRadioTab";
 
 import { ColorSwatchVariantTypeAuto } from "./ColorSwatchVariantTypeAuto";
 import type { ColorSwatchVariantTypeNamedProps } from "./ColorSwatchVariantTypeNamed";
@@ -17,12 +20,16 @@ import type { ColorSwatchVariantTypeManualProps } from "./ColorSwatchVariantType
 import { ColorSwatchVariantTypeManual } from "./ColorSwatchVariantTypeManual";
 
 import { InputLabel } from "../components/InputLabel";
-import { InputSelect } from "../components/InputSelect";
 
 export type ColorSwatchVariantsPropsNative = JSX.IntrinsicElements["div"];
 export type ColorSwatchVariantsPropsCustom = {
   dxVariants: ButteryTokensColorVariant;
-  onChangeVariantType: ChangeEventHandler<HTMLSelectElement>;
+  /**
+   * An optional key to manually display only a sub-set of the
+   * available variant options
+   */
+  dxAvailableOptions?: (typeof variantOptions)[0]["type"][];
+  onChangeVariantType: ChangeEventHandler<HTMLInputElement>;
   onChangeVariantAuto: <T extends ButteryTokensColorVariantBase>(
     variant: T
   ) => void;
@@ -33,19 +40,7 @@ export type ColorSwatchVariantsProps = ColorSwatchVariantsPropsNative &
   ColorSwatchVariantsPropsCustom;
 
 const styles = css`
-  display: grid;
-  grid-template-columns: 30% 1fr;
-  gap: ${makeRem(16)};
-
-  & > * {
-    &:last-child {
-      padding-left: ${makeRem(16)};
-      border-left: ${makeRem(1)} solid
-        ${makeColor("neutral-light", {
-          opacity: 0.05,
-        })};
-    }
-  }
+  padding: 0 ${makeRem(16)};
 `;
 
 const variantOptions: {
@@ -56,20 +51,17 @@ const variantOptions: {
   {
     type: "auto",
     display: "Auto",
-    description:
-      "Variants are created automatically based upon the number of variants you want",
+    description: "Auto-create colors & names",
   },
   {
     type: "auto-named",
     display: "Named",
-    description:
-      "Variants are created automatically however the number of names you provide is the number of variants that are created.",
+    description: "Auto-create colors with custom names",
   },
   {
     type: "key-value",
     display: "Manual",
-    description:
-      "Create your variants automatically by providing a HEX and an associative name",
+    description: "Custom colors & names",
   },
 ];
 
@@ -81,6 +73,7 @@ export const ColorSwatchVariants = forwardRef<
     children,
     className,
     dxVariants,
+    dxAvailableOptions,
     onChangeVariantType,
     onChangeVariantAuto,
     onChangeVariantNamed,
@@ -89,7 +82,6 @@ export const ColorSwatchVariants = forwardRef<
   },
   ref
 ) {
-  const variantModeId = useId();
   const variantUnion = useMemo<ColorVariantTypes>(() => {
     if (typeof dxVariants === "number") {
       return {
@@ -109,34 +101,44 @@ export const ColorSwatchVariants = forwardRef<
     };
   }, [dxVariants]);
 
+  const options = useMemo(() => {
+    if (dxAvailableOptions) {
+      return dxAvailableOptions.map((availableOption) =>
+        variantOptions.find(
+          (variantOption) => variantOption.type === availableOption
+        )
+      );
+    }
+    return variantOptions;
+  }, [dxAvailableOptions]);
+
   return (
-    <div {...restProps} className={classes(styles, className)} ref={ref}>
-      {useMemo(
-        () => (
-          <div>
-            <InputLabel
-              dxLabel="Variant mode"
-              dxSize="dense"
-              htmlFor={variantModeId}
-            />
-            <InputSelect
-              dxSize="dense"
-              value={variantUnion.type}
-              onChange={onChangeVariantType}
-              id={variantModeId}
-              style={{ width: "100%" }}
-            >
-              {variantOptions.map((option) => (
-                <option value={option.type} key={option.type}>
-                  {option.display}
-                </option>
-              ))}
-            </InputSelect>
-          </div>
-        ),
-        [onChangeVariantType, variantModeId, variantUnion.type]
-      )}
-      <div>
+    <>
+      <InputLabel
+        dxLabel="Variants"
+        dxSize="dense"
+        dxHelp="The methodology in which the variants are created & named"
+      >
+        <InputRadioTabs>
+          {options.map((option) => {
+            if (!option) return null;
+            return (
+              <InputRadioTab
+                key={option.type}
+                dxSize="dense"
+                dxLabel={option.display}
+                name="variant-mode"
+                onChange={onChangeVariantType}
+                checked={option.type === variantUnion.type}
+                value={option.type}
+              >
+                {option.display}
+              </InputRadioTab>
+            );
+          })}
+        </InputRadioTabs>
+      </InputLabel>
+      <div {...restProps} className={classes(styles, className)} ref={ref}>
         {match(variantUnion)
           .with({ type: "auto" }, ({ variant }) => (
             <ColorSwatchVariantTypeAuto
@@ -162,6 +164,6 @@ export const ColorSwatchVariants = forwardRef<
           })
           .exhaustive()}
       </div>
-    </div>
+    </>
   );
 });

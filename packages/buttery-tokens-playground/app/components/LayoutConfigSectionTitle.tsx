@@ -12,7 +12,7 @@ const styles = css`
   align-items: center;
   top: ${makeRem(133)};
   position: sticky;
-  background: white;
+  background: inherit;
   height: ${makeCustom("layout-section-title-height")};
   z-index: 10;
 `;

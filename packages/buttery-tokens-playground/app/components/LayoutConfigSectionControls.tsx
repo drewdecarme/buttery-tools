@@ -1,6 +1,7 @@
 import { classes } from "@buttery/components";
 import {
   makeColor,
+  makeCustom,
   makeFontWeight,
   makeRem,
   makeReset,
@@ -24,9 +25,11 @@ export type LayoutConfigSectionControlsProps =
     LayoutConfigSectionControlsPropsCustom;
 
 const styles = css`
-  padding-right: ${makeRem(32)};
+  padding: 0 ${makeCustom("layout-gutters")};
+  padding-bottom: ${makeCustom("layout-gutters")};
   border-right: ${makeRem(1)} solid
     ${makeColor("neutral-light", { opacity: 0.2 })};
+  background-color: #fafafa;
 
   & > .title {
     gap: ${makeRem(8)};
@@ -60,7 +63,7 @@ export const LayoutConfigSectionControls = forwardRef<
 ) {
   return (
     <article {...restProps} className={classes(styles, className)} ref={ref}>
-      <LayoutConfigSectionTitle className="title">
+      <LayoutConfigSectionTitle>
         <h3>{dxTitle}</h3>
         <button>
           <InformationCircleIcon dxSize={16} />

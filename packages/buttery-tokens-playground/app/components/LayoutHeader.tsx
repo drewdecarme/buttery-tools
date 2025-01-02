@@ -13,6 +13,7 @@ const styles = css`
     ${makeColor("neutral-dark", { opacity: 0.1 })};
 
   & > div {
+    margin: 0 auto;
     max-width: ${makeCustom("layout-max-width")};
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
