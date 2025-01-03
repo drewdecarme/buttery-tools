@@ -4,6 +4,7 @@ import type { ColorVariantTypes } from "@buttery/tokens-utils/schemas";
 import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
 import { ColorBlob, useColorBlob } from "~/components/ColorBlob";
+import { InputGroup } from "~/components/InputGroup";
 
 import { ColorSwatchHex } from "./ColorSwatchHex";
 import { ColorSwatch } from "./ColorSwatch";
@@ -54,7 +55,7 @@ export function ColorBrandModeManualSwatch<
   }, [id, setColor]);
 
   const handleChangeVariantType = useCallback<
-    ChangeEventHandler<HTMLSelectElement>
+    ChangeEventHandler<HTMLInputElement>
   >(
     ({ currentTarget: { value } }) => {
       const type = value as ColorVariantTypes["type"];
@@ -145,16 +146,16 @@ export function ColorBrandModeManualSwatch<
 
   return (
     <ColorSwatch dxOnRemove={handleRemove}>
-      <ColorSwatchSummary>
+      <ColorSwatchSummary dxTitle={name} dxSubtitle={`Hex: ${hex}`}>
         <ColorBlob
           ref={colorBlobRef}
           dxVariant="circle"
           dxType="hex"
           dxValue={hex}
         />
-        <ColorSwatchName name={name} onChangeName={handleChangeName} />
       </ColorSwatchSummary>
-      <div>
+      <InputGroup>
+        <ColorSwatchName name={name} onChangeName={handleChangeName} />
         <ColorSwatchHex id={id} hex={hex} onChangeHex={handleChangeHex} />
         <ColorSwatchVariants
           dxVariants={variants}
@@ -163,7 +164,7 @@ export function ColorBrandModeManualSwatch<
           onChangeVariantNamed={handleChangeVariantNamed}
           onChangeVariantManual={handleChangeVariantManual}
         />
-      </div>
+      </InputGroup>
     </ColorSwatch>
   );
 }

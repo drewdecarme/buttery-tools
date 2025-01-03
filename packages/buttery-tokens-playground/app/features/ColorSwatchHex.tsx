@@ -1,6 +1,9 @@
+import { useCallback, useRef, type ChangeEventHandler } from "react";
 import { makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
-import type { ChangeEventHandler } from "react";
+
+import { InputLabel } from "~/components/InputLabel";
+import { InputText } from "~/components/InputText";
 
 import { InputColor } from "../components/InputColor";
 
@@ -16,13 +19,48 @@ export function ColorSwatchHex(props: {
   hex: string;
   onChangeHex: ChangeEventHandler<HTMLInputElement>;
 }) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const handleChangeColor = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    (e) => {
+      const hex = e.currentTarget.value;
+      if (inputRef.current) {
+        inputRef.current.value = hex;
+      }
+      props.onChangeHex(e);
+    },
+    [props]
+  );
+
+  const handleChangeInput = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    (e) => {
+      const value = e.currentTarget.value;
+      const hex = value.replace("#", "");
+      if (hex.length === 3 || hex.length === 6) {
+        props.onChangeHex(e);
+      }
+    },
+    [props]
+  );
+
   return (
-    <div className={styles}>
-      <InputColor
-        dxSize="dense"
-        value={props.hex}
-        onChange={props.onChangeHex}
-      />
-    </div>
+    <InputLabel
+      dxLabel="Hex"
+      dxHelp="The hexadecimal color value"
+      dxSize="dense"
+    >
+      <div className={styles}>
+        <InputColor
+          dxSize="dense"
+          value={props.hex}
+          onChange={handleChangeColor}
+        />
+        <InputText
+          ref={inputRef}
+          defaultValue={props.hex}
+          dxSize="dense"
+          onChange={handleChangeInput}
+        />
+      </div>
+    </InputLabel>
   );
 }

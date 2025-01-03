@@ -13,6 +13,9 @@ export type TooltipPropsCustom = {
 export type TooltipProps = TooltipPropsNative & TooltipPropsCustom;
 
 const styles = css`
+  @starting-style {
+    display: none;
+  }
   --arrow-color: var(--tooltip-bg-color) !important;
 
   border-radius: ${makeRem(4)};

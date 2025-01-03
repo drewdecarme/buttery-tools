@@ -2,6 +2,8 @@ import type { ColorVariantTypeKeyValue } from "@buttery/tokens-utils/schemas";
 import { useEffect } from "react";
 import { generateGUID } from "@buttery/utils/isomorphic";
 import { useImmer } from "use-immer";
+import { css } from "@linaria/core";
+import { makeRem } from "@buttery/tokens/playground";
 
 import { ColorSwatchVariantAdd } from "./ColorSwatchVariantAdd";
 import { ColorSwatchVariantRemove } from "./ColorSwatchVariantRemove";
@@ -15,6 +17,10 @@ export type ColorSwatchVariantTypeManualProps = {
   variants: ColorVariantTypeKeyValue;
   onChangeVariantManual: (variants: ColorVariantTypeKeyValue) => void;
 };
+
+const styles = css`
+  grid-template-columns: ${makeRem(24)} 1fr auto !important;
+`;
 
 export function ColorSwatchVariantTypeManual({
   variants,
@@ -51,11 +57,15 @@ export function ColorSwatchVariantTypeManual({
 
   return (
     <>
-      <InputLabel dxLabel="Manual Variants" dxSize="dense" />
+      <InputLabel
+        dxLabel="Manual Variants"
+        dxSize="dense"
+        dxHelp="Add custom variant colors & names"
+      />
       <ColorSwatchVariantList>
         {localVariantEntries.map(([colorId, { name, hex }]) => {
           return (
-            <li key={colorId}>
+            <li key={colorId} className={styles}>
               <InputColor
                 value={hex}
                 dxSize="dense"

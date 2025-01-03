@@ -52,10 +52,6 @@ const styles = css`
   .tabs {
     padding: 0 ${makeCustom("layout-gutters")};
   }
-
-  & + * {
-    min-height: 80vh;
-  }
 `;
 
 export async function loader() {

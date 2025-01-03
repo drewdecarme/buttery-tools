@@ -20,47 +20,20 @@
   },
   "color": {
     "brand": {
-      "type": "fluorescent",
+      "type": "manual",
       "colors": {
-        "primary": {
-          "hue": 273,
-          "variants": 10
-        },
-        "secondary": {
-          "hue": 52,
-          "variants": 10
+        "brand2": {
+          "hex": "#39d336",
+          "variants": {
+            "light": "#c3ffc2",
+            "dark": "#2d9c2b"
+          }
         },
         "brand3": {
-          "hue": 334,
-          "variants": 10
-        },
-        "brand4": {
-          "hue": 114,
-          "variants": 10
-        },
-        "brand5": {
-          "hue": 180,
-          "variants": 10
-        },
-        "brand6": {
-          "hue": 180,
-          "variants": 10
-        },
-        "brand7": {
-          "hue": 180,
-          "variants": 10
-        },
-        "brand8": {
-          "hue": 180,
-          "variants": 10
-        },
-        "brand9": {
-          "hue": 180,
+          "hex": "#000000",
           "variants": 10
         }
-      },
-      "saturation": 100,
-      "brightness": 95
+      }
     },
     "neutral": {
       "neutral": {
@@ -74,26 +47,6 @@
       "background": {
         "hex": "#F5F5F5",
         "variants": 1
-      },
-      "neutral4": {
-        "hex": "#000000",
-        "variants": 10
-      },
-      "neutral5": {
-        "hex": "#000000",
-        "variants": 10
-      },
-      "neutral6": {
-        "hex": "#000000",
-        "variants": 10
-      },
-      "neutral7": {
-        "hex": "#000000",
-        "variants": 10
-      },
-      "neutral8": {
-        "hex": "#000000",
-        "variants": 10
       }
     }
   },

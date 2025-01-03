@@ -152,20 +152,18 @@ export function ColorBrandModeAutoSwatch<
           dxValue={hue}
         />
       </ColorSwatchSummary>
-      <div>
-        <InputGroup>
-          <ColorSwatchName name={name} onChangeName={handleChangeName} />
-          <ColorSwatchHue hue={hue} onChangeHue={handleChangeHue} />
-          <ColorSwatchVariants
-            dxVariants={variants}
-            dxAvailableOptions={["auto", "auto-named"]}
-            onChangeVariantType={handleChangeVariantType}
-            onChangeVariantAuto={handleChangeVariantAuto}
-            onChangeVariantNamed={handleChangeVariantNamed}
-            onChangeVariantManual={handleChangeVariantManual}
-          />
-        </InputGroup>
-      </div>
+      <InputGroup>
+        <ColorSwatchName name={name} onChangeName={handleChangeName} />
+        <ColorSwatchHue hue={hue} onChangeHue={handleChangeHue} />
+        <ColorSwatchVariants
+          dxVariants={variants}
+          dxAvailableOptions={["auto", "auto-named"]}
+          onChangeVariantType={handleChangeVariantType}
+          onChangeVariantAuto={handleChangeVariantAuto}
+          onChangeVariantNamed={handleChangeVariantNamed}
+          onChangeVariantManual={handleChangeVariantManual}
+        />
+      </InputGroup>
     </ColorSwatch>
   );
 }

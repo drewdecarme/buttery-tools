@@ -38,7 +38,7 @@ const styles = css`
 `;
 
 export const InputColor = forwardRef<HTMLInputElement, InputColorProps>(
-  function InputColor({ children, className, dxSize, ...restProps }, ref) {
+  function InputColor({ className, dxSize, ...restProps }, ref) {
     return (
       <input
         {...restProps}
@@ -47,9 +47,7 @@ export const InputColor = forwardRef<HTMLInputElement, InputColorProps>(
           [`s-${dxSize}`]: dxSize,
         })}
         ref={ref}
-      >
-        {children}
-      </input>
+      />
     );
   }
 );

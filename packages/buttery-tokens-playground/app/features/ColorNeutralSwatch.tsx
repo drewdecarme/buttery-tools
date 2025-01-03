@@ -3,12 +3,17 @@ import type { ChangeEventHandler, MouseEventHandler } from "react";
 import type { ColorVariantTypes } from "@buttery/tokens-utils/schemas";
 import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
+import { ColorBlob, useColorBlob } from "~/components/ColorBlob";
+import { InputGroup } from "~/components/InputGroup";
+
 import { ColorSwatchHex } from "./ColorSwatchHex";
 import { ColorSwatch } from "./ColorSwatch";
 import type { ConfigurationStateColorsManual } from "./config.utils";
 import type { ConfigurationContextType } from "./Config.context";
 import type { ColorSwatchVariantsPropsCustom } from "./ColorSwatchVariants";
 import { ColorSwatchVariants } from "./ColorSwatchVariants";
+import { ColorSwatchName } from "./ColorSwatchName";
+import { ColorSwatchSummary } from "./ColorSwatchSummary";
 
 export function ColorNeutralSwatch<T extends ConfigurationStateColorsManual>({
   colorDef,
@@ -18,6 +23,7 @@ export function ColorNeutralSwatch<T extends ConfigurationStateColorsManual>({
   setColor: ConfigurationContextType["setColor"];
 }) {
   const [id, { name, hex, variants }] = Object.entries(colorDef)[0];
+  const { colorBlobRef, setHex } = useColorBlob();
 
   const handleChangeHex = useCallback<ChangeEventHandler<HTMLInputElement>>(
     ({ currentTarget: { value } }) => {
@@ -25,8 +31,9 @@ export function ColorNeutralSwatch<T extends ConfigurationStateColorsManual>({
         const color = draft.neutral[id];
         color.hex = value;
       });
+      setHex(value);
     },
-    [id, setColor]
+    [id, setColor, setHex]
   );
 
   const handleChangeName = useCallback<ChangeEventHandler<HTMLInputElement>>(
@@ -46,7 +53,7 @@ export function ColorNeutralSwatch<T extends ConfigurationStateColorsManual>({
   }, [id, setColor]);
 
   const handleChangeVariantType = useCallback<
-    ChangeEventHandler<HTMLSelectElement>
+    ChangeEventHandler<HTMLInputElement>
   >(
     ({ currentTarget: { value } }) => {
       const type = value as ColorVariantTypes["type"];
@@ -137,20 +144,25 @@ export function ColorNeutralSwatch<T extends ConfigurationStateColorsManual>({
 
   return (
     <ColorSwatch dxOnRemove={handleRemove}>
-      <ColorSwatchHex
-        id={id}
-        hex={hex}
-        name={name}
-        onChangeHex={handleChangeHex}
-        onChangeName={handleChangeName}
-      />
-      <ColorSwatchVariants
-        dxVariants={variants}
-        onChangeVariantType={handleChangeVariantType}
-        onChangeVariantAuto={handleChangeVariantAuto}
-        onChangeVariantNamed={handleChangeVariantNamed}
-        onChangeVariantManual={handleChangeVariantManual}
-      />
+      <ColorSwatchSummary dxTitle={name} dxSubtitle={`Hex: ${hex}`}>
+        <ColorBlob
+          ref={colorBlobRef}
+          dxVariant="circle"
+          dxType="hex"
+          dxValue={hex}
+        />
+      </ColorSwatchSummary>
+      <InputGroup>
+        <ColorSwatchName name={name} onChangeName={handleChangeName} />
+        <ColorSwatchHex id={id} hex={hex} onChangeHex={handleChangeHex} />
+        <ColorSwatchVariants
+          dxVariants={variants}
+          onChangeVariantType={handleChangeVariantType}
+          onChangeVariantAuto={handleChangeVariantAuto}
+          onChangeVariantNamed={handleChangeVariantNamed}
+          onChangeVariantManual={handleChangeVariantManual}
+        />
+      </InputGroup>
     </ColorSwatch>
   );
 }

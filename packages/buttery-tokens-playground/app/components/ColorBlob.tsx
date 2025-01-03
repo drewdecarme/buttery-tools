@@ -72,7 +72,7 @@ export const ColorBlob = forwardRef<ColorBlobRef, ColorBlobProps>(
         style={
           props.dxType === "hex"
             ? // @ts-expect-error setting custom properties is valid
-              { ["--hex"]: `#${props.dxValue}` }
+              { ["--hex"]: props.dxValue }
             : { ["--hue"]: props.dxValue }
         }
         ref={colorRef}
