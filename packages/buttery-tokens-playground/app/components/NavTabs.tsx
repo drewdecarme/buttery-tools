@@ -15,6 +15,16 @@ import { NavTabsContextProvider } from "./NavTabs.context";
 
 export type NavTabsPropsNative = JSX.IntrinsicElements["nav"];
 export type NavTabsPropsCustom = {
+  /**
+   * The size of the tabs
+   * @default regular
+   */
+  dxSize?: "regular" | "dense";
+  /**
+   * The color of the tabs
+   * @default primary
+   */
+  dxColor?: "primary" | "secondary";
   dxInitActiveTab?: string;
 };
 export type NavTabsProps = NavTabsPropsNative & NavTabsPropsCustom;
@@ -42,14 +52,39 @@ const styles = css`
     button {
       display: grid;
       place-content: center;
-      height: ${makeRem(60)};
-      font-size: ${makeRem(12)};
       text-transform: uppercase;
       font-weight: ${makeFontWeight("bold")};
       transition: all 0.15s ease-in-out;
+    }
+  }
 
+  &.s-regular {
+    a,
+    button {
+      height: ${makeRem(60)};
+      font-size: ${makeRem(14)};
+    }
+  }
+  &.s-dense {
+    a,
+    button {
+      height: ${makeRem(30)};
+      font-size: ${makeRem(12)};
+    }
+  }
+  &.c-primary {
+    a,
+    button {
       &.active {
         color: ${makeColor("primary-500")};
+      }
+    }
+  }
+  &.c-secondary {
+    a,
+    button {
+      &.active {
+        color: ${makeColor("secondary-500")};
       }
     }
   }
@@ -59,12 +94,25 @@ const divStyles = css`
   position: absolute;
   height: ${makeRem(2)};
   bottom: 0;
-  background: ${makeColor("primary-500")};
   transition: all 0.2s ease-in-out;
+
+  &.c-primary {
+    background: ${makeColor("primary-500")};
+  }
+  &.c-secondary {
+    background: ${makeColor("secondary-500")};
+  }
 `;
 
 export const NavTabs = forwardRef<HTMLElement, NavTabsProps>(function NavTabs(
-  { children, className, dxInitActiveTab, ...restProps },
+  {
+    children,
+    className,
+    dxInitActiveTab,
+    dxSize = "regular",
+    dxColor = "primary",
+    ...restProps
+  },
   forwardedRef
 ) {
   const navRef = useForwardedRef(forwardedRef);
@@ -97,8 +145,20 @@ export const NavTabs = forwardRef<HTMLElement, NavTabsProps>(function NavTabs(
 
   return (
     <NavTabsContextProvider dxInitActiveTab={dxInitActiveTab}>
-      <nav {...restProps} className={classes(styles, className)} ref={navRef}>
-        <div ref={divRef} className={divStyles} />
+      <nav
+        {...restProps}
+        className={classes(styles, className, {
+          [`s-${dxSize}`]: dxSize,
+          [`c-${dxColor}`]: dxColor,
+        })}
+        ref={navRef}
+      >
+        <div
+          ref={divRef}
+          className={classes(divStyles, {
+            [`c-${dxColor}`]: dxColor,
+          })}
+        />
         {children}
       </nav>
     </NavTabsContextProvider>

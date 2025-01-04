@@ -23,10 +23,10 @@
       "type": "manual",
       "colors": {
         "brand2": {
-          "hex": "#39d336",
+          "hex": "#519550",
           "variants": {
-            "light": "#c3ffc2",
-            "dark": "#2d9c2b"
+            "light": "#b8ffb9",
+            "dark": "#525252"
           }
         },
         "brand3": {
@@ -37,7 +37,7 @@
     },
     "neutral": {
       "neutral": {
-        "hex": "#4A4A4A",
+        "hex": "#384ebc",
         "variants": 10
       },
       "surface": {

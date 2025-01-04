@@ -5,6 +5,9 @@ import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
 import { ColorBlob, useColorBlob } from "~/components/ColorBlob";
 import { InputGroup } from "~/components/InputGroup";
+import { NavTab } from "~/components/NavTab";
+import { NavTabLabel } from "~/components/NavTabLabel";
+import { NavTabContent } from "~/components/NavTabContent";
 
 import { ColorSwatchHex } from "./ColorSwatchHex";
 import { ColorSwatch } from "./ColorSwatch";
@@ -14,6 +17,7 @@ import type { ColorSwatchVariantsPropsCustom } from "./ColorSwatchVariants";
 import { ColorSwatchVariants } from "./ColorSwatchVariants";
 import { ColorSwatchName } from "./ColorSwatchName";
 import { ColorSwatchSummary } from "./ColorSwatchSummary";
+import { ColorSwatchTabs } from "./ColorSwatchTabs";
 
 export function ColorNeutralSwatch<T extends ConfigurationStateColorsManual>({
   colorDef,
@@ -152,17 +156,42 @@ export function ColorNeutralSwatch<T extends ConfigurationStateColorsManual>({
           dxValue={hex}
         />
       </ColorSwatchSummary>
-      <InputGroup>
+      <div>
         <ColorSwatchName name={name} onChangeName={handleChangeName} />
-        <ColorSwatchHex id={id} hex={hex} onChangeHex={handleChangeHex} />
-        <ColorSwatchVariants
-          dxVariants={variants}
-          onChangeVariantType={handleChangeVariantType}
-          onChangeVariantAuto={handleChangeVariantAuto}
-          onChangeVariantNamed={handleChangeVariantNamed}
-          onChangeVariantManual={handleChangeVariantManual}
-        />
-      </InputGroup>
+        <ColorSwatchTabs dxInitActiveTab="light-theme">
+          <ul>
+            <li>
+              <NavTab id="light-theme">
+                <NavTabLabel>Light Theme</NavTabLabel>
+                <NavTabContent>
+                  <InputGroup>
+                    <ColorSwatchHex
+                      id={id}
+                      hex={hex}
+                      onChangeHex={handleChangeHex}
+                    />
+                    <ColorSwatchVariants
+                      dxVariants={variants}
+                      onChangeVariantType={handleChangeVariantType}
+                      onChangeVariantAuto={handleChangeVariantAuto}
+                      onChangeVariantNamed={handleChangeVariantNamed}
+                      onChangeVariantManual={handleChangeVariantManual}
+                    />
+                  </InputGroup>
+                </NavTabContent>
+              </NavTab>
+            </li>
+            <li>
+              <NavTab id="dark-theme">
+                <NavTabLabel>Dark Theme</NavTabLabel>
+                <NavTabContent>
+                  <div>dark stuff</div>
+                </NavTabContent>
+              </NavTab>
+            </li>
+          </ul>
+        </ColorSwatchTabs>
+      </div>
     </ColorSwatch>
   );
 }
