@@ -5,9 +5,6 @@ import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
 import { ColorBlob, useColorBlob } from "~/components/ColorBlob";
 import { InputGroup } from "~/components/InputGroup";
-import { NavTab } from "~/components/NavTab";
-import { NavTabLabel } from "~/components/NavTabLabel";
-import { NavTabContent } from "~/components/NavTabContent";
 
 import { ColorSwatchHex } from "./ColorSwatchHex";
 import { ColorSwatch } from "./ColorSwatch";
@@ -17,7 +14,6 @@ import type { ColorSwatchVariantsPropsCustom } from "./ColorSwatchVariants";
 import { ColorSwatchVariants } from "./ColorSwatchVariants";
 import { ColorSwatchName } from "./ColorSwatchName";
 import { ColorSwatchSummary } from "./ColorSwatchSummary";
-import { ColorSwatchTabs } from "./ColorSwatchTabs";
 
 export function ColorNeutralSwatch<T extends ConfigurationStateColorsManual>({
   colorDef,
@@ -157,8 +153,18 @@ export function ColorNeutralSwatch<T extends ConfigurationStateColorsManual>({
         />
       </ColorSwatchSummary>
       <div>
-        <ColorSwatchName name={name} onChangeName={handleChangeName} />
-        <ColorSwatchTabs dxInitActiveTab="light-theme">
+        <InputGroup>
+          <ColorSwatchName name={name} onChangeName={handleChangeName} />
+          <ColorSwatchHex id={id} hex={hex} onChangeHex={handleChangeHex} />
+          <ColorSwatchVariants
+            dxVariants={variants}
+            onChangeVariantType={handleChangeVariantType}
+            onChangeVariantAuto={handleChangeVariantAuto}
+            onChangeVariantNamed={handleChangeVariantNamed}
+            onChangeVariantManual={handleChangeVariantManual}
+          />
+        </InputGroup>
+        {/* <ColorSwatchTabs dxInitActiveTab="light-theme">
           <ul>
             <li>
               <NavTab id="light-theme">
@@ -190,7 +196,7 @@ export function ColorNeutralSwatch<T extends ConfigurationStateColorsManual>({
               </NavTab>
             </li>
           </ul>
-        </ColorSwatchTabs>
+        </ColorSwatchTabs> */}
       </div>
     </ColorSwatch>
   );
