@@ -24,6 +24,7 @@ const styles = css`
     border-radius: ${makeRem(2)};
     padding: 0 ${makeRem(8)};
     transition: all 0.1s ease-in-out;
+    background: white;
 
     &:focus {
       border-color: ${makeColor("primary-100")};

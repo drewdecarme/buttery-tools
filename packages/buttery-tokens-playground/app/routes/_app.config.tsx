@@ -102,7 +102,7 @@ export default function AppConfigRoute() {
               </NavLink>
             </li>
             <li>
-              <NavLink to="./grid-system">Grid System</NavLink>
+              <NavLink to="./size-and-spacing">Size & Spacing</NavLink>
             </li>
             <li>
               <NavLink to="./typography">Typography</NavLink>
