@@ -81,7 +81,7 @@ const css: CompileFunction = ({ config, cssVarPrefix }) => {
       return accum.concat(
         `\n${cssVarPrefix}-${customToken}: ${
           customTokenValue.storeAsRem
-            ? `${customTokenValue.value / (config.font?.baseSize ?? 16)}rem`
+            ? `${customTokenValue.value / config.size.documentFontSize}rem`
             : customTokenValue.value
         };`
       );

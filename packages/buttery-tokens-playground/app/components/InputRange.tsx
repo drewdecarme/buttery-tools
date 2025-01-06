@@ -43,7 +43,7 @@ const containerStyles = css`
   width: 100%;
   font-family: ${makeFontFamily("body")};
 
-  .label {
+  .range-label {
     font-size: ${makeRem(14)};
     color: ${makeColor("neutral", { opacity: 0.8 })};
   }
@@ -206,34 +206,37 @@ export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
         const min = Number(node.min || 0);
         const max = Number(node.max || 100);
         const percentage = ((value - min) / (max - min)) * 100;
+        if (dxOnChange) {
+          console.log("running change handler");
+          dxOnChange(value);
+        }
 
         node.style.setProperty(
           "--percentage",
           percentage.toString().concat("%")
         );
       },
-      []
+      [dxOnChange]
     );
 
     const handleInput = useCallback<FormEventHandler<HTMLInputElement>>(
       ({ currentTarget }) => {
         setPercentage(currentTarget);
-        if (dxOnChange) dxOnChange(Number(currentTarget.value));
         // set the input value if it's available in the dom
         if (!inputRef.current) return;
         inputRef.current.value = currentTarget.value.toString();
       },
-      [dxOnChange, setPercentage]
+      [setPercentage]
     );
 
     const inputRangeCallbackRef = useCallback<RefCallback<HTMLInputElement>>(
       (node) => {
         if (!node) return;
+        console.log("running callback");
         setPercentage(node);
-        if (dxOnChange) dxOnChange(Number(node.value));
         ref.current = node;
       },
-      [dxOnChange, ref, setPercentage]
+      [ref, setPercentage]
     );
 
     const inputNumberCallbackRef = useCallback<RefCallback<HTMLInputElement>>(
@@ -258,7 +261,7 @@ export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
 
     return (
       <div className={classes(containerStyles)}>
-        {dxDisplayMin && <span className="label">{min}</span>}
+        {dxDisplayMin && <span className="range-label">{min}</span>}
         <input
           {...restProps}
           min={min}
@@ -274,7 +277,7 @@ export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
           onInput={handleInput}
           ref={inputRangeCallbackRef}
         />
-        {dxDisplayMax && <span className="label">{max}</span>}
+        {dxDisplayMax && <span className="range-label">{max}</span>}
         {dxDisplayInput && (
           <InputNumber
             ref={inputNumberCallbackRef}

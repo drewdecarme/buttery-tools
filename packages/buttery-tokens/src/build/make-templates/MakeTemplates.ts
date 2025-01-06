@@ -123,7 +123,7 @@ export class MakeTemplates {
 ${tokensCSSFileContent}}
 
 html, body {
-  font-size: ${this.config.font?.baseSize ?? 16}px;
+  font-size: ${this.config.size.documentFontSize}px;
   box-sizing: border-box;
 }
 

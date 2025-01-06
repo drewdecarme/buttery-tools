@@ -14,7 +14,7 @@ const styles = css`
   }
 `;
 
-export function SpacePreviewContent({ children }: { children: ReactNode }) {
+function SpacePreviewContent({ children }: { children: ReactNode }) {
   return (
     <LayoutConfigSectionPreview className={styles}>
       <LayoutConfigSectionTitle>

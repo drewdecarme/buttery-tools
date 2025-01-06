@@ -38,14 +38,11 @@ const template: CompileFunction = ({ config, docs, functionName }) => {
  * );
  * \`\`\`
  */
-export const ${functionName} = (pixel: number) => \`\${pixel / ${
-    config.font?.baseSize ?? 16
-  }}rem\`;
-`;
+export const ${functionName} = (pixel: number) => \`\${pixel / ${config.size.documentFontSize}}rem\`;`;
 };
 
 const css: CompileFunction = ({ config, cssVarPrefix }) => {
-  return `${cssVarPrefix}: ${config.font?.baseSize ?? 16};`;
+  return `${cssVarPrefix}: ${config.size.documentFontSize ?? 16};`;
 };
 
 export const MakeTemplateRem = new MakeTemplate({

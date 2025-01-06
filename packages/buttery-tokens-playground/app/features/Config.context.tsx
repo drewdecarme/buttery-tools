@@ -5,15 +5,22 @@ import { useContext, useMemo, createContext, useCallback } from "react";
 import type { Updater } from "use-immer";
 import { useImmer } from "use-immer";
 
-import type { ConfigurationStateColor } from "./config.utils";
+import type {
+  ConfigurationStateColor,
+  ConfigurationStateSize,
+} from "./config.utils";
 import {
   getInitColorStateFromConfig,
+  getInitSizeFromConfig,
   transformColorStateIntoColorConfig,
+  transformSizeStateIntoColorConfig,
 } from "./config.utils";
 
 export type ConfigurationContextType = {
   color: ConfigurationStateColor;
   setColor: Updater<ConfigurationStateColor>;
+  size: ConfigurationStateSize;
+  setSize: Updater<ConfigurationStateSize>;
   getConfigFromState: () => ButteryTokensConfig;
   originalConfig: ButteryTokensConfig;
 };
@@ -33,28 +40,33 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
   const [color, setColor] = useImmer(
     getInitColorStateFromConfig(originalConfig)
   );
+  const [size, setSize] = useImmer(getInitSizeFromConfig(originalConfig));
 
   const getConfigFromState = useCallback<
     ConfigurationContextType["getConfigFromState"]
   >(() => {
     const configColor = transformColorStateIntoColorConfig(color);
+    const configSize = transformSizeStateIntoColorConfig(size);
     const config = ConfigSchema.safeParse({
       color: configColor,
+      size: configSize,
     });
     if (config.error) {
       throw config.error;
     }
     return config.data;
-  }, [color]);
+  }, [color, size]);
 
   const value = useMemo<ConfigurationContextType>(
     () => ({
       color,
       setColor,
+      size,
+      setSize,
       getConfigFromState,
       originalConfig,
     }),
-    [color, getConfigFromState, originalConfig, setColor]
+    [color, getConfigFromState, originalConfig, setColor, setSize, size]
   );
 
   return (

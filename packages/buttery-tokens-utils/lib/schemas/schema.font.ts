@@ -3,10 +3,6 @@ import { z } from "zod";
 import { optionalSchema } from "./schema-utils.js";
 
 /**
- * The base font-size
- */
-const FontBaseSizeSchema = z.number();
-/**
  * A record of key/value strings that will be variables that can be used as the font families.
  * You can have as many as you want but a good guidance would be
  * 1. `heading`
@@ -38,7 +34,6 @@ const FontVariantsSchema = z.record(
 );
 export const FontSchema = z
   .object({
-    baseSize: optionalSchema(FontBaseSizeSchema, 16),
     families: optionalSchema(FontFamiliesSchema, {}),
     fallback: optionalSchema(
       FontFallbackSchema,

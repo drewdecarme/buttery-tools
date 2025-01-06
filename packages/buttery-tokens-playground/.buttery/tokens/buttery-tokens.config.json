@@ -1,13 +1,19 @@
 {
+  "$schema": "../../../buttery-tokens-utils/schema.json",
   "runtime": {
     "namespace": "replace-me",
     "prefix": "--buttery",
     "strict": true,
     "suppressStrictWarnings": false
   },
-  "gridSystem": 4,
+  "size": {
+    "documentFontSize": 16,
+    "space": {
+      "mode": "auto",
+      "variants": 11
+    }
+  },
   "font": {
-    "baseSize": 16,
     "families": {},
     "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
     "weights": {},

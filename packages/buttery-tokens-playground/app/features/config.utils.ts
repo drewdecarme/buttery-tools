@@ -1,10 +1,14 @@
 import { exhaustiveMatchGuard } from "@buttery/components";
+import { calculateSpaceVariantsAuto } from "@buttery/tokens-utils";
 import type {
   ColorDefHueSchema,
   ButteryTokensConfig,
   ColorDefHexSchema,
   ButteryTokensColorBrandTypeAuto,
   ButteryTokensColorBrandTypeManual,
+  SpaceAuto,
+  SpaceManual,
+  ButteryTokensConfigSpaceAndSize,
 } from "@buttery/tokens-utils/schemas";
 import {
   ColorBrandTypeEarthSchema,
@@ -190,4 +194,110 @@ export function transformColorStateIntoColorConfig(
     default:
       exhaustiveMatchGuard(colorState.brand.type);
   }
+}
+
+// Start SIZE
+export type ConfigurationStateSizeSpaceVariants = {
+  [id: string]: {
+    name: string;
+    value: number;
+  };
+};
+export type ConfigurationStateSizeAuto = Omit<SpaceAuto, "variants"> & {
+  variants: ConfigurationStateSizeSpaceVariants;
+};
+export type ConfigurationStateSizeManual = Omit<SpaceManual, "variants"> & {
+  variants: ConfigurationStateSizeSpaceVariants;
+};
+export type ConfigurationStateSize = Pick<
+  ButteryTokensConfigSpaceAndSize,
+  "documentFontSize" | "baselineGrid"
+> & {
+  mode: (ConfigurationStateSizeAuto | ConfigurationStateSizeManual)["mode"];
+  manual: ConfigurationStateSizeManual;
+  auto: ConfigurationStateSizeAuto;
+};
+
+function formatVariants(variants: Record<string, number>) {
+  return Object.entries(variants).reduce(
+    (accum, [variantName, variantValue]) =>
+      Object.assign(accum, {
+        [`__${generateGUID()}`]: {
+          name: variantName,
+          value: variantValue,
+        },
+      }),
+    {}
+  );
+}
+
+export function formatSpaceAutoVariants(
+  variants: number | string[],
+  baselineGrid: number,
+  factor?: number
+): ConfigurationStateSizeAuto["variants"] {
+  const autoVariants = calculateSpaceVariantsAuto(
+    variants,
+    baselineGrid,
+    factor
+  );
+  return formatVariants(autoVariants);
+}
+
+function formatManualVariants(
+  variants: Record<string, number>
+): ConfigurationStateSizeManual["variants"] {
+  return formatVariants(variants);
+}
+
+export function getInitSizeFromConfig(
+  config: ButteryTokensConfig
+): ConfigurationStateSize {
+  switch (config.size.space.mode) {
+    case "auto": {
+      return {
+        documentFontSize: config.size.documentFontSize,
+        baselineGrid: config.size.baselineGrid,
+        mode: config.size.space.mode,
+        auto: {
+          mode: "auto",
+          factor: config.size.space.factor,
+          variants: formatSpaceAutoVariants(
+            config.size.space.variants,
+            config.size.baselineGrid,
+            config.size.space.factor
+          ),
+        },
+        manual: {
+          mode: "manual",
+          variants: formatManualVariants({ sm: 4, md: 8, lg: 12 }),
+        },
+      };
+    }
+
+    case "manual": {
+      return {
+        documentFontSize: config.size.documentFontSize,
+        baselineGrid: config.size.baselineGrid,
+        mode: config.size.space.mode,
+        auto: {
+          mode: "auto",
+          variants: formatSpaceAutoVariants(11, config.size.baselineGrid),
+        },
+        manual: {
+          mode: "manual",
+          variants: formatManualVariants(config.size.space.variants),
+        },
+      };
+    }
+
+    default:
+      return exhaustiveMatchGuard(config.size.space);
+  }
+}
+
+export function transformSizeStateIntoColorConfig(
+  state: ReturnType<typeof getInitSizeFromConfig>
+) {
+  return state;
 }

@@ -1,14 +1,20 @@
 {
-  "$schema": "https://buttery.tools/tokens/schema.json",
+  "$schema": "../../../buttery-tokens-utils/schema.json",
   "runtime": {
     "namespace": "playground",
     "prefix": "playground",
     "strict": true,
     "suppressStrictWarnings": false
   },
-  "gridSystem": 4,
+  "size": {
+    "documentFontSize": 16,
+    "baselineGrid": 4,
+    "space": {
+      "mode": "auto",
+      "variants": 11
+    }
+  },
   "font": {
-    "baseSize": 16,
     "families": {
       "logo": "'Poppins'",
       "heading": "'Inter'",

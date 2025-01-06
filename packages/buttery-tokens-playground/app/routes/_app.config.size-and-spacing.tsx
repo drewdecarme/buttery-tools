@@ -4,7 +4,9 @@ import { InputNumber } from "~/components/InputNumber";
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
 import { LayoutConfigSectionTitle } from "~/components/LayoutConfigSectionTitle";
+import { SpaceConfig } from "~/features/SpaceConfig";
 import { SpacePreview } from "~/features/SpacePreview";
+import { SpacePreviewContent } from "~/features/SpacePreviewContent";
 
 export default function ConfigResponseRoute() {
   return (
@@ -41,24 +43,11 @@ export default function ConfigResponseRoute() {
           dxTitle="Spacing"
           dxDescription={<>explanation of spacing</>}
         >
-          <InputGroup>
-            <InputLabel
-              dxLabel="Scaling factor"
-              dxHelp="Multiplies the baseline grid to define scalable spacing intervals"
-              dxSize="dense"
-            >
-              <InputNumber dxSize="dense" defaultValue={"1.5"} />
-            </InputLabel>
-            <InputLabel
-              dxLabel="Variant count"
-              dxHelp="The number of spacing variants (default: 5)"
-              dxSize="dense"
-            >
-              <InputNumber dxSize="dense" defaultValue={"5"} />
-            </InputLabel>
-          </InputGroup>
+          <SpaceConfig />
         </LayoutConfigSectionControls>
-        <SpacePreview>test</SpacePreview>
+        <SpacePreview>
+          <SpacePreviewContent />
+        </SpacePreview>
       </LayoutConfigSection>
     </>
   );

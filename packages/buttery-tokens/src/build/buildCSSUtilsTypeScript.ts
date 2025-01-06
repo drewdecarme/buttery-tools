@@ -13,6 +13,7 @@ import { MakeTemplateReset } from "./make-templates/template.makeReset.js";
 import { MakeTemplateResponsive } from "./make-templates/template.makeResponsive.js";
 import { MakeTemplatePx } from "./make-templates/template.makePx.js";
 import { MakeTemplateFontBaseSize } from "./make-templates/template.makeFontBaseSize.js";
+import { MakeTemplateSpace } from "./make-templates/template.makeSpace.js";
 
 import type { ResolvedButteryTokensConfig } from "../config/getButteryTokensConfig.js";
 import { LOG } from "../utils/util.logger.js";
@@ -49,6 +50,7 @@ export async function buildCSSUtilsTypeScript({
   Templates.register(MakeTemplatePx);
   Templates.register(MakeTemplateResponsive);
   Templates.register(MakeTemplateReset);
+  Templates.register(MakeTemplateSpace);
   if (config.custom) {
     Templates.register(MakeTemplateCustom);
   }
