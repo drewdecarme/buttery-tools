@@ -14,6 +14,17 @@ export type InputSelectProps = InputSelectPropsNative & InputSelectPropsCustom;
 
 const divStyles = css`
   position: relative;
+  background: white;
+  border: ${makeRem(1)} solid ${makeColor("neutral", { opacity: 0.1 })};
+  border-radius: ${makeRem(2)};
+
+  &:has(select:focus) {
+    border-color: ${makeColor("primary-100")};
+  }
+
+  &:has(select:disabled) {
+    background: ${makeColor("neutral-light", { opacity: 0.1 })};
+  }
 
   .icon {
     position: absolute;
@@ -33,25 +44,21 @@ const divStyles = css`
 
 const styles = css`
   ${makeReset("input")};
+  border: none;
+  transition: all 0.1s ease-in-out;
+  width: 100%;
 
   &.s-dense {
     height: ${makeRem(28)};
     font-size: ${makeRem(14)};
-    border: ${makeRem(1)} solid ${makeColor("neutral", { opacity: 0.1 })};
-    border-radius: ${makeRem(2)};
     padding: 0 ${makeRem(8)};
-    transition: all 0.1s ease-in-out;
-
-    &:focus {
-      border-color: ${makeColor("primary-100")};
-    }
   }
 `;
 
 export const InputSelect = forwardRef<HTMLSelectElement, InputSelectProps>(
   function InputSelect({ children, className, dxSize, ...restProps }, ref) {
     return (
-      <div className={divStyles}>
+      <div className={classes(divStyles, "input-select")}>
         <select
           {...restProps}
           className={classes(styles, className, {

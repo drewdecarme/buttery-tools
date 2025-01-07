@@ -236,6 +236,7 @@ export function formatSpaceAutoVariants(
   baselineGrid: number,
   factor?: number
 ): ConfigurationStateSizeAuto["variants"] {
+  console.log({ factor });
   const autoVariants = calculateSpaceVariantsAuto(
     variants,
     baselineGrid,

@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
 import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
-import { useState } from "react";
+import type { ChangeEventHandler } from "react";
+import { useCallback, useState } from "react";
 import { classes, useToggle } from "@buttery/components";
 
 import { Button } from "~/components/Button";
@@ -49,25 +50,40 @@ const styles = css`
     }
   }
 `;
-type SpaceConfigVariantItemProps = {
+export type SpaceConfigVariantItemProps = {
   baseFontSize: number;
   onAddVariant?: () => {};
   onDeleteVariant?: () => {};
-  onChangeVariantName?: () => {};
+  onChangeVariantName: (id: string, value: string) => void;
   onChangeVariantValue?: () => {};
 };
 
 function SpaceConfigVariantItem({
+  id,
   name,
   value,
   baseFontSize,
-}: SpaceConfigVariantItemProps & { name: string; value: number }) {
+  onChangeVariantName,
+}: SpaceConfigVariantItemProps & { id: string; name: string; value: number }) {
   const [isEditing, toggle] = useToggle(false);
+
+  const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    ({ currentTarget: { value } }) => {
+      onChangeVariantName(id, value);
+    },
+    [id, onChangeVariantName]
+  );
+
   return (
     <>
       <div>
         {isEditing ? (
-          <InputText defaultValue={name} dxSize="dense" dxType="text" />
+          <InputText
+            defaultValue={name}
+            dxSize="dense"
+            dxType="text"
+            onChange={handleChange}
+          />
         ) : (
           name
         )}
@@ -100,7 +116,12 @@ export function SpaceConfigVariants({
       {Object.entries(variants).map(([variantId, { name, value }]) => {
         return (
           <li key={variantId}>
-            <SpaceConfigVariantItem {...restProps} name={name} value={value} />
+            <SpaceConfigVariantItem
+              {...restProps}
+              id={variantId}
+              name={name}
+              value={value}
+            />
           </li>
         );
       })}
