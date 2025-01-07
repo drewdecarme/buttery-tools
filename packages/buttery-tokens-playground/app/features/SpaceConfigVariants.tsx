@@ -2,17 +2,14 @@ import { css } from "@linaria/core";
 import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 import type { ChangeEventHandler, FormEventHandler, RefCallback } from "react";
 import { useCallback, useMemo, useRef } from "react";
-import { classes, exhaustiveMatchGuard, useToggle } from "@buttery/components";
+import { classes, useToggle } from "@buttery/components";
 import { debounce } from "@buttery/utils/browser";
-import { generateGUID } from "@buttery/utils/isomorphic";
-import { calculateSpaceVariantAutoValue } from "@buttery/tokens-utils";
 
 import { Button } from "~/components/Button";
 import { IconPencilEdit01 } from "~/icons/IconPencilEdit01";
 import { IconTick01 } from "~/icons/IconTick01";
 import { InputText } from "~/components/InputText";
 import { InputLabel } from "~/components/InputLabel";
-import type { InputRangePropsCustom } from "~/components/InputRange";
 import { InputRange } from "~/components/InputRange";
 
 import {
@@ -21,6 +18,7 @@ import {
   type ConfigurationStateSizeSpaceVariants,
 } from "./config.utils";
 import type { ConfigurationContextType } from "./Config.context";
+import { useRecalculateSpaceVariants } from "./space.useRecalculateSpaceVariants";
 
 const styles = css`
   ${makeReset("ul")};
@@ -161,9 +159,9 @@ function SpaceConfigVariantItem({
 }
 
 export function SpaceConfigVariants({
+  baseFontSize,
   variants,
   mode,
-  baseFontSize,
   setSize,
 }: {
   baseFontSize: number;
@@ -171,87 +169,11 @@ export function SpaceConfigVariants({
   mode: ConfigurationStateSize["mode"];
   setSize: ConfigurationContextType["setSize"];
 }) {
-  const handleChangeNumOfVariants = useCallback<
-    Required<InputRangePropsCustom>["dxOnChange"]
-  >(
-    (value) => {
-      setSize((draft) => {
-        const prevVariants = draft[mode].variants;
-        const prevVarEntries = Object.entries(draft[mode].variants);
-        const prevVarEntriesLength = prevVarEntries.length;
-        const prevVarLastEntryVal = prevVarEntries[prevVarEntriesLength - 1][1];
+  const { recalculateSpaceVariants } = useRecalculateSpaceVariants();
 
-        // Remove the amount of values
-        if (value < prevVarEntriesLength) {
-          const newEntries = prevVarEntries.slice(0, value);
-          draft[mode].variants = Object.fromEntries(newEntries);
-          return;
-        }
-
-        // Add the amount of values
-        if (value > prevVarEntriesLength) {
-          const numOfVariantsToAdd = value - prevVarEntriesLength;
-          const newVariantsArr = [...new Array(numOfVariantsToAdd)];
-          const newVariantStartIndex = prevVarEntriesLength + 1;
-          const newVariantStartOrder = prevVarLastEntryVal.order + 1;
-
-          switch (mode) {
-            case "auto": {
-              draft.auto.variants = Object.entries(newVariantsArr).reduce(
-                (accum, _, i) => {
-                  const index = newVariantStartIndex + i;
-                  const order = newVariantStartOrder + i;
-                  const value = calculateSpaceVariantAutoValue(
-                    index,
-                    draft.baselineGrid,
-                    draft.auto.factor
-                  );
-
-                  return Object.assign(accum, {
-                    [generateGUID()]: {
-                      name: String(index),
-                      value,
-                      order,
-                    },
-                  });
-                },
-                prevVariants
-              );
-              break;
-            }
-
-            case "manual": {
-              draft.manual.variants = Object.entries(newVariantsArr).reduce(
-                (accum, _, i) => {
-                  const index = newVariantStartIndex + i;
-                  const order = newVariantStartOrder + i;
-                  const value = index * draft.baselineGrid;
-
-                  return Object.assign(accum, {
-                    [generateGUID()]: {
-                      name: String(index),
-                      value,
-                      order,
-                    },
-                  });
-                },
-                prevVariants
-              );
-              break;
-            }
-
-            default:
-              exhaustiveMatchGuard(mode);
-          }
-        }
-      });
-    },
-    [mode, setSize]
-  );
-
-  const debouncedHandleChangeNumOfVariants = useMemo(
-    () => debounce(handleChangeNumOfVariants, 100),
-    [handleChangeNumOfVariants]
+  const debouncedHandleCalcVariants = useMemo(
+    () => debounce(recalculateSpaceVariants, 100),
+    [recalculateSpaceVariants]
   );
 
   const handleChangeVariantName = useCallback<
@@ -284,7 +206,7 @@ export function SpaceConfigVariants({
             max={50}
             step={1}
             dxVariant="normal"
-            dxOnChange={debouncedHandleChangeNumOfVariants}
+            dxOnChange={debouncedHandleCalcVariants}
           />
         </div>
       </InputLabel>

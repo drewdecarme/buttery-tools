@@ -15,6 +15,10 @@ const styles = css`
     top: ${makeRem(133)};
     padding: 0 ${makeCustom("layout-gutters")};
     padding-bottom: ${makeCustom("layout-gutters")};
+
+    &.full {
+      min-height: 100%;
+    }
   }
 `;
 

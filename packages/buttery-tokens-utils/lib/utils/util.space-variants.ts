@@ -44,7 +44,7 @@ export function calculateSpaceVariantsManual(
   return variants;
 }
 
-export function calculateSpaceVariants(
+export function createSpaceVariants(
   size: ButteryTokensConfigSpaceAndSize
 ): SpaceVariantsRecord {
   switch (size.space.mode) {
