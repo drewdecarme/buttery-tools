@@ -1,5 +1,9 @@
 import { exhaustiveMatchGuard } from "@buttery/components";
-import { calculateSpaceVariantsAuto } from "@buttery/tokens-utils";
+import type { SpaceVariantsRecord } from "@buttery/tokens-utils";
+import {
+  calculateSpaceVariantsAuto,
+  calculateSpaceVariantsManual,
+} from "@buttery/tokens-utils";
 import type {
   ColorDefHueSchema,
   ButteryTokensConfig,
@@ -201,6 +205,7 @@ export type ConfigurationStateSizeSpaceVariants = {
   [id: string]: {
     name: string;
     value: number;
+    order: number;
   };
 };
 export type ConfigurationStateSizeAuto = Omit<SpaceAuto, "variants"> & {
@@ -218,37 +223,50 @@ export type ConfigurationStateSize = Pick<
   auto: ConfigurationStateSizeAuto;
 };
 
-function formatVariants(variants: Record<string, number>) {
-  return Object.entries(variants).reduce(
-    (accum, [variantName, variantValue]) =>
+export function orderSpaceVariants(
+  variants: ConfigurationStateSizeSpaceVariants
+): ConfigurationStateSizeSpaceVariants {
+  return Object.fromEntries(
+    Object.entries(variants).sort((a, b) => a[1].order - b[1].order)
+  );
+}
+
+function convertSpaceVariantConfigIntoState(
+  variants: SpaceVariantsRecord
+): ConfigurationStateSizeSpaceVariants {
+  const spaceVariants = Object.entries(variants).reduce(
+    (accum, [variantName, variantValue], i) =>
       Object.assign(accum, {
-        [`__${generateGUID()}`]: {
+        [generateGUID()]: {
           name: variantName,
           value: variantValue,
+          order: i,
         },
       }),
     {}
   );
+  const orderedVariants = orderSpaceVariants(spaceVariants);
+  return orderedVariants;
 }
 
-export function formatSpaceAutoVariants(
+function getStateSpaceAutoVariantsFromConfig(
   variants: number | string[],
   baselineGrid: number,
   factor?: number
 ): ConfigurationStateSizeAuto["variants"] {
-  console.log({ factor });
   const autoVariants = calculateSpaceVariantsAuto(
     variants,
     baselineGrid,
     factor
   );
-  return formatVariants(autoVariants);
+  return convertSpaceVariantConfigIntoState(autoVariants);
 }
 
-function formatManualVariants(
+function getStateSpaceManualVariantsFromConfig(
   variants: Record<string, number>
 ): ConfigurationStateSizeManual["variants"] {
-  return formatVariants(variants);
+  const manualVariants = calculateSpaceVariantsManual(variants);
+  return convertSpaceVariantConfigIntoState(manualVariants);
 }
 
 export function getInitSizeFromConfig(
@@ -263,7 +281,7 @@ export function getInitSizeFromConfig(
         auto: {
           mode: "auto",
           factor: config.size.space.factor,
-          variants: formatSpaceAutoVariants(
+          variants: getStateSpaceAutoVariantsFromConfig(
             config.size.space.variants,
             config.size.baselineGrid,
             config.size.space.factor
@@ -271,7 +289,11 @@ export function getInitSizeFromConfig(
         },
         manual: {
           mode: "manual",
-          variants: formatManualVariants({ sm: 4, md: 8, lg: 12 }),
+          variants: getStateSpaceManualVariantsFromConfig({
+            sm: 4,
+            md: 8,
+            lg: 12,
+          }),
         },
       };
     }
@@ -283,11 +305,16 @@ export function getInitSizeFromConfig(
         mode: config.size.space.mode,
         auto: {
           mode: "auto",
-          variants: formatSpaceAutoVariants(11, config.size.baselineGrid),
+          variants: getStateSpaceAutoVariantsFromConfig(
+            11,
+            config.size.baselineGrid
+          ),
         },
         manual: {
           mode: "manual",
-          variants: formatManualVariants(config.size.space.variants),
+          variants: getStateSpaceManualVariantsFromConfig(
+            config.size.space.variants
+          ),
         },
       };
     }

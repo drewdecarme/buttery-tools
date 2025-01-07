@@ -1,22 +1,16 @@
 import type { ChangeEventHandler } from "react";
-import { useCallback, useMemo } from "react";
-import { debounce } from "@buttery/utils/browser";
+import { useCallback } from "react";
 import { css } from "@linaria/core";
 import { makeRem } from "@buttery/tokens/playground";
+import { calculateSpaceVariantAutoValue } from "@buttery/tokens-utils";
 
 import { InputGroup } from "~/components/InputGroup";
 import { InputLabel } from "~/components/InputLabel";
-import type { InputRangePropsCustom } from "~/components/InputRange";
-import { InputRange } from "~/components/InputRange";
 import { InputCheckbox } from "~/components/InputCheckbox";
 import { InputSelect } from "~/components/InputSelect";
 
-import {
-  formatSpaceAutoVariants,
-  type ConfigurationStateSizeAuto,
-} from "./config.utils";
+import { type ConfigurationStateSizeAuto } from "./config.utils";
 import type { ConfigurationContextType } from "./Config.context";
-import type { SpaceConfigVariantItemProps } from "./SpaceConfigVariants";
 import { SpaceConfigVariants } from "./SpaceConfigVariants";
 
 const labelStyles = css`
@@ -40,63 +34,27 @@ export function SpaceConfigAuto({
   state: ConfigurationStateSizeAuto;
   setSize: ConfigurationContextType["setSize"];
 }) {
-  const handleChangeNumOfVariants = useCallback<
-    Required<InputRangePropsCustom>["dxOnChange"]
-  >(
-    (value) => {
-      setSize((draft) => {
-        const prevVariants = draft.auto.variants;
-        const prevEntries = Object.entries(prevVariants);
-        const prevLength = prevEntries.length;
-
-        if (value === prevLength) return;
-
-        if (value < prevLength) {
-          const newEntries = prevEntries.slice(0, value);
-          draft.auto.variants = Object.fromEntries(newEntries);
-        }
-        if (value > prevLength) {
-          const prevNames = prevEntries.map(([_, entry]) => entry.name);
-          const numToAdd = value - prevLength;
-          const newNames = prevNames
-            .concat([...new Array(numToAdd)])
-            .map((name, i) => {
-              if (!name) return i.toString();
-              return name;
-            });
-
-          const newVariants = formatSpaceAutoVariants(
-            newNames,
-            draft.baselineGrid,
-            draft.auto.factor
-          );
-          draft.auto.variants = newVariants;
-        }
-      });
-    },
-    [setSize]
-  );
-
-  const debouncedHandleChangeNumOfVariants = useMemo(
-    () => debounce(handleChangeNumOfVariants, 100),
-    [handleChangeNumOfVariants]
-  );
-
   const handleUpdateVariantsWithFactor = useCallback<
     (value: 2 | 3 | undefined) => void
   >(
     (factor) => {
       setSize((draft) => {
-        const prevVariantNames = Object.entries(draft.auto.variants).map(
-          ([_, entry]) => entry.name
-        );
-        const newVariants = formatSpaceAutoVariants(
-          prevVariantNames,
-          draft.baselineGrid,
-          factor
-        );
         draft.auto.factor = factor;
-        draft.auto.variants = newVariants;
+
+        const updatedEntries = Object.entries(draft.auto.variants).map(
+          ([variantId, variantValue], index) => [
+            variantId,
+            {
+              ...variantValue,
+              value: calculateSpaceVariantAutoValue(
+                index,
+                draft.baselineGrid,
+                factor
+              ),
+            },
+          ]
+        );
+        draft.auto.variants = Object.fromEntries(updatedEntries);
       });
     },
     [setSize]
@@ -114,17 +72,6 @@ export function SpaceConfigAuto({
       handleUpdateVariantsWithFactor(Number(value) as 2 | 3);
     },
     [handleUpdateVariantsWithFactor]
-  );
-
-  const handleChangeVariantName = useCallback<
-    SpaceConfigVariantItemProps["onChangeVariantName"]
-  >(
-    (id, name) => {
-      setSize((draft) => {
-        draft.auto.variants[id].name = name;
-      });
-    },
-    [setSize]
   );
 
   return (
@@ -150,29 +97,11 @@ export function SpaceConfigAuto({
           </InputSelect>
         </div>
       </InputLabel>
-      <InputLabel
-        dxLabel="Variants"
-        dxHelp="The number of spacing variants (default: 5)"
-        dxSize="dense"
-      >
-        <div>
-          <InputRange
-            defaultValue={Object.entries(state.variants).length}
-            dxDisplayInput
-            dxDisplayMax
-            dxDisplayMin
-            min={1}
-            max={50}
-            step={1}
-            dxVariant="normal"
-            dxOnChange={debouncedHandleChangeNumOfVariants}
-          />
-        </div>
-      </InputLabel>
       <SpaceConfigVariants
+        mode="auto"
+        setSize={setSize}
         variants={state.variants}
         baseFontSize={baseFontSize}
-        onChangeVariantName={handleChangeVariantName}
       />
     </InputGroup>
   );

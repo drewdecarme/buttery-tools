@@ -135,11 +135,11 @@ export const ButtonRegular = forwardRef<HTMLButtonElement, ButtonRegularProps>(
     return (
       <button
         {...restProps}
+        ref={ref}
         className={classes(
           createButtonStyles({ dxColor, dxSize, dxVariant }),
           className
         )}
-        ref={ref}
       >
         {DXAdornmentStart}
         {children}

@@ -101,6 +101,7 @@ export const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(
     });
     const ref = useForwardedRef(forwardedRef);
     const id = useId();
+
     const refCallback = useCallback<RefCallback<HTMLButtonElement>>(
       (node) => {
         if (!node) return;
@@ -114,12 +115,12 @@ export const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(
       <>
         <button
           {...restProps}
+          ref={refCallback}
           aria-labelledby={id}
           className={classes(styles, className, {
             [`s-${dxSize}`]: dxSize,
             [`st-${dxStyle}`]: dxStyle,
           })}
-          ref={refCallback}
         >
           <DXIcon
             dxSize={match(dxSize)

@@ -3,32 +3,50 @@ import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 import type {
   ButteryTokensConfigSpaceAndSize,
   SpaceAuto,
+  SpaceManual,
 } from "../schemas/schema.size-and-space.js";
+
+export type SpaceVariantsRecord = Record<string, number>;
+
+export function calculateSpaceVariantAutoValue(
+  i: number,
+  baselineGrid: number,
+  factor = 1
+) {
+  return factor === 1
+    ? baselineGrid * (i + 1)
+    : baselineGrid * Math.pow(factor, i);
+}
 
 export function calculateSpaceVariantsAuto(
   variants: SpaceAuto["variants"],
   baselineGrid: number,
   factor = 1
-) {
+): SpaceVariantsRecord {
   const variantArr =
     typeof variants === "number"
       ? [...new Array(variants)].map((_, i) => i.toString())
       : variants;
-  return variantArr.reduce<Record<string, number>>((accum, variantName, i) => {
-    if (factor === 1) {
+  const transformedVariants = variantArr.reduce<SpaceVariantsRecord>(
+    (accum, variantName, i) => {
       return Object.assign(accum, {
-        [variantName]: baselineGrid * (i + 1),
+        [variantName]: calculateSpaceVariantAutoValue(i, baselineGrid, factor),
       });
-    }
-    return Object.assign(accum, {
-      [variantName]: baselineGrid * Math.pow(factor, i),
-    });
-  }, {});
+    },
+    {}
+  );
+  return transformedVariants;
 }
 
-export function createSpaceVariants(
+export function calculateSpaceVariantsManual(
+  variants: SpaceManual["variants"]
+): SpaceVariantsRecord {
+  return variants;
+}
+
+export function calculateSpaceVariants(
   size: ButteryTokensConfigSpaceAndSize
-): Record<string, number> {
+): SpaceVariantsRecord {
   switch (size.space.mode) {
     case "auto": {
       return calculateSpaceVariantsAuto(
@@ -39,7 +57,7 @@ export function createSpaceVariants(
     }
 
     case "manual": {
-      return size.space.variants;
+      return calculateSpaceVariantsManual(size.space.variants);
     }
 
     default:

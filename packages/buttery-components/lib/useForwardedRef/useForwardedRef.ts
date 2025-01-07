@@ -1,3 +1,4 @@
+import type { ForwardedRef } from "react";
 import { useImperativeHandle, useRef } from "react";
 
 /**
@@ -13,18 +14,13 @@ import { useImperativeHandle, useRef } from "react";
  *   return <input ref={internalRef} />;
  * });
  */
-export function useForwardedRef<T>(forwardedRef: React.Ref<T>) {
+export function useForwardedRef<T extends HTMLElement>(
+  forwardedRef: ForwardedRef<T>
+) {
   const internalRef = useRef<T | null>(null);
 
-  // @ts-expect-error we're augmenting the internal ref here so the types won't match up
-  useImperativeHandle(forwardedRef, () => ({
-    get current() {
-      return internalRef.current;
-    },
-    set current(value) {
-      internalRef.current = value;
-    },
-  }));
+  // @ts-expect-error mismatch in the internals
+  useImperativeHandle(forwardedRef, () => internalRef.current);
 
   return internalRef;
 }

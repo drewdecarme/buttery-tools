@@ -1,3 +1,5 @@
+import { InputGroup } from "~/components/InputGroup";
+
 import type { ConfigurationStateSizeManual } from "./config.utils";
 import type { ConfigurationContextType } from "./Config.context";
 import { SpaceConfigVariants } from "./SpaceConfigVariants";
@@ -12,9 +14,13 @@ export function SpaceConfigManual({
   setSize: ConfigurationContextType["setSize"];
 }) {
   return (
-    <SpaceConfigVariants
-      variants={state.variants}
-      baseFontSize={baseFontSize}
-    />
+    <InputGroup>
+      <SpaceConfigVariants
+        mode="manual"
+        setSize={setSize}
+        variants={state.variants}
+        baseFontSize={baseFontSize}
+      />
+    </InputGroup>
   );
 }
