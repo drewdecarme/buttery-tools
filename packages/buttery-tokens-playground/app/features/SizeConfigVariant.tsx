@@ -9,6 +9,11 @@ import { InputGroup } from "~/components/InputGroup";
 import { InputLabel } from "~/components/InputLabel";
 import { InputNumber } from "~/components/InputNumber";
 import { InputText } from "~/components/InputText";
+import { VariantContainer } from "~/components/VariantContainer";
+import { VariantContainerBar } from "~/components/VariantContainerBar";
+import { VariantContainerBarActions } from "~/components/VariantContainerBarActions";
+import { VariantContainerBarTitle } from "~/components/VariantContainerBarTitle";
+import { VariantContainerContent } from "~/components/VariantContainerContent";
 import { IconDelete } from "~/icons/IconDelete";
 import { IconPencilEdit01 } from "~/icons/IconPencilEdit01";
 
@@ -29,25 +34,9 @@ export type SizeConfigVariantProps = SizeConfigVariantPropsNative &
   SizeConfigVariantPropsCustom;
 
 const styles = css`
-  background: white;
-  padding: ${makeRem(16)};
-  width: 100%;
-  border: 1px solid ${makeColor("neutral-light", { opacity: 0.2 })};
-  border-radius: ${makeRem(4)};
-
-  h5 {
-    margin: 0;
-  }
-
-  .bar {
-    display: grid;
-    grid-template-columns: ${makeRem(50)} auto 1fr;
-    gap: ${makeRem(16)};
-    align-items: center;
-  }
+  grid-template-columns: ${makeRem(50)} auto auto 1fr !important;
 
   .value {
-    padding-left: ${makeRem(8)};
     position: relative;
     font-size: ${makeRem(12)};
     color: ${makeColor("neutral-light", { opacity: 0.8 })};
@@ -62,19 +51,6 @@ const styles = css`
       background: ${makeColor("neutral-light", { opacity: 0.4 })};
       width: 1px;
     }
-  }
-  .actions {
-    display: flex;
-    gap: ${makeRem(4)};
-    justify-content: flex-end;
-    align-items: center;
-  }
-
-  .bottom {
-    margin-top: ${makeRem(16)};
-    padding-top: ${makeRem(16)};
-    border-top: ${makeRem(1)} solid
-      ${makeColor("neutral-light", { opacity: 0.2 })};
   }
 `;
 
@@ -97,11 +73,16 @@ export const SizeConfigVariant = forwardRef<
   const [isOpen, toggle] = useToggle();
 
   return (
-    <div {...restProps} className={classes(styles, className)} ref={ref}>
-      <div className="bar">
-        <h5>{dxName}</h5>
+    <VariantContainer
+      {...restProps}
+      className={classes(styles, className)}
+      ref={ref}
+    >
+      <VariantContainerBar className={styles}>
+        <VariantContainerBarTitle>{dxName}</VariantContainerBarTitle>
         <div className="value">{dxValue}px</div>
-        <div className="actions">
+        <div className="value">{dxValue / dxBaselineGrid}rem</div>
+        <VariantContainerBarActions>
           <Button
             dxVariant="icon"
             DXIcon={IconPencilEdit01}
@@ -115,10 +96,10 @@ export const SizeConfigVariant = forwardRef<
             dxSize="dense"
             dxHelp="Delete Variant"
           />
-        </div>
-      </div>
+        </VariantContainerBarActions>
+      </VariantContainerBar>
       {isOpen && (
-        <div className="bottom">
+        <VariantContainerContent>
           <InputGroup>
             <InputLabel dxLabel="Token name" dxSize="dense">
               <InputText
@@ -150,8 +131,8 @@ export const SizeConfigVariant = forwardRef<
               />
             </InputLabel>
           </InputGroup>
-        </div>
+        </VariantContainerContent>
       )}
-    </div>
+    </VariantContainer>
   );
 });
