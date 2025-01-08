@@ -48,7 +48,7 @@ export function SizeConfig() {
         draft.baselineGrid = newBaselineGrid;
 
         // Go through all of the size variants and adjust their values
-        // to multiples of the newBaselineGrid
+        // to multiples of the `newBaselineGrid`
         const sizeVariantEntries = Object.entries(draft.size.variants);
         for (const [variantId, variant] of sizeVariantEntries) {
           const nearestValue =
