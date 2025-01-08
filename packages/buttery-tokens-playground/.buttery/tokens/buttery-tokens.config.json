@@ -1,16 +1,35 @@
 {
-  "$schema": "../../../buttery-tokens-utils/schema.json",
   "runtime": {
     "namespace": "replace-me",
     "prefix": "--buttery",
     "strict": true,
     "suppressStrictWarnings": false
   },
-  "size": {
-    "documentFontSize": 16,
+  "sizeAndSpace": {
+    "baseFontSize": 16,
+    "baselineGrid": 4,
+    "size": {
+      "variants": {
+        "dense": 24,
+        "normal": 32,
+        "big": 44
+      }
+    },
     "space": {
       "mode": "auto",
-      "variants": 11
+      "variants": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ]
     }
   },
   "font": {
@@ -26,20 +45,31 @@
   },
   "color": {
     "brand": {
-      "type": "manual",
+      "type": "earth",
       "colors": {
+        "brand1": {
+          "hue": 180,
+          "variants": 10
+        },
         "brand2": {
-          "hex": "#519550",
-          "variants": {
-            "light": "#b8ffb9",
-            "dark": "#525252"
-          }
+          "hue": 270,
+          "variants": 10
         },
         "brand3": {
-          "hex": "#000000",
+          "hue": 109,
+          "variants": 10
+        },
+        "brand4": {
+          "hue": 355,
+          "variants": 10
+        },
+        "brand5": {
+          "hue": 19,
           "variants": 10
         }
-      }
+      },
+      "saturation": 36,
+      "brightness": 71
     },
     "neutral": {
       "neutral": {

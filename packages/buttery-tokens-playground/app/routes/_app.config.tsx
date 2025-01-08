@@ -9,7 +9,7 @@ import { NavTabs } from "~/components/NavTabs";
 import { IconCopy } from "~/icons/IconCopy";
 import { IconDownload05 } from "~/icons/IconDownload05";
 import { ConfigurationProvider } from "~/features/Config.context";
-import { ConfigView } from "~/features/ConfigView";
+import { ConfigPreview } from "~/features/ConfigPreview";
 import { getButteryConfig } from "~/utils/util.getLocalConfig";
 import { ConfigSave } from "~/features/ConfigSave";
 import { errors } from "~/utils/util.error-modes";
@@ -87,7 +87,7 @@ export default function AppConfigRoute() {
               >
                 Export
               </Button>
-              <ConfigView />
+              <ConfigPreview />
             </ButtonGroup>
             <ButtonGroup>
               <ConfigSave />

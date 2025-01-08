@@ -48,7 +48,7 @@ const tabStyles = css`
   padding: 0 ${makeCustom("modal-gutters")};
 `;
 
-export function ConfigView() {
+export function ConfigPreview() {
   const { openModal, modalRef } = useModal();
   const { getConfigFromState } = useConfigurationContext();
   const [configHTML, setConfigHTML] = useState<string>("");
@@ -74,7 +74,7 @@ export function ConfigView() {
         DXAdornmentStart={<IconView dxSize={16} />}
         onClick={openModal}
       >
-        View
+        Preview
       </Button>
       <ModalDrawer
         ref={modalRef}
