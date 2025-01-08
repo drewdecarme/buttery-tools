@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
 import { classes } from "@buttery/components";
 import { makeRem } from "@buttery/tokens/playground";
+import type { ReactNode } from "react";
 
 import { useSizePreviewContext } from "./SizePreview.context";
 import { useConfigurationContext } from "./Config.context";
@@ -8,10 +9,11 @@ import { useConfigurationContext } from "./Config.context";
 const styles = css`
   position: relative;
   height: ${makeRem(160 * 2 + 1)};
+  width: ${makeRem(160 * 4 + 1)};
   margin: 0 auto auto auto;
   background-color: #fff;
   overflow: hidden;
-  aspect-ratio: 1 / 1;
+  font-size: var(--base-font-size);
 
   &.grid {
     &::before {
@@ -31,24 +33,31 @@ const styles = css`
       z-index: 1;
       pointer-events: none;
     }
-    /* border-right: 1px solid rgba(0, 0, 0, 0.1); */
+  }
+
+  .padding {
+    border: 1em solid rgb(196, 208, 140);
+    height: 100%;
   }
 `;
 
-export function SizePreviewContent() {
+export function SizePreviewContent({ children }: { children: ReactNode }) {
   const {
-    sizeAndSpace: { baselineGrid },
+    sizeAndSpace: { baselineGrid, baseFontSize },
   } = useConfigurationContext();
   const { showGrid } = useSizePreviewContext();
   return (
     <div
       style={{
         // @ts-expect-error custom properties are OK
+        "--base-font-size": `${baseFontSize}px`,
         "--baseline-grid": `${baselineGrid}px`,
       }}
       className={classes(styles, {
         grid: showGrid,
       })}
-    ></div>
+    >
+      <div className="padding">{children}</div>
+    </div>
   );
 }

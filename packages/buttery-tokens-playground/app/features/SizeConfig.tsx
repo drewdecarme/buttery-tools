@@ -1,5 +1,8 @@
 import type { ChangeEventHandler } from "react";
 import { useCallback, useEffect } from "react";
+import { css } from "@linaria/core";
+import { makeRem, makeReset } from "@buttery/tokens/playground";
+import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
 import { InputGroup } from "~/components/InputGroup";
 import { InputLabel } from "~/components/InputLabel";
@@ -7,6 +10,15 @@ import { InputNumber } from "~/components/InputNumber";
 
 import { useConfigurationContext } from "./Config.context";
 import { useRecalculateSpaceVariants } from "./space.useRecalculateSpaceVariants";
+import type { SizeConfigVariantPropsCustom } from "./SizeConfigVariant";
+import { SizeConfigVariant } from "./SizeConfigVariant";
+
+const ulStyles = css`
+  ${makeReset("ul")};
+  display: flex;
+  flex-direction: column;
+  gap: ${makeRem(8)};
+`;
 
 export function SizeConfig() {
   const { sizeAndSpace, setSizeAndSpace } = useConfigurationContext();
@@ -39,6 +51,30 @@ export function SizeConfig() {
     recalculateSpaceVariants();
   }, [recalculateSpaceVariants, sizeAndSpace.baselineGrid]);
 
+  const handleChangeVariantProperties = useCallback<
+    SizeConfigVariantPropsCustom["dxOnChangeVariantProperties"]
+  >(
+    (id, options) => {
+      switch (options.property) {
+        case "name":
+          setSizeAndSpace((draft) => {
+            draft.size.variants[id].name = options.name;
+          });
+          break;
+
+        case "value":
+          setSizeAndSpace((draft) => {
+            draft.size.variants[id].value = options.value;
+          });
+          break;
+
+        default:
+          exhaustiveMatchGuard(options);
+      }
+    },
+    [setSizeAndSpace]
+  );
+
   return (
     <InputGroup>
       <InputLabel
@@ -64,18 +100,28 @@ export function SizeConfig() {
           onChange={handleChangeBaselineGrid}
         />
       </InputLabel>
-      <InputLabel
-        dxLabel="Variants (WIP)"
-        dxSize="dense"
-        dxHelp="Create named variants to align the vertical sizing of adjacent elements"
-      >
-        <InputNumber
+      <div>
+        <InputLabel
+          dxLabel="Variants"
           dxSize="dense"
-          step={2}
-          defaultValue={sizeAndSpace.baselineGrid}
-          onChange={handleChangeBaselineGrid}
+          dxHelp="Create named variants to align the vertical sizing of adjacent elements such as inputs, buttons and icons"
         />
-      </InputLabel>
+        <ul className={ulStyles}>
+          {Object.entries(sizeAndSpace.size.variants).map(
+            ([variantId, { name, value }]) => (
+              <li key={variantId}>
+                <SizeConfigVariant
+                  dxVariantId={variantId}
+                  dxName={name}
+                  dxValue={value}
+                  dxBaselineGrid={sizeAndSpace.baselineGrid}
+                  dxOnChangeVariantProperties={handleChangeVariantProperties}
+                />
+              </li>
+            )
+          )}
+        </ul>
+      </div>
     </InputGroup>
   );
 }
