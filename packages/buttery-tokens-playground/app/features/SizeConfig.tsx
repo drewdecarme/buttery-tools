@@ -53,7 +53,6 @@ export function SizeConfig() {
         for (const [variantId, variant] of sizeVariantEntries) {
           const nearestValue =
             mathFn(variant.value / newBaselineGrid) * newBaselineGrid;
-          console.log(draft.size.variants[variantId].value, nearestValue);
           draft.size.variants[variantId].value = nearestValue;
         }
       });
@@ -99,7 +98,7 @@ export function SizeConfig() {
       >
         <InputNumber
           dxSize="dense"
-          defaultValue={sizeAndSpace.baseFontSize}
+          value={sizeAndSpace.baseFontSize}
           onChange={handleChangeDocumentFontSize}
         />
       </InputLabel>
@@ -111,7 +110,7 @@ export function SizeConfig() {
         <InputNumber
           dxSize="dense"
           step={4}
-          defaultValue={sizeAndSpace.baselineGrid}
+          value={sizeAndSpace.baselineGrid}
           onChange={handleChangeBaselineGrid}
         />
       </InputLabel>

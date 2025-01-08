@@ -124,7 +124,7 @@ export function SizePreviewContent() {
               </button>
               <input
                 style={{ height: variant.value }}
-                value={`input - ${variant.name}`}
+                defaultValue={`input - ${variant.name}`}
               />
               <div
                 className="icon"
