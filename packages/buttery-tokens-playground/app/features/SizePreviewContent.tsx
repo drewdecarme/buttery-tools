@@ -83,25 +83,27 @@ export function SizePreviewContent() {
   const { showGrid } = useSizePreviewContext();
   const ref = useRef<HTMLDivElement | null>(null);
 
+  // Update the size variants each time the baseline grid changes
+  // This ensures that each time the baseline grid updates, the variants
+  // are all divisible by the new baseline grid and the example always
+  // lines up on the lines
   useEffect(() => {
     if (!ref.current) return;
+    // Get the real width of the container
     const realWidth = ref.current.offsetWidth;
     const realHeight = ref.current.offsetHeight;
 
+    // Calculate the width that the container should be based upon the baseline grid
+    // this makes it a completely divisible grid
     const adjWidth = Math.floor(realWidth / baselineGrid) * baselineGrid;
     const adjHeight = Math.floor(realHeight / baselineGrid) * baselineGrid;
     const adjMin = Math.floor(300 / baselineGrid) * baselineGrid;
 
+    // set some custom properties based upon those calculated values
     ref.current.style.setProperty("--container-min-height", makePx(adjMin));
     ref.current.style.setProperty("--container-width", makePx(adjWidth));
     ref.current.style.setProperty("--container-height", makePx(adjHeight));
   }, [baselineGrid]);
-
-  // const refCallback = useCallback<RefCallback<HTMLDivElement>>((node) => {
-  //   if (!node) return;
-  //   ref.current = node;
-  //   calculateContainerDimensions()
-  // }, []);
 
   return (
     <div style={{ height: "400px" }}>
