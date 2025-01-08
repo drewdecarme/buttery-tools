@@ -1,7 +1,6 @@
 import { css } from "@linaria/core";
 import { classes } from "@buttery/components";
-import { makeRem } from "@buttery/tokens/playground";
-import type { ReactNode } from "react";
+import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 
 import { useSizePreviewContext } from "./SizePreview.context";
 import { useConfigurationContext } from "./Config.context";
@@ -41,9 +40,35 @@ const styles = css`
   }
 `;
 
-export function SizePreviewContent({ children }: { children: ReactNode }) {
+const ulStyles = css`
+  ${makeReset("ul")};
+  display: flex;
+  flex-direction: column;
+  gap: ${makeRem(16)};
+
+  li {
+    display: flex;
+    gap: ${makeRem(8)};
+  }
+
+  input,
+  button {
+    font-size: 0.75em;
+    padding: 0 1em;
+  }
+
+  .icon {
+    display: grid;
+    place-content: center;
+    border: 1px solid ${makeColor("secondary-600")};
+    font-size: 0.5em;
+    border-radius: ${makeRem(4)};
+  }
+`;
+
+export function SizePreviewContent() {
   const {
-    sizeAndSpace: { baselineGrid, baseFontSize },
+    sizeAndSpace: { baselineGrid, baseFontSize, size },
   } = useConfigurationContext();
   const { showGrid } = useSizePreviewContext();
   return (
@@ -57,7 +82,27 @@ export function SizePreviewContent({ children }: { children: ReactNode }) {
         grid: showGrid,
       })}
     >
-      <div className="padding">{children}</div>
+      <div className="padding">
+        <ul className={ulStyles}>
+          {Object.entries(size.variants).map(([variantId, variant]) => (
+            <li key={variantId}>
+              <button style={{ height: variant.value }}>
+                btn - {variant.name}
+              </button>
+              <input
+                style={{ height: variant.value }}
+                value={`input - ${variant.name}`}
+              />
+              <div
+                className="icon"
+                style={{ height: variant.value, aspectRatio: "1 / 1" }}
+              >
+                icon
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
