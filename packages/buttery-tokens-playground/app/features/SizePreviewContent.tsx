@@ -1,18 +1,28 @@
 import { css } from "@linaria/core";
 import { classes } from "@buttery/components";
-import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
+import {
+  makeColor,
+  makePx,
+  makeRem,
+  makeReset,
+} from "@buttery/tokens/playground";
+import { useEffect, useRef } from "react";
 
 import { useSizePreviewContext } from "./SizePreview.context";
 import { useConfigurationContext } from "./Config.context";
 
 const styles = css`
   position: relative;
-  height: ${makeRem(160 * 2 + 1)};
-  width: ${makeRem(160 * 4 + 1)};
+  min-height: 100%;
+  width: calc(var(--container-width) + 1);
+  height: calc(var(--container-min-height) + 1);
+  /* min-height: calc(var(--container-min-height) + 1); */
   margin: 0 auto auto auto;
   background-color: #fff;
   overflow: hidden;
   font-size: var(--base-font-size);
+  border: var(--baseline-grid) solid
+    ${makeColor("secondary-200", { opacity: 0.2 })};
 
   &.grid {
     &::before {
@@ -22,21 +32,21 @@ const styles = css`
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: linear-gradient(
+      /* background-image: linear-gradient(
           to right,
           rgba(0, 0, 0, 0.1) 1px,
           transparent 1px
         ),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px); */
+      background-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px
+      );
       background-size: var(--baseline-grid) var(--baseline-grid);
       z-index: 1;
       pointer-events: none;
     }
-  }
-
-  .padding {
-    border: 1em solid rgb(196, 208, 140);
-    height: 100%;
   }
 `;
 
@@ -44,11 +54,11 @@ const ulStyles = css`
   ${makeReset("ul")};
   display: flex;
   flex-direction: column;
-  gap: ${makeRem(16)};
+  gap: var(--baseline-grid);
 
   li {
     display: flex;
-    gap: ${makeRem(8)};
+    gap: var(--baseline-grid);
   }
 
   input,
@@ -71,18 +81,41 @@ export function SizePreviewContent() {
     sizeAndSpace: { baselineGrid, baseFontSize, size },
   } = useConfigurationContext();
   const { showGrid } = useSizePreviewContext();
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const realWidth = ref.current.offsetWidth;
+    const realHeight = ref.current.offsetHeight;
+
+    const adjWidth = Math.floor(realWidth / baselineGrid) * baselineGrid;
+    const adjHeight = Math.floor(realHeight / baselineGrid) * baselineGrid;
+    const adjMin = Math.floor(300 / baselineGrid) * baselineGrid;
+
+    ref.current.style.setProperty("--container-min-height", makePx(adjMin));
+    ref.current.style.setProperty("--container-width", makePx(adjWidth));
+    ref.current.style.setProperty("--container-height", makePx(adjHeight));
+  }, [baselineGrid]);
+
+  // const refCallback = useCallback<RefCallback<HTMLDivElement>>((node) => {
+  //   if (!node) return;
+  //   ref.current = node;
+  //   calculateContainerDimensions()
+  // }, []);
+
   return (
-    <div
-      style={{
-        // @ts-expect-error custom properties are OK
-        "--base-font-size": `${baseFontSize}px`,
-        "--baseline-grid": `${baselineGrid}px`,
-      }}
-      className={classes(styles, {
-        grid: showGrid,
-      })}
-    >
-      <div className="padding">
+    <div style={{ height: "400px" }}>
+      <div
+        ref={ref}
+        style={{
+          // @ts-expect-error custom properties are OK
+          "--base-font-size": `${baseFontSize}px`,
+          "--baseline-grid": `${baselineGrid}px`,
+        }}
+        className={classes(styles, {
+          grid: showGrid,
+        })}
+      >
         <ul className={ulStyles}>
           {Object.entries(size.variants).map(([variantId, variant]) => (
             <li key={variantId}>

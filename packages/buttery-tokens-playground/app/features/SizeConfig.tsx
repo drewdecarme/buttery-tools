@@ -40,7 +40,22 @@ export function SizeConfig() {
   >(
     ({ currentTarget: { value } }) => {
       setSizeAndSpace((draft) => {
-        draft.baselineGrid = Number(value);
+        const newBaselineGrid = Number(value);
+        if (!newBaselineGrid) return; // return if the baseline grid is 0
+
+        const mathFn =
+          newBaselineGrid < draft.baselineGrid ? Math.floor : Math.ceil;
+        draft.baselineGrid = newBaselineGrid;
+
+        // Go through all of the size variants and adjust their values
+        // to multiples of the newBaselineGrid
+        const sizeVariantEntries = Object.entries(draft.size.variants);
+        for (const [variantId, variant] of sizeVariantEntries) {
+          const nearestValue =
+            mathFn(variant.value / newBaselineGrid) * newBaselineGrid;
+          console.log(draft.size.variants[variantId].value, nearestValue);
+          draft.size.variants[variantId].value = nearestValue;
+        }
       });
     },
     [setSizeAndSpace]
