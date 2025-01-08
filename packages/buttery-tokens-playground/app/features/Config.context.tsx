@@ -7,7 +7,7 @@ import { useImmer } from "use-immer";
 
 import type {
   ConfigurationStateColor,
-  ConfigurationStateSize,
+  ConfigurationStateSizeAndSpace,
 } from "./config.utils";
 import {
   getInitColorStateFromConfig,
@@ -19,8 +19,8 @@ import {
 export type ConfigurationContextType = {
   color: ConfigurationStateColor;
   setColor: Updater<ConfigurationStateColor>;
-  size: ConfigurationStateSize;
-  setSize: Updater<ConfigurationStateSize>;
+  sizeAndSpace: ConfigurationStateSizeAndSpace;
+  setSizeAndSpace: Updater<ConfigurationStateSizeAndSpace>;
   getConfigFromState: () => ButteryTokensConfig;
   originalConfig: ButteryTokensConfig;
 };
@@ -40,33 +40,42 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
   const [color, setColor] = useImmer(
     getInitColorStateFromConfig(originalConfig)
   );
-  const [size, setSize] = useImmer(getInitSizeFromConfig(originalConfig));
+  const [sizeAndSpace, setSizeAndSpace] = useImmer(
+    getInitSizeFromConfig(originalConfig)
+  );
 
   const getConfigFromState = useCallback<
     ConfigurationContextType["getConfigFromState"]
   >(() => {
     const configColor = transformColorStateIntoColorConfig(color);
-    const configSize = transformSizeStateIntoColorConfig(size);
+    const configSizeAndSpace = transformSizeStateIntoColorConfig(sizeAndSpace);
     const config = ConfigSchema.safeParse({
       color: configColor,
-      size: configSize,
+      sizeAndSpace: configSizeAndSpace,
     });
     if (config.error) {
       throw config.error;
     }
     return config.data;
-  }, [color, size]);
+  }, [color, sizeAndSpace]);
 
   const value = useMemo<ConfigurationContextType>(
     () => ({
       color,
       setColor,
-      size,
-      setSize,
+      sizeAndSpace,
+      setSizeAndSpace,
       getConfigFromState,
       originalConfig,
     }),
-    [color, getConfigFromState, originalConfig, setColor, setSize, size]
+    [
+      color,
+      getConfigFromState,
+      originalConfig,
+      setColor,
+      setSizeAndSpace,
+      sizeAndSpace,
+    ]
   );
 
   return (

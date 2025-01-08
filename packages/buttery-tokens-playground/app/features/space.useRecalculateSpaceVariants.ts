@@ -6,16 +6,18 @@ import { useConfigurationContext } from "./Config.context";
 
 export function useRecalculateSpaceVariants() {
   const {
-    setSize,
-    size: { mode },
+    setSizeAndSpace,
+    sizeAndSpace: {
+      space: { mode },
+    },
   } = useConfigurationContext();
 
   const recalculateSpaceVariants = useCallback<
     (numOfVariants?: number) => void
   >(
     (numOfVariants) => {
-      setSize((draft) => {
-        const prevVariants = draft[mode].variants;
+      setSizeAndSpace((draft) => {
+        const prevVariants = draft.space[mode].variants;
         const prevVarEntries = Object.entries(prevVariants);
         const prevVarEntriesLength = prevVarEntries.length;
         const prevVarLastEntryVal = prevVarEntries[prevVarEntriesLength - 1][1];
@@ -26,7 +28,7 @@ export function useRecalculateSpaceVariants() {
         if (totalVariants < prevVarEntriesLength) {
           // Remove the amount of values
           const newEntries = prevVarEntries.slice(0, totalVariants);
-          draft[mode].variants = Object.fromEntries(newEntries);
+          draft.space[mode].variants = Object.fromEntries(newEntries);
           return;
         }
 
@@ -46,7 +48,7 @@ export function useRecalculateSpaceVariants() {
                   const value = calculateSpaceVariantAutoValue(
                     index,
                     draft.baselineGrid,
-                    draft.auto.factor
+                    draft.space.auto.factor
                   );
 
                   return Object.assign(accum, {
@@ -59,7 +61,7 @@ export function useRecalculateSpaceVariants() {
                 },
                 prevVariants
               );
-              draft[mode].variants = newAutoVariants;
+              draft.space[mode].variants = newAutoVariants;
               return;
             }
 
@@ -80,7 +82,7 @@ export function useRecalculateSpaceVariants() {
                 },
                 prevVariants
               );
-              draft[mode].variants = newManualVariants;
+              draft.space[mode].variants = newManualVariants;
               return;
             }
 
@@ -98,7 +100,7 @@ export function useRecalculateSpaceVariants() {
                 ? calculateSpaceVariantAutoValue(
                     index,
                     draft.baselineGrid,
-                    draft.auto.factor
+                    draft.space.auto.factor
                   )
                 : variantValue.value;
 
@@ -112,10 +114,10 @@ export function useRecalculateSpaceVariants() {
             ];
           }
         );
-        draft[mode].variants = Object.fromEntries(updatedVariants);
+        draft.space[mode].variants = Object.fromEntries(updatedVariants);
       });
     },
-    [mode, setSize]
+    [mode, setSizeAndSpace]
   );
 
   return { recalculateSpaceVariants };

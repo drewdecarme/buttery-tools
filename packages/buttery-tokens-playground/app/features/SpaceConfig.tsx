@@ -24,15 +24,15 @@ const groupStyles = css`
 `;
 
 export function SpaceConfig() {
-  const { size, setSize } = useConfigurationContext();
+  const { sizeAndSpace, setSizeAndSpace } = useConfigurationContext();
 
   const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     ({ currentTarget: { value } }) => {
-      setSize((draft) => {
-        draft.mode = value === "auto" ? "auto" : "manual";
+      setSizeAndSpace((draft) => {
+        draft.space.mode = value === "auto" ? "auto" : "manual";
       });
     },
-    [setSize]
+    [setSizeAndSpace]
   );
 
   return (
@@ -49,7 +49,7 @@ export function SpaceConfig() {
                 dxHelp="Best when starting from scratch without design assets"
                 value="auto"
                 name="mode"
-                defaultChecked={size.mode === "auto"}
+                defaultChecked={sizeAndSpace.space.mode === "auto"}
                 onChange={handleOnChange}
               />
               <InputRadioCard
@@ -59,28 +59,28 @@ export function SpaceConfig() {
                 dxHelp="Best when configuring spacing definitions provided by a design / product team"
                 value="manual"
                 name="mode"
-                defaultChecked={size.mode === "manual"}
+                defaultChecked={sizeAndSpace.space.mode === "manual"}
                 onChange={handleOnChange}
               />
             </div>
           </InputSection>
         ),
-        [handleOnChange, size.mode]
+        [handleOnChange, sizeAndSpace.space.mode]
       )}
       <InputSection>
-        {match(size)
+        {match(sizeAndSpace.space)
           .with({ mode: "manual" }, (state) => (
             <SpaceConfigManual
-              baseFontSize={state.documentFontSize}
+              baseFontSize={sizeAndSpace.baseFontSize}
               state={state.manual}
-              setSize={setSize}
+              setSizeAndSpace={setSizeAndSpace}
             />
           ))
           .with({ mode: "auto" }, (state) => (
             <SpaceConfigAuto
-              baseFontSize={state.documentFontSize}
+              baseFontSize={sizeAndSpace.baseFontSize}
               state={state.auto}
-              setSize={setSize}
+              setSizeAndSpace={setSizeAndSpace}
             />
           ))
           .exhaustive()}

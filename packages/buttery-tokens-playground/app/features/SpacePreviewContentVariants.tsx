@@ -2,7 +2,7 @@ import { css } from "@linaria/core";
 import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 import { Fragment } from "react/jsx-runtime";
 
-import type { ConfigurationStateSizeSpaceVariants } from "./config.utils";
+import type { ConfigurationStateSizeAndSpace_SpaceVariants } from "./config.utils";
 
 const styles = css`
   ${makeReset("ul")};
@@ -27,7 +27,7 @@ const styles = css`
 
 export function SpacePreviewContentVariants(props: {
   baseFontSize: number;
-  variants: ConfigurationStateSizeSpaceVariants;
+  variants: ConfigurationStateSizeAndSpace_SpaceVariants;
 }) {
   return (
     <div className={styles}>

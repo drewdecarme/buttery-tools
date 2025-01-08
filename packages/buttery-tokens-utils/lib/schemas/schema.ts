@@ -9,7 +9,7 @@ import { CustomSchema } from "./schema.custom.js";
 
 export const ConfigSchema = z.object({
   runtime: RuntimeSchema,
-  size: SizeAndSpaceSchema,
+  sizeAndSpace: SizeAndSpaceSchema,
   font: FontSchema,
   breakpoints: BreakpointsSchema,
   color: ColorSchema,

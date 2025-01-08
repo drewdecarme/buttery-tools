@@ -17,7 +17,7 @@ export type SpaceAuto = z.infer<typeof SpaceAutoSchema>;
 
 export const SizeAndSpaceSchema = z
   .object({
-    documentFontSize: z.number().default(16),
+    baseFontSize: z.number().default(16),
     /**
      * ## Description
      * The integer that will regulate the visual harmony of the application by enforcing strict spacing requirements
@@ -46,7 +46,29 @@ export const SizeAndSpaceSchema = z
      * @default 4
      */
     baselineGrid: z.number().default(4),
-
+    size: z
+      .object({
+        variants: z
+          .record(z.string(), z.number())
+          .describe(
+            "Semantically named variants that describe the height of elements that can be placed inline with each other. By default, the values of the key value pairs should be divisible by the baselineGrid factor. This ensures that all mechanisms that use this are the same height so vertical rhythm is preserved using any inline element. Sizes often follow modular scaling systems (e.g., Major Third Scale, where each step is 1.25x the previous size) or the Golden Ratio (1.618x) for harmonious proportions."
+          )
+          .default({
+            dense: 24,
+            normal: 32,
+            big: 44,
+          }),
+      })
+      .describe(
+        "A key in which to describe the sizing constraints of the buttery tokens utility system"
+      )
+      .default({
+        variants: {
+          dense: 24,
+          normal: 32,
+          big: 44,
+        },
+      }),
     space: z
       .discriminatedUnion("mode", [SpaceManualSchema, SpaceAutoSchema])
       .default({
@@ -55,13 +77,20 @@ export const SizeAndSpaceSchema = z
       }),
   })
   .default({
-    documentFontSize: 16,
+    baseFontSize: 16,
     baselineGrid: 4,
+    size: {
+      variants: {
+        dense: 24,
+        normal: 32,
+        big: 44,
+      },
+    },
     space: {
       mode: "auto",
       variants: 11,
     },
   });
-export type ButteryTokensConfigSpaceAndSize = z.infer<
+export type ButteryTokensConfigSizeAndSpace = z.infer<
   typeof SizeAndSpaceSchema
 >;

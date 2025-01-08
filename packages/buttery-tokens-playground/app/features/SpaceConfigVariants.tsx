@@ -13,9 +13,9 @@ import { InputLabel } from "~/components/InputLabel";
 import { InputRange } from "~/components/InputRange";
 
 import {
+  type ConfigurationStateSizeAndSpace,
   orderSpaceVariants,
-  type ConfigurationStateSize,
-  type ConfigurationStateSizeSpaceVariants,
+  type ConfigurationStateSizeAndSpace_SpaceVariants,
 } from "./config.utils";
 import type { ConfigurationContextType } from "./Config.context";
 import { useRecalculateSpaceVariants } from "./space.useRecalculateSpaceVariants";
@@ -162,12 +162,12 @@ export function SpaceConfigVariants({
   baseFontSize,
   variants,
   mode,
-  setSize,
+  setSizeAndSpace,
 }: {
   baseFontSize: number;
-  variants: ConfigurationStateSizeSpaceVariants;
-  mode: ConfigurationStateSize["mode"];
-  setSize: ConfigurationContextType["setSize"];
+  variants: ConfigurationStateSizeAndSpace_SpaceVariants;
+  mode: ConfigurationStateSizeAndSpace["space"]["mode"];
+  setSizeAndSpace: ConfigurationContextType["setSizeAndSpace"];
 }) {
   const { recalculateSpaceVariants } = useRecalculateSpaceVariants();
 
@@ -180,11 +180,11 @@ export function SpaceConfigVariants({
     SpaceConfigVariantItemProps["onChangeVariantName"]
   >(
     (id, name) => {
-      setSize((draft) => {
-        draft[mode].variants[id].name = name;
+      setSizeAndSpace((draft) => {
+        draft.space[mode].variants[id].name = name;
       });
     },
-    [mode, setSize]
+    [mode, setSizeAndSpace]
   );
 
   const orderedVariants = orderSpaceVariants(variants);

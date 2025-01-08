@@ -9,7 +9,7 @@ import { InputLabel } from "~/components/InputLabel";
 import { InputCheckbox } from "~/components/InputCheckbox";
 import { InputSelect } from "~/components/InputSelect";
 
-import { type ConfigurationStateSizeAuto } from "./config.utils";
+import { type ConfigurationStateSizeAndSpace_SpaceAuto } from "./config.utils";
 import type { ConfigurationContextType } from "./Config.context";
 import { SpaceConfigVariants } from "./SpaceConfigVariants";
 
@@ -28,20 +28,20 @@ const labelStyles = css`
 export function SpaceConfigAuto({
   baseFontSize,
   state,
-  setSize,
+  setSizeAndSpace,
 }: {
   baseFontSize: number;
-  state: ConfigurationStateSizeAuto;
-  setSize: ConfigurationContextType["setSize"];
+  state: ConfigurationStateSizeAndSpace_SpaceAuto;
+  setSizeAndSpace: ConfigurationContextType["setSizeAndSpace"];
 }) {
   const handleUpdateVariantsWithFactor = useCallback<
     (value: 2 | 3 | undefined) => void
   >(
     (factor) => {
-      setSize((draft) => {
-        draft.auto.factor = factor;
+      setSizeAndSpace((draft) => {
+        draft.space.auto.factor = factor;
 
-        const updatedEntries = Object.entries(draft.auto.variants).map(
+        const updatedEntries = Object.entries(draft.space.auto.variants).map(
           ([variantId, variantValue], index) => [
             variantId,
             {
@@ -54,10 +54,10 @@ export function SpaceConfigAuto({
             },
           ]
         );
-        draft.auto.variants = Object.fromEntries(updatedEntries);
+        draft.space.auto.variants = Object.fromEntries(updatedEntries);
       });
     },
-    [setSize]
+    [setSizeAndSpace]
   );
 
   const handleToggleFactor = useCallback<ChangeEventHandler<HTMLInputElement>>(
@@ -99,7 +99,7 @@ export function SpaceConfigAuto({
       </InputLabel>
       <SpaceConfigVariants
         mode="auto"
-        setSize={setSize}
+        setSizeAndSpace={setSizeAndSpace}
         variants={state.variants}
         baseFontSize={baseFontSize}
       />

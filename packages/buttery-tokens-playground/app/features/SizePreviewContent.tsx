@@ -37,7 +37,7 @@ const styles = css`
 
 export function SizePreviewContent() {
   const {
-    size: { baselineGrid },
+    sizeAndSpace: { baselineGrid },
   } = useConfigurationContext();
   const { showGrid } = useSizePreviewContext();
   return (
