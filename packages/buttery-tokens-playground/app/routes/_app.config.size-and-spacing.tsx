@@ -7,7 +7,7 @@ import { SpaceConfig } from "~/features/SpaceConfig";
 import { SpacePreview } from "~/features/SpacePreview";
 import { SpacePreviewContent } from "~/features/SpacePreviewContent";
 
-export default function ConfigResponseRoute() {
+export default function ConfigSizeAndSpacingRoute() {
   return (
     <>
       <LayoutConfigSection>

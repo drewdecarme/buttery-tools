@@ -29,6 +29,10 @@ const styles = css`
     &:focus {
       border-color: ${makeColor("primary-100")};
     }
+
+    &:disabled {
+      background: ${makeColor("neutral-light", { opacity: 0.1 })};
+    }
   }
 `;
 

@@ -5,22 +5,41 @@ import type { JSX } from "react";
 import { forwardRef } from "react";
 
 export type VariantContainerPropsNative = JSX.IntrinsicElements["div"];
-export type VariantContainerProps = VariantContainerPropsNative;
+export type VariantContainerPropsCustom = {
+  dxStyle?: "normal" | "alt";
+};
+export type VariantContainerProps = VariantContainerPropsNative &
+  VariantContainerPropsCustom;
 
 const styles = css`
-  background: white;
-  padding: ${makeRem(16)};
   width: 100%;
   border: 1px solid ${makeColor("neutral-light", { opacity: 0.2 })};
   border-radius: ${makeRem(4)};
+
+  &.normal {
+    padding: ${makeRem(16)};
+    background: white;
+  }
+
+  &.alt {
+    padding: ${makeRem(8)};
+    background: ${makeColor("neutral-light", { opacity: 0.1 })};
+  }
 `;
 
 export const VariantContainer = forwardRef<
   HTMLDivElement,
   VariantContainerProps
->(function VariantContainer({ children, className, ...restProps }, ref) {
+>(function VariantContainer(
+  { children, className, dxStyle = "normal", ...restProps },
+  ref
+) {
   return (
-    <div {...restProps} className={classes(styles, className)} ref={ref}>
+    <div
+      {...restProps}
+      className={classes(styles, dxStyle, className)}
+      ref={ref}
+    >
       {children}
     </div>
   );

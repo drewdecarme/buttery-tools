@@ -201,7 +201,7 @@ export function transformColorStateIntoColorConfig(
   }
 }
 
-// Start SIZE
+// Start Size And Space
 export type ConfigurationStateSizeAndSpace_SpaceVariants = {
   [id: string]: {
     name: string;
@@ -296,7 +296,7 @@ function createSizeVariantsFromConfig(
   );
 }
 
-export function getInitSizeFromConfig(
+export function getInitStateSizeAndSpaceFromConfig(
   config: ButteryTokensConfig
 ): ConfigurationStateSizeAndSpace {
   switch (config.sizeAndSpace.space.mode) {

@@ -72,6 +72,7 @@ const styles = css`
         &-primary {
         }
         &-secondary {
+          color: ${makeColor("secondary-800")};
         }
       }
     }

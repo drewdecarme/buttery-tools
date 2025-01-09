@@ -2,17 +2,39 @@ import { z } from "zod";
 
 import { optionalSchema } from "./schema-utils.js";
 
+export const fontFamilyFallback =
+  'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+
 /**
  * A record of key/value strings that will be variables that can be used as the font families.
  * You can have as many as you want but a good guidance would be
  * 1. `heading`
  * 2. `body`
  */
-const FontFamiliesSchema = z.record(z.string(), z.string());
-/**
- * A fallback for font families that don't render
- */
-const FontFallbackSchema = z.string();
+const FontFamiliesSchema = z
+  .record(
+    z.string(),
+    z.union([
+      z
+        .string()
+        .describe(
+          "The name of the font family i.e. Lato, Poppins, OpenSans, etc..."
+        ),
+      z.object({
+        fontFamily: z
+          .string()
+          .describe(
+            "The name of the font family i.e. Lato, Poppins, OpenSans, etc..."
+          ),
+        /**
+         * A fallback for font families that don't render
+         */
+        fallback: z.string().optional().default(fontFamilyFallback),
+      }),
+    ])
+  )
+  .default({});
+
 /**
  * A record of key/value strings that will be variables that can be used as the font weights.
  * You can have as many as you want but a good guidance would be
@@ -35,10 +57,6 @@ const FontVariantsSchema = z.record(
 export const FontSchema = z
   .object({
     families: optionalSchema(FontFamiliesSchema, {}),
-    fallback: optionalSchema(
-      FontFallbackSchema,
-      'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
-    ),
     weights: optionalSchema(FontWeightsSchema, {}),
     variants: optionalSchema(FontVariantsSchema, {}),
   })

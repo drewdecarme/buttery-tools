@@ -10,8 +10,12 @@ import type {
   ConfigurationStateSizeAndSpace,
 } from "./config.utils";
 import {
+  getInitStateFontFromConfig,
+  type ConfigurationStateFont,
+} from "./config.utils.font";
+import {
   getInitColorStateFromConfig,
-  getInitSizeFromConfig,
+  getInitStateSizeAndSpaceFromConfig,
   transformColorStateIntoColorConfig,
   transformSizeStateIntoColorConfig,
 } from "./config.utils";
@@ -19,6 +23,8 @@ import {
 export type ConfigurationContextType = {
   color: ConfigurationStateColor;
   setColor: Updater<ConfigurationStateColor>;
+  font: ConfigurationStateFont;
+  setFont: Updater<ConfigurationStateFont>;
   sizeAndSpace: ConfigurationStateSizeAndSpace;
   setSizeAndSpace: Updater<ConfigurationStateSizeAndSpace>;
   getConfigFromState: () => ButteryTokensConfig;
@@ -40,8 +46,9 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
   const [color, setColor] = useImmer(
     getInitColorStateFromConfig(originalConfig)
   );
+  const [font, setFont] = useImmer(getInitStateFontFromConfig(originalConfig));
   const [sizeAndSpace, setSizeAndSpace] = useImmer(
-    getInitSizeFromConfig(originalConfig)
+    getInitStateSizeAndSpaceFromConfig(originalConfig)
   );
 
   const getConfigFromState = useCallback<
@@ -61,6 +68,8 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
 
   const value = useMemo<ConfigurationContextType>(
     () => ({
+      font,
+      setFont,
       color,
       setColor,
       sizeAndSpace,
@@ -70,9 +79,11 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
     }),
     [
       color,
+      font,
       getConfigFromState,
       originalConfig,
       setColor,
+      setFont,
       setSizeAndSpace,
       sizeAndSpace,
     ]
