@@ -39,13 +39,13 @@
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
     "@buttery/tsconfig": "workspace:*",
-    "@ngneat/falso": "7.2.0",
+    "@ngneat/falso": "7.3.0",
     "@types/fs-extra": "11.0.4",
-    "@types/node": "22.10.2",
+    "@types/node": "22.10.5",
     "@types/picomatch": "3.0.1",
     "esbuild": "0.24.2",
     "tsx": "4.19.2",
-    "typescript": "5.7.2"
+    "typescript": "5.7.3"
   },
   "dependencies": {
     "@buttery/core": "workspace:0.1.11",

@@ -35,10 +35,10 @@
     "@buttery/logs": "workspace:*",
     "@buttery/tsconfig": "workspace:*",
     "@buttery/utils": "workspace:*",
-    "@types/node": "^22.10.2",
-    "tsx": "^4.19.2",
-    "typescript": "5.7.2",
-    "wrangler": "^3.99.0",
-    "zod-to-json-schema": "^3.24.1"
+    "@types/node": "22.10.5",
+    "tsx": "4.19.2",
+    "typescript": "5.7.3",
+    "wrangler": "3.100.0",
+    "zod-to-json-schema": "3.24.1"
   }
 }

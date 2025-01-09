@@ -365,7 +365,7 @@ export function getInitStateSizeAndSpaceFromConfig(
   }
 }
 
-export function transformSizeStateIntoColorConfig(
+export function transformSizeAndSpaceStateIntoColorConfig(
   state: ConfigurationStateSizeAndSpace
 ): ButteryTokensConfig["sizeAndSpace"] {
   const space = match<

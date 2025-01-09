@@ -38,7 +38,7 @@
     "@buttery/tsconfig": "workspace:*",
     "@types/fs-extra": "11.0.4",
     "tsx": "4.19.2",
-    "typescript": "5.7.2"
+    "typescript": "5.7.3"
   },
   "dependencies": {
     "@buttery/core": "workspace:0.1.11",

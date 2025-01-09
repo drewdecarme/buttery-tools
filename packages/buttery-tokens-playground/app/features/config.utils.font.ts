@@ -1,17 +1,21 @@
-import {
-  fontFamilyFallback,
-  type ButteryTokensConfig,
-} from "@buttery/tokens-utils/schemas";
+import { type ButteryTokensConfig } from "@buttery/tokens-utils/schemas";
 import { generateGUID } from "@buttery/utils/isomorphic";
 
-export type ConfigurationStateFontFamilies = Record<
-  string,
-  { name: string; fontFamily: string; fallback?: string }
->;
-export type ConfigurationStateFontWeights = Record<
+export type ConfigurationStateFontFamilyWeights = Record<
   string,
   { name: string; value: number }
 >;
+
+export type ConfigurationStateFontFamilies = Record<
+  string,
+  {
+    name: string;
+    fontFamily: string;
+    fallback?: string;
+    weights: ConfigurationStateFontFamilyWeights;
+  }
+>;
+
 export type ConfigurationStateFontVariants = Record<
   string,
   {
@@ -24,7 +28,6 @@ export type ConfigurationStateFontVariants = Record<
 >;
 export type ConfigurationStateFont = {
   families: ConfigurationStateFontFamilies;
-  weights: ConfigurationStateFontWeights;
   variants: ConfigurationStateFontVariants;
 };
 
@@ -35,33 +38,26 @@ export function getInitStateFontFromConfig(
   const families = Object.entries(
     configFamilies
   ).reduce<ConfigurationStateFontFamilies>(
-    (accum, [name, family]) =>
+    (accum, [name, { weights, ...restFamily }]) =>
       Object.assign<
         ConfigurationStateFontFamilies,
         ConfigurationStateFontFamilies
       >(accum, {
         [generateGUID()]: {
           name,
-          fontFamily: typeof family === "string" ? family : family.fontFamily,
-          fallback:
-            typeof family === "string" ? fontFamilyFallback : family.fallback,
-        },
-      }),
-    {}
-  );
-
-  const configWeights = config.font.weights ?? {};
-  const weights = Object.entries(
-    configWeights
-  ).reduce<ConfigurationStateFontWeights>(
-    (accum, [name, value]) =>
-      Object.assign<
-        ConfigurationStateFontWeights,
-        ConfigurationStateFontWeights
-      >(accum, {
-        [generateGUID()]: {
-          name,
-          value,
+          ...restFamily,
+          weights: Object.entries(
+            weights
+          ).reduce<ConfigurationStateFontFamilyWeights>(
+            (accum, [weightName, weightValue]) =>
+              Object.assign(accum, {
+                [generateGUID()]: {
+                  name: weightName,
+                  value: weightValue,
+                },
+              }),
+            {}
+          ),
         },
       }),
     {}
@@ -85,7 +81,24 @@ export function getInitStateFontFromConfig(
   );
   return {
     families,
-    weights,
     variants,
+  };
+}
+
+export function transformFontStateStateIntoFontConfig(
+  state: ConfigurationStateFont
+): ButteryTokensConfig["font"] {
+  const families = Object.values(state.families).reduce(
+    (accum, family) =>
+      Object.assign(accum, {
+        [family.name]: family.fallback
+          ? { fontFamily: family.fontFamily, fallback: family.fallback }
+          : family.fontFamily,
+      }),
+    {}
+  );
+
+  return {
+    families,
   };
 }

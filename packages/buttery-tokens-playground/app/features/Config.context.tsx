@@ -17,7 +17,7 @@ import {
   getInitColorStateFromConfig,
   getInitStateSizeAndSpaceFromConfig,
   transformColorStateIntoColorConfig,
-  transformSizeStateIntoColorConfig,
+  transformSizeAndSpaceStateIntoColorConfig,
 } from "./config.utils";
 
 export type ConfigurationContextType = {
@@ -55,7 +55,8 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
     ConfigurationContextType["getConfigFromState"]
   >(() => {
     const configColor = transformColorStateIntoColorConfig(color);
-    const configSizeAndSpace = transformSizeStateIntoColorConfig(sizeAndSpace);
+    const configSizeAndSpace =
+      transformSizeAndSpaceStateIntoColorConfig(sizeAndSpace);
     const config = ConfigSchema.safeParse({
       color: configColor,
       sizeAndSpace: configSizeAndSpace,

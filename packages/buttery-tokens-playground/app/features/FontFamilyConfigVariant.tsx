@@ -175,6 +175,41 @@ export function FontFamilyConfigVariant(props: FontFamilyConfigVariantProps) {
                 />
               </div>
             </InputLabel>
+            <InputLabel
+              dxLabel="Weights"
+              dxSize="dense"
+              dxHelp="Add weights to vary the density, style, and treatment of the font family"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <InputText dxSize="dense" />
+                    </td>
+                    <td>
+                      <InputText dxSize="dense" />
+                    </td>
+                    <td>
+                      <Button
+                        dxVariant="icon"
+                        dxSize="dense"
+                        DXIcon={IconDelete}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <Button dxVariant="text" dxColor="secondary">
+                Add a weight
+              </Button>
+            </InputLabel>
           </InputGroup>
         </VariantContainerContent>
       )}

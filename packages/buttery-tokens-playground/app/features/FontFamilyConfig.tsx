@@ -37,6 +37,7 @@ export function FontFamilyConfig() {
             draft.families[generateGUID()] = {
               fontFamily: "Arial",
               name: "family".concat(String(familyIndex)),
+              weights: {},
               fallback: undefined,
             };
           });
@@ -93,7 +94,7 @@ export function FontFamilyConfig() {
               dxColor="secondary"
               onClick={handleAddVariant}
             >
-              Add another font family
+              Add a family
             </Button>
           </VariantContainerBar>
         </VariantContainer>
