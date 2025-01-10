@@ -1,7 +1,7 @@
 import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
 
 import type {
-  ButteryTokensConfigSpaceAndSize,
+  ButteryTokensConfigSizeAndSpace,
   SpaceAuto,
   SpaceManual,
 } from "../schemas/schema.size-and-space.js";
@@ -45,7 +45,7 @@ export function calculateSpaceVariantsManual(
 }
 
 export function createSpaceVariants(
-  size: ButteryTokensConfigSpaceAndSize
+  size: ButteryTokensConfigSizeAndSpace
 ): SpaceVariantsRecord {
   switch (size.space.mode) {
     case "auto": {

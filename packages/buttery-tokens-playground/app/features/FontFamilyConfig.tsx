@@ -1,15 +1,18 @@
 import { css } from "@linaria/core";
 import { makeRem, makeReset } from "@buttery/tokens/playground";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
+import { match } from "ts-pattern";
 
-import { VariantContainer } from "~/components/VariantContainer";
-import { VariantContainerBar } from "~/components/VariantContainerBar";
 import { Button } from "~/components/Button";
+import { VariantEmpty } from "~/components/VariantEmpty";
+import { VariantAdd } from "~/components/VariantAdd";
+import { IconPlusSign } from "~/icons/IconPlusSign";
 
 import { useConfigurationContext } from "./Config.context";
-import type { FontFamilyConfigVariantProps } from "./FontFamilyConfigVariant";
-import { FontFamilyConfigVariant } from "./FontFamilyConfigVariant";
+import { FontFamilyConfigManual } from "./FontFamilyConfigManual";
+import type { OnFontVariantAction } from "./config.utils.font";
+import { FontFamilyConfigRegistry } from "./FontFamilyConfigRegistry";
 
 const styles = css`
   ${makeReset("ul")};
@@ -18,40 +21,43 @@ const styles = css`
   gap: ${makeRem(8)};
 `;
 
-const addStyles = css`
-  grid-template-columns: 1fr !important;
-  button {
-    justify-content: flex-start;
-  }
-`;
-
 export function FontFamilyConfig() {
   const { font, setFont } = useConfigurationContext();
 
-  const handleAction = useCallback<FontFamilyConfigVariantProps["onAction"]>(
+  const handleAction = useCallback<OnFontVariantAction>(
     (args) => {
       switch (args.action) {
-        case "add":
+        case "addFontFamily":
           setFont((draft) => {
-            const familyIndex = Object.values(draft.families).length;
+            draft.source = "manual";
             draft.families[generateGUID()] = {
-              fontFamily: "Arial",
-              name: "family".concat(String(familyIndex)),
-              weights: {},
+              name: "Arial",
               fallback: undefined,
+              styles: {},
+              meta: {
+                isOpen: true,
+              },
             };
           });
           break;
 
-        case "changeName":
+        case "toggle": {
           setFont((draft) => {
-            draft.families[args.id].name = args.name;
+            draft.families[args.id].meta.isOpen =
+              !draft.families[args.id].meta.isOpen;
+          });
+          break;
+        }
+
+        case "changeSource":
+          setFont((draft) => {
+            draft.source = args.source;
           });
           break;
 
         case "changeFontFamily":
           setFont((draft) => {
-            draft.families[args.id].fontFamily = args.fontFamily;
+            draft.families[args.id].name = args.fontFamily;
           });
           break;
 
@@ -68,37 +74,59 @@ export function FontFamilyConfig() {
     [setFont]
   );
 
-  const handleAddVariant = useCallback(
-    () => handleAction({ action: "add" }),
+  useEffect(() => {
+    console.log(font);
+  }, [font]);
+
+  const handleAddFontFamily = useCallback(
+    () => handleAction({ action: "addFontFamily" }),
     [handleAction]
   );
 
+  // Show an empty state if there are no families added
+  if (Object.entries(font.families).length === 0) {
+    return (
+      <VariantEmpty dxMessage="No font families have been added yet">
+        <Button
+          dxVariant="outlined"
+          dxColor="secondary"
+          DXIconStart={IconPlusSign}
+          onClick={handleAddFontFamily}
+        >
+          Click to add a font family
+        </Button>
+      </VariantEmpty>
+    );
+  }
+
   return (
     <ul className={styles}>
-      {Object.entries(font.families).map(([fontFamilyId, family]) => {
-        return (
-          <li key={fontFamilyId}>
-            <FontFamilyConfigVariant
-              {...family}
-              id={fontFamilyId}
-              onAction={handleAction}
-            />
-          </li>
-        );
-      })}
-      <li>
-        <VariantContainer dxStyle="alt">
-          <VariantContainerBar className={addStyles}>
-            <Button
-              dxVariant="text"
-              dxColor="secondary"
-              onClick={handleAddVariant}
-            >
-              Add a family
-            </Button>
-          </VariantContainerBar>
-        </VariantContainer>
-      </li>
+      {match(font)
+        .with({ source: "manual" }, (state) =>
+          Object.entries(state.families).map(([familyId, family]) => (
+            <li key={familyId}>
+              <FontFamilyConfigManual
+                {...family}
+                id={familyId}
+                source={state.source}
+                onAction={handleAction}
+              />
+            </li>
+          ))
+        )
+        .otherwise((state) =>
+          Object.entries(state.families).map(([familyId, family]) => (
+            <li key={familyId}>
+              <FontFamilyConfigRegistry
+                {...family}
+                id={familyId}
+                source={state.source}
+                onAction={handleAction}
+              />
+            </li>
+          ))
+        )}
+      <VariantAdd onAdd={handleAddFontFamily}>Add a font family</VariantAdd>
     </ul>
   );
 }

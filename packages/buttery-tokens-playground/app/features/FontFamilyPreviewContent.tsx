@@ -1,5 +1,6 @@
 import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
+import { match } from "ts-pattern";
 
 import { InputTextarea } from "~/components/InputTextarea";
 
@@ -43,9 +44,7 @@ const styles = css`
   }
 `;
 export function FontFamilyPreviewContent() {
-  const {
-    font: { families },
-  } = useConfigurationContext();
+  const { font } = useConfigurationContext();
   const { fontSize, sampleText, setSampleText, displayCustomTextarea } =
     useFontFamilyPreviewContext();
   return (
@@ -58,21 +57,28 @@ export function FontFamilyPreviewContent() {
         />
       )}
       <ul className={styles}>
-        {Object.entries(families).map(([familyId, family]) => {
-          const style = {
-            fontFamily: `"${family.fontFamily}", sans-serif`,
-            fontSize,
-          };
-          return (
-            <li key={familyId}>
-              <div className="heading">
-                <h4>{family.name}</h4>
-                <div>{family.fontFamily}</div>
-              </div>
-              <p style={style}>{sampleText}</p>
-            </li>
-          );
-        })}
+        {match(font)
+          .with({ source: "manual" }, (state) =>
+            Object.entries(state.families).map(([familyId, family]) => {
+              const style = {
+                fontFamily: `"${family.name}", sans-serif`,
+                fontSize,
+              };
+              return (
+                <li key={familyId}>
+                  <div className="heading">
+                    <h4>{family.name}</h4>
+                    <div>{Object.values(family.styles).length} Styles</div>
+                  </div>
+                  <p style={style}>{sampleText}</p>
+                </li>
+              );
+            })
+          )
+          .otherwise(() => {
+            return <div>WIP</div>;
+          })}
+        {}
       </ul>
     </>
   );

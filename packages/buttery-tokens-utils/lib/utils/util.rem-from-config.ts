@@ -4,5 +4,5 @@ export function remFromConfig(
   config: ButteryTokensConfig,
   value: number
 ): string {
-  return (value / config.size.documentFontSize).toString();
+  return (value / config.sizeAndSpace.baseFontSize).toString();
 }

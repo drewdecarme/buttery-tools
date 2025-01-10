@@ -17,25 +17,12 @@
     },
     "space": {
       "mode": "auto",
-      "variants": [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10"
-      ]
+      "variants": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
     }
   },
   "font": {
+    "source": "manual",
     "families": {},
-    "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
-    "weights": {},
     "variants": {}
   },
   "breakpoints": {

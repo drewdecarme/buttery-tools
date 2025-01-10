@@ -6,8 +6,11 @@ import {
   makeReset,
 } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
-import type { JSX, ReactNode } from "react";
+import type { JSX } from "react";
 import { forwardRef } from "react";
+import { match } from "ts-pattern";
+
+import type { IconDashboardSquareAdd } from "~/icons/IconDashboardSquareAdd";
 
 import type { ButtonSharedProps } from "./button.utils";
 
@@ -27,7 +30,7 @@ export type ButtonRegularPropsCustom = ButtonSharedProps & {
    * A node (typically an icon) to put at the
    * start of the button content
    */
-  DXAdornmentStart?: ReactNode;
+  DXIconStart?: typeof IconDashboardSquareAdd;
 };
 export type ButtonRegularProps = ButtonRegularPropsNative &
   ButtonRegularPropsCustom;
@@ -38,6 +41,11 @@ const styles = css`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.1s ease-in-out;
+
+  &:active {
+    scale: 0.97;
+  }
 
   &.v {
     &-contained {
@@ -64,6 +72,12 @@ const styles = css`
           }
         }
         &-secondary {
+          border: ${makeRem(1)} solid ${makeColor("secondary-600")};
+          color: ${makeColor("secondary-600")};
+          &:hover {
+            color: ${makeColor("secondary-900")};
+            border-color: ${makeColor("secondary-900")};
+          }
         }
       }
     }
@@ -106,7 +120,7 @@ export function createButtonClassNames({
   dxColor,
   dxVariant,
   dxSize,
-}: Required<Omit<ButtonRegularPropsCustom, "DXAdornmentStart">>): string {
+}: Required<Omit<ButtonRegularPropsCustom, "DXIconStart">>): string {
   return classes({
     [`c-${dxColor}`]: dxColor,
     [`s-${dxSize}`]: dxSize,
@@ -115,7 +129,7 @@ export function createButtonClassNames({
 }
 
 export function createButtonStyles(
-  args: Required<Omit<ButtonRegularPropsCustom, "DXAdornmentStart">>
+  args: Required<Omit<ButtonRegularPropsCustom, "DXIconStart">>
 ): string {
   return classes(styles, createButtonClassNames(args));
 }
@@ -128,7 +142,7 @@ export const ButtonRegular = forwardRef<HTMLButtonElement, ButtonRegularProps>(
       dxColor = "primary",
       dxVariant = "contained",
       dxSize = "normal",
-      DXAdornmentStart = null,
+      DXIconStart = null,
       ...restProps
     },
     ref
@@ -142,7 +156,15 @@ export const ButtonRegular = forwardRef<HTMLButtonElement, ButtonRegularProps>(
           className
         )}
       >
-        {DXAdornmentStart}
+        {DXIconStart && (
+          <DXIconStart
+            dxSize={match(dxSize)
+              .with("dense", () => 12)
+              .with("normal", () => 16)
+              .with("big", () => 20)
+              .exhaustive()}
+          />
+        )}
         {children}
       </button>
     );

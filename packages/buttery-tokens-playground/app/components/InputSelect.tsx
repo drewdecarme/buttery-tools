@@ -53,6 +53,10 @@ const styles = css`
     font-size: ${makeRem(14)};
     padding: 0 ${makeRem(8)};
   }
+
+  &:invalid {
+    color: ${makeColor("neutral-light", { opacity: 0.3 })};
+  }
 `;
 
 export const InputSelect = forwardRef<HTMLSelectElement, InputSelectProps>(
