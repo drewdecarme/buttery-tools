@@ -49,6 +49,22 @@ export function FontFamilyConfig() {
           break;
         }
 
+        case "addStyle": {
+          setFont((draft) => {
+            // @ts-expect-error this is going to be okay
+            draft.families[args.id].styles[args.style] = true;
+          });
+          break;
+        }
+
+        case "deleteStyle": {
+          setFont((draft) => {
+            // @ts-expect-error this is going to be okay
+            delete draft.families[args.id].styles[args.style];
+          });
+          break;
+        }
+
         case "changeSource":
           setFont((draft) => {
             draft.source = args.source;

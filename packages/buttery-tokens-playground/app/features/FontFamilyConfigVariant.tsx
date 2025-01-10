@@ -1,4 +1,4 @@
-import { makeRem, makeColor, makeReset } from "@buttery/tokens/playground";
+import { makeRem, makeColor } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import type { ChangeEventHandler, ReactNode } from "react";
 import { useCallback, useMemo } from "react";
@@ -32,33 +32,11 @@ const variantStyles = css`
   }
 `;
 
-const styleStyles = css`
-  ${makeReset("ul")};
-  display: grid;
-  grid-template-rows: ${makeRem(32)};
-  font-size: ${makeRem(14)};
-  row-gap: ${makeRem(8)};
-
-  li {
-    display: subgrid;
-    grid-template-columns: 1fr auto;
-    column-gap: ${makeRem(8)};
-  }
-`;
-
-const styleAddStyles = css`
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: ${makeRem(16)};
-  align-items: center;
-`;
-
 export type FontFamilyConfigVariantProps =
   ConfigurationStateFontFamilyValuesMeta & {
     id: string;
     name: string;
     source: ConfigurationStateFont["source"];
-    meta;
     onAction: OnFontVariantAction;
   };
 
@@ -68,19 +46,6 @@ export function FontFamilyConfigVariant(
   }
 ) {
   // const fallbackRef = useRef<HTMLInputElement | null>(null);
-
-  // const handleChangeFontFamily = useCallback<
-  //   ChangeEventHandler<HTMLInputElement>
-  // >(
-  //   ({ currentTarget: { value } }) => {
-  //     props.onAction({
-  //       action: "changeFontFamily",
-  //       id: props.id,
-  //       fontFamily: value,
-  //     });
-  //   },
-  //   [props]
-  // );
 
   // const handleToggleFallback = useCallback<
   //   ChangeEventHandler<HTMLInputElement>
@@ -177,50 +142,7 @@ export function FontFamilyConfigVariant(
               />
             </InputRadioTabs>
             {props.children}
-            {/* <InputLabel
-              dxLabel="Family"
-              dxSize="dense"
-              dxHelp="Mullish, Consolas, OpenSans, Lato, etc..."
-            >
-              <div className={inlineField}>
-                <InputText
-                  dxSize="dense"
-                  dxType="text"
-                  value={props.fontFamily}
-                  onChange={handleChangeFontFamily}
-                />
-              </div>
-            </InputLabel> */}
 
-            {/* <InputLabel
-              dxLabel="Styles"
-              dxSize="dense"
-              dxHelp="Add weights & styles to create separate variants the font family"
-            >
-              <ul className={styleStyles}>
-                {Object.keys(props.styles).map((style) => (
-                  <li key={style}>
-                    <div>style</div>
-                    <Button
-                      dxVariant="icon"
-                      DXIcon={IconDelete}
-                      dxSize="dense"
-                      dxHelp="Delete family"
-                    />
-                  </li>
-                ))}
-              </ul>
-              <div className={styleAddStyles}>
-                <InputSelect dxSize="dense">{}</InputSelect>
-                <Button
-                  dxVariant="outlined"
-                  dxSize="dense"
-                  DXIconStart={IconPlusSign}
-                >
-                  Add style
-                </Button>
-              </div>
-            </InputLabel> */}
             {/* <InputLabel
               dxLabel="Include a fallback?"
               dxSize="dense"

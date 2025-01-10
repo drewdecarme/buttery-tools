@@ -165,6 +165,8 @@ export type OnFontVariantAction = (
   options:
     | { action: "addFontFamily" }
     | { action: "toggle"; id: string }
+    | { action: "addStyle"; id: string; style: string }
+    | { action: "deleteStyle"; id: string; style: string }
     | { action: "changeSource"; source: ConfigurationStateFont["source"] }
     | {
         action: "changeFontFamily";

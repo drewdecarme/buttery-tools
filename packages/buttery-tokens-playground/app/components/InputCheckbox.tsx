@@ -89,7 +89,7 @@ const styles = css`
 
 export const InputCheckbox = forwardRef<HTMLInputElement, InputCheckboxProps>(
   function InputCheckbox(
-    { children, className, dxSize = "dense", ...restProps },
+    { children, className, dxSize = "normal", ...restProps },
     ref
   ) {
     return (
@@ -105,7 +105,7 @@ export const InputCheckbox = forwardRef<HTMLInputElement, InputCheckboxProps>(
           ref={ref}
         />
         <span>
-          <IconTick04Solid dxSize={dxSize === "dense" ? 12 : 16} />
+          <IconTick04Solid dxSize={dxSize === "normal" ? 12 : 16} />
         </span>
       </div>
     );
