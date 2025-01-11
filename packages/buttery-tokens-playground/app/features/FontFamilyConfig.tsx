@@ -3,6 +3,7 @@ import { makeRem, makeReset } from "@buttery/tokens/playground";
 import { useCallback, useEffect } from "react";
 import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
 import { match } from "ts-pattern";
+import { manualFontStyles } from "@buttery/tokens-utils/schemas";
 
 import { Button } from "~/components/Button";
 import { VariantEmpty } from "~/components/VariantEmpty";
@@ -33,7 +34,11 @@ export function FontFamilyConfig() {
             draft.families[generateGUID()] = {
               name: "Arial",
               fallback: undefined,
-              styles: {},
+              styles: {
+                "regular-400": {
+                  display: manualFontStyles["regular-400"],
+                },
+              },
               meta: {
                 isOpen: true,
               },
@@ -51,8 +56,11 @@ export function FontFamilyConfig() {
 
         case "addStyle": {
           setFont((draft) => {
-            // @ts-expect-error this is going to be okay
-            draft.families[args.id].styles[args.style] = true;
+            // @ts-expect-error this is going to be okay TODO: Enable Types
+            draft.families[args.id].styles[args.style] = {
+              // @ts-expect-error this is going to be okay TODO: Enable Types
+              display: manualFontStyles[args.style],
+            };
           });
           break;
         }

@@ -12,7 +12,7 @@ const styles = css`
   width: 100%;
   overflow: hidden;
 
-  li {
+  & > li {
     padding-bottom: ${makeRem(16)};
     padding-left: ${makeRem(16)};
     padding-right: ${makeRem(16)};
@@ -43,6 +43,14 @@ const styles = css`
     width: 100%;
   }
 `;
+
+const styleStyles = css`
+  ${makeReset("ul")};
+  h5 {
+    color: ${makeColor("neutral-light", { opacity: 0.5 })};
+    margin-bottom: 0;
+  }
+`;
 export function FontFamilyPreviewContent() {
   const { font } = useConfigurationContext();
   const { fontSize, sampleText, setSampleText, displayCustomTextarea } =
@@ -68,9 +76,20 @@ export function FontFamilyPreviewContent() {
                 <li key={familyId}>
                   <div className="heading">
                     <h4>{family.name}</h4>
-                    <div>{Object.values(family.styles).length} Styles</div>
+                    <div>{Object.keys(family.styles).length} Styles</div>
                   </div>
-                  <p style={style}>{sampleText}</p>
+                  <ul className={styleStyles}>
+                    {Object.entries(family.styles).map(
+                      ([styleValue, { display }]) => {
+                        return (
+                          <li key={styleValue}>
+                            <h5>{display}</h5>
+                            <p style={style}>{sampleText}</p>
+                          </li>
+                        );
+                      }
+                    )}
+                  </ul>
                 </li>
               );
             })

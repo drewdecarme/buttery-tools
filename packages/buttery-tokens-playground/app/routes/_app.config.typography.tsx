@@ -29,25 +29,6 @@ export default function ConfigTypographyRoute() {
       </LayoutConfigSection>
       <LayoutConfigSection>
         <LayoutConfigSectionControls
-          dxTitle="Weights"
-          dxDescription={
-            <>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque
-              odit a corporis harum consequatur reprehenderit repellendus
-              impedit possimus, ea deleniti nostrum velit officia nihil quidem
-              aut dicta dolorum officiis in!
-            </>
-          }
-        >
-          weights
-        </LayoutConfigSectionControls>
-        <LayoutConfigSectionPreview>
-          <LayoutConfigSectionTitle>controls</LayoutConfigSectionTitle>
-          preview
-        </LayoutConfigSectionPreview>
-      </LayoutConfigSection>
-      <LayoutConfigSection>
-        <LayoutConfigSectionControls
           dxTitle="Variants"
           dxDescription={
             <>

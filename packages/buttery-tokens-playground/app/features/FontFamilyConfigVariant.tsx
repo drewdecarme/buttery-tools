@@ -123,7 +123,7 @@ export function FontFamilyConfigVariant(
           <InputGroup>
             <InputRadioTabs>
               <InputRadioTab
-                checked={props.source === "manual"}
+                defaultChecked={props.source === "manual"}
                 dxSize="dense"
                 name="type"
                 dxLabel="Manual"
@@ -133,7 +133,7 @@ export function FontFamilyConfigVariant(
               />
               <InputRadioTab
                 dxSize="dense"
-                checked={props.source !== "manual"}
+                defaultChecked={props.source !== "manual"}
                 name="type"
                 dxLabel="Registries"
                 dxSubLabel="Select from Google, Adobe, etc..."

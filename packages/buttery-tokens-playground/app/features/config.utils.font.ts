@@ -1,6 +1,7 @@
-import type {
-  ManualFontStyles,
-  ButteryTokensConfig,
+import {
+  type ManualFontStyles,
+  type ButteryTokensConfig,
+  manualFontStyles,
 } from "@buttery/tokens-utils/schemas";
 import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
 
@@ -30,7 +31,9 @@ export type ConfigurationStateFontManualFamilyValues =
   ConfigurationStateFontFamilyValuesMeta & {
     name: string;
     fallback?: string;
-    styles: ManualFontStyles;
+    styles: {
+      [key: string]: { display: string };
+    };
   };
 export type ConfigurationStateFontManualFamily = Record<
   string,
@@ -106,7 +109,9 @@ export function getInitStateFontFromConfig(
                 name: familyName,
                 fallback: familyDef.fallback,
                 styles: {
-                  "regular-400": true,
+                  "regular-400": {
+                    display: manualFontStyles["regular-400"],
+                  },
                 },
                 meta: {
                   isOpen: false,

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { JSX, ReactNode } from "react";
 import { forwardRef } from "react";
 import type { ModalRef, UseModalOptions } from "@buttery/components";
 import { classes, ModalProvider, useModalDialog } from "@buttery/components";

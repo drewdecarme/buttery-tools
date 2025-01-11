@@ -8,6 +8,7 @@ import { IconTextCreation } from "~/icons/IconTextCreation";
 import { InputRange } from "~/components/InputRange";
 
 import { useFontFamilyPreviewContext } from "./FontFamilyPreview.context";
+import { FontFamilyPreviewControlsHelp } from "./FontFamilyPreviewControlsHelp";
 
 const styles = css`
   display: grid;
@@ -44,6 +45,7 @@ export function FontFamilyPreviewControls() {
               dxSize="normal"
               dxHelp="Customize sample text"
             />
+            <FontFamilyPreviewControlsHelp />
           </ButtonGroup>
         ),
         [setDisplayCustomTextarea]
