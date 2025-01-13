@@ -46,10 +46,8 @@ export const manualFontStyles: ManualFontStylesValue = {
   "black-900-italic": "Black 900 - Italic",
 };
 
-export const ManualFontStylesSchema = z.record(
-  ManualFontStylesValueSchema.keyof(),
-  z.boolean()
-);
+export const ManualFontStylesSchema =
+  ManualFontStylesValueSchema.keyof().array();
 export type ManualFontStyles = z.infer<typeof ManualFontStylesSchema>;
 
 const FontFamiliesManualSchema = z.record(
@@ -59,6 +57,7 @@ const FontFamiliesManualSchema = z.record(
     styles: ManualFontStylesSchema,
   })
 );
+export type FontFamiliesManual = z.infer<typeof FontFamiliesManualSchema>;
 
 const FontFamiliesGoogleSchema = z.union([
   z.record(

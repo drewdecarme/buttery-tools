@@ -1,6 +1,8 @@
 import {
   type ManualFontStyles,
+  type FontFamiliesManual,
   type ButteryTokensConfig,
+  fontFamilyFallback,
   manualFontStyles,
 } from "@buttery/tokens-utils/schemas";
 import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
@@ -108,11 +110,22 @@ export function getInitStateFontFromConfig(
               [generateGUID()]: {
                 name: familyName,
                 fallback: familyDef.fallback,
-                styles: {
-                  "regular-400": {
-                    display: manualFontStyles["regular-400"],
-                  },
-                },
+                styles:
+                  familyDef.styles.length > 0
+                    ? familyDef.styles.reduce(
+                        (accum, style) =>
+                          Object.assign(accum, {
+                            [style]: {
+                              display: manualFontStyles[style],
+                            },
+                          }),
+                        {}
+                      )
+                    : {
+                        "regular-400": {
+                          display: manualFontStyles["regular-400"],
+                        },
+                      },
                 meta: {
                   isOpen: false,
                 },
@@ -152,18 +165,34 @@ export function getInitStateFontFromConfig(
 export function transformFontStateStateIntoFontConfig(
   state: ConfigurationStateFont
 ): ButteryTokensConfig["font"] {
-  // const families = Object.values(state.families).reduce(
-  //   (accum, family) =>
-  //     Object.assign(accum, {
-  //       [family.name]: family.fallback
-  //         ? { fontFamily: family.fontFamily, fallback: family.fallback }
-  //         : family.fontFamily,
-  //     }),
-  //   {}
-  // );
-  // return {
-  //   families,
-  // };
+  const families =
+    state.source === "manual"
+      ? Object.values(state.families).reduce(
+          (accum, family) =>
+            Object.assign<FontFamiliesManual, FontFamiliesManual>(accum, {
+              [family.name]: {
+                fallback: family.fallback ?? fontFamilyFallback,
+                styles: Object.keys(family.styles) as ManualFontStyles,
+              },
+            }),
+          {}
+        )
+      : Object.values(state.families).reduce(
+          (accum, family) =>
+            Object.assign(accum, {
+              [family.name]: {
+                fallback: family.fallback ?? fontFamilyFallback,
+                styles: Object.keys(family.styles),
+              },
+            }),
+          {}
+        );
+
+  return {
+    source: state.source,
+    families,
+    variants: {},
+  };
 }
 
 export type OnFontFamilyAction = (

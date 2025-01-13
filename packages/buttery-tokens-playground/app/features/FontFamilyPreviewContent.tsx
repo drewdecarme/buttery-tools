@@ -1,7 +1,6 @@
 import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import { match } from "ts-pattern";
-import type { ManualFontStyles } from "@buttery/tokens-utils/schemas";
 import { manualFontStyles } from "@buttery/tokens-utils/schemas";
 
 import { InputTextarea } from "~/components/InputTextarea";
@@ -82,10 +81,7 @@ export function FontFamilyPreviewContent() {
                   </div>
                   <ul className={styleStyles}>
                     {Object.keys(manualFontStyles).map((fontFamilyStyleKey) => {
-                      const styleValue =
-                        family.styles[
-                          fontFamilyStyleKey as keyof ManualFontStyles
-                        ];
+                      const styleValue = family.styles[fontFamilyStyleKey];
                       if (!styleValue) return;
                       const { display } = styleValue;
                       const [_, fontWeight, fontStyle] =

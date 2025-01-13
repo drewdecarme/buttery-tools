@@ -11,6 +11,7 @@ import type {
 } from "./config.utils";
 import {
   getInitStateFontFromConfig,
+  transformFontStateStateIntoFontConfig,
   type ConfigurationStateFont,
 } from "./config.utils.font";
 import {
@@ -57,15 +58,17 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
     const configColor = transformColorStateIntoColorConfig(color);
     const configSizeAndSpace =
       transformSizeAndSpaceStateIntoColorConfig(sizeAndSpace);
+    const configFont = transformFontStateStateIntoFontConfig(font);
     const config = ConfigSchema.safeParse({
       color: configColor,
       sizeAndSpace: configSizeAndSpace,
+      font: configFont,
     });
     if (config.error) {
       throw config.error;
     }
     return config.data;
-  }, [color, sizeAndSpace]);
+  }, [color, font, sizeAndSpace]);
 
   const value = useMemo<ConfigurationContextType>(
     () => ({
