@@ -39,8 +39,6 @@
         "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
         "styles": [
           "regular-400",
-          "light-300",
-          "medium-500",
           "semiBold-600",
           "bold-700"
         ]
@@ -49,10 +47,8 @@
         "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
         "styles": [
           "regular-400",
-          "light-300",
           "medium-500",
-          "semiBold-600",
-          "black-900"
+          "semiBold-600"
         ]
       }
     },
