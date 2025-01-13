@@ -5,6 +5,7 @@ import { LayoutConfigSectionTitle } from "~/components/LayoutConfigSectionTitle"
 import { FontFamilyConfig } from "~/features/FontFamilyConfig";
 import { FontFamilyPreview } from "~/features/FontFamilyPreview";
 import { FontFamilyPreviewContent } from "~/features/FontFamilyPreviewContent";
+import { FontVariantConfig } from "~/features/FontVariantConfig";
 
 export default function ConfigTypographyRoute() {
   return (
@@ -29,7 +30,7 @@ export default function ConfigTypographyRoute() {
       </LayoutConfigSection>
       <LayoutConfigSection>
         <LayoutConfigSectionControls
-          dxTitle="Variants"
+          dxTitle="Typography variants"
           dxDescription={
             <>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque
@@ -39,7 +40,7 @@ export default function ConfigTypographyRoute() {
             </>
           }
         >
-          variants
+          <FontVariantConfig />
         </LayoutConfigSectionControls>
         <LayoutConfigSectionPreview>
           <LayoutConfigSectionTitle>controls</LayoutConfigSectionTitle>

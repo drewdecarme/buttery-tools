@@ -166,7 +166,7 @@ export function transformFontStateStateIntoFontConfig(
   // };
 }
 
-export type OnFontVariantAction = (
+export type OnFontFamilyAction = (
   options:
     | { action: "addFontFamily" }
     | { action: "toggle"; id: string }
@@ -183,4 +183,8 @@ export type OnFontVariantAction = (
         id: string;
         fallback: string | undefined;
       }
+) => void;
+
+export type OnFontVariantAction = (
+  options: { action: "addVariant" } | { action: "deleteVariant"; id: string }
 ) => void;

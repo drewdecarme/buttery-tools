@@ -12,7 +12,7 @@ import { IconPlusSign } from "~/icons/IconPlusSign";
 
 import { useConfigurationContext } from "./Config.context";
 import { FontFamilyConfigManual } from "./FontFamilyConfigManual";
-import type { OnFontVariantAction } from "./config.utils.font";
+import type { OnFontFamilyAction } from "./config.utils.font";
 import { FontFamilyConfigRegistry } from "./FontFamilyConfigRegistry";
 
 const styles = css`
@@ -25,7 +25,7 @@ const styles = css`
 export function FontFamilyConfig() {
   const { font, setFont } = useConfigurationContext();
 
-  const handleAction = useCallback<OnFontVariantAction>(
+  const handleAction = useCallback<OnFontFamilyAction>(
     (args) => {
       switch (args.action) {
         case "addFontFamily":

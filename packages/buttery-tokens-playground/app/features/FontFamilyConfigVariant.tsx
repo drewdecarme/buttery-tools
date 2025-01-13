@@ -18,7 +18,7 @@ import { IconPencilEdit01 } from "~/icons/IconPencilEdit01";
 import type {
   ConfigurationStateFont,
   ConfigurationStateFontFamilyValuesMeta,
-  OnFontVariantAction,
+  OnFontFamilyAction,
 } from "./config.utils.font";
 
 const variantStyles = css`
@@ -37,7 +37,7 @@ export type FontFamilyConfigVariantProps =
     id: string;
     name: string;
     source: ConfigurationStateFont["source"];
-    onAction: OnFontVariantAction;
+    onAction: OnFontFamilyAction;
   };
 
 export function FontFamilyConfigVariant(

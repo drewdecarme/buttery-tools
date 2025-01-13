@@ -1,6 +1,8 @@
 import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import { match } from "ts-pattern";
+import type { ManualFontStyles } from "@buttery/tokens-utils/schemas";
+import { manualFontStyles } from "@buttery/tokens-utils/schemas";
 
 import { InputTextarea } from "~/components/InputTextarea";
 
@@ -79,16 +81,30 @@ export function FontFamilyPreviewContent() {
                     <div>{Object.keys(family.styles).length} Styles</div>
                   </div>
                   <ul className={styleStyles}>
-                    {Object.entries(family.styles).map(
-                      ([styleValue, { display }]) => {
-                        return (
-                          <li key={styleValue}>
-                            <h5>{display}</h5>
-                            <p style={style}>{sampleText}</p>
-                          </li>
-                        );
-                      }
-                    )}
+                    {Object.keys(manualFontStyles).map((fontFamilyStyleKey) => {
+                      const styleValue =
+                        family.styles[
+                          fontFamilyStyleKey as keyof ManualFontStyles
+                        ];
+                      if (!styleValue) return;
+                      const { display } = styleValue;
+                      const [_, fontWeight, fontStyle] =
+                        fontFamilyStyleKey.split("-");
+                      return (
+                        <li key={fontFamilyStyleKey}>
+                          <h5>{display}</h5>
+                          <p
+                            style={{
+                              ...style,
+                              fontWeight,
+                              fontStyle,
+                            }}
+                          >
+                            {sampleText}
+                          </p>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </li>
               );

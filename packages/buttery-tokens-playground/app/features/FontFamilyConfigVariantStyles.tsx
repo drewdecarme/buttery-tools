@@ -5,7 +5,7 @@ import type { ChangeEvent } from "react";
 import { InputLabel } from "~/components/InputLabel";
 import { InputCheckbox } from "~/components/InputCheckbox";
 
-import type { OnFontVariantAction } from "./config.utils.font";
+import type { OnFontFamilyAction } from "./config.utils.font";
 
 const ulStyles = css`
   ${makeReset("ul")};
@@ -24,7 +24,7 @@ export type FontFamilyConfigVariantStylesProps = {
   allStyles: { value: string; display: string }[];
   selectedStyles: string[];
   id: string;
-  onAction: OnFontVariantAction;
+  onAction: OnFontFamilyAction;
 };
 export function FontFamilyConfigVariantStyles({
   allStyles,
