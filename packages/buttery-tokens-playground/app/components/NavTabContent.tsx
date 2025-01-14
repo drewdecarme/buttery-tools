@@ -7,7 +7,6 @@ export function NavTabContent(
   props: { children: ReactNode } & { [key: string]: unknown }
 ) {
   const { activeTab, tabContentRef } = useNavTabsContext();
-  console.log("rendering", { activeTab, tabContentRef: tabContentRef.current });
   if (props["id"] !== activeTab) return null;
   if (!tabContentRef.current) return;
 

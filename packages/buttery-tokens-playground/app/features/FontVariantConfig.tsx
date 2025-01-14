@@ -8,12 +8,10 @@ import { Button } from "~/components/Button";
 import { VariantEmpty } from "~/components/VariantEmpty";
 import { VariantAdd } from "~/components/VariantAdd";
 import { IconPlusSign } from "~/icons/IconPlusSign";
-import { VariantContainer } from "~/components/VariantContainer";
-import { VariantContainerBar } from "~/components/VariantContainerBar";
-import { VariantContainerBarTitle } from "~/components/VariantContainerBarTitle";
 
 import { useConfigurationContext } from "./Config.context";
 import type { OnFontVariantAction } from "./config.utils.font";
+import { FontVariantConfigVariant } from "./FontVariantConfigVariant";
 
 const styles = css`
   ${makeReset("ul")};
@@ -84,18 +82,15 @@ export function FontVariantConfig() {
     <ul className={styles}>
       {Object.entries(font.variants).map(([variantId, variant]) => (
         <li key={variantId}>
-          <VariantContainer>
-            <VariantContainerBar>
-              <VariantContainerBarTitle>
-                {variant.variantName}
-              </VariantContainerBarTitle>
-            </VariantContainerBar>
-          </VariantContainer>
+          <FontVariantConfigVariant
+            variantId={variantId}
+            state={font}
+            onAction={handleAction}
+            {...variant}
+          />
         </li>
       ))}
-      <VariantAdd onAdd={handleAddTypographyVariant}>
-        Add a font family
-      </VariantAdd>
+      <VariantAdd onAdd={handleAddTypographyVariant}>Add a variant</VariantAdd>
     </ul>
   );
 }

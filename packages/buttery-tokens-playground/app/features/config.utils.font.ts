@@ -12,15 +12,16 @@ export type ConfigurationStateFontFamilyWeights = Record<
   { name: string; value: number }
 >;
 
-export type ConfigurationStateFontVariants = Record<
+export type ConfigurationStateFontVariantValue = {
+  variantName: string;
+  family: string;
+  weight: string;
+  size: number;
+  lineHeight: number;
+};
+export type ConfigurationStateFontVariant = Record<
   string,
-  {
-    variantName: string;
-    family: string;
-    weight: string;
-    size: number;
-    lineHeight: number;
-  }
+  ConfigurationStateFontVariantValue
 >;
 
 export type ConfigurationStateFontFamilyValuesMeta = {
@@ -66,7 +67,7 @@ export type ConfigurationStateFontAdobe = {
 };
 
 type ConfigurationStateFontShared = {
-  variants: ConfigurationStateFontVariants;
+  variants: ConfigurationStateFontVariant;
 };
 export type ConfigurationStateFont = ConfigurationStateFontShared &
   (
@@ -80,11 +81,11 @@ export function getInitStateFontFromConfig(
 ): ConfigurationStateFont {
   const variants = Object.entries(
     config.font.variants
-  ).reduce<ConfigurationStateFontVariants>(
+  ).reduce<ConfigurationStateFontVariant>(
     (accum, [variantName, variant]) =>
       Object.assign<
-        ConfigurationStateFontVariants,
-        ConfigurationStateFontVariants
+        ConfigurationStateFontVariant,
+        ConfigurationStateFontVariant
       >(accum, {
         [generateGUID()]: {
           variantName,

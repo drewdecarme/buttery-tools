@@ -1,11 +1,11 @@
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
-import { LayoutConfigSectionPreview } from "~/components/LayoutConfigSectionPreview";
-import { LayoutConfigSectionTitle } from "~/components/LayoutConfigSectionTitle";
 import { FontFamilyConfig } from "~/features/FontFamilyConfig";
 import { FontFamilyPreview } from "~/features/FontFamilyPreview";
 import { FontFamilyPreviewContent } from "~/features/FontFamilyPreviewContent";
 import { FontVariantConfig } from "~/features/FontVariantConfig";
+import { FontVariantPreview } from "~/features/FontVariantPreview";
+import { FontVariantPreviewContent } from "~/features/FontVariantPreviewContent";
 
 export default function ConfigTypographyRoute() {
   return (
@@ -42,10 +42,9 @@ export default function ConfigTypographyRoute() {
         >
           <FontVariantConfig />
         </LayoutConfigSectionControls>
-        <LayoutConfigSectionPreview>
-          <LayoutConfigSectionTitle>controls</LayoutConfigSectionTitle>
-          preview
-        </LayoutConfigSectionPreview>
+        <FontVariantPreview>
+          <FontVariantPreviewContent />
+        </FontVariantPreview>
       </LayoutConfigSection>
     </>
   );

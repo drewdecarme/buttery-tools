@@ -23,7 +23,7 @@ export const ManualFontStylesValueSchema = z.object({
   "black-900": z.literal("Black 900"),
   "black-900-italic": z.literal("Black 900 - Italic"),
 });
-type ManualFontStylesValue = z.infer<typeof ManualFontStylesValueSchema>;
+export type ManualFontStylesValue = z.infer<typeof ManualFontStylesValueSchema>;
 
 export const manualFontStyles: ManualFontStylesValue = {
   "thin-100": "Thin 100",
@@ -103,32 +103,33 @@ const FontFamiliesAdobeSchema = z.union([
   ),
 ]);
 
-const FontVariantsSchema = z.record(
-  z.string(),
-  z.object({
-    family: z.string(),
-    weight: z.string(),
-    size: z.number(),
-    lineHeight: z.number(),
-  })
-);
+const FontVariantValueSchema = z.object({
+  family: z.string(),
+  weight: z.string(),
+  size: z.number(),
+  lineHeight: z.number(),
+});
+export type FontVariantValue = z.infer<typeof FontVariantValueSchema>;
+
+const FontVariantSchema = z.record(z.string(), FontVariantValueSchema);
+export type FontVariant = z.infer<typeof FontVariantSchema>;
 
 export const FontSchema = z
   .discriminatedUnion("source", [
     z.object({
       source: z.literal("manual"),
       families: FontFamiliesManualSchema,
-      variants: FontVariantsSchema,
+      variants: FontVariantSchema,
     }),
     z.object({
       source: z.literal("google"),
       families: FontFamiliesGoogleSchema,
-      variants: FontVariantsSchema,
+      variants: FontVariantSchema,
     }),
     z.object({
       source: z.literal("adobe"),
       families: FontFamiliesAdobeSchema,
-      variants: FontVariantsSchema,
+      variants: FontVariantSchema,
     }),
   ])
   .superRefine((data, ctx) => {
