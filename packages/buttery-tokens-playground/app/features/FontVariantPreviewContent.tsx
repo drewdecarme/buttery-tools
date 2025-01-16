@@ -5,6 +5,8 @@ import {
   makeRem,
   makeReset,
 } from "@buttery/tokens/playground";
+import type { ManualFontStylesValue } from "@buttery/tokens-utils/schemas";
+import { manualFontStyles } from "@buttery/tokens-utils/schemas";
 
 import { useConfigurationContext } from "./Config.context";
 
@@ -16,8 +18,7 @@ const styles = css`
 
   li {
     display: grid;
-    grid-template-columns: minmax(min-content, max-content) 1fr;
-    gap: ${makeRem(32)};
+    grid-template-columns: ${makeRem(232)} 60%;
 
     padding: ${makeRem(32)} 0;
 
@@ -30,6 +31,10 @@ const styles = css`
     }
 
     .heading {
+      padding-right: ${makeRem(16)};
+      border-right: 1px solid ${makeColor("neutral-light", { opacity: 0.1 })};
+      margin-right: ${makeRem(32)};
+
       h4 {
         margin: 0;
       }
@@ -55,33 +60,42 @@ export function FontVariantPreviewContent() {
   } = useConfigurationContext();
   return (
     <ul className={styles}>
-      {Object.entries(variants).map(([variantId, variant]) => (
-        <li key={variantId}>
-          <div className="heading">
-            <h4>{variant.variantName}</h4>
-            <dl className="sub">
-              <dt>Family</dt>
-              <dd>{variant.family}</dd>
-              <dt>Size</dt>
-              <dd>
-                {variant.size}px / {variant.lineHeight}
-              </dd>
-              <dt>Weight</dt>
-              <dd>{variant.weight}</dd>
-            </dl>
-          </div>
-          <div
-            style={{
-              fontFamily: `"${variant.family}"`,
-              fontSize: variant.size,
-              fontWeight: variant.weight.split("-")[1],
-              lineHeight: variant.lineHeight,
-            }}
-          >
-            Curious minds discover joy in the beauty of everyday moments
-          </div>
-        </li>
-      ))}
+      {Object.entries(variants).map(([variantId, variant]) => {
+        console.log(variant);
+        return (
+          <li key={variantId}>
+            <div className="heading">
+              <h4>{variant.variantName}</h4>
+              <dl className="sub">
+                <dt>Family</dt>
+                <dd>{variant.family}</dd>
+                <dt>Size</dt>
+                <dd>
+                  {variant.size}px / {variant.lineHeight}
+                </dd>
+                <dt>Weight</dt>
+                <dd>
+                  {
+                    manualFontStyles[
+                      variant.weight as keyof ManualFontStylesValue
+                    ]
+                  }
+                </dd>
+              </dl>
+            </div>
+            <div
+              style={{
+                fontFamily: `"${variant.family}"`,
+                fontSize: variant.size,
+                fontWeight: variant.weight.split("-")[1],
+                lineHeight: variant.lineHeight,
+              }}
+            >
+              Curious minds discover joy in the beauty of everyday moments
+            </div>
+          </li>
+        );
+      })}
     </ul>
   );
 }

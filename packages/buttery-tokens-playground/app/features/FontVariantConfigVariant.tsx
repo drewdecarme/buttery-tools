@@ -1,10 +1,5 @@
 import { useMemo } from "react";
-import {
-  type ManualFontStylesValue,
-  manualFontStyles,
-} from "@buttery/tokens-utils/schemas";
 import { exhaustiveMatchGuard, useToggle } from "@buttery/components";
-import { produce } from "immer";
 import { css } from "@linaria/core";
 import { makeColor, makeRem } from "@buttery/tokens/playground";
 
@@ -45,16 +40,6 @@ export type FontVariantConfigVariantProps =
     onAction: OnFontVariantAction;
   };
 
-type WeightsAndStyles = {
-  weights: {
-    [key in keyof Partial<ManualFontStylesValue>]: {
-      value: string;
-      display: string;
-    };
-  };
-  styles: { [key: string]: { value: string; display: string } };
-};
-
 export function FontVariantConfigVariant({
   variantId,
   variantName,
@@ -81,7 +66,7 @@ export function FontVariantConfigVariant({
     }
   }, [state]);
 
-  const { weights, styles } = useMemo<WeightsAndStyles>(() => {
+  const weights = useMemo(() => {
     let selectedFamily: ConfigurationStateFontManualFamilyValues | undefined =
       undefined;
     switch (state.source) {
@@ -111,32 +96,105 @@ export function FontVariantConfigVariant({
       throw "Cannot determine the family from the selection. This should not have happened.";
     }
 
-    return Object.keys(selectedFamily.styles).reduce<WeightsAndStyles>(
-      (accum, styleString) => {
-        const [weightName, weightValue, rawStyle] = styleString.split("-");
-        const weight =
-          `${weightName}-${weightValue}` as keyof ManualFontStylesValue;
-        console.log(weight);
-        const style = rawStyle || "regular";
-
-        return produce(accum, (draft) => {
-          if (!draft.weights[weight]) {
-            draft.weights[weight] = {
-              value: weight,
-              display: manualFontStyles[weight],
-            };
-          }
-          if (!draft.styles[style]) {
-            draft.styles[style] = {
-              value: style,
-              display: style,
-            };
-          }
-        });
-      },
-      { weights: {}, styles: {} } as WeightsAndStyles
-    );
+    return Object.entries(selectedFamily.styles).reduce<
+      { value: string; display: string }[]
+    >((accum, [value, { display }]) => accum.concat({ value, display }), []);
   }, [family, state]);
+
+  const InputName = useMemo(
+    () => (
+      <InputLabel
+        dxLabel="Variant Name"
+        dxSize="dense"
+        dxHelp="body1, display2, caption, etc..."
+      >
+        <InputText
+          dxSize="dense"
+          defaultValue={variantName}
+          onChange={({ currentTarget: { value } }) => {
+            onAction({
+              action: "changeVariantName",
+              id: variantId,
+              name: value,
+            });
+          }}
+        />
+      </InputLabel>
+    ),
+    [onAction, variantId, variantName]
+  );
+
+  const InputFamily = useMemo(
+    () => (
+      <>
+        <InputLabel dxLabel="Font Family" dxSize="dense">
+          <InputSelect
+            dxSize="dense"
+            defaultValue={family}
+            onChange={({ currentTarget: { value } }) => {
+              onAction({
+                action: "changeVariantFamily",
+                id: variantId,
+                family: value,
+              });
+            }}
+          >
+            {families.map((family) => (
+              <option key={family} value={family}>
+                {family}
+              </option>
+            ))}
+          </InputSelect>
+        </InputLabel>
+      </>
+    ),
+    [families, family, onAction, variantId]
+  );
+
+  const InputSize = useMemo(
+    () => (
+      <InputLabel dxLabel="Size" dxSize="dense">
+        <InputNumber
+          dxSize="dense"
+          defaultValue={size}
+          min={4}
+          onChange={({ currentTarget: { value } }) => {
+            onAction({
+              action: "changeVariantSize",
+              id: variantId,
+              size: Number(value),
+            });
+          }}
+        />
+      </InputLabel>
+    ),
+    [onAction, size, variantId]
+  );
+
+  const InputWeightAndStyle = useMemo(
+    () => (
+      <InputLabel dxLabel="Font Weight & Style" dxSize="dense">
+        <InputSelect
+          dxSize="dense"
+          defaultValue={family}
+          onChange={({ currentTarget: { value } }) => {
+            onAction({
+              action: "changeVariantWeightAndStyle",
+              id: variantId,
+              weightAndStyle: value,
+            });
+          }}
+        >
+          {weights.map((weight) => (
+            <option key={weight.value} value={weight.value}>
+              {weight.display}
+            </option>
+          ))}
+        </InputSelect>
+      </InputLabel>
+    ),
+    [family, onAction, variantId, weights]
+  );
 
   return (
     <VariantContainer>
@@ -169,43 +227,10 @@ export function FontVariantConfigVariant({
       {isOpen && (
         <VariantContainerContent>
           <InputGroup>
-            <InputLabel
-              dxLabel="Variant Name"
-              dxSize="dense"
-              dxHelp="body1, display2, caption, etc..."
-            >
-              <InputText dxSize="dense" defaultValue={variantName} />
-            </InputLabel>
-            <InputLabel dxLabel="Font Family" dxSize="dense">
-              <InputSelect dxSize="dense" defaultValue={family}>
-                {families.map((family) => (
-                  <option key={family} value={family}>
-                    {family}
-                  </option>
-                ))}
-              </InputSelect>
-            </InputLabel>
-            <InputLabel dxLabel="Size" dxSize="dense">
-              <InputNumber dxSize="dense" defaultValue={size} />
-            </InputLabel>
-            <InputLabel dxLabel="Font Weight" dxSize="dense">
-              <InputSelect dxSize="dense" defaultValue={family}>
-                {Object.values(weights).map((weight) => (
-                  <option key={weight.value} value={weight.value}>
-                    {weight.display}
-                  </option>
-                ))}
-              </InputSelect>
-            </InputLabel>
-            <InputLabel dxLabel="Font style" dxSize="dense">
-              <InputSelect dxSize="dense" defaultValue={family}>
-                {Object.values(styles).map((style) => (
-                  <option key={style.value} value={style.value}>
-                    {style.display}
-                  </option>
-                ))}
-              </InputSelect>
-            </InputLabel>
+            {InputName}
+            {InputFamily}
+            {InputSize}
+            {InputWeightAndStyle}
           </InputGroup>
         </VariantContainerContent>
       )}

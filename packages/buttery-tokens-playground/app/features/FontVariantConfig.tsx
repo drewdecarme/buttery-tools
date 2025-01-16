@@ -2,7 +2,6 @@ import { css } from "@linaria/core";
 import { makeRem, makeReset } from "@buttery/tokens/playground";
 import { useCallback } from "react";
 import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
-import { manualFontStyles } from "@buttery/tokens-utils/schemas";
 
 import { Button } from "~/components/Button";
 import { VariantEmpty } from "~/components/VariantEmpty";
@@ -38,7 +37,7 @@ export function FontVariantConfig() {
               lineHeight: 1.3,
               size: 16,
               variantName: `variant${nextVariantNum}`,
-              weight: manualFontStyles["regular-400"],
+              weight: "regular-400",
             };
           });
           break;
@@ -46,6 +45,34 @@ export function FontVariantConfig() {
         case "deleteVariant": {
           setFont((draft) => {
             delete draft.variants[args.id];
+          });
+          break;
+        }
+
+        case "changeVariantName": {
+          setFont((draft) => {
+            draft.variants[args.id].variantName = args.name;
+          });
+          break;
+        }
+
+        case "changeVariantFamily": {
+          setFont((draft) => {
+            draft.variants[args.id].family = args.family;
+          });
+          break;
+        }
+
+        case "changeVariantSize": {
+          setFont((draft) => {
+            draft.variants[args.id].size = args.size;
+          });
+          break;
+        }
+
+        case "changeVariantWeightAndStyle": {
+          setFont((draft) => {
+            draft.variants[args.id].weight = args.weightAndStyle;
           });
           break;
         }

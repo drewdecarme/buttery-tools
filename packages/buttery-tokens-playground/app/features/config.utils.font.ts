@@ -216,5 +216,15 @@ export type OnFontFamilyAction = (
 ) => void;
 
 export type OnFontVariantAction = (
-  options: { action: "addVariant" } | { action: "deleteVariant"; id: string }
+  options:
+    | { action: "addVariant" }
+    | { action: "deleteVariant"; id: string }
+    | { action: "changeVariantName"; id: string; name: string }
+    | { action: "changeVariantFamily"; id: string; family: string }
+    | { action: "changeVariantSize"; id: string; size: number }
+    | {
+        action: "changeVariantWeightAndStyle";
+        id: string;
+        weightAndStyle: string;
+      }
 ) => void;
