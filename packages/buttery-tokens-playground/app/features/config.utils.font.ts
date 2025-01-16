@@ -1,4 +1,5 @@
 import {
+  type FontVariant,
   type ManualFontStyles,
   type FontFamiliesManual,
   type ButteryTokensConfig,
@@ -192,7 +193,18 @@ export function transformFontStateStateIntoFontConfig(
   return {
     source: state.source,
     families,
-    variants: {},
+    variants: Object.values(state.variants).reduce(
+      (accum, variant) =>
+        Object.assign<typeof state.variants, FontVariant>(accum, {
+          [variant.variantName]: {
+            family: variant.family,
+            lineHeight: variant.lineHeight,
+            size: variant.size,
+            weight: variant.weight,
+          },
+        }),
+      {}
+    ),
   };
 }
 

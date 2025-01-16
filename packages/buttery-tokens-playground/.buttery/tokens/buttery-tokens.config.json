@@ -52,7 +52,14 @@
         ]
       }
     },
-    "variants": {}
+    "variants": {
+      "display1": {
+        "family": "Lato",
+        "weight": "semiBold-600",
+        "size": 32,
+        "lineHeight": 1.3
+      }
+    }
   },
   "breakpoints": {
     "phone": 375,
