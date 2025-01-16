@@ -211,6 +211,7 @@ export function transformFontStateStateIntoFontConfig(
 export type OnFontFamilyAction = (
   options:
     | { action: "addFontFamily" }
+    | { action: "deleteFontFamily"; id: string }
     | { action: "toggle"; id: string }
     | { action: "addStyle"; id: string; style: string }
     | { action: "deleteStyle"; id: string; style: string }

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { exhaustiveMatchGuard, useToggle } from "@buttery/components";
 import { css } from "@linaria/core";
 import { makeColor, makeRem } from "@buttery/tokens/playground";
@@ -196,6 +196,13 @@ export function FontVariantConfigVariant({
     [family, onAction, variantId, weights]
   );
 
+  const handleDelete = useCallback(() => {
+    onAction({
+      action: "deleteVariant",
+      id: variantId,
+    });
+  }, [onAction, variantId]);
+
   return (
     <VariantContainer>
       <VariantContainerBar className={barStyles}>
@@ -216,12 +223,13 @@ export function FontVariantConfigVariant({
               <Button
                 dxVariant="icon"
                 DXIcon={IconDelete}
+                onClick={handleDelete}
                 dxSize="dense"
                 dxHelp="Delete variant"
               />
             </VariantContainerBarActions>
           ),
-          [toggle]
+          [handleDelete, toggle]
         )}
       </VariantContainerBar>
       {isOpen && (

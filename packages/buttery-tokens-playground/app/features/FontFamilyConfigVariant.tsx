@@ -93,6 +93,13 @@ export function FontFamilyConfigVariant(
     });
   }, [props]);
 
+  const handleDelete = useCallback(() => {
+    props.onAction({
+      action: "deleteFontFamily",
+      id: props.id,
+    });
+  }, [props]);
+
   return (
     <VariantContainer>
       <VariantContainerBar className={variantStyles}>
@@ -110,6 +117,7 @@ export function FontFamilyConfigVariant(
               <Button
                 dxVariant="icon"
                 DXIcon={IconDelete}
+                onClick={handleDelete}
                 dxSize="dense"
                 dxHelp="Delete family"
               />

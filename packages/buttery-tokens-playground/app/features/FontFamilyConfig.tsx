@@ -9,6 +9,7 @@ import { Button } from "~/components/Button";
 import { VariantEmpty } from "~/components/VariantEmpty";
 import { VariantAdd } from "~/components/VariantAdd";
 import { IconPlusSign } from "~/icons/IconPlusSign";
+import { LOG } from "~/utils/util.logger";
 
 import { useConfigurationContext } from "./Config.context";
 import { FontFamilyConfigManual } from "./FontFamilyConfigManual";
@@ -45,6 +46,29 @@ export function FontFamilyConfig() {
             };
           });
           break;
+
+        case "deleteFontFamily": {
+          setFont((draft) => {
+            const familyToDelete = draft.families[args.id];
+            const isFontFamilyInVariants = Object.values(draft.variants).reduce(
+              (accum, variant) => {
+                console.log(variant.family, familyToDelete.name);
+                if (variant.family === familyToDelete.name) return true;
+                return accum;
+              },
+              false
+            );
+            if (isFontFamilyInVariants) {
+              LOG.error(
+                "Cannot delete this family since it is a part of the variants. Please delete the variants that include the family and try again."
+              );
+              return;
+            }
+
+            delete draft.families[args.id];
+          });
+          break;
+        }
 
         case "toggle": {
           setFont((draft) => {
