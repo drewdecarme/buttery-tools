@@ -7,7 +7,7 @@ import { ColorBlob, useColorBlob } from "~/components/ColorBlob";
 import { InputGroup } from "~/components/InputGroup";
 
 import { ColorSwatch } from "./ColorSwatch";
-import type { ConfigurationStateColorsAuto } from "./config.utils";
+import type { ConfigurationStateColorsAuto } from "./config.utils.sizing";
 import type { ConfigurationContextType } from "./Config.context";
 import type { ColorSwatchVariantsPropsCustom } from "./ColorSwatchVariants";
 import { ColorSwatchVariants } from "./ColorSwatchVariants";

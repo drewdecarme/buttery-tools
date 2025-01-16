@@ -3,7 +3,7 @@ import { generateGUID } from "@buttery/utils/isomorphic";
 import { ColorSwatchAdd } from "./ColorSwatchAdd";
 import { ColorBrandModeManualSwatch } from "./ColorBrandModeManualSwatch";
 import type { ConfigurationContextType } from "./Config.context";
-import type { ConfigurationStateColorBrandManual } from "./config.utils";
+import type { ConfigurationStateColorBrandManual } from "./config.utils.sizing";
 import { ColorSwatchList } from "./ColorSwatchList";
 
 import { InputLabel } from "../components/InputLabel";

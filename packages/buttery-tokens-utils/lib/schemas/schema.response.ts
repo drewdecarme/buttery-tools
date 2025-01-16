@@ -13,8 +13,17 @@ import { z } from "zod";
  * - desktop-lg: 1400, // Targets full HD monitors, commonly used in desktop displays. Ensures that content utilizes the available screen real estate efficiently.
  */
 export const BreakpointsSchema = z.record(z.string(), z.number()).default({
-  phone: 375,
+  mobile: 480,
   tablet: 768,
+  laptop: 1024,
   desktop: 1280,
+  ultraWide: 1536,
 });
-export type ButteryTokensConfigBreakpoints = z.infer<typeof BreakpointsSchema>;
+export type Breakpoints = z.infer<typeof BreakpointsSchema>;
+
+export const ResponseSchema = z
+  .object({
+    breakpoints: BreakpointsSchema,
+  })
+  .default({});
+export type ButteryTokensConfigResponse = z.infer<typeof ResponseSchema>;

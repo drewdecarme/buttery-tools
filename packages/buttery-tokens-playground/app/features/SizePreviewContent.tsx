@@ -78,7 +78,7 @@ const ulStyles = css`
 
 export function SizePreviewContent() {
   const {
-    sizeAndSpace: { baselineGrid, baseFontSize, size },
+    sizing: { baselineGrid, baseFontSize, size },
   } = useConfigurationContext();
   const { showGrid } = useSizePreviewContext();
   const ref = useRef<HTMLDivElement | null>(null);

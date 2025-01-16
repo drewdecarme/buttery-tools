@@ -9,7 +9,7 @@ import type { ConfigurationContextType } from "./Config.context";
 import {
   colorAutoPresets,
   type ConfigurationStateColorBrandAuto,
-} from "./config.utils";
+} from "./config.utils.sizing";
 import { ColorSwatchAdd } from "./ColorSwatchAdd";
 import { ColorSwatchList } from "./ColorSwatchList";
 import { ColorBrandModeAutoSwatch } from "./ColorBrandModeAutoSwatch";

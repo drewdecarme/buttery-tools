@@ -6,8 +6,8 @@ import { useConfigurationContext } from "./Config.context";
 
 export function useRecalculateSpaceVariants() {
   const {
-    setSizeAndSpace,
-    sizeAndSpace: {
+    setSizing,
+    sizing: {
       space: { mode },
     },
   } = useConfigurationContext();
@@ -16,7 +16,7 @@ export function useRecalculateSpaceVariants() {
     (numOfVariants?: number) => void
   >(
     (numOfVariants) => {
-      setSizeAndSpace((draft) => {
+      setSizing((draft) => {
         const prevVariants = draft.space[mode].variants;
         const prevVarEntries = Object.entries(prevVariants);
         const prevVarEntriesLength = prevVarEntries.length;
@@ -117,7 +117,7 @@ export function useRecalculateSpaceVariants() {
         draft.space[mode].variants = Object.fromEntries(updatedVariants);
       });
     },
-    [mode, setSizeAndSpace]
+    [mode, setSizing]
   );
 
   return { recalculateSpaceVariants };

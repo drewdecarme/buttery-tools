@@ -7,6 +7,8 @@ import {
   manualFontStyles,
 } from "@buttery/tokens-utils/schemas";
 import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
+import type { Updater } from "use-immer";
+import { useImmer } from "use-immer";
 
 export type ConfigurationStateFontFamilyWeights = Record<
   string,
@@ -164,7 +166,7 @@ export function getInitStateFontFromConfig(
   }
 }
 
-export function transformFontStateStateIntoFontConfig(
+export function getFontConfigFromState(
   state: ConfigurationStateFont
 ): ButteryTokensConfig["font"] {
   const families =
@@ -207,6 +209,14 @@ export function transformFontStateStateIntoFontConfig(
     ),
   };
 }
+
+export function useConfigStateFont(initConfig: ButteryTokensConfig) {
+  return useImmer(getInitStateFontFromConfig(initConfig));
+}
+export type ConfigurationContextFontType = {
+  font: ConfigurationStateFont;
+  setFont: Updater<ConfigurationStateFont>;
+};
 
 export type OnFontFamilyAction = (
   options:

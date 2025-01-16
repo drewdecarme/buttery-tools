@@ -2,21 +2,21 @@ import { useConfigurationContext } from "./Config.context";
 import { SpacePreviewContentVariants } from "./SpacePreviewContentVariants";
 
 export function SpacePreviewContent() {
-  const { sizeAndSpace } = useConfigurationContext();
-  switch (sizeAndSpace.space.mode) {
+  const { sizing } = useConfigurationContext();
+  switch (sizing.space.mode) {
     case "auto":
       return (
         <SpacePreviewContentVariants
-          variants={sizeAndSpace.space.auto.variants}
-          baseFontSize={sizeAndSpace.baseFontSize}
+          variants={sizing.space.auto.variants}
+          baseFontSize={sizing.baseFontSize}
         />
       );
 
     case "manual":
       return (
         <SpacePreviewContentVariants
-          variants={sizeAndSpace.space.manual.variants}
-          baseFontSize={sizeAndSpace.baseFontSize}
+          variants={sizing.space.manual.variants}
+          baseFontSize={sizing.baseFontSize}
         />
       );
     default:

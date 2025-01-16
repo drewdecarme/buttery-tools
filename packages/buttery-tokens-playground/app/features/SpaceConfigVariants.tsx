@@ -16,7 +16,7 @@ import {
   type ConfigurationStateSizeAndSpace,
   orderSpaceVariants,
   type ConfigurationStateSizeAndSpace_SpaceVariants,
-} from "./config.utils";
+} from "./config.utils.sizing.js";
 import type { ConfigurationContextType } from "./Config.context";
 import { useRecalculateSpaceVariants } from "./space.useRecalculateSpaceVariants";
 
@@ -162,12 +162,12 @@ export function SpaceConfigVariants({
   baseFontSize,
   variants,
   mode,
-  setSizeAndSpace,
+  setSizing,
 }: {
   baseFontSize: number;
   variants: ConfigurationStateSizeAndSpace_SpaceVariants;
   mode: ConfigurationStateSizeAndSpace["space"]["mode"];
-  setSizeAndSpace: ConfigurationContextType["setSizeAndSpace"];
+  setSizing: ConfigurationContextType["setSizing"];
 }) {
   const { recalculateSpaceVariants } = useRecalculateSpaceVariants();
 
@@ -180,11 +180,11 @@ export function SpaceConfigVariants({
     SpaceConfigVariantItemProps["onChangeVariantName"]
   >(
     (id, name) => {
-      setSizeAndSpace((draft) => {
+      setSizing((draft) => {
         draft.space[mode].variants[id].name = name;
       });
     },
-    [mode, setSizeAndSpace]
+    [mode, setSizing]
   );
 
   const orderedVariants = orderSpaceVariants(variants);

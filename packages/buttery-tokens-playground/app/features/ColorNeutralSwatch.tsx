@@ -8,7 +8,7 @@ import { InputGroup } from "~/components/InputGroup";
 
 import { ColorSwatchHex } from "./ColorSwatchHex";
 import { ColorSwatch } from "./ColorSwatch";
-import type { ConfigurationStateColorsManual } from "./config.utils";
+import type { ConfigurationStateColorsManual } from "./config.utils.sizing";
 import type { ConfigurationContextType } from "./Config.context";
 import type { ColorSwatchVariantsPropsCustom } from "./ColorSwatchVariants";
 import { ColorSwatchVariants } from "./ColorSwatchVariants";

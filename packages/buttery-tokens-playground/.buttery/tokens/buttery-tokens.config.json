@@ -17,19 +17,7 @@
     },
     "space": {
       "mode": "auto",
-      "variants": [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10"
-      ]
+      "variants": 11
     }
   },
   "font": {
@@ -61,10 +49,14 @@
       }
     }
   },
-  "breakpoints": {
-    "phone": 375,
-    "tablet": 768,
-    "desktop": 1280
+  "response": {
+    "breakpoints": {
+      "mobile": 480,
+      "tablet": 768,
+      "laptop": 1024,
+      "desktop": 1280,
+      "ultraWide": 1536
+    }
   },
   "color": {
     "brand": {

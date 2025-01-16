@@ -21,25 +21,25 @@ const ulStyles = css`
 `;
 
 export function SizeConfig() {
-  const { sizeAndSpace, setSizeAndSpace } = useConfigurationContext();
+  const { sizing, setSizing } = useConfigurationContext();
   const { recalculateSpaceVariants } = useRecalculateSpaceVariants();
 
   const handleChangeDocumentFontSize = useCallback<
     ChangeEventHandler<HTMLInputElement>
   >(
     ({ currentTarget: { value } }) => {
-      setSizeAndSpace((draft) => {
+      setSizing((draft) => {
         draft.baseFontSize = Number(value);
       });
     },
-    [setSizeAndSpace]
+    [setSizing]
   );
 
   const handleChangeBaselineGrid = useCallback<
     ChangeEventHandler<HTMLInputElement>
   >(
     ({ currentTarget: { value } }) => {
-      setSizeAndSpace((draft) => {
+      setSizing((draft) => {
         const newBaselineGrid = Number(value);
         if (!newBaselineGrid) return; // return if the baseline grid is 0
 
@@ -57,13 +57,13 @@ export function SizeConfig() {
         }
       });
     },
-    [setSizeAndSpace]
+    [setSizing]
   );
 
   // recalculate the size variants when the baseline grid changes
   useEffect(() => {
     recalculateSpaceVariants();
-  }, [recalculateSpaceVariants, sizeAndSpace.baselineGrid]);
+  }, [recalculateSpaceVariants, sizing.baselineGrid]);
 
   const handleChangeVariantProperties = useCallback<
     SizeConfigVariantPropsCustom["dxOnChangeVariantProperties"]
@@ -71,13 +71,13 @@ export function SizeConfig() {
     (id, options) => {
       switch (options.property) {
         case "name":
-          setSizeAndSpace((draft) => {
+          setSizing((draft) => {
             draft.size.variants[id].name = options.name;
           });
           break;
 
         case "value":
-          setSizeAndSpace((draft) => {
+          setSizing((draft) => {
             draft.size.variants[id].value = options.value;
           });
           break;
@@ -86,7 +86,7 @@ export function SizeConfig() {
           exhaustiveMatchGuard(options);
       }
     },
-    [setSizeAndSpace]
+    [setSizing]
   );
 
   return (
@@ -98,7 +98,7 @@ export function SizeConfig() {
       >
         <InputNumber
           dxSize="dense"
-          value={sizeAndSpace.baseFontSize}
+          value={sizing.baseFontSize}
           onChange={handleChangeDocumentFontSize}
         />
       </InputLabel>
@@ -110,7 +110,7 @@ export function SizeConfig() {
         <InputNumber
           dxSize="dense"
           step={4}
-          value={sizeAndSpace.baselineGrid}
+          value={sizing.baselineGrid}
           onChange={handleChangeBaselineGrid}
         />
       </InputLabel>
@@ -121,14 +121,14 @@ export function SizeConfig() {
           dxHelp="Create named variants to align the vertical sizing of adjacent elements such as inputs, buttons and icons"
         />
         <ul className={ulStyles}>
-          {Object.entries(sizeAndSpace.size.variants).map(
+          {Object.entries(sizing.size.variants).map(
             ([variantId, { name, value }]) => (
               <li key={variantId}>
                 <SizeConfigVariant
                   dxVariantId={variantId}
                   dxName={name}
                   dxValue={value}
-                  dxBaselineGrid={sizeAndSpace.baselineGrid}
+                  dxBaselineGrid={sizing.baselineGrid}
                   dxOnChangeVariantProperties={handleChangeVariantProperties}
                 />
               </li>

@@ -6,7 +6,8 @@
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",
     "**/.client/**/*.tsx",
-    ".react-router/types/**/*"
+    ".react-router/types/**/*",
+    "app/features/config.utils.sizing.ts"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],

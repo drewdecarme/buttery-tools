@@ -2,35 +2,32 @@ import type { ButteryTokensConfig } from "@buttery/tokens-utils/schemas";
 import { ConfigSchema } from "@buttery/tokens-utils/schemas";
 import type { FC, ReactNode } from "react";
 import { useContext, useMemo, createContext, useCallback } from "react";
-import type { Updater } from "use-immer";
-import { useImmer } from "use-immer";
 
-import type {
-  ConfigurationStateColor,
-  ConfigurationStateSizeAndSpace,
-} from "./config.utils";
+import type { ConfigurationContextSizingType } from "./config.utils.sizing.js";
 import {
-  getInitStateFontFromConfig,
-  transformFontStateStateIntoFontConfig,
-  type ConfigurationStateFont,
+  type ConfigurationContextFontType,
+  getFontConfigFromState,
+  useConfigStateFont,
 } from "./config.utils.font";
 import {
-  getInitColorStateFromConfig,
-  getInitStateSizeAndSpaceFromConfig,
-  transformColorStateIntoColorConfig,
-  transformSizeAndSpaceStateIntoColorConfig,
-} from "./config.utils";
+  getSizeAndSpaceConfigFromState,
+  useConfigStateSizing,
+} from "./config.utils.sizing.js";
+import type { ConfigurationContextColorType } from "./config.utils.color";
+import {
+  getColorConfigFromState,
+  useConfigStateColor,
+} from "./config.utils.color";
+import type { ConfigurationContextResponseType } from "./config.utils.response.js";
+import { useConfigStateResponse } from "./config.utils.response.js";
 
-export type ConfigurationContextType = {
-  color: ConfigurationStateColor;
-  setColor: Updater<ConfigurationStateColor>;
-  font: ConfigurationStateFont;
-  setFont: Updater<ConfigurationStateFont>;
-  sizeAndSpace: ConfigurationStateSizeAndSpace;
-  setSizeAndSpace: Updater<ConfigurationStateSizeAndSpace>;
-  getConfigFromState: () => ButteryTokensConfig;
-  originalConfig: ButteryTokensConfig;
-};
+export type ConfigurationContextType = ConfigurationContextColorType &
+  ConfigurationContextFontType &
+  ConfigurationContextResponseType &
+  ConfigurationContextSizingType & {
+    getConfigFromState: () => ButteryTokensConfig;
+    originalConfig: ButteryTokensConfig;
+  };
 const ConfigurationContext = createContext<ConfigurationContextType | null>(
   null
 );
@@ -44,31 +41,28 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
   originalConfig,
 }) => {
   // Start setting initial state
-  const [color, setColor] = useImmer(
-    getInitColorStateFromConfig(originalConfig)
-  );
-  const [font, setFont] = useImmer(getInitStateFontFromConfig(originalConfig));
-  const [sizeAndSpace, setSizeAndSpace] = useImmer(
-    getInitStateSizeAndSpaceFromConfig(originalConfig)
-  );
+  const [color, setColor] = useConfigStateColor(originalConfig);
+  const [font, setFont] = useConfigStateFont(originalConfig);
+  const [sizing, setSizing] = useConfigStateSizing(originalConfig);
+  const [response, setResponse] = useConfigStateResponse(originalConfig);
 
   const getConfigFromState = useCallback<
     ConfigurationContextType["getConfigFromState"]
   >(() => {
-    const configColor = transformColorStateIntoColorConfig(color);
-    const configSizeAndSpace =
-      transformSizeAndSpaceStateIntoColorConfig(sizeAndSpace);
-    const configFont = transformFontStateStateIntoFontConfig(font);
+    const configColor = getColorConfigFromState(color);
+    const configSizing = getSizeAndSpaceConfigFromState(sizing);
+    const configFont = getFontConfigFromState(font);
+
     const config = ConfigSchema.safeParse({
       color: configColor,
-      sizeAndSpace: configSizeAndSpace,
+      sizing: configSizing,
       font: configFont,
     });
     if (config.error) {
       throw config.error;
     }
     return config.data;
-  }, [color, font, sizeAndSpace]);
+  }, [color, font, sizing]);
 
   const value = useMemo<ConfigurationContextType>(
     () => ({
@@ -76,8 +70,10 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
       setFont,
       color,
       setColor,
-      sizeAndSpace,
-      setSizeAndSpace,
+      sizing,
+      setSizing,
+      response,
+      setResponse,
       getConfigFromState,
       originalConfig,
     }),
@@ -86,10 +82,12 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
       font,
       getConfigFromState,
       originalConfig,
+      response,
       setColor,
       setFont,
-      setSizeAndSpace,
-      sizeAndSpace,
+      setResponse,
+      setSizing,
+      sizing,
     ]
   );
 
