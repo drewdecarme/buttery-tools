@@ -123,7 +123,7 @@ export function FontFamilyConfigVariant(
               />
             </VariantContainerBarActions>
           ),
-          [handleToggle]
+          [handleDelete, handleToggle]
         )}
       </VariantContainerBar>
       {props.meta.isOpen && (
