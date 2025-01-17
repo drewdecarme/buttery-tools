@@ -6,10 +6,12 @@ import {
   makeRem,
   makeReset,
 } from "@buttery/tokens/playground";
-import type { RefCallback } from "react";
-import { useCallback, useRef } from "react";
+import type { MouseEventHandler, RefCallback } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { classes } from "@buttery/components";
 
 import { useConfigurationContext } from "./Config.context";
+import type { ConfigurationStateResponseBreakpointValue } from "./config.utils.response";
 
 const styles = css`
   /* background: #272727; */
@@ -41,14 +43,16 @@ const styles = css`
       display: grid;
       place-content: center;
       padding: ${makeRem(16)};
-      /* color: White; */
-
+      color: ${makeColor("neutral-light", { opacity: 0.5 })};
       .title {
         font-size: ${makeRem(18)};
       }
       .name {
         font-size: ${makeRem(14)};
         font-weight: ${makeFontWeight("light")};
+      }
+      &.active {
+        color: ${makeColor("neutral")};
       }
     }
   }
@@ -57,12 +61,10 @@ const styles = css`
     ${makeReset("ul")};
     position: relative;
     width: 100%;
-    height: 200px;
-    padding-top: ${makeRem(40)};
+    height: ${makeRem(200)};
+    padding-top: ${makeRem(24)};
 
-    button {
-      ${makeReset("button")};
-
+    .line {
       position: absolute;
       top: 0;
       left: 0;
@@ -71,9 +73,32 @@ const styles = css`
       margin: 0 auto;
       border-left: 1px solid rgb(var(--color));
       border-right: 1px solid rgb(var(--color));
+      width: initial;
+      transition: all 0.3s ease-in-out;
 
-      &:hover {
-        background: rgba(var(--color), 0.2);
+      button {
+        ${makeReset("button")};
+        width: 100%;
+        height: ${makeRem(24)};
+        font-size: ${makeRem(12)};
+        display: grid;
+        place-content: center;
+        cursor: pointer;
+        background: ${makeColor("neutral-light", { opacity: 0.1 })};
+        transition: all 0.3s ease-in-out;
+
+        & > span {
+          display: none;
+          color: white;
+          z-index: 12;
+        }
+        &:hover {
+          background: rgba(var(--color), 0.8);
+
+          & > span {
+            display: initial;
+          }
+        }
       }
     }
 
@@ -82,11 +107,12 @@ const styles = css`
       position: relative;
       z-index: 20;
       padding: 1rem;
-      height: 100%;
+      height: ${`calc(100% - ${makeRem(8)})`};
       border-radius: ${makeRem(4)};
-      margin: 1px;
       box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-      margin: 0 auto;
+      margin-top: ${makeRem(8)};
+      margin-left: auto;
+      margin-right: auto;
       border: 2px solid transparent;
       transition: width 0.2s ease-in-out;
     }
@@ -110,72 +136,168 @@ const colors = [
   "223, 124, 223", // Plum
 ];
 
+type State = ConfigurationStateResponseBreakpointValue & {
+  id: string;
+  samplePageWidth: string;
+};
+
 export function BreakpointPreviewContent() {
   const { response } = useConfigurationContext();
+  const gridRef = useRef<HTMLDivElement | null>(null);
   const pageRef = useRef<HTMLDivElement | null>(null);
-  const maxBreakpoint = Object.values(response.breakpoints).reduce(
-    (accum, { value }) => {
-      if (value > accum) return value;
-      return accum;
-    },
-    0
+  const [activeBreakpoint, setActiveBreakpoint] = useState<State | undefined>(
+    undefined
   );
 
-  const calculateWidth = useCallback<
-    (maxSize: number, containerWidth: number, width: number) => string
+  const maxBreakpoint = useMemo(
+    () =>
+      Object.values(response.breakpoints).reduce((accum, { value }) => {
+        if (value > accum) return value;
+        return accum;
+      }, 0),
+    [response.breakpoints]
+  );
+
+  const calculateBreakpointSectionWidth = useCallback<
+    (maxSize: number, containerWidth: number, width: number) => number
   >((maxSize, containerWidth, width) => {
     const scalingFactor = containerWidth / maxSize;
-
     const scaledValue = width * scalingFactor;
-    return makePx(scaledValue);
+    return scaledValue;
   }, []);
 
-  const createSetButtonRef = useCallback<
-    (colWidth: number, maxBreakpoint: number) => RefCallback<HTMLButtonElement>
-  >(
-    (colWidth, maxBreakpoint) => (node) => {
-      if (!node) return;
-      const parent = node.parentElement;
-      if (!parent) return;
-      const width = calculateWidth(maxBreakpoint, parent.offsetWidth, colWidth);
-      node.style.setProperty("width", width);
+  const calculateAndSetActiveBreakpoint = useCallback<
+    (
+      breakpointId: string,
+      breakpoint: ConfigurationStateResponseBreakpointValue,
+      breakpointSectionWidth: number
+    ) => void
+  >((breakpointId, breakpoint, breakpointSectionWidth) => {
+    setActiveBreakpoint({
+      ...breakpoint,
+      id: breakpointId,
+      samplePageWidth: `calc(${makePx(breakpointSectionWidth)} - 2px)`,
+    });
+  }, []);
 
-      node.addEventListener("click", () => {
-        if (!pageRef.current) return;
-        pageRef.current.style.setProperty("width", `calc(${width} - 2px)`);
-      });
+  const createBreakpointSection = useCallback<
+    (
+      breakpointId: string,
+      breakpoint: ConfigurationStateResponseBreakpointValue,
+      isActive: boolean
+    ) => RefCallback<HTMLDivElement>
+  >(
+    (breakpointId, breakpoint, isActive) => (node) => {
+      if (!node) return;
+      const container = node.parentElement;
+      if (!container) return;
+      const containerWidth =
+        gridRef.current?.offsetWidth ?? container.offsetWidth;
+      const breakpointSectionWidth = calculateBreakpointSectionWidth(
+        maxBreakpoint,
+        containerWidth,
+        breakpoint.value
+      );
+      console.log(makePx(breakpointSectionWidth));
+      node.style.setProperty("width", makePx(breakpointSectionWidth));
+
+      if (!isActive) return;
+      calculateAndSetActiveBreakpoint(
+        breakpointId,
+        breakpoint,
+        breakpointSectionWidth
+      );
     },
-    [calculateWidth]
+    [
+      calculateBreakpointSectionWidth,
+      maxBreakpoint,
+      calculateAndSetActiveBreakpoint,
+    ]
+  );
+
+  const createHandleClick = useCallback<
+    (
+      breakpointId: string,
+      breakpoint: ConfigurationStateResponseBreakpointValue
+    ) => MouseEventHandler<HTMLButtonElement>
+  >(
+    (breakpointId, breakpoint) => () => {
+      if (!gridRef.current) return;
+      const breakpointSectionWidth = calculateBreakpointSectionWidth(
+        maxBreakpoint,
+        gridRef.current.offsetWidth,
+        breakpoint.value
+      );
+      calculateAndSetActiveBreakpoint(
+        breakpointId,
+        breakpoint,
+        breakpointSectionWidth
+      );
+    },
+    [
+      calculateAndSetActiveBreakpoint,
+      calculateBreakpointSectionWidth,
+      maxBreakpoint,
+    ]
+  );
+
+  const breakpointEntires = useMemo(
+    () =>
+      Object.entries(response.breakpoints).sort(
+        (a, b) => a[1].value - b[1].value
+      ),
+    [response.breakpoints]
   );
 
   return (
     <div className={styles}>
       <ul className="points">
-        {Object.entries(response.breakpoints)
-          .reverse()
-          .map(([breakpointId, breakpoint]) => (
-            <li key={breakpointId}>
-              <button>
-                <div className="title">{makePx(breakpoint.value)}</div>
-                <div className="name">{breakpoint.name}</div>
-              </button>
-            </li>
-          ))}
+        {breakpointEntires.reverse().map(([breakpointId, breakpoint]) => (
+          <li key={breakpointId}>
+            <button
+              onClick={createHandleClick(breakpointId, breakpoint)}
+              className={classes({
+                active: breakpointId === activeBreakpoint?.id,
+              })}
+            >
+              <div className="title">{makePx(breakpoint.value)}</div>
+              <div className="name">{breakpoint.name}</div>
+            </button>
+          </li>
+        ))}
       </ul>
-      <div className="grid">
-        <div>
-          {Object.entries(response.breakpoints)
-            .sort((a, b) => b[1].value - a[1].value)
-            .map(([breakpointId, { value }], i) => (
-              <button
-                key={breakpointId}
-                ref={createSetButtonRef(value, maxBreakpoint)}
-                // @ts-expect-error custom properties are valid
-                style={{ "--color": colors[i] }}
-              />
-            ))}
-        </div>
-        <div className="page" ref={pageRef} />
+      <div className="grid" ref={gridRef}>
+        {useMemo(
+          () => (
+            <div>
+              {breakpointEntires.map(([breakpointId, breakpoint], i) => (
+                <div
+                  className="line"
+                  key={breakpointId}
+                  ref={createBreakpointSection(
+                    breakpointId,
+                    breakpoint,
+                    i === 0
+                  )}
+                  // @ts-expect-error custom properties are valid
+                  style={{ "--color": colors[i] }}
+                >
+                  <button onClick={createHandleClick(breakpointId, breakpoint)}>
+                    <span>{makePx(breakpoint.value)}</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+          ),
+          [breakpointEntires, createBreakpointSection, createHandleClick]
+        )}
+        <div
+          className="page"
+          ref={pageRef}
+          style={{
+            width: activeBreakpoint?.samplePageWidth ?? "initial",
+          }}
+        />
       </div>
     </div>
   );

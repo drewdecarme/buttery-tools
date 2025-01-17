@@ -3,11 +3,12 @@ import { generateGUID } from "@buttery/utils/isomorphic";
 import type { Updater } from "use-immer";
 import { useImmer } from "use-immer";
 
+export type ConfigurationStateResponseBreakpointValue = {
+  name: string;
+  value: number;
+};
 type ConfigurationStateResponseBreakpoints = {
-  [key: string]: {
-    name: string;
-    value: number;
-  };
+  [key: string]: ConfigurationStateResponseBreakpointValue;
 };
 
 export type ConfigurationStateResponse = {
@@ -35,6 +36,19 @@ function getInitResponseStateFromConfig(
     ),
   };
 }
+
+export type OnResponseBreakpointAction = (
+  options:
+    | {
+        action: "addBreakpoint";
+      }
+    | {
+        action: "addBreakpointDirection";
+        direction: "above" | "below";
+        referenceIndex: number;
+      }
+    | { action: "deleteBreakpoint"; id: string }
+) => void;
 
 export function useConfigStateResponse(initConfig: ButteryTokensConfig) {
   return useImmer(getInitResponseStateFromConfig(initConfig));
