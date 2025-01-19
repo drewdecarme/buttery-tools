@@ -142,6 +142,7 @@ export const ButtonRegular = forwardRef<HTMLButtonElement, ButtonRegularProps>(
       dxColor = "primary",
       dxVariant = "contained",
       dxSize = "normal",
+      type = "button",
       DXIconStart = null,
       ...restProps
     },
@@ -151,6 +152,7 @@ export const ButtonRegular = forwardRef<HTMLButtonElement, ButtonRegularProps>(
       <button
         {...restProps}
         ref={ref}
+        type={type}
         className={classes(
           createButtonStyles({ dxColor, dxSize, dxVariant }),
           className

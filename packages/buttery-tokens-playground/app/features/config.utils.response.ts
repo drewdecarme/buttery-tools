@@ -48,6 +48,7 @@ export type OnResponseBreakpointAction = (
         referenceIndex: number;
       }
     | { action: "deleteBreakpoint"; id: string }
+    | { action: "updateBreakpoint"; id: string; name: string; value: number }
 ) => void;
 
 export function useConfigStateResponse(initConfig: ButteryTokensConfig) {

@@ -66,6 +66,13 @@ export function BreakpointConfig() {
           });
           break;
 
+        case "updateBreakpoint":
+          setResponse((draft) => {
+            draft.breakpoints[args.id].name = args.name;
+            draft.breakpoints[args.id].value = args.value;
+          });
+          break;
+
         default:
           return exhaustiveMatchGuard(args);
       }

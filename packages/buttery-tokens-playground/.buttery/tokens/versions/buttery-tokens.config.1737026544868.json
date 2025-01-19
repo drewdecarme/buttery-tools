@@ -21,19 +21,7 @@
       },
       "space": {
         "mode": "auto",
-        "variants": [
-          "0",
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10"
-        ]
+        "variants": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
       }
     },
     "font": {
@@ -41,19 +29,11 @@
       "families": {
         "Montserrat": {
           "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
-          "styles": [
-            "regular-400",
-            "semiBold-600",
-            "bold-700"
-          ]
+          "styles": ["regular-400", "semiBold-600", "bold-700"]
         },
         "Lato": {
           "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
-          "styles": [
-            "regular-400",
-            "medium-500",
-            "semiBold-600"
-          ]
+          "styles": ["regular-400", "medium-500", "semiBold-600"]
         }
       },
       "variants": {

@@ -4,6 +4,7 @@ import {
   makeRem,
   makeReset,
 } from "@buttery/tokens/playground";
+import type { FormEventHandler } from "react";
 import { useCallback, useMemo } from "react";
 import { useDropdownMenu, useToggle } from "@buttery/components";
 import { css } from "@linaria/core";
@@ -15,10 +16,14 @@ import { VariantContainer } from "~/components/VariantContainer";
 import { Button } from "~/components/Button";
 import { IconDelete } from "~/icons/IconDelete";
 import { IconPencilEdit01 } from "~/icons/IconPencilEdit01";
-import { VariantContainerContent } from "~/components/VariantContainerContent";
 import { IconInsertRow } from "~/icons/IconInsertRow";
 import { IconPlusSign } from "~/icons/IconPlusSign";
 import { Dropdown } from "~/components/Dropdown";
+import { InputText } from "~/components/InputText";
+import { InputNumber } from "~/components/InputNumber";
+import { VariantContainerContent } from "~/components/VariantContainerContent";
+import { InputGroup } from "~/components/InputGroup";
+import { InputLabel } from "~/components/InputLabel";
 
 import type {
   ConfigurationStateResponseBreakpointValue,
@@ -27,6 +32,21 @@ import type {
 
 const barStyles = css`
   grid-template-columns: ${makeRem(100)} 1fr auto !important;
+
+  .save {
+    color: ${makeColor("success-600")};
+  }
+
+  .delete {
+    color: ${makeColor("danger-200")};
+  }
+`;
+
+const contentStyles = css`
+  .footer {
+    display: flex;
+    gap: ${makeRem(8)};
+  }
 `;
 
 const dropdownStyles = css`
@@ -56,7 +76,7 @@ export function BreakpointConfigVariant({
   breakpoint: ConfigurationStateResponseBreakpointValue;
   onAction: OnResponseBreakpointAction;
 }) {
-  const [isOpen, toggle] = useToggle();
+  const [isEditing, toggle] = useToggle();
 
   const handleDelete = useCallback(() => {
     onAction({ action: "deleteBreakpoint", id: breakpointId });
@@ -90,6 +110,26 @@ export function BreakpointConfigVariant({
     closeMenu();
   }, [breakpointIndex, closeMenu, onAction]);
 
+  const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
+    (e) => {
+      e.preventDefault();
+      console.log("submitting");
+      const formData = new FormData(e.currentTarget);
+      console.log(Object.fromEntries(formData.entries()));
+      const name = formData.get("name");
+      const value = formData.get("value");
+
+      onAction({
+        action: "updateBreakpoint",
+        id: breakpointId,
+        name: String(name),
+        value: Number(value),
+      });
+      toggle();
+    },
+    [breakpointId, onAction, toggle]
+  );
+
   return (
     <VariantContainer>
       <VariantContainerBar className={barStyles}>
@@ -99,6 +139,13 @@ export function BreakpointConfigVariant({
           {useMemo(
             () => (
               <VariantContainerBarActions>
+                <Button
+                  dxVariant="icon"
+                  DXIcon={IconPencilEdit01}
+                  onClick={toggle}
+                  dxSize="dense"
+                  dxHelp={"Edit variant"}
+                />
                 <div>
                   <Button
                     ref={setTargetRef}
@@ -133,17 +180,11 @@ export function BreakpointConfigVariant({
                 </div>
                 <Button
                   dxVariant="icon"
-                  DXIcon={IconPencilEdit01}
-                  onClick={toggle}
-                  dxSize="dense"
-                  dxHelp="Edit variant"
-                />
-                <Button
-                  dxVariant="icon"
                   DXIcon={IconDelete}
                   onClick={handleDelete}
                   dxSize="dense"
                   dxHelp="Delete variant"
+                  className="delete"
                 />
               </VariantContainerBarActions>
             ),
@@ -158,7 +199,37 @@ export function BreakpointConfigVariant({
           )}
         </VariantContainerBarActions>
       </VariantContainerBar>
-      {isOpen && <VariantContainerContent>content</VariantContainerContent>}
+      {isEditing ? (
+        <VariantContainerContent className={contentStyles}>
+          <form onSubmit={handleSubmit}>
+            <InputGroup>
+              <InputLabel dxSize="dense" dxLabel="Breakpoint name">
+                <InputText
+                  defaultValue={breakpoint.name}
+                  name="name"
+                  dxSize="dense"
+                />
+              </InputLabel>
+              <InputLabel dxSize="dense" dxLabel="Value">
+                <InputNumber
+                  dxSize="dense"
+                  min={0}
+                  defaultValue={breakpoint.value}
+                  name="value"
+                />
+              </InputLabel>
+              <div className="footer">
+                <Button dxVariant="contained" dxSize="dense" type="submit">
+                  Save
+                </Button>
+                <Button dxVariant="outlined" dxSize="dense">
+                  Cancel
+                </Button>
+              </div>
+            </InputGroup>
+          </form>
+        </VariantContainerContent>
+      ) : null}
     </VariantContainer>
   );
 }

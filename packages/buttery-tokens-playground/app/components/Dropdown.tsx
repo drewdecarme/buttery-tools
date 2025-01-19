@@ -19,7 +19,7 @@ const styles = css`
   border: none;
   transform: scale(0.9);
   filter: drop-shadow(3px 8px 28px rgba(130, 130, 130, 0.3));
-  border-radius: 0.5rem;
+  border-radius: ${makeRem(4)};
   padding: ${makeRem(8)} 0;
 
   /* Animation for appearing */

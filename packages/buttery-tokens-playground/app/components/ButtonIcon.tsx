@@ -90,6 +90,7 @@ export const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(
       DXIcon,
       dxSize = "normal",
       dxStyle = "normal",
+      type = "button",
       ...restProps
     },
     forwardedRef
@@ -115,6 +116,7 @@ export const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(
       <>
         <button
           {...restProps}
+          type={type}
           ref={refCallback}
           aria-labelledby={id}
           className={classes(styles, className, {
