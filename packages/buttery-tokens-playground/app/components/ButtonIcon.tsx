@@ -78,10 +78,6 @@ const styles = css`
   }
 `;
 
-const helpStyles = css`
-  white-space: nowrap;
-`;
-
 export const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(
   function ButtonIcon(
     {
@@ -133,7 +129,7 @@ export const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(
           />
         </button>
         {dxHelp && (
-          <Tooltip ref={setTooltipRef} className={helpStyles} id={id}>
+          <Tooltip ref={setTooltipRef} id={id}>
             {dxHelp}
           </Tooltip>
         )}

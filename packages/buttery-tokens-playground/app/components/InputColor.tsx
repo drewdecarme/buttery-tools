@@ -9,7 +9,7 @@ export type InputColorPropsNative = Omit<
   "type"
 >;
 export type InputColorPropsCustom = {
-  dxSize: "dense";
+  dxSize: "dense" | "regular";
 };
 export type InputColorProps = InputColorPropsNative & InputColorPropsCustom;
 
@@ -33,6 +33,12 @@ const styles = css`
   &.s-dense {
     border-radius: ${makeRem(2)};
     height: ${makeRem(24)};
+    aspect-ratio: 1 / 1;
+  }
+
+  &.s-regular {
+    border-radius: ${makeRem(4)};
+    height: ${makeRem(32)};
     aspect-ratio: 1 / 1;
   }
 `;

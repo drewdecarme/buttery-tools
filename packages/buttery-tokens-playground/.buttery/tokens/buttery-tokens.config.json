@@ -60,14 +60,14 @@
   },
   "color": {
     "brand": {
-      "type": "earth",
+      "type": "fluorescent",
       "colors": {
-        "brand1": {
-          "hue": 180,
+        "primary": {
+          "hue": 211,
           "variants": 10
         },
-        "brand2": {
-          "hue": 270,
+        "secondary": {
+          "hue": 150,
           "variants": 10
         },
         "brand3": {
@@ -83,8 +83,8 @@
           "variants": 10
         }
       },
-      "saturation": 41,
-      "brightness": 71
+      "saturation": 63,
+      "brightness": 82
     },
     "neutral": {
       "neutral": {

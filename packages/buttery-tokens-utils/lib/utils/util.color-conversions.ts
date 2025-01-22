@@ -97,35 +97,29 @@ function rgbToHsb(r: number, g: number, b: number) {
 
   const max = Math.max(red, green, blue);
   const min = Math.min(red, green, blue);
-  let h = 0;
-  let s: number;
-  let v = max;
+  const delta = max - min;
 
-  const d = max - min;
-  s = max === 0 ? 0 : d / max;
+  let h = 0; // Hue
+  const s = max === 0 ? 0 : (delta / max) * 100; // Saturation
+  const v = max * 100; // Brightness
 
-  if (max === min) {
-    h = 0; // achromatic
-  } else {
-    switch (max) {
-      case red:
-        h = (g - b) / d + (g < b ? 6 : 0);
-        break;
-      case green:
-        h = (b - r) / d + 2;
-        break;
-      case blue:
-        h = (r - g) / d + 4;
-        break;
+  if (delta !== 0) {
+    if (max === red) {
+      h = ((green - blue) / delta) % 6;
+    } else if (max === green) {
+      h = (blue - red) / delta + 2;
+    } else if (max === blue) {
+      h = (red - green) / delta + 4;
     }
-    h = h / 6;
+    h *= 60; // Convert to degrees
   }
 
-  h = Math.round(h * 360);
-  s = Math.round(s * 100);
-  v = Math.round(v * 100);
+  // Normalize hue to 0–360
+  if (h < 0) {
+    h += 360;
+  }
 
-  return { h, s, b: v };
+  return { h: Math.round(h), s: Math.round(s), b: Math.round(v) };
 }
 
 // Convert HEX to HSB

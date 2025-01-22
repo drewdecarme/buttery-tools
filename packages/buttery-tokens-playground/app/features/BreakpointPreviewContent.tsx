@@ -115,6 +115,8 @@ const styles = css`
       margin-right: auto;
       border: 2px solid transparent;
       transition: width 0.2s ease-in-out;
+      display: grid;
+      place-content: center;
     }
   }
 `;
@@ -297,7 +299,9 @@ export function BreakpointPreviewContent() {
           style={{
             width: activeBreakpoint?.samplePageWidth ?? "initial",
           }}
-        />
+        >
+          {activeBreakpoint?.name}
+        </div>
       </div>
     </div>
   );

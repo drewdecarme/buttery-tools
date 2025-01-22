@@ -89,7 +89,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         })}
         ref={ref}
       >
-        {children}
+        <div>{children}</div>
       </div>
     );
   }

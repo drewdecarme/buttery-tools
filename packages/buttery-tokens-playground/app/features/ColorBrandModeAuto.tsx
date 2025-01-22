@@ -1,18 +1,15 @@
 import { css } from "@linaria/core";
 import { makeRem } from "@buttery/tokens/playground";
-import type { ButteryTokensColorBrandTypeAuto } from "@buttery/tokens-utils/schemas";
 import type { ChangeEventHandler } from "react";
-import { useCallback, useId } from "react";
-import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
+import { useCallback } from "react";
+import { generateGUID } from "@buttery/utils/isomorphic";
 
 import type { ConfigurationContextType } from "./Config.context";
-import {
-  colorAutoPresets,
-  type ConfigurationStateColorBrandAuto,
-} from "./config.utils.sizing";
 import { ColorSwatchAdd } from "./ColorSwatchAdd";
 import { ColorSwatchList } from "./ColorSwatchList";
 import { ColorBrandModeAutoSwatch } from "./ColorBrandModeAutoSwatch";
+import type { ConfigurationStateColorBrandAuto } from "./config.utils.color";
+import { colorAutoPresets } from "./config.utils.color";
 import { ColorBrandModeAutoCategory } from "./ColorBrandModeAutoCategory";
 
 import { InputRange } from "../components/InputRange";
@@ -31,60 +28,6 @@ export function ColorBrandModeAuto({
   state: ConfigurationStateColorBrandAuto;
   setColor: ConfigurationContextType["setColor"];
 }) {
-  const handleSelectCategory = useCallback<
-    (type: ButteryTokensColorBrandTypeAuto["type"]) => void
-  >(
-    (value) => {
-      const category = value as ButteryTokensColorBrandTypeAuto["type"];
-      setColor((draft) => {
-        draft.brand.auto.type = category;
-        draft.brand.auto.colors = {
-          [generateGUID()]: {
-            name: "primary",
-            hue: 40,
-            variants: 10,
-          },
-          [generateGUID()]: {
-            name: "secondary",
-            hue: 180,
-            variants: 4,
-          },
-        };
-
-        switch (draft.brand.auto.type) {
-          case "earth":
-            draft.brand.auto.brightness = 36;
-            draft.brand.auto.saturation = 36;
-            break;
-
-          case "fluorescent":
-            draft.brand.auto.brightness = 82;
-            draft.brand.auto.saturation = 63;
-            break;
-
-          case "jewel":
-            draft.brand.auto.brightness = 56;
-            draft.brand.auto.saturation = 73;
-            break;
-
-          case "neutral":
-            draft.brand.auto.brightness = 58;
-            draft.brand.auto.saturation = 1;
-            break;
-
-          case "pastel":
-            draft.brand.auto.brightness = 89;
-            draft.brand.auto.saturation = 14;
-            break;
-
-          default:
-            exhaustiveMatchGuard(draft.brand.auto);
-        }
-      });
-    },
-    [setColor]
-  );
-
   const handleChangeBrightness = useCallback<
     ChangeEventHandler<HTMLInputElement>
   >(
@@ -109,28 +52,20 @@ export function ColorBrandModeAuto({
     [setColor]
   );
 
-  const selectId = useId();
-
   return (
     <>
       <InputSection>
         <InputLabel
-          dxLabel="Select a color category"
-          dxHelp="The color category determines the tone of the hues that you choose"
-          htmlFor={selectId}
+          dxLabel="Determine the color category"
+          dxHelp="Manually select a category or pick a color to auto determine it's category"
         />
-        <ColorBrandModeAutoCategory
-          id={selectId}
-          onSelect={handleSelectCategory}
-          selectedType={state.type}
-        />
+        <ColorBrandModeAutoCategory state={state} setColor={setColor} />
       </InputSection>
       <InputSection>
         <InputLabel
           dxLabel="Configure your colors"
           dxHelp="Adjust the saturation, brightness and hues to get the colors you want in accordance with the selected category"
         />
-
         <div className={inputLabelStyles}>
           <InputLabel
             dxLabel="Saturation"
