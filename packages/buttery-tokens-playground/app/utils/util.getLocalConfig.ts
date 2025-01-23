@@ -1,4 +1,3 @@
-import path from "node:path";
 import { readFile } from "node:fs/promises";
 
 import type { ButteryTokensConfig } from "@buttery/tokens-utils/schemas";
@@ -14,6 +13,7 @@ export function getLocalConfigVars() {
     CONFIG_PATH: String(process.env.BUTTERY_TOKENS_PG_CONFIG_PATH),
     VERSION_DIR: String(process.env.BUTTERY_TOKENS_PG_VERSION_DIR),
   };
+  LOG.debug(JSON.stringify(vars, null, 2));
 
   return Object.entries(vars).reduce((accum, [varName, varValue]) => {
     if (typeof varValue === "undefined") {
@@ -32,14 +32,14 @@ export function getIsLocalConfig() {
 }
 
 async function getLocalConfig() {
-  const configPathFromProcess = process.env.BUTTERY_TOKENS_PG_CONFIG_PATH;
-  if (!configPathFromProcess) {
+  const configPath = process.env.BUTTERY_TOKENS_PG_CONFIG_PATH;
+  if (!configPath) {
     throw errors.MISSING_ENV_VAR(
       "Unable to determine local path of `buttery-tokens.config.json`",
       "BUTTERY_TOKENS_PG_CONFIG_PATH"
     );
   }
-  const configPath = path.resolve(configPathFromProcess);
+  LOG.debug(`Fetching configuration from path ${configPath}`);
   const rawConfig = await readFile(configPath, { encoding: "utf8" });
 
   const jsonConfig = tryHandleSync<Record<string, unknown>, [string]>(

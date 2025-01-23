@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 import { makeRem, makeReset } from "@buttery/tokens/playground";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
 import { match } from "ts-pattern";
 import { manualFontStyles } from "@buttery/tokens-utils/schemas";
@@ -53,7 +53,6 @@ export function FontFamilyConfig() {
             const familyToDelete = draft.families[args.id];
             const isFontFamilyInVariants = Object.values(draft.variants).reduce(
               (accum, variant) => {
-                console.log(variant.family, familyToDelete.name);
                 if (variant.family === familyToDelete.name) return true;
                 return accum;
               },
@@ -122,10 +121,6 @@ export function FontFamilyConfig() {
     },
     [setFont]
   );
-
-  useEffect(() => {
-    console.log(font);
-  }, [font]);
 
   const handleAddFontFamily = useCallback(
     () => handleAction({ action: "addFontFamily" }),

@@ -19,13 +19,13 @@ export const IconPencil = ({
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <path
+    {/* <path
       d="M7 11C7.63152 11.3231 8.4887 11.9732 9.28009 11.99a91C10.2988 12.0324 10.9868 11.1372 12 11.1372C13.0132 11.1372 13.7012 12.0324 14.7199 11.9991C15.5113 11.9732 16.3685 11.3231 17 11"
       stroke="currentColor"
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-    />
+    /> */}
     <path
       d="M12 12L12 22"
       stroke="currentColor"

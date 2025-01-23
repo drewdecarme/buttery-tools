@@ -5,12 +5,13 @@
     "**/.server/**/*.ts",
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",
-    "**/.client/**/*.tsx"
-    // ".react-router/types/**/*",
+    "**/.client/**/*.tsx",
+    ".react-router/types/**/*",
+    "app/features/config.utils.sizing.ts"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    // "types": ["vite/client", "@react-router/node"],
+    "types": ["vite/client", "@react-router/node"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
@@ -26,7 +27,7 @@
     "paths": {
       "~/*": ["./app/*"]
     },
-    // "rootDirs": [".", "./.react-router/types"],
+    "rootDirs": [".", "./.react-router/types"],
     // Vite takes care of building everything, not tsc.
     "noEmit": true
   }

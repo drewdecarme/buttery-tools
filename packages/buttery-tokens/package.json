@@ -63,7 +63,7 @@
     "@buttery/utils": "workspace:*",
     "@inquirer/prompts": "7.2.1",
     "@linaria/core": "6.2.0",
-    "@remix-run/express": "^2.15.2",
+    "@react-router/express": "^7.1.3",
     "@types/chroma-js": "3.1.0",
     "@types/node": "22.10.9",
     "@wyw-in-js/vite": "0.5.5",

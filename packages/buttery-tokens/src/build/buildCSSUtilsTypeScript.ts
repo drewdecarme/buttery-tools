@@ -18,6 +18,10 @@ import { MakeTemplateFontBaseSize } from "./make-templates/template.makeFontBase
 import type { ResolvedButteryTokensConfig } from "../config/getButteryTokensConfig.js";
 import { LOG } from "../utils/util.logger.js";
 
+function hasValues<T extends Record<string, unknown>>(obj: T) {
+  return Object.keys(obj).length > 0;
+}
+
 /**
  * Provided a config and a collection of directories, this function gathers
  * all of the templates, registers them and then adds the necessary data
@@ -43,15 +47,17 @@ export async function buildCSSUtilsTypeScript({
 
   // Register the templates that should be generated
   Templates.register(MakeTemplateColor);
-  Templates.register(MakeTemplateFontFamily);
-  Templates.register(MakeTemplateFontWeight);
+  if (hasValues(config.font.families)) {
+    Templates.register(MakeTemplateFontFamily);
+    Templates.register(MakeTemplateFontWeight);
+  }
   Templates.register(MakeTemplateFontBaseSize);
   Templates.register(MakeTemplateRem);
   Templates.register(MakeTemplatePx);
   Templates.register(MakeTemplateResponsive);
   Templates.register(MakeTemplateReset);
   // Templates.register(MakeTemplateSpace);
-  if (config.custom) {
+  if (hasValues(config.custom)) {
     Templates.register(MakeTemplateCustom);
   }
 
@@ -85,8 +91,9 @@ export async function buildCSSUtilsTypeScript({
       exec(cmd, (error, stdout) => {
         if (error) {
           const err = String(error);
-          reject(stdout ? `${stdout}:${err}` : err);
-          throw LOG.fatal(new Error());
+          const fullErr = stdout ? `${stdout}:${err}` : err;
+          reject(fullErr);
+          throw LOG.fatal(new Error(fullErr));
         }
         resolve();
       });

@@ -52,6 +52,7 @@ export async function getButteryTokensDirectories(
         root: playgroundDir,
         server: path.resolve(playgroundDir, "./build/server/index.js"),
         static: path.resolve(playgroundDir, "./build/client"),
+        versions: path.resolve(paths.butteryDir, "./tokens/versions"),
       },
       /**
        * The directory where the buttery token utilities

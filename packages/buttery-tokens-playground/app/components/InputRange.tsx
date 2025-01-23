@@ -207,7 +207,6 @@ export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
         const max = Number(node.max || 100);
         const percentage = ((value - min) / (max - min)) * 100;
         if (dxOnChange) {
-          console.log("running change handler");
           dxOnChange(value);
         }
 
@@ -232,7 +231,6 @@ export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
     const inputRangeCallbackRef = useCallback<RefCallback<HTMLInputElement>>(
       (node) => {
         if (!node) return;
-        console.log("running callback");
         setPercentage(node);
         ref.current = node;
       },

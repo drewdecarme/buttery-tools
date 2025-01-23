@@ -200,7 +200,6 @@ export function BreakpointPreviewContent() {
         containerWidth,
         breakpoint.value
       );
-      console.log(makePx(breakpointSectionWidth));
       node.style.setProperty("width", makePx(breakpointSectionWidth));
 
       if (!isActive) return;

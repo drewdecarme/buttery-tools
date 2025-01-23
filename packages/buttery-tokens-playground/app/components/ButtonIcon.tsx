@@ -84,6 +84,7 @@ export const ButtonIcon = forwardRef<HTMLButtonElement, ButtonIconProps>(
       className,
       dxHelp,
       DXIcon,
+      dxVariant: _,
       dxSize = "normal",
       dxStyle = "normal",
       type = "button",

@@ -61,7 +61,6 @@ export function FontVariantPreviewContent() {
   return (
     <ul className={styles}>
       {Object.entries(variants).map(([variantId, variant]) => {
-        console.log(variant);
         return (
           <li key={variantId}>
             <div className="heading">

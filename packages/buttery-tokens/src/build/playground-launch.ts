@@ -1,32 +1,29 @@
 import express from "express";
-import { createRequestHandler } from "@remix-run/express";
+import { createRequestHandler } from "@react-router/express";
 
 import type { ResolvedButteryTokensConfig } from "../config/getButteryTokensConfig.js";
 import { LOG } from "../utils/util.logger.js";
 
 export async function launchPlayground(rConfig: ResolvedButteryTokensConfig) {
   const app = express();
+  const port = process.env.PORT || 5700;
 
   // Serve static files from the public directory
   app.use(express.static(rConfig.dirs.playground.static));
 
-  // Middleware to handle Remix requests
+  // Middleware to handle React Router requests
   app.all(
     "*",
     createRequestHandler({
-      build: await import(rConfig.dirs.playground.server),
+      build: () => import(rConfig.dirs.playground.server),
       mode: process.env.NODE_ENV,
     })
   );
 
-  const port = process.env.PORT || 5700;
-
   // Set some local environment variables
   process.env.BUTTERY_TOKENS_PG_IS_LOCAL = "true";
-  console.log(rConfig.paths);
-  process.env.BUTTERY_TOKENS_PG_CONFIG_PATH = JSON.stringify(
-    rConfig.paths.config
-  );
+  process.env.BUTTERY_TOKENS_PG_CONFIG_PATH = rConfig.paths.config;
+  process.env.BUTTERY_TOKENS_PG_VERSION_DIR = rConfig.dirs.playground.versions;
 
   app.listen(port, () => {
     LOG.watch(

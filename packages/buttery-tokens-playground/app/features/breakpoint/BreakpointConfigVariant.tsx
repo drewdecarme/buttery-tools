@@ -113,9 +113,7 @@ export function BreakpointConfigVariant({
   const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
     (e) => {
       e.preventDefault();
-      console.log("submitting");
       const formData = new FormData(e.currentTarget);
-      console.log(Object.fromEntries(formData.entries()));
       const name = formData.get("name");
       const value = formData.get("value");
 
