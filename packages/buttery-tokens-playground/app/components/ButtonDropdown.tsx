@@ -113,7 +113,7 @@ export const ButtonDropdown = forwardRef<
   {
     children,
     dxLabel,
-    DXAdornmentStart,
+    DXIconStart,
     dxColor = "primary",
     dxVariant = "contained",
     dxSize = "normal",

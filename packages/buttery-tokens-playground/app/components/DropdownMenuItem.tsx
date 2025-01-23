@@ -65,7 +65,7 @@ const styles = css`
   }
   .title {
     grid-area: title;
-    font-weight: ${makeFontWeight("medium")};
+    font-weight: ${makeFontWeight("Mulish-medium")};
     color: ${makeColor("neutral")};
     font-size: ${makeRem(16)};
   }

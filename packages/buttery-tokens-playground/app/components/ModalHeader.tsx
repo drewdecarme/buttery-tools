@@ -8,6 +8,7 @@ import {
   makeReset,
 } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef } from "react";
 
 import { IconCancel } from "~/icons/IconCancel";
@@ -36,8 +37,8 @@ const styles = css`
   .title {
     flex: 1;
     font-size: ${makeRem(20)};
-    font-family: ${makeFontFamily("body")};
-    font-weight: ${makeFontWeight("bold")};
+    font-family: ${makeFontFamily("Mulish")};
+    font-weight: ${makeFontWeight("Mulish-bold")};
     line-height: 1;
   }
 
@@ -45,8 +46,8 @@ const styles = css`
     font-size: ${makeRem(16)};
     margin-top: ${makeRem(12)};
     color: ${makeColor("neutral-light", { opacity: 0.8 })};
-    font-family: ${makeFontFamily("body")};
-    font-weight: ${makeFontWeight("regular")};
+    font-family: ${makeFontFamily("Mulish")};
+    font-weight: ${makeFontWeight("Mulish-regular")};
     max-width: 70ch;
     line-height: 1.4;
   }

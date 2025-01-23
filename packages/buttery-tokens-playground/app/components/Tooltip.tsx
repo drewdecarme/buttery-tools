@@ -21,7 +21,7 @@ const styles = css`
   border-radius: ${makeRem(4)};
   padding: ${makeRem(16)};
   font-size: ${makeRem(12)};
-  font-family: ${makeFontFamily("body")};
+  font-family: ${makeFontFamily("Mulish")};
   max-width: ${makeRem(300)};
   border: 0;
   filter: drop-shadow(1px 2px 3px var(--tooltip-bg-filter-color))

@@ -26,10 +26,10 @@ const styles = css`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  font-family: ${makeFontFamily("body")};
+  font-family: ${makeFontFamily("Mulish")};
   background: var(--bg-color);
   line-height: 1;
-  font-weight: ${makeFontWeight("semi-bold")};
+  font-weight: ${makeFontWeight("Mulish-semiBold")};
   white-space: nowrap;
   border-radius: ${makeRem(4)};
 

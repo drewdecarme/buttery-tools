@@ -45,7 +45,7 @@ const styles = css`
   }
 
   .title {
-    font-weight: ${makeFontWeight("bold")};
+    font-weight: ${makeFontWeight("Mulish-bold")};
   }
 
   .help {

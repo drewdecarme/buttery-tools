@@ -1,3 +1,5 @@
+import { match } from "ts-pattern";
+
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate.js";
 
 const template: CompileFunction = ({
@@ -7,7 +9,13 @@ const template: CompileFunction = ({
   functionName,
   cssVarPrefix,
 }) => {
-  const fontFamilyNames = Object.keys(config.font?.families ?? {});
+  const fontFamilyNames = match(config.font)
+    .with({ source: "manual" }, (state) => {
+      return Object.keys(state.families);
+    })
+    .otherwise((state) => {
+      return Object.keys(state.families);
+    });
   const fontFamilyUnion = methods.createTypeUnion(fontFamilyNames);
 
   return `export type FontFamily = ${fontFamilyUnion};
@@ -58,7 +66,7 @@ const css: CompileFunction = ({ config, cssVarPrefix }) => {
   return Object.entries(config.font?.families ?? {}).reduce(
     (accum, [fontFamilyName, fontFamilyValue]) =>
       accum.concat(
-        `  ${cssVarPrefix}-${fontFamilyName}: ${fontFamilyValue};\n`
+        `  ${cssVarPrefix}-${fontFamilyName}: "${fontFamilyName}", ${fontFamilyValue.fallback};\n`
       ),
     ""
   );
@@ -67,7 +75,7 @@ const css: CompileFunction = ({ config, cssVarPrefix }) => {
 export const MakeTemplateFontFamily = new MakeTemplate({
   functionName: "makeFontFamily",
   functionDescription:
-    "A utility that returns the CSS variable assigned to keys of the `font.family` that are defined in the `buttery.config.ts`",
+    "A utility that returns the CSS variable assigned to the font-family`",
   variableBody: "font-family",
   template,
   css,

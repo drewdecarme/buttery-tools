@@ -16,7 +16,7 @@ const buttonStyles = css`
   ${makeReset("button")};
   display: flex;
   color: ${makeColor("secondary-800")};
-  font-weight: ${makeFontWeight("semi-bold")};
+  font-weight: ${makeFontWeight("Mulish-semiBold")};
   font-size: ${makeRem(12)};
   gap: ${makeRem(4)};
   align-items: center;

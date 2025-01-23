@@ -49,7 +49,7 @@ const styles = css`
       }
       .name {
         font-size: ${makeRem(14)};
-        font-weight: ${makeFontWeight("light")};
+        font-weight: ${makeFontWeight("Mulish-light")};
       }
       &.active {
         color: ${makeColor("neutral")};

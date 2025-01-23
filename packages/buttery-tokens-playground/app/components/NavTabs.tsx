@@ -53,7 +53,7 @@ const styles = css`
       display: grid;
       place-content: center;
       text-transform: uppercase;
-      font-weight: ${makeFontWeight("bold")};
+      font-weight: ${makeFontWeight("Mulish-bold")};
       transition: all 0.15s ease-in-out;
     }
   }

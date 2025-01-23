@@ -1,7 +1,5 @@
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate.js";
 
-export const makeRem = (pixel: number) => `${pixel / 16}rem`;
-
 const template: CompileFunction = ({ config, docs, functionName }) => {
   return `/**
  * ## Description
@@ -38,11 +36,11 @@ const template: CompileFunction = ({ config, docs, functionName }) => {
  * );
  * \`\`\`
  */
-export const ${functionName} = (pixel: number) => \`\${pixel / ${config.size.documentFontSize}}rem\`;`;
+export const ${functionName} = (pixel: number) => \`\${pixel / ${config.sizeAndSpace.baseFontSize}}rem\`;`;
 };
 
 const css: CompileFunction = ({ config, cssVarPrefix }) => {
-  return `${cssVarPrefix}: ${config.size.documentFontSize ?? 16};`;
+  return `${cssVarPrefix}: ${config.sizeAndSpace.baseFontSize};`;
 };
 
 export const MakeTemplateRem = new MakeTemplate({

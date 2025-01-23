@@ -20,7 +20,7 @@ const template: CompileFunction = ({
  *
  * const bodyStyles = css\`
  *  body: {
- *    font-size: \${${functionName}("${config.size.documentFontSize}")};
+ *    font-size: \${${functionName}("${config.sizeAndSpace.baseFontSize}")};
  *  }
  *   
  * \`
@@ -33,7 +33,7 @@ export const ${functionName}: MakeFontBaseSize = (value) => {
 };
 
 const css: CompileFunction = ({ config, cssVarPrefix }) => {
-  return `  ${cssVarPrefix}: ${config.size.documentFontSize};\n`;
+  return `  ${cssVarPrefix}: ${config.sizeAndSpace.baseFontSize};\n`;
 };
 
 export const MakeTemplateFontBaseSize = new MakeTemplate({

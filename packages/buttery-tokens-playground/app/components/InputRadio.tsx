@@ -64,7 +64,7 @@ const styles = css`
     .title {
       grid-area: radio-text-title;
       margin-bottom: ${makeRem(4)};
-      font-weight: ${makeFontWeight("semi-bold")};
+      font-weight: ${makeFontWeight("Mulish-semiBold")};
     }
 
     .description {

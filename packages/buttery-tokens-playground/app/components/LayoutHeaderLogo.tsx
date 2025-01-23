@@ -35,13 +35,13 @@ const styles = css`
       font-size: ${makeRem(24)};
       text-transform: uppercase;
       letter-spacing: -${makeRem(2)};
-      font-family: ${makeFontFamily("logo")};
+      font-family: ${makeFontFamily("Mulish")};
       &:first-child {
-        font-weight: ${makeFontWeight("medium")};
+        font-weight: ${makeFontWeight("Mulish-medium")};
       }
 
       &:last-child {
-        font-weight: ${makeFontWeight("bold")};
+        font-weight: ${makeFontWeight("Mulish-bold")};
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;

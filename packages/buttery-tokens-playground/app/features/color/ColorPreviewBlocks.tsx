@@ -6,10 +6,10 @@ const blockStyles = css`
   height: 100%;
   width: 100%;
   padding: ${makeRem(8)};
-  font-family: ${makeFontFamily("code")};
+  font-family: ${makeFontFamily("Consolas")};
 
   .name {
-    font-family: ${makeFontFamily("code")};
+    font-family: ${makeFontFamily("Consolas")};
     font-size: ${makeRem(12)};
   }
 `;

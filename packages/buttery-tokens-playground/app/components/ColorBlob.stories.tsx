@@ -22,8 +22,8 @@ type Story = StoryObj<typeof meta>;
 
 export const CircleHue: Story = {
   args: {
-    dxVariant: "circle",
     dxType: "hue",
+    dxVariant: "circle",
     dxValue: 40,
   } as ColorBlobProps,
 };

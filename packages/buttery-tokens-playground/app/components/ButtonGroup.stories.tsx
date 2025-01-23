@@ -18,26 +18,16 @@ export default meta;
 export const WithDropdownAtEnd = () => {
   return (
     <ButtonGroup>
-      <Button dxVariant="outlined" DXAdornmentStart={<IconCopy dxSize={16} />}>
+      <Button dxVariant="outlined" DXIconStart={IconCopy}>
         Copy
       </Button>
-      <Button
-        dxVariant="outlined"
-        DXAdornmentStart={<IconDownload05 dxSize={16} />}
-      >
+      <Button dxVariant="outlined" DXIconStart={IconDownload05}>
         Export
       </Button>
       <ButtonDropdown
         dxVariant="outlined"
-        DXAdornmentStart={<IconFloppyDisk dxSize={16} />}
-        dxOptions={[
-          {
-            dxLabel: "Compare and Save",
-            dxAction: () => {
-              void 0;
-            },
-          },
-        ]}
+        DXIconStart={IconFloppyDisk}
+        dxLabel="Save"
       >
         Save
       </ButtonDropdown>
@@ -48,27 +38,17 @@ export const WithDropdownAtEnd = () => {
 export const WithDropdownInMiddle = () => {
   return (
     <ButtonGroup>
-      <Button dxVariant="outlined" DXAdornmentStart={<IconCopy dxSize={16} />}>
+      <Button dxVariant="outlined" DXIconStart={IconCopy}>
         Copy
       </Button>
       <ButtonDropdown
         dxVariant="outlined"
-        DXAdornmentStart={<IconFloppyDisk dxSize={16} />}
-        dxOptions={[
-          {
-            dxLabel: "Compare and Save",
-            dxAction: () => {
-              void 0;
-            },
-          },
-        ]}
+        DXIconStart={IconFloppyDisk}
+        dxLabel="Save"
       >
         Save
       </ButtonDropdown>
-      <Button
-        dxVariant="outlined"
-        DXAdornmentStart={<IconDownload05 dxSize={16} />}
-      >
+      <Button dxVariant="outlined" DXIconStart={IconDownload05}>
         Export
       </Button>
     </ButtonGroup>
@@ -80,26 +60,16 @@ export const WithDropdownAtStart = () => {
     <ButtonGroup>
       <ButtonDropdown
         dxVariant="outlined"
-        DXAdornmentStart={<IconFloppyDisk dxSize={16} />}
-        dxOptions={[
-          {
-            dxLabel: "Compare and Save",
-            dxAction: () => {
-              void 0;
-            },
-          },
-        ]}
+        DXIconStart={IconFloppyDisk}
+        dxLabel="Save"
       >
         Save
       </ButtonDropdown>
-      <Button dxVariant="outlined" DXAdornmentStart={<IconCopy dxSize={16} />}>
+      <Button dxVariant="outlined" DXIconStart={IconCopy}>
         Copy
       </Button>
 
-      <Button
-        dxVariant="outlined"
-        DXAdornmentStart={<IconDownload05 dxSize={16} />}
-      >
+      <Button dxVariant="outlined" DXIconStart={IconDownload05}>
         Export
       </Button>
     </ButtonGroup>

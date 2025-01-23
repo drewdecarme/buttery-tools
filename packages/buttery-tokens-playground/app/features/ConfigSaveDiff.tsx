@@ -14,7 +14,7 @@ const styles = css`
 
   .title {
     font-size: ${makeRem(16)};
-    font-weight: ${makeFontWeight("semi-bold")};
+    font-weight: ${makeFontWeight("Mulish-semiBold")};
     margin-bottom: ${makeRem(4)};
   }
   .help {

@@ -7,7 +7,7 @@ const template: CompileFunction = ({
   functionName,
   cssVarPrefix,
 }) => {
-  const breakpointNames = Object.keys(config.breakpoints ?? {});
+  const breakpointNames = Object.keys(config.response.breakpoints ?? {});
   const breakpointUnion = methods.createTypeUnion(breakpointNames);
 
   return `export type Breakpoints = ${breakpointUnion};
@@ -48,7 +48,7 @@ export const ${functionName}: MakeResponsive = (params) => {
 };
 
 const css: CompileFunction = ({ config, cssVarPrefix }) => {
-  return Object.entries(config.breakpoints ?? {}).reduce(
+  return Object.entries(config.response.breakpoints ?? {}).reduce(
     (accum, [breakpointName, breakpointValue]) =>
       accum.concat(
         `  ${cssVarPrefix}-${breakpointName}: ${breakpointValue}px;\n`

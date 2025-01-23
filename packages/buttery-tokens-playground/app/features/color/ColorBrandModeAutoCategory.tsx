@@ -47,12 +47,12 @@ const categoryContainerStyles = css`
       grid-template-columns: ${makeRem(24)} 1fr;
       align-items: center;
       gap: ${makeRem(8)};
-      font-weight: ${makeFontWeight("bold")};
+      font-weight: ${makeFontWeight("Mulish-bold")};
     }
 
     .desc {
       font-size: ${makeRem(12)};
-      font-weight: ${makeFontWeight("regular")};
+      font-weight: ${makeFontWeight("Mulish-regular")};
       height: ${makeRem(44)};
       margin-top: ${makeRem(8)};
       line-height: 1.4;

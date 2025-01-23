@@ -23,7 +23,7 @@ const codeStyles = css`
   padding: ${makeCustom("modal-gutters")};
 
   * {
-    font-family: ${makeFontFamily("code")};
+    font-family: ${makeFontFamily("Consolas")};
     font-size: ${makeRem(14)};
   }
 
@@ -69,11 +69,7 @@ export function ConfigPreview() {
 
   return (
     <>
-      <Button
-        dxVariant="outlined"
-        DXAdornmentStart={<IconView dxSize={16} />}
-        onClick={openModal}
-      >
+      <Button dxVariant="outlined" DXIconStart={IconView} onClick={openModal}>
         Preview
       </Button>
       <ModalDrawer

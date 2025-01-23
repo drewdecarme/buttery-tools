@@ -103,7 +103,7 @@ const itemStyles = css`
   .title {
     grid-area: title;
     margin-bottom: ${makeRem(4)};
-    font-weight: ${makeFontWeight("semi-bold")};
+    font-weight: ${makeFontWeight("Mulish-semiBold")};
   }
   .description {
     grid-area: description;

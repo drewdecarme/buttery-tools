@@ -13,7 +13,7 @@ export type TableBodyCellProps = TableBodyCellPropsNative &
 
 const styles = css`
   font-size: ${makeRem(16)};
-  font-weight: ${makeFontWeight("regular")};
+  font-weight: ${makeFontWeight("Mulish-regular")};
   text-align: left;
 
   padding: ${makeRem(16)};

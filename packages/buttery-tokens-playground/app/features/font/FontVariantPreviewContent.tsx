@@ -44,7 +44,7 @@ const styles = css`
         display: grid;
         grid-template-columns: auto 1fr;
         column-gap: ${makeRem(16)};
-        font-weight: ${makeFontWeight("light")};
+        font-weight: ${makeFontWeight("Mulish-light")};
 
         dd {
           margin: 0;

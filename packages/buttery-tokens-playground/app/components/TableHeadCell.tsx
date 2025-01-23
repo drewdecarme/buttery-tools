@@ -13,7 +13,7 @@ export type TableHeadCellProps = TableHeadCellPropsNative &
 
 const styles = css`
   font-size: ${makeRem(14)};
-  font-weight: ${makeFontWeight("bold")};
+  font-weight: ${makeFontWeight("Mulish-bold")};
   text-align: left;
   padding: 0 ${makeRem(16)};
   height: ${makeRem(40)};

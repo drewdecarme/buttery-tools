@@ -41,7 +41,7 @@ const containerStyles = css`
   align-items: center;
   gap: ${makeRem(16)};
   width: 100%;
-  font-family: ${makeFontFamily("body")};
+  font-family: ${makeFontFamily("Mulish")};
 
   .range-label {
     font-size: ${makeRem(14)};

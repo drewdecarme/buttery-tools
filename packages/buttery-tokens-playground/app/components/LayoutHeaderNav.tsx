@@ -26,7 +26,7 @@ const styles = css`
     font-size: ${makeRem(16)};
     text-transform: uppercase;
     letter-spacing: -1px;
-    font-weight: ${makeFontWeight("medium")};
+    font-weight: ${makeFontWeight("Mulish-medium")};
 
     &.active {
       color: ${makeColor("secondary-600")};

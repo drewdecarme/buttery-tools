@@ -1,3 +1,5 @@
+import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
+
 import { type CompileFunction, MakeTemplate } from "./MakeTemplate.js";
 
 const template: CompileFunction = ({
@@ -69,22 +71,24 @@ export const ${functionName}: MakeCustom = (value) => {
 const css: CompileFunction = ({ config, cssVarPrefix }) => {
   return Object.entries(config.custom ?? {}).reduce(
     (accum, [customToken, customTokenValue]) => {
-      if (
-        typeof customTokenValue === "string" ||
-        typeof customTokenValue === "number"
-      ) {
-        return accum.concat(
-          `\n${cssVarPrefix}-${customToken}: ${customTokenValue};`
-        );
-      }
+      switch (customTokenValue.type) {
+        case "number":
+        case "string":
+          return accum.concat(
+            `\n${cssVarPrefix}-${customToken}: ${customTokenValue};`
+          );
 
-      return accum.concat(
-        `\n${cssVarPrefix}-${customToken}: ${
-          customTokenValue.storeAsRem
-            ? `${customTokenValue.value / config.size.documentFontSize}rem`
-            : customTokenValue.value
-        };`
-      );
+        case "rem": {
+          const remValue =
+            customTokenValue.value / config.sizeAndSpace.baseFontSize;
+          return accum.concat(
+            `\n${cssVarPrefix}-${customToken}: ${remValue}rem;`
+          );
+        }
+
+        default:
+          return exhaustiveMatchGuard(customTokenValue);
+      }
     },
     ""
   );

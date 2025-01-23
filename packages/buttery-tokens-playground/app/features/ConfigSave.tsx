@@ -28,7 +28,7 @@ export function ConfigSave() {
     <>
       <ButtonDropdown
         dxVariant="contained"
-        DXAdornmentStart={<IconFloppyDisk dxSize={16} />}
+        DXIconStart={IconFloppyDisk}
         onClick={saveConfig}
         dxLabel="Save"
       >

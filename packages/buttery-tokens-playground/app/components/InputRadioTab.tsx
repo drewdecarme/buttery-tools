@@ -23,13 +23,13 @@ const styles = css`
   display: grid;
   place-content: center;
   width: 100%;
-  font-family: ${makeFontFamily("body")};
+  font-family: ${makeFontFamily("Mulish")};
   text-align: center;
   z-index: 2;
 
   &:has(input:checked) {
     .r-label {
-      font-weight: ${makeFontWeight("bold")};
+      font-weight: ${makeFontWeight("Mulish-bold")};
     }
   }
 

@@ -1,4 +1,11 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "react-router";
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+} from "react-router";
 import "@buttery/tokens/playground/css";
 import type { LinksFunction } from "react-router";
 
@@ -20,7 +27,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:wght@100..900",
+    href: "https://fonts.googleapis.com/css2?family=Mulish:wght@100..900",
   },
   {
     rel: "stylesheet",

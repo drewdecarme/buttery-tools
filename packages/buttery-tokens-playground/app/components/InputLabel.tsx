@@ -33,8 +33,8 @@ const styles = css`
 
   .label {
     font-size: ${makeRem(16)};
-    font-weight: ${makeFontWeight("semi-bold")};
-    font-family: ${makeFontFamily("body")};
+    font-family: ${makeFontFamily("Mulish")};
+    font-weight: ${makeFontWeight("Mulish-semiBold")};
     color: ${makeColor("neutral-dark")};
     margin-bottom: ${makeRem(8)};
 
@@ -48,7 +48,7 @@ const styles = css`
     margin-top: ${makeRem(4)};
     font-size: ${makeRem(14)};
     color: ${makeColor("neutral-dark", { opacity: 0.8 })};
-    font-weight: ${makeFontWeight("regular")};
+    font-weight: ${makeFontWeight("Mulish-regular")};
 
     &.dense {
       font-size: ${makeRem(12)};

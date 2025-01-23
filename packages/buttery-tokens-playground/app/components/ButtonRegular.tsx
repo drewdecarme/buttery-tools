@@ -102,14 +102,14 @@ const styles = css`
     &-normal {
       height: ${makeRem(32)};
       font-size: ${makeRem(12)};
-      font-weight: ${makeFontWeight("medium")};
+      font-weight: ${makeFontWeight("Mulish-medium")};
       padding: 0 ${makeRem(16)};
       gap: ${makeRem(8)};
     }
     &-big {
       height: ${makeRem(44)};
       font-size: ${makeRem(14)};
-      font-weight: ${makeFontWeight("medium")};
+      font-weight: ${makeFontWeight("Mulish-medium")};
       padding: 0 ${makeRem(20)};
       gap: ${makeRem(10)};
     }

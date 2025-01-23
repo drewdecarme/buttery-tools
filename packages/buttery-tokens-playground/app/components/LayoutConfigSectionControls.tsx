@@ -50,7 +50,7 @@ const styles = css`
   h3 {
     margin: 0;
     font-size: ${makeRem(20)};
-    font-weight: ${makeFontWeight("bold")};
+    font-weight: ${makeFontWeight("Mulish-bold")};
   }
 `;
 

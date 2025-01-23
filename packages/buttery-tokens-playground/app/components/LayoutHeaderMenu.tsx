@@ -82,7 +82,7 @@ const styles = css`
     div {
       .title {
         font-size: ${makeRem(16)};
-        font-weight: ${makeFontWeight("bold")};
+        font-weight: ${makeFontWeight("Mulish-bold")};
       }
 
       .sub {
