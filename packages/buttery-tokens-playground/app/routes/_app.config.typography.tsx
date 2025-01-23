@@ -1,11 +1,11 @@
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
-import { FontFamilyConfig } from "~/features/FontFamilyConfig";
-import { FontFamilyPreview } from "~/features/FontFamilyPreview";
-import { FontFamilyPreviewContent } from "~/features/FontFamilyPreviewContent";
-import { FontVariantConfig } from "~/features/FontVariantConfig";
-import { FontVariantPreview } from "~/features/FontVariantPreview";
-import { FontVariantPreviewContent } from "~/features/FontVariantPreviewContent";
+import { FontFamilyConfig } from "~/features/font/FontFamilyConfig";
+import { FontFamilyPreview } from "~/features/font/FontFamilyPreview";
+import { FontFamilyPreviewContent } from "~/features/font/FontFamilyPreviewContent";
+import { FontVariantConfig } from "~/features/font/FontVariantConfig";
+import { FontVariantPreview } from "~/features/font/FontVariantPreview";
+import { FontVariantPreviewContent } from "~/features/font/FontVariantPreviewContent";
 
 export default function ConfigTypographyRoute() {
   return (

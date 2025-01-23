@@ -1,10 +1,10 @@
-import { ColorPreviewBrand } from "~/features/ColorPreviewBrand";
-import { ColorBrandMode } from "~/features/ColorBrandMode";
+import { ColorPreviewBrand } from "~/features/color/ColorPreviewBrand";
+import { ColorBrandMode } from "~/features/color/ColorBrandMode";
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
-import { ColorPreviewNeutral } from "~/features/ColorPreviewNeutral";
-import { ColorNeutral } from "~/features/ColorNeutral";
-import { ColorPreview } from "~/features/ColorPreview";
+import { ColorPreviewNeutral } from "~/features/color/ColorPreviewNeutral";
+import { ColorNeutral } from "~/features/color/ColorNeutral";
+import { ColorPreview } from "~/features/color/ColorPreview";
 
 export default function ColorsRoute() {
   return (

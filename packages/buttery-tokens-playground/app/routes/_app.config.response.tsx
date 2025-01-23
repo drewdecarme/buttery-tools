@@ -1,8 +1,8 @@
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
-import { BreakpointConfig } from "~/features/BreakpointConfig";
-import { BreakpointPreview } from "~/features/BreakpointPreview";
-import { BreakpointPreviewContent } from "~/features/BreakpointPreviewContent";
+import { BreakpointConfig } from "~/features/breakpoint/BreakpointConfig";
+import { BreakpointPreview } from "~/features/breakpoint/BreakpointPreview";
+import { BreakpointPreviewContent } from "~/features/breakpoint/BreakpointPreviewContent";
 
 export default function ConfigResponseRoute() {
   return (
