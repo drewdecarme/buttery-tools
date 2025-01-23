@@ -1,5 +1,6 @@
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
+import { CustomConfig } from "~/features/custom/CustomConfig";
 import { CustomPreview } from "~/features/custom/CustomPreview";
 import { CustomPreviewContent } from "~/features/custom/CustomPreviewContent";
 
@@ -9,9 +10,9 @@ export default function ConfigResponseRoute() {
       <LayoutConfigSection>
         <LayoutConfigSectionControls
           dxTitle="Custom"
-          dxDescription={<>explanation of breakpoints</>}
+          dxDescription={<>explanation of custom</>}
         >
-          custom
+          <CustomConfig />
         </LayoutConfigSectionControls>
         <CustomPreview>
           <CustomPreviewContent />

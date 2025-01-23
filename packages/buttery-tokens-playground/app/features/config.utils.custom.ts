@@ -47,7 +47,18 @@ export type OnCustomAction = (
         action: "addToken";
       }
     | { action: "deleteToken"; id: string }
-    | { action: "updateToken"; id: string; name: string; value: number }
+    | { action: "updateName"; id: string; name: string }
+    | { action: "updateDescription"; id: string; description: string }
+    | {
+        action: "updateType";
+        id: string;
+        type: ConfigurationStateCustomValue["type"];
+      }
+    | {
+        action: "updateValue";
+        id: string;
+        value: ConfigurationStateCustomValue["value"];
+      }
 ) => void;
 
 export function useConfigStateCustom(initConfig: ButteryTokensConfig) {
