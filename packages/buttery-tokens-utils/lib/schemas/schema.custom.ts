@@ -23,17 +23,39 @@ import { z } from "zod";
  * { "layout-header-height": 48 };
  * ```
  */
+const CustomVariantSharedSchema = z.object({ description: z.string() });
+export const CustomVariantRemSchema = z
+  .object({
+    type: z.literal("rem"),
+    value: z.number(),
+  })
+  .merge(CustomVariantSharedSchema);
+export type CustomVariantRem = z.infer<typeof CustomVariantRemSchema>;
+
+export const CustomVariantStringSchema = z
+  .object({
+    type: z.literal("string"),
+    value: z.string(),
+  })
+  .merge(CustomVariantSharedSchema);
+export type CustomVariantString = z.infer<typeof CustomVariantStringSchema>;
+
+export const CustomVariantNumberSchema = z
+  .object({
+    type: z.literal("number"),
+    value: z.number(),
+  })
+  .merge(CustomVariantSharedSchema);
+export type CustomVariantNumber = z.infer<typeof CustomVariantNumberSchema>;
+
+export const CustomVariantSchema = z.discriminatedUnion("type", [
+  CustomVariantRemSchema,
+  CustomVariantStringSchema,
+  CustomVariantNumberSchema,
+]);
+export type CustomVariant = z.infer<typeof CustomVariantSchema>;
+
 export const CustomSchema = z
-  .record(
-    z.string(),
-    z.union([
-      z.number(),
-      z.string(),
-      z.object({
-        value: z.number(),
-        storeAsRem: z.boolean(),
-      }),
-    ])
-  )
+  .record(z.string(), CustomVariantSchema)
   .default({});
 export type ButteryTokensConfigCustom = z.infer<typeof CustomSchema>;

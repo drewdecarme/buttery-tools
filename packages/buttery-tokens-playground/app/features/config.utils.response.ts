@@ -58,3 +58,20 @@ export type ConfigurationContextResponseType = {
   response: ConfigurationStateResponse;
   setResponse: Updater<ConfigurationStateResponse>;
 };
+
+export function getResponseConfigFromState(
+  state: ConfigurationStateResponse
+): ButteryTokensConfig["response"] {
+  return {
+    breakpoints: Object.values(state.breakpoints).reduce(
+      (accum, { name, value }) =>
+        Object.assign<
+          ButteryTokensConfig["response"]["breakpoints"],
+          ButteryTokensConfig["response"]["breakpoints"]
+        >(accum, {
+          [name]: value,
+        }),
+      {}
+    ),
+  };
+}

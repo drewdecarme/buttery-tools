@@ -52,6 +52,7 @@
   "response": {
     "breakpoints": {
       "mobile": 480,
+      "mobileLg": 700,
       "tablet": 768,
       "laptop": 1024,
       "desktop": 1280,

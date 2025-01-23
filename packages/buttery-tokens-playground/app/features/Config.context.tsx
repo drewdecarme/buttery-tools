@@ -19,12 +19,21 @@ import {
   useConfigStateColor,
 } from "./config.utils.color";
 import type { ConfigurationContextResponseType } from "./config.utils.response.js";
-import { useConfigStateResponse } from "./config.utils.response.js";
+import {
+  getResponseConfigFromState,
+  useConfigStateResponse,
+} from "./config.utils.response.js";
+import type { ConfigurationContextCustomType } from "./config.utils.custom.js";
+import {
+  getCustomConfigFromState,
+  useConfigStateCustom,
+} from "./config.utils.custom.js";
 
 export type ConfigurationContextType = ConfigurationContextColorType &
   ConfigurationContextFontType &
   ConfigurationContextResponseType &
-  ConfigurationContextSizingType & {
+  ConfigurationContextSizingType &
+  ConfigurationContextCustomType & {
     getConfigFromState: () => ButteryTokensConfig;
     originalConfig: ButteryTokensConfig;
   };
@@ -45,6 +54,7 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
   const [font, setFont] = useConfigStateFont(originalConfig);
   const [sizing, setSizing] = useConfigStateSizing(originalConfig);
   const [response, setResponse] = useConfigStateResponse(originalConfig);
+  const [custom, setCustom] = useConfigStateCustom(originalConfig);
 
   const getConfigFromState = useCallback<
     ConfigurationContextType["getConfigFromState"]
@@ -52,17 +62,21 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
     const configColor = getColorConfigFromState(color);
     const configSizing = getSizeAndSpaceConfigFromState(sizing);
     const configFont = getFontConfigFromState(font);
+    const configResponse = getResponseConfigFromState(response);
+    const configCustom = getCustomConfigFromState(custom);
 
     const config = ConfigSchema.safeParse({
       color: configColor,
       sizing: configSizing,
       font: configFont,
+      response: configResponse,
+      custom: configCustom,
     });
     if (config.error) {
       throw config.error;
     }
     return config.data;
-  }, [color, font, sizing]);
+  }, [color, custom, font, response, sizing]);
 
   const value = useMemo<ConfigurationContextType>(
     () => ({
@@ -74,16 +88,20 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
       setSizing,
       response,
       setResponse,
+      custom,
+      setCustom,
       getConfigFromState,
       originalConfig,
     }),
     [
       color,
+      custom,
       font,
       getConfigFromState,
       originalConfig,
       response,
       setColor,
+      setCustom,
       setFont,
       setResponse,
       setSizing,
