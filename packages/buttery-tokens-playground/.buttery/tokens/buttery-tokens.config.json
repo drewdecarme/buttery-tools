@@ -61,7 +61,7 @@
   },
   "color": {
     "brand": {
-      "type": "fluorescent",
+      "type": "jewel",
       "colors": {
         "primary": {
           "hue": 211,
@@ -84,8 +84,8 @@
           "variants": 10
         }
       },
-      "saturation": 63,
-      "brightness": 82
+      "saturation": 73,
+      "brightness": 56
     },
     "neutral": {
       "neutral": {
@@ -102,5 +102,16 @@
       }
     }
   },
-  "custom": {}
+  "custom": {
+    "nav-bar-height": {
+      "type": "string",
+      "value": "100px",
+      "description": "The height of the navigation bar. This can be used  to calculate the sticky top for the scrollable portions of the app"
+    },
+    "token_2": {
+      "type": "rem",
+      "value": 100,
+      "description": "This is just an example token"
+    }
+  }
 }

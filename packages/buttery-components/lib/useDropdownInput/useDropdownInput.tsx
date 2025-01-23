@@ -75,9 +75,9 @@ export function useDropdownInput<
       const container = containerRef.current;
       if (!dropdown || !target || !container) return;
 
-      // Set the width of the dropdown to the width of the target
+      // Set the min-width of the dropdown to the width of the target
       // (in this case it's going to be the input)
-      dropdown.style.setProperty("width", `${target.clientWidth}px`);
+      dropdown.style.setProperty("min-width", `${target.clientWidth}px`);
 
       isDropdownOpenRef.current = true;
       openDropdown();
