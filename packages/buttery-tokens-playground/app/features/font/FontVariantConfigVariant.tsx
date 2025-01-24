@@ -3,14 +3,11 @@ import { exhaustiveMatchGuard, useToggle } from "@buttery/components";
 import { css } from "@linaria/core";
 import { makeColor, makeRem } from "@buttery/tokens/playground";
 
-import { Button } from "~/components/Button";
 import { VariantContainer } from "~/components/VariantContainer";
 import { VariantContainerBar } from "~/components/VariantContainerBar";
 import { VariantContainerBarTitle } from "~/components/VariantContainerBarTitle";
 import { VariantContainerBarActions } from "~/components/VariantContainerBarActions";
 import { VariantContainerContent } from "~/components/VariantContainerContent";
-import { IconDelete } from "~/icons/IconDelete";
-import { IconPencilEdit01 } from "~/icons/IconPencilEdit01";
 import { InputLabel } from "~/components/InputLabel";
 import { InputSelect } from "~/components/InputSelect";
 import { InputNumber } from "~/components/InputNumber";
@@ -210,27 +207,12 @@ export function FontVariantConfigVariant({
         <div className="meta">
           {family} / {size} / {weight} / {lineHeight}
         </div>
-        {useMemo(
-          () => (
-            <VariantContainerBarActions>
-              <Button
-                dxVariant="icon"
-                DXIcon={IconPencilEdit01}
-                onClick={toggle}
-                dxSize="dense"
-                dxHelp="Edit variant"
-              />
-              <Button
-                dxVariant="icon"
-                DXIcon={IconDelete}
-                onClick={handleDelete}
-                dxSize="dense"
-                dxHelp="Delete variant"
-              />
-            </VariantContainerBarActions>
-          ),
-          [handleDelete, toggle]
-        )}
+
+        <VariantContainerBarActions
+          dxIsEditing={isOpen}
+          dxOnDelete={handleDelete}
+          dxOnEdit={toggle}
+        />
       </VariantContainerBar>
       {isOpen && (
         <VariantContainerContent>

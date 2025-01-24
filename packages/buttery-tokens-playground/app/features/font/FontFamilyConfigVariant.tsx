@@ -1,9 +1,8 @@
 import { makeRem, makeColor } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import type { ChangeEventHandler, ReactNode } from "react";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
-import { Button } from "~/components/Button";
 import { InputGroup } from "~/components/InputGroup";
 import { InputRadioTab } from "~/components/InputRadioTab";
 import { InputRadioTabs } from "~/components/InputRadioTabs";
@@ -12,8 +11,6 @@ import { VariantContainerBar } from "~/components/VariantContainerBar";
 import { VariantContainerBarActions } from "~/components/VariantContainerBarActions";
 import { VariantContainerBarTitle } from "~/components/VariantContainerBarTitle";
 import { VariantContainerContent } from "~/components/VariantContainerContent";
-import { IconDelete } from "~/icons/IconDelete";
-import { IconPencilEdit01 } from "~/icons/IconPencilEdit01";
 
 import type {
   ConfigurationStateFont,
@@ -104,27 +101,11 @@ export function FontFamilyConfigVariant(
     <VariantContainer>
       <VariantContainerBar className={variantStyles}>
         <VariantContainerBarTitle>{props.name}</VariantContainerBarTitle>
-        {useMemo(
-          () => (
-            <VariantContainerBarActions>
-              <Button
-                dxVariant="icon"
-                DXIcon={IconPencilEdit01}
-                onClick={handleToggle}
-                dxSize="dense"
-                dxHelp="Toggle edit family"
-              />
-              <Button
-                dxVariant="icon"
-                DXIcon={IconDelete}
-                onClick={handleDelete}
-                dxSize="dense"
-                dxHelp="Delete family"
-              />
-            </VariantContainerBarActions>
-          ),
-          [handleDelete, handleToggle]
-        )}
+        <VariantContainerBarActions
+          dxIsEditing={props.meta.isOpen}
+          dxOnEdit={handleToggle}
+          dxOnDelete={handleDelete}
+        />
       </VariantContainerBar>
       {props.meta.isOpen && (
         <VariantContainerContent>

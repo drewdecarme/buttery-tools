@@ -5,7 +5,7 @@ import {
   makeReset,
 } from "@buttery/tokens/playground";
 import type { FormEventHandler } from "react";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { useDropdownMenu, useToggle } from "@buttery/components";
 import { css } from "@linaria/core";
 
@@ -14,8 +14,6 @@ import { VariantContainerBarTitle } from "~/components/VariantContainerBarTitle"
 import { VariantContainerBar } from "~/components/VariantContainerBar";
 import { VariantContainer } from "~/components/VariantContainer";
 import { Button } from "~/components/Button";
-import { IconDelete } from "~/icons/IconDelete";
-import { IconPencilEdit01 } from "~/icons/IconPencilEdit01";
 import { IconInsertRow } from "~/icons/IconInsertRow";
 import { IconPlusSign } from "~/icons/IconPlusSign";
 import { Dropdown } from "~/components/Dropdown";
@@ -133,68 +131,43 @@ export function BreakpointConfigVariant({
       <VariantContainerBar className={barStyles}>
         <VariantContainerBarTitle>{breakpoint.name}</VariantContainerBarTitle>
         <div>{makePx(breakpoint.value)}</div>
-        <VariantContainerBarActions>
-          {useMemo(
-            () => (
-              <VariantContainerBarActions>
-                <Button
-                  dxVariant="icon"
-                  DXIcon={IconPencilEdit01}
-                  onClick={toggle}
-                  dxSize="dense"
-                  dxHelp={"Edit variant"}
-                />
-                <div>
+        <VariantContainerBarActions
+          dxIsEditing={isEditing}
+          dxOnDelete={handleDelete}
+          dxOnEdit={toggle}
+        >
+          <div>
+            <Button
+              ref={setTargetRef}
+              dxVariant="icon"
+              DXIcon={IconInsertRow}
+              dxSize="dense"
+            />
+            <Dropdown ref={setDropdownRef} className={dropdownStyles}>
+              <ul>
+                <li>
                   <Button
-                    ref={setTargetRef}
-                    dxVariant="icon"
-                    DXIcon={IconInsertRow}
+                    dxVariant="text"
                     dxSize="dense"
-                  />
-                  <Dropdown ref={setDropdownRef} className={dropdownStyles}>
-                    <ul>
-                      <li>
-                        <Button
-                          dxVariant="text"
-                          dxSize="dense"
-                          DXIconStart={IconPlusSign}
-                          onClick={addVariantAbove}
-                        >
-                          Insert 1 row above
-                        </Button>
-                      </li>
-                      <li>
-                        <Button
-                          dxVariant="text"
-                          dxSize="dense"
-                          DXIconStart={IconPlusSign}
-                          onClick={addVariantBelow}
-                        >
-                          Insert 1 row below
-                        </Button>
-                      </li>
-                    </ul>
-                  </Dropdown>
-                </div>
-                <Button
-                  dxVariant="icon"
-                  DXIcon={IconDelete}
-                  onClick={handleDelete}
-                  dxSize="dense"
-                  dxHelp="Delete variant"
-                  className="delete"
-                />
-              </VariantContainerBarActions>
-            ),
-            [
-              addVariantAbove,
-              addVariantBelow,
-              handleDelete,
-              setDropdownRef,
-              setTargetRef,
-              toggle,
-            ]
-          )}
+                    DXIconStart={IconPlusSign}
+                    onClick={addVariantAbove}
+                  >
+                    Insert 1 row above
+                  </Button>
+                </li>
+                <li>
+                  <Button
+                    dxVariant="text"
+                    dxSize="dense"
+                    DXIconStart={IconPlusSign}
+                    onClick={addVariantBelow}
+                  >
+                    Insert 1 row below
+                  </Button>
+                </li>
+              </ul>
+            </Dropdown>
+          </div>
         </VariantContainerBarActions>
       </VariantContainerBar>
       {isEditing ? (

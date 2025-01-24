@@ -4,8 +4,6 @@ import { useCallback } from "react";
 import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
 
 import { VariantEmpty } from "~/components/VariantEmpty";
-import { IconPlusSign } from "~/icons/IconPlusSign";
-import { Button } from "~/components/Button";
 
 import { BreakpointConfigVariant } from "./BreakpointConfigVariant";
 
@@ -89,16 +87,11 @@ export function BreakpointConfig() {
 
   if (breakpointsEntires.length === 0) {
     return (
-      <VariantEmpty dxMessage="No breakpoints have been added yet">
-        <Button
-          dxVariant="outlined"
-          dxColor="secondary"
-          DXIconStart={IconPlusSign}
-          onClick={handleAddBreakpoint}
-        >
-          Click to add a variant
-        </Button>
-      </VariantEmpty>
+      <VariantEmpty
+        dxMessage="No breakpoints have been added yet"
+        dxActionMessage="Click to add a breakpoint"
+        dxOnAdd={handleAddBreakpoint}
+      />
     );
   }
 

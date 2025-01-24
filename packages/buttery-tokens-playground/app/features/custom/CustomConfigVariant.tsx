@@ -5,13 +5,10 @@ import { makeRem } from "@buttery/tokens/playground";
 import { match } from "ts-pattern";
 import { CustomVariantSchema } from "@buttery/tokens-utils/schemas";
 
-import { Button } from "~/components/Button";
 import { VariantContainer } from "~/components/VariantContainer";
 import { VariantContainerBar } from "~/components/VariantContainerBar";
 import { VariantContainerBarActions } from "~/components/VariantContainerBarActions";
 import { VariantContainerBarTitle } from "~/components/VariantContainerBarTitle";
-import { IconDelete } from "~/icons/IconDelete";
-import { IconPencilEdit01 } from "~/icons/IconPencilEdit01";
 import { VariantContainerContent } from "~/components/VariantContainerContent";
 import { InputTextarea } from "~/components/InputTextarea";
 import { InputLabel } from "~/components/InputLabel";
@@ -19,6 +16,7 @@ import { InputText } from "~/components/InputText";
 import { InputGroup } from "~/components/InputGroup";
 import { InputNumber } from "~/components/InputNumber";
 import { InputSelect } from "~/components/InputSelect";
+import { VariantContainerBarText } from "~/components/VariantContainerBarText";
 
 import type {
   ConfigurationStateCustomValue,
@@ -27,10 +25,6 @@ import type {
 
 const barStyles = css`
   grid-template-columns: auto auto 1fr;
-
-  .val {
-    font-size: ${makeRem(14)};
-  }
 `;
 
 const contentStyles = css`
@@ -60,7 +54,7 @@ export function CustomConfigVariant({
     <VariantContainer>
       <VariantContainerBar className={barStyles}>
         <VariantContainerBarTitle>{tokenDef.name}</VariantContainerBarTitle>
-        <div className="val">
+        <VariantContainerBarText>
           {tokenDef.type} |{" "}
           {match(tokenDef)
             .with({ type: "string" }, ({ value }) => {
@@ -74,23 +68,12 @@ export function CustomConfigVariant({
               return makeRem(value);
             })
             .exhaustive()}
-        </div>
-        <VariantContainerBarActions>
-          <Button
-            dxVariant="icon"
-            DXIcon={IconPencilEdit01}
-            onClick={toggle}
-            dxSize="dense"
-            dxHelp="Toggle edit"
-          />
-          <Button
-            dxVariant="icon"
-            DXIcon={IconDelete}
-            onClick={handleDelete}
-            dxSize="dense"
-            dxHelp="Delete custom token"
-          />
-        </VariantContainerBarActions>
+        </VariantContainerBarText>
+        <VariantContainerBarActions
+          dxIsEditing={isOpen}
+          dxOnDelete={handleDelete}
+          dxOnEdit={toggle}
+        />
       </VariantContainerBar>
       {isOpen && (
         <VariantContainerContent className={contentStyles}>

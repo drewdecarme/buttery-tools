@@ -30,7 +30,7 @@ export function FontFamilyPreviewControls() {
         max={40}
         min={10}
         dxOnChange={setFontSize}
-        defaultValue={fontSize}
+        value={fontSize}
       />
       {useMemo(
         () => (
