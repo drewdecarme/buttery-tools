@@ -8,16 +8,16 @@ import {
   type ConfigurationContextFontType,
   getFontConfigFromState,
   useConfigStateFont,
-} from "./config.utils.font";
+} from "./config.utils.font.js";
 import {
   getSizeAndSpaceConfigFromState,
   useConfigStateSizing,
 } from "./config.utils.sizing.js";
-import type { ConfigurationContextColorType } from "./config.utils.color";
+import type { ConfigurationContextColorType } from "./config.utils.color.js";
 import {
   getColorConfigFromState,
   useConfigStateColor,
-} from "./config.utils.color";
+} from "./config.utils.color.js";
 import type { ConfigurationContextResponseType } from "./config.utils.response.js";
 import {
   getResponseConfigFromState,

@@ -19,7 +19,7 @@
     "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
-  "packageManager": "yarn@4.5.3",
+  "packageManager": "yarn@4.6.0",
   "scripts": {
     "package:version": "yarn monoweave version",
     "build": "turbo build",

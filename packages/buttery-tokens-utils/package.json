@@ -1,7 +1,7 @@
 {
   "name": "@buttery/tokens-utils",
   "version": "0.0.1",
-  "description": "A collection of schemas and utils that can be shared across the @buttery/tokens & @buttery/tokens-playground packages",
+  "description": "A collection of schemas and utils that can be shared across the @buttery/tokens & @buttery/token-studio packages",
   "scripts": {
     "build": "yarn json-schema:build && yarn tsc --project tsconfig.library.json",
     "dev": "yarn build --watch",
