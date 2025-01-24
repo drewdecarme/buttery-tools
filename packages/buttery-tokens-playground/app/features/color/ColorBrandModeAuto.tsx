@@ -54,6 +54,18 @@ export function ColorBrandModeAuto({
     [setColor]
   );
 
+  const handleAddVariant = useCallback(() => {
+    const totalColors = Object.entries(state.colors).length;
+    setColor((draft) => {
+      const id = generateGUID();
+      draft.brand.auto.colors[id] = {
+        hue: 180,
+        name: `brand${totalColors + 1}`,
+        variants: 10,
+      };
+    });
+  }, [setColor, state.colors]);
+
   const colorEntries = Object.entries(state.colors);
 
   return (
@@ -110,16 +122,7 @@ export function ColorBrandModeAuto({
             <VariantEmpty
               dxMessage="No colors have been added"
               dxActionMessage="Click to add a color"
-              dxOnAdd={() =>
-                setColor((draft) => {
-                  const id = generateGUID();
-                  draft.brand.auto.colors[id] = {
-                    hue: 180,
-                    name: `brand${Object.entries(state.colors).length + 1}`,
-                    variants: 10,
-                  };
-                })
-              }
+              dxOnAdd={handleAddVariant}
             />
           ) : (
             <VariantList>
@@ -134,18 +137,7 @@ export function ColorBrandModeAuto({
                 );
               })}
               <li>
-                <VariantAdd
-                  onAdd={() =>
-                    setColor((draft) => {
-                      const id = generateGUID();
-                      draft.brand.auto.colors[id] = {
-                        hue: 180,
-                        name: `brand${Object.entries(state.colors).length + 1}`,
-                        variants: 10,
-                      };
-                    })
-                  }
-                >
+                <VariantAdd onAdd={handleAddVariant}>
                   Add another color
                 </VariantAdd>
               </li>

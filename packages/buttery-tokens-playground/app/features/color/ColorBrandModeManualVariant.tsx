@@ -2,21 +2,32 @@ import { useCallback } from "react";
 import type { ChangeEventHandler, MouseEventHandler } from "react";
 import type { ColorVariantTypes } from "@buttery/tokens-utils/schemas";
 import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
+import { makeRem } from "@buttery/tokens/playground";
+import { css } from "@linaria/core";
+import { useToggle } from "@buttery/components";
 
 import { ColorBlob, useColorBlob } from "~/components/ColorBlob";
 import { InputGroup } from "~/components/InputGroup";
+import { VariantContainer } from "~/components/VariantContainer";
+import { VariantContainerBar } from "~/components/VariantContainerBar";
+import { VariantContainerBarActions } from "~/components/VariantContainerBarActions";
+import { VariantContainerBarText } from "~/components/VariantContainerBarText";
+import { VariantContainerBarTitle } from "~/components/VariantContainerBarTitle";
+import { VariantContainerContent } from "~/components/VariantContainerContent";
 
 import { ColorSwatchHex } from "./ColorSwatchHex";
-import { ColorSwatch } from "./ColorSwatch";
 import type { ColorSwatchVariantsPropsCustom } from "./ColorSwatchVariants";
 import { ColorSwatchVariants } from "./ColorSwatchVariants";
-import { ColorSwatchSummary } from "./ColorSwatchSummary";
 import { ColorSwatchName } from "./ColorSwatchName";
 
 import type { ConfigurationContextType } from "../Config.context";
 import type { ConfigurationStateColorsManual } from "../config.utils.color";
 
-export function ColorBrandModeManualSwatch<
+const barStyles = css`
+  grid-template-columns: ${makeRem(24)} ${makeRem(100)} auto 1fr;
+`;
+
+export function ColorBrandModeManualVariant<
   T extends ConfigurationStateColorsManual
 >({
   colorDef,
@@ -27,6 +38,7 @@ export function ColorBrandModeManualSwatch<
 }) {
   const [id, { name, hex, variants }] = Object.entries(colorDef)[0];
   const { colorBlobRef, setHex } = useColorBlob();
+  const [isOpen, toggle] = useToggle();
 
   const handleChangeHex = useCallback<ChangeEventHandler<HTMLInputElement>>(
     ({ currentTarget: { value } }) => {
@@ -146,26 +158,37 @@ export function ColorBrandModeManualSwatch<
   );
 
   return (
-    <ColorSwatch dxOnRemove={handleRemove}>
-      <ColorSwatchSummary dxTitle={name} dxSubtitle={`Hex: ${hex}`}>
+    <VariantContainer>
+      <VariantContainerBar className={barStyles}>
         <ColorBlob
           ref={colorBlobRef}
           dxVariant="circle"
           dxType="hex"
           dxValue={hex}
         />
-      </ColorSwatchSummary>
-      <InputGroup>
-        <ColorSwatchName name={name} onChangeName={handleChangeName} />
-        <ColorSwatchHex id={id} hex={hex} onChangeHex={handleChangeHex} />
-        <ColorSwatchVariants
-          dxVariants={variants}
-          onChangeVariantType={handleChangeVariantType}
-          onChangeVariantAuto={handleChangeVariantAuto}
-          onChangeVariantNamed={handleChangeVariantNamed}
-          onChangeVariantManual={handleChangeVariantManual}
+        <VariantContainerBarTitle>{name}</VariantContainerBarTitle>
+        <VariantContainerBarText>{`Hex: ${hex}`}</VariantContainerBarText>
+        <VariantContainerBarActions
+          dxIsEditing={isOpen}
+          dxOnDelete={handleRemove}
+          dxOnEdit={toggle}
         />
-      </InputGroup>
-    </ColorSwatch>
+      </VariantContainerBar>
+      {isOpen && (
+        <VariantContainerContent>
+          <InputGroup>
+            <ColorSwatchName name={name} onChangeName={handleChangeName} />
+            <ColorSwatchHex id={id} hex={hex} onChangeHex={handleChangeHex} />
+            <ColorSwatchVariants
+              dxVariants={variants}
+              onChangeVariantType={handleChangeVariantType}
+              onChangeVariantAuto={handleChangeVariantAuto}
+              onChangeVariantNamed={handleChangeVariantNamed}
+              onChangeVariantManual={handleChangeVariantManual}
+            />
+          </InputGroup>
+        </VariantContainerContent>
+      )}
+    </VariantContainer>
   );
 }
