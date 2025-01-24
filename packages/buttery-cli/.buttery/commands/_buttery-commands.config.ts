@@ -1,5 +1,6 @@
 import { defineCommandsConfig } from "@buttery/commands";
 
+// TODO: Switch to JSON
 export default defineCommandsConfig({
   name: "buttery",
   description:

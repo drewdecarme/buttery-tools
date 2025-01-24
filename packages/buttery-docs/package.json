@@ -18,7 +18,7 @@
     "local:dev": "tsx ./scripts/local.dev.ts",
     "local:build": "tsx ./scripts/local.build.ts",
     "local:add": "tsx ./scripts/local.add.ts",
-    "tokens:dev": "tsx ./scripts/tokens.dev.ts",
+    "tokens:studio": "tsx ./scripts/tokens.studio.ts",
     "tokens:build": "tsx ./scripts/tokens.build.ts",
     "icons:build": "tsx ./scripts/icons.build.ts",
     "pages:deploy": "cd ./.buttery/docs/dist && wrangler pages deploy ./build/client --project-name buttery-docs-cf",

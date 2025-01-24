@@ -24,7 +24,7 @@ import type {
 } from "../config.utils.custom";
 
 const barStyles = css`
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto auto 1fr !important;
 `;
 
 const contentStyles = css`

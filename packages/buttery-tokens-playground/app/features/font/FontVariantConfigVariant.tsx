@@ -22,7 +22,7 @@ import type {
 } from "../config.utils.font";
 
 const barStyles = css`
-  grid-template-columns: ${makeRem(80)} 1fr auto;
+  grid-template-columns: ${makeRem(80)} 1fr auto !important;
 
   .meta {
     font-size: ${makeRem(12)};

@@ -3,11 +3,12 @@ import {
   type CommandMeta,
   defineOptions,
 } from "@buttery/commands";
+import { tokenStudio } from "@buttery/tokens/cli/token-studio";
 
 export const meta: CommandMeta = {
-  name: "dev",
+  name: "studio",
   description:
-    "Iteratively develop @buttery/tokens `make` functions based upon the `buttery/config.tokens`",
+    "Launch the TokenStudio to visually configure the buttery tokens",
 };
 
 export const options = defineOptions({
@@ -29,6 +30,11 @@ export const options = defineOptions({
   },
 });
 
-export const action: CommandAction<never, typeof options> = async () => {
-  console.log("TODO!");
+export const action: CommandAction<never, typeof options> = async ({
+  options,
+}) => {
+  tokenStudio({
+    logLevel: options.debug ? "debug" : "info",
+    prompt: options.prompt,
+  });
 };

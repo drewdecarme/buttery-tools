@@ -40,7 +40,9 @@ async function createJsonSchema() {
   if (res.hasError) {
     throw LOG.fatal(res.error);
   }
-  LOG.success("Successfully create JSON schema from the ButteryConfig");
+  LOG.success(
+    "Successfully created the JSON schema from the buttery Zod schemas"
+  );
 }
 
 createJsonSchema();

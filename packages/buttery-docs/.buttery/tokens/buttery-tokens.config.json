@@ -1,7 +1,7 @@
 {
   "runtime": {
-    "namespace": "replace-me",
-    "prefix": "--buttery",
+    "namespace": "docs",
+    "prefix": "docs",
     "strict": true,
     "suppressStrictWarnings": false
   },
@@ -9,11 +9,7 @@
     "baseFontSize": 16,
     "baselineGrid": 4,
     "size": {
-      "variants": {
-        "dense": 24,
-        "normal": 32,
-        "big": 44
-      }
+      "variants": {}
     },
     "space": {
       "mode": "auto",

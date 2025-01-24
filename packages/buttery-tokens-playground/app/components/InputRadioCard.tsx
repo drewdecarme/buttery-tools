@@ -57,6 +57,7 @@ const styles = css`
   input {
     position: absolute;
     left: -1000px;
+    visibility: hidden;
   }
 `;
 

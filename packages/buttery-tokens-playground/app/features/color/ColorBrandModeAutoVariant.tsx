@@ -24,7 +24,7 @@ import type { ConfigurationContextType } from "../Config.context";
 import type { ConfigurationStateColorsAuto } from "../config.utils.color";
 
 const barStyles = css`
-  grid-template-columns: ${makeRem(24)} ${makeRem(100)} auto 1fr;
+  grid-template-columns: ${makeRem(24)} ${makeRem(100)} auto 1fr !important;
 `;
 
 export function ColorBrandModeAutoVariant<

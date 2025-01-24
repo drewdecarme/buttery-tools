@@ -17,14 +17,7 @@ const optionsSchema = z.object({
 });
 export type ButteryTokensBaseOptions = z.infer<typeof optionsSchema>;
 
-export const butteryTokensDevOptionsSchema = optionsSchema.extend({
-  /**
-   * Launch the GUI to see and make your changes to your tokens live
-   * or run through the wizard to configure them again
-   * @default false
-   */
-  interactive: z.boolean().default(false),
-});
+export const butteryTokensDevOptionsSchema = optionsSchema;
 export type ButteryTokensDevOptions = z.infer<
   typeof butteryTokensDevOptionsSchema
 >;
@@ -32,4 +25,9 @@ export type ButteryTokensDevOptions = z.infer<
 export const butteryTokensBuildOptionsSchema = optionsSchema;
 export type ButteryTokensBuildOptions = z.infer<
   typeof butteryTokensBuildOptionsSchema
+>;
+
+export const butteryTokensTokenStudioOptionsSchema = optionsSchema;
+export type ButteryTokensTokenStudioOptions = z.infer<
+  typeof butteryTokensTokenStudioOptionsSchema
 >;

@@ -6,7 +6,6 @@ import type { ButteryTokensDevOptions } from "./_cli-scripts.utils.js";
 import { butteryTokensDevOptionsSchema } from "./_cli-scripts.utils.js";
 
 import { LOG } from "../utils/util.logger.js";
-import { launchPlayground } from "../build/playground-launch.js";
 import { buildButteryTokens } from "../build/buttery-tokens.build.js";
 
 /**
@@ -32,22 +31,10 @@ export async function dev(options?: Partial<ButteryTokensDevOptions>) {
   }
   const rConfig = res.data;
 
-  // Watch the config file if the interactive UI is NOT being run
-  // and return early to the UI code isn't reached
-  if (!parsedOptions.interactive) {
-    watchButteryConfigForChanges(rConfig.paths.config, {
-      async onChange() {
-        // rebuild the tokens
-        await buildButteryTokens(parsedOptions);
-      },
-    });
-    return;
-  }
-
-  // Launch the interactive playground
-  LOG.info("Launching interactive playground...");
-  const playgroundRes = await tryHandle(launchPlayground)(rConfig);
-  if (playgroundRes.hasError) {
-    return LOG.fatal(playgroundRes.error);
-  }
+  watchButteryConfigForChanges(rConfig.paths.config, {
+    async onChange() {
+      // rebuild the tokens
+      await buildButteryTokens(parsedOptions);
+    },
+  });
 }

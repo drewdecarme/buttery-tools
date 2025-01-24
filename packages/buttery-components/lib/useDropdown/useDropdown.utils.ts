@@ -232,7 +232,6 @@ function calculateDropdownPosition(
     case "bottom-right":
       top = targetBox.bottom + offset;
       left = targetBox.left + targetBox.width - popover.width;
-      console.log(targetBox.left, targetBox.width, popover.width);
       resolvedPosition = position;
       break;
     case "bottom-center":

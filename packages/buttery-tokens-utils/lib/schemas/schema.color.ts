@@ -338,19 +338,9 @@ export const ColorSchema = z
   .object({
     brand: ColorBrandSchema.default({
       type: "manual",
-      colors: {
-        primary: {
-          hex: "#5A29E0",
-          variants: 10,
-        },
-      },
+      colors: {},
     }),
-    neutral: ColorNeutralSchema.default({
-      "grey-1": {
-        hex: "#000000",
-        variants: 10,
-      },
-    }),
+    neutral: ColorNeutralSchema.default({}),
   })
   .default({});
 export type ButteryTokensColor = z.infer<typeof ColorSchema>;
