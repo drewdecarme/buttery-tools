@@ -1,5 +1,5 @@
 import { css } from "@linaria/core";
-import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
+import { makeColor, makeRem } from "@buttery/tokens/playground";
 import type { ChangeEventHandler, FormEventHandler, RefCallback } from "react";
 import { useCallback, useMemo, useRef } from "react";
 import { classes, useToggle } from "@buttery/components";
@@ -11,6 +11,11 @@ import { IconTick01 } from "~/icons/IconTick01";
 import { InputText } from "~/components/InputText";
 import { InputLabel } from "~/components/InputLabel";
 import { InputRange } from "~/components/InputRange";
+import { VariantList } from "~/components/VariantList";
+import { VariantContainer } from "~/components/VariantContainer";
+import { VariantContainerBar } from "~/components/VariantContainerBar";
+import { VariantContainerBarText } from "~/components/VariantContainerBarText";
+import { VariantContainerBarTitle } from "~/components/VariantContainerBarTitle";
 
 import { useRecalculateSpaceVariants } from "./space.useRecalculateSpaceVariants";
 
@@ -22,42 +27,21 @@ import {
 import type { ConfigurationContextType } from "../Config.context.js";
 
 const styles = css`
-  ${makeReset("ul")};
-  display: flex;
-  flex-direction: column;
-  gap: ${makeRem(8)};
+  display: grid;
+  grid-template-columns: 1fr ${makeRem(54)} ${makeRem(54)} auto;
+  gap: ${makeRem(16)};
+  align-items: center;
+  font-size: ${makeRem(14)};
+  border-radius: ${makeRem(4)};
+  height: ${makeRem(62 - 16 * 2)};
 
-  form {
-    display: grid;
-    grid-template-columns: 1fr ${makeRem(54)} ${makeRem(54)} auto;
-    gap: ${makeRem(16)};
-    height: ${makeRem(44)};
-    background: white;
-    align-items: center;
-    padding: 0 ${makeRem(16)};
+  .actions {
+    justify-self: end;
     font-size: ${makeRem(14)};
-    border-radius: ${makeRem(4)};
+  }
 
-    .stat {
-      justify-self: start;
-      display: flex;
-      gap: ${makeRem(8)};
-      font-size: ${makeRem(14)};
-      color: ${makeColor("neutral-light", { opacity: 0.5 })};
-
-      span.txt {
-        min-width: ${makeRem(36)};
-      }
-    }
-
-    .actions {
-      justify-self: end;
-      font-size: ${makeRem(14)};
-    }
-
-    .save {
-      color: ${makeColor("success-500")};
-    }
+  .save {
+    color: ${makeColor("success-500")};
   }
 `;
 export type SpaceConfigVariantItemProps = {
@@ -112,50 +96,58 @@ function SpaceConfigVariantItem({
   );
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        {isEditing ? (
-          <InputText
-            ref={inputRef}
-            defaultValue={name}
-            dxSize="dense"
-            dxType="text"
-            onChange={handleChangeVariantName}
-          />
-        ) : (
-          name
-        )}
-      </div>
-      {onChangeVariantValue && (
-        <div>
-          {isEditing ? (
-            <InputText
-              defaultValue={value}
-              dxSize="dense"
-              dxType="text"
-              onChange={handleChangeVariantValue}
-            />
-          ) : (
-            value
+    <VariantContainer>
+      <form onSubmit={handleSubmit}>
+        <VariantContainerBar className={styles}>
+          <div>
+            {isEditing ? (
+              <InputText
+                ref={inputRef}
+                defaultValue={name}
+                dxSize="dense"
+                dxType="text"
+                onChange={handleChangeVariantName}
+              />
+            ) : (
+              <VariantContainerBarTitle>{name}</VariantContainerBarTitle>
+            )}
+          </div>
+          {onChangeVariantValue && (
+            <div>
+              {isEditing ? (
+                <InputText
+                  defaultValue={value}
+                  dxSize="dense"
+                  dxType="text"
+                  onChange={handleChangeVariantValue}
+                />
+              ) : (
+                <VariantContainerBarText>{value}</VariantContainerBarText>
+              )}
+            </div>
           )}
-        </div>
-      )}
-      {!onChangeVariantValue && <div className="stat">{`${value}px`}</div>}
-      <div className="stat">{`${value / baseFontSize}rem`}</div>
-      <div className="actions">
-        <Button
-          ref={buttonRef}
-          type="button"
-          dxVariant="icon"
-          dxSize="dense"
-          dxStyle="normal"
-          DXIcon={isEditing ? IconTick01 : IconPencilEdit01}
-          dxHelp={isEditing ? "Save name" : "Edit name"}
-          className={classes({ save: isEditing })}
-          onClick={toggle}
-        />
-      </div>
-    </form>
+          {!onChangeVariantValue && (
+            <VariantContainerBarText>{`${value}px`}</VariantContainerBarText>
+          )}
+          <VariantContainerBarText>{`${
+            value / baseFontSize
+          }rem`}</VariantContainerBarText>
+          <div className="actions">
+            <Button
+              ref={buttonRef}
+              type="button"
+              dxVariant="icon"
+              dxSize="dense"
+              dxStyle="normal"
+              DXIcon={isEditing ? IconTick01 : IconPencilEdit01}
+              dxHelp={isEditing ? "Save name" : "Edit name"}
+              className={classes({ save: isEditing })}
+              onClick={toggle}
+            />
+          </div>
+        </VariantContainerBar>
+      </form>
+    </VariantContainer>
   );
 }
 
@@ -211,7 +203,7 @@ export function SpaceConfigVariants({
           />
         </div>
       </InputLabel>
-      <ul className={styles}>
+      <VariantList>
         {Object.entries(orderedVariants).map(([variantId, { name, value }]) => {
           return (
             <li key={variantId}>
@@ -225,7 +217,7 @@ export function SpaceConfigVariants({
             </li>
           );
         })}
-      </ul>
+      </VariantList>
     </>
   );
 }

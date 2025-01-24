@@ -1,12 +1,13 @@
 import type { ChangeEventHandler } from "react";
 import { useCallback, useEffect } from "react";
-import { css } from "@linaria/core";
-import { makeRem, makeReset } from "@buttery/tokens/playground";
-import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
+import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
 
 import { InputGroup } from "~/components/InputGroup";
 import { InputLabel } from "~/components/InputLabel";
 import { InputNumber } from "~/components/InputNumber";
+import { VariantList } from "~/components/VariantList";
+import { VariantAdd } from "~/components/VariantAdd";
+import { VariantEmpty } from "~/components/VariantEmpty";
 
 import { useRecalculateSpaceVariants } from "./space.useRecalculateSpaceVariants";
 import type { SizeConfigVariantPropsCustom } from "./SizeConfigVariant";
@@ -14,16 +15,30 @@ import { SizeConfigVariant } from "./SizeConfigVariant";
 
 import { useConfigurationContext } from "../Config.context";
 
-const ulStyles = css`
-  ${makeReset("ul")};
-  display: flex;
-  flex-direction: column;
-  gap: ${makeRem(8)};
-`;
-
 export function SizeConfig() {
   const { sizing, setSizing } = useConfigurationContext();
   const { recalculateSpaceVariants } = useRecalculateSpaceVariants();
+
+  const sizeVariantEntries = Object.entries(sizing.size.variants);
+
+  const handleAddSizeVariant = useCallback(() => {
+    const totalSizeVariants = sizeVariantEntries.length;
+    setSizing((draft) => {
+      draft.size.variants[generateGUID()] = {
+        name: `size${totalSizeVariants + 1}`,
+        value: (sizeVariantEntries[0]?.[1].value ?? 0) + sizing.baselineGrid,
+      };
+    });
+  }, [setSizing, sizeVariantEntries, sizing.baselineGrid]);
+
+  const handleDelete = useCallback<(id: string) => void>(
+    (id) => {
+      setSizing((draft) => {
+        delete draft.size.variants[id];
+      });
+    },
+    [setSizing]
+  );
 
   const handleChangeDocumentFontSize = useCallback<
     ChangeEventHandler<HTMLInputElement>
@@ -121,21 +136,33 @@ export function SizeConfig() {
           dxSize="dense"
           dxHelp="Create named variants to align the vertical sizing of adjacent elements such as inputs, buttons and icons"
         />
-        <ul className={ulStyles}>
-          {Object.entries(sizing.size.variants).map(
-            ([variantId, { name, value }]) => (
+        {sizeVariantEntries.length === 0 ? (
+          <VariantEmpty
+            dxMessage="No sizing variants have been added yet"
+            dxActionMessage="Click to add a sizing variant color"
+            dxOnAdd={handleAddSizeVariant}
+          />
+        ) : (
+          <VariantList>
+            {sizeVariantEntries.map(([variantId, { name, value }]) => (
               <li key={variantId}>
                 <SizeConfigVariant
                   dxVariantId={variantId}
                   dxName={name}
                   dxValue={value}
                   dxBaselineGrid={sizing.baselineGrid}
+                  dxOnDelete={handleDelete}
                   dxOnChangeVariantProperties={handleChangeVariantProperties}
                 />
               </li>
-            )
-          )}
-        </ul>
+            ))}
+            <li>
+              <VariantAdd onAdd={handleAddSizeVariant}>
+                Add another sizing variant
+              </VariantAdd>
+            </li>
+          </VariantList>
+        )}
       </div>
     </InputGroup>
   );

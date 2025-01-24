@@ -2,9 +2,8 @@ import { classes, useToggle } from "@buttery/components";
 import { makeColor, makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import type { JSX } from "react";
-import { forwardRef } from "react";
+import { forwardRef, useCallback } from "react";
 
-import { Button } from "~/components/Button";
 import { InputGroup } from "~/components/InputGroup";
 import { InputLabel } from "~/components/InputLabel";
 import { InputNumber } from "~/components/InputNumber";
@@ -12,10 +11,9 @@ import { InputText } from "~/components/InputText";
 import { VariantContainer } from "~/components/VariantContainer";
 import { VariantContainerBar } from "~/components/VariantContainerBar";
 import { VariantContainerBarActions } from "~/components/VariantContainerBarActions";
+import { VariantContainerBarText } from "~/components/VariantContainerBarText";
 import { VariantContainerBarTitle } from "~/components/VariantContainerBarTitle";
 import { VariantContainerContent } from "~/components/VariantContainerContent";
-import { IconDelete } from "~/icons/IconDelete";
-import { IconPencilEdit01 } from "~/icons/IconPencilEdit01";
 
 export type SizeConfigVariantPropsNative = JSX.IntrinsicElements["div"];
 export type SizeConfigVariantPropsCustom = {
@@ -23,6 +21,7 @@ export type SizeConfigVariantPropsCustom = {
   dxName: string;
   dxValue: number;
   dxBaselineGrid: number;
+  dxOnDelete: (id: string) => void;
   dxOnChangeVariantProperties: (
     id: string,
     args:
@@ -65,12 +64,17 @@ export const SizeConfigVariant = forwardRef<
     dxName,
     dxValue,
     dxBaselineGrid,
+    dxOnDelete,
     dxOnChangeVariantProperties,
     ...restProps
   },
   ref
 ) {
   const [isOpen, toggle] = useToggle();
+
+  const handleDelete = useCallback(() => {
+    dxOnDelete(dxVariantId);
+  }, [dxOnDelete, dxVariantId]);
 
   return (
     <VariantContainer
@@ -80,23 +84,17 @@ export const SizeConfigVariant = forwardRef<
     >
       <VariantContainerBar className={styles}>
         <VariantContainerBarTitle>{dxName}</VariantContainerBarTitle>
-        <div className="value">{dxValue}px</div>
-        <div className="value">{dxValue / dxBaselineGrid}rem</div>
-        <VariantContainerBarActions>
-          <Button
-            dxVariant="icon"
-            DXIcon={IconPencilEdit01}
-            onClick={toggle}
-            dxSize="dense"
-            dxHelp="Toggle Edit"
-          />
-          <Button
-            dxVariant="icon"
-            DXIcon={IconDelete}
-            dxSize="dense"
-            dxHelp="Delete Variant"
-          />
-        </VariantContainerBarActions>
+        <VariantContainerBarText className="value">
+          {dxValue}px
+        </VariantContainerBarText>
+        <VariantContainerBarText className="value">
+          {dxValue / dxBaselineGrid}rem
+        </VariantContainerBarText>
+        <VariantContainerBarActions
+          dxIsEditing={isOpen}
+          dxOnEdit={toggle}
+          dxOnDelete={handleDelete}
+        />
       </VariantContainerBar>
       {isOpen && (
         <VariantContainerContent>
