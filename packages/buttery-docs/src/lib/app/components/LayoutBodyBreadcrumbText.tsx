@@ -1,6 +1,7 @@
 import { classes } from "@buttery/components";
 import { makeColor, makeRem } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef } from "react";
 
 export type LayoutBodyBreadcrumbTextPropsNative = JSX.IntrinsicElements["div"];

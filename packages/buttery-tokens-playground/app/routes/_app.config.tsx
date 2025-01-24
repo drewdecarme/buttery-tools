@@ -107,6 +107,9 @@ export default function AppConfigRoute() {
             <li>
               <NavLink to="./custom">Custom</NavLink>
             </li>
+            <li>
+              <NavLink to="./settings">Settings</NavLink>
+            </li>
           </ul>
         </NavTabs>
       </div>

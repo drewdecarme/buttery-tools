@@ -1,5 +1,6 @@
 import { classes } from "@buttery/components";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef } from "react";
 
 export type ButtonPropsNative = JSX.IntrinsicElements["button"];

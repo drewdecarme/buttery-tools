@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { Suspense, forwardRef, lazy } from "react";
 
 import type { IconNames } from "./buttery-icons.types.js";

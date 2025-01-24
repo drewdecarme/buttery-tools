@@ -1,7 +1,7 @@
 {
   "runtime": {
-    "namespace": "docsV2",
-    "prefix": "docsV2",
+    "namespace": "replace-me",
+    "prefix": "--buttery",
     "strict": true,
     "suppressStrictWarnings": false
   },
@@ -36,13 +36,19 @@
   },
   "color": {
     "brand": {
-      "type": "manual",
+      "type": "jewel",
       "colors": {
-        "primary": {
-          "hex": "#5A29E0",
-          "variants": 10
+        "brand1": {
+          "hue": 328,
+          "variants": [
+            "light",
+            "dark",
+            "variant-3"
+          ]
         }
-      }
+      },
+      "saturation": 73,
+      "brightness": 56
     },
     "neutral": {
       "grey-1": {
@@ -51,5 +57,16 @@
       }
     }
   },
-  "custom": {}
+  "custom": {
+    "token_1": {
+      "type": "string",
+      "value": "testing",
+      "description": "token_description_1"
+    },
+    "token_2": {
+      "type": "string",
+      "value": "",
+      "description": "token_description_2"
+    }
+  }
 }

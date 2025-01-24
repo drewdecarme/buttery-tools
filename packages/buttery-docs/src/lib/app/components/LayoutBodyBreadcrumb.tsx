@@ -6,6 +6,7 @@ import {
   makeReset,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef } from "react";
 
 export type LayoutBodyBreadcrumbPropsNative = JSX.IntrinsicElements["nav"];

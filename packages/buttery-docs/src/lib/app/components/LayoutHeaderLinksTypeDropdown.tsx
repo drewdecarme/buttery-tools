@@ -1,4 +1,4 @@
-import { DropdownNav, useDropdownNav } from "@buttery/components";
+import { useDropdownNav } from "@buttery/components";
 import {
   makeColor,
   makeFontFamily,
@@ -121,18 +121,18 @@ const dropdownStyles = css`
 export function LayoutHeaderLinksTypeDropdown(
   props: ButteryDocsConfigHeaderLinkTypeDropdown
 ) {
-  const { targetProps, dropdownProps } = useDropdownNav({
+  const { setNavMenuRef, setTargetRef } = useDropdownNav({
     dxOffset: 16,
     dxPosition: "bottom-right",
   });
 
   return (
     <>
-      <button type="button" {...targetProps} className={buttonStyles}>
+      <button type="button" ref={setTargetRef} className={buttonStyles}>
         {props.text}
         <IconComponent icon="arrow-down-stroke-rounded" ddSize={24} />
       </button>
-      <DropdownNav {...dropdownProps} className={dropdownStyles}>
+      <div ref={setNavMenuRef} className={dropdownStyles}>
         <ul>
           {props.items.map((item) => {
             return (
@@ -150,7 +150,7 @@ export function LayoutHeaderLinksTypeDropdown(
             );
           })}
         </ul>
-      </DropdownNav>
+      </div>
     </>
   );
 }
