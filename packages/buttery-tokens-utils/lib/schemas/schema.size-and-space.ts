@@ -80,11 +80,7 @@ export const SizeAndSpaceSchema = z
     baseFontSize: 16,
     baselineGrid: 4,
     size: {
-      variants: {
-        dense: 24,
-        normal: 32,
-        big: 44,
-      },
+      variants: {},
     },
     space: {
       mode: "auto",
