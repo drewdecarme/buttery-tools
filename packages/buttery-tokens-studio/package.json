@@ -1,5 +1,5 @@
 {
-  "name": "@buttery/token-studio",
+  "name": "@buttery/tokens-studio",
   "sideEffects": false,
   "type": "module",
   "scripts": {

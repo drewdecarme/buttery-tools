@@ -1357,9 +1357,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@buttery/token-studio@workspace:*, @buttery/token-studio@workspace:packages/buttery-tokens-studio":
+"@buttery/tokens-studio@workspace:*, @buttery/tokens-studio@workspace:packages/buttery-tokens-studio":
   version: 0.0.0-use.local
-  resolution: "@buttery/token-studio@workspace:packages/buttery-tokens-studio"
+  resolution: "@buttery/tokens-studio@workspace:packages/buttery-tokens-studio"
   dependencies:
     "@buttery/components": "workspace:*"
     "@buttery/logs": "workspace:"
@@ -1426,7 +1426,7 @@ __metadata:
   resolution: "@buttery/tokens@workspace:packages/buttery-tokens"
   dependencies:
     "@buttery/core": "workspace:*"
-    "@buttery/token-studio": "workspace:*"
+    "@buttery/tokens-studio": "workspace:*"
     "@buttery/tokens-utils": "workspace:*"
     "@buttery/tsconfig": "workspace:*"
     "@buttery/utils": "workspace:*"

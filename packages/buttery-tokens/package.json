@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@buttery/core": "workspace:*",
-    "@buttery/token-studio": "workspace:*",
+    "@buttery/tokens-studio": "workspace:*",
     "@buttery/tokens-utils": "workspace:*",
     "@buttery/tsconfig": "workspace:*",
     "@buttery/utils": "workspace:*",
