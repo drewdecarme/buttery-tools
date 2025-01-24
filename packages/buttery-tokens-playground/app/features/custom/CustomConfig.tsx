@@ -4,8 +4,6 @@ import { css } from "@linaria/core";
 import { makeRem, makeReset } from "@buttery/tokens/playground";
 
 import { VariantEmpty } from "~/components/VariantEmpty";
-import { Button } from "~/components/Button";
-import { IconPlusSign } from "~/icons/IconPlusSign";
 import { VariantAdd } from "~/components/VariantAdd";
 
 import { CustomConfigVariant } from "./CustomConfigVariant";
@@ -104,16 +102,11 @@ export function CustomConfig() {
   const customEntires = Object.entries(custom);
   if (customEntires.length === 0) {
     return (
-      <VariantEmpty dxMessage="No custom tokens have been added yet">
-        <Button
-          dxVariant="outlined"
-          dxColor="secondary"
-          DXIconStart={IconPlusSign}
-          onClick={handleAdd}
-        >
-          Click to add a custom token
-        </Button>
-      </VariantEmpty>
+      <VariantEmpty
+        dxMessage="No custom tokens have been added yet"
+        dxActionMessage="Click to add a custom token"
+        dxOnAdd={handleAdd}
+      />
     );
   }
 

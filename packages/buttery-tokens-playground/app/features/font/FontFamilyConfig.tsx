@@ -5,10 +5,8 @@ import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
 import { match } from "ts-pattern";
 import { manualFontStyles } from "@buttery/tokens-utils/schemas";
 
-import { Button } from "~/components/Button";
 import { VariantEmpty } from "~/components/VariantEmpty";
 import { VariantAdd } from "~/components/VariantAdd";
-import { IconPlusSign } from "~/icons/IconPlusSign";
 import { LOG } from "~/utils/util.logger";
 
 import { FontFamilyConfigManual } from "./FontFamilyConfigManual";
@@ -130,16 +128,11 @@ export function FontFamilyConfig() {
   // Show an empty state if there are no families added
   if (Object.entries(font.families).length === 0) {
     return (
-      <VariantEmpty dxMessage="No font families have been added yet">
-        <Button
-          dxVariant="outlined"
-          dxColor="secondary"
-          DXIconStart={IconPlusSign}
-          onClick={handleAddFontFamily}
-        >
-          Click to add a font family
-        </Button>
-      </VariantEmpty>
+      <VariantEmpty
+        dxMessage="No font families have been added yet"
+        dxActionMessage="Click to add a font family"
+        dxOnAdd={handleAddFontFamily}
+      />
     );
   }
 

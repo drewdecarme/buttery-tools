@@ -4,9 +4,27 @@ import { css } from "@linaria/core";
 import type { JSX } from "react";
 import { forwardRef } from "react";
 
-export type VariantEmptyPropsNative = JSX.IntrinsicElements["div"];
+import { IconPlusSign } from "~/icons/IconPlusSign";
+
+import { Button } from "./Button";
+
+export type VariantEmptyPropsNative = Omit<
+  JSX.IntrinsicElements["div"],
+  "children"
+>;
 export type VariantEmptyPropsCustom = {
+  /**
+   * the text that will describe the empty state
+   */
   dxMessage: string;
+  /**
+   * The text that will be displayed on the action button
+   */
+  dxActionMessage: string;
+  /**
+   * The click handler for getting out of the empty state
+   */
+  dxOnAdd: () => void;
 };
 export type VariantEmptyProps = VariantEmptyPropsNative &
   VariantEmptyPropsCustom;
@@ -31,11 +49,23 @@ const styles = css`
 `;
 
 export const VariantEmpty = forwardRef<HTMLDivElement, VariantEmptyProps>(
-  function VariantEmpty({ children, className, dxMessage, ...restProps }, ref) {
+  function VariantEmpty(
+    { className, dxMessage, dxOnAdd, dxActionMessage, ...restProps },
+    ref
+  ) {
     return (
       <div {...restProps} className={classes(styles, className)} ref={ref}>
         <div className="message">{dxMessage}</div>
-        <div>{children}</div>
+        <div>
+          <Button
+            dxVariant="outlined"
+            dxColor="secondary"
+            DXIconStart={IconPlusSign}
+            onClick={dxOnAdd}
+          >
+            {dxActionMessage}
+          </Button>
+        </div>
       </div>
     );
   }

@@ -4,10 +4,12 @@ import type { ChangeEventHandler } from "react";
 import { useCallback } from "react";
 import { generateGUID } from "@buttery/utils/isomorphic";
 
-import { ColorSwatchAdd } from "./ColorSwatchAdd";
-import { ColorBrandModeAutoSwatch } from "./ColorBrandModeAutoSwatch";
+import { VariantAdd } from "~/components/VariantAdd";
+import { VariantEmpty } from "~/components/VariantEmpty";
+import { VariantList } from "~/components/VariantList";
+
+import { ColorBrandModeAutoVariant } from "./ColorBrandModeAutoVariant";
 import { ColorBrandModeAutoCategory } from "./ColorBrandModeAutoCategory";
-import { ColorSwatchList } from "./ColorSwatchList";
 
 import type { ConfigurationContextType } from "../Config.context";
 import type { ConfigurationStateColorBrandAuto } from "../config.utils.color";
@@ -51,6 +53,8 @@ export function ColorBrandModeAuto({
     },
     [setColor]
   );
+
+  const colorEntries = Object.entries(state.colors);
 
   return (
     <>
@@ -102,32 +106,51 @@ export function ColorBrandModeAuto({
         </div>
         <div className={inputLabelStyles}>
           <InputLabel dxLabel="Hues & Variants" dxSize="dense" />
-          <ColorSwatchList>
-            {Object.entries(state.colors).map(([colorId, colorNameAndDef]) => {
-              return (
-                <li key={colorId}>
-                  <ColorBrandModeAutoSwatch
-                    colorDef={{ [colorId]: colorNameAndDef }}
-                    setColor={setColor}
-                  />
-                </li>
-              );
-            })}
-            <li>
-              <ColorSwatchAdd
-                onClick={() =>
-                  setColor((draft) => {
-                    const id = generateGUID();
-                    draft.brand.auto.colors[id] = {
-                      hue: 180,
-                      name: `brand${Object.entries(state.colors).length + 1}`,
-                      variants: 10,
-                    };
-                  })
-                }
-              />
-            </li>
-          </ColorSwatchList>
+          {colorEntries.length === 0 ? (
+            <VariantEmpty
+              dxMessage="No colors have been added"
+              dxActionMessage="Click to add a color"
+              dxOnAdd={() =>
+                setColor((draft) => {
+                  const id = generateGUID();
+                  draft.brand.auto.colors[id] = {
+                    hue: 180,
+                    name: `brand${Object.entries(state.colors).length + 1}`,
+                    variants: 10,
+                  };
+                })
+              }
+            />
+          ) : (
+            <VariantList>
+              {colorEntries.map(([colorId, colorNameAndDef]) => {
+                return (
+                  <li key={colorId}>
+                    <ColorBrandModeAutoVariant
+                      colorDef={{ [colorId]: colorNameAndDef }}
+                      setColor={setColor}
+                    />
+                  </li>
+                );
+              })}
+              <li>
+                <VariantAdd
+                  onAdd={() =>
+                    setColor((draft) => {
+                      const id = generateGUID();
+                      draft.brand.auto.colors[id] = {
+                        hue: 180,
+                        name: `brand${Object.entries(state.colors).length + 1}`,
+                        variants: 10,
+                      };
+                    })
+                  }
+                >
+                  Add another color
+                </VariantAdd>
+              </li>
+            </VariantList>
+          )}
         </div>
       </InputSection>
     </>

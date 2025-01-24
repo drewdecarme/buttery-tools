@@ -1,24 +1,14 @@
-import { css } from "@linaria/core";
-import { makeRem, makeReset } from "@buttery/tokens/playground";
 import { useCallback } from "react";
 import { exhaustiveMatchGuard, generateGUID } from "@buttery/utils/isomorphic";
 
-import { Button } from "~/components/Button";
 import { VariantEmpty } from "~/components/VariantEmpty";
 import { VariantAdd } from "~/components/VariantAdd";
-import { IconPlusSign } from "~/icons/IconPlusSign";
+import { VariantList } from "~/components/VariantList";
 
 import { FontVariantConfigVariant } from "./FontVariantConfigVariant";
 
 import { useConfigurationContext } from "../Config.context";
 import type { OnFontVariantAction } from "../config.utils.font";
-
-const styles = css`
-  ${makeReset("ul")};
-  display: flex;
-  flex-direction: column;
-  gap: ${makeRem(8)};
-`;
 
 export function FontVariantConfig() {
   const { font, setFont } = useConfigurationContext();
@@ -93,21 +83,16 @@ export function FontVariantConfig() {
   // Show an empty state if there are no families added
   if (Object.entries(font.variants).length === 0) {
     return (
-      <VariantEmpty dxMessage="No typographical variants have been added yet">
-        <Button
-          dxVariant="outlined"
-          dxColor="secondary"
-          DXIconStart={IconPlusSign}
-          onClick={handleAddTypographyVariant}
-        >
-          Click to add a typography variant
-        </Button>
-      </VariantEmpty>
+      <VariantEmpty
+        dxMessage="No typographical variants have been added yet"
+        dxActionMessage="Click to add a typography variant"
+        dxOnAdd={handleAddTypographyVariant}
+      />
     );
   }
 
   return (
-    <ul className={styles}>
+    <VariantList>
       {Object.entries(font.variants).map(([variantId, variant]) => (
         <li key={variantId}>
           <FontVariantConfigVariant
@@ -119,6 +104,6 @@ export function FontVariantConfig() {
         </li>
       ))}
       <VariantAdd onAdd={handleAddTypographyVariant}>Add a variant</VariantAdd>
-    </ul>
+    </VariantList>
   );
 }
