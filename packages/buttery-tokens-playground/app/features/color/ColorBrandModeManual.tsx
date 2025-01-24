@@ -41,8 +41,8 @@ export function ColorBrandModeManual({
       />
       {colorEntries.length === 0 ? (
         <VariantEmpty
-          dxMessage="No colors have been added yet"
-          dxActionMessage="Click to add a color"
+          dxMessage="No brand colors have been added yet"
+          dxActionMessage="Click to add a brand color"
           dxOnAdd={handleAdd}
         />
       ) : (
@@ -58,7 +58,7 @@ export function ColorBrandModeManual({
             );
           })}
           <li>
-            <VariantAdd onAdd={handleAdd}>Add another color</VariantAdd>
+            <VariantAdd onAdd={handleAdd}>Add another brand color</VariantAdd>
           </li>
         </VariantList>
       )}
