@@ -1,7 +1,7 @@
 {
   "runtime": {
-    "namespace": "replace-me",
-    "prefix": "--buttery",
+    "namespace": "new",
+    "prefix": "new",
     "strict": true,
     "suppressStrictWarnings": false
   },
@@ -80,8 +80,8 @@
           "variants": 10
         }
       },
-      "saturation": 73,
-      "brightness": 56
+      "saturation": 77,
+      "brightness": 69
     },
     "neutral": {
       "neutral": {

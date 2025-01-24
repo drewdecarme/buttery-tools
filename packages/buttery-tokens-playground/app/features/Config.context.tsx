@@ -28,11 +28,17 @@ import {
   getCustomConfigFromState,
   useConfigStateCustom,
 } from "./config.utils.custom.js";
+import type { ConfigurationContextSettingsType } from "./config.utils.settings.js";
+import {
+  getSettingsConfigFromState,
+  useConfigStateSettings,
+} from "./config.utils.settings.js";
 
 export type ConfigurationContextType = ConfigurationContextColorType &
   ConfigurationContextFontType &
   ConfigurationContextResponseType &
   ConfigurationContextSizingType &
+  ConfigurationContextSettingsType &
   ConfigurationContextCustomType & {
     getConfigFromState: () => ButteryTokensConfig;
     originalConfig: ButteryTokensConfig;
@@ -55,6 +61,7 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
   const [sizing, setSizing] = useConfigStateSizing(originalConfig);
   const [response, setResponse] = useConfigStateResponse(originalConfig);
   const [custom, setCustom] = useConfigStateCustom(originalConfig);
+  const [settings, setSettings] = useConfigStateSettings(originalConfig);
 
   const getConfigFromState = useCallback<
     ConfigurationContextType["getConfigFromState"]
@@ -64,6 +71,7 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
     const configFont = getFontConfigFromState(font);
     const configResponse = getResponseConfigFromState(response);
     const configCustom = getCustomConfigFromState(custom);
+    const configSettings = getSettingsConfigFromState(settings);
 
     const config = ConfigSchema.safeParse({
       color: configColor,
@@ -71,12 +79,13 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
       font: configFont,
       response: configResponse,
       custom: configCustom,
+      runtime: configSettings,
     });
     if (config.error) {
       throw config.error;
     }
     return config.data;
-  }, [color, custom, font, response, sizing]);
+  }, [color, custom, font, response, settings, sizing]);
 
   const value = useMemo<ConfigurationContextType>(
     () => ({
@@ -90,6 +99,8 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
       setResponse,
       custom,
       setCustom,
+      settings,
+      setSettings,
       getConfigFromState,
       originalConfig,
     }),
@@ -104,7 +115,9 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
       setCustom,
       setFont,
       setResponse,
+      setSettings,
       setSizing,
+      settings,
       sizing,
     ]
   );

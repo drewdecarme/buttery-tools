@@ -65,7 +65,7 @@ export const RuntimeSchema = z
     suppressStrictWarnings: optionalSchema(z.boolean(), false),
   })
   .default({
-    namespace: "replace-me",
-    prefix: "--buttery",
+    namespace: "new",
+    prefix: "new",
   });
 export type ButteryTokensConfigRuntime = z.infer<typeof RuntimeSchema>;
