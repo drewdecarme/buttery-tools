@@ -77,6 +77,7 @@ export function ColorBrandModeAuto({
             dxDisplayMin
             dxDisplayMax
             dxDisplayInput
+            value={state.saturation}
             {...colorAutoPresets[state.type].saturation}
             className={inputLabelStyles}
             onChange={handleChangeSaturation}
@@ -93,6 +94,7 @@ export function ColorBrandModeAuto({
             dxDisplayMin
             dxDisplayMax
             dxDisplayInput
+            value={state.brightness}
             {...colorAutoPresets[state.type].brightness}
             className={inputLabelStyles}
             onChange={handleChangeBrightness}

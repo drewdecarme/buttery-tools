@@ -6,19 +6,14 @@ import {
   makeReset,
 } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
-import type {
-  ChangeEventHandler,
-  FormEventHandler,
-  JSX,
-  RefCallback,
-} from "react";
-import { forwardRef, useCallback, useRef } from "react";
+import type { ChangeEventHandler, JSX } from "react";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 
 import { InputNumber } from "./InputNumber";
 
 export type InputRangePropsNative = Omit<
   JSX.IntrinsicElements["input"],
-  "type" | "min" | "max"
+  "type" | "min" | "max" | "value"
 >;
 export type InputRangePropsCustom = {
   min: number;
@@ -28,6 +23,7 @@ export type InputRangePropsCustom = {
   dxDisplayInput?: boolean;
   dxDisplayTooltip?: boolean;
   dxVariant?: "normal" | "hue";
+  value?: number;
   /**
    * Custom handler that has the value of the range
    * passed as a parameter
@@ -54,7 +50,7 @@ const containerStyles = css`
   }
 `;
 
-const inputStyles = css`
+const inputRangeStyles = css`
   --thumb-bg: white;
   --thumb-size: ${makeRem(14)};
   --thumb-border: ${makeRem(1)} solid
@@ -181,6 +177,14 @@ const inputStyles = css`
   }
 `;
 
+function calculatePercentage(value: number, min: number, max: number) {
+  const raw = ((value - min) / (max - min)) * 100;
+  return {
+    raw,
+    percent: `${raw}%`,
+  };
+}
+
 export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
   function InputRange(
     {
@@ -193,68 +197,29 @@ export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
       dxVariant = "normal",
       dxOnChange,
       className,
+      value,
       ...restProps
     },
     forwardedRef
   ) {
-    const ref = useForwardedRef(forwardedRef);
-    const inputRef = useRef<HTMLInputElement | null>(null);
+    const inputRangeRef = useForwardedRef(forwardedRef);
+    const inputNumberRef = useRef<HTMLInputElement | null>(null);
+    const [localValue, setLocalValue] = useState(value ?? 0);
 
-    const setPercentage = useCallback<(node: HTMLInputElement) => void>(
-      (node) => {
-        const value = Number(node.value);
-        const min = Number(node.min || 0);
-        const max = Number(node.max || 100);
-        const percentage = ((value - min) / (max - min)) * 100;
-        if (dxOnChange) {
-          dxOnChange(value);
-        }
+    // If the input is controlled, we need to update
+    // our local state if the controlled value changes
+    useEffect(() => {
+      if (!value) return;
+      setLocalValue(value);
+    }, [value]);
 
-        node.style.setProperty(
-          "--percentage",
-          percentage.toString().concat("%")
-        );
+    const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+      (e) => {
+        const value = Number(e.currentTarget.value);
+        setLocalValue(Number(value));
+        if (dxOnChange) dxOnChange(value);
       },
       [dxOnChange]
-    );
-
-    const handleInput = useCallback<FormEventHandler<HTMLInputElement>>(
-      ({ currentTarget }) => {
-        setPercentage(currentTarget);
-        // set the input value if it's available in the dom
-        if (!inputRef.current) return;
-        inputRef.current.value = currentTarget.value.toString();
-      },
-      [setPercentage]
-    );
-
-    const inputRangeCallbackRef = useCallback<RefCallback<HTMLInputElement>>(
-      (node) => {
-        if (!node) return;
-        setPercentage(node);
-        ref.current = node;
-      },
-      [ref, setPercentage]
-    );
-
-    const inputNumberCallbackRef = useCallback<RefCallback<HTMLInputElement>>(
-      (node) => {
-        if (!node || !ref.current) return;
-        inputRef.current = node;
-        node.value = ref.current.value;
-      },
-      [ref]
-    );
-
-    const handleManualChange = useCallback<
-      ChangeEventHandler<HTMLInputElement>
-    >(
-      ({ currentTarget: { value } }) => {
-        if (!ref.current) return;
-        ref.current.value = value;
-        setPercentage(ref.current);
-      },
-      [ref, setPercentage]
     );
 
     return (
@@ -266,24 +231,30 @@ export const InputRange = forwardRef<HTMLInputElement, InputRangeProps>(
           max={max}
           type="range"
           className={classes(
-            inputStyles,
+            inputRangeStyles,
             {
               [`v-${dxVariant}`]: dxVariant,
             },
             className
           )}
-          onInput={handleInput}
-          ref={inputRangeCallbackRef}
+          value={localValue}
+          style={{
+            // @ts-expect-error Custom properties are allowed but cannot be recognized by the compiler
+            "--percentage": calculatePercentage(localValue, min, max).percent,
+          }}
+          onInput={handleOnChange}
+          ref={inputRangeRef}
         />
         {dxDisplayMax && <span className="range-label">{max}</span>}
         {dxDisplayInput && (
           <InputNumber
-            ref={inputNumberCallbackRef}
+            ref={inputNumberRef}
             dxSize="dense"
             min={min}
             max={max}
+            value={localValue}
             className="manual-input"
-            onChange={handleManualChange}
+            onChange={handleOnChange}
           />
         )}
       </div>
