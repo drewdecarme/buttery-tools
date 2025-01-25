@@ -1,3 +1,5 @@
+import type { MetaFunction } from "react-router";
+
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
 import { SizeConfig } from "~/features/size-and-space/SizeConfig";
@@ -6,6 +8,17 @@ import { SizePreviewContent } from "~/features/size-and-space/SizePreviewContent
 import { SpaceConfig } from "~/features/size-and-space/SpaceConfig";
 import { SpacePreview } from "~/features/size-and-space/SpacePreview";
 import { SpacePreviewContent } from "~/features/size-and-space/SpacePreviewContent";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Size & Spacing | Tokens Studio" },
+    {
+      name: "description",
+      content:
+        "Configure specific tokens to manage vertical rhythm, relative size and factor based spacing",
+    },
+  ];
+};
 
 export default function ConfigSizeAndSpacingRoute() {
   return (

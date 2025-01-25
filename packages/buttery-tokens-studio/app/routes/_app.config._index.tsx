@@ -1,3 +1,5 @@
+import type { MetaFunction } from "react-router";
+
 import { ColorPreviewBrand } from "~/features/color/ColorPreviewBrand";
 import { ColorBrandMode } from "~/features/color/ColorBrandMode";
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
@@ -5,6 +7,17 @@ import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionCon
 import { ColorPreviewNeutral } from "~/features/color/ColorPreviewNeutral";
 import { ColorNeutral } from "~/features/color/ColorNeutral";
 import { ColorPreview } from "~/features/color/ColorPreview";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Color | Tokens Studio" },
+    {
+      name: "description",
+      content:
+        "Select a methodology in which to create the colors in your palette. Add variants, neutral tones, and static colors to round your palette out.",
+    },
+  ];
+};
 
 export default function ColorsRoute() {
   return (

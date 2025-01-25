@@ -3,8 +3,8 @@ import { Link } from "react-router";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "Buttery Tokens Studio" },
+    { name: "description", content: "Welcome to the Buttery Tokens Studio!" },
   ];
 };
 
