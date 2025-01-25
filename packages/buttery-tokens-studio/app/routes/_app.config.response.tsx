@@ -31,17 +31,6 @@ export default function ConfigResponseRoute() {
           <BreakpointPreviewContent />
         </BreakpointPreview>
       </LayoutConfigSection>
-      {/* <LayoutConfigSection>
-        <LayoutConfigSectionControls
-          dxTitle="Containers"
-          dxDescription={<>explanation of containers</>}
-        >
-          <ContainerConfig />
-        </LayoutConfigSectionControls>
-        <ContainerPreview>
-          <ContainerPreviewContent />
-        </ContainerPreview>
-      </LayoutConfigSection> */}
     </>
   );
 }
