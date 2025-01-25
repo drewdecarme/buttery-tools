@@ -11,11 +11,14 @@ import {
   useColorPreviewContext,
 } from "./ColorPreview.context";
 
+import { colorThemeMap } from "../config.utils.color";
+
 const styles = css`
   position: relative;
 
   &.light {
-    background: white;
+    background: ${colorThemeMap.light};
+
     &::after {
       content: "";
       position: absolute;
@@ -27,7 +30,7 @@ const styles = css`
     }
   }
   &.dark {
-    background: #1e1e1e;
+    background: ${colorThemeMap.dark};
   }
 `;
 

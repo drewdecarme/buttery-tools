@@ -7,15 +7,17 @@ import { IconSun03 } from "~/icons/IconSun03";
 import { useColorPreviewContext } from "./ColorPreview.context";
 
 export function ColorPreviewControls() {
-  const { themeMode, setThemeMode } = useColorPreviewContext();
+  const { themeMode, setThemeMode, toggleWCAG, showWCAG } =
+    useColorPreviewContext();
   return (
     <ButtonGroup>
       <Button
         dxVariant="icon"
         DXIcon={IconUniversalAccess}
+        onClick={toggleWCAG}
         dxStyle="outlined"
         dxSize="normal"
-        dxHelp="View accessibility metrics"
+        dxHelp={`${showWCAG ? "Hide" : "Show"} accessibility metrics`}
       />
       <Button
         dxVariant="icon"

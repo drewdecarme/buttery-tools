@@ -19,6 +19,8 @@ import type { Updater } from "use-immer";
 import { useImmer } from "use-immer";
 import type { z, ZodUnionDef, ZodLiteral } from "zod";
 
+import type { ColorPreviewThemeMode } from "./color/ColorPreview.context";
+
 export const initConfig: ButteryTokensConfig = ConfigSchema.parse({});
 
 export type ConfigurationStateColorsAuto = {
@@ -200,4 +202,9 @@ export function useConfigStateColor(initConfig: ButteryTokensConfig) {
 export type ConfigurationContextColorType = {
   color: ConfigurationStateColor;
   setColor: Updater<ConfigurationStateColor>;
+};
+
+export const colorThemeMap: Record<ColorPreviewThemeMode, string> = {
+  dark: "#1e1e1e",
+  light: "#ffffff",
 };
