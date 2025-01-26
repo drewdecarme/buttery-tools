@@ -5,9 +5,8 @@ import { makeCustom } from "@buttery/tokens/playground";
 import { Button } from "~/components/Button";
 import { ModalDrawer } from "~/components/ModalDrawer";
 import { ModalHeader } from "~/components/ModalHeader";
-import { IconView } from "~/icons/IconView";
-import { NavTabs } from "~/components/NavTabs";
 import { CodeBlock } from "~/components/CodeBlock";
+import { IconCode } from "~/icons/IconCode";
 
 import { useConfigurationContext } from "./Config.context";
 
@@ -27,19 +26,15 @@ const styles = css`
   }
 `;
 
-const tabStyles = css`
-  padding: 0 ${makeCustom("modal-gutters")};
-`;
-
-export function ConfigPreview() {
+export function ConfigJSON() {
   const { openModal, modalRef } = useModal();
   const { getConfigFromState } = useConfigurationContext();
   const config = getConfigFromState();
 
   return (
     <>
-      <Button dxVariant="outlined" DXIconStart={IconView} onClick={openModal}>
-        Preview
+      <Button dxVariant="outlined" DXIconStart={IconCode} onClick={openModal}>
+        JSON
       </Button>
       <ModalDrawer
         ref={modalRef}
@@ -47,19 +42,9 @@ export function ConfigPreview() {
         dxSize="md"
         className={styles}
       >
-        <ModalHeader dxSubtitle="Below you'll find the code representation of the configuration. You can copy and paste this into your buttery-tokens.config.ts file or you can use one of the other buttons to save it.">
-          View the configuration
+        <ModalHeader dxSubtitle="Below you'll find the code representation of the configuration. You can copy and paste this into your `buttery-tokens.config.json` file or you can use one of the other buttons to save it.">
+          Buttery Tokens Configuration
         </ModalHeader>
-        <NavTabs className={tabStyles}>
-          <ul>
-            <li>
-              <button className="active">JSON</button>
-            </li>
-            <li>
-              <button>TypeScript</button>
-            </li>
-          </ul>
-        </NavTabs>
         <CodeBlock
           className={codeStyles}
           dxCode={JSON.stringify(config, null, 2)}

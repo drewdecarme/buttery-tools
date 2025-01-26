@@ -4,9 +4,11 @@ import { css } from "@linaria/core";
 import { makeColor, makeFontWeight, makeRem } from "@buttery/tokens/playground";
 import { classes } from "@buttery/components";
 
+import type { IconCode } from "~/icons/IconCode";
+
 export type InputRadioCardPropsNative = JSX.IntrinsicElements["input"];
 export type InputRadioCardPropsCustom = {
-  DXIcon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  DXIcon: typeof IconCode;
   dxTitle: string;
   dxDescription: string;
   dxHelp?: string;

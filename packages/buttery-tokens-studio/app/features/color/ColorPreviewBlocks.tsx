@@ -14,8 +14,6 @@ import { IconCancel } from "~/icons/IconCancel";
 
 import { useColorPreviewContext } from "./ColorPreview.context";
 
-import { colorThemeMap } from "../config.utils.color";
-
 const blockStyles = css`
   height: 100%;
   width: 100%;

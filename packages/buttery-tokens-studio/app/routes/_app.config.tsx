@@ -7,12 +7,12 @@ import { Button } from "~/components/Button";
 import { ButtonGroup } from "~/components/ButtonGroup";
 import { NavTabs } from "~/components/NavTabs";
 import { IconCopy } from "~/icons/IconCopy";
-import { IconDownload05 } from "~/icons/IconDownload05";
 import { ConfigurationProvider } from "~/features/Config.context";
-import { ConfigPreview } from "~/features/ConfigPreview";
+import { ConfigJSON } from "~/features/ConfigJSON";
 import { getButteryConfig } from "~/utils/util.getLocalConfig";
 import { ConfigSave } from "~/features/ConfigSave";
 import { errors } from "~/utils/util.error-modes";
+import { ConfigStyleGuide } from "~/features/ConfigStyleguide";
 
 const styles = css`
   position: sticky;
@@ -78,10 +78,8 @@ export default function AppConfigRoute() {
               <Button dxVariant="outlined" DXIconStart={IconCopy}>
                 Copy
               </Button>
-              <Button dxVariant="outlined" DXIconStart={IconDownload05}>
-                Export
-              </Button>
-              <ConfigPreview />
+              <ConfigStyleGuide />
+              <ConfigJSON />
             </ButtonGroup>
             <ButtonGroup>
               <ConfigSave />
