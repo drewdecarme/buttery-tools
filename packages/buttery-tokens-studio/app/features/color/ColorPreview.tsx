@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useMemo, type ReactNode } from "react";
 import { css } from "@linaria/core";
 import { classes } from "@buttery/components";
 
@@ -40,12 +40,22 @@ const stylesTitle = css`
 `;
 
 function ColorPreviewContent({ children }: { children: ReactNode }) {
-  const { themeMode } = useColorPreviewContext();
+  const { wcagValues } = useColorPreviewContext();
   return (
-    <LayoutConfigSectionPreview className={classes(styles, themeMode)}>
-      <LayoutConfigSectionTitle className={stylesTitle}>
-        <ColorPreviewControls />
-      </LayoutConfigSectionTitle>
+    <LayoutConfigSectionPreview
+      style={{
+        background: wcagValues.bgColor,
+      }}
+      className={classes(styles)}
+    >
+      {useMemo(
+        () => (
+          <LayoutConfigSectionTitle className={stylesTitle}>
+            <ColorPreviewControls />
+          </LayoutConfigSectionTitle>
+        ),
+        []
+      )}
       {children}
     </LayoutConfigSectionPreview>
   );

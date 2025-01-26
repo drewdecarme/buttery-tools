@@ -121,15 +121,16 @@ function ColorBlock({
   dxName,
   showWCAG,
   bgHex,
+  fontSize,
   ...restProps
 }: JSX.IntrinsicElements["div"] & {
   dxHex: string;
   dxName: string;
   showWCAG: boolean;
   bgHex: string;
+  fontSize: number;
 }) {
-  const colorWcag = checker.analyze(dxHex, bgHex, 18);
-  console.log(colorWcag);
+  const colorWcag = checker.analyze(dxHex, bgHex, fontSize);
 
   return (
     <div
@@ -221,7 +222,7 @@ export function ColorPreviewBlocks(props: {
   baseVariantHex: string;
   variants: Record<string, string>;
 }) {
-  const { showWCAG, themeMode } = useColorPreviewContext();
+  const { showWCAG, wcagValues } = useColorPreviewContext();
   return (
     <div className={styles}>
       <ColorBlock
@@ -229,7 +230,8 @@ export function ColorPreviewBlocks(props: {
         dxName={props.colorName}
         dxHex={props.baseVariantHex}
         showWCAG={showWCAG}
-        bgHex={colorThemeMap[themeMode]}
+        bgHex={wcagValues.bgColor}
+        fontSize={wcagValues.fontSize}
       />
       <div>
         {Object.entries(props.variants).map(([variantName, variantHex]) => (
@@ -238,7 +240,8 @@ export function ColorPreviewBlocks(props: {
             dxName={variantName}
             dxHex={variantHex}
             showWCAG={showWCAG}
-            bgHex={colorThemeMap[themeMode]}
+            bgHex={wcagValues.bgColor}
+            fontSize={wcagValues.fontSize}
           />
         ))}
       </div>

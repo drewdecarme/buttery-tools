@@ -5,16 +5,27 @@ import {
   type ReactNode,
   useContext,
   useMemo,
+  useEffect,
 } from "react";
 import React, { useState } from "react";
+import type { Updater } from "use-immer";
+import { useImmer } from "use-immer";
+
+import { colorThemeMap } from "../config.utils.color";
 
 export type ColorPreviewThemeMode = "light" | "dark";
+export type ColorPreviewWCAGValues = {
+  fontSize: number;
+  bgColor: string;
+};
 
 type ColorPreviewContextType = {
   themeMode: ColorPreviewThemeMode;
   setThemeMode: React.Dispatch<SetStateAction<ColorPreviewThemeMode>>;
   showWCAG: boolean;
   toggleWCAG: () => void;
+  wcagValues: ColorPreviewWCAGValues;
+  setWcagValues: Updater<ColorPreviewWCAGValues>;
 };
 const ColorPreviewContext = React.createContext<ColorPreviewContextType | null>(
   null
@@ -27,6 +38,16 @@ export const ColorPreviewProvider: FC<ColorPreviewProviderProps> = ({
 }) => {
   const [themeMode, setThemeMode] = useState<ColorPreviewThemeMode>("light");
   const [showWCAG, toggleWCAG] = useToggle(true);
+  const [wcagValues, setWcagValues] = useImmer<ColorPreviewWCAGValues>({
+    fontSize: 16,
+    bgColor: "#FFFFFF",
+  });
+
+  useEffect(() => {
+    setWcagValues((draft) => {
+      draft.bgColor = colorThemeMap[themeMode];
+    });
+  }, [setWcagValues, themeMode]);
 
   const value = useMemo<ColorPreviewContextType>(
     () => ({
@@ -34,8 +55,10 @@ export const ColorPreviewProvider: FC<ColorPreviewProviderProps> = ({
       setThemeMode,
       showWCAG,
       toggleWCAG,
+      wcagValues,
+      setWcagValues,
     }),
-    [showWCAG, themeMode, toggleWCAG]
+    [setWcagValues, showWCAG, themeMode, toggleWCAG, wcagValues]
   );
 
   return (
