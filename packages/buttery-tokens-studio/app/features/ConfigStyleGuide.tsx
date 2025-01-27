@@ -7,14 +7,9 @@ import { ModalHeader } from "~/components/ModalHeader";
 import { Modal } from "~/components/Modal";
 import { IconPaintBoard } from "~/icons/IconPaintBoard";
 import { ModalBody } from "~/components/ModalBody";
-import { InputSection } from "~/components/InputSection";
-import { InputLabel } from "~/components/InputLabel";
-import { IconLayout01 } from "~/icons/IconLayout01";
-import { InputRadio } from "~/components/InputRadio";
-import { IconLayout2Column } from "~/icons/IconLayout2Column";
-import { IconWebDesign01 } from "~/icons/IconWebDesign01";
 
-import { StyleGuideBasic } from "./styleguide/StyleguideBasic";
+import { StyleGuideControlBar } from "./style-guide/StyleGuideControlBar";
+import { StyleGuideBasic } from "./style-guide/StyleGuideBasic";
 
 const styles = css`
   height: 100%;
@@ -25,33 +20,24 @@ const styles = css`
 
 const bodyStyles = css`
   display: grid;
-  grid-template-columns: ${makeRem(300)} 1fr;
+  grid-template-rows: ${makeRem(64)} 1fr;
   height: 100%;
   overflow: hidden;
-
-  .sidebar {
-    padding-right: ${makeRem(32)};
-  }
 
   .guide {
     padding: ${makeRem(32)};
     background: ${makeColor("neutral-light", { opacity: 0.1 })};
     height: 100%;
     overflow: auto;
+
     & > div {
       padding: ${makeRem(32)};
       background: white;
       border-radius: ${makeRem(8)};
-      max-width: ${makeRem(1024)};
+      max-width: ${makeRem(1280)};
       margin: 0 auto;
     }
   }
-`;
-
-const layoutStyles = css`
-  display: flex;
-  flex-direction: column;
-  gap: ${makeRem(8)};
 `;
 
 export function ConfigStyleGuide() {
@@ -76,7 +62,7 @@ export function ConfigStyleGuide() {
           Style Guide
         </ModalHeader>
         <ModalBody className={bodyStyles}>
-          <div className="sidebar">
+          {/* <div className="sidebar">
             <InputSection>
               <InputLabel
                 dxLabel="Choose template"
@@ -110,7 +96,8 @@ export function ConfigStyleGuide() {
                 />
               </div>
             </InputSection>
-          </div>
+          </div> */}
+          <StyleGuideControlBar />
           <div className="guide">
             <StyleGuideBasic />
           </div>

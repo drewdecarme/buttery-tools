@@ -37,7 +37,7 @@ export const ColorPreviewProvider: FC<ColorPreviewProviderProps> = ({
   children,
 }) => {
   const [themeMode, setThemeMode] = useState<ColorPreviewThemeMode>("light");
-  const [showWCAG, toggleWCAG] = useToggle(true);
+  const [showWCAG, toggleWCAG] = useToggle(false);
   const [wcagValues, setWcagValues] = useImmer<ColorPreviewWCAGValues>({
     fontSize: 16,
     bgColor: "#FFFFFF",

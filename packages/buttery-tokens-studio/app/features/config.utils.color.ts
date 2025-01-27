@@ -18,6 +18,11 @@ import { generateGUID } from "@buttery/utils/isomorphic";
 import type { Updater } from "use-immer";
 import { useImmer } from "use-immer";
 import type { z, ZodUnionDef, ZodLiteral } from "zod";
+import { match } from "ts-pattern";
+import {
+  createBrandVariants,
+  createNeutralVariants,
+} from "@buttery/tokens-utils";
 
 import type { ColorPreviewThemeMode } from "./color/ColorPreview.context";
 
@@ -208,3 +213,44 @@ export const colorThemeMap: Record<ColorPreviewThemeMode, string> = {
   dark: "#1e1e1e",
   light: "#ffffff",
 };
+
+export const convertBrandColorIntoVariants = (
+  color: ConfigurationStateColor
+) => {
+  return match(color.brand)
+    .with({ type: "auto" }, (state) => {
+      const variants = createBrandVariants({
+        ...state.auto,
+        colors: Object.values(state.auto.colors).reduce(
+          (accum, { name, ...restDef }) =>
+            Object.assign(accum, { [name]: restDef }),
+          {}
+        ),
+      });
+      return variants;
+    })
+    .with({ type: "manual" }, (state) => {
+      const variants = createBrandVariants({
+        type: "manual",
+        colors: Object.values(state.manual.colors).reduce(
+          (accum, { name, ...restDef }) =>
+            Object.assign(accum, { [name]: restDef }),
+          {}
+        ),
+      });
+      return variants;
+    })
+    .exhaustive();
+};
+
+export function convertNeutralColorIntoVariants(
+  color: ConfigurationStateColor
+) {
+  return createNeutralVariants(
+    Object.values(color.neutral).reduce(
+      (accum, { name, ...restDef }) =>
+        Object.assign(accum, { [name]: restDef }),
+      {}
+    )
+  );
+}
