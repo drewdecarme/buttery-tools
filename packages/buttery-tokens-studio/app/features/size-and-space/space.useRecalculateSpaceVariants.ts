@@ -90,31 +90,6 @@ export function useRecalculateSpaceVariants() {
               exhaustiveMatchGuard(mode);
           }
         }
-
-        // Do this when the previous number of variants are teh same
-        // as the requested amount of variants
-        const updatedVariants = Object.entries(prevVariants).map(
-          ([variantId, variantValue], index) => {
-            const value =
-              mode === "auto"
-                ? calculateSpaceVariantAutoValue(
-                    index,
-                    draft.baselineGrid,
-                    draft.space.auto.factor
-                  )
-                : variantValue.value;
-
-            return [
-              variantId,
-              {
-                ...variantValue,
-                name: String(index),
-                value,
-              },
-            ];
-          }
-        );
-        draft.space[mode].variants = Object.fromEntries(updatedVariants);
       });
     },
     [mode, setSizing]

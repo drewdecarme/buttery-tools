@@ -88,7 +88,8 @@ function createSpaceAutoVariantsFromConfig(
     baselineGrid,
     factor
   );
-  return convertSpaceVariantConfigIntoState(autoVariants);
+  const state = convertSpaceVariantConfigIntoState(autoVariants);
+  return state;
 }
 
 function createSpaceManualVariantsFromConfig(
@@ -114,6 +115,11 @@ export function getInitStateSizeAndSpaceFromConfig(
 ): ConfigurationStateSizeAndSpace {
   switch (config.sizeAndSpace.space.mode) {
     case "auto": {
+      const spaceVariants = createSpaceAutoVariantsFromConfig(
+        config.sizeAndSpace.space.variants,
+        config.sizeAndSpace.baselineGrid,
+        config.sizeAndSpace.space.factor
+      );
       return {
         baseFontSize: config.sizeAndSpace.baseFontSize,
         baselineGrid: config.sizeAndSpace.baselineGrid,
@@ -127,11 +133,7 @@ export function getInitStateSizeAndSpaceFromConfig(
           auto: {
             mode: "auto",
             factor: config.sizeAndSpace.space.factor,
-            variants: createSpaceAutoVariantsFromConfig(
-              config.sizeAndSpace.space.variants,
-              config.sizeAndSpace.baselineGrid,
-              config.sizeAndSpace.space.factor
-            ),
+            variants: spaceVariants,
           },
           manual: {
             mode: "manual",
@@ -159,7 +161,7 @@ export function getInitStateSizeAndSpaceFromConfig(
           auto: {
             mode: "auto",
             variants: createSpaceAutoVariantsFromConfig(
-              11,
+              10,
               config.sizeAndSpace.baselineGrid
             ),
           },
@@ -214,7 +216,8 @@ export function getSizeAndSpaceConfigFromState(
 }
 
 export function useConfigStateSizing(initConfig: ButteryTokensConfig) {
-  return useImmer(getInitStateSizeAndSpaceFromConfig(initConfig));
+  const state = getInitStateSizeAndSpaceFromConfig(initConfig);
+  return useImmer(state);
 }
 export type ConfigurationContextSizingType = {
   sizing: ConfigurationStateSizeAndSpace;

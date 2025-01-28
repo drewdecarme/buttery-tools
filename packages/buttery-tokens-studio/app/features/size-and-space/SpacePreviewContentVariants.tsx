@@ -31,14 +31,16 @@ export function SpacePreviewContentVariants(props: {
 }) {
   return (
     <div className={styles}>
-      {Object.entries(props.variants).map(([id, { name, value }]) => (
-        <Fragment key={id}>
-          <div>{name}</div>
-          <div className="px">{value}px</div>
-          <div className="rem">{value / props.baseFontSize}rem</div>
-          <div className="bar" style={{ height: value }} />
-        </Fragment>
-      ))}
+      {Object.entries(props.variants).map(([id, { name, value }]) => {
+        return (
+          <Fragment key={id}>
+            <div>{name}</div>
+            <div className="px">{value}px</div>
+            <div className="rem">{value / props.baseFontSize}rem</div>
+            <div className="bar" style={{ height: value }} />
+          </Fragment>
+        );
+      })}
     </div>
   );
 }

@@ -84,7 +84,7 @@ export const SizeAndSpaceSchema = z
     },
     space: {
       mode: "auto",
-      variants: 11,
+      variants: 10,
     },
   });
 export type ButteryTokensConfigSizeAndSpace = z.infer<

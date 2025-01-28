@@ -11,7 +11,7 @@ const styles = css`
   display: grid;
   grid-template-columns: ${`minmax(min-content, ${makeRem(300)}) auto`};
   gap: ${makeRem(32)};
-  margin-bottom: ${makeRem(64)};
+  margin-bottom: ${makeRem(200)};
 
   .right {
     padding: 0 ${makeRem(32)};

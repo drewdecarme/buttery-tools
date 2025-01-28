@@ -25,7 +25,7 @@ export function calculateSpaceVariantsAuto(
 ): SpaceVariantsRecord {
   const variantArr =
     typeof variants === "number"
-      ? [...new Array(variants)].map((_, i) => i.toString())
+      ? [...new Array(variants)].map((_, i) => (i + 1).toString())
       : variants;
   const transformedVariants = variantArr.reduce<SpaceVariantsRecord>(
     (accum, variantName, i) => {

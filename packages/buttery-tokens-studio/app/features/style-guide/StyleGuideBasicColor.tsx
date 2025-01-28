@@ -17,6 +17,7 @@ import { IconCancel } from "~/icons/IconCancel";
 import { StyleGuidePage } from "./StyleGuidePage";
 import { StyleGuidePageRight } from "./StyleGuidePageRight";
 import { StyleGuidePageLeft } from "./StyleGuidePageLeft";
+import { styleGuideTableStyles } from "./style-guide.utils";
 
 import { useConfigurationContext } from "../Config.context";
 import {
@@ -25,39 +26,10 @@ import {
 } from "../config.utils.color";
 
 const tableStyles = css`
-  position: relative;
-  border: 0;
-  padding: 0;
-  border-spacing: 0;
-  width: 100%;
-  isolation: isolate;
-  border-collapse: collapse;
-
-  th,
-  td {
-    margin: 0;
-    border: 0;
-    padding: 0;
-    padding: 0 ${makeRem(8)};
-  }
-
   td:not(:first-child) {
     text-align: center;
     font-family: ${makeFontFamily("Consolas")};
     font-size: ${makeRem(14)} !important;
-  }
-
-  th {
-    height: ${makeRem(56)};
-    font-weight: ${makeFontWeight("Mulish-bold")};
-    font-family: "Playfair Display";
-    font-size: ${makeRem(14)};
-    text-transform: uppercase;
-    white-space: nowrap;
-
-    &:last-child {
-      padding: 0 ${makeRem(16)};
-    }
   }
 
   .wcag {
@@ -128,8 +100,10 @@ function WCAGBadge(props: { pass: boolean; rating: "AA" | "AAA" }) {
 
 export function StyleGuideBasicColor({
   bgColor = "#FFFFFF",
+  dxMarker,
 }: {
   bgColor?: string;
+  dxMarker: string;
 }) {
   const { color } = useConfigurationContext();
   const bVariants = convertBrandColorIntoVariants(color);
@@ -138,7 +112,7 @@ export function StyleGuideBasicColor({
 
   return (
     <StyleGuidePage>
-      <StyleGuidePageLeft dxMarker="01" dxTitle="Color">
+      <StyleGuidePageLeft dxMarker={dxMarker} dxTitle="Color">
         <p>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam,
           sapiente eaque? Odio dolore rem id soluta quas quos blanditiis hic,
@@ -155,10 +129,11 @@ export function StyleGuideBasicColor({
         </p>
       </StyleGuidePageLeft>
       <StyleGuidePageRight>
-        <table className={tableStyles}>
+        <table className={classes(styleGuideTableStyles, tableStyles)}>
           <thead>
             <tr>
               <th>Color</th>
+              <th style={{ width: 100 }}>HEX</th>
               <th style={{ width: 100 }}>WCAG Rating</th>
               <th style={{ width: 100 }}>Contrast</th>
             </tr>
@@ -181,6 +156,7 @@ export function StyleGuideBasicColor({
                           {colorName}
                         </div>
                       </td>
+                      <td>{baseHex}</td>
                       <td>
                         <div className="wcag">
                           <WCAGBadge
@@ -216,6 +192,7 @@ export function StyleGuideBasicColor({
                                 {variantName}
                               </div>
                             </td>
+                            <td>{variantHex}</td>
                             <td>
                               <div className="wcag">
                                 <WCAGBadge

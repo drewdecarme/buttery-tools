@@ -191,7 +191,7 @@ export function SpaceConfigVariants({
       >
         <div>
           <InputRange
-            defaultValue={Object.entries(variants).length}
+            value={Object.entries(variants).length}
             dxDisplayInput
             dxDisplayMax
             dxDisplayMin
