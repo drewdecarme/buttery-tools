@@ -5,7 +5,6 @@ import {
   makeFontFamily,
   makePx,
   makeRem,
-  makeReset,
 } from "@buttery/tokens/playground";
 import type { JSX } from "react";
 import { classes } from "@buttery/components";
