@@ -51,12 +51,12 @@ export function ConfigSaveDiff() {
       <DiffEditor
         className={diffStyles}
         theme="vs-dark"
-        height="500px"
+        height="100%"
         original={JSON.stringify(originalConfig, null, 2)}
         modified={JSON.stringify(getConfigFromState(), null, 2)}
         language="json"
         options={{
-          renderOverviewRuler: false,
+          fontSize: 16,
         }}
       />
     </>

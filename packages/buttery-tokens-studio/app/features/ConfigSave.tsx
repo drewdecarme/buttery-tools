@@ -1,4 +1,5 @@
 import { useModal } from "@buttery/components";
+import { css } from "@linaria/core";
 
 import { Modal } from "~/components/Modal";
 import { ModalBody } from "~/components/ModalBody";
@@ -14,6 +15,12 @@ import { IconTimeManagement } from "~/icons/IconTimeManagement";
 
 import { ConfigSaveDiff } from "./ConfigSaveDiff";
 import { useSaveConfig } from "./config.useSave";
+
+const modalBodyStyles = css`
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+`;
 
 export function ConfigSave() {
   const { openModal, modalRef, closeModal } = useModal();
@@ -57,7 +64,7 @@ export function ConfigSave() {
         <ModalHeader dxSubtitle="View your modified config next to the original & make any changes necessary. Once complete, click the 'save' button at the bottom right hand of the screen.">
           View Diff & Save
         </ModalHeader>
-        <ModalBody>
+        <ModalBody className={modalBodyStyles}>
           <ConfigSaveDiff />
         </ModalBody>
         <ModalFooter>

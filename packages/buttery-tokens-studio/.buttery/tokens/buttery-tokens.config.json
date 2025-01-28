@@ -9,7 +9,11 @@
     "baseFontSize": 16,
     "baselineGrid": 4,
     "size": {
-      "variants": {}
+      "variants": {
+        "dense": 24,
+        "regular": 32,
+        "big": 48
+      }
     },
     "space": {
       "mode": "auto",
@@ -21,11 +25,19 @@
     "families": {
       "Montserrat": {
         "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
-        "styles": ["regular-400", "semiBold-600", "bold-700"]
+        "styles": [
+          "regular-400",
+          "semiBold-600",
+          "bold-700"
+        ]
       },
       "Lato": {
         "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
-        "styles": ["regular-400", "medium-500", "semiBold-600"]
+        "styles": [
+          "regular-400",
+          "medium-500",
+          "semiBold-600"
+        ]
       },
       "Playfair Display": {
         "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",

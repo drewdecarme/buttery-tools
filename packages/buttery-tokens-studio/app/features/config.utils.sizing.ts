@@ -214,7 +214,6 @@ export function getSizeAndSpaceConfigFromState(
     variants: Object.values(state.size.variants).reduce<
       ButteryTokensConfig["sizeAndSpace"]["size"]["variants"]
     >((accum, { name, value }) => {
-      console.log(name, value);
       return Object.assign(accum, { [name]: value });
     }, {}),
   };
