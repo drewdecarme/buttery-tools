@@ -16,7 +16,7 @@ export const layoutNavOverlineCSS = css`
   ${makeReset("anchor")};
   font-size: ${makeRem(12)};
   text-transform: uppercase;
-  font-weight: ${makeFontWeight("bold")};
+  font-weight: ${makeFontWeight("Source Sans 3-bold")};
   color: ${makeColor("neutral-900")};
 `;
 

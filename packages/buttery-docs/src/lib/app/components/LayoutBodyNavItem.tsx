@@ -52,7 +52,7 @@ const anchorCss = css`
   &.active {
     background: ${makeColor("primary-300", { opacity: 0.2 })};
     color: ${makeColor("primary")};
-    font-weight: ${makeFontWeight("semi-bold")};
+    font-weight: ${makeFontWeight("Source Sans 3-semiBold")};
   }
   &:not(.active) {
     &:hover {
@@ -60,7 +60,7 @@ const anchorCss = css`
         opacity: 0.2,
       })};
       color: ${makeColor("primary")};
-      font-weight: ${makeFontWeight("semi-bold")};
+      font-weight: ${makeFontWeight("Source Sans 3-semiBold")};
     }
   }
 `;

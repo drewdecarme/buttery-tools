@@ -60,7 +60,7 @@ const ulStyles = css`
 
       &.active {
         color: ${makeColor("secondary")};
-        font-weight: ${makeFontWeight("semi-bold")};
+        font-weight: ${makeFontWeight("Source Sans 3-semiBold")};
       }
     }
   }

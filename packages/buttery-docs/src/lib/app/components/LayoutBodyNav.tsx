@@ -48,7 +48,7 @@ const anchorOverlineCSS = css`
   &.active,
   &:hover {
     & > * {
-      font-weight: ${makeFontWeight("bold")};
+      font-weight: ${makeFontWeight("Source Sans 3-bold")};
       color: ${makeColor("primary")};
     }
   }

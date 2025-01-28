@@ -61,7 +61,7 @@ const divStyles = css`
   font-size: ${makeRem(16)};
   text-transform: uppercase;
   color: ${makeColor("neutral")};
-  font-weight: ${makeFontWeight("bold")};
+  font-weight: ${makeFontWeight("Source Sans 3-bold")};
 `;
 
 export type LayoutHeaderProps = { header: ButteryDocsConfigHeader | undefined };

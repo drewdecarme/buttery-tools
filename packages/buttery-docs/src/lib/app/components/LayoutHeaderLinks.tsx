@@ -61,7 +61,7 @@ const internalCss = css`
 
   &.active {
     color: ${makeColor("primary")};
-    font-weight: ${makeFontWeight("bold")};
+    font-weight: ${makeFontWeight("Source Sans 3-bold")};
   }
 `;
 

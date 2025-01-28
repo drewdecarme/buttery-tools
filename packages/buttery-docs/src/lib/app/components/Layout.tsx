@@ -10,7 +10,7 @@ import type { JSX } from "react";
 import { forwardRef } from "react";
 
 export const bodyStyles = css`
-  font-family: ${makeFontFamily("body")};
+  font-family: ${makeFontFamily("Source Sans 3")};
   margin: 0;
 
   display: grid;

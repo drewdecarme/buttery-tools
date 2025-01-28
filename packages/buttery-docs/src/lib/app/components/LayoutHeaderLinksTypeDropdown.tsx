@@ -16,7 +16,7 @@ import type { ButteryDocsConfigHeaderLinkTypeDropdown } from "../../../config/_c
 const buttonStyles = css`
   ${makeReset("button")};
   font-size: ${makeRem(16)};
-  font-family: ${makeFontFamily("body")};
+  font-family: ${makeFontFamily("Source Sans 3")};
   cursor: pointer;
 
   display: flex;
@@ -29,7 +29,7 @@ const buttonStyles = css`
 
   &.active {
     color: ${makeColor("primary")};
-    font-weight: ${makeFontWeight("bold")};
+    font-weight: ${makeFontWeight("Source Sans 3-bold")};
   }
 `;
 
@@ -80,7 +80,7 @@ const dropdownStyles = css`
 
     a {
       ${makeReset("anchor")};
-      font-family: ${makeFontFamily("body")};
+      font-family: ${makeFontFamily("Source Sans 3")};
       display: grid;
       grid-template-columns: ${makeRem(48)} auto;
       gap: ${makeRem(8)};
@@ -98,7 +98,7 @@ const dropdownStyles = css`
 
       .title {
         font-size: ${makeRem(16)};
-        font-weight: ${makeFontWeight("semi-bold")};
+        font-weight: ${makeFontWeight("Source Sans 3-semiBold")};
       }
 
       .sub-title {

@@ -3,16 +3,14 @@ import { css } from "@linaria/core";
 import { NavLink, Outlet, useLoaderData } from "react-router";
 import { tryHandle } from "@buttery/utils/isomorphic";
 
-import { Button } from "~/components/Button";
 import { ButtonGroup } from "~/components/ButtonGroup";
 import { NavTabs } from "~/components/NavTabs";
-import { IconCopy } from "~/icons/IconCopy";
 import { ConfigurationProvider } from "~/features/Config.context";
 import { ConfigJSON } from "~/features/ConfigJSON";
 import { getButteryConfig } from "~/utils/util.getLocalConfig";
 import { ConfigSave } from "~/features/ConfigSave";
 import { errors } from "~/utils/util.error-modes";
-import { ConfigStyleGuide } from "~/features/ConfigStyleguide";
+import { ConfigStyleGuide } from "~/features/ConfigStyleGuide";
 
 const styles = css`
   position: sticky;
@@ -75,9 +73,6 @@ export default function AppConfigRoute() {
           </div>
           <div className="actions">
             <ButtonGroup>
-              <Button dxVariant="outlined" DXIconStart={IconCopy}>
-                Copy
-              </Button>
               <ConfigStyleGuide />
               <ConfigJSON />
             </ButtonGroup>

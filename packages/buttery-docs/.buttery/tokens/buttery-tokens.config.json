@@ -1,7 +1,7 @@
 {
   "runtime": {
     "namespace": "docs",
-    "prefix": "docs",
+    "prefix": "buttery-docs",
     "strict": true,
     "suppressStrictWarnings": false
   },
@@ -9,17 +9,50 @@
     "baseFontSize": 16,
     "baselineGrid": 4,
     "size": {
-      "variants": {}
+      "variants": {
+        "dense": 24,
+        "normal": 36,
+        "big": 48
+      }
     },
     "space": {
       "mode": "auto",
-      "variants": 11
+      "variants": 20
     }
   },
   "font": {
     "source": "manual",
-    "families": {},
-    "variants": {}
+    "families": {
+      "Source Sans 3": {
+        "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
+        "styles": [
+          "regular-400",
+          "medium-500",
+          "semiBold-600",
+          "bold-700"
+        ]
+      }
+    },
+    "variants": {
+      "body1": {
+        "family": "Source Sans 3",
+        "weight": "regular-400",
+        "size": 16,
+        "lineHeight": 1.3
+      },
+      "body2": {
+        "family": "Source Sans 3",
+        "weight": "medium-500",
+        "size": 14,
+        "lineHeight": 1.3
+      },
+      "overline": {
+        "family": "Source Sans 3",
+        "weight": "bold-700",
+        "size": 12,
+        "lineHeight": 1.3
+      }
+    }
   },
   "response": {
     "breakpoints": {
@@ -34,35 +67,51 @@
     "brand": {
       "type": "jewel",
       "colors": {
-        "brand1": {
-          "hue": 328,
-          "variants": [
-            "light",
-            "dark",
-            "variant-3"
-          ]
+        "primary": {
+          "hue": 38,
+          "variants": 10
+        },
+        "secondary": {
+          "hue": 168,
+          "variants": 10
+        },
+        "warning": {
+          "hue": 56,
+          "variants": 10
+        },
+        "danger": {
+          "hue": 360,
+          "variants": 10
         }
       },
-      "saturation": 73,
-      "brightness": 56
+      "saturation": 83,
+      "brightness": 58
     },
     "neutral": {
-      "grey-1": {
-        "hex": "#000000",
+      "neutral": {
+        "hex": "#999999",
         "variants": 10
+      },
+      "background": {
+        "hex": "#ffffff",
+        "variants": 1
+      },
+      "surface": {
+        "hex": "#ffffff",
+        "variants": 1
       }
     }
   },
   "custom": {
-    "token_1": {
-      "type": "string",
-      "value": "testing",
-      "description": "token_description_1"
+    "layout-header-height": {
+      "type": "rem",
+      "value": 64,
+      "description": "The height of the header in the layout"
     },
-    "token_2": {
-      "type": "string",
-      "value": "",
-      "description": "token_description_2"
+    "layout-max-width": {
+      "type": "rem",
+      "value": 1440,
+      "description": "The max width that the layout of the docs can go"
     }
   }
 }
