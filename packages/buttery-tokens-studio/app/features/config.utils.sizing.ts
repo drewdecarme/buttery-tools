@@ -187,11 +187,20 @@ export function getSizeAndSpaceConfigFromState(
     ConfigurationStateSizeAndSpace["space"],
     ButteryTokensConfig["sizeAndSpace"]["space"]
   >(state.space)
-    .with({ mode: "auto" }, (state) => ({
-      mode: "auto",
-      factor: state.auto.factor,
-      variants: Object.values(state.auto.variants).map(({ name }) => name),
-    }))
+    .with({ mode: "auto" }, (state) => {
+      const variantValues = Object.values(state.auto.variants);
+      const areAllVariantsNumbers = variantValues.reduce((accum, { value }) => {
+        if (Number(value)) return accum;
+        return false;
+      }, true);
+      return {
+        mode: "auto",
+        factor: state.auto.factor,
+        variants: areAllVariantsNumbers
+          ? variantValues.length
+          : variantValues.map(({ name }) => name),
+      };
+    })
     .with({ mode: "manual" }, (state) => ({
       mode: "manual",
       variants: Object.values(state.manual.variants).reduce(
@@ -204,7 +213,10 @@ export function getSizeAndSpaceConfigFromState(
   const size = {
     variants: Object.values(state.size.variants).reduce<
       ButteryTokensConfig["sizeAndSpace"]["size"]["variants"]
-    >((accum, { name, value }) => Object.assign(accum, { [name]: value }), {}),
+    >((accum, { name, value }) => {
+      console.log(name, value);
+      return Object.assign(accum, { [name]: value });
+    }, {}),
   };
 
   return {

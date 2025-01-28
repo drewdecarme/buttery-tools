@@ -4,6 +4,7 @@ import { StyleGuideBasicColor } from "./StyleGuideBasicColor";
 import { StyleGuideBasicTypography } from "./StyleGuideBasicTypography";
 import { StyleGuideBasicFont } from "./StyleGuideBasicFont";
 import { StyleGuideBasicSpacing } from "./StyleGuideBasicSpacing";
+import { StyleGuideBasicSize } from "./StyleGuideBasicSize";
 
 const styles = css`
   background: white;
@@ -13,6 +14,7 @@ const sections = [
   StyleGuideBasicColor,
   StyleGuideBasicFont,
   StyleGuideBasicTypography,
+  StyleGuideBasicSize,
   StyleGuideBasicSpacing,
 ];
 

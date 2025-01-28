@@ -72,15 +72,21 @@ export const ConfigurationProvider: FC<ConfigurationProviderProps> = ({
     const configResponse = getResponseConfigFromState(response);
     const configCustom = getCustomConfigFromState(custom);
     const configSettings = getSettingsConfigFromState(settings);
+    console.log("PRE Parse", JSON.stringify(configSizing.size, null, 2));
 
     const config = ConfigSchema.safeParse({
       color: configColor,
-      sizing: configSizing,
+      sizeAndSpace: configSizing,
       font: configFont,
       response: configResponse,
       custom: configCustom,
       runtime: configSettings,
     });
+    console.log(config);
+    console.log(
+      "POST parse",
+      JSON.stringify(config.data?.sizeAndSpace.size, null, 2)
+    );
     if (config.error) {
       throw config.error;
     }
