@@ -11,6 +11,7 @@ import { css } from "@linaria/core";
 import { StyleGuidePage } from "./StyleGuidePage";
 import { StyleGuidePageLeft } from "./StyleGuidePageLeft";
 import { StyleGuidePageRight } from "./StyleGuidePageRight";
+import type { StyleGuideSharedProps } from "./style-guide.utils";
 
 import { useConfigurationContext } from "../Config.context";
 
@@ -41,13 +42,13 @@ const styles = css`
   }
 `;
 
-export function StyleGuideBasicTypography(props: { dxMarker: string }) {
+export function StyleGuideBasicTypography(props: StyleGuideSharedProps) {
   const {
     font: { variants },
   } = useConfigurationContext();
   return (
     <StyleGuidePage>
-      <StyleGuidePageLeft dxMarker={props.dxMarker} dxTitle="Typography">
+      <StyleGuidePageLeft dxMarker={props.dxMarker} dxTitle={props.dxTitle}>
         <p>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam,
           sapiente eaque? Odio dolore rem id soluta quas quos blanditiis hic,

@@ -7,9 +7,13 @@ import { ModalHeader } from "~/components/ModalHeader";
 import { Modal } from "~/components/Modal";
 import { IconPaintBoard } from "~/icons/IconPaintBoard";
 import { ModalBody } from "~/components/ModalBody";
+import { InputLabel } from "~/components/InputLabel";
+import { InputRadio } from "~/components/InputRadio";
+import { InputSection } from "~/components/InputSection";
+import { IconLayout01 } from "~/icons/IconLayout01";
 
-import { StyleGuideControlBar } from "./style-guide/StyleGuideControlBar";
 import { StyleGuideBasic } from "./style-guide/StyleGuideBasic";
+import { StyleGuideControlBar } from "./style-guide/StyleGuideControlBar";
 
 const styles = css`
   height: 100%;
@@ -20,13 +24,34 @@ const styles = css`
 
 const bodyStyles = css`
   display: grid;
-  grid-template-rows: ${makeRem(64)} 1fr;
+  grid-template-columns: auto minmax(min-content, 1fr);
+  column-gap: ${makeRem(32)};
   height: 100%;
   overflow: hidden;
+  padding-right: 0;
+  border-top: 1px solid ${makeColor("neutral-light", { opacity: 0.1 })};
+
+  .sidebar {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    background: white;
+
+    .s-head {
+      border-bottom: 1px solid ${makeColor("neutral-light", { opacity: 0.1 })};
+      height: ${makeRem(80)};
+      display: grid;
+      align-items: center;
+      justify-content: end;
+    }
+    .s-body {
+      padding: ${makeRem(16)} 0;
+    }
+  }
 
   .guide {
-    padding: ${makeRem(32)};
     background: ${makeColor("neutral-light", { opacity: 0.1 })};
+    padding: ${makeRem(32)};
     height: 100%;
     overflow: auto;
 
@@ -58,46 +83,32 @@ export function ConfigStyleGuide() {
         dxSize="full"
         className={styles}
       >
-        <ModalHeader dxSubtitle="TokensStudio has a few preset auto generated style guide styles that can be applied and exported. Select a layout from one of the buttons below to view it. You'll also have the ability to configure different sections to contextualize the guide.">
-          Style Guide
-        </ModalHeader>
+        <ModalHeader>Style Guide</ModalHeader>
         <ModalBody className={bodyStyles}>
-          {/* <div className="sidebar">
-            <InputSection>
-              <InputLabel
-                dxLabel="Choose template"
-                dxHelp="Select a layout template to view the guide in different layouts"
-              />
-              <div className={layoutStyles}>
-                <InputRadio
-                  dxVariant="block"
-                  DXIcon={IconLayout01}
-                  defaultChecked
-                  name="layout"
-                  value="basic"
-                  dxTextPrimary="Basic"
-                  dxTextSecondary="A basic layout that displays some sections headers along with it's content"
+          <div className="sidebar">
+            <div className="s-head">
+              <StyleGuideControlBar />
+            </div>
+            <div className="s-body">
+              <InputSection>
+                <InputLabel
+                  dxLabel="Choose template"
+                  dxHelp="Select a layout template to view the guide in different layouts"
                 />
-                <InputRadio
-                  dxVariant="block"
-                  DXIcon={IconLayout2Column}
-                  value="stylized"
-                  name="layout"
-                  dxTextPrimary="Stylized"
-                  dxTextSecondary="A bit more stylized than basic, this layout separates out each section with a large stylistic placed number"
-                />
-                <InputRadio
-                  dxVariant="block"
-                  DXIcon={IconWebDesign01}
-                  value="web-app"
-                  name="layout"
-                  dxTextPrimary="Web App"
-                  dxTextSecondary="A layout that closely models a web app that can be exported as a web app"
-                />
-              </div>
-            </InputSection>
-          </div> */}
-          <StyleGuideControlBar />
+                <div>
+                  <InputRadio
+                    dxVariant="block"
+                    DXIcon={IconLayout01}
+                    defaultChecked
+                    name="layout"
+                    value="basic"
+                    dxTextPrimary="Basic"
+                    dxTextSecondary="A basic layout that displays some sections headers along with it's content"
+                  />
+                </div>
+              </InputSection>
+            </div>
+          </div>
           <div className="guide">
             <StyleGuideBasic />
           </div>

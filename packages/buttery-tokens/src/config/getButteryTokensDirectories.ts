@@ -24,11 +24,11 @@ export async function getButteryTokensDirectories(
     );
     const nodeModulesTokensPlaygroundDir = await getNodeModulesButteryOutputDir(
       paths.butteryDir,
-      "tokens-playground",
+      "tokens-studio",
       { logLevel: logLevel }
     );
 
-    const playgroundDir = path.resolve(nodeModulesTokensPlaygroundDir.target);
+    const studioDir = path.resolve(nodeModulesTokensPlaygroundDir.target);
     const outputDistDir = path.resolve(
       nodeModulesTokenDir.target,
       "./dist/out"
@@ -44,14 +44,14 @@ export async function getButteryTokensDirectories(
 
     const dirs = {
       /**
-       * The UI for the configuration UI playground. We provide the location
+       * The UI for the configuration UI tokens studio. We provide the location
        * of the template and then the location of the dynamically created app root
        * and public path to feed to the createServer vite function.
        */
-      playground: {
-        root: playgroundDir,
-        server: path.resolve(playgroundDir, "./build/server/index.js"),
-        static: path.resolve(playgroundDir, "./build/client"),
+      studio: {
+        root: studioDir,
+        server: path.resolve(studioDir, "./build/server/index.js"),
+        static: path.resolve(studioDir, "./build/client"),
         versions: path.resolve(paths.butteryDir, "./tokens/versions"),
       },
       /**

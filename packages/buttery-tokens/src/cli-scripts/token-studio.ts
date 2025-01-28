@@ -39,13 +39,13 @@ export async function tokenStudio(
   const port = process.env.PORT || 5700;
 
   // Serve static files from the public directory
-  app.use(express.static(rConfig.dirs.playground.static));
+  app.use(express.static(rConfig.dirs.studio.static));
 
   // Middleware to handle React Router requests
   app.all(
     "*",
     createRequestHandler({
-      build: () => import(rConfig.dirs.playground.server),
+      build: () => import(rConfig.dirs.studio.server),
       mode: process.env.NODE_ENV,
     })
   );
@@ -53,7 +53,7 @@ export async function tokenStudio(
   // Set some local environment variables
   process.env.BUTTERY_TOKENS_PG_IS_LOCAL = "true";
   process.env.BUTTERY_TOKENS_PG_CONFIG_PATH = rConfig.paths.config;
-  process.env.BUTTERY_TOKENS_PG_VERSION_DIR = rConfig.dirs.playground.versions;
+  process.env.BUTTERY_TOKENS_PG_VERSION_DIR = rConfig.dirs.studio.versions;
 
   app.listen(port, () => {
     LOG.watch(`🎨 The TokenStudio is running at http://localhost:${port}`);

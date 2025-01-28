@@ -17,6 +17,7 @@ import { IconCancel } from "~/icons/IconCancel";
 import { StyleGuidePage } from "./StyleGuidePage";
 import { StyleGuidePageRight } from "./StyleGuidePageRight";
 import { StyleGuidePageLeft } from "./StyleGuidePageLeft";
+import type { StyleGuideSharedProps } from "./style-guide.utils";
 import { styleGuideTableStyles } from "./style-guide.utils";
 
 import { useConfigurationContext } from "../Config.context";
@@ -100,11 +101,11 @@ function WCAGBadge(props: { pass: boolean; rating: "AA" | "AAA" }) {
 
 export function StyleGuideBasicColor({
   bgColor = "#FFFFFF",
+  dxTitle,
   dxMarker,
 }: {
   bgColor?: string;
-  dxMarker: string;
-}) {
+} & StyleGuideSharedProps) {
   const { color } = useConfigurationContext();
   const bVariants = convertBrandColorIntoVariants(color);
   const nVariants = convertNeutralColorIntoVariants(color);
@@ -112,7 +113,7 @@ export function StyleGuideBasicColor({
 
   return (
     <StyleGuidePage>
-      <StyleGuidePageLeft dxMarker={dxMarker} dxTitle="Color">
+      <StyleGuidePageLeft dxMarker={dxMarker} dxTitle={dxTitle}>
         <p>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam,
           sapiente eaque? Odio dolore rem id soluta quas quos blanditiis hic,

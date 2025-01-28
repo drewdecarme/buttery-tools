@@ -1,5 +1,5 @@
 import { classes } from "@buttery/components";
-import { makeRem } from "@buttery/tokens/playground";
+import { makeColor, makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import type { JSX } from "react";
 import { forwardRef } from "react";
@@ -9,12 +9,13 @@ export type StyleGuidePageProps = StyleGuidePagePropsNative;
 
 const styles = css`
   display: grid;
-  grid-template-columns: ${`minmax(min-content, ${makeRem(300)}) auto`};
+  grid-template-columns: ${`${makeRem(300)} auto`};
   gap: ${makeRem(32)};
-  margin-bottom: ${makeRem(200)};
+  padding-bottom: ${makeRem(100)} !important;
 
-  .right {
-    padding: 0 ${makeRem(32)};
+  &:not(:last-child) {
+    border-bottom: 1px solid ${makeColor("neutral-light", { opacity: 0.2 })};
+    margin-bottom: ${makeRem(100)};
   }
 `;
 
