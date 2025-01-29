@@ -23,7 +23,7 @@ import {
   type ConfigurationStateSizeAndSpace,
   orderSpaceVariants,
   type ConfigurationStateSizeAndSpace_SpaceVariants,
-} from "../config.utils.sizing.js";
+} from "./size-and-space.utils.js";
 import type { ConfigurationContextType } from "../Config.context.js";
 
 const styles = css`

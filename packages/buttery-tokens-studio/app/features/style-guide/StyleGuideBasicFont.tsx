@@ -20,6 +20,14 @@ const styles = css`
     font-family: var(--family);
     background: var(--bg);
 
+    .overline {
+      font-size: ${makeRem(14)};
+      font-family: "Playfair Display";
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: ${makeRem(32)};
+    }
+
     .title {
       font-size: ${makeRem(48)};
       font-family: var(--family);
@@ -54,25 +62,29 @@ export function StyleGuideBasicFont(props: StyleGuideSharedProps) {
         <div className={styles}>
           {match(font)
             .with({ source: "manual" }, (state) =>
-              Object.entries(state.families).map(([familyId, familyDef]) => (
-                <div
-                  key={familyId}
-                  className="family"
-                  style={{
-                    // @ts-expect-error Custom properties are valid
-                    "--family": familyDef.name,
-                    "--bg": makeColor("neutral-light", {
-                      opacity: getRandomNumber(0, 0.03),
-                    }),
-                  }}
-                >
-                  <div className="title">{familyDef.name}</div>
-                  <div className="alph">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
-                  <div className="alph">abcdefghijklmnopqrstuvwxyz</div>
-                  <div className="alph">123456789!@#$%^&*()</div>
-                  <div className="a">Aa</div>
-                </div>
-              ))
+              Object.entries(state.families).map(([familyId, familyDef]) => {
+                console.log(familyDef);
+                return (
+                  <div
+                    key={familyId}
+                    className="family"
+                    style={{
+                      // @ts-expect-error Custom properties are valid
+                      "--family": familyDef.name,
+                      "--bg": makeColor("neutral-light", {
+                        opacity: getRandomNumber(0, 0.03),
+                      }),
+                    }}
+                  >
+                    <div className="overline">{familyDef.tokenName}</div>
+                    <div className="title">{familyDef.familyName}</div>
+                    <div className="alph">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+                    <div className="alph">abcdefghijklmnopqrstuvwxyz</div>
+                    <div className="alph">123456789!@#$%^&*()</div>
+                    <div className="a">Aa</div>
+                  </div>
+                );
+              })
             )
             .with({ source: P.union("adobe", "google") }, () => {
               return <div>not implemented</div>;

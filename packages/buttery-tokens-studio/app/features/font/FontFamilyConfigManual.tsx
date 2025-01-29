@@ -12,8 +12,7 @@ import { FontFamilyConfigVariant } from "./FontFamilyConfigVariant";
 import type { FontFamilyConfigVariantProps } from "./FontFamilyConfigVariant";
 import type { FontFamilyConfigVariantStylesProps } from "./FontFamilyConfigVariantStyles";
 import { FontFamilyConfigVariantStyles } from "./FontFamilyConfigVariantStyles";
-
-import type { ConfigurationStateFontManualFamilyValues } from "../config.utils.font";
+import type { ConfigurationStateFontManualFamilyValues } from "./font.utils";
 
 const inlineField = css`
   display: flex;
@@ -27,18 +26,28 @@ const allFontStyles = Object.entries(manualFontStyles).reduce<
 export function FontFamilyConfigManual<
   T extends ConfigurationStateFontManualFamilyValues
 >({
-  name,
+  tokenName,
+  familyName,
   id,
   source,
   onAction,
   meta,
   styles,
 }: T & FontFamilyConfigVariantProps) {
-  const handleChangeFontFamily = useCallback<
+  const handleChangeFontFamilyName = useCallback<
     ChangeEventHandler<HTMLInputElement>
   >(
     ({ currentTarget: { value } }) => {
-      onAction({ action: "changeFontFamily", id, fontFamily: value });
+      onAction({ action: "changeFamilyName", id, fontFamilyName: value });
+    },
+    [id, onAction]
+  );
+
+  const handleChangeTokenName = useCallback<
+    ChangeEventHandler<HTMLInputElement>
+  >(
+    ({ currentTarget: { value } }) => {
+      onAction({ action: "changeTokenName", id, token: value });
     },
     [id, onAction]
   );
@@ -46,12 +55,27 @@ export function FontFamilyConfigManual<
   return (
     <FontFamilyConfigVariant
       id={id}
-      name={name}
+      tokenName={tokenName}
+      familyName={familyName}
       source={source}
       meta={meta}
       onAction={onAction}
     >
       <InputGroup>
+        <InputLabel
+          dxLabel="Token Name"
+          dxSize="dense"
+          dxHelp="heading, body, display, etc..."
+        >
+          <div className={inlineField}>
+            <InputText
+              dxSize="dense"
+              dxType="text"
+              value={tokenName}
+              onChange={handleChangeTokenName}
+            />
+          </div>
+        </InputLabel>
         <InputLabel
           dxLabel="Family"
           dxSize="dense"
@@ -61,8 +85,8 @@ export function FontFamilyConfigManual<
             <InputText
               dxSize="dense"
               dxType="text"
-              value={name}
-              onChange={handleChangeFontFamily}
+              value={familyName}
+              onChange={handleChangeFontFamilyName}
             />
           </div>
         </InputLabel>

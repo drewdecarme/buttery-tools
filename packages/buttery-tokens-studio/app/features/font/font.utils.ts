@@ -17,7 +17,7 @@ export type ConfigurationStateFontFamilyWeights = Record<
 
 export type ConfigurationStateFontVariantValue = {
   variantName: string;
-  family: string;
+  familyToken: string;
   weight: string;
   size: number;
   lineHeight: number;
@@ -35,7 +35,8 @@ export type ConfigurationStateFontFamilyValuesMeta = {
 
 export type ConfigurationStateFontManualFamilyValues =
   ConfigurationStateFontFamilyValuesMeta & {
-    name: string;
+    tokenName: string;
+    familyName: string;
     fallback?: string;
     styles: {
       [key: string]: { display: string };
@@ -52,7 +53,8 @@ export type ConfigurationStateFontManual = {
 
 export type ConfigurationStateFontRegistryFamilyValues =
   ConfigurationStateFontFamilyValuesMeta & {
-    name: string;
+    tokenName: string;
+    familyName: string;
     fallback?: string;
     styles: string[];
   };
@@ -106,13 +108,14 @@ export function getInitStateFontFromConfig(
         families: Object.entries(
           config.font.families
         ).reduce<ConfigurationStateFontManualFamily>(
-          (accum, [familyName, familyDef]) =>
+          (accum, [tokenName, familyDef]) =>
             Object.assign<
               ConfigurationStateFontManualFamily,
               ConfigurationStateFontManualFamily
             >(accum, {
               [generateGUID()]: {
-                name: familyName,
+                tokenName,
+                familyName: familyDef.family,
                 fallback: familyDef.fallback,
                 styles:
                   familyDef.styles.length > 0
@@ -174,7 +177,8 @@ export function getFontConfigFromState(
       ? Object.values(state.families).reduce(
           (accum, family) =>
             Object.assign<FontFamiliesManual, FontFamiliesManual>(accum, {
-              [family.name]: {
+              [family.tokenName]: {
+                family: family.familyName,
                 fallback: family.fallback ?? fontFamilyFallback,
                 styles: Object.keys(family.styles) as ManualFontStyles,
               },
@@ -184,7 +188,8 @@ export function getFontConfigFromState(
       : Object.values(state.families).reduce(
           (accum, family) =>
             Object.assign(accum, {
-              [family.name]: {
+              [family.tokenName]: {
+                family: family.familyName,
                 fallback: family.fallback ?? fontFamilyFallback,
                 styles: Object.keys(family.styles),
               },
@@ -199,7 +204,7 @@ export function getFontConfigFromState(
       (accum, variant) =>
         Object.assign<typeof state.variants, FontVariant>(accum, {
           [variant.variantName]: {
-            family: variant.family,
+            familyToken: variant.familyToken,
             lineHeight: variant.lineHeight,
             size: variant.size,
             weight: variant.weight,
@@ -227,9 +232,14 @@ export type OnFontFamilyAction = (
     | { action: "deleteStyle"; id: string; style: string }
     | { action: "changeSource"; source: ConfigurationStateFont["source"] }
     | {
-        action: "changeFontFamily";
+        action: "changeTokenName";
         id: string;
-        fontFamily: string;
+        token: string;
+      }
+    | {
+        action: "changeFamilyName";
+        id: string;
+        fontFamilyName: string;
       }
     | {
         action: "changeFallback";
@@ -243,7 +253,7 @@ export type OnFontVariantAction = (
     | { action: "addVariant" }
     | { action: "deleteVariant"; id: string }
     | { action: "changeVariantName"; id: string; name: string }
-    | { action: "changeVariantFamily"; id: string; family: string }
+    | { action: "changeVariantFamilyToken"; id: string; familyToken: string }
     | { action: "changeVariantSize"; id: string; size: number }
     | {
         action: "changeVariantWeightAndStyle";

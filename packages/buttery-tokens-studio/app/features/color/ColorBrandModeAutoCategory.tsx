@@ -25,11 +25,10 @@ import {
   ColorBrandModeAutoCategorySelect,
   colorCategories,
 } from "./ColorBrandModeAutoCategorySelect";
-
 import type {
   ConfigurationStateColor,
   ConfigurationStateColorBrandAuto,
-} from "../config.utils.color";
+} from "./color.utils";
 
 const categoryContainerStyles = css`
   padding: ${makeRem(16)};

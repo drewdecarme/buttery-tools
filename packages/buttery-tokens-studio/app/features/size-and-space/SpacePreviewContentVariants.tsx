@@ -2,7 +2,7 @@ import { css } from "@linaria/core";
 import { makeColor, makeRem, makeReset } from "@buttery/tokens/playground";
 import { Fragment } from "react/jsx-runtime";
 
-import type { ConfigurationStateSizeAndSpace_SpaceVariants } from "../config.utils.sizing.js";
+import type { ConfigurationStateSizeAndSpace_SpaceVariants } from "./size-and-space.utils.js";
 
 const styles = css`
   ${makeReset("ul")};

@@ -1,11 +1,17 @@
 import type { FontFamilyConfigVariantProps } from "./FontFamilyConfigVariant";
 import { FontFamilyConfigVariant } from "./FontFamilyConfigVariant";
-
-import type { ConfigurationStateFontRegistryFamilyValues } from "../config.utils.font";
+import type { ConfigurationStateFontRegistryFamilyValues } from "./font.utils";
 
 export function FontFamilyConfigRegistry<
   T extends ConfigurationStateFontRegistryFamilyValues
->({ name, id, source, onAction, meta }: T & FontFamilyConfigVariantProps) {
+>({
+  tokenName,
+  familyName,
+  id,
+  source,
+  onAction,
+  meta,
+}: T & FontFamilyConfigVariantProps) {
   // const handleChangeFontFamily = useCallback<
   //   ChangeEventHandler<HTMLInputElement>
   // >(
@@ -18,7 +24,8 @@ export function FontFamilyConfigRegistry<
   return (
     <FontFamilyConfigVariant
       id={id}
-      name={name}
+      tokenName={tokenName}
+      familyName={familyName}
       source={source}
       meta={meta}
       onAction={onAction}

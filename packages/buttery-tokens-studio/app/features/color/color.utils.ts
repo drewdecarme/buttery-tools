@@ -24,7 +24,7 @@ import {
   createNeutralVariants,
 } from "@buttery/tokens-utils";
 
-import type { ColorPreviewThemeMode } from "./color/ColorPreview.context";
+import type { ColorPreviewThemeMode } from "./ColorPreview.context";
 
 export const initConfig: ButteryTokensConfig = ConfigSchema.parse({});
 

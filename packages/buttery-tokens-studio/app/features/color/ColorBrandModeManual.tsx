@@ -6,11 +6,11 @@ import { VariantEmpty } from "~/components/VariantEmpty";
 import { VariantAdd } from "~/components/VariantAdd";
 
 import { ColorBrandModeManualVariant } from "./ColorBrandModeManualVariant";
+import type { ConfigurationStateColorBrandManual } from "./color.utils";
 
 import type { ConfigurationContextType } from "../Config.context";
 import { InputLabel } from "../../components/InputLabel";
 import { InputSection } from "../../components/InputSection";
-import type { ConfigurationStateColorBrandManual } from "../config.utils.color";
 
 export function ColorBrandModeManual({
   state,

@@ -23,7 +23,8 @@
   "font": {
     "source": "manual",
     "families": {
-      "Montserrat": {
+      "heading": {
+        "family": "Montserrat",
         "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
         "styles": [
           "regular-400",
@@ -31,7 +32,8 @@
           "bold-700"
         ]
       },
-      "Lato": {
+      "body": {
+        "family": "Lato",
         "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
         "styles": [
           "regular-400",
@@ -39,7 +41,8 @@
           "semiBold-600"
         ]
       },
-      "Playfair Display": {
+      "formal": {
+        "family": "Playfair Display",
         "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
         "styles": [
           "regular-400",
@@ -52,37 +55,37 @@
     },
     "variants": {
       "display1": {
-        "family": "Montserrat",
+        "familyToken": "heading",
         "weight": "bold-700",
         "size": 32,
         "lineHeight": 1.3
       },
       "display2": {
-        "family": "Montserrat",
+        "familyToken": "heading",
         "weight": "semiBold-600",
         "size": 24,
         "lineHeight": 1.3
       },
       "display3": {
-        "family": "Montserrat",
+        "familyToken": "heading",
         "weight": "semiBold-600",
         "size": 18,
         "lineHeight": 1.3
       },
       "body1": {
-        "family": "Lato",
+        "familyToken": "body",
         "weight": "regular-400",
         "size": 16,
         "lineHeight": 1.3
       },
       "body2": {
-        "family": "Lato",
+        "familyToken": "body",
         "weight": "regular-400",
         "size": 14,
         "lineHeight": 1.3
       },
       "caption": {
-        "family": "Lato",
+        "familyToken": "body",
         "weight": "regular-400",
         "size": 12,
         "lineHeight": 1.3

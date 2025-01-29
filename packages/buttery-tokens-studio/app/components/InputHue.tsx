@@ -6,7 +6,7 @@ import type { InputRangePropsNative } from "./InputRange";
 import { InputRange } from "./InputRange";
 import { ColorBlob, useColorBlob } from "./ColorBlob";
 
-export type InputHuePropsNative = InputRangePropsNative;
+export type InputHuePropsNative = InputRangePropsNative & { value?: number };
 export type InputHueProps = InputHuePropsNative;
 
 const styles = css`

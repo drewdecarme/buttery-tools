@@ -71,14 +71,17 @@ export function FontFamilyPreviewContent() {
           .with({ source: "manual" }, (state) =>
             Object.entries(state.families).map(([familyId, family]) => {
               const style = {
-                fontFamily: `"${family.name}", sans-serif`,
+                fontFamily: `"${family.familyName}"`,
                 fontSize,
               };
               return (
                 <li key={familyId}>
                   <div className="heading">
-                    <h4>{family.name}</h4>
-                    <div>{Object.keys(family.styles).length} Styles</div>
+                    <h4>{family.tokenName}</h4>
+                    <div>
+                      {family.familyName}&nbsp;
+                      {`(${Object.keys(family.styles).length} Styles)`}
+                    </div>
                   </div>
                   <ul className={styleStyles}>
                     {Object.keys(manualFontStyles).map((fontFamilyStyleKey) => {

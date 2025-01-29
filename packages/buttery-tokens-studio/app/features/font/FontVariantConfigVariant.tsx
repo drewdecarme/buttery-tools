@@ -19,7 +19,7 @@ import type {
   ConfigurationStateFontManualFamilyValues,
   ConfigurationStateFontVariantValue,
   OnFontVariantAction,
-} from "../config.utils.font";
+} from "./font.utils";
 
 const barStyles = css`
   grid-template-columns: ${makeRem(80)} 1fr auto !important;
@@ -41,7 +41,7 @@ export function FontVariantConfigVariant({
   variantId,
   variantName,
   state,
-  family,
+  familyToken,
   lineHeight,
   size,
   weight,
@@ -52,11 +52,11 @@ export function FontVariantConfigVariant({
   const families = useMemo(() => {
     switch (state.source) {
       case "manual":
-        return Object.values(state.families).map((family) => family.name);
+        return Object.values(state.families).map((family) => family.tokenName);
 
       case "adobe":
       case "google":
-        return Object.values(state.families).map((family) => family.name);
+        return Object.values(state.families).map((family) => family.tokenName);
 
       default:
         return exhaustiveMatchGuard(state);
@@ -71,7 +71,8 @@ export function FontVariantConfigVariant({
         selectedFamily = Object.values(state.families).reduce<
           ConfigurationStateFontManualFamilyValues | undefined
         >(
-          (accum, familyDef) => (familyDef.name === family ? familyDef : accum),
+          (accum, familyDef) =>
+            familyDef.tokenName === familyToken ? familyDef : accum,
           undefined
         );
         break;
@@ -96,7 +97,7 @@ export function FontVariantConfigVariant({
     return Object.entries(selectedFamily.styles).reduce<
       { value: string; display: string }[]
     >((accum, [value, { display }]) => accum.concat({ value, display }), []);
-  }, [family, state]);
+  }, [familyToken, state]);
 
   const InputName = useMemo(
     () => (
@@ -127,12 +128,12 @@ export function FontVariantConfigVariant({
         <InputLabel dxLabel="Font Family" dxSize="dense">
           <InputSelect
             dxSize="dense"
-            defaultValue={family}
+            defaultValue={familyToken}
             onChange={({ currentTarget: { value } }) => {
               onAction({
-                action: "changeVariantFamily",
+                action: "changeVariantFamilyToken",
                 id: variantId,
-                family: value,
+                familyToken: value,
               });
             }}
           >
@@ -145,7 +146,7 @@ export function FontVariantConfigVariant({
         </InputLabel>
       </>
     ),
-    [families, family, onAction, variantId]
+    [families, familyToken, onAction, variantId]
   );
 
   const InputSize = useMemo(
@@ -173,7 +174,7 @@ export function FontVariantConfigVariant({
       <InputLabel dxLabel="Font Weight & Style" dxSize="dense">
         <InputSelect
           dxSize="dense"
-          defaultValue={family}
+          defaultValue={familyToken}
           onChange={({ currentTarget: { value } }) => {
             onAction({
               action: "changeVariantWeightAndStyle",
@@ -190,7 +191,7 @@ export function FontVariantConfigVariant({
         </InputSelect>
       </InputLabel>
     ),
-    [family, onAction, variantId, weights]
+    [familyToken, onAction, variantId, weights]
   );
 
   const handleDelete = useCallback(() => {
@@ -205,7 +206,7 @@ export function FontVariantConfigVariant({
       <VariantContainerBar className={barStyles}>
         <VariantContainerBarTitle>{variantName}</VariantContainerBarTitle>
         <div className="meta">
-          {family} / {size} / {weight} / {lineHeight}
+          {familyToken} / {size} / {weight} / {lineHeight}
         </div>
 
         <VariantContainerBarActions

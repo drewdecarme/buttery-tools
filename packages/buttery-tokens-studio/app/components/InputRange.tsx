@@ -13,7 +13,7 @@ import { InputNumber } from "./InputNumber";
 
 export type InputRangePropsNative = Omit<
   JSX.IntrinsicElements["input"],
-  "type" | "min" | "max" | "value"
+  "type" | "min" | "max"
 >;
 export type InputRangePropsCustom = {
   min: number;

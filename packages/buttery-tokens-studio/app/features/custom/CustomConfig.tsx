@@ -9,7 +9,7 @@ import { VariantAdd } from "~/components/VariantAdd";
 import { CustomConfigVariant } from "./CustomConfigVariant";
 
 import { useConfigurationContext } from "../Config.context";
-import type { OnCustomAction } from "../config.utils.custom";
+import type { OnCustomAction } from "./custom.utils";
 
 const styles = css`
   ${makeReset("ul")};

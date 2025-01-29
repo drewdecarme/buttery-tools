@@ -24,7 +24,7 @@ import { useConfigurationContext } from "../Config.context";
 import {
   convertBrandColorIntoVariants,
   convertNeutralColorIntoVariants,
-} from "../config.utils.color";
+} from "../color/color.utils";
 
 const tableStyles = css`
   td:not(:first-child) {

@@ -8,7 +8,7 @@ import { VariantEmpty } from "~/components/VariantEmpty";
 import { BreakpointConfigVariant } from "./BreakpointConfigVariant";
 
 import { useConfigurationContext } from "../Config.context";
-import type { OnResponseBreakpointAction } from "../config.utils.response";
+import type { OnResponseBreakpointAction } from "./response.utils";
 
 const styles = css`
   ${makeReset("ul")};

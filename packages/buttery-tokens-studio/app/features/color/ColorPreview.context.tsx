@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import type { Updater } from "use-immer";
 import { useImmer } from "use-immer";
 
-import { colorThemeMap } from "../config.utils.color";
+import { colorThemeMap } from "./color.utils";
 
 export type ColorPreviewThemeMode = "light" | "dark";
 export type ColorPreviewWCAGValues = {

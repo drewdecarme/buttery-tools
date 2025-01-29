@@ -6,9 +6,9 @@ import { VariantAdd } from "~/components/VariantAdd";
 import { VariantList } from "~/components/VariantList";
 
 import { FontVariantConfigVariant } from "./FontVariantConfigVariant";
+import type { OnFontVariantAction } from "./font.utils";
 
 import { useConfigurationContext } from "../Config.context";
-import type { OnFontVariantAction } from "../config.utils.font";
 
 export function FontVariantConfig() {
   const { font, setFont } = useConfigurationContext();
@@ -24,7 +24,7 @@ export function FontVariantConfig() {
                 ? Object.values(draft.families)[0]
                 : Object.values(draft.families)[0];
             draft.variants[generateGUID()] = {
-              family: family.name,
+              familyToken: family.tokenName,
               lineHeight: 1.3,
               size: 16,
               variantName: `variant${nextVariantNum}`,
@@ -47,9 +47,9 @@ export function FontVariantConfig() {
           break;
         }
 
-        case "changeVariantFamily": {
+        case "changeVariantFamilyToken": {
           setFont((draft) => {
-            draft.variants[args.id].family = args.family;
+            draft.variants[args.id].familyToken = args.familyToken;
           });
           break;
         }

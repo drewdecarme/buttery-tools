@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../buttery-tokens-utils/schema.json",
   "runtime": {
     "namespace": "studio",
     "prefix": "studio",

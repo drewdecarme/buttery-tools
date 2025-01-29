@@ -11,7 +11,7 @@ import { InputSelect } from "~/components/InputSelect";
 
 import { SpaceConfigVariants } from "./SpaceConfigVariants";
 
-import { type ConfigurationStateSizeAndSpace_SpaceAuto } from "../config.utils.sizing.js";
+import { type ConfigurationStateSizeAndSpace_SpaceAuto } from "./size-and-space.utils.js";
 import type { ConfigurationContextType } from "../Config.context.js";
 
 const labelStyles = css`

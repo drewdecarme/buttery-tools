@@ -14,6 +14,7 @@ import { StyleGuidePageRight } from "./StyleGuidePageRight";
 import type { StyleGuideSharedProps } from "./style-guide.utils";
 
 import { useConfigurationContext } from "../Config.context";
+import { getFontConfigFromState } from "../font/font.utils";
 
 const styles = css`
   ${makeReset("ul")};
@@ -43,9 +44,8 @@ const styles = css`
 `;
 
 export function StyleGuideBasicTypography(props: StyleGuideSharedProps) {
-  const {
-    font: { variants },
-  } = useConfigurationContext();
+  const { font } = useConfigurationContext();
+  const fontConfig = getFontConfigFromState(font);
   return (
     <StyleGuidePage>
       <StyleGuidePageLeft dxMarker={props.dxMarker} dxTitle={props.dxTitle}>
@@ -57,25 +57,29 @@ export function StyleGuideBasicTypography(props: StyleGuideSharedProps) {
       </StyleGuidePageLeft>
       <StyleGuidePageRight>
         <ul className={styles}>
-          {Object.entries(variants).map(([variantId, variant]) => {
+          {Object.entries(font.variants).map(([variantId, variant]) => {
+            const fontFamily =
+              // @ts-expect-error This is valid but the types don't match up
+              fontConfig.families[variant.familyToken].familyName;
             return (
               <li key={variantId}>
                 <div
                   className="typ-display"
                   style={{
-                    fontFamily: `"${variant.family}"`,
+                    fontFamily: `"${fontFamily}"`,
                     fontSize: variant.size,
                     fontWeight: variant.weight.split("-")[1],
                     lineHeight: variant.lineHeight,
                   }}
                 >
-                  <span>{variant.variantName}</span>&nbsp;|&nbsp;
-                  <span>
+                  <div>{variant.variantName}</div>
+                  <div>
                     Curious minds discover joy in the beauty of everyday moments
-                  </span>
+                  </div>
                 </div>
                 <div className="typ-description">
-                  <span>{variant.family}</span>
+                  <span>{variant.familyToken}</span>
+                  <span>{fontFamily}</span>
                   <span>
                     {
                       manualFontStyles[

@@ -11,7 +11,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { classes } from "@buttery/components";
 
 import { useConfigurationContext } from "../Config.context";
-import type { ConfigurationStateResponseBreakpointValue } from "../config.utils.response";
+import type { ConfigurationStateResponseBreakpointValue } from "./response.utils";
 
 const styles = css`
   /* background: #272727; */

@@ -3,36 +3,36 @@ import { ConfigSchema } from "@buttery/tokens-utils/schemas";
 import type { FC, ReactNode } from "react";
 import { useContext, useMemo, createContext, useCallback } from "react";
 
-import type { ConfigurationContextSizingType } from "./config.utils.sizing.js";
+import type { ConfigurationContextSizingType } from "./size-and-space/size-and-space.utils.js";
 import {
   type ConfigurationContextFontType,
   getFontConfigFromState,
   useConfigStateFont,
-} from "./config.utils.font.js";
+} from "./font/font.utils.js";
 import {
   getSizeAndSpaceConfigFromState,
   useConfigStateSizing,
-} from "./config.utils.sizing.js";
-import type { ConfigurationContextColorType } from "./config.utils.color.js";
-import {
-  getColorConfigFromState,
-  useConfigStateColor,
-} from "./config.utils.color.js";
-import type { ConfigurationContextResponseType } from "./config.utils.response.js";
+} from "./size-and-space/size-and-space.utils.js";
+import type { ConfigurationContextResponseType } from "./response/response.utils.js";
 import {
   getResponseConfigFromState,
   useConfigStateResponse,
-} from "./config.utils.response.js";
-import type { ConfigurationContextCustomType } from "./config.utils.custom.js";
+} from "./response/response.utils.js";
+import type { ConfigurationContextCustomType } from "./custom/custom.utils.js";
 import {
   getCustomConfigFromState,
   useConfigStateCustom,
-} from "./config.utils.custom.js";
-import type { ConfigurationContextSettingsType } from "./config.utils.settings.js";
+} from "./custom/custom.utils.js";
+import type { ConfigurationContextSettingsType } from "./settings/settings.utils.js";
 import {
   getSettingsConfigFromState,
   useConfigStateSettings,
-} from "./config.utils.settings.js";
+} from "./settings/settings.utils.js";
+import type { ConfigurationContextColorType } from "./color/color.utils.js";
+import {
+  useConfigStateColor,
+  getColorConfigFromState,
+} from "./color/color.utils.js";
 
 export type ConfigurationContextType = ConfigurationContextColorType &
   ConfigurationContextFontType &

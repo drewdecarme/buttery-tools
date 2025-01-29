@@ -1,7 +1,7 @@
 import { ColorPreviewBlocks } from "./ColorPreviewBlocks";
+import { convertNeutralColorIntoVariants } from "./color.utils";
 
 import { useConfigurationContext } from "../Config.context";
-import { convertNeutralColorIntoVariants } from "../config.utils.color";
 
 export function ColorPreviewNeutral() {
   const { color } = useConfigurationContext();

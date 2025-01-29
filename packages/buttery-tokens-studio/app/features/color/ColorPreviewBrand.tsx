@@ -1,8 +1,8 @@
 import { ColorPreviewBlocks } from "./ColorPreviewBlocks";
 import { ColorPreviewContainer } from "./ColorPreviewContainer";
+import { convertBrandColorIntoVariants } from "./color.utils";
 
 import { useConfigurationContext } from "../Config.context";
-import { convertBrandColorIntoVariants } from "../config.utils.color";
 
 export function ColorPreviewBrand() {
   const { color } = useConfigurationContext();

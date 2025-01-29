@@ -8,6 +8,8 @@ import {
 import type { ManualFontStylesValue } from "@buttery/tokens-utils/schemas";
 import { manualFontStyles } from "@buttery/tokens-utils/schemas";
 
+import { getFontConfigFromState } from "./font.utils";
+
 import { useConfigurationContext } from "../Config.context";
 
 const styles = css`
@@ -45,7 +47,7 @@ const styles = css`
         grid-template-columns: auto 1fr;
         column-gap: ${makeRem(16)};
         font-weight: ${makeFontWeight("Mulish-light")};
-
+        line-height: 1.3;
         dd {
           margin: 0;
         }
@@ -55,19 +57,22 @@ const styles = css`
 `;
 
 export function FontVariantPreviewContent() {
-  const {
-    font: { variants },
-  } = useConfigurationContext();
+  const { font } = useConfigurationContext();
+
+  const fontConfig = getFontConfigFromState(font);
+
   return (
     <ul className={styles}>
-      {Object.entries(variants).map(([variantId, variant]) => {
+      {Object.entries(font.variants).map(([variantId, variant]) => {
+        // @ts-expect-error This is a valid statement; the types don't match up
+        const fontFamily = fontConfig.families[variant.familyToken].family;
         return (
           <li key={variantId}>
             <div className="heading">
               <h4>{variant.variantName}</h4>
               <dl className="sub">
                 <dt>Family</dt>
-                <dd>{variant.family}</dd>
+                <dd>{variant.familyToken}</dd>
                 <dt>Size</dt>
                 <dd>
                   {variant.size}px / {variant.lineHeight}
@@ -84,7 +89,7 @@ export function FontVariantPreviewContent() {
             </div>
             <div
               style={{
-                fontFamily: `"${variant.family}"`,
+                fontFamily: `"${fontFamily}"`,
                 fontSize: variant.size,
                 fontWeight: variant.weight.split("-")[1],
                 lineHeight: variant.lineHeight,

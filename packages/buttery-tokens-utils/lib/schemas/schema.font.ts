@@ -53,6 +53,7 @@ export type ManualFontStyles = z.infer<typeof ManualFontStylesSchema>;
 const FontFamiliesManualSchema = z.record(
   z.string(),
   z.object({
+    family: z.string(),
     fallback: z.string().optional().default(fontFamilyFallback),
     styles: ManualFontStylesSchema,
   })
@@ -63,6 +64,7 @@ const FontFamiliesGoogleSchema = z.union([
   z.record(
     z.literal("google-font-1"),
     z.object({
+      family: z.string(),
       fallback: z.string().default(fontFamilyFallback),
       styles: z.array(
         z.literal("google-font-1-style-1"),
@@ -73,6 +75,7 @@ const FontFamiliesGoogleSchema = z.union([
   z.record(
     z.literal("google-font-2"),
     z.object({
+      family: z.string(),
       styles: z.array(
         z.literal("google-font-2-style-1"),
         z.literal("google-font-2-style-2")
@@ -104,7 +107,7 @@ const FontFamiliesAdobeSchema = z.union([
 ]);
 
 const FontVariantValueSchema = z.object({
-  family: z.string(),
+  familyToken: z.string(),
   weight: z.string(),
   size: z.number(),
   lineHeight: z.number(),
@@ -140,7 +143,7 @@ export const FontSchema = z
     if (variantEntries.length === 0) return;
 
     for (const [key, variant] of variantEntries) {
-      if (!familyKeys.includes(variant.family)) {
+      if (!familyKeys.includes(variant.familyToken)) {
         ctx.addIssue({
           code: "invalid_union",
           path: ["variants", key, "family"],

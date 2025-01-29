@@ -21,7 +21,7 @@ import { VariantContainerBarText } from "~/components/VariantContainerBarText";
 import type {
   ConfigurationStateCustomValue,
   OnCustomAction,
-} from "../config.utils.custom";
+} from "./custom.utils";
 
 const barStyles = css`
   grid-template-columns: auto auto 1fr !important;

@@ -79,7 +79,7 @@ export const InputRadioCard = forwardRef<HTMLInputElement, InputRadioCardProps>(
     return (
       <label className={styles}>
         <div>
-          <DXIcon />
+          <DXIcon dxSize={20} />
         </div>
         <div className="title">{dxTitle}</div>
         <div className="description">{dxDescription}</div>

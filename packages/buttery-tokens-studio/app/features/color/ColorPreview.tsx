@@ -10,8 +10,7 @@ import {
   ColorPreviewProvider,
   useColorPreviewContext,
 } from "./ColorPreview.context";
-
-import { colorThemeMap } from "../config.utils.color";
+import { colorThemeMap } from "./color.utils";
 
 const styles = css`
   position: relative;

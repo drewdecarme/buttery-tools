@@ -5,7 +5,7 @@ import type { ChangeEvent } from "react";
 import { InputLabel } from "~/components/InputLabel";
 import { InputCheckbox } from "~/components/InputCheckbox";
 
-import type { OnFontFamilyAction } from "../config.utils.font";
+import type { OnFontFamilyAction } from "./font.utils";
 
 const ulStyles = css`
   ${makeReset("ul")};

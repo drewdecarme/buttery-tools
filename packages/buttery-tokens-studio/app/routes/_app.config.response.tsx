@@ -2,9 +2,9 @@ import type { MetaFunction } from "react-router";
 
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
-import { BreakpointConfig } from "~/features/breakpoint/BreakpointConfig";
-import { BreakpointPreview } from "~/features/breakpoint/BreakpointPreview";
-import { BreakpointPreviewContent } from "~/features/breakpoint/BreakpointPreviewContent";
+import { BreakpointConfig } from "~/features/response/BreakpointConfig";
+import { BreakpointPreview } from "~/features/response/BreakpointPreview";
+import { BreakpointPreviewContent } from "~/features/response/BreakpointPreviewContent";
 
 export const meta: MetaFunction = () => {
   return [

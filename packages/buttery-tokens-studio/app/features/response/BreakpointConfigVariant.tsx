@@ -26,7 +26,7 @@ import { InputLabel } from "~/components/InputLabel";
 import type {
   ConfigurationStateResponseBreakpointValue,
   OnResponseBreakpointAction,
-} from "../config.utils.response";
+} from "./response.utils";
 
 const barStyles = css`
   grid-template-columns: ${makeRem(100)} 1fr auto !important;

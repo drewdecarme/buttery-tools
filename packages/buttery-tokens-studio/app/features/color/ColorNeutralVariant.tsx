@@ -19,9 +19,9 @@ import { ColorSwatchHex } from "./ColorSwatchHex";
 import type { ColorSwatchVariantsPropsCustom } from "./ColorSwatchVariants";
 import { ColorSwatchVariants } from "./ColorSwatchVariants";
 import { ColorSwatchName } from "./ColorSwatchName";
+import type { ConfigurationStateColorsManual } from "./color.utils";
 
 import type { ConfigurationContextType } from "../Config.context";
-import type { ConfigurationStateColorsManual } from "../config.utils.color";
 
 const barStyles = css`
   grid-template-columns: ${makeRem(24)} ${makeRem(100)} auto 1fr !important;

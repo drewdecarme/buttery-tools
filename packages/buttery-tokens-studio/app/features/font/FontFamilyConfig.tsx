@@ -11,9 +11,9 @@ import { LOG } from "~/utils/util.logger";
 
 import { FontFamilyConfigManual } from "./FontFamilyConfigManual";
 import { FontFamilyConfigRegistry } from "./FontFamilyConfigRegistry";
+import type { OnFontFamilyAction } from "./font.utils";
 
 import { useConfigurationContext } from "../Config.context";
-import type { OnFontFamilyAction } from "../config.utils.font";
 
 const styles = css`
   ${makeReset("ul")};
@@ -30,9 +30,11 @@ export function FontFamilyConfig() {
       switch (args.action) {
         case "addFontFamily":
           setFont((draft) => {
+            const numOfFamilies = (Object.values(draft.families).length = 0);
             draft.source = "manual";
             draft.families[generateGUID()] = {
-              name: "Arial",
+              tokenName: `family${numOfFamilies + 1}`,
+              familyName: "Arial",
               fallback: undefined,
               styles: {
                 "regular-400": {
@@ -51,7 +53,8 @@ export function FontFamilyConfig() {
             const familyToDelete = draft.families[args.id];
             const isFontFamilyInVariants = Object.values(draft.variants).reduce(
               (accum, variant) => {
-                if (variant.family === familyToDelete.name) return true;
+                if (variant.familyToken === familyToDelete.tokenName)
+                  return true;
                 return accum;
               },
               false
@@ -101,9 +104,15 @@ export function FontFamilyConfig() {
           });
           break;
 
-        case "changeFontFamily":
+        case "changeFamilyName":
           setFont((draft) => {
-            draft.families[args.id].name = args.fontFamily;
+            draft.families[args.id].familyName = args.fontFamilyName;
+          });
+          break;
+
+        case "changeTokenName":
+          setFont((draft) => {
+            draft.families[args.id].tokenName = args.token;
           });
           break;
 

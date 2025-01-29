@@ -11,15 +11,16 @@ import { VariantContainerBar } from "~/components/VariantContainerBar";
 import { VariantContainerBarActions } from "~/components/VariantContainerBarActions";
 import { VariantContainerBarTitle } from "~/components/VariantContainerBarTitle";
 import { VariantContainerContent } from "~/components/VariantContainerContent";
+import { VariantContainerBarText } from "~/components/VariantContainerBarText";
 
 import type {
   ConfigurationStateFont,
   ConfigurationStateFontFamilyValuesMeta,
   OnFontFamilyAction,
-} from "../config.utils.font";
+} from "./font.utils";
 
 const variantStyles = css`
-  grid-template-columns: ${makeRem(100)} 1fr !important;
+  grid-template-columns: ${makeRem(100)} 1fr 1fr !important;
 
   .family-name {
     align-content: start;
@@ -32,7 +33,8 @@ const variantStyles = css`
 export type FontFamilyConfigVariantProps =
   ConfigurationStateFontFamilyValuesMeta & {
     id: string;
-    name: string;
+    tokenName: string;
+    familyName: string;
     source: ConfigurationStateFont["source"];
     onAction: OnFontFamilyAction;
   };
@@ -100,7 +102,8 @@ export function FontFamilyConfigVariant(
   return (
     <VariantContainer>
       <VariantContainerBar className={variantStyles}>
-        <VariantContainerBarTitle>{props.name}</VariantContainerBarTitle>
+        <VariantContainerBarTitle>{props.tokenName}</VariantContainerBarTitle>
+        <VariantContainerBarText>{props.familyName}</VariantContainerBarText>
         <VariantContainerBarActions
           dxIsEditing={props.meta.isOpen}
           dxOnEdit={handleToggle}

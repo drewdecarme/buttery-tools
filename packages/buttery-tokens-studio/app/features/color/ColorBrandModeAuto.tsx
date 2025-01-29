@@ -10,10 +10,10 @@ import { VariantList } from "~/components/VariantList";
 
 import { ColorBrandModeAutoVariant } from "./ColorBrandModeAutoVariant";
 import { ColorBrandModeAutoCategory } from "./ColorBrandModeAutoCategory";
+import type { ConfigurationStateColorBrandAuto } from "./color.utils";
+import { colorAutoPresets } from "./color.utils";
 
 import type { ConfigurationContextType } from "../Config.context";
-import type { ConfigurationStateColorBrandAuto } from "../config.utils.color";
-import { colorAutoPresets } from "../config.utils.color";
 import { InputRange } from "../../components/InputRange";
 import { InputSection } from "../../components/InputSection";
 import { InputLabel } from "../../components/InputLabel";
