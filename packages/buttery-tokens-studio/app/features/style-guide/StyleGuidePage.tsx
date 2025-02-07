@@ -22,7 +22,11 @@ const styles = css`
 export const StyleGuidePage = forwardRef<HTMLElement, StyleGuidePageProps>(
   function StyleGuidePage({ children, className, ...restProps }, ref) {
     return (
-      <section {...restProps} className={classes(styles, className)} ref={ref}>
+      <section
+        {...restProps}
+        className={classes(styles, "page", className)}
+        ref={ref}
+      >
         {children}
       </section>
     );

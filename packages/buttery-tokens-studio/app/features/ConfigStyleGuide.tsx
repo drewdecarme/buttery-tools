@@ -36,6 +36,7 @@ const bodyStyles = css`
     grid-template-rows: auto 1fr;
     height: 100%;
     background: white;
+    min-width: ${makeRem(300)};
 
     .s-head {
       border-bottom: 1px solid ${makeColor("neutral-light", { opacity: 0.1 })};

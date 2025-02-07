@@ -10,6 +10,8 @@ import {
   ColorAccessibilityChecker,
   getAccessibleTextColor,
 } from "@buttery/tokens-utils";
+import { Fragment } from "react/jsx-runtime";
+import { useRef } from "react";
 
 import { IconTick01 } from "~/icons/IconTick01";
 import { IconCancel } from "~/icons/IconCancel";
@@ -110,9 +112,10 @@ export function StyleGuideBasicColor({
   const bVariants = convertBrandColorIntoVariants(color);
   const nVariants = convertNeutralColorIntoVariants(color);
   const variants = Object.assign(bVariants, nVariants);
+  const pageRef = useRef<HTMLElement | null>(null);
 
   return (
-    <StyleGuidePage>
+    <StyleGuidePage ref={pageRef} className="style-guide">
       <StyleGuidePageLeft dxMarker={dxMarker} dxTitle={dxTitle}>
         <p>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam,
@@ -143,8 +146,9 @@ export function StyleGuideBasicColor({
             {Object.entries(variants).map(
               ([colorName, { base: baseHex, ...restVariants }], i) => {
                 const baseWcag = checker.analyze(baseHex, bgColor, 16);
+
                 return (
-                  <>
+                  <Fragment key={baseHex}>
                     <tr key={`${colorName}-${i}`}>
                       <td>
                         <div
@@ -211,7 +215,7 @@ export function StyleGuideBasicColor({
                         );
                       })}
                     <tr className={gapStyles} />
-                  </>
+                  </Fragment>
                 );
               }
             )}

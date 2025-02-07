@@ -5,6 +5,8 @@ import { Button } from "~/components/Button";
 import { IconDownload05 } from "~/icons/IconDownload05";
 import { IconFloppyDisk } from "~/icons/IconFloppyDisk";
 
+import { useExportStyleGuide } from "./style-guide.useDownload";
+
 const styles = css`
   display: flex;
   justify-content: flex-end;
@@ -13,6 +15,8 @@ const styles = css`
 `;
 
 export function StyleGuideControlBar() {
+  const { exportStyleGuide } = useExportStyleGuide();
+
   return (
     <div className={styles}>
       <Button
@@ -28,6 +32,7 @@ export function StyleGuideControlBar() {
         dxSize="big"
         dxStyle="outlined"
         dxHelp="Export to PDF"
+        onClick={exportStyleGuide}
       />
     </div>
   );

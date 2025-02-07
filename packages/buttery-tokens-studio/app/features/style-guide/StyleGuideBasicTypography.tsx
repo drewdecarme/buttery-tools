@@ -66,7 +66,7 @@ export function StyleGuideBasicTypography(props: StyleGuideSharedProps) {
                 <div
                   className="typ-display"
                   style={{
-                    fontFamily: `"${fontFamily}"`,
+                    fontFamily: fontFamily ? `"${fontFamily}"` : undefined,
                     fontSize: variant.size,
                     fontWeight: variant.weight.split("-")[1],
                     lineHeight: variant.lineHeight,

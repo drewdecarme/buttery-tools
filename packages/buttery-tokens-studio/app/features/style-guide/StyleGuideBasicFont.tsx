@@ -63,7 +63,6 @@ export function StyleGuideBasicFont(props: StyleGuideSharedProps) {
           {match(font)
             .with({ source: "manual" }, (state) =>
               Object.entries(state.families).map(([familyId, familyDef]) => {
-                console.log(familyDef);
                 return (
                   <div
                     key={familyId}

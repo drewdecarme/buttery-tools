@@ -1,12 +1,23 @@
 import { makeRem } from "@buttery/tokens/playground";
 import { css } from "@linaria/core";
 import type { JSX } from "react";
+import { getAccessibleTextColor } from "@buttery/tokens-utils";
 
 import { StyleGuideBasicColor } from "./StyleGuideBasicColor";
 import { StyleGuideBasicFont } from "./StyleGuideBasicFont";
 import { StyleGuideBasicSize } from "./StyleGuideBasicSize";
 import { StyleGuideBasicSpacing } from "./StyleGuideBasicSpacing";
 import { StyleGuideBasicTypography } from "./StyleGuideBasicTypography";
+
+export function getSGColorClass(colorName: string, ...args: string[]) {
+  return `sg-${colorName}${args ? args.join("-") : ""}`;
+}
+export function getSgColorClassValues(hex: string) {
+  return {
+    backgroundColor: hex,
+    color: getAccessibleTextColor(hex),
+  };
+}
 
 export const styleGuideTableStyles = css`
   position: relative;
