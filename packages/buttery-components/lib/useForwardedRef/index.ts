@@ -1,1 +1,1 @@
-export * from "./useForwardedRef";
+export * from "./useForwardedRef.js";

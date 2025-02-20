@@ -1,5 +1,6 @@
 import type { Manifest, ManifestChunk } from "vite";
-import { getCriticalViteChunks } from "./getCriticalViteChunks";
+
+import { getCriticalViteChunks } from "./getCriticalViteChunks.js";
 
 /**
  * Provided the reconciled route id from the request, this function

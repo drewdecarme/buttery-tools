@@ -1,0 +1,35 @@
+{
+  "name": "@buttery/utils",
+  "version": "0.0.0",
+  "description": "A public set of utilities designed to make browser, node, and isomorphic actions just a littttle bit easier.",
+  "type": "module",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "yarn tsc --project tsconfig.library.json",
+    "dev": "yarn build --watch"
+  },
+  "exports": {
+    "./*": "./dist/*/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git",
+    "directory": "packages/buttery-utils"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "devDependencies": {
+    "@buttery/tsconfig": "workspace:*",
+    "typescript": "5.7.3"
+  }
+}

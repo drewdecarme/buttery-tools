@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../buttery-tokens-utils/schema.json",
+  "runtime": {
+    "namespace": "studio",
+    "prefix": "studio",
+    "strict": true,
+    "suppressStrictWarnings": false
+  },
+  "sizeAndSpace": {
+    "baseFontSize": 16,
+    "baselineGrid": 4,
+    "size": {
+      "variants": {}
+    },
+    "space": {
+      "mode": "auto",
+      "variants": 11
+    }
+  },
+  "font": {
+    "source": "manual",
+    "families": {},
+    "variants": {}
+  },
+  "response": {
+    "breakpoints": {
+      "mobile": 480,
+      "tablet": 768,
+      "laptop": 1024,
+      "desktop": 1280,
+      "ultraWide": 1536
+    }
+  },
+  "color": {
+    "brand": {
+      "type": "fluorescent",
+      "colors": {
+        "brand1": {
+          "hue": 158,
+          "variants": 10
+        }
+      },
+      "saturation": 63,
+      "brightness": 82
+    },
+    "neutral": {
+      "neutral1": {
+        "hex": "#000000",
+        "variants": 10
+      }
+    }
+  },
+  "custom": {}
+}

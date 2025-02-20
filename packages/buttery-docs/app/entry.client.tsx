@@ -1,6 +1,8 @@
-import { ButteryDocsClient } from "@buttery/docs/client";
 import ReactDOMClient from "react-dom/client";
-import { routes } from "./routes";
+
+import { ButteryDocsClient } from "@buttery/docs/client";
+
+import { routes } from "./routes.js";
 
 ReactDOMClient.hydrateRoot(
   document.getElementById("root") as HTMLElement,

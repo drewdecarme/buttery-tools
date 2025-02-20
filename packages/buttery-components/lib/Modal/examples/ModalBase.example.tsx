@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
-import { Modal } from "../Modal";
-import { useModal } from "../modal.useModal";
+
+import { Modal } from "../Modal.js";
+import { useModal } from "../modal.useModal.js";
 const styles = css`
   /* Animation for appearing */
   @keyframes appear {

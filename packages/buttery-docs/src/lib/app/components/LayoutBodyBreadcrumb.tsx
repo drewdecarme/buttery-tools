@@ -1,12 +1,12 @@
 import { classes } from "@buttery/components";
 import {
-  makeColorShade,
-  makeColorStatic,
+  makeColor,
   makeCustom,
   makeRem,
   makeReset,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef } from "react";
 
 export type LayoutBodyBreadcrumbPropsNative = JSX.IntrinsicElements["nav"];
@@ -16,7 +16,7 @@ const styles = css`
   grid-area: layout-breadcrumb;
   position: sticky;
   top: ${makeCustom("layout-header-height")};
-  background: ${makeColorStatic("background")};
+  background: ${makeColor("background")};
   z-index: 10;
 
   ul {
@@ -28,7 +28,7 @@ const styles = css`
     margin-left: ${makeRem(32)};
     margin-right: ${makeRem(32)};
     border-bottom: ${makeRem(1)} solid
-      ${makeColorShade("neutral", { variant: "50", opacity: 0.5 })};
+      ${makeColor("neutral-50", { opacity: 0.5 })};
 
     & > li {
       position: relative;

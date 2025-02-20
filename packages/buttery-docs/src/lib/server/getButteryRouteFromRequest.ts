@@ -1,4 +1,4 @@
-import type { ButteryDocsRouteManifest } from "@buttery/core/config";
+import type { ButteryDocsRouteManifest } from "../../utils/util.types.js";
 
 /**
  * Fetches the buttery route manifest entry that matches the requested pathname

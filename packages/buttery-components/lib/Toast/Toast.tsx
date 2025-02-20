@@ -1,4 +1,3 @@
-import { classes } from "@BUTTERY_COMPONENT/utils";
 import { css } from "@linaria/core";
 import {
   type FC,
@@ -7,6 +6,8 @@ import {
   useCallback,
   useEffect,
 } from "react";
+
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 
 export type ToastProps = {
   id: string;

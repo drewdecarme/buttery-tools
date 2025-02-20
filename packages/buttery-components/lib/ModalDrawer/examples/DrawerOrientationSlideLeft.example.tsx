@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
-import { Drawer } from "../ModalDrawer";
-import { useDrawer } from "../modal-drawer.useDrawer";
+
+import { Drawer } from "../ModalDrawer.js";
+import { useDrawer } from "../modal-drawer.useDrawer.js";
 
 const drawerStyles = css`
   --drawer-width: 40%;

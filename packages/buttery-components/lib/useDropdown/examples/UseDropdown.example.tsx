@@ -1,4 +1,4 @@
-import { useDropdown } from "../useDropdown";
+import { useDropdown } from "../useDropdown.js";
 
 export default () => {
   const { openDropdown, closeDropdown, setDropdownRef, setTargetRef } =

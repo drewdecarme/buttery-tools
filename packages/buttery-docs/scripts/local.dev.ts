@@ -1,4 +1,4 @@
-import { dev } from "../src/cli-scripts/dev";
+import { dev } from "../src/cli-scripts/dev.js";
 
 /**
  * Runs the `dev` cli script locally to test to

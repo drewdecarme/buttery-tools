@@ -1,4 +1,3 @@
-import { classes } from "@BUTTERY_COMPONENT/utils";
 import { css } from "@linaria/core";
 import {
   randBoolean,
@@ -6,8 +5,11 @@ import {
   randSentence,
 } from "@ngneat/falso";
 import type { FC } from "react";
-import { Toaster } from "../Toaster";
-import { useToast } from "../toast.useToast";
+
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
+
+import { Toaster } from "../Toaster.js";
+import { useToast } from "../toast.useToast.js";
 
 const divCSS = css`
   width: 400px;
@@ -101,7 +103,7 @@ export default () => {
           })
         }
       >
-        Create "Components" toast
+        Create Components toast
       </button>
       <ComponentsToaster />
       <button
@@ -114,7 +116,7 @@ export default () => {
           })
         }
       >
-        Create "Features" toast
+        Create Features toast
       </button>
       <FeaturesToaster />
     </>

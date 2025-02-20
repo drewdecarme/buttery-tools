@@ -1,9 +1,12 @@
 import path from "node:path";
-import { printAsBullets } from "@buttery/core/logger";
-import chokidar from "chokidar";
-import { dev } from "../src/cli-scripts/dev";
-import { LOG } from "../src/utils/utils";
-import { buildRuntime } from "./runtime.build";
+
+import { watch } from "chokidar";
+import { printAsBullets } from "@buttery/logs";
+
+import { buildRuntime } from "./runtime.build.js";
+
+import { dev } from "../src/cli-scripts/dev.js";
+import { LOG } from "../src/utils/LOG.js";
 
 // Allows for local development to test out all functionality
 // before it is built and published to the rest of the packages
@@ -31,9 +34,9 @@ const watchPaths = [srcDir, butteryConfig];
 LOG.watch(
   `Watching the following paths for changes: ${printAsBullets(watchPaths)}}`
 );
-chokidar
-  .watch([srcDir, commandsDir, butteryConfig], { ignoreInitial: true })
-  .on("all", async (event, changePath) => {
+watch([srcDir, commandsDir, butteryConfig], { ignoreInitial: true }).on(
+  "all",
+  async (event, changePath) => {
     LOG.checkpointStart(
       `${path.relative(rootDir, changePath)}:${event}. Rebuilding...`
     );
@@ -45,4 +48,5 @@ chokidar
     LOG.checkpointEnd(
       `${path.relative(rootDir, changePath)}:${event}. Rebuilding... done.`
     );
-  });
+  }
+);

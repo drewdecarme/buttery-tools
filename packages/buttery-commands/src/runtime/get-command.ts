@@ -1,8 +1,10 @@
-import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import type { WellFormedCommand } from "../utils/runtime.types";
-import type { ButteryCommandsGraph } from "../utils/utils";
-import { getArgs } from "./get-args";
-import { getOptions } from "./get-options";
+import { tryHandle } from "@buttery/utils/isomorphic";
+
+import { getArgs } from "./get-args.js";
+import { getOptions } from "./get-options.js";
+import type { WellFormedCommand } from "./runtime.types.js";
+
+import type { ButteryCommandsGraph } from "../utils/LOG.js";
 
 /**
  * Provided a manifest entry point, loop through all of the
@@ -51,7 +53,7 @@ export async function getCommand(
   const positionalArgs = cmdArgs.filter(
     (arg) => !arg.includes("--") || !arg.includes("-")
   );
-  const cmdArgsResult = await inlineTryCatch(getArgs)(
+  const cmdArgsResult = await tryHandle(getArgs)(
     positionalArgs,
     cmd.args ?? {}
   );
@@ -61,7 +63,7 @@ export async function getCommand(
 
   // Parse the options
   const optionArgs = cmdArgs.filter((arg) => arg !== "--help" && arg !== "-h");
-  const cmdOptionsResult = await inlineTryCatch(getOptions)(
+  const cmdOptionsResult = await tryHandle(getOptions)(
     optionArgs,
     cmd.options ?? {}
   );

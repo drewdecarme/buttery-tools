@@ -3,12 +3,13 @@ import {
   renderToReadableStream,
 } from "react-dom/server";
 import { type RouteObject, createStaticHandler } from "react-router";
+
 import {
   ButteryDocsServer,
   type ButteryDocsServerContext,
-} from "./ButteryDocsServer";
-import { createRouterFromRoutes } from "./createRouterFromRoutes";
-import { LOG_SERVER } from "./server.utils";
+} from "./ButteryDocsServer.js";
+import { createRouterFromRoutes } from "./createRouterFromRoutes.js";
+import { LOG_SERVER } from "./server.utils.js";
 
 const ABORT_DELAY = 5_000;
 

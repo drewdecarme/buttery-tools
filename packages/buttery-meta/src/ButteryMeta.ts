@@ -1,6 +1,7 @@
 import { ButteryLogger } from "@buttery/logs";
 import type { ReactElement } from "react";
 import ReactDOMServer from "react-dom/server";
+
 import {
   type ButteryMetaDescriptor,
   ButteryMetaSchema,

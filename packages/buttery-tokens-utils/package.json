@@ -1,0 +1,45 @@
+{
+  "name": "@buttery/tokens-utils",
+  "version": "0.0.1",
+  "description": "A collection of schemas and utils that can be shared across the @buttery/tokens & @buttery/tokens-studio packages",
+  "scripts": {
+    "build": "yarn json-schema:build && yarn tsc --project tsconfig.library.json",
+    "dev": "yarn build --watch",
+    "json-schema:build": "yarn tsx ./scripts/create-json-schema.ts",
+    "json-schema:deploy-dev": "yarn wrangler r2 object put buttery-tools/tokens.dev.json --file ./schema.json",
+    "json-schema:deploy-prod": "yarn wrangler r2 object put buttery-tools/tokens.json --file ./schema.json"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    },
+    "./schemas": "./dist/schemas/index.js",
+    "./schema.json": "./schema.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/drewdecarme/buttery-tools.git"
+  },
+  "author": "Drew DeCarme (drewdecarme@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewdecarme/buttery-tools/issues"
+  },
+  "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
+  "dependencies": {
+    "chroma-js": "3.1.2",
+    "zod": "3.24.1"
+  },
+  "devDependencies": {
+    "@buttery/logs": "workspace:*",
+    "@buttery/tsconfig": "workspace:*",
+    "@buttery/utils": "workspace:*",
+    "@types/node": "22.12.0",
+    "tsx": "4.19.2",
+    "typescript": "5.7.3",
+    "wrangler": "3.106.0",
+    "zod-to-json-schema": "3.24.1"
+  }
+}

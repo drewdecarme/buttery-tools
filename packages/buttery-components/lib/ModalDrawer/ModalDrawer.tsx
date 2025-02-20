@@ -4,12 +4,12 @@ import {
   Modal,
   type ModalPropsCustom,
   type ModalPropsNative,
-} from "@BUTTERY_COMPONENT/Modal";
+} from "@BUTTERY_COMPONENT/Modal/index.js";
 import type {
   ModalDefaultState,
   ModalRef,
-} from "@BUTTERY_COMPONENT/useModalDialog";
-import { classes } from "@BUTTERY_COMPONENT/utils";
+} from "@BUTTERY_COMPONENT/useModalDialog/index.js";
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
 
 export type DrawerPropsNative = ModalPropsNative;
 export type DrawerPropsCustom = ModalPropsCustom & {

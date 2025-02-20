@@ -1,7 +1,5 @@
-import type { ButteryDocsRouteManifestGraphObject } from "@buttery/core/config";
 import {
-  makeColorBrand,
-  makeColorShade,
+  makeColor,
   makeCustom,
   makeFontWeight,
   makeRem,
@@ -10,14 +8,16 @@ import {
 import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router";
-import { LayoutBodyNavItem } from "./LayoutBodyNavItem";
-import { LayoutTextOverline } from "./LayoutTextOverline";
+
+import { LayoutBodyNavItem } from "./LayoutBodyNavItem.js";
+import { LayoutTextOverline } from "./LayoutTextOverline.js";
+
+import type { ButteryDocsRouteManifestGraphObject } from "../../../utils/util.types.js";
 
 const navStyles = css`
   grid-area: layout-sidebar;
   align-self: start;
-  border-right: ${makeRem(1)} solid
-    ${makeColorShade("neutral", { variant: "50", opacity: 0.5 })};
+  border-right: ${makeRem(1)} solid ${makeColor("neutral-50", { opacity: 0.5 })};
   max-height: ${`calc(100% - ${makeCustom("layout-header-height")})`};
   overflow-y: auto;
   position: sticky;
@@ -38,8 +38,7 @@ const sectionStyles = css`
   margin-bottom: ${makeRem(16)};
   & + & {
     padding-top: ${makeRem(16)};
-    border-top: ${makeRem(1)} solid
-      ${makeColorShade("neutral", { variant: "50", opacity: 0.5 })};
+    border-top: ${makeRem(1)} solid ${makeColor("neutral-50", { opacity: 0.5 })};
   }
 `;
 
@@ -49,8 +48,8 @@ const anchorOverlineCSS = css`
   &.active,
   &:hover {
     & > * {
-      font-weight: ${makeFontWeight("bold")};
-      color: ${makeColorBrand("primary")};
+      font-weight: ${makeFontWeight("Source Sans 3-bold")};
+      color: ${makeColor("primary")};
     }
   }
 `;

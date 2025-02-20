@@ -1,16 +1,12 @@
-import { parseAndValidateOptions } from "@buttery/core/utils/node";
-import chokidar from "chokidar";
-import type { z } from "zod";
-import { buildCSSUtils } from "../buildCSSUtils";
-import { getButteryTokensConfig } from "../getButteryTokensConfig";
-import { getButteryTokensDirectories } from "../getButteryTokensDirectories";
-import { launchPlayground } from "../launchPlayground";
-import { LOG } from "../logger";
-import { butteryTokensDevOptionsSchema } from "./_options.schema";
+import { parseAndValidateOptions } from "@buttery/core/utils";
+import { watchButteryConfigForChanges } from "@buttery/core/config";
+import { tryHandle } from "@buttery/utils/isomorphic";
 
-export type ButterTokensDevOptions = z.infer<
-  typeof butteryTokensDevOptionsSchema
->;
+import type { ButteryTokensDevOptions } from "./_cli-scripts.utils.js";
+import { butteryTokensDevOptionsSchema } from "./_cli-scripts.utils.js";
+
+import { LOG } from "../utils/util.logger.js";
+import { buildButteryTokens } from "../build/buttery-tokens.build.js";
 
 /**
  * Run the @buttery/tokens build process in development mode
@@ -20,7 +16,7 @@ export type ButterTokensDevOptions = z.infer<
  * Depending upon the options that are passed you can also
  * view the interactive wizard to make changes live in a GUI.
  */
-export async function dev(options?: ButterTokensDevOptions) {
+export async function dev(options?: Partial<ButteryTokensDevOptions>) {
   const parsedOptions = parseAndValidateOptions(
     butteryTokensDevOptionsSchema,
     options,
@@ -28,50 +24,17 @@ export async function dev(options?: ButterTokensDevOptions) {
   );
   LOG.level = parsedOptions.logLevel;
 
-  try {
-    LOG.info("Building @buttery/tokens..");
-    // Fetch the tokens config and resolve the paths
-    const config = await getButteryTokensConfig({
-      prompt: parsedOptions.prompt,
-    });
-    const dirs = await getButteryTokensDirectories(config, {
-      logLevel: parsedOptions.logLevel,
-    });
-
-    // build the make functions
-    await buildCSSUtils(config, dirs);
-    LOG.info("Building @buttery/tokens... done.");
-
-    // Watch the .buttery/config file to check if any changes
-    // are
-    const watcher = chokidar.watch(config.paths.config);
-    LOG.watch(config.paths.config.concat(" for changes..."));
-
-    watcher.on("change", async (file) => {
-      LOG.watch(`"${file}" changed.`);
-      LOG.watch("Rebuilding tokens...");
-      const config = await getButteryTokensConfig({
-        prompt: parsedOptions.prompt,
-      });
-      const dirs = await getButteryTokensDirectories(config, {
-        logLevel: parsedOptions.logLevel,
-      });
-
-      await buildCSSUtils(config, dirs);
-
-      LOG.watch("Rebuilding tokens... done.");
-    });
-
-    // watch and launch the interactive UI
-    if (!parsedOptions.interactive) return;
-
-    LOG.info("Launching interactive playground...");
-    await launchPlayground(config, {
-      logLevel: parsedOptions.logLevel,
-    });
-  } catch (error) {
-    throw LOG.fatal(
-      new Error(`Error when trying to run @buttery/tools in DEV mode: ${error}`)
-    );
+  // Build the tokens using the central builder
+  const res = await tryHandle(buildButteryTokens)(parsedOptions);
+  if (res.hasError) {
+    return LOG.fatal(res.error);
   }
+  const rConfig = res.data;
+
+  watchButteryConfigForChanges(rConfig.paths.config, {
+    async onChange() {
+      // rebuild the tokens
+      await buildButteryTokens(parsedOptions);
+    },
+  });
 }

@@ -11,6 +11,7 @@ export type DropdownOptionPosition =
   | "left-bottom"
   | "left-middle"
   | "left-top";
+export type DropdownOptionOrigin = "top-left" | "top-right";
 export type DropdownOptionArrow = {
   /**
    * The size of the arrow
@@ -46,4 +47,10 @@ export type DropdownOptions = {
    * @default undefined
    */
   dxOffset?: DropdownOptionOffset;
+  /**
+   * The origin of the dropdown which will effect how the
+   * dropdown will be aligned
+   * @default top-left
+   */
+  dxOrigin?: DropdownOptionOrigin;
 };

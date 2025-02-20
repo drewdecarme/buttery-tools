@@ -9,10 +9,11 @@
   },
   "scripts": {
     "build": "yarn tsc && yarn cli-scripts:build && yarn runtime:build && yarn lib:build",
-    "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
-    "cli-scripts:types": "yarn tsc --project tsconfig.cli-types.json",
     "runtime:build": "tsx ./scripts/runtime.build.ts",
+    "cli-scripts:build": "tsc --project tsconfig.cli-scripts.json",
+    "cli-scripts:dev": "yarn cli-scripts:build --watch",
     "lib:build": "yarn tsc --project tsconfig.library.json",
+    "lib:dev": "yarn lib:build --watch",
     "local:dev": "tsx ./scripts/local.dev.ts",
     "local:build": "tsx ./scripts/local.build.ts",
     "local:start": "yarn node ./bin/index.js"
@@ -21,7 +22,7 @@
     "dist"
   ],
   "exports": {
-    ".": "./dist/index.js",
+    ".": "./dist/lib/index.js",
     "./runtime": "./dist/runtime.js",
     "./cli/*": "./dist/cli-scripts/*.js"
   },
@@ -38,22 +39,24 @@
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
     "@buttery/tsconfig": "workspace:*",
-    "@ngneat/falso": "7.2.0",
-    "@types/fs-extra": "^11.0.4",
-    "@types/node": "22.10.1",
-    "@types/picomatch": "^3.0.1",
-    "esbuild": "0.24.0",
+    "@ngneat/falso": "7.3.0",
+    "@types/fs-extra": "11.0.4",
+    "@types/node": "22.12.0",
+    "@types/picomatch": "3.0.2",
+    "esbuild": "0.24.2",
     "tsx": "4.19.2",
-    "typescript": "5.7.2"
+    "typescript": "5.7.3"
   },
   "dependencies": {
-    "@buttery/core": "workspace:^0.1.11",
-    "@inquirer/prompts": "7.1.0",
-    "chokidar": "^4.0.1",
-    "fs-extra": "^11.2.0",
-    "picocolors": "^1.1.1",
-    "picomatch": "^4.0.2",
-    "zod": "^3.23.8"
+    "@buttery/core": "workspace:0.1.11",
+    "@buttery/logs": "workspace:*",
+    "@buttery/utils": "workspace:*",
+    "@inquirer/prompts": "7.2.4",
+    "chokidar": "4.0.3",
+    "fs-extra": "11.3.0",
+    "picocolors": "1.1.1",
+    "picomatch": "4.0.2",
+    "zod": "3.24.1"
   },
   "bin": {
     "spread": "./bin/index.js"

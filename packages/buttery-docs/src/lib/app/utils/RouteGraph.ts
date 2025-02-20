@@ -1,5 +1,6 @@
-import type { ButteryDocsRouteManifestGraphObject } from "@buttery/core/config";
-import { LOG } from "./LOG";
+import { LOG } from "./LOG.js";
+
+import type { ButteryDocsRouteManifestGraphObject } from "../../../utils/util.types.js";
 
 /**
  * A collection of utilities to easily transact on the route manifest

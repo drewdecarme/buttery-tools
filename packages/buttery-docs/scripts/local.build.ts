@@ -1,4 +1,4 @@
-import { build } from "../src/cli-scripts/build";
+import { build } from "../src/cli-scripts/build.js";
 
 /**
  * Runs the `build` cli script locally to test to

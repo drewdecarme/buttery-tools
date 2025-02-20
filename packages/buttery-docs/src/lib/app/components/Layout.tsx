@@ -1,15 +1,16 @@
 import { classes } from "@buttery/components";
 import {
-  makeColorShade,
+  makeColor,
   makeCustom,
   makeFontFamily,
   makeRem,
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
+import type { JSX } from "react";
 import { forwardRef } from "react";
 
 export const bodyStyles = css`
-  font-family: ${makeFontFamily("body")};
+  font-family: ${makeFontFamily("Source Sans 3")};
   margin: 0;
 
   display: grid;
@@ -32,7 +33,7 @@ export const bodyStyles = css`
       line-height: 1.5;
     }
   }
-  background: ${makeColorShade("neutral", { variant: "50", opacity: 0.12 })};
+  background: ${makeColor("neutral-50", { opacity: 0.12 })};
 `;
 
 export type LayoutPropsNative = JSX.IntrinsicElements["div"];

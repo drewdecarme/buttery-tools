@@ -1,8 +1,9 @@
+import { type MutableRefObject, useCallback, useMemo, useRef } from "react";
+
 import type {
   ModalDefaultState,
-  ModalRef
-} from "@BUTTERY_COMPONENT/useModalDialog";
-import { type MutableRefObject, useCallback, useMemo, useRef } from "react";
+  ModalRef,
+} from "@BUTTERY_COMPONENT/useModalDialog/index.js";
 
 export function useModal<T extends ModalDefaultState>() {
   const modalRef = useRef<ModalRef<T>>(null);
@@ -21,7 +22,7 @@ export function useModal<T extends ModalDefaultState>() {
     () => ({
       modalRef: modalRef as unknown as MutableRefObject<ModalRef>,
       openModal,
-      closeModal
+      closeModal,
     }),
     [closeModal, openModal]
   );

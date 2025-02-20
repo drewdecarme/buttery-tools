@@ -1,8 +1,4 @@
-import type { ButteryLogLevel } from "../logger/index.js";
-import type { ButteryConfigCommands } from "./buttery-config.types.commands.js";
-import type { ButteryConfigDocs } from "./buttery-config.types.docs.js";
-import type { ButteryConfigIcons } from "./buttery-config.types.icons.js";
-import type { ButteryConfigTokens } from "./buttery-config.types.tokens.js";
+import type { ButteryLogLevel } from "@buttery/logs";
 
 export type ButteryConfigPaths = {
   config: string;
@@ -11,19 +7,9 @@ export type ButteryConfigPaths = {
   rootDir: string;
 };
 
-export type ButteryConfig = {
-  commands?: ButteryConfigCommands;
-  tokens?: ButteryConfigTokens | ButteryConfigTokens[];
-  docs?: ButteryConfigDocs;
-  icons?: ButteryConfigIcons;
-};
+export type GetButteryConfigOptionExtensions = "ts" | "json";
 
-export type GetButteryConfigOptions = {
-  /**
-   * Optional starting directory to look for the config at
-   * @default process.cwd()
-   */
-  startingDirectory?: string;
+export type GetButteryConfigOptions<ConfigShape> = {
   /**
    * Boolean value that determines if the user should be prompted
    * if the misconfiguration for the config file is detected.
@@ -31,27 +17,36 @@ export type GetButteryConfigOptions = {
    */
   prompt?: boolean;
   /**
-   * Indicate if the config file should be rebuilt when changed. Useful
-   * for when developing anything that subscribes from values in the config.
-   * @default false;
+   * An optional string prefix to add to the beginning of the resolved
+   * configuration file name. This configuration specifically solves the need
+   * for some files in some directories to be prefixed with a certain string
+   * to be ignored during their own build steps
    */
-  watch?: boolean;
+  configPrefix?: string;
   /**
-   * The key of the default config that should be added if and when
-   * a directory / config isn't detected and the user indicated that they
-   * would like to be prompted to reconcile the configuration.
-   * @default undefined
+   * A function that will returned a well formed Config based upon the generic
+   * that is provided. This function will run anytime a config file is missing
+   * and needs to be created. This callback is defined externally to this function
+   * to allow whatever is instantiating it to control what is put into the file
    */
-  defaultConfig?: keyof ButteryConfig;
+  onEmpty: () => Promise<ConfigShape>;
   /**
-   * A boolean that tells the application if you need a config
-   * key inside of the .buttery/config file.
-   * @default true
+   * A promise that is run after the configuration file content is read and evaluated.
+   * This is to ensure that the variables that are return are well formed
+   * TODO: Validate the schema instead of a fn
    */
-  requireConfig?: boolean;
+  validate: (rawConfig: ConfigShape) => Promise<ConfigShape>;
   /**
    * The level of logs that should be displayed
    * @default info
    */
   logLevel?: ButteryLogLevel;
+  /**
+   * In some cases there is a need to change the file extension
+   * that is searched for to resolve the config. Add this option
+   * if you wish to search for something different other than a .ts
+   * file
+   * @default ts
+   */
+  extension?: GetButteryConfigOptionExtensions;
 };

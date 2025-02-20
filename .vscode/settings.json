@@ -2,8 +2,10 @@
   "cSpell.words": [
     "autofix",
     "brainer",
+    "Consolas",
     "Dateify",
     "discoverability",
+    "ecountered",
     "fooded",
     "frontmatter",
     "invoicer",
@@ -12,10 +14,10 @@
     "Pipeable",
     "staticly",
     "svgs",
+    "toggletip",
     "Transpiles"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "editor.formatOnSave": true,
   "files.associations": {
     "*.d.ts": "typescript"
   }

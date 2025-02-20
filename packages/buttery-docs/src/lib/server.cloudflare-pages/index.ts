@@ -1,2 +1,2 @@
-export { createButteryDocsRenderToReadableStream as createRenderCloudflarePages } from "../server/createRenderFnReadableStream";
-export * from "./handleRequest.cloudflare-pages";
+export { createButteryDocsRenderToReadableStream as createRenderCloudflarePages } from "../server/createRenderFnReadableStream.js";
+export * from "./handleRequest.cloudflare-pages.js";

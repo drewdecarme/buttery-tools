@@ -1,0 +1,8 @@
+{
+  "extends": "@buttery/tsconfig/library",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ESNext"
+  }
+}

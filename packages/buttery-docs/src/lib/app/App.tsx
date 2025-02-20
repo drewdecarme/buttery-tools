@@ -1,30 +1,23 @@
 import { Meta } from "@buttery/meta/react";
 import { Suspense, lazy, useMemo } from "react";
-import {
-  Link,
-  Outlet,
-  Route,
-  type RouteObject,
-  Routes,
-  useLocation,
-} from "react-router";
+import { Link, Outlet, type RouteObject, useLocation } from "react-router";
 import "@buttery/tokens/docs/css";
+
+import { Layout } from "./components/Layout.js";
+import { LayoutBody } from "./components/LayoutBody.js";
+import { LayoutBodyBreadcrumb } from "./components/LayoutBodyBreadcrumb.js";
+import { LayoutBodyBreadcrumbText } from "./components/LayoutBodyBreadcrumbText.js";
+import { LayoutBodyMain } from "./components/LayoutBodyMain.js";
+import { LayoutBodyNav } from "./components/LayoutBodyNav.js";
+import { LayoutBodyTOC } from "./components/LayoutBodyTOC.js";
+import { LayoutHeader } from "./components/LayoutHeader.js";
+import { ButteryDocsRouteManifestGraphUtils } from "./utils/RouteGraph.js";
+
 import type {
-  ButteryConfigDocsHeader,
   ButteryDocsRouteManifestEntryDoc,
   ButteryDocsRouteManifestGraphObject,
-} from "@buttery/core/config";
-import {
-  Layout,
-  LayoutBody,
-  LayoutBodyBreadcrumb,
-  LayoutBodyBreadcrumbText,
-  LayoutBodyMain,
-  LayoutBodyNav,
-  LayoutBodyTOC,
-  LayoutHeader,
-} from "./components";
-import { ButteryDocsRouteManifestGraphUtils } from "./utils/RouteGraph";
+} from "../../utils/util.types.js";
+import type { ButteryDocsConfigHeader } from "../../config/_config.utils.js";
 
 function createRoute(
   route: ButteryDocsRouteManifestEntryDoc,
@@ -89,7 +82,7 @@ function DocsLayout({
     const pageRoute = pathname.split("/").filter(Boolean)[0];
     const graph = routeModuleGraph.getRouteGraphNodeByRoutePath(pageRoute);
     return graph;
-  }, [pathname, routeModuleGraph.getRouteGraphNodeByRoutePath]);
+  }, [pathname, routeModuleGraph]);
 
   const breadcrumbLinks = routeModuleGraph.constructBreadcrumbs(pathname);
 
@@ -125,51 +118,9 @@ function DocsLayout({
   );
 }
 
-/**
- * @deprecated Upgrading to react-router v7. Use the `createButteryDocsRoutes` instead
- */
-export function App(props: {
-  routeModuleGraph: ButteryDocsRouteManifestGraphUtils;
-  header: ButteryConfigDocsHeader | undefined;
-  routeDocs: ButteryDocsRouteManifestEntryDoc[];
-  routeIndex: ButteryDocsRouteManifestEntryDoc;
-}) {
-  return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <Layout>
-            <LayoutHeader header={props.header} />
-            <Outlet />
-          </Layout>
-        }
-      >
-        <Route
-          index
-          element={createRoute(props.routeIndex, { isDocs: false }).element}
-        />
-        <Route
-          element={<DocsLayout routeModuleGraph={props.routeModuleGraph} />}
-        >
-          {props.routeDocs.map((route) => {
-            return (
-              <Route
-                key={route.routePath}
-                {...createRoute(route, { isDocs: true })}
-                index
-              />
-            );
-          })}
-        </Route>
-      </Route>
-    </Routes>
-  );
-}
-
 export function createButteryDocsRoutes(props: {
   routeGraph: ButteryDocsRouteManifestGraphObject;
-  header: ButteryConfigDocsHeader | undefined;
+  header: ButteryDocsConfigHeader | undefined;
   routeDocs: ButteryDocsRouteManifestEntryDoc[];
   routeIndex: ButteryDocsRouteManifestEntryDoc;
 }): RouteObject[] {

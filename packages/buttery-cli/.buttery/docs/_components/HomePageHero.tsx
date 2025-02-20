@@ -1,6 +1,6 @@
 import { classes, useIntervalState } from "@buttery/components";
 import {
-  makeColorBrand,
+  makeColor,
   makeCustom,
   makeRem,
   makeReset,
@@ -35,19 +35,17 @@ const containerStyles = css`
         transform: translateY(0);
       }
       &.primary {
-        background-color: ${makeColorBrand("primary", {
-          variant: "50",
+        background-color: ${makeColor("primary-50", {
           opacity: 0.1,
         })};
-        color: ${makeColorBrand("primary", { variant: "900" })};
+        color: ${makeColor("primary-900")};
       }
       &.secondary {
-        background-color: ${makeColorBrand("secondary", {
-          variant: "50",
+        background-color: ${makeColor("secondary-50", {
           opacity: 0.1,
         })};
         padding: 0 1rem;
-        color: ${makeColorBrand("secondary", { variant: "900" })};
+        color: ${makeColor("secondary-900")};
       }
 
       &.entering {

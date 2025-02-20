@@ -1,8 +1,6 @@
-import { DropdownNav, useDropdownNav } from "@buttery/components";
-import type { ButteryConfigDocsHeaderLinkTypeDropdown } from "@buttery/core/config";
+import { useDropdownNav } from "@buttery/components";
 import {
-  makeColorBrand,
-  makeColorShade,
+  makeColor,
   makeFontFamily,
   makeFontWeight,
   makeRem,
@@ -10,12 +8,15 @@ import {
 } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import { NavLink } from "react-router";
-import { IconComponent } from "./icons";
+
+import { IconComponent } from "./icons/IconComponent.js";
+
+import type { ButteryDocsConfigHeaderLinkTypeDropdown } from "../../../config/_config.utils.js";
 
 const buttonStyles = css`
   ${makeReset("button")};
   font-size: ${makeRem(16)};
-  font-family: ${makeFontFamily("body")};
+  font-family: ${makeFontFamily("Source Sans 3")};
   cursor: pointer;
 
   display: flex;
@@ -23,12 +24,12 @@ const buttonStyles = css`
   align-items: center;
 
   &:hover {
-    color: ${makeColorBrand("primary")};
+    color: ${makeColor("primary")};
   }
 
   &.active {
-    color: ${makeColorBrand("primary")};
-    font-weight: ${makeFontWeight("bold")};
+    color: ${makeColor("primary")};
+    font-weight: ${makeFontWeight("Source Sans 3-bold")};
   }
 `;
 
@@ -79,7 +80,7 @@ const dropdownStyles = css`
 
     a {
       ${makeReset("anchor")};
-      font-family: ${makeFontFamily("body")};
+      font-family: ${makeFontFamily("Source Sans 3")};
       display: grid;
       grid-template-columns: ${makeRem(48)} auto;
       gap: ${makeRem(8)};
@@ -97,12 +98,12 @@ const dropdownStyles = css`
 
       .title {
         font-size: ${makeRem(16)};
-        font-weight: ${makeFontWeight("semi-bold")};
+        font-weight: ${makeFontWeight("Source Sans 3-semiBold")};
       }
 
       .sub-title {
         font-size: ${makeRem(14)};
-        color: ${makeColorShade("neutral", { variant: "500" })};
+        color: ${makeColor("neutral-500")};
         /* font-style: italic; */
       }
 
@@ -110,7 +111,7 @@ const dropdownStyles = css`
       &:hover {
         .title,
         .sub-title {
-          color: ${makeColorBrand("primary")};
+          color: ${makeColor("primary")};
         }
       }
     }
@@ -118,20 +119,20 @@ const dropdownStyles = css`
 `;
 
 export function LayoutHeaderLinksTypeDropdown(
-  props: ButteryConfigDocsHeaderLinkTypeDropdown
+  props: ButteryDocsConfigHeaderLinkTypeDropdown
 ) {
-  const { targetProps, dropdownProps } = useDropdownNav({
+  const { setNavMenuRef, setTargetRef } = useDropdownNav({
     dxOffset: 16,
     dxPosition: "bottom-right",
   });
 
   return (
     <>
-      <button type="button" {...targetProps} className={buttonStyles}>
+      <button type="button" ref={setTargetRef} className={buttonStyles}>
         {props.text}
         <IconComponent icon="arrow-down-stroke-rounded" ddSize={24} />
       </button>
-      <DropdownNav {...dropdownProps} className={dropdownStyles}>
+      <div ref={setNavMenuRef} className={dropdownStyles}>
         <ul>
           {props.items.map((item) => {
             return (
@@ -149,7 +150,7 @@ export function LayoutHeaderLinksTypeDropdown(
             );
           })}
         </ul>
-      </DropdownNav>
+      </div>
     </>
   );
 }

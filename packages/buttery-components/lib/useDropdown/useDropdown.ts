@@ -1,30 +1,28 @@
-import {
-  ensurePopover,
-  ensureTarget,
-  usePopover
-} from "@BUTTERY_COMPONENT/usePopover";
-import { type RefCallback, useCallback } from "react";
-import type { DropdownOptions } from "./useDropdown.types";
-import {
-  getIsDropdownOpen,
-  processDropdownOptions,
-  setDropdownPositionStyles
-} from "./useDropdown.utils";
+import { type RefCallback, useCallback, useMemo, useRef } from "react";
 
-export type DropdownRefHandleOpen = (
-  e?: React.MouseEvent,
-  options?: UseDropdownOptions
-) => void;
+import type { FocusableElement } from "@BUTTERY_COMPONENT/usePopover/usePopover.js";
+import { usePopover } from "@BUTTERY_COMPONENT/usePopover/usePopover.js";
+
+import type { DropdownOptions } from "./useDropdown.types.js";
+import {
+  processDropdownOptions,
+  setDropdownPositionStyles,
+} from "./useDropdown.utils.js";
+
+export type UseDropdownHandleOpen = (e?: React.MouseEvent) => void;
 
 export type DropdownRef = {
-  handleOpen: DropdownRefHandleOpen;
+  handleOpen: UseDropdownHandleOpen;
   handleClose: () => void;
-  handleToggle: DropdownRefHandleOpen;
 };
 
 export type UseDropdownOptions = DropdownOptions & { id: string };
 
-export const useDropdown = <T extends HTMLElement>(
+export const useDropdown = <
+  DropdownNode extends HTMLElement,
+  TargetNode extends FocusableElement,
+  AlignmentNode extends HTMLElement = HTMLElement
+>(
   options: UseDropdownOptions
 ) => {
   const {
@@ -33,72 +31,64 @@ export const useDropdown = <T extends HTMLElement>(
     setPopoverRef,
     setTargetRef,
     showPopover,
-    hidePopover
-  } = usePopover<T>({ id: options.id });
+    hidePopover,
+  } = usePopover<DropdownNode, TargetNode>({ id: options.id });
+  const alignmentRef = useRef<AlignmentNode | null>(null);
 
-  const setDropdownRef = useCallback<RefCallback<T>>(
+  const memoOptions = useMemo(() => options, [options]);
+
+  const setDropdownRef = useCallback<RefCallback<DropdownNode>>(
     (node) => {
+      if (!node) return;
+
+      // TODO: Refine this to include strategy
+      node.style.position = "fixed";
+      node.style.inset = "unset";
       setPopoverRef(node);
-      // add a few more styles specific to the dropdown version of the popover
-      if (ensurePopover(popoverRef.current)) {
-        popoverRef.current.style.position = "fixed";
-        popoverRef.current.style.inset = "unset";
-      }
     },
-    [setPopoverRef, popoverRef.current]
+    [setPopoverRef]
   );
 
-  const openDropdown = useCallback<DropdownRef["handleOpen"]>(
-    (_e, pOptions) => {
-      if (
-        !ensurePopover(popoverRef.current) ||
-        !ensureTarget(targetRef.current)
-      ) {
-        return;
-      }
+  const openDropdown = useCallback<UseDropdownHandleOpen>(() => {
+    const popover = popoverRef.current;
+    const target = targetRef.current;
+    if (!popover || !target) return;
 
-      // apply the options either from the hook or
-      // from the params which take precedence.
-      const parsedOptions = processDropdownOptions(pOptions ?? options);
+    // apply the options either from the hook or
+    // from the params which take precedence.
+    const parsedOptions = processDropdownOptions(memoOptions);
 
-      // show the popover
-      showPopover();
+    // position the dropdown element near the target
+    setDropdownPositionStyles(parsedOptions.dxPosition, {
+      arrow: parsedOptions.dxArrow,
+      offset: parsedOptions.dxOffset,
+      origin: parsedOptions.dxOrigin,
+      dropdownNode: popover,
+      targetNode: target,
+      alignmentNode: alignmentRef.current,
+    });
 
-      // position the dropdown element near the target
-      setDropdownPositionStyles(parsedOptions.dxPosition, {
-        arrow: parsedOptions.dxArrow,
-        offset: parsedOptions.dxOffset,
-        dropdownNode: popoverRef.current,
-        targetNode: targetRef.current
-      });
-    },
-    [targetRef.current, popoverRef.current, showPopover, options]
+    // show the popover
+    showPopover();
+  }, [popoverRef, targetRef, memoOptions, showPopover]);
+
+  return useMemo(
+    () => ({
+      dropdownRef: popoverRef,
+      setDropdownRef,
+      alignmentRef,
+      targetRef,
+      setTargetRef,
+      closeDropdown: hidePopover,
+      openDropdown,
+    }),
+    [
+      hidePopover,
+      openDropdown,
+      popoverRef,
+      setDropdownRef,
+      setTargetRef,
+      targetRef,
+    ]
   );
-
-  const closeDropdown = useCallback(async () => {
-    const isPopoverOpen = getIsDropdownOpen(popoverRef);
-    if (!isPopoverOpen) return;
-    await hidePopover();
-  }, [hidePopover, popoverRef]);
-
-  const toggleDropdown = useCallback<DropdownRefHandleOpen>(
-    (e, options) => {
-      const isPopoverOpen = getIsDropdownOpen(popoverRef);
-      if (isPopoverOpen) {
-        return closeDropdown();
-      }
-      openDropdown(e, options);
-    },
-    [closeDropdown, openDropdown, popoverRef]
-  );
-
-  return {
-    dropdownRef: popoverRef,
-    setDropdownRef,
-    targetRef,
-    setTargetRef,
-    closeDropdown,
-    openDropdown,
-    toggleDropdown
-  };
 };

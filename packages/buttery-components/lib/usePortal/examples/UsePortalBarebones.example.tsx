@@ -1,4 +1,4 @@
-import { usePortal } from "../usePortal";
+import { usePortal } from "../usePortal.js";
 
 export default () => {
   const { closePortal, togglePortal, Portal } = usePortal();

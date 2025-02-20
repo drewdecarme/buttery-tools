@@ -1,6 +1,8 @@
-import { exhaustiveMatchGuard } from "@buttery/core/utils/isomorphic";
-import type { CommandOptions } from "../lib/library.js";
-import type { WellFormedCommandOptions } from "../utils/runtime.types.js";
+import { exhaustiveMatchGuard } from "@buttery/utils/isomorphic";
+
+import type { WellFormedCommandOptions } from "./runtime.types.js";
+
+import type { CommandOptions } from "../lib/index.js";
 
 /**
  * Provided an array of arguments and some command options,

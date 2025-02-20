@@ -1,12 +1,13 @@
 import type { Meta } from "@storybook/react";
-import { Layout } from "./Layout";
-import { LayoutBody } from "./LayoutBody";
-import { LayoutBodyBreadcrumb } from "./LayoutBodyBreadcrumb";
-import { LayoutBodyBreadcrumbText } from "./LayoutBodyBreadcrumbText";
-import { LayoutBodyMain } from "./LayoutBodyMain";
-import { LayoutBodyNav } from "./LayoutBodyNav";
-import { LayoutBodyTOC } from "./LayoutBodyTOC";
-import { LayoutHeader } from "./LayoutHeader";
+
+import { Layout } from "./Layout.js";
+import { LayoutBody } from "./LayoutBody.js";
+import { LayoutBodyBreadcrumb } from "./LayoutBodyBreadcrumb.js";
+import { LayoutBodyBreadcrumbText } from "./LayoutBodyBreadcrumbText.js";
+import { LayoutBodyMain } from "./LayoutBodyMain.js";
+import { LayoutBodyNav } from "./LayoutBodyNav.js";
+import { LayoutBodyTOC } from "./LayoutBodyTOC.js";
+import { LayoutHeader } from "./LayoutHeader.js";
 
 const meta: Meta = {
   title: "Layout",

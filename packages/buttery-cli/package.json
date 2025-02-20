@@ -14,6 +14,9 @@
   "bin": {
     "buttery": "./bin/index.js"
   },
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "scripts": {
     "build": "yarn cli:build && yarn docs:build",
     "cli:dev": "tsx ./scripts/dev.ts",
@@ -34,14 +37,16 @@
     "url": "https://github.com/drewdecarme/buttery-tools/issues"
   },
   "dependencies": {
-    "@buttery/commands": "workspace:^0.4.7",
-    "@buttery/components": "workspace:^0.1.6",
-    "@buttery/docs": "workspace:^0.2.9",
-    "@buttery/tokens": "workspace:^0.1.11",
-    "@buttery/tsconfig": "workspace:^0.1.4"
+    "@buttery/commands": "workspace:0.4.7",
+    "@buttery/components": "workspace:*",
+    "@buttery/docs": "workspace:*",
+    "@buttery/logs": "workspace:*",
+    "@buttery/tokens": "workspace:0.1.11",
+    "@buttery/tsconfig": "workspace:0.1.4",
+    "@buttery/utils": "workspace:*"
   },
   "devDependencies": {
     "tsx": "4.19.2",
-    "typescript": "5.7.2"
+    "typescript": "5.7.3"
   }
 }

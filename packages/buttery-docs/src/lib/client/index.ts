@@ -1,1 +1,1 @@
-export * from "./ButteryDocsClient";
+export * from "./ButteryDocsClient.js";

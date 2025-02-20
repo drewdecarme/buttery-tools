@@ -4,6 +4,9 @@
     "noEmit": true,
     "outDir": "./dist",
     "baseUrl": ".",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "skipDefaultLibCheck": true,
     "paths": {
       "@BUTTERY_COMPONENT/*": ["./lib/*"]
     }

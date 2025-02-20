@@ -1,14 +1,16 @@
-import { inlineTryCatch } from "@buttery/builtins";
 import rehypeParse from "rehype-parse";
 import rehypeRemark from "rehype-remark";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
-import type { TemplateMeta } from "../../src/cli-scripts/add";
-import { fetchGitLabRepoBlob } from "./fetch-gitlab-repo-blob";
-import type { GitLabRepoTreeNode } from "./types";
-import { decodeBlobContent } from "./util.decodeBlobContent";
+import { tryHandle } from "@buttery/utils/isomorphic";
+
+import { fetchGitLabRepoBlob } from "./fetch-gitlab-repo-blob.js";
+import type { GitLabRepoTreeNode } from "./types.js";
+import { decodeBlobContent } from "./util.decodeBlobContent.js";
+
+import type { TemplateMeta } from "../../src/cli-scripts/add.js";
 
 export async function getTemplateMeta(
   repoName: string,
@@ -27,10 +29,7 @@ export async function getTemplateMeta(
     throw "Cannot find the README.md when trying to get the descriptions of each of the good docs content types.";
   }
 
-  const readmeBlob = await inlineTryCatch(fetchGitLabRepoBlob)(
-    repoName,
-    readme.id
-  );
+  const readmeBlob = await tryHandle(fetchGitLabRepoBlob)(repoName, readme.id);
   if (readmeBlob.hasError) {
     throw readmeBlob.error;
   }

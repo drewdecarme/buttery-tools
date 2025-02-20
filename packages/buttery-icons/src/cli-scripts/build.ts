@@ -1,13 +1,14 @@
-import { parseAndValidateOptions } from "@buttery/core/utils/node";
+import { parseAndValidateOptions } from "@buttery/core/utils";
 import type { z } from "zod";
-import { copyStaticDir } from "../copy-static-dir";
-import { generateComponents } from "../generate-components";
-import { generateTypes } from "../generate-types";
-import { getButteryIconsConfig } from "../getButteryIconsConfig";
-import { getButteryIconsDirectories } from "../getButteryIconsDirectories";
-import { getSVGFilePaths } from "../getSVGFilePaths";
-import { LOG } from "../utils";
-import { butteryIconsBuildOptionsSchema } from "./_options.schema";
+
+import { butteryIconsBuildOptionsSchema } from "./_cli-scripts.utils.js";
+
+import { copyStaticDir } from "../build/copy-static-dir.js";
+import { generateComponents } from "../build/generate-components.js";
+import { generateTypes } from "../build/generate-types.js";
+import { getSVGFilePaths } from "../build/getSVGFilePaths.js";
+import { getButteryIconsConfig } from "../config/getButteryIconsConfig.js";
+import { LOG } from "../utils/util.logger.js";
 
 export type ButteryIconsBuildOptions = z.infer<
   typeof butteryIconsBuildOptionsSchema
@@ -19,7 +20,7 @@ export type ButteryIconsBuildOptions = z.infer<
  * dynamically imported and typed using a standard
  * component
  */
-export async function build(options?: ButteryIconsBuildOptions) {
+export async function build(options?: Partial<ButteryIconsBuildOptions>) {
   const parsedOptions = parseAndValidateOptions(
     butteryIconsBuildOptionsSchema,
     options,
@@ -31,31 +32,25 @@ export async function build(options?: ButteryIconsBuildOptions) {
 
   try {
     LOG.loadingStart("Building @buttery/icons");
-    const config = await getButteryIconsConfig({
-      prompt: parsedOptions.prompt,
-    });
-    const dirs = await getButteryIconsDirectories(config, {
-      logLevel: parsedOptions.logLevel,
-    });
+    const rConfig = await getButteryIconsConfig(parsedOptions);
 
-    const svgFilePaths = await getSVGFilePaths(dirs);
+    const svgFilePaths = await getSVGFilePaths(rConfig.dirs);
 
     if (svgFilePaths.length === 0) {
-      throw `No SVGs currently in "${dirs.io.svg}". Please add some.`;
+      throw `No SVGs currently in "${rConfig.dirs.svg}". Please add some.`;
     }
 
     // copy the library files to the output directory
-    await copyStaticDir(dirs);
+    await copyStaticDir(rConfig.dirs);
 
     //  create the components
-    await generateComponents(dirs);
+    await generateComponents(rConfig.dirs);
 
     // create types
-    await generateTypes(dirs);
+    await generateTypes(rConfig.dirs);
     LOG.loadingEnd("complete!");
   } catch (error) {
-    throw LOG.fatal(
-      new Error(`Error when trying to build @buttery/icons: ${error}`)
-    );
+    LOG.loadingEnd("");
+    LOG.fatal(new Error(`Error when trying to build @buttery/icons: ${error}`));
   }
 }

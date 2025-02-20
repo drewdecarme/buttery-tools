@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist/cli-scripts",
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "dist/cli-scripts",
+    "allowImportingTsExtensions": false
+  },
+  "include": ["cli-scripts/*.ts"]
+}

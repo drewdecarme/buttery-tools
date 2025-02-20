@@ -1,11 +1,11 @@
-import { useDynamicNode } from "@BUTTERY_COMPONENT/useDynamicNode";
+import { useDynamicNode } from "@BUTTERY_COMPONENT/useDynamicNode/index.js";
 import {
   type ReactNode,
   memo,
   useCallback,
   useEffect,
   useMemo,
-  useState
+  useState,
 } from "react";
 import { createPortal } from "react-dom";
 
@@ -37,7 +37,7 @@ export const usePortal = () => {
 
   const Portal = memo(function Portal({
     children,
-    disabled = false
+    disabled = false,
   }: {
     children: ReactNode;
     disabled?: boolean;

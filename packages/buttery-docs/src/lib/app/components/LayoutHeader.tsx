@@ -1,7 +1,5 @@
-import type { ButteryConfigDocs } from "@buttery/core/config";
 import {
-  makeColorShade,
-  makeColorStatic,
+  makeColor,
   makeCustom,
   makeFontWeight,
   makeRem,
@@ -9,7 +7,10 @@ import {
 import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router";
-import { LayoutHeaderLinks } from "./LayoutHeaderLinks";
+
+import { LayoutHeaderLinks } from "./LayoutHeaderLinks.js";
+
+import type { ButteryDocsConfigHeader } from "../../../config/_config.utils.js";
 
 const layoutHeaderStyles = css`
   grid-area: layout-header;
@@ -19,8 +20,8 @@ const layoutHeaderStyles = css`
   align-items: center;
   padding: 0 ${makeRem(32)};
   border-bottom: ${makeRem(1)} solid
-    ${makeColorShade("neutral", { variant: "50", opacity: 0.5 })};
-  background: ${makeColorStatic("background")};
+    ${makeColor("neutral-50", { opacity: 0.5 })};
+  background: ${makeColor("background")};
   z-index: 10;
 
   & > div {
@@ -59,11 +60,11 @@ const imgStyles = css`
 const divStyles = css`
   font-size: ${makeRem(16)};
   text-transform: uppercase;
-  color: ${makeColorShade("neutral")};
-  font-weight: ${makeFontWeight("bold")};
+  color: ${makeColor("neutral")};
+  font-weight: ${makeFontWeight("Source Sans 3-bold")};
 `;
 
-export type LayoutHeaderProps = { header: ButteryConfigDocs["header"] | null };
+export type LayoutHeaderProps = { header: ButteryDocsConfigHeader | undefined };
 
 export const LayoutHeader: FC<LayoutHeaderProps> = ({ header }) => {
   return (

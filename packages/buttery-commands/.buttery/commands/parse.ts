@@ -3,7 +3,7 @@ import {
   type CommandMeta,
   defineArgs,
   defineOptions,
-} from "../../src/lib/library";
+} from "../../src/lib/index.js";
 
 export const meta: CommandMeta = {
   name: "parse",

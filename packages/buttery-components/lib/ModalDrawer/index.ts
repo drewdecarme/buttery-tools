@@ -1,3 +1,3 @@
-export * from "./ModalDrawer";
-export * from "./modal-drawer.useDrawer";
-export * from "./modal-drawer.useDrawerContext";
+export * from "./ModalDrawer.js";
+export * from "./modal-drawer.useDrawer.js";
+export * from "./modal-drawer.useDrawerContext.js";

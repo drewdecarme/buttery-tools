@@ -1,7 +1,0 @@
-{
-  "extends": "@buttery/core/tsconfig",
-  "compilerOptions": {
-    "noEmit": false,
-    "declaration": true
-  }
-}

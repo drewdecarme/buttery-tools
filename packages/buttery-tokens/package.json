@@ -5,22 +5,31 @@
   "type": "module",
   "sideEffects": false,
   "scripts": {
-    "build": "yarn tsc && yarn cli-scripts:build",
-    "cli-scripts:build": "tsx ./scripts/cli-scripts.build.ts && yarn cli-scripts:types",
-    "cli-scripts:types": "yarn tsc --project tsconfig.cli-types.json",
+    "build": "yarn tsc && yarn cli-scripts:build && yarn json-schema:build",
+    "cli-scripts:build": "tsc --project ./tsconfig.cli-build.json",
+    "cli-scripts:dev": "yarn cli-scripts:build --watch",
+    "lib:build": "yarn tsc --project ./tsconfig.library-build.json",
     "local:build": "tsx  --trace-exit ./scripts/local.build.ts",
-    "local:dev": "tsx ./scripts/local.dev.ts"
+    "local:dev": "tsx ./scripts/local.dev.ts",
+    "local:studio": "tsx ./scripts/local.studio.ts"
   },
+  "files": [
+    "lib",
+    "dist",
+    "static"
+  ],
   "exports": {
+    ".": "./dist/lib/index.js",
     "./*": {
-      "types": "./*.d.ts",
-      "import": "./*.js"
+      "types": "./dist/out/*.d.ts",
+      "import": "./dist/out/*.js"
     },
     "./*/css": {
-      "types": "./*.d.ts",
-      "import": "./*.css"
+      "types": "./dist/out/*.d.ts",
+      "import": "./dist/out/*.css"
     },
-    "./cli/*": "./dist/cli-scripts/*.js"
+    "./cli/*": "./dist/cli-scripts/*.js",
+    "./schema.json": "./dist/schema.json"
   },
   "repository": {
     "type": "git",
@@ -37,22 +46,37 @@
   },
   "homepage": "https://github.com/drewdecarme/buttery-tools#readme",
   "devDependencies": {
-    "@types/react": "18.3.12",
-    "@types/react-dom": "18.3.1",
-    "storybook": "8.4.6",
+    "@cloudflare/workers-types": "4.20250124.3",
+    "@types/express": "5.0.0",
+    "@types/react": "19.0.8",
+    "@types/react-dom": "19.0.3",
+    "autoprefixer": "10.4.20",
+    "storybook": "8.5.2",
     "tsx": "4.19.2"
   },
   "dependencies": {
-    "@buttery/core": "workspace:^0.1.11",
-    "@types/chroma-js": "2.4.4",
+    "@buttery/core": "workspace:*",
+    "@buttery/tokens-studio": "workspace:*",
+    "@buttery/tokens-utils": "workspace:*",
+    "@buttery/tsconfig": "workspace:*",
+    "@buttery/utils": "workspace:*",
+    "@inquirer/prompts": "7.2.4",
+    "@linaria/core": "6.2.0",
+    "@react-router/express": "^7.1.3",
+    "@types/chroma-js": "3.1.0",
+    "@types/node": "22.12.0",
     "@wyw-in-js/vite": "0.5.5",
-    "chokidar": "4.0.1",
     "chroma-js": "3.1.2",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "ts-pattern": "5.5.0",
-    "typescript": "5.7.2",
-    "vite": "6.0.2",
-    "zod": "3.23.8"
+    "express": "4.21.2",
+    "isbot": "5.1.22",
+    "postcss": "8.5.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-router": "^7.1.3",
+    "ts-pattern": "^5.6.2",
+    "typescript": "5.7.3",
+    "vite": "6.0.11",
+    "wrangler": "3.106.0",
+    "zod": "3.24.1"
   }
 }

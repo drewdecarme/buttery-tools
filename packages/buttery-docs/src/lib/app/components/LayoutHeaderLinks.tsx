@@ -1,7 +1,5 @@
-import type { ButteryConfigDocsHeaderLink } from "@buttery/core/config";
 import {
-  makeColorBrand,
-  makeColorShade,
+  makeColor,
   makeFontWeight,
   makeRem,
   makeReset,
@@ -10,8 +8,11 @@ import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router";
 import { match } from "ts-pattern";
-import { LayoutHeaderLinksTypeDropdown } from "./LayoutHeaderLinksTypeDropdown";
-import { IconComponent } from "./icons";
+
+import { LayoutHeaderLinksTypeDropdown } from "./LayoutHeaderLinksTypeDropdown.js";
+import { IconComponent } from "./icons/IconComponent.js";
+
+import type { ButteryDocsConfigHeaderLink } from "../../../config/_config.utils.js";
 
 const divStyles = css`
   display: flex;
@@ -29,8 +30,7 @@ const ulStyles = css`
   & + * {
     padding-left: ${makeRem(16)};
     margin-left: ${makeRem(16)};
-    border-left: ${makeRem(1)} solid
-      ${makeColorShade("neutral", { variant: "50" })};
+    border-left: ${makeRem(1)} solid ${makeColor("neutral-50")};
   }
 `;
 
@@ -43,7 +43,7 @@ const anchorSocialStyles = css`
   width: ${makeRem(28)};
 
   &:hover {
-    color: ${makeColorBrand("primary")};
+    color: ${makeColor("primary")};
   }
 `;
 
@@ -55,18 +55,18 @@ const internalCss = css`
   font-size: ${makeRem(16)};
 
   &:hover {
-    color: ${makeColorBrand("primary")};
+    color: ${makeColor("primary")};
     text-decoration: underline;
   }
 
   &.active {
-    color: ${makeColorBrand("primary")};
-    font-weight: ${makeFontWeight("bold")};
+    color: ${makeColor("primary")};
+    font-weight: ${makeFontWeight("Source Sans 3-bold")};
   }
 `;
 
 export const LayoutHeaderLinks: FC<{
-  links?: ButteryConfigDocsHeaderLink[][];
+  links?: ButteryDocsConfigHeaderLink[][];
 }> = ({ links = [] }) => {
   return (
     <div className={divStyles}>

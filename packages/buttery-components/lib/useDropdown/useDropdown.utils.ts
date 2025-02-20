@@ -1,11 +1,19 @@
 import { css } from "@linaria/core";
+
 import type {
   DropdownOptionArrow,
+  DropdownOptionOrigin,
   DropdownOptionPosition,
-  DropdownOptions
-} from "./useDropdown.types";
+  DropdownOptions,
+} from "./useDropdown.types.js";
 
-const arrowBaseClassName = css`
+export function isDropdownOpen<T extends HTMLElement = HTMLElement>(
+  node: T | undefined | null
+) {
+  return node?.classList.contains("open");
+}
+
+export const arrowClassName = css`
   overflow: visible;
   position: relative;
 
@@ -53,7 +61,7 @@ const arrowRight = css`
   }
 `;
 
-const arrowClassNames: { [key in DropdownOptionPosition]: string } = {
+export const arrowClassNames: { [key in DropdownOptionPosition]: string } = {
   "bottom-center": arrowUp,
   "bottom-left": arrowUp,
   "bottom-right": arrowUp,
@@ -65,8 +73,23 @@ const arrowClassNames: { [key in DropdownOptionPosition]: string } = {
   "left-bottom": arrowRight,
   "right-top": arrowLeft,
   "right-middle": arrowLeft,
-  "right-bottom": arrowLeft
+  "right-bottom": arrowLeft,
 };
+
+export const useDropdownPositions: DropdownOptionPosition[] = [
+  "bottom-center",
+  "bottom-left",
+  "bottom-right",
+  "top-center",
+  "top-left",
+  "top-right",
+  "right-bottom",
+  "right-middle",
+  "right-top",
+  "left-bottom",
+  "left-middle",
+  "left-top",
+];
 
 export const processDropdownOptions = (
   options?: Omit<DropdownOptions, "id">
@@ -74,9 +97,10 @@ export const processDropdownOptions = (
   dxPosition: options?.dxPosition || "bottom-left",
   dxArrow: {
     size: options?.dxArrow?.size ?? 0,
-    color: options?.dxArrow?.color ?? "transparent"
+    color: options?.dxArrow?.color ?? "transparent",
   },
-  dxOffset: options?.dxOffset ?? 0
+  dxOffset: options?.dxOffset ?? 0,
+  dxOrigin: options?.dxOrigin ?? "top-left",
 });
 
 export function setDropdownPositionStyles<
@@ -88,20 +112,39 @@ export function setDropdownPositionStyles<
     offset,
     arrow,
     dropdownNode,
-    targetNode
+    targetNode,
+    alignmentNode,
   }: {
     arrow: DropdownOptionArrow;
+    origin: DropdownOptionOrigin;
     offset: number;
     dropdownNode: DropdownElement;
     targetNode: TargetElement;
+    alignmentNode: HTMLElement | null;
   }
 ) {
-  const targetBox = targetNode.getBoundingClientRect();
+  const alignmentTarget = alignmentNode ?? targetNode;
+  const targetBox = alignmentTarget.getBoundingClientRect();
 
   if (!targetBox) {
     return console.warn(
       "Cannot properly position menu near target. Target bounding box is `undefined`"
     );
+  }
+
+  let dropdownHeight = dropdownNode.offsetHeight;
+  let dropdownWidth = dropdownNode.offsetWidth;
+
+  // Ensure the popover dimensions are non-zero
+  if (dropdownHeight === 0 || dropdownWidth === 0) {
+    dropdownNode.style.setProperty("visibility", "hidden");
+    dropdownNode.style.setProperty("display", "block");
+
+    dropdownHeight = dropdownNode.offsetHeight;
+    dropdownWidth = dropdownNode.offsetWidth;
+
+    dropdownNode.style.removeProperty("visibility");
+    dropdownNode.style.removeProperty("display");
   }
 
   const { popoverTop, popoverLeft, resolvedPosition } =
@@ -111,9 +154,9 @@ export function setDropdownPositionStyles<
       popover: {
         // using offsets here to ignore any scaling while also
         // factoring in padding, margin, border and possible scroll bars
-        height: dropdownNode.offsetHeight,
-        width: dropdownNode.offsetWidth
-      }
+        height: dropdownHeight,
+        width: dropdownWidth,
+      },
     });
 
   dropdownNode.style.setProperty("top", `${popoverTop}px`);
@@ -125,10 +168,10 @@ export function setDropdownPositionStyles<
     targetBox,
     arrow: arrow.size,
     popoverLeft,
-    popoverTop
+    popoverTop,
   });
 
-  dropdownNode.classList.add(arrowBaseClassName);
+  dropdownNode.classList.add(arrowClassName);
   dropdownNode.style.setProperty("--arrow-size", `${arrow.size}px`);
   dropdownNode.style.setProperty("--arrow-left", arrowLeft);
   dropdownNode.style.setProperty("--arrow-top", arrowTop);
@@ -141,7 +184,7 @@ function calculateDropdownPosition(
   {
     offset,
     targetBox,
-    popover
+    popover,
   }: {
     offset: number;
     targetBox: DOMRect;
@@ -243,7 +286,7 @@ function calculateArrowPosition(
     targetBox,
     arrow,
     popoverLeft,
-    popoverTop
+    popoverTop,
   }: {
     targetBox: DOMRect;
     arrow: number;
@@ -291,9 +334,3 @@ function calculateArrowPosition(
 
   return { arrowTop, arrowLeft };
 }
-
-export const getIsDropdownOpen = <T extends HTMLElement>(
-  popoverRef: React.MutableRefObject<T | null>
-): boolean => {
-  return !!popoverRef.current?.classList.contains("open");
-};

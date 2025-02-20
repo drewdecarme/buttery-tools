@@ -7,7 +7,5 @@ export const meta: CommandMeta = {
 };
 
 export const action: CommandAction = async () => {
-  try {
-    create();
-  } catch (error) {}
+  create();
 };

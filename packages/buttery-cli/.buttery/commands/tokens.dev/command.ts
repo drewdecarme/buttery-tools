@@ -11,14 +11,6 @@ export const meta: CommandMeta = {
 };
 
 export const options = defineOptions({
-  interactive: {
-    alias: "i",
-    defaultValue: false,
-    description:
-      "Runs the build in watch mode and opens up a local server to configure your tokens through a UI",
-    type: "boolean",
-    required: false,
-  },
   prompt: {
     type: "boolean",
     defaultValue: false,
@@ -37,6 +29,6 @@ export const options = defineOptions({
   },
 });
 
-export const action: CommandAction<typeof options> = async () => {
+export const action: CommandAction<never, typeof options> = async () => {
   console.log("TODO!");
 };

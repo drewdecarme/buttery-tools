@@ -1,1 +1,1 @@
-export * from "./useIntervalState";
+export * from "./useIntervalState.js";

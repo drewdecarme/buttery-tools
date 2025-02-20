@@ -1,15 +1,16 @@
-import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { inlineTryCatch, writeFile } from "@buttery/builtins";
-import { parseAndValidateOptions } from "@buttery/core/utils/node";
+import { readFile, writeFile } from "node:fs/promises";
+
+import { parseAndValidateOptions } from "@buttery/core/utils";
+import { tryHandle } from "@buttery/utils/isomorphic";
 import { confirm, input, select } from "@inquirer/prompts";
-import { getButteryDocsConfig } from "../getButteryDocsConfig";
-import { getButteryDocsDirectories } from "../getButteryDocsDirectories";
-import {
-  type ButteryDocsAddOptions,
-  butteryDocsAddOptionsSchema,
-} from "../options";
-import { LOG } from "../utils";
+
+
+import type { ButteryDocsAddOptions } from "./_cli-scripts.utils.js";
+import { butteryDocsAddOptionsSchema } from "./_cli-scripts.utils.js";
+
+import { getButteryDocsConfig } from "../config/getButteryDocsConfig.js";
+import { LOG } from "../utils/util.logger.js";
 
 export type Template = {
   contentType: string;
@@ -42,17 +43,15 @@ export async function add(
   );
   LOG.level = parsedOptions.logLevel;
 
-  const config = await getButteryDocsConfig({
+  const rConfig = await getButteryDocsConfig({
     prompt: parsedOptions.prompt,
-  });
-  const dirs = await getButteryDocsDirectories(config, {
     logLevel: parsedOptions.logLevel,
   });
 
   //
   if (parsedOptions.template) {
     LOG.debug("--template=true. Reading template manifest and prompting user");
-    const fileContent = await readFile(dirs.templates.manifest, "utf8");
+    const fileContent = await readFile(rConfig.dirs.templates.manifest, "utf8");
     const templateManifest = JSON.parse(fileContent) as TemplateManifest;
 
     // let the user select a template
@@ -80,7 +79,7 @@ export async function add(
 
     // create the full path with the extensions
     const resolvedPath = path.join(
-      dirs.srcDocs.root,
+      rConfig.dirs.srcDocs.root,
       `${userPath}.${selectedExt}`
     );
 
@@ -113,7 +112,7 @@ config:
 
 ${decodedFileContent}
 `;
-    const createFile = await inlineTryCatch(writeFile)(resolvedPath, content);
+    const createFile = await tryHandle(writeFile)(resolvedPath, content);
 
     if (createFile.hasError) {
       return LOG.fatal(createFile.error);

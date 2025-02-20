@@ -1,13 +1,14 @@
-import { type ForwardedRef, type ReactNode, forwardRef } from "react";
+import { forwardRef, type JSX, type ForwardedRef, type ReactNode } from "react";
 
 import {
   type ModalDefaultState,
   type ModalRef,
   type UseModalOptions,
   useModalDialog,
-} from "@BUTTERY_COMPONENT/useModalDialog";
-import { classes } from "@BUTTERY_COMPONENT/utils";
-import { ModalProvider } from "./Modal.provider";
+} from "@BUTTERY_COMPONENT/useModalDialog/index.js";
+import { classes } from "@BUTTERY_COMPONENT/utils/index.js";
+
+import { ModalProvider } from "./Modal.provider.js";
 
 export type ModalPropsNative = Omit<JSX.IntrinsicElements["dialog"], "ref">;
 export type ModalPropsCustom = UseModalOptions & {

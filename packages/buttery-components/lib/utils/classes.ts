@@ -27,7 +27,7 @@ export function classes(
     | boolean
     | null
     | undefined
-    | Record<string, boolean>
+    | Record<string, string | boolean | undefined | null>
     | Array<
         string | number | boolean | null | undefined | Record<string, boolean>
       >

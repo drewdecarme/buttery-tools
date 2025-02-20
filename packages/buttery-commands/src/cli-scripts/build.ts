@@ -1,15 +1,14 @@
-import { inlineTryCatch } from "@buttery/core/utils/isomorphic";
-import { parseAndValidateOptions } from "@buttery/core/utils/node";
-import { build as esbuild } from "esbuild";
-import { getBuildConfig } from "../compiler/get-build-config";
-import { runPreBuild } from "../compiler/run-prebuild";
-import {
-  type ButteryCommandsBuildOptions,
-  butteryCommandsBuildOptionsSchema,
-} from "../options";
-import { getButteryCommandsConfig } from "../utils/getButteryCommandsConfig";
-import { getButteryCommandsDirectories } from "../utils/getButteryCommandsDirectories";
-import { LOG } from "../utils/utils";
+import { parseAndValidateOptions } from "@buttery/core/utils";
+import { tryHandle } from "@buttery/utils/isomorphic";
+import { buildWithEsbuild } from "@buttery/core/build";
+
+import type { ButteryCommandsBuildOptions } from "./_cli-scripts.utils.js";
+import { butteryCommandsBuildOptionsSchema } from "./_cli-scripts.utils.js";
+
+import { getBuildConfig } from "../build/get-build-config.js";
+import { runPreBuild } from "../build/run-prebuild.js";
+import { getButteryCommandsConfig } from "../config/getButteryCommandsConfig.js";
+import { LOG } from "../utils/LOG.js";
 
 /**
  * Compiles and builds the buttery commands binary
@@ -25,25 +24,20 @@ export async function build(options?: Partial<ButteryCommandsBuildOptions>) {
   LOG.level = parsedOptions.logLevel;
 
   // Reconcile the buttery config & dirs
-  const config = await getButteryCommandsConfig();
-  const dirs = getButteryCommandsDirectories(config);
-  const esbuildConfig = await getBuildConfig(config, dirs, {
+  const rConfig = await getButteryCommandsConfig(parsedOptions);
+  const esbuildConfig = await getBuildConfig(rConfig, {
     ...parsedOptions,
     isProd: true,
   });
 
   // run the prebuild
-  const preBuildResults = await inlineTryCatch(runPreBuild)(
-    config,
-    dirs,
-    parsedOptions
-  );
+  const preBuildResults = await tryHandle(runPreBuild)(rConfig, parsedOptions);
   if (preBuildResults.hasError) {
     return LOG.fatal(preBuildResults.error);
   }
 
   // build the commands
-  const buildResults = await inlineTryCatch(esbuild)(esbuildConfig);
+  const buildResults = await tryHandle(buildWithEsbuild)(esbuildConfig);
   if (buildResults.hasError) {
     return LOG.fatal(buildResults.error);
   }

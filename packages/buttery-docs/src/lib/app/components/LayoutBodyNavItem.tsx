@@ -1,14 +1,10 @@
 import { classes } from "@buttery/components";
-import type { ButteryDocsRouteManifestGraphObject } from "@buttery/core/config";
-import {
-  makeColorBrand,
-  makeColorShade,
-  makeFontWeight,
-  makeRem,
-} from "@buttery/tokens/docs";
+import { makeColor, makeFontWeight, makeRem } from "@buttery/tokens/docs";
 import { css } from "@linaria/core";
 import type { FC } from "react";
 import { NavLink } from "react-router";
+
+import type { ButteryDocsRouteManifestGraphObject } from "../../../utils/util.types.js";
 
 const ulStyles = css`
   list-style-type: none;
@@ -27,7 +23,7 @@ const ulStyles = css`
         top: 0;
         bottom: 0;
         width: ${makeRem(1)};
-        background: ${makeColorShade("neutral", { variant: "50" })};
+        background: ${makeColor("neutral-50")};
       }
     }
   }
@@ -40,7 +36,7 @@ const ulStyles = css`
 const anchorCss = css`
   height: ${makeRem(24)};
   text-decoration: none;
-  color: ${makeColorShade("neutral")};
+  color: ${makeColor("neutral")};
   padding: ${makeRem(2)} ${makeRem(8)};
   border-radius: ${makeRem(4)};
   font-size: ${makeRem(14)};
@@ -54,18 +50,17 @@ const anchorCss = css`
   }
 
   &.active {
-    background: ${makeColorBrand("primary", { variant: "300", opacity: 0.2 })};
-    color: ${makeColorBrand("primary")};
-    font-weight: ${makeFontWeight("semi-bold")};
+    background: ${makeColor("primary-300", { opacity: 0.2 })};
+    color: ${makeColor("primary")};
+    font-weight: ${makeFontWeight("Source Sans 3-semiBold")};
   }
   &:not(.active) {
     &:hover {
-      background: ${makeColorBrand("primary", {
-        variant: "200",
+      background: ${makeColor("primary-200", {
         opacity: 0.2,
       })};
-      color: ${makeColorBrand("primary")};
-      font-weight: ${makeFontWeight("semi-bold")};
+      color: ${makeColor("primary")};
+      font-weight: ${makeFontWeight("Source Sans 3-semiBold")};
     }
   }
 `;
