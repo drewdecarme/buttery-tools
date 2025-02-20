@@ -2,6 +2,8 @@ import type { MetaFunction } from "react-router";
 
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
+import { LayoutConfigSectionControlsContent } from "~/components/LayoutConfigSectionControlsContent";
+import { LayoutConfigSectionControlsTitle } from "~/components/LayoutConfigSectionControlsTitle";
 import { BreakpointConfig } from "~/features/response/BreakpointConfig";
 import { BreakpointPreview } from "~/features/response/BreakpointPreview";
 import { BreakpointPreviewContent } from "~/features/response/BreakpointPreviewContent";
@@ -21,11 +23,11 @@ export default function ConfigResponseRoute() {
   return (
     <>
       <LayoutConfigSection>
-        <LayoutConfigSectionControls
-          dxTitle="Breakpoints"
-          dxDescription={<>explanation of breakpoints</>}
-        >
-          <BreakpointConfig />
+        <LayoutConfigSectionControls>
+          <LayoutConfigSectionControlsTitle dxTitle="Breakpoints" />
+          <LayoutConfigSectionControlsContent>
+            <BreakpointConfig />
+          </LayoutConfigSectionControlsContent>
         </LayoutConfigSectionControls>
         <BreakpointPreview>
           <BreakpointPreviewContent />

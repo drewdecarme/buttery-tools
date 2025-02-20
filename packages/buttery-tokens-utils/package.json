@@ -6,7 +6,8 @@
     "build": "yarn json-schema:build && yarn tsc --project tsconfig.library.json",
     "dev": "yarn build --watch",
     "json-schema:build": "yarn tsx ./scripts/create-json-schema.ts",
-    "json-schema:deploy-dev": "yarn wrangler r2 object put buttery-tools/tokens/schema.dev.json --file ./dist/schema.json"
+    "json-schema:deploy-dev": "yarn wrangler r2 object put buttery-tools/tokens.dev.json --file ./schema.json",
+    "json-schema:deploy-prod": "yarn wrangler r2 object put buttery-tools/tokens.json --file ./schema.json"
   },
   "type": "module",
   "exports": {

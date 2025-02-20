@@ -2,7 +2,7 @@ import { css } from "@linaria/core";
 import type { ReactNode } from "react";
 
 import { LayoutConfigSectionPreview } from "~/components/LayoutConfigSectionPreview";
-import { LayoutConfigSectionTitle } from "~/components/LayoutConfigSectionTitle";
+import { LayoutConfigSectionPreviewTitle } from "~/components/LayoutConfigSectionPreviewTitle";
 
 import { SizePreviewProvider } from "./SizePreview.context";
 import { SizePreviewControls } from "./SizePreviewControls";
@@ -18,9 +18,9 @@ const styles = css`
 function SizePreviewContent({ children }: { children: ReactNode }) {
   return (
     <LayoutConfigSectionPreview className={styles}>
-      <LayoutConfigSectionTitle>
+      <LayoutConfigSectionPreviewTitle>
         <SizePreviewControls />
-      </LayoutConfigSectionTitle>
+      </LayoutConfigSectionPreviewTitle>
       {children}
     </LayoutConfigSectionPreview>
   );

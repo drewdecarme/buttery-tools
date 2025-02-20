@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { withDescription } from "./schema-utils.js";
+
 const ColorVariantTypeAutoSchema = z.number();
 export type ColorVariantTypeAuto = z.infer<typeof ColorVariantTypeAutoSchema>;
 const ColorVariantTypeNamedSchema = z.string().array();
@@ -334,15 +336,15 @@ const ColorNeutralSchema = z.record(
 );
 export type ButteryTokensColorNeutral = z.infer<typeof ColorNeutralSchema>;
 
-export const ColorSchema = z
-  .object({
+export const ColorSchema = withDescription(
+  z.object({
     brand: ColorBrandSchema.default({
       type: "manual",
       colors: {},
     }),
     neutral: ColorNeutralSchema.default({}),
   })
-  .default({});
+).default({});
 export type ButteryTokensColor = z.infer<typeof ColorSchema>;
 
 // const testManual: ButteryTokensColor = {

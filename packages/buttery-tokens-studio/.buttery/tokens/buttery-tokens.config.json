@@ -1,7 +1,8 @@
 {
+  "$schema": "../../../buttery-tokens-utils/schema.json",
   "runtime": {
-    "namespace": "new",
-    "prefix": "new",
+    "namespace": "studio-test",
+    "prefix": "studio-test",
     "strict": true,
     "suppressStrictWarnings": false
   },
@@ -26,20 +27,12 @@
       "heading": {
         "family": "Montserrat",
         "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
-        "styles": [
-          "regular-400",
-          "semiBold-600",
-          "bold-700"
-        ]
+        "styles": ["regular-400", "semiBold-600", "bold-700"]
       },
       "body": {
         "family": "Lato",
         "fallback": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
-        "styles": [
-          "regular-400",
-          "medium-500",
-          "semiBold-600"
-        ]
+        "styles": ["regular-400", "medium-500", "semiBold-600"]
       },
       "formal": {
         "family": "Playfair Display",

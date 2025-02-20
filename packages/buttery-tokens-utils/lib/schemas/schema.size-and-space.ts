@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { withDescription } from "./schema-utils.js";
+
 export const SpaceVariantSchema = z.record(z.string(), z.number());
 
 export const SpaceManualSchema = z.object({
@@ -15,8 +17,8 @@ export const SpaceAutoSchema = z.object({
 });
 export type SpaceAuto = z.infer<typeof SpaceAutoSchema>;
 
-export const SizeAndSpaceSchema = z
-  .object({
+export const SizeAndSpaceSchema = withDescription(
+  z.object({
     baseFontSize: z.number().default(16),
     /**
      * ## Description
@@ -59,15 +61,15 @@ export const SizeAndSpaceSchema = z
       ),
     space: z.discriminatedUnion("mode", [SpaceManualSchema, SpaceAutoSchema]),
   })
-  .default({
-    size: {
-      variants: {},
-    },
-    space: {
-      mode: "auto",
-      variants: 10,
-    },
-  });
+).default({
+  size: {
+    variants: {},
+  },
+  space: {
+    mode: "auto",
+    variants: 10,
+  },
+});
 export type ButteryTokensConfigSizeAndSpace = z.infer<
   typeof SizeAndSpaceSchema
 >;

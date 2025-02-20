@@ -4,8 +4,10 @@ import { css } from "@linaria/core";
 import type { JSX } from "react";
 import { forwardRef } from "react";
 
-export type LayoutConfigSectionTitlePropsNative = JSX.IntrinsicElements["div"];
-export type LayoutConfigSectionTitleProps = LayoutConfigSectionTitlePropsNative;
+export type LayoutConfigSectionPreviewTitlePropsNative =
+  JSX.IntrinsicElements["div"];
+export type LayoutConfigSectionPreviewTitleProps =
+  LayoutConfigSectionPreviewTitlePropsNative;
 
 const styles = css`
   display: flex;
@@ -17,10 +19,10 @@ const styles = css`
   z-index: 10;
 `;
 
-export const LayoutConfigSectionTitle = forwardRef<
+export const LayoutConfigSectionPreviewTitle = forwardRef<
   HTMLDivElement,
-  LayoutConfigSectionTitleProps
->(function LayoutConfigSectionTitle(
+  LayoutConfigSectionPreviewTitleProps
+>(function LayoutConfigSectionPreviewTitle(
   { children, className, ...restProps },
   ref
 ) {

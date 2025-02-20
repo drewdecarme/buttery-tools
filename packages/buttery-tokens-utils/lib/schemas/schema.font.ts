@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { withDescription } from "./schema-utils.js";
+
 export const fontFamilyFallback =
   'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
 
@@ -119,21 +121,27 @@ export type FontVariant = z.infer<typeof FontVariantSchema>;
 
 export const FontSchema = z
   .discriminatedUnion("source", [
-    z.object({
-      source: z.literal("manual"),
-      families: FontFamiliesManualSchema,
-      variants: FontVariantSchema,
-    }),
-    z.object({
-      source: z.literal("google"),
-      families: FontFamiliesGoogleSchema,
-      variants: FontVariantSchema,
-    }),
-    z.object({
-      source: z.literal("adobe"),
-      families: FontFamiliesAdobeSchema,
-      variants: FontVariantSchema,
-    }),
+    withDescription(
+      z.object({
+        source: z.literal("manual"),
+        families: FontFamiliesManualSchema,
+        variants: FontVariantSchema,
+      })
+    ),
+    withDescription(
+      z.object({
+        source: z.literal("google"),
+        families: FontFamiliesGoogleSchema,
+        variants: FontVariantSchema,
+      })
+    ),
+    withDescription(
+      z.object({
+        source: z.literal("adobe"),
+        families: FontFamiliesAdobeSchema,
+        variants: FontVariantSchema,
+      })
+    ),
   ])
   .superRefine((data, ctx) => {
     // Ensure font.variants[variantName].family keys match font.families

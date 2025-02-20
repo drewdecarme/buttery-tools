@@ -2,6 +2,8 @@ import type { MetaFunction } from "react-router";
 
 import { LayoutConfigSection } from "~/components/LayoutConfigSection";
 import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionControls";
+import { LayoutConfigSectionControlsContent } from "~/components/LayoutConfigSectionControlsContent";
+import { LayoutConfigSectionControlsTitle } from "~/components/LayoutConfigSectionControlsTitle";
 import { SizeConfig } from "~/features/size-and-space/SizeConfig";
 import { SizePreview } from "~/features/size-and-space/SizePreview";
 import { SizePreviewContent } from "~/features/size-and-space/SizePreviewContent";
@@ -24,22 +26,27 @@ export default function ConfigSizeAndSpacingRoute() {
   return (
     <>
       <LayoutConfigSection>
-        <LayoutConfigSectionControls
-          dxTitle="Sizing"
-          dxDescription={<>explanation of sizing</>}
-        >
-          <SizeConfig />
+        <LayoutConfigSectionControls>
+          <LayoutConfigSectionControlsTitle dxTitle="Sizing">
+            test
+          </LayoutConfigSectionControlsTitle>
+          <LayoutConfigSectionControlsContent>
+            <SizeConfig />
+          </LayoutConfigSectionControlsContent>
         </LayoutConfigSectionControls>
+
         <SizePreview>
           <SizePreviewContent />
         </SizePreview>
       </LayoutConfigSection>
       <LayoutConfigSection>
-        <LayoutConfigSectionControls
-          dxTitle="Spacing"
-          dxDescription={<>explanation of spacing</>}
-        >
-          <SpaceConfig />
+        <LayoutConfigSectionControls>
+          <LayoutConfigSectionControlsTitle dxTitle="Spacing">
+            test
+          </LayoutConfigSectionControlsTitle>
+          <LayoutConfigSectionControlsContent>
+            <SpaceConfig />
+          </LayoutConfigSectionControlsContent>
         </LayoutConfigSectionControls>
         <SpacePreview>
           <SpacePreviewContent />

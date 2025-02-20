@@ -2,7 +2,7 @@ import { css } from "@linaria/core";
 import type { ReactNode } from "react";
 
 import { LayoutConfigSectionPreview } from "~/components/LayoutConfigSectionPreview";
-import { LayoutConfigSectionTitle } from "~/components/LayoutConfigSectionTitle";
+import { LayoutConfigSectionPreviewTitle } from "~/components/LayoutConfigSectionPreviewTitle";
 
 import { BreakpointPreviewProvider } from "./BreakpointPreview.context";
 import { BreakpointPreviewControls } from "./BreakpointPreviewControls";
@@ -17,9 +17,9 @@ const styles = css`
 function BreakpointPreviewContent({ children }: { children: ReactNode }) {
   return (
     <LayoutConfigSectionPreview className={styles}>
-      <LayoutConfigSectionTitle>
+      <LayoutConfigSectionPreviewTitle>
         <BreakpointPreviewControls />
-      </LayoutConfigSectionTitle>
+      </LayoutConfigSectionPreviewTitle>
       {children}
     </LayoutConfigSectionPreview>
   );

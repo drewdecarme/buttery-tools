@@ -2,7 +2,7 @@ import { css } from "@linaria/core";
 import type { ReactNode } from "react";
 
 import { LayoutConfigSectionPreview } from "~/components/LayoutConfigSectionPreview";
-import { LayoutConfigSectionTitle } from "~/components/LayoutConfigSectionTitle";
+import { LayoutConfigSectionPreviewTitle } from "~/components/LayoutConfigSectionPreviewTitle";
 
 import { CustomPreviewProvider } from "./CustomPreview.context";
 import { CustomPreviewControls } from "./CustomPreviewControls";
@@ -17,9 +17,9 @@ const styles = css`
 function CustomPreviewContent({ children }: { children: ReactNode }) {
   return (
     <LayoutConfigSectionPreview className={styles}>
-      <LayoutConfigSectionTitle>
+      <LayoutConfigSectionPreviewTitle>
         <CustomPreviewControls />
-      </LayoutConfigSectionTitle>
+      </LayoutConfigSectionPreviewTitle>
       {children}
     </LayoutConfigSectionPreview>
   );

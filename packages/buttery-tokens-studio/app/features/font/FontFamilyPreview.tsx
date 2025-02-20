@@ -2,7 +2,7 @@ import { css } from "@linaria/core";
 import type { ReactNode } from "react";
 
 import { LayoutConfigSectionPreview } from "~/components/LayoutConfigSectionPreview";
-import { LayoutConfigSectionTitle } from "~/components/LayoutConfigSectionTitle";
+import { LayoutConfigSectionPreviewTitle } from "~/components/LayoutConfigSectionPreviewTitle";
 
 import { FontFamilyPreviewProvider } from "./FontFamilyPreview.context";
 import { FontFamilyPreviewControls } from "./FontFamilyPreviewControls";
@@ -18,9 +18,9 @@ const styles = css`
 function FontFamilyPreviewContent({ children }: { children: ReactNode }) {
   return (
     <LayoutConfigSectionPreview className={styles}>
-      <LayoutConfigSectionTitle>
+      <LayoutConfigSectionPreviewTitle>
         <FontFamilyPreviewControls />
-      </LayoutConfigSectionTitle>
+      </LayoutConfigSectionPreviewTitle>
       {children}
     </LayoutConfigSectionPreview>
   );

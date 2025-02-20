@@ -3,7 +3,7 @@ import { css } from "@linaria/core";
 import { classes } from "@buttery/components";
 
 import { LayoutConfigSectionPreview } from "~/components/LayoutConfigSectionPreview";
-import { LayoutConfigSectionTitle } from "~/components/LayoutConfigSectionTitle";
+import { LayoutConfigSectionPreviewTitle } from "~/components/LayoutConfigSectionPreviewTitle";
 
 import { ColorPreviewControls } from "./ColorPreviewControls";
 import {
@@ -49,9 +49,9 @@ function ColorPreviewContent({ children }: { children: ReactNode }) {
     >
       {useMemo(
         () => (
-          <LayoutConfigSectionTitle className={stylesTitle}>
+          <LayoutConfigSectionPreviewTitle className={stylesTitle}>
             <ColorPreviewControls />
-          </LayoutConfigSectionTitle>
+          </LayoutConfigSectionPreviewTitle>
         ),
         []
       )}

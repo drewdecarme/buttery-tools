@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { withDescription } from "./schema-utils.js";
+
 /**
  * Define the breakpoints that will govern how the application responds to the viewport size.
  * - phone-sm: 320, // This breakpoint targets small mobile devices, including older smartphones like the iPhone 5 and SE. It's crucial to ensure basic functionality and readability on these smaller screens.,
@@ -21,9 +23,9 @@ export const BreakpointsSchema = z.record(z.string(), z.number()).default({
 });
 export type Breakpoints = z.infer<typeof BreakpointsSchema>;
 
-export const ResponseSchema = z
-  .object({
+export const ResponseSchema = withDescription(
+  z.object({
     breakpoints: BreakpointsSchema,
   })
-  .default({});
+).default({});
 export type ButteryTokensConfigResponse = z.infer<typeof ResponseSchema>;

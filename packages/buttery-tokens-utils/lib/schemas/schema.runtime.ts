@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-import { optionalSchema } from "./schema-utils.js";
+import { optionalSchema, withDescription } from "./schema-utils.js";
 
-export const RuntimeSchema = z
-  .object({
+export const RuntimeSchema = withDescription(
+  z.object({
     /**
      * ## Description
      * A namespace that will be appended to the import of the buttery tokens package.
@@ -64,8 +64,8 @@ export const RuntimeSchema = z
      */
     suppressStrictWarnings: optionalSchema(z.boolean(), false),
   })
-  .default({
-    namespace: "new",
-    prefix: "new",
-  });
+).default({
+  namespace: "new",
+  prefix: "new",
+});
 export type ButteryTokensConfigRuntime = z.infer<typeof RuntimeSchema>;

@@ -7,12 +7,20 @@ import { SizeAndSpaceSchema } from "./schema.size-and-space.js";
 import { RuntimeSchema } from "./schema.runtime.js";
 import { CustomSchema } from "./schema.custom.js";
 
-export const ConfigSchema = z.object({
-  runtime: RuntimeSchema,
-  sizeAndSpace: SizeAndSpaceSchema,
-  font: FontSchema,
-  response: ResponseSchema,
-  color: ColorSchema,
-  custom: CustomSchema,
-});
+export const ConfigSchema = z
+  .object({
+    runtime: RuntimeSchema,
+    sizeAndSpace: SizeAndSpaceSchema,
+    font: FontSchema,
+    response: ResponseSchema,
+    color: ColorSchema,
+    custom: CustomSchema,
+  })
+  .merge(
+    z.object({
+      // add a schema field onto the output JSON schema so we
+      // can correctly reference the file
+      $schema: z.string().default("https://schema.buttery.tools/tokens.json"),
+    })
+  );
 export type ButteryTokensConfig = z.infer<typeof ConfigSchema>;

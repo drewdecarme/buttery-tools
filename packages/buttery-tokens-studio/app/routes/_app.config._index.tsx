@@ -7,6 +7,8 @@ import { LayoutConfigSectionControls } from "~/components/LayoutConfigSectionCon
 import { ColorPreviewNeutral } from "~/features/color/ColorPreviewNeutral";
 import { ColorNeutral } from "~/features/color/ColorNeutral";
 import { ColorPreview } from "~/features/color/ColorPreview";
+import { LayoutConfigSectionControlsTitle } from "~/components/LayoutConfigSectionControlsTitle";
+import { LayoutConfigSectionControlsContent } from "~/components/LayoutConfigSectionControlsContent";
 
 export const meta: MetaFunction = () => {
   return [
@@ -23,36 +25,31 @@ export default function ColorsRoute() {
   return (
     <>
       <LayoutConfigSection>
-        <LayoutConfigSectionControls
-          dxTitle="Brand Colors"
-          dxDescription={
-            <>
-              Brand colors are an essential part of your application&apos;s
-              design system, providing consistency and harmony across all visual
-              assets.
-            </>
-          }
-        >
-          <ColorBrandMode />
+        <LayoutConfigSectionControls>
+          <LayoutConfigSectionControlsTitle dxTitle="Brand Colors" />
+          <LayoutConfigSectionControlsContent>
+            <ColorBrandMode />
+          </LayoutConfigSectionControlsContent>
         </LayoutConfigSectionControls>
         <ColorPreview>
           <ColorPreviewBrand />
         </ColorPreview>
       </LayoutConfigSection>
       <LayoutConfigSection>
-        <LayoutConfigSectionControls
-          dxTitle="Neutral Colors"
-          dxDescription={
-            <>
-              Brand colors are an essential part of your application&apos;s
+        <LayoutConfigSectionControls>
+          <LayoutConfigSectionControlsTitle
+            dxTitle="Neutral Colors"
+            data-description="Brand colors are an essential part of your application's
               design system, providing consistency and harmony across all visual
               elements. This configuration allows you to generate a cohesive
               color palette using harmonious fluorescent tones by defining
-              parameters for saturation, brightness, and hue variations.
-            </>
-          }
-        >
-          <ColorNeutral />
+              parameters for saturation, brightness, and hue variations."
+          >
+            test
+          </LayoutConfigSectionControlsTitle>
+          <LayoutConfigSectionControlsContent>
+            <ColorNeutral />
+          </LayoutConfigSectionControlsContent>
         </LayoutConfigSectionControls>
         <ColorPreview>
           <ColorPreviewNeutral />
