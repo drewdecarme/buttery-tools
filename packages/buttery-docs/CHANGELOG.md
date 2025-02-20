@@ -2,6 +2,12 @@
 
 <!-- MONOWEAVE:BELOW -->
 
+## @buttery/docs (v0.2.9) <a name="0.2.9"></a>
+
+Removes the inclusion of the `@buttery/tokens/docs` CSS file since it is being built at build time and then statically supplied to the development server of the `@buttery/docs` app. This will fix a runtime error in DEV and PROD instances where the browser is looking for a file that doesn't exist.
+
+
+
 ## @buttery/docs (v0.2.8) <a name="0.2.8"></a>
 
 Upgrades `@buttery/docs` to use ReactRouter v7. This changeset is important in order to support the ongoing major releases of React Router and eventually React 19.
