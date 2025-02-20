@@ -39,7 +39,7 @@
   "dependencies": {
     "@buttery/commands": "workspace:0.4.7",
     "@buttery/components": "workspace:*",
-    "@buttery/docs": "workspace:0.2.8",
+    "@buttery/docs": "workspace:*",
     "@buttery/logs": "workspace:*",
     "@buttery/tokens": "workspace:0.1.11",
     "@buttery/tsconfig": "workspace:0.1.4",
